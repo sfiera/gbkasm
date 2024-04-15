@@ -3035,9 +3035,8 @@ code_01_64d3::
     jp nz, Jump_001_6678
 
     ld hl, $00d2
-    rst $08
-    and $cb
-    ld a, h
+    vcall $e6
+    bit 7, h
     jr nz, jr_001_64ec
 
     vcall $e7
