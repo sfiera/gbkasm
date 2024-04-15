@@ -4071,9 +4071,8 @@ code_01_6b27::
     call Call_001_6b88
     ret c
 
-    rst $08
-    add sp, $18
-    pop hl
+    vcall $e8
+    jr jr_001_6b10
 
 code_01_6b2f::
     call Call_001_6a87
@@ -5467,8 +5466,8 @@ jt01_714d::
 
 jr_001_7158:
     dec hl
-    rst $08
-    add sp, -$30
+    vcall $e8
+    ret nc
     xor a
     ld [hl+], a
     ld [hl], a
