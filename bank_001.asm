@@ -2766,8 +2766,8 @@ jr_001_606b:
     ld a, $0d
     call Call_001_5f89
     ld a, $01
-    rst $08
-    call z, $c3cf
+    vcall $cc
+    vcall $c3
     call Call_001_611d
     jr c, jr_001_60b0
 
@@ -2817,13 +2817,13 @@ jr_001_60c9:
     ld bc, $000a
     vcall $02
     ld a, $01
-    rst $08
-    call z, Call_001_72cf
+    vcall $cc
+    vcall $72
     push af
     xor a
-    rst $08
-    call z, $38f1
-    dec h
+    vcall $cc
+    pop af
+    jr c, jr_001_610d
     ld a, [$c6d5]
     or a
     jr z, jr_001_6106
@@ -2849,6 +2849,7 @@ jr_001_6106:
     call Call_001_5f89
     jr jr_001_6100
 
+jr_001_610d:
     call Call_001_6112
     jr jr_001_6100
 
