@@ -8,59 +8,59 @@ SECTION "ROM Bank $001", ROMX[$4000], BANK[$1]
     db "Z", $a5, $00, $00, $00, $a0, $1e, $00, $06, $00, $0a, $01, "KISS MAIL", $c3, $9d, "^", $00, $00, "GB KISS MENU ", $00, $00, $00, $82, $82, "DD((", $10, $10, "((DD", $82, $82, $00, $00, $10, $10, "8(8(|D|D", $fe, $82, $fe, $fe, $00, $00, "88|D", $fe, $82, $fe, $82, $fe, $82, "|D88", $00, $00, $10, $10, "8(|D", $fe, $82, "|D8(", $10, $10, $00, $00, "88|D", $fe, $92, $fe, $aa, $fe, $92, "|D88", $10, $10, $18, $18, $fc, $fc, $fe, $fe, $fc, $fc, $18, $18, $10, $10, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
 
 jt01::
-    dw $7dcc
-    dw $7f2f
-    dw $7e77
-    dw $7f04
-    dw $7e90
-    dw $7260
-    dw $665c
-    dw $7730
-    dw $784d
-    dw $7863
-    dw $793f
-    dw $78f0
-    dw $7df1
-    dw $7e03
-    dw $7e43
-    dw $7d47
-    dw $7d60
-    dw $776c
-    dw $7daf
-    dw $77ae
-    dw $777b
-    dw $6d2f
-    dw $7222
-    dw $6d53
-    dw $6d72
-    dw $6de4
-    dw $6e2e
-    dw $6f66
-    dw $6f7a
-    dw $6f8f
-    dw $6f9b
-    dw $6fda
-    dw $6feb
-    dw $714d
-    dw $70ba
-    dw $71e6
-    dw $7138
-    dw $6e8b
-    dw $6e63
-    dw $6a93
-    dw $6c1b
-    dw $6c28
-    dw $6c2f
-    dw $6c3c
-    dw $6c5b
-    dw $6c38
-    dw $6c67
-    dw $6cc3
-    dw $6c8e
-    dw $6c92
-    dw $6cd8
-    dw $6ca5
-    dw $6ca9
+    dw jt01_7dcc
+    dw jt01_7f2f
+    dw jt01_7e77
+    dw jt01_7f04
+    dw jt01_7e90
+    dw jt01_7260
+    dw jt01_665c
+    dw jt01_7730
+    dw jt01_784d
+    dw jt01_7863
+    dw jt01_793f
+    dw jt01_78f0
+    dw jt01_7df1
+    dw jt01_7e03
+    dw jt01_7e43
+    dw jt01_7d47
+    dw jt01_7d60
+    dw jt01_776c
+    dw jt01_7daf
+    dw jt01_77ae
+    dw jt01_777b
+    dw jt01_6d2f
+    dw jt01_7222
+    dw jt01_6d53
+    dw jt01_6d72
+    dw jt01_6de4
+    dw jt01_6e2e
+    dw jt01_6f66
+    dw jt01_6f7a
+    dw jt01_6f8f
+    dw jt01_6f9b
+    dw jt01_6fda
+    dw jt01_6feb
+    dw jt01_714d
+    dw jt01_70ba
+    dw jt01_71e6
+    dw jt01_7138
+    dw jt01_6e8b
+    dw jt01_6e63
+    dw jt01_6a93
+    dw jt01_6c1b
+    dw jt01_6c28
+    dw jt01_6c2f
+    dw jt01_6c3c
+    dw jt01_6c5b
+    dw jt01_6c38
+    dw jt01_6c67
+    dw jt01_6cc3
+    dw jt01_6c8e
+    dw jt01_6c92
+    dw jt01_6cd8
+    dw jt01_6ca5
+    dw jt01_6ca9
 
 j01_4100::
     ld sp, $e000
@@ -7373,11 +7373,11 @@ Call_001_7bd2:
 
 
 data_01_7bdc::
-    dw $7c6d
-    dw $7cda
-    dw $7be7
-    dw $7c24
-    dw $7be6
+    dw data_01_7c6d
+    dw data_01_7cda
+    dw data_01_7be7
+    dw data_01_7c24
+    dw data_01_7be6
 
 data_01_7be6::
     db $05
