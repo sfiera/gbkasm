@@ -608,10 +608,9 @@ data_01_440d::
     ld hl, $0753
     ld de, $8865
     ld bc, $0791
-    rst $08
-    jp nz, $5321
-
-    ld bc, $bdcf
+    vcall $c2
+    ld hl, $0153
+    vcall $bd
     ld hl, data_01_4510
     vcall $69
     ld hl, $c400
