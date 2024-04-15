@@ -2626,9 +2626,8 @@ Call_001_5f89:
 
 Jump_001_5fb5:
 jr_001_5fb5:
-    rst $08
-    ld bc, data_01_7fcd
-    ld h, l
+    vcall $01
+    call Call_001_657f
     ldh a, [$c0]
     push af
     ld a, $01

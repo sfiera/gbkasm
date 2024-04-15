@@ -1694,9 +1694,9 @@ jr_000_0943:
     and $04
     ret z
 
-    rst $08
-    ld bc, $0421
-    add $87
+    vcall $01
+    ld hl, $c604
+    add a
     add a
     ld e, a
     ld d, $00
