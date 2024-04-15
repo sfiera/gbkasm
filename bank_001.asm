@@ -4847,9 +4847,8 @@ jr_001_6ea1:
     jr jr_001_6e8e
 
 jr_001_6ec1:
-    rst $08
-    ld hl, sp+$18
-    ret
+    vcall $f8
+    jr jr_001_6e8e
 
 
 jr_001_6ec5:
@@ -4868,12 +4867,10 @@ jr_001_6ed2:
 
 jr_001_6eda:
     ld a, $23
-    rst $08
-    ld hl, sp+$3e
-    inc hl
-    rst $08
-    ld hl, sp+$18
-    xor d
+    vcall $f8
+    ld a, $23
+    vcall $f8
+    jr jr_001_6e8e
 
 jr_001_6ee4:
     ld c, $00
@@ -4900,10 +4897,12 @@ Call_001_6ef7:
 Call_001_6efc:
     push af
     ld a, $2a
-    rst $08
-    ld hl, sp-$0f
-    rst $08
-    ld hl, sp-$37
+    vcall $f8
+    pop af
+    vcall $f8
+    ret
+
+
     ld c, l
     ld b, h
     ld hl, sp+$00
