@@ -35,7 +35,9 @@ Config4::
     db $02
 
 RST_10::
-    db $c3, $c9, $00, $00, $fe, $03, $00, $bf
+    jp code_00_00c9
+
+    db $00, $fe, $03, $00, $bf
 
 RST_18::
     db $00, $00, $00, $00, $00, $00, $00, $00
@@ -215,6 +217,7 @@ code_00_00bd::
     ret
 
 
+code_00_00c9::
     push af
     push af
     push de
