@@ -282,15 +282,14 @@ jt02_419f::
     push de
     push hl
     ld c, a
-    rst $08
-    jr jr_002_415f
+    vcall $18
+    cp c
+    jr z, jr_002_419f
 
-    jr z, @+$04
+    vcall $18
 
-    rst $08
-    jr @-$2f
-
-    ld [de], a
+jr_002_419f:
+    vcall $12
     pop hl
     pop de
     pop bc
