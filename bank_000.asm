@@ -195,6 +195,8 @@ jr_000_0093:
     ld [hl], e
     inc hl
     ld [hl], d
+
+jt00_00b9::
     pop hl
     pop de
     pop af
@@ -458,36 +460,38 @@ jt00_01b9::
     nop
 
 jt00::
-    dw $00e9
-    dw $0150
-    dw $015b
+    dw jt00_00e9
+    dw jt00_0150
+    dw jt00_015b
     dw $6f05
     dw $6f35
     dw $6f3e
     dw $76d8
     dw $76f1
     dw $7712
-    dw $02fd
-    dw $01b9
-    dw $01b9
-    dw $01b9
-    dw $01b9
-    dw $00b9
-    dw $0000
-    dw $02ed
-    dw $022c
-    dw $0230
-    dw $0234
-    dw $0239
-    dw $023d
-    dw $0241
-    dw $0245
-    dw $0249
-    dw $024d
-    dw $0218
-    dw $0268
-    dw $3811
-    dw $c900
+    dw jt00_02fd
+    dw jt00_01b9
+    dw jt00_01b9
+    dw jt00_01b9
+    dw jt00_01b9
+    dw jt00_00b9
+    dw 0
+    dw jt00_02ed
+    dw jt00_022c
+    dw jt00_0230
+    dw jt00_0234
+    dw jt00_0239
+    dw jt00_023d
+    dw jt00_0241
+    dw jt00_0245
+    dw jt00_0249
+    dw jt00_024d
+    dw jt00_0218
+    dw jt00_0268
+
+jt00_0218::
+    ld de, $0038
+    ret
 
 Jump_000_021c:
     push af
@@ -496,40 +500,47 @@ Jump_000_021c:
     push hl
     ldh a, [$99]
     bit 2, a
-    call nz, Call_000_0230
+    call nz, jt00_0230
     pop hl
     pop de
     pop bc
     pop af
     reti
 
-
+jt00_022c::
     ld l, $00
     jr jr_000_024f
 
-Call_000_0230:
+jt00_0230::
     ld l, $03
     jr jr_000_024f
 
+jt00_0234::
     xor a
     ld l, $06
     jr jr_000_024f
 
+jt00_0239::
     ld l, $09
     jr jr_000_024f
 
+jt00_023d::
     ld l, $0c
     jr jr_000_024f
 
+jt00_0241::
     ld l, $0f
     jr jr_000_024f
 
+jt00_0245::
     ld l, $12
     jr jr_000_024f
 
+jt00_0249::
     ld l, $15
     jr jr_000_024f
 
+jt00_024d::
     ld l, $18
 
 jr_000_024f:
@@ -554,7 +565,7 @@ jr_000_0263:
     pop af
     ret
 
-
+jt00_0268::
     ld a, d
     cp $80
     jr c, jr_000_0290
@@ -684,7 +695,8 @@ Jump_000_02e6:
 
     db $6e
 
-    ld hl, $02ed
+jt00_02ed::
+    ld hl, jt00_02ed
     rst $08
 
     db $6f
