@@ -641,54 +641,54 @@ Jump_005_43b3:
 
 
 data_05_43cb::
-    dw $450d
-    dw $4518
-    dw $4518
-    dw $4518
-    dw $4518
-    dw $4518
-    dw $4518
-    dw $4530
-    dw $4538
-    dw $4540
-    dw $4549
-    dw $4554
-    dw $456f
-    dw $458a
-    dw $4598
-    dw $45a4
-    dw $45b9
-    dw $45d3
-    dw $45da
-    dw $45f1
-    dw $4602
-    dw $460f
-    dw $461c
-    dw $4629
-    dw $4639
-    dw $4646
-    dw $4653
-    dw $4660
-    dw $466d
-    dw $467a
-    dw $4688
-    dw $4688
-    dw $4688
-    dw $4688
-    dw $4688
-    dw $4688
-    dw $4688
-    dw $4688
-    dw $4688
-    dw $4688
-    dw $4688
-    dw $4688
-    dw $4688
-    dw $4688
-    dw $4688
-    dw $4688
-    dw $4688
-    dw $4688
+    dw code_05_450d
+    dw code_05_4518
+    dw code_05_4518
+    dw code_05_4518
+    dw code_05_4518
+    dw code_05_4518
+    dw code_05_4518
+    dw code_05_4530
+    dw code_05_4538
+    dw code_05_4540
+    dw code_05_4549
+    dw code_05_4554
+    dw code_05_456f
+    dw code_05_458a
+    dw code_05_4598
+    dw code_05_45a4
+    dw code_05_45b9
+    dw code_05_45d3
+    dw code_05_45da
+    dw code_05_45f1
+    dw code_05_4602
+    dw code_05_460f
+    dw code_05_461c
+    dw code_05_4629
+    dw code_05_4639
+    dw code_05_4646
+    dw code_05_4653
+    dw code_05_4660
+    dw code_05_466d
+    dw code_05_467a
+    dw code_05_4688
+    dw code_05_4688
+    dw code_05_4688
+    dw code_05_4688
+    dw code_05_4688
+    dw code_05_4688
+    dw code_05_4688
+    dw code_05_4688
+    dw code_05_4688
+    dw code_05_4688
+    dw code_05_4688
+    dw code_05_4688
+    dw code_05_4688
+    dw code_05_4688
+    dw code_05_4688
+    dw code_05_4688
+    dw code_05_4688
+    dw code_05_4688
 
 jr_005_442b:
     push af
@@ -1825,34 +1825,34 @@ data_05_4a00::
     db $05, $05, $05, $05, $05, $05, $05, $05, $05, $05, $05, $05
 
 data_05_4a1c::
-    dw $4a54
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $4a55
-    dw $4a55
-    dw $4a55
-    dw $4a55
-    dw $4a55
-    dw $4a55
-    dw $4a55
-    dw $4a55
-    dw $4a55
-    dw $4a55
-    dw $4a55
-    dw $4a55
-    dw $4a55
-    dw $4a55
-    dw $4a55
+    dw data_05_4a54
+    dw 0
+    dw 0
+    dw 0
+    dw 0
+    dw 0
+    dw 0
+    dw 0
+    dw 0
+    dw 0
+    dw 0
+    dw 0
+    dw 0
+    dw data_05_4a55
+    dw data_05_4a55
+    dw data_05_4a55
+    dw data_05_4a55
+    dw data_05_4a55
+    dw data_05_4a55
+    dw data_05_4a55
+    dw data_05_4a55
+    dw data_05_4a55
+    dw data_05_4a55
+    dw data_05_4a55
+    dw data_05_4a55
+    dw data_05_4a55
+    dw data_05_4a55
+    dw data_05_4a55
 
 data_05_4a54::
     db $00
@@ -1867,34 +1867,34 @@ data_05_4a56::
     db $32, $32, $32, $32, $32, $32, $32, $32
 
 data_05_4a8e::
-    dw $4ac6
-    dw $4ad6
-    dw $4ae6
-    dw $4af6
-    dw $4b06
-    dw $4b16
-    dw $4b26
-    dw $4b36
-    dw $4c46
-    dw $4c56
-    dw $4c66
-    dw $4c76
-    dw $4c06
-    dw $4c16
-    dw $4c26
-    dw $4c36
-    dw $4bc6
-    dw $4bd6
-    dw $4be6
-    dw $4bf6
-    dw $4b86
-    dw $4b96
-    dw $4ba6
-    dw $4bb6
-    dw $4b46
-    dw $4b56
-    dw $4b66
-    dw $4b76
+    dw data_05_4ac6
+    dw data_05_4ad6
+    dw data_05_4ae6
+    dw data_05_4af6
+    dw data_05_4b06
+    dw data_05_4b16
+    dw data_05_4b26
+    dw data_05_4b36
+    dw data_05_4c46
+    dw data_05_4c56
+    dw data_05_4c66
+    dw data_05_4c76
+    dw data_05_4c06
+    dw data_05_4c16
+    dw data_05_4c26
+    dw data_05_4c36
+    dw data_05_4bc6
+    dw data_05_4bd6
+    dw data_05_4be6
+    dw data_05_4bf6
+    dw data_05_4b86
+    dw data_05_4b96
+    dw data_05_4ba6
+    dw data_05_4bb6
+    dw data_05_4b46
+    dw data_05_4b56
+    dw data_05_4b66
+    dw data_05_4b76
 
 data_05_4ac6::
     db $79, $bd, $ff, $ff, $ff, $ff, $fd, $b9, $75, $31, $00, $00, $00, $00, $01, $35
@@ -1981,18 +1981,18 @@ data_05_4c76::
     db $bb, $bb, $bb, $bb, $bb, $bb, $bb, $bb, $33, $33, $33, $33, $33, $33, $33, $33
 
 data_05_4c86::
-    dw $4c9e
-    dw $4cdc
-    dw $4ca5
-    dw $4ce5
-    dw $4caf
-    dw $4cc1
-    dw $4cb7
-    dw $4cc9
-    dw $4cee
-    dw $4d23
-    dw $4d2c
-    dw $4d35
+    dw data_05_4c9e
+    dw data_05_4cdc
+    dw data_05_4ca5
+    dw data_05_4ce5
+    dw data_05_4caf
+    dw data_05_4cc1
+    dw data_05_4cb7
+    dw data_05_4cc9
+    dw data_05_4cee
+    dw data_05_4d23
+    dw data_05_4d2c
+    dw data_05_4d35
 
 data_05_4c9e::
     db $88, $ed, $f2, $c0, $46, $63, $ff
