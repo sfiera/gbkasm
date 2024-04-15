@@ -1837,34 +1837,34 @@ data_04_4a00::
     db $05, $05, $05, $05, $05, $05, $05, $05, $05, $05, $05, $05
 
 data_04_4a1c::
-    dw $4a54
-    dw $4a55
-    dw $4a55
-    dw $4a55
-    dw $4a55
-    dw $4a55
-    dw $4a55
-    dw $4a55
-    dw $4a55
-    dw $4a55
-    dw $4a55
-    dw $4a55
-    dw $4a55
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
-    dw $0000
+    dw data_04_4a54
+    dw data_04_4a55
+    dw data_04_4a55
+    dw data_04_4a55
+    dw data_04_4a55
+    dw data_04_4a55
+    dw data_04_4a55
+    dw data_04_4a55
+    dw data_04_4a55
+    dw data_04_4a55
+    dw data_04_4a55
+    dw data_04_4a55
+    dw data_04_4a55
+    dw 0
+    dw 0
+    dw 0
+    dw 0
+    dw 0
+    dw 0
+    dw 0
+    dw 0
+    dw 0
+    dw 0
+    dw 0
+    dw 0
+    dw 0
+    dw 0
+    dw 0
 
 data_04_4a54::
     db $00
@@ -1879,34 +1879,34 @@ data_04_4a56::
     db $32, $32, $32, $32, $32, $32, $32, $32
 
 data_04_4a8e::
-    dw $4ac6
-    dw $4ad6
-    dw $4ae6
-    dw $4af6
-    dw $4b06
-    dw $4b16
-    dw $4b26
-    dw $4b36
-    dw $4c46
-    dw $4c56
-    dw $4c66
-    dw $4c76
-    dw $4c06
-    dw $4c16
-    dw $4c26
-    dw $4c36
-    dw $4bc6
-    dw $4bd6
-    dw $4be6
-    dw $4bf6
-    dw $4b86
-    dw $4b96
-    dw $4ba6
-    dw $4bb6
-    dw $4b46
-    dw $4b56
-    dw $4b66
-    dw $4b76
+    dw data_04_4ac6
+    dw data_04_4ad6
+    dw data_04_4ae6
+    dw data_04_4af6
+    dw data_04_4b06
+    dw data_04_4b16
+    dw data_04_4b26
+    dw data_04_4b36
+    dw data_04_4c46
+    dw data_04_4c56
+    dw data_04_4c66
+    dw data_04_4c76
+    dw data_04_4c06
+    dw data_04_4c16
+    dw data_04_4c26
+    dw data_04_4c36
+    dw data_04_4bc6
+    dw data_04_4bd6
+    dw data_04_4be6
+    dw data_04_4bf6
+    dw data_04_4b86
+    dw data_04_4b96
+    dw data_04_4ba6
+    dw data_04_4bb6
+    dw data_04_4b46
+    dw data_04_4b56
+    dw data_04_4b66
+    dw data_04_4b76
 
 data_04_4ac6::
     db $79, $bd, $ff, $ff, $ff, $ff, $fd, $b9, $75, $31, $00, $00, $00, $00, $01, $35
@@ -1993,18 +1993,18 @@ data_04_4c76::
     db $bb, $bb, $bb, $bb, $bb, $bb, $bb, $bb, $33, $33, $33, $33, $33, $33, $33, $33
 
 data_04_4c86::
-    dw $4c9e
-    dw $4cdc
-    dw $4ca5
-    dw $4ce5
-    dw $4caf
-    dw $4cc1
-    dw $4cb7
-    dw $4cc9
-    dw $4cee
-    dw $4d23
-    dw $4d2c
-    dw $4d35
+    dw data_04_4c9e
+    dw data_04_4cdc
+    dw data_04_4ca5
+    dw data_04_4ce5
+    dw data_04_4caf
+    dw data_04_4cc1
+    dw data_04_4cb7
+    dw data_04_4cc9
+    dw data_04_4cee
+    dw data_04_4d23
+    dw data_04_4d2c
+    dw data_04_4d35
 
 data_04_4c9e::
     db $88, $ed, $f2, $c0, $46, $63, $ff
@@ -2047,22 +2047,22 @@ data_04_4d35::
     db $88, $00, $e2, $80, $06, $04, $06, $04, $ff
 
 data_04_4d3e::
-    dw $4d5e
-    dw $4d61
-    dw $4d73
-    dw $4d8d
-    dw $4d94
-    dw $4e4a
-    dw $4e61
-    dw $4e6e
-    dw $4ed4
-    dw $4edc
-    dw $4ee4
-    dw $4ef0
-    dw $4efc
-    dw $4f02
-    dw $4f08
-    dw $4f29
+    dw data_04_4d5e
+    dw data_04_4d61
+    dw data_04_4d73
+    dw data_04_4d8d
+    dw data_04_4d94
+    dw data_04_4e4a
+    dw data_04_4e61
+    dw data_04_4e6e
+    dw data_04_4ed4
+    dw data_04_4edc
+    dw data_04_4ee4
+    dw data_04_4ef0
+    dw data_04_4efc
+    dw data_04_4f02
+    dw data_04_4f08
+    dw data_04_4f29
 
 data_04_4d5e::
     db $00, $80, $80
