@@ -4478,10 +4478,8 @@ jt01_6d2f::
     ld b, [hl]
     inc hl
     push hl
-    rst $08
-    add $da
-    ld c, a
-    ld l, l
+    vcall $c6
+    jp c, Jump_001_6d4f
     ldh [$a1], a
     ld a, b
     pop bc
@@ -4507,6 +4505,8 @@ jr_001_6d3b:
     jr nz, jr_001_6d3b
 
     push hl
+
+Jump_001_6d4f::
     pop hl
     ldh a, [$a1]
     ret
