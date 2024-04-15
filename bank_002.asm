@@ -223,8 +223,7 @@ jr_002_4156:
 
 jr_002_415f:
     push hl
-    rst $08
-    ld [bc], a
+    vcall $02
     pop hl
     pop bc
     add hl, bc
@@ -769,8 +768,7 @@ jt02_4577::
     ld e, l
     ld d, h
     pop hl
-    rst $08
-    ld [bc], a
+    vcall $02
     jp Jump_002_445e
 
 
@@ -846,8 +844,7 @@ jt02_45ca::
     call jt02_4586
     call Call_002_4450
     pop de
-    rst $08
-    ld [bc], a
+    vcall $02
     jp Jump_002_443d
 
 
@@ -2069,11 +2066,9 @@ jr_002_4adf:
     inc hl
     ld d, [hl]
     ld hl, $000a
-    rst $08
-    adc d
+    vcall $8a
     ld de, $000a
-    rst $08
-    adc c
+    vcall $89
     ld e, l
     ld d, h
     ld hl, sp+$02
@@ -2318,8 +2313,7 @@ jr_002_4c2c:
     push bc
     push de
     ld bc, $000a
-    rst $08
-    ld h, a
+    vcall $67
     ld a, h
     or l
     pop de
@@ -2616,8 +2610,7 @@ jr_002_4d5c:
     ld e, a
     ld d, $a2
     ld b, $0c
-    rst $08
-    dec de
+    vcall $1b
     jp Jump_002_4d37
 
 
@@ -4969,8 +4962,7 @@ jt02_56c4::
     ld h, $00
     ld d, h
     ld e, c
-    rst $08
-    adc c
+    vcall $89
     ld b, l
     pop af
     call jt02_5730
@@ -5161,8 +5153,7 @@ jr_002_57ad:
     pop hl
     push hl
     ld bc, $0010
-    rst $08
-    ld [bc], a
+    vcall $02
     pop hl
     ld bc, $0010
     add hl, bc
@@ -5240,8 +5231,7 @@ jr_002_5814:
     push hl
     ld bc, $0010
     push bc
-    rst $08
-    ld [bc], a
+    vcall $02
     pop bc
     pop hl
     add hl, bc
@@ -5316,8 +5306,7 @@ jr_002_5891:
     ld hl, $9730
     ld de, image_02_778e
     ld bc, $00c0
-    rst $08
-    ld [bc], a
+    vcall $02
 
 jr_002_589c:
     ld hl, $97f0
@@ -5331,8 +5320,7 @@ jr_002_58a8:
     ld hl, $97c0
     ld de, $781e
     ld bc, $0010
-    rst $08
-    ld [bc], a
+    vcall $02
     ld hl, $97d0
     ld bc, $0000
     call Call_002_694e
@@ -5537,8 +5525,7 @@ jt02_5988::
     call Call_002_5999
     pop de
     ld bc, $0010
-    rst $08
-    ld [bc], a
+    vcall $02
     ret
 
 
@@ -6336,8 +6323,7 @@ jr_002_5cdb:
     pop hl
     push hl
     ld de, $c3e0
-    rst $08
-    ld [bc], a
+    vcall $02
     pop hl
     pop de
     pop bc
@@ -6412,8 +6398,7 @@ jr_002_5d44:
     ld [hl+], a
     pop hl
     ld de, $c3e0
-    rst $08
-    ld [bc], a
+    vcall $02
     ret
 
 
@@ -6493,8 +6478,7 @@ jr_002_5da9:
     pop hl
     ld bc, $0010
     push bc
-    rst $08
-    ld [bc], a
+    vcall $02
     pop bc
     pop hl
     add hl, bc
@@ -6544,8 +6528,7 @@ jr_002_5deb:
     push de
     ld b, $00
     push bc
-    rst $08
-    ld [bc], a
+    vcall $02
     pop bc
     pop hl
     add hl, bc
@@ -6581,8 +6564,7 @@ jr_002_5e13:
     push hl
     ld b, $00
     push bc
-    rst $08
-    ld [bc], a
+    vcall $02
     pop bc
     pop hl
     add hl, bc
@@ -7010,19 +6992,13 @@ jt02_5ff2::
     ld de, code_02_6036
     ld hl, $c000
     ld bc, $001c
-    rst $08
-
-    db $02
-
+    vcall $02
     ld a, [$000f]
     ld [$c00b], a
     ld de, $6052
     ld hl, $fff5
     ld bc, $000a
-    rst $08
-
-    db $02
-
+    vcall $02
     xor a
     ldh [$82], a
     ldh [$83], a
@@ -8133,8 +8109,7 @@ jr_002_66e3:
     push hl
     ld bc, $0020
     push bc
-    rst $08
-    ld [bc], a
+    vcall $02
     pop bc
     pop hl
     add hl, bc
@@ -8146,8 +8121,7 @@ jr_002_66e3:
     push hl
     ld bc, $0020
     push bc
-    rst $08
-    ld [bc], a
+    vcall $02
     pop bc
     pop hl
     add hl, bc
@@ -8568,8 +8542,7 @@ Jump_002_69b1:
     ld bc, $0010
     push bc
     push hl
-    rst $08
-    ld [bc], a
+    vcall $02
     pop hl
     pop bc
     add hl, bc
@@ -8838,8 +8811,7 @@ jr_002_6acb:
     call Call_002_6b10
 
 jr_002_6ad4:
-    rst $08
-    ld [bc], a
+    vcall $02
     pop hl
     ld a, [$c3be]
     add [hl]
@@ -8872,8 +8844,7 @@ Call_002_6ae2:
     ld b, a
     push bc
     push de
-    rst $08
-    ld [bc], a
+    vcall $02
     pop hl
     pop bc
     add hl, bc

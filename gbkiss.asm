@@ -4,6 +4,12 @@
 ; https://github.com/mattcurrie/mgbdis
 
 INCLUDE "hardware.inc"
+
+MACRO vcall
+    rst $08
+    db \1
+ENDM
+
 INCLUDE "bank_000.asm"
 INCLUDE "bank_001.asm"
 INCLUDE "bank_002.asm"
