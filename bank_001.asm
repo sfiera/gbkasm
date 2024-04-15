@@ -1189,9 +1189,8 @@ Jump_001_47eb:
 
 jr_001_480c:
     ld bc, $041c
-    rst $08
-    call nz, $9dcd
-    ld b, a
+    vcall $c4
+    call Call_001_479d
 
 Jump_001_4814:
 jr_001_4814:
@@ -2074,9 +2073,8 @@ jr_001_4ff3:
     jr nz, jr_001_5013
 
     ld bc, $0a00
-    rst $08
-    call nz, $a1cd
-    ld b, h
+    vcall $c4
+    call Call_001_44a1
     jr nz, jr_001_5013
 
     pop hl
