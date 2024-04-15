@@ -448,9 +448,8 @@ jr_001_434f:
 
 Call_001_4358:
 jr_001_4358:
-    rst $08
-    jp c, Jump_000_02e6
-
+    vcall $da
+    and $02
     jr nz, jr_001_4358
 
     ret
