@@ -3109,11 +3109,11 @@ Call_001_657f:
     vcall $58
     ld a, $73
     ld de, $0103
-    rst $08
-    call $163c
-    inc de
-    rst $08
-    call $913e
+    vcall $cd
+    inc a
+    ld d, $13
+    vcall $cd
+    ld a, $91
     ld hl, $0111
     ld de, $0204
     ld bc, $1108
