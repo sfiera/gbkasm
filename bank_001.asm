@@ -959,9 +959,9 @@ jr_001_46c2:
 
     ld hl, $c500
     ld de, $c600
-    rst $08
-    ldh a, [$38]
-    ld [hl], $78
+    vcall $f0
+    jr c, jr_001_4721
+    ld a, b
     or c
     jr z, jr_001_4721
 
