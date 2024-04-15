@@ -335,9 +335,8 @@ Jump_001_4283:
     ld hl, data_01_4f76
     call Call_001_4bd2
     ld a, $b4
-    rst $08
-    call c, $3ac3
-    ld b, c
+    vcall $dc
+    jp Jump_001_413a
 
 Jump_001_4290:
     call Call_001_4278
