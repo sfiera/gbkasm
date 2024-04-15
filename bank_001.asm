@@ -6042,10 +6042,7 @@ jt01_776c::
     vcall $b8
     pop hl
     inc hl
-    rst $08
-
-code_01_7778::
-    ld l, c
+    vcall $69
     jr jt01_776c
 
 jt01_777b::
@@ -7182,7 +7179,7 @@ jt01_7df1::
 jt01_7e03::
     call jt01_7df1
     ld a, $79
-    ld de, code_01_7778
+    ld de, $7778
     call Call_001_7e20
     dec c
     dec c
