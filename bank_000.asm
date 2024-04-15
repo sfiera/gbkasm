@@ -1973,9 +1973,9 @@ jr_000_0a8a:
     ld b, $00
     ld de, $ffd2
     ld hl, $c500
-    rst $08
-    ld [$21d1], a
-    ld l, $00
+    vcall $ea
+    pop de
+    ld hl, $002e
     add hl, de
     ld e, l
     ld d, h

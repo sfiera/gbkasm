@@ -4079,9 +4079,8 @@ code_01_6b2f::
     call Call_001_6a87
     call Call_001_6d18
     ld hl, $c500
-    rst $08
-    ld [$8bcd], a
-    ld l, d
+    vcall $ea
+    call Call_001_6a8b
     jp Jump_001_6ad8
 
 
