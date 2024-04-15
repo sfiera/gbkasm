@@ -457,10 +457,8 @@ jr_001_4358:
 
 
 Call_001_435f:
-    rst $08
-    jp Jump_001_72cf
-
-
+    vcall $c3
+    vcall $72
     ld a, [$ce00]
     push af
     cp $05
@@ -2816,11 +2814,8 @@ jr_001_60b5:
 jr_001_60c9:
     ld a, $11
     call Call_001_5f89
-    rst $08
-    jp $1d11
-
-
-    ld h, [hl]
+    vcall $c3
+    ld de, data_01_661d
     ld hl, $c6d5
     ld bc, $000a
     vcall $02
@@ -5817,7 +5812,6 @@ jr_001_72ba:
     dec c
 
 Call_001_72cf:
-Jump_001_72cf:
     jr nz, jr_001_72ba
 
     ret

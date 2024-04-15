@@ -2340,45 +2340,34 @@ Call_000_0d05:
     jr jr_000_0d3b
 
 Call_000_0d16:
-    rst $08
-    jp $73cf
-
-
+    vcall $c3
+    vcall $73
     jr jr_000_0d3b
 
     ld hl, $c700
-    rst $08
-    jp $79cf
-
-
+    vcall $c3
+    vcall $79
     jr jr_000_0d3b
 
 Call_000_0d25:
 Jump_000_0d25:
-    rst $08
-    jp $7dcf
-
-
+    vcall $c3
+    vcall $7d
     jr jr_000_0d3b
 
 Call_000_0d2b:
-    rst $08
-    jp $77cf
-
-
+    vcall $c3
+    vcall $77
     jr jr_000_0d3b
 
 Call_000_0d31:
-    rst $08
-    jp $76cf
-
-
+    vcall $c3
+    vcall $76
     jr jr_000_0d3b
 
 Call_000_0d37:
-    rst $08
-    jp $75cf
-
+    vcall $c3
+    vcall $75
 
 jr_000_0d3b:
     push af
