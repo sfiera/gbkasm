@@ -2683,17 +2683,16 @@ jr_001_5ffa:
 
 jr_001_6002:
     call Call_001_5ee7
-    rst $08
-    ld de, $0021
-    inc b
+    vcall $11
+    ld hl, $0400
     vcall $b6
     call Call_001_614f
     vcall $70
     call Call_001_5f15
     ld hl, $0404
     vcall $b6
-    rst $08
-    ld de, $dbcf
+    vcall $11
+    vcall $db
     jr jr_001_5fca
 
     ldh a, [$c0]
