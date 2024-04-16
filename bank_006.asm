@@ -5,7 +5,11 @@
 
 SECTION "ROM Bank $006", ROMX[$4000], BANK[$6]
 
-    db $03, $07, $40, $dd, $5e, $ad, $72
+FileRandomSelection::
+    db $03
+    dw FileMogutteNanbo
+    dw FileDrive
+    dw FileSameGame
 
 FileMogutteNanbo::
     INCBIN "gbk/mogutte-nanbo.gbk"

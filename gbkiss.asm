@@ -10,6 +10,20 @@ MACRO vcall
     db \1
 ENDM
 
+MACRO TableEntry
+    db $46, BANK(\1)
+    dw \1
+SHIFT
+REPT _NARG
+    db \1
+    SHIFT
+ENDR
+ENDM
+
+MACRO TableBlank
+    ds 4, $00
+ENDM
+
 def rIRMode     equ $0000
 def kIRModeOff  equ $00
 def kIRModeOn   equ $0a

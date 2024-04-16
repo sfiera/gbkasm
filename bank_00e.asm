@@ -5,14 +5,25 @@
 
 SECTION "ROM Bank $00e", ROMX[$4000], BANK[$e]
 
-    db $46, $0e, $1c, $40, $46, $0e, $2e, $40, $46, $0e, $40, $40, $46, $0e, $52, $40
-    db $46, $0e, $67, $40, $00, $00, $00, $00, $00, $00, $00, $00, $46, $0e, $7f, $40
-    db $31, $35, $ca, $df, $bd, $de, $d9, $20, $c3, $de, $b0, $c0, $31, $00, $46, $0e
-    db $dc, $45, $31, $35, $ca, $df, $bd, $de, $d9, $20, $c3, $de, $b0, $c0, $32, $00
-    db $46, $0e, $eb, $4b, $31, $35, $ca, $df, $bd, $de, $d9, $20, $c3, $de, $b0, $c0
-    db $33, $00, $46, $0e, $a8, $51, $d3, $b8, $de, $0f, $af, $c3, $0e, $c5, $dd, $ce
-    db $de, $20, $c3, $de, $b0, $c0, $00, $46, $0e, $11, $58, $bd, $c4, $af, $cc, $df
-    db $b3, $ab, $af, $c1, $0f, $bd, $b3, $bc, $de, $0e, $c3, $de, $b0, $c0, $00
+FileCollection5::
+    TableEntry .koura1
+    TableEntry .koura2
+    TableEntry .koura3
+    TableEntry .sezaki
+    TableEntry .num0Data
+    TableBlank
+    TableBlank
+
+.koura1
+    TableEntry FileKoura1, "15ﾊﾟｽﾞﾙ ﾃﾞｰﾀ1\n"
+.koura2
+    TableEntry FileKoura2, "15ﾊﾟｽﾞﾙ ﾃﾞｰﾀ2\n"
+.koura3
+    TableEntry FileKoura3, "15ﾊﾟｽﾞﾙ ﾃﾞｰﾀ3\n"
+.sezaki
+    TableEntry FileSezaki, "ﾓｸﾞ«ｯﾃ»ﾅﾝﾎﾞ ﾃﾞｰﾀ\n"
+.num0Data
+    TableEntry FileNum0Data, "ｽﾄｯﾌﾟｳｫｯﾁ«ｽｳｼﾞ»ﾃﾞｰﾀ\n"
 
 FileKoura1::
     INCBIN "gbk/koura-1.gbk"
