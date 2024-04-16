@@ -5,6 +5,7 @@
 
 SECTION "ROM Bank $004", ROMX[$4000], BANK[$4]
 
+j04_4000::
     jp Jump_004_407a
 
 

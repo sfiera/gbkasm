@@ -20,19 +20,19 @@ RST_08::
 
 
 Config0::
-    db $01
+    db BANK(j01_4100)
 
 Config1::
-    db $01
+    db BANK(jt01)
 
 Config2::
     db $4a
 
 Config3::
-    db $01
+    db BANK(jt01)
 
 Config4::
-    db $02
+    db BANK(jt02)
 
 RST_10::
     jp code_00_00c9
@@ -148,7 +148,7 @@ Jump_000_0068:
     dec hl
     ld [hl], e
     ld e, a
-    ld a, [$000d]
+    ld a, [Config2]
     cp e
     jr c, jr_000_0093
 
@@ -175,9 +175,9 @@ jr_000_0093:
     dec hl
     ldh a, [hROMBank]
     ld [hl-], a
-    ld [hl], $00
+    ld [hl], HIGH(code_00_00bd)
     dec hl
-    ld [hl], $bd
+    ld [hl], LOW(code_00_00bd)
     sla e
     ld a, d
     rlca
@@ -257,7 +257,7 @@ jt00_00e9::
     ld [rIgnored], a
     xor a
     ld [rIRMode], a
-    ld a, [$000c]
+    ld a, [Config1]
 
 Call_000_00f7:
     ldh [hROMBank], a
@@ -313,10 +313,10 @@ HeaderGlobalChecksum::
     db $75, $09
 
 jt00_0150::
-    ld a, [$000b]
+    ld a, [Config0]
     ldh [hROMBank], a
     ld [rROMBank], a
-    jp $4100
+    jp j01_4100
 
 
 jt00_015b::
@@ -556,7 +556,7 @@ Call_000_025a:
     ldh a, [hROMBank]
     ld hl, sp+$07
     ld [hl], a
-    ld a, $04
+    ld a, BANK(j04_4000)
 
 jr_000_0263:
     call RST_20
@@ -2395,7 +2395,7 @@ SECTION "ROM Bank $3fe0", ROM0[$3fe0]
 
 code_00_3fe0::
     push af
-    ld a, $03
+    ld a, BANK(j03_4000)
     rst $20
     pop af
     ld bc, data_00_3fe0
