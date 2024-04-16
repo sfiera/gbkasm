@@ -2321,6 +2321,7 @@ jr_000_0cea:
     ret
 
 
+data_00_0cf2:
     db "GB KISS MENU "
 
 Call_000_0cff:
