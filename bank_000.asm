@@ -252,7 +252,7 @@ code_00_00c9::
 
 jt00_00e9::
     xor a
-    ldh [$81], a
+    ldh [hRAMBank], a
     inc a
     ld [$6000], a
     xor a

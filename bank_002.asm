@@ -477,7 +477,7 @@ data_02_430a::
     db $37, $30, $37, $38, $30, $38, $39, $30, $39, $30, $30, $30, $00
 
 jt02_4437::
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     push af
     call Call_002_44e9
 
@@ -507,7 +507,7 @@ Call_002_4450:
 
 
 jt02_4456::
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     push af
     call Call_002_447b
     jr c, jr_002_4466
@@ -539,7 +539,7 @@ Call_002_446c:
 
 Call_002_4475:
 Jump_002_4475:
-    ldh [$81], a
+    ldh [hRAMBank], a
     ld [jt02], a
     ret
 
@@ -615,7 +615,7 @@ jr_002_44a4:
     jr c, jr_002_44d0
 
 jr_002_44c4:
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     or a
     jr z, jr_002_44e5
 
@@ -675,7 +675,7 @@ Call_002_44e9:
     call Call_002_4534
 
 jr_002_451a:
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     or a
     jr nz, jr_002_4522
 
@@ -685,7 +685,7 @@ jr_002_4522:
     ld a, $46
     call Call_002_4536
     ld de, $c000
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     or a
     ret z
 
@@ -724,7 +724,7 @@ jr_002_4545:
 
 
 jt02_454a::
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     push af
     call Call_002_4556
     ld a, [hl+]
@@ -747,7 +747,7 @@ Call_002_4556:
 
 
 jt02_4566::
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     push af
     push hl
     call Call_002_4556
@@ -760,7 +760,7 @@ jt02_4566::
 
 
 jt02_4577::
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     push af
     push hl
     call jt02_4586
@@ -837,7 +837,7 @@ jr_002_45b9:
 
 
 jt02_45ca::
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     push af
     push hl
     call jt02_4586
@@ -855,7 +855,7 @@ jt02_45da::
     ld hl, $1fff
 
 jr_002_45e1:
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     push af
     push hl
     call Call_002_446c
@@ -1072,11 +1072,11 @@ jr_002_46c5:
     jr nz, jr_002_46df
 
     ld de, $a002
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     inc a
     call Call_002_4475
     call Call_002_4877
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     dec a
     call Call_002_4475
     jr jr_002_46e2
@@ -1100,7 +1100,7 @@ Jump_002_46ee:
 
 Call_002_46f4:
 Jump_002_46f4:
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     push af
 
 jr_002_46f7:
@@ -1117,10 +1117,10 @@ Call_002_470a:
     ld a, h
     and $1f
     ld h, a
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     and $fc
     ldh [$97], a
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     and $03
     rrca
     rrca
@@ -1159,7 +1159,7 @@ jr_002_471e:
     jr c, jr_002_4742
 
 jr_002_4739:
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     or a
     jr z, jr_002_475b
 
@@ -1230,7 +1230,7 @@ Call_002_4773:
 
     jp z, Jump_002_483d
 
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     dec a
     call Call_002_4475
     push hl
@@ -1238,7 +1238,7 @@ Call_002_4773:
     call Call_002_483d
     pop hl
     push af
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     inc a
     call Call_002_4475
     pop af
@@ -1251,7 +1251,7 @@ Call_002_4791:
     or e
     jp nz, Jump_002_4856
 
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     inc a
     call Call_002_4475
     push de
@@ -1259,7 +1259,7 @@ Call_002_4791:
     call Call_002_4856
     pop de
     push af
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     dec a
     call Call_002_4475
     pop af
@@ -1294,7 +1294,7 @@ jt02_47b7::
 Call_002_47c5:
     ld e, l
     ld d, h
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     push af
     call jt02_4586
     push hl
@@ -1347,12 +1347,12 @@ jr_002_4808:
     or e
     jr nz, jr_002_4824
 
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     inc a
     call Call_002_4475
     ld de, $a002
     call Call_002_4877
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     dec a
     call Call_002_4475
     jr jr_002_4835
@@ -1477,7 +1477,7 @@ Call_002_4889:
 
     ld e, l
     ld d, h
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     push af
     call jt02_4586
     push hl
@@ -1562,7 +1562,7 @@ jt02_48ec::
     push de
     call Call_002_47c5
     pop de
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     push af
     push de
     ld de, $fe00
@@ -1608,7 +1608,7 @@ jr_002_491e:
 
 jt02_4926::
     or a
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     push af
     push af
     ld de, $fe00
@@ -1695,7 +1695,7 @@ jt02_496e::
     jr c, jr_002_49dc
 
     push bc
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     push af
     call Call_002_4591
     ld bc, $000a
@@ -1729,7 +1729,7 @@ jt02_496e::
     inc de
 
 jr_002_49ba:
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     push af
     push de
     push bc
@@ -1780,7 +1780,7 @@ jt02_49de::
     rlca
     jr c, jr_002_49fc
 
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     push af
     call Call_002_4591
     jr jr_002_4a0b
@@ -1799,7 +1799,7 @@ jr_002_4a00:
 
 
 jr_002_4a05:
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     push af
     call Call_002_446c
 
@@ -1829,7 +1829,7 @@ jr_002_4a0b:
     jr c, jr_002_4a2d
 
 jr_002_4a24:
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     or a
     jr z, jr_002_4a00
 
@@ -1852,7 +1852,7 @@ jr_002_4a36:
 jt02_4a3c::
     ld a, e
     ldh [$97], a
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     push af
     call Call_002_4591
     call Call_002_4a4f
@@ -2100,7 +2100,7 @@ jr_002_4b4d:
 jr_002_4b5c:
     pop hl
     pop de
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     push af
     push hl
     push hl

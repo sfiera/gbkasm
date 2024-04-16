@@ -3523,7 +3523,7 @@ jr_001_688b:
 
 Call_001_68a9:
 Jump_001_68a9:
-    ldh [$81], a
+    ldh [hRAMBank], a
     ld [$4000], a
     ret
 
@@ -4154,7 +4154,7 @@ code_01_6b9c::
 
 
 code_01_6ba6::
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     push af
     call Call_001_6d18
     call Call_001_6c05
@@ -4198,7 +4198,7 @@ jr_001_6bdb:
 
 
 code_01_6bdc::
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     push af
     call Call_001_6d18
     ld hl, $c400
@@ -5440,7 +5440,7 @@ Call_001_7129:
 jt01_7138::
     ldh a, [hROMBank]
     ld e, a
-    ldh a, [$81]
+    ldh a, [hRAMBank]
     ld d, a
     push de
     push hl
@@ -5646,7 +5646,7 @@ jt01_71e6::
     ldh [hROMBank], a
     ld [$2000], a
     ld a, b
-    ldh [$81], a
+    ldh [hRAMBank], a
     ld [$4000], a
     push de
     ret
