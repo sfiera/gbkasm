@@ -1221,7 +1221,7 @@ Jump_000_0543:
     ld de, $0204
     vcall $57
     ld c, $80
-    ld de, data_00_05c6
+    ld de, strPasswordMenu
     ld a, [$c654]
     ld b, a
     ld a, [$c655]
@@ -1252,7 +1252,7 @@ jr_000_0557:
     dec b
     jr nz, jr_000_0557
 
-    ld hl, data_00_0688
+    ld hl, strPasswordMenuMessage
     call Call_000_087f
     ld a, $01
     vcall $b4
@@ -1316,7 +1316,7 @@ jr_000_05b9:
     ret
 
 
-data_00_05c6::
+strPasswordMenu::
     db " PASSWORD INPUT»", $0d, "\r\n"
     db " ｷｬﾗﾊﾞﾝﾊﾞｰｼﾞｮﾝ 5ｹﾞｰﾑ", $0d, "\r\n"
     db " ｷｽﾓﾝ&ﾊﾞｹ«ﾁｭ»ﾘﾚｰ«ﾎｶ4»", $0d, "\r\n"
@@ -1325,20 +1325,20 @@ data_00_05c6::
     db " ﾐﾆｹﾞｰﾑ«ｶﾞｿﾞｳｲﾚｶｴ»ﾃﾞｰﾀ", $0d, "\r\n"
     db " GB KISS TOOLS", $0d, "\r\n"
 
-data_00_0660::
+strPasswords::
     db "KISSMON "
     db "CANNON  "
     db "BINARY  "
     db "GAMEDATA"
     db "KISSTOOL"
 
-data_00_0688::
+strPasswordMenuMessage::
     db "  ﾒﾆｭｰ«ｦ ｾﾝﾀｸｼﾃ»\n"
     db " \n"
     db "«START/Aｦ ｵｼﾃｸﾀﾞｻｲ»\n"
     db "\n"
 
-data_00_06b0::
+strPasswordDashes::
     db "--------\n"
 
 code_00_06b9::
@@ -1355,13 +1355,13 @@ code_00_06b9::
     vcall $59
     ld hl, $0204
     vcall $b8
-    ld hl, data_00_05c6
+    ld hl, strPasswordMenu
     vcall $69
     ld hl, $0607
     vcall $b8
-    ld hl, data_00_06b0
+    ld hl, strPasswordDashes
     vcall $69
-    ld hl, data_00_0778
+    ld hl, strEnterPassword
     ld bc, $9902
     call Call_000_0882
     ld a, $03
@@ -1387,7 +1387,7 @@ code_00_06b9::
     vcall $55
     jp c, Jump_000_0543
 
-    ld hl, data_00_0660
+    ld hl, strPasswords
     ld bc, $0502
 
 jr_000_072f:
@@ -1448,7 +1448,7 @@ jr_000_0772:
     ret
 
 
-data_00_0778::
+strEnterPassword::
     db " \n"
     db "ﾊﾟｽﾜｰﾄﾞ«ｦ ﾆｭｳﾘｮｸｼﾃ »\n"
     db "«STARTｦ ｵｼﾃｸﾀﾞｻｲ  »\n"
@@ -1522,15 +1522,15 @@ Call_000_07e6:
     vcall $59
     ld hl, $0101
     vcall $b8
-    ld hl, data_00_082b
+    ld hl, strPasswordMenuTitle
     vcall $69
     ret
 
 
-data_00_082b::
+strPasswordMenuTitle::
     db "GB KISS  MINI GAME\n"
 
-data_00_083e::
+strLoadMenuMessage::
     db "«ｼﾃｲﾉ»ﾃﾞｰﾀ«ｦ ﾃﾝｿｳｼﾏｽ»\n"
     db "«  AﾃﾞGBKISSﾃﾝｿｳ  »\n"
     db "«STARTﾃﾞ ｼﾞﾌﾞﾝﾉSRAMﾍ»\n"
@@ -1571,7 +1571,7 @@ Call_000_089a:
 
 Jump_000_08a1:
     call Call_000_07e6
-    ld hl, data_00_083e
+    ld hl, strLoadMenuMessage
     call Call_000_087f
     ldh a, [hROMBank]
     push af
@@ -1758,16 +1758,16 @@ jr_000_0973:
     pop bc
     jr c, jr_000_09b6
 
-    ld de, data_00_0d40
+    ld de, strLoadSuccess
     jr jr_000_09c2
 
 jr_000_09b6:
-    ld de, data_00_0d53
+    ld de, strLoadFailure
     ld a, [$c664]
     or a
     jr z, jr_000_09c2
 
-    ld de, data_00_0d68
+    ld de, strLoadOverwrite
 
 jr_000_09c2:
     pop af
@@ -1789,7 +1789,7 @@ jr_000_09c2:
     ld e, $07
     pop hl
     vcall $5b
-    ld hl, data_00_083e
+    ld hl, strLoadMenuMessage
     call Call_000_087f
     xor a
     ret
@@ -2248,20 +2248,20 @@ jr_000_0c02:
     jp Jump_000_0d25
 
 
-data_00_0c17::
+strBeamFilePrep::
     db "«ﾂｳｼﾝｼﾞｭﾝﾋﾞﾁｭｳ ﾆｼﾃ  »\n"
     db "ｹﾞｰﾑﾎﾞｰｲ«ﾄﾞｳｼｦ ｸｯﾂｹ »\n"
     db "Aﾎﾞﾀﾝ«ｦ ｵｼﾃｸﾀﾞｻｲ   »\n"
     db "\n"
 
-data_00_0c59::
+strBeamFileStarted::
     db "«ﾂｳｼﾝｦ ﾁｭｳｼｽﾙﾊﾞｱｲﾊ »\n"
     db "                \n"
     db "Bﾎﾞﾀﾝ«ｦ ｵｼﾃｸﾀﾞｻｲ   »\n"
     db "\n"
 
 Call_000_0c95:
-    ld hl, data_00_0c17
+    ld hl, strBeamFilePrep
     call Call_000_087f
 
 jr_000_0c9b:
@@ -2272,7 +2272,7 @@ jr_000_0c9b:
     and $01
     jr z, jr_000_0c9b
 
-    ld hl, data_00_0c59
+    ld hl, strBeamFileStarted
     call Call_000_087f
     ld hl, $ce00
     ld de, $c800
@@ -2321,7 +2321,7 @@ jr_000_0cea:
     ret
 
 
-data_00_0cf2:
+strGBKissMenu:
     db "GB KISS MENU "
 
 Call_000_0cff:
@@ -2375,13 +2375,13 @@ jr_000_0d3b:
     ret
 
 
-data_00_0d40::
+strLoadSuccess::
     db "«- <ﾃﾝｿｳ ｻﾚﾏｼﾀ> -»\n"
 
-data_00_0d53::
+strLoadFailure::
     db "«- ﾃﾝｿｳﾃﾞｷﾏｾﾝﾃﾞｼﾀ -»\n"
 
-data_00_0d68::
+strLoadOverwrite::
     db "«- ｵﾅｼﾞ»ﾌｧｲﾙ«ｶﾞｱﾘﾏｽ -»\n"
 
 SECTION "ROM Bank $3fe0", ROM0[$3fe0]
