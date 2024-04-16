@@ -1,4 +1,5 @@
-INCLUDE "charmap.asm"
+INCLUDE "charmap.inc"
+INCLUDE "macro.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
@@ -22,55 +23,52 @@ History::
 
 Body::
     xor a
-    rst $08
-    db $b3
-
-    rst $08
-    db $b5
-
+    vcall $b3
+    vcall $b5
     ld hl, $1200
-    rst $08
-    db $b6
-
+    vcall $b6
     ld a, $01
-    rst $08
-    db $b4
+    vcall $b4
 
 jr4:
     rst $10
-    dw $0006
+    dw code5 - @
+
     rst $10
-    dw $0093
+    dw code4 - @
+
     ret
 
 
+code5:
     ld a, $0a
     ld [$cc95], a
     xor a
     ld hl, $cc96
     ld [hli], a
     ld [hl], a
-    rst $08
-    db $db
+    vcall $db
+    rst $10
+    dw code6 - @
 
     rst $10
-    dw $0006
-    rst $10
-    dw $0049
+    dw jr6 - @
+
     ret
 
 
+code6:
     rst $10
-    dw $0006
+    dw jr2 - @
+
     rst $10
-    dw $006d
+    dw jr8 - @
+
     ret
 
 
 jr2:
-    rst $08
-    db $da
-
+    vcall $da
     bit 2, l
     jr nz, jr1
 
@@ -83,34 +81,39 @@ jr2:
 
 jr3:
     rst $10
-    dw $0006
+    dw code7 - @
+
     rst $10
-    dw $0049
+    dw code2 - @
+
     ret
 
 
+code7:
     rst $10
-    dw $0006
+    dw code8 - @
+
     rst $10
-    dw $001a
+    dw code1 - @
+
     ret
 
+code8:
     jr nz, jr3
+    rst $10
+    dw code9 - @
 
     rst $10
-    dw $0006
-    rst $10
-    dw $0053
+    dw code4 - @
+
     ret
 
 
-    rst $08
-    db $db
+code9:
+    vcall $db
 
 jr5:
-    rst $08
-    db $da
-
+    vcall $da
     bit 3, l
     jr nz, jr4
 
@@ -118,8 +121,7 @@ jr5:
     jr z, jr5
 
 jr1:
-    rst $08
-    db $01
+    vcall $01
 
 code1:
     ldh a, [$83]
@@ -139,27 +141,19 @@ jr6:
 jr9:
     push de
 
-    rst $08
-    db $b8
-
+    vcall $b8
     pop de
     ld hl, $cc40
-    rst $08
-    db $a3
-
+    vcall $a3
     ld hl, $cc43
-    rst $08
-    db $69
-
+    vcall $69
     ld a, [$cc95]
     or a
 jr7:
     ret
 
 code2:
-    rst $08
-    db $da
-
+    vcall $da
     ld a, l
     and $03
     jr z, jr7
@@ -181,12 +175,10 @@ jr8:
 
 code4:
     rst $10
-    dw $0024
+    dw data1 - @
 
     pop hl
-    rst $08
-    db $5c
-
+    vcall $5c
     ld hl, $cc96
     ld e, [hl]
     inc hl
@@ -212,6 +204,7 @@ jr10:
     ld hl, $0b0e
     jr jr9
 
+data1:
     db $03, $01
     db "SHOOTING MASTER\n"
     db $06, $06

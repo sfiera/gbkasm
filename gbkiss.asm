@@ -5,25 +5,6 @@
 
 INCLUDE "hardware.inc"
 
-MACRO vcall
-    rst $08
-    db \1
-ENDM
-
-MACRO TableEntry
-    db $46, BANK(\1)
-    dw \1
-SHIFT
-REPT _NARG
-    db \1
-    SHIFT
-ENDR
-ENDM
-
-MACRO TableBlank
-    ds 4, $00
-ENDM
-
 def rIRMode     equ $0000
 def kIRModeOff  equ $00
 def kIRModeOn   equ $0a
@@ -32,7 +13,8 @@ def rRAMBank    equ $4000
 def rIgnored    equ $6000
 def rIR         equ $a000
 
-INCLUDE "charmap.asm"
+INCLUDE "macro.inc"
+INCLUDE "charmap.inc"
 INCLUDE "hram.asm"
 INCLUDE "bank_000.asm"
 INCLUDE "bank_001.asm"
