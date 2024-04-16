@@ -1,26 +1,18 @@
+INCLUDE "charmap.asm"
+
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    dw $01fb
+    dw End
     db $1d
     db $00
-    db $c5
+    db $c0 | (.end - (@ + 1))
     db $68
     db "SHOT"
+.end
 
 Icon::
-    db $ff, $00, $80, $00, $80, $00, $80, $00, $80, $00, $80, $00, $80, $01, $a0, $22
-    db $b0, $32, $b0, $34, $a0, $24, $a0, $27, $b0, $34, $b8, $3c, $b8, $3a, $b8, $3a
-    db $b8, $39, $b8, $38, $b0, $30, $b0, $30, $b0, $30, $b0, $30, $ff, $00, $00, $ff
-    db $ff, $00, $00, $00, $00, $0f, $00, $31, $00, $41, $07, $80, $18, $01, $22, $02
-    db $46, $06, $46, $06, $82, $02, $03, $fc, $86, $06, $4e, $0e, $4e, $0e, $2a, $0a
-    db $1e, $06, $0f, $88, $06, $46, $06, $36, $01, $0e, $06, $06, $ff, $00, $00, $ff
-    db $ff, $00, $00, $00, $00, $e0, $00, $18, $00, $04, $c0, $02, $30, $01, $88, $80
-    db $c4, $c0, $c4, $c0, $82, $80, $80, $7f, $c2, $c0, $e4, $e0, $a4, $a0, $e8, $e0
-    db $f0, $c1, $e0, $22, $c0, $c4, $c0, $d8, $00, $e0, $c0, $c0, $ff, $00, $00, $ff
-    db $fe, $01, $02, $01, $02, $01, $02, $01, $02, $01, $02, $01, $02, $01, $0a, $89
-    db $1a, $99, $1a, $59, $0a, $49, $0a, $c9, $1a, $59, $1a, $59, $3a, $b9, $3a, $b9
-    db $3a, $39, $3a, $39, $1a, $19, $1a, $19, $1a, $19, $1a, $19, $fe, $01, $00, $ff
+    INCBIN "gfx/shot-icon.2bpp"
 
 History::
     db $01, $00
@@ -29,20 +21,207 @@ History::
     ds 16, $00
 
 Body::
-    db $af, $cf, $b3, $cf, $b5, $21, $00, $12, $cf, $b6, $3e, $01, $cf, $b4, $d7, $06
-    db $00, $d7, $93, $00, $c9, $3e, $0a, $ea, $95, $cc, $af, $21, $96, $cc, $22, $77
-    db $cf, $db, $d7, $06, $00, $d7, $49, $00, $c9, $d7, $06, $00, $d7, $6d, $00, $c9
-    db $cf, $da, $cb, $55, $20, $2b, $7d, $e6, $03, $28, $f5, $af, $e0, $83, $d7, $06
-    db $00, $d7, $49, $00, $c9, $d7, $06, $00, $d7, $1a, $00, $c9, $20, $f0, $d7, $06
-    db $00, $d7, $53, $00, $c9, $cf, $db, $cf, $da, $cb, $5d, $20, $b1, $cb, $55, $28
-    db $f6, $cf, $01, $f0, $83, $d6, $3c, $38, $06, $e0, $83, $21, $95, $cc, $35, $21
-    db $06, $0b, $fa, $95, $cc, $5f, $16, $00, $d5, $cf, $b8, $d1, $21, $40, $cc, $cf
-    db $a3, $21, $43, $cc, $cf, $69, $fa, $95, $cc, $b7, $c9, $cf, $da, $7d, $e6, $03
-    db $28, $f8, $21, $96, $cc, $34, $20, $02, $23, $34, $21, $96, $cc, $5e, $23, $56
-    db $21, $08, $0b, $18, $d3, $d7, $24, $00, $e1, $cf, $5c, $21, $96, $cc, $5e, $23
-    db $56, $21, $98, $cc, $7b, $96, $23, $7a, $9e, $2b, $38, $03, $73, $23, $72, $21
-    db $98, $cc, $5e, $23, $56, $21, $0e, $0b, $18, $ae, $03, $01, $53, $48, $4f, $4f
-    db $54, $49, $4e, $47, $20, $4d, $41, $53, $54, $45, $52, $00, $06, $06, $54, $49
-    db $4d, $45, $3a, $00, $06, $08, $53, $48, $4f, $54, $3a, $00, $05, $0c, $0e, $48
-    db $49, $47, $48, $20, $53, $43, $4f, $52, $45, $00, $06, $0e, $53, $48, $4f, $54
-    db $3a, $00, $ff
+    xor a
+    rst $08
+    db $b3
+
+    rst $08
+    db $b5
+
+    ld hl, $1200
+    rst $08
+    db $b6
+
+    ld a, $01
+    rst $08
+    db $b4
+
+jr4:
+    rst $10
+    dw $0006
+    rst $10
+    dw $0093
+    ret
+
+
+    ld a, $0a
+    ld [$cc95], a
+    xor a
+    ld hl, $cc96
+    ld [hli], a
+    ld [hl], a
+    rst $08
+    db $db
+
+    rst $10
+    dw $0006
+    rst $10
+    dw $0049
+    ret
+
+
+    rst $10
+    dw $0006
+    rst $10
+    dw $006d
+    ret
+
+
+jr2:
+    rst $08
+    db $da
+
+    bit 2, l
+    jr nz, jr1
+
+    ld a, l
+    and $03
+    jr z, jr2
+
+    xor a
+    ldh [$83], a
+
+jr3:
+    rst $10
+    dw $0006
+    rst $10
+    dw $0049
+    ret
+
+
+    rst $10
+    dw $0006
+    rst $10
+    dw $001a
+    ret
+
+    jr nz, jr3
+
+    rst $10
+    dw $0006
+    rst $10
+    dw $0053
+    ret
+
+
+    rst $08
+    db $db
+
+jr5:
+    rst $08
+    db $da
+
+    bit 3, l
+    jr nz, jr4
+
+    bit 2, l
+    jr z, jr5
+
+jr1:
+    rst $08
+    db $01
+
+code1:
+    ldh a, [$83]
+    sub $3c
+    jr c, jr6
+
+    ldh [$83], a
+    ld hl, $cc95
+    dec [hl]
+
+jr6:
+    ld hl, $0b06
+    ld a, [$cc95]
+    ld e, a
+    ld d, $00
+
+jr9:
+    push de
+
+    rst $08
+    db $b8
+
+    pop de
+    ld hl, $cc40
+    rst $08
+    db $a3
+
+    ld hl, $cc43
+    rst $08
+    db $69
+
+    ld a, [$cc95]
+    or a
+jr7:
+    ret
+
+code2:
+    rst $08
+    db $da
+
+    ld a, l
+    and $03
+    jr z, jr7
+
+code3:
+    ld hl, $cc96
+    inc [hl]
+    jr nz, jr8
+    inc hl
+    inc [hl]
+
+jr8:
+    ld hl, $cc96
+    ld e, [hl]
+    inc hl
+    ld d, [hl]
+    ld hl, $0b08
+    jr jr9
+
+code4:
+    rst $10
+    dw $0024
+
+    pop hl
+    rst $08
+    db $5c
+
+    ld hl, $cc96
+    ld e, [hl]
+    inc hl
+    ld d, [hl]
+    ld hl, $cc98
+    ld a, e
+    sub [hl]
+    inc hl
+    ld a, d
+    sbc [hl]
+    dec hl
+    jr c, jr10
+
+    ld [hl], e
+    inc hl
+    ld [hl], d
+
+jr10:
+    ld hl, $cc98
+    ld e, [hl]
+    inc hl
+    ld d, [hl]
+    ld hl, $0b0e
+    jr jr9
+
+    db $03, $01
+    db "SHOOTING MASTER\n"
+    db $06, $06
+    db "TIME:\n"
+    db $06, $08
+    db "SHOT:\n"
+    db $05, $0c
+    db "»HIGH SCORE\n"
+    db $06, $0e
+    db "SHOT:\n"
+    db $ff
+
+End:
