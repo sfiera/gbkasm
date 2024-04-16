@@ -488,7 +488,7 @@ Jump_002_443d:
 
 Call_002_4442:
     xor a
-    ld [$0000], a
+    ld [rIRMode], a
     ret
 
 
@@ -501,8 +501,8 @@ Jump_002_4447:
 
 
 Call_002_4450:
-    ld a, $0a
-    ld [$0000], a
+    ld a, kIRModeOn
+    ld [rIRMode], a
     ret
 
 
@@ -540,7 +540,7 @@ Call_002_446c:
 Call_002_4475:
 Jump_002_4475:
     ldh [hRAMBank], a
-    ld [jt02], a
+    ld [rRAMBank], a
     ret
 
 
@@ -679,7 +679,7 @@ jr_002_451a:
     or a
     jr nz, jr_002_4522
 
-    ld bc, jt02
+    ld bc, rRAMBank
 
 jr_002_4522:
     ld a, $46
@@ -7037,11 +7037,11 @@ code_02_603c::
     push af
     ld a, $03
     ldh [hROMBank], a
-    ld [$2000], a
+    ld [rROMBank], a
     call Call_002_6068
     pop af
     ldh [hROMBank], a
-    ld [$2000], a
+    ld [rROMBank], a
     pop af
     reti
 

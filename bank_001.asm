@@ -3524,7 +3524,7 @@ jr_001_688b:
 Call_001_68a9:
 Jump_001_68a9:
     ldh [hRAMBank], a
-    ld [$4000], a
+    ld [rRAMBank], a
     ret
 
 
@@ -3966,7 +3966,7 @@ Call_001_6a8b:
     ld a, $0e
 
 jr_001_6a8e:
-    ld [$0000], a
+    ld [rIRMode], a
     pop af
     ret
 
@@ -4212,8 +4212,8 @@ code_01_6bdc::
     jr c, jr_001_6c01
 
     call Call_001_6c05
-    ld a, $0a
-    ld [$0000], a
+    ld a, kIRModeOn
+    ld [rIRMode], a
 
 jr_001_6bf8:
     ld a, [de]
@@ -5644,10 +5644,10 @@ jt01_71e6::
 
     ld a, c
     ldh [hROMBank], a
-    ld [$2000], a
+    ld [rROMBank], a
     ld a, b
     ldh [hRAMBank], a
-    ld [$4000], a
+    ld [rRAMBank], a
     push de
     ret
 

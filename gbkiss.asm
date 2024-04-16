@@ -10,6 +10,14 @@ MACRO vcall
     db \1
 ENDM
 
+def rIRMode     equ $0000
+def kIRModeOff  equ $00
+def kIRModeOn   equ $0a
+def rROMBank    equ $2000
+def rRAMBank    equ $4000
+def rIgnored    equ $6000
+def rIR         equ $a000
+
 INCLUDE "hram.asm"
 INCLUDE "bank_000.asm"
 INCLUDE "bank_001.asm"

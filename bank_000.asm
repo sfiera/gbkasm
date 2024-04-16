@@ -44,7 +44,7 @@ RST_18::
 
 RST_20::
     ldh [hROMBank], a
-    ld [$2000], a
+    ld [rROMBank], a
     ret
 
 
@@ -254,14 +254,14 @@ jt00_00e9::
     xor a
     ldh [hRAMBank], a
     inc a
-    ld [$6000], a
+    ld [rIgnored], a
     xor a
-    ld [$0000], a
+    ld [rIRMode], a
     ld a, [$000c]
 
 Call_000_00f7:
     ldh [hROMBank], a
-    ld [$2000], a
+    ld [rROMBank], a
     ret
 
 
@@ -315,7 +315,7 @@ HeaderGlobalChecksum::
 jt00_0150::
     ld a, [$000b]
     ldh [hROMBank], a
-    ld [$2000], a
+    ld [rROMBank], a
     jp $4100
 
 
@@ -728,8 +728,8 @@ Jump_000_0309:
     push af
     ld a, $06
     ldh [hROMBank], a
-    ld [$2000], a
-    ld hl, $4000
+    ld [rROMBank], a
+    ld hl, rRAMBank
     ld l, [hl]
     ld h, d
     push hl
@@ -750,7 +750,7 @@ Jump_000_0309:
 jr_000_0337:
     pop af
     ldh [hROMBank], a
-    ld [$2000], a
+    ld [rROMBank], a
     ret
 
 
