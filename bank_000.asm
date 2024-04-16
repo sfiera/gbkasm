@@ -1317,40 +1317,29 @@ jr_000_05b9:
 
 
 data_00_05c6::
-    db " PASSWORD INPUT", $0e, $0d, $01, $00, " "
-
-    db $b7, $ac, $d7, $ca, $de, $dd, $ca, $de, $b0, $bc, $de, $ae, $dd, " 5", $b9, $de, $b0, $d1, $0d, $01, $00, " "
-
-    db $b7, $bd, $d3, $dd, "&", $ca, $de, $b9, $0f, $c1, $ad, $0e, $d8, $da, $b0, $0f, $ce, $b6, "4", $0e, $0d, $01, $00, " "
-
-    db "15", $ca, $df, $bd, $de, $d9, "&", $b7, $ac, $c9, $dd, $0f, " ", $ce, $b6, "4", $ba, $0e, $0d, $01, $00, " "
-
-    db $ca, $de, $b2, $c5, $d8, $b0, $d7, $dd, $c4, $de, $0f, "&BJ", $ce, $b6, "2", $ba, $0e, $0d, $01, $00, " "
-
-    db $d0, $c6, $b9, $de, $b0, $d1, $0f, $b6, $de, $bf, $de, $b3, $b2, $da, $b6, $b4, $0e, $c3, $de, $b0, $c0, $0d, $01, $00, " "
-
-    db "GB KISS TOOLS", $0d, $01, $00
+    db " PASSWORD INPUT»", $0d, "\r\n"
+    db " ｷｬﾗﾊﾞﾝﾊﾞｰｼﾞｮﾝ 5ｹﾞｰﾑ", $0d, "\r\n"
+    db " ｷｽﾓﾝ&ﾊﾞｹ«ﾁｭ»ﾘﾚｰ«ﾎｶ4»", $0d, "\r\n"
+    db " 15ﾊﾟｽﾞﾙ&ｷｬﾉﾝ« ﾎｶ4ｺ»", $0d, "\r\n"
+    db " ﾊﾞｲﾅﾘｰﾗﾝﾄﾞ«&BJﾎｶ2ｺ»", $0d, "\r\n"
+    db " ﾐﾆｹﾞｰﾑ«ｶﾞｿﾞｳｲﾚｶｴ»ﾃﾞｰﾀ", $0d, "\r\n"
+    db " GB KISS TOOLS", $0d, "\r\n"
 
 data_00_0660::
     db "KISSMON "
-
     db "CANNON  "
-
     db "BINARY  "
-
     db "GAMEDATA"
-
     db "KISSTOOL"
 
 data_00_0688::
-    db "  ", $d2, $c6, $ad, $b0, $0f, $a6, " ", $be, $dd, $c0, $b8, $bc, $c3, $0e, $00
-
-    db " ", $00
-
-    db $0f, "START/A", $a6, " ", $b5, $bc, $c3, $b8, $c0, $de, $bb, $b2, $0e, $00, $00
+    db "  ﾒﾆｭｰ«ｦ ｾﾝﾀｸｼﾃ»\n"
+    db " \n"
+    db "«START/Aｦ ｵｼﾃｸﾀﾞｻｲ»\n"
+    db "\n"
 
 data_00_06b0::
-    db "--------", $00
+    db "--------\n"
 
 code_00_06b9::
     call Call_000_07e6
@@ -1460,9 +1449,10 @@ jr_000_0772:
 
 
 data_00_0778::
-    db " ", $00, $ca, $df, $bd, $dc, $b0, $c4, $de, $0f, $a6, " ", $c6, $ad, $b3, $d8, $ae, $b8, $bc, $c3, " ", $0e, $00, $0f
-
-    db "START", $a6, " ", $b5, $bc, $c3, $b8, $c0, $de, $bb, $b2, "  ", $0e, $00, $00
+    db " \n"
+    db "ﾊﾟｽﾜｰﾄﾞ«ｦ ﾆｭｳﾘｮｸｼﾃ »\n"
+    db "«STARTｦ ｵｼﾃｸﾀﾞｻｲ  »\n"
+    db "\n"
 
 code_00_07a4::
     ld de, $4000
@@ -1538,14 +1528,13 @@ Call_000_07e6:
 
 
 data_00_082b::
-    db "GB KISS  MINI GAME", $00
+    db "GB KISS  MINI GAME\n"
 
 data_00_083e::
-    db $0f, $bc, $c3, $b2, $c9, $0e, $c3, $de, $b0, $c0, $0f, $a6, " ", $c3, $dd, $bf, $b3, $bc, $cf, $bd, $0e, $00
-
-    db $0f, "  A", $c3, $de, "GBKISS", $c3, $dd, $bf, $b3, "  ", $0e, $00
-
-    db $0f, "START", $c3, $de, " ", $bc, $de, $cc, $de, $dd, $c9, "SRAM", $cd, $0e, $00, $00
+    db "«ｼﾃｲﾉ»ﾃﾞｰﾀ«ｦ ﾃﾝｿｳｼﾏｽ»\n"
+    db "«  AﾃﾞGBKISSﾃﾝｿｳ  »\n"
+    db "«STARTﾃﾞ ｼﾞﾌﾞﾝﾉSRAMﾍ»\n"
+    db "\n"
 
 Call_000_087f:
     ld bc, $99c2
@@ -2260,10 +2249,16 @@ jr_000_0c02:
 
 
 data_00_0c17::
-    db $0f, $c2, $b3, $bc, $dd, $bc, $de, $ad, $dd, $cb, $de, $c1, $ad, $b3, " ", $c6, $bc, $c3, "  ", $0e, $00, $b9, $de, $b0, $d1, $ce, $de, $b0, $b2, $0f, $c4, $de, $b3, $bc, $a6, " ", $b8, $af, $c2, $b9, " ", $0e, $00, "A", $ce, $de, $c0, $dd, $0f, $a6, " ", $b5, $bc, $c3, $b8, $c0, $de, $bb, $b2, "   ", $0e, $00, $00
+    db "«ﾂｳｼﾝｼﾞｭﾝﾋﾞﾁｭｳ ﾆｼﾃ  »\n"
+    db "ｹﾞｰﾑﾎﾞｰｲ«ﾄﾞｳｼｦ ｸｯﾂｹ »\n"
+    db "Aﾎﾞﾀﾝ«ｦ ｵｼﾃｸﾀﾞｻｲ   »\n"
+    db "\n"
 
 data_00_0c59::
-    db $0f, $c2, $b3, $bc, $dd, $a6, " ", $c1, $ad, $b3, $bc, $bd, $d9, $ca, $de, $b1, $b2, $ca, " ", $0e, $00, "                ", $00, "B", $ce, $de, $c0, $dd, $0f, $a6, " ", $b5, $bc, $c3, $b8, $c0, $de, $bb, $b2, "   ", $0e, $00, $00
+    db "«ﾂｳｼﾝｦ ﾁｭｳｼｽﾙﾊﾞｱｲﾊ »\n"
+    db "                \n"
+    db "Bﾎﾞﾀﾝ«ｦ ｵｼﾃｸﾀﾞｻｲ   »\n"
+    db "\n"
 
 Call_000_0c95:
     ld hl, data_00_0c17
@@ -2380,16 +2375,13 @@ jr_000_0d3b:
 
 
 data_00_0d40::
-    db $0f, $2d, $20, $3c, $c3, $dd, $bf, $b3, $20, $bb, $da, $cf, $bc, $c0, $3e, $20
-    db $2d, $0e, $00
+    db "«- <ﾃﾝｿｳ ｻﾚﾏｼﾀ> -»\n"
 
 data_00_0d53::
-    db $0f, $2d, $20, $c3, $dd, $bf, $b3, $c3, $de, $b7, $cf, $be, $dd, $c3, $de, $bc
-    db $c0, $20, $2d, $0e, $00
+    db "«- ﾃﾝｿｳﾃﾞｷﾏｾﾝﾃﾞｼﾀ -»\n"
 
 data_00_0d68::
-    db $0f, $2d, $20, $b5, $c5, $bc, $de, $0e, $cc, $a7, $b2, $d9, $0f, $b6, $de, $b1
-    db $d8, $cf, $bd, $20, $2d, $0e
+    db "«- ｵﾅｼﾞ»ﾌｧｲﾙ«ｶﾞｱﾘﾏｽ -»\n"
 
 SECTION "ROM Bank $3fe0", ROM0[$3fe0]
 

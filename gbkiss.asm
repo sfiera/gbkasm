@@ -18,6 +18,7 @@ def rRAMBank    equ $4000
 def rIgnored    equ $6000
 def rIR         equ $a000
 
+INCLUDE "charmap.asm"
 INCLUDE "hram.asm"
 INCLUDE "bank_000.asm"
 INCLUDE "bank_001.asm"

@@ -8,7 +8,7 @@ all: gbkiss.gb
 %.1bpp: %.png
 	rgbgfx -d 1 -o $@ $<
 
-gbkiss.o: gbkiss.asm bank_*.asm $(IMAGE_DEPS)
+gbkiss.o: gbkiss.asm bank_*.asm hram.asm charmap.asm $(IMAGE_DEPS)
 	rgbasm --preserve-ld --nop-after-halt -o gbkiss.o gbkiss.asm
 
 gbkiss.gb: gbkiss.o
