@@ -542,172 +542,228 @@ data_03_42a3::
     db $00
 
 data_03_42a4::
-    db $02, $44, $45
+    db $02
+    dw data_03_4544
 
 data_03_42a7::
-    db $02, $50, $45
+    db $02
+    dw data_03_4550
 
 data_03_42aa::
-    db $02, $75, $45
+    db $02
+    dw data_03_4575
 
 data_03_42ad::
-    db $02, $8c, $45
+    db $02
+    dw data_03_458c
 
 data_03_42b0::
-    db $08, $ec, $45
+    db $08
+    dw data_03_45ec
 
 data_03_42b3::
-    db $08, $18, $46
+    db $08
+    dw data_03_4618
 
 data_03_42b6::
-    db $02, $41, $46
+    db $02
+    dw data_03_4641
 
 data_03_42b9::
-    db $02, $57, $46
+    db $02
+    dw data_03_4657
 
 data_03_42bc::
-    db $08, $9d, $46
+    db $08
+    dw data_03_469d
 
 data_03_42bf::
-    db $08, $c9, $46
+    db $08
+    dw data_03_46c9
 
 data_03_42c2::
-    db $08, $23, $47
+    db $08
+    dw data_03_4723
 
 data_03_42c5::
-    db $08, $75, $47
+    db $08
+    dw data_03_4775
 
 data_03_42c8::
-    db $08, $99, $47
+    db $08
+    dw data_03_4799
 
 data_03_42cb::
-    db $08, $e9, $47
+    db $08
+    dw data_03_47e9
 
 data_03_42ce::
-    db $08, $23, $48
+    db $08
+    dw data_03_4823
 
 data_03_42d1::
-    db $08, $4d, $48
+    db $08
+    dw data_03_484d
 
 data_03_42d4::
-    db $08, $77, $48
+    db $08
+    dw data_03_4877
 
 data_03_42d7::
-    db $02, $a5, $48
+    db $02
+    dw data_03_48a5
 
 data_03_42da::
-    db $02, $ed, $48
+    db $02
+    dw data_03_48ed
 
 data_03_42dd::
-    db $02, $53, $49
+    db $02
+    dw data_03_4953
 
 data_03_42e0::
-    db $02, $fb, $49
+    db $02
+    dw data_03_49fb
 
 data_03_42e3::
-    db $02, $61, $4a
+    db $02
+    dw data_03_4a61
 
 data_03_42e6::
-    db $02, $c7, $4a
+    db $02
+    dw data_03_4ac7
 
 data_03_42e9::
-    db $02, $2d, $4b
+    db $02
+    dw data_03_4b2d
 
 data_03_42ec::
-    db $02, $93, $4b
+    db $02
+    dw data_03_4b93
 
 data_03_42ef::
-    db $02, $f9, $4b
+    db $02
+    dw data_03_4bf9
 
 data_03_42f2::
-    db $02, $5f, $4c
+    db $02
+    dw data_03_4c5f
 
 data_03_42f5::
-    db $02, $c5, $4c
+    db $02
+    dw data_03_4cc5
 
 data_03_42f8::
-    db $02, $2b, $4d
+    db $02
+    dw data_03_4d2b
 
 data_03_42fb::
-    db $02, $3a, $4d
+    db $02
+    dw data_03_4d3a
 
 data_03_42fe::
-    db $02, $9a, $4d
+    db $02
+    dw data_03_4d9a
 
 data_03_4301::
-    db $02, $25, $4e
+    db $02
+    dw data_03_4e25
 
 data_03_4304::
-    db $08, $54, $4e
+    db $08
+    dw data_03_4e54
 
 data_03_4307::
-    db $08, $7e, $4e
+    db $08
+    dw data_03_4e7e
 
 data_03_430a::
-    db $02, $98, $4e
+    db $02
+    dw data_03_4e98
 
 data_03_430d::
-    db $08, $ce, $4e
+    db $08
+    dw data_03_4ece
 
 data_03_4310::
-    db $02, $de, $4e
+    db $02
+    dw data_03_4ede
 
 data_03_4313::
-    db $02, $ea, $4e
+    db $02
+    dw data_03_4eea
 
 data_03_4316::
-    db $02, $21, $4f
+    db $02
+    dw data_03_4f21
 
 data_03_4319::
-    db $08, $4c, $4f
+    db $08
+    dw data_03_4f4c
 
 data_03_431c::
-    db $08, $72, $4f
+    db $08
+    dw data_03_4f72
 
 data_03_431f::
-    db $08, $9a, $4f
+    db $08
+    dw data_03_4f9a
 
 data_03_4322::
-    db $02, $a8, $4f
+    db $02
+    dw data_03_4fa8
 
 data_03_4325::
-    db $02, $b4, $4f
+    db $02
+    dw data_03_4fb4
 
 data_03_4328::
-    db $08, $2e, $50
+    db $08
+    dw data_03_502e
 
 data_03_432b::
-    db $02, $64, $50
+    db $02
+    dw data_03_5064
 
 data_03_432e::
-    db $02, $8f, $50
+    db $02
+    dw data_03_508f
 
 data_03_4331::
-    db $08, $c1, $50
+    db $08
+    dw data_03_50c1
 
 data_03_4334::
-    db $02, $e7, $50
+    db $02
+    dw data_03_50e7
 
 data_03_4337::
-    db $02, $05, $51
+    db $02
+    dw data_03_5105
 
 data_03_433a::
-    db $02, $25, $51
+    db $02
+    dw data_03_5125
 
 data_03_433d::
-    db $08, $44, $51
+    db $08
+    dw data_03_5144
 
 data_03_4340::
-    db $02, $6e, $51
+    db $02
+    dw data_03_516e
 
 data_03_4343::
-    db $02, $8a, $51
+    db $02
+    dw data_03_518a
 
 data_03_4346::
-    db $02, $b3, $51
+    db $02
+    dw data_03_51b3
 
 data_03_4349::
-    db $08, $e9, $51
+    db $08
+    dw data_03_51e9
 
 data_03_434c::
     dw data_03_4384
