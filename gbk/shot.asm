@@ -205,16 +205,11 @@ jr10:
     jr jr9
 
 data1:
-    db $03, $01
-    db "SHOOTING MASTER\n"
-    db $06, $06
-    db "TIME:\n"
-    db $06, $08
-    db "SHOT:\n"
-    db $05, $0c
-    db "»HIGH SCORE\n"
-    db $06, $0e
-    db "SHOT:\n"
+    db $03, $01, "SHOOTING MASTER\n"
+    db $06, $06, "TIME:\n"
+    db $06, $08, "SHOT:\n"
+    db $05, $0c, "»HIGH SCORE\n"
+    db $06, $0e, "SHOT:\n"
     db $ff
 
 End:
