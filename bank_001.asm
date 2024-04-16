@@ -4095,8 +4095,19 @@ Call_001_6ab3:
 
 
 data_01_6abe::
-    db $e7, $6a, $ed, $6a, $f8, $6a, $1f, $6b, $2f, $6b, $27, $6b, $7c, $6b, $40, $6b
-    db $9c, $6b, $a6, $6b, $67, $6b, $cd, $6b, $dc, $6b
+    dw code_01_6ae7
+    dw code_01_6aed
+    dw code_01_6af8
+    dw code_01_6b1f
+    dw code_01_6b2f
+    dw code_01_6b27
+    dw code_01_6b7c
+    dw code_01_6b40
+    dw code_01_6b9c
+    dw code_01_6ba6
+    dw code_01_6b67
+    dw code_01_6bcd
+    dw code_01_6bdc
 
 Call_001_6ad8:
 Jump_001_6ad8:
