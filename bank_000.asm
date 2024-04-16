@@ -43,7 +43,7 @@ RST_18::
     db $00, $00, $00, $00, $00, $00, $00, $00
 
 RST_20::
-    ldh [$80], a
+    ldh [hROMBank], a
     ld [$2000], a
     ret
 
@@ -173,7 +173,7 @@ Jump_000_0068:
 jr_000_0093:
     ld d, e
     dec hl
-    ldh a, [$80]
+    ldh a, [hROMBank]
     ld [hl-], a
     ld [hl], $00
     dec hl
@@ -260,7 +260,7 @@ jt00_00e9::
     ld a, [$000c]
 
 Call_000_00f7:
-    ldh [$80], a
+    ldh [hROMBank], a
     ld [$2000], a
     ret
 
@@ -314,7 +314,7 @@ HeaderGlobalChecksum::
 
 jt00_0150::
     ld a, [$000b]
-    ldh [$80], a
+    ldh [hROMBank], a
     ld [$2000], a
     jp $4100
 
@@ -553,7 +553,7 @@ jr_000_024f:
 Call_000_025a:
     push hl
     push af
-    ldh a, [$80]
+    ldh a, [hROMBank]
     ld hl, sp+$07
     ld [hl], a
     ld a, $04
@@ -626,7 +626,7 @@ jr_000_0290:
     jr z, jr_000_028b
 
     pop hl
-    ldh a, [$80]
+    ldh a, [hROMBank]
     ld b, a
     ld a, h
     ld h, $00
@@ -724,10 +724,10 @@ Jump_000_0309:
     vcall $8e
     ld d, h
     ld e, l
-    ldh a, [$80]
+    ldh a, [hROMBank]
     push af
     ld a, $06
-    ldh [$80], a
+    ldh [hROMBank], a
     ld [$2000], a
     ld hl, $4000
     ld l, [hl]
@@ -749,7 +749,7 @@ Jump_000_0309:
 
 jr_000_0337:
     pop af
-    ldh [$80], a
+    ldh [hROMBank], a
     ld [$2000], a
     ret
 
@@ -1584,20 +1584,20 @@ Jump_000_08a1:
     call Call_000_07e6
     ld hl, data_00_083e
     call Call_000_087f
-    ldh a, [$80]
+    ldh a, [hROMBank]
     push af
     ld hl, $c600
     ld a, [hl+]
     ld e, [hl]
     inc hl
     ld d, [hl]
-    ldh [$80], a
+    ldh [hROMBank], a
     ld [$2000], a
     ld hl, $c604
     ld bc, $0028
     vcall $02
     pop af
-    ldh [$80], a
+    ldh [hROMBank], a
     ld [$2000], a
     ld de, $0304
     vcall $57
@@ -1621,10 +1621,10 @@ Jump_000_08d3:
     or a
     jr z, jr_000_091e
 
-    ldh a, [$80]
+    ldh a, [hROMBank]
     push af
     ld a, b
-    ldh [$80], a
+    ldh [hROMBank], a
     ld [$2000], a
     ld a, d
     cp $80
@@ -1640,7 +1640,7 @@ jr_000_08f3:
     vcall $02
     pop bc
     pop af
-    ldh [$80], a
+    ldh [hROMBank], a
     ld [$2000], a
     ld d, c
     ld e, $07
@@ -1711,11 +1711,11 @@ jr_000_0943:
 
     ldh a, [$8a]
     ld [$c660], a
-    ldh a, [$80]
+    ldh a, [hROMBank]
     ld [$c65f], a
     push af
     ld a, [hl+]
-    ldh [$80], a
+    ldh [hROMBank], a
     ld [$2000], a
     ld a, [hl+]
     ld h, [hl]
@@ -1738,7 +1738,7 @@ jr_000_0973:
     jr z, jr_000_09e6
 
     pop af
-    ldh [$80], a
+    ldh [hROMBank], a
     ld [$2000], a
     push bc
     push de
@@ -1756,11 +1756,11 @@ jr_000_0973:
     pop bc
     ret c
 
-    ldh a, [$80]
+    ldh a, [hROMBank]
     push af
     ld a, b
     ld [$c65e], a
-    ldh [$80], a
+    ldh [hROMBank], a
     ld [$2000], a
     ld l, e
     ld h, d
@@ -1782,7 +1782,7 @@ jr_000_09b6:
 
 jr_000_09c2:
     pop af
-    ldh [$80], a
+    ldh [hROMBank], a
     ld [$2000], a
     ld a, $04
     add c
@@ -1808,7 +1808,7 @@ jr_000_09c2:
 
 jr_000_09e6:
     pop af
-    ldh [$80], a
+    ldh [hROMBank], a
     ld [$2000], a
     ld c, b
     ld hl, $c600

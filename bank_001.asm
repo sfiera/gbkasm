@@ -5438,7 +5438,7 @@ Call_001_7129:
 
 
 jt01_7138::
-    ldh a, [$80]
+    ldh a, [hROMBank]
     ld e, a
     ldh a, [$81]
     ld d, a
@@ -5643,7 +5643,7 @@ jt01_71e6::
     jr z, jr_001_7225
 
     ld a, c
-    ldh [$80], a
+    ldh [hROMBank], a
     ld [$2000], a
     ld a, b
     ldh [$81], a

@@ -7033,14 +7033,14 @@ code_02_6036::
 
 code_02_603c::
     push af
-    ldh a, [$80]
+    ldh a, [hROMBank]
     push af
     ld a, $03
-    ldh [$80], a
+    ldh [hROMBank], a
     ld [$2000], a
     call Call_002_6068
     pop af
-    ldh [$80], a
+    ldh [hROMBank], a
     ld [$2000], a
     pop af
     reti
