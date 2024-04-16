@@ -1,4 +1,5 @@
 IMAGE_DEPS = gfx/image_02_6f8e.1bpp gfx/image_02_778e.2bpp gfx/image_02_7f8e.2bpp
+BUILD_GBK = gbk/shot.gbk
 GBK_DEPS = gbk/bakechu-relay.gbk \
 		   gbk/binary.gbk \
 		   gbk/biorhythm.gbk \
@@ -23,12 +24,13 @@ GBK_DEPS = gbk/bakechu-relay.gbk \
 		   gbk/roulette.gbk \
 		   gbk/samegame.gbk \
 		   gbk/sezaki.gbk \
-		   gbk/shot.gbk \
 		   gbk/slot.gbk \
 		   gbk/sound-test.gbk \
 		   gbk/sram-get-and-clear.gbk \
 		   gbk/watch-and-timer.gbk \
-		   gbk/worm.gbk
+		   gbk/worm.gbk \
+		   $(BUILD_GBK)
+OBJ = gbkiss.o gbk/shot.o
 
 DEPS = $(IMAGE_DEPS) $(GBK_DEPS)
 
@@ -41,7 +43,7 @@ all: gbkiss.gb
 	rgbgfx -d 1 -o $@ $<
 
 gbkiss.o: gbkiss.asm bank_*.asm hram.asm charmap.asm $(DEPS)
-	rgbasm --preserve-ld --nop-after-halt -o gbkiss.o gbkiss.asm
+	rgbasm --preserve-ld --nop-after-halt -o $@ $<
 
 gbkiss.gb: gbkiss.o
 	rgblink -n gbkiss.sym -m gbkiss.map -o $@ $<
@@ -49,10 +51,15 @@ gbkiss.gb: gbkiss.o
 
 	@if which md5sum &>/dev/null; then md5sum $@; else md5 $@; fi
 
+gbk/shot.o: gbk/shot.asm
+	rgbasm --preserve-ld --nop-after-halt -o $@ $<
+
+gbk/shot.gbk: gbk/shot.o
+	rgblink -x -o $@ $<
+
 .PHONY: clean
 clean:
-	rm -f gbkiss.o gbkiss.gb gbkiss.sym gbkiss.map
-	find . \( -iname '*.1bpp' -o -iname '*.2bpp' \) -exec rm {} +
+	rm -f gbkiss.gb gbkiss.sym gbkiss.map $(BUILD_GBK) $(OBJ) $(IMAGE_DEPS)
 
 .PHONY: check
 check: gbkiss.gb
