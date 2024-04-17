@@ -14,12 +14,14 @@ Header::
 
 Icon::
     INCBIN "gfx/shot-icon.2bpp"
-
+Points::
+    dw $0001
+Author::
+    db "TOBI      ", $02
 History::
-    db $01, $00
-    db "TOBI      ", $02, $00
-    ds 16, $00
-    ds 16, $00
+    ds 11, $00
+    ds 11, $00
+    ds 11, $00
 
 Main::
     xor a
