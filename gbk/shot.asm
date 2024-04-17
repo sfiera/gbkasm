@@ -38,9 +38,9 @@ jr_0106:
 
 code_010d:
     ld a, $0a
-    ld [$cc95], a
+    ld [wramTime], a
     xor a
-    ld hl, $cc96
+    ld hl, wramShot
     ld [hli], a
     ld [hl], a
     vcall $db
@@ -106,25 +106,24 @@ code_015b:
     jr c, code_0167
 
     ldh [$83], a
-    ld hl, $cc95
+    ld hl, wramTime
     dec [hl]
 
 code_0167:
     ld hl, $0b06
-    ld a, [$cc95]
+    ld a, [wramTime]
     ld e, a
     ld d, $00
 
 jr_0170:
     push de
-
     vcall $b8
     pop de
-    ld hl, $cc40
+    ld hl, wramAtoiScratch
     vcall $a3
-    ld hl, $cc43
+    ld hl, wramAtoiScratch + 3
     vcall $69
-    ld a, [$cc95]
+    ld a, [wramTime]
     or a
 
 jr_0182:
@@ -137,48 +136,50 @@ code_0183:
     and $03
     jr z, jr_0182
 
-    ld hl, $cc96
+    ld hl, wramShot
     inc [hl]
     jr nz, code_0192
     inc hl
     inc [hl]
 
 code_0192:
-    ld hl, $cc96
+    ld hl, wramShot
     ld e, [hl]
     inc hl
     ld d, [hl]
     ld hl, $0b08
     jr jr_0170
 
+
 code_019d:
     rpush gfx
     pop hl
     vcall $5c
-    ld hl, $cc96
+    ld hl, wramShot
     ld e, [hl]
     inc hl
     ld d, [hl]
-    ld hl, $cc98
+    ld hl, wramHighScore
     ld a, e
     sub [hl]
     inc hl
     ld a, d
     sbc [hl]
     dec hl
-    jr c, jr_01b7
+    jr c, .highScoreUnchanged
 
     ld [hl], e
     inc hl
     ld [hl], d
 
-jr_01b7:
-    ld hl, $cc98
+.highScoreUnchanged
+    ld hl, wramHighScore
     ld e, [hl]
     inc hl
     ld d, [hl]
     ld hl, $0b0e
     jr jr_0170
+
 
 gfx:
     db $03, $01, "SHOOTING MASTER\n"
@@ -189,3 +190,19 @@ gfx:
     db $ff
 
 End:
+
+
+SECTION "WRAM 0", WRAM0[$cc40]
+
+wramAtoiScratch:
+    ds 6
+
+
+SECTION "WRAM 1", WRAM0[$cc95]
+
+wramTime:
+    ds 1
+wramShot:
+    ds 2
+wramHighScore:
+    ds 2
