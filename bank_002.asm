@@ -9973,10 +9973,10 @@ jr_002_6f8d:
 
 
 image_02_6f8e::
-    INCBIN "gfx/image_02_6f8e.1bpp"
+    INCBIN "gfx/font.1bpp"
 
 image_02_778e::
-    INCBIN "gfx/image_02_778e.2bpp"
+    INCBIN "gfx/tiles_0.2bpp"
 
 image_02_7f8e::
-    INCBIN "gfx/image_02_7f8e.2bpp"
+    INCBIN "gfx/tiles_1.2bpp"

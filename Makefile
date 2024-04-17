@@ -1,7 +1,7 @@
-IMAGE_DEPS_2BPP = gfx/image_02_778e.2bpp gfx/image_02_7f8e.2bpp
-IMAGE_DEPS_1BPP = gfx/image_02_6f8e.1bpp
-IMAGE_DEPS_VERT = gfx/shot-icon.2bpp
-IMAGE_DEPS = $(IMAGE_DEPS_2BPP) $(IMAGE_DEPS_1BPP) $(IMAGE_DEPS_VERT)
+IMAGE_DEPS_2BPP = gfx/tiles_0.2bpp gfx/tiles_1.2bpp
+IMAGE_DEPS_1BPP = gfx/font.1bpp
+IMAGE_DEPS_ICON = gfx/shot.icon
+IMAGE_DEPS = $(IMAGE_DEPS_2BPP) $(IMAGE_DEPS_1BPP) $(IMAGE_DEPS_ICON)
 
 GBK_ASM = gbk/shot.asm
 ASM = gbkiss.asm $(GBK_ASM)
@@ -24,13 +24,13 @@ all: gbkiss.gb
 %.gbk: %.o
 	rgblink -n $@.sym -x -o $@ $<
 
-$(IMAGE_DEPS_2BPP): %.2bpp: %.png
-	rgbgfx -o $@ $<
+$(IMAGE_DEPS_2BPP): %.2bpp: %.2bpp.png
+	rgbgfx -d2 -o $@ $<
 
-$(IMAGE_DEPS_1BPP): %.1bpp: %.png
-	rgbgfx -d 1 -o $@ $<
+$(IMAGE_DEPS_1BPP): %.1bpp: %.1bpp.png
+	rgbgfx -d1 -o $@ $<
 
-$(IMAGE_DEPS_VERT): %.2bpp: %.png
+$(IMAGE_DEPS_ICON): %.icon: %.icon.png
 	rgbgfx -Z -o $@ $<
 
 .PHONY: clean
@@ -43,4 +43,4 @@ check: gbkiss.gb
 
 -include $(DEP)
 gbkiss.o: $(GBK) $(IMAGE_DEPS)
-gbk/shot.o: gfx/shot-icon.2bpp
+gbk/shot.o: gfx/shot.icon

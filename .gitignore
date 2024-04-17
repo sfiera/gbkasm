@@ -6,4 +6,5 @@
 *.o.d
 *.1bpp
 *.2bpp
+*.icon
 /gbk/shot.gbk
