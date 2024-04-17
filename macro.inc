@@ -5,6 +5,11 @@ MACRO vcall
     db \1
 ENDM
 
+MACRO rpush
+    rst $10
+    dw \1 - @
+ENDM
+
 MACRO TableEntry
     db $46, BANK(\1)
     dw \1

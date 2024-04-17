@@ -21,7 +21,7 @@ History::
     ds 16, $00
     ds 16, $00
 
-Body::
+Main::
     xor a
     vcall $b3
     vcall $b5
@@ -30,17 +30,13 @@ Body::
     ld a, $01
     vcall $b4
 
-jr4:
-    rst $10
-    dw code5 - @
-
-    rst $10
-    dw code4 - @
-
+jr_0106:
+    rpush code_010d
+    rpush code_019d
     ret
 
 
-code5:
+code_010d:
     ld a, $0a
     ld [$cc95], a
     xor a
@@ -48,97 +44,78 @@ code5:
     ld [hli], a
     ld [hl], a
     vcall $db
-    rst $10
-    dw code6 - @
-
-    rst $10
-    dw jr6 - @
-
+    rpush code_0121
+    rpush code_0167
     ret
 
 
-code6:
-    rst $10
-    dw jr2 - @
-
-    rst $10
-    dw jr8 - @
-
+code_0121:
+    rpush code_0128
+    rpush code_0192
     ret
 
 
-jr2:
+code_0128:
     vcall $da
     bit 2, l
-    jr nz, jr1
+    jr nz, jr_0159
 
     ld a, l
     and $03
-    jr z, jr2
+    jr z, code_0128
 
     xor a
     ldh [$83], a
 
-jr3:
-    rst $10
-    dw code7 - @
-
-    rst $10
-    dw code2 - @
-
+jr_0136:
+    rpush code_013d
+    rpush code_0183
     ret
 
 
-code7:
-    rst $10
-    dw code8 - @
-
-    rst $10
-    dw code1 - @
-
-    ret
-
-code8:
-    jr nz, jr3
-    rst $10
-    dw code9 - @
-
-    rst $10
-    dw code4 - @
-
+code_013d:
+    rpush code_0144
+    rpush code_015b
     ret
 
 
-code9:
+code_0144:
+    jr nz, jr_0136
+    rpush code_014d
+    rpush code_019d
+    ret
+
+
+code_014d:
     vcall $db
 
-jr5:
+jr_014f:
     vcall $da
     bit 3, l
-    jr nz, jr4
+    jr nz, jr_0106
 
     bit 2, l
-    jr z, jr5
+    jr z, jr_014f
 
-jr1:
+jr_0159:
     vcall $01
 
-code1:
+code_015b:
     ldh a, [$83]
     sub $3c
-    jr c, jr6
+    jr c, code_0167
 
     ldh [$83], a
     ld hl, $cc95
     dec [hl]
 
-jr6:
+code_0167:
     ld hl, $0b06
     ld a, [$cc95]
     ld e, a
     ld d, $00
 
-jr9:
+jr_0170:
     push de
 
     vcall $b8
@@ -149,34 +126,33 @@ jr9:
     vcall $69
     ld a, [$cc95]
     or a
-jr7:
+
+jr_0182:
     ret
 
-code2:
+
+code_0183:
     vcall $da
     ld a, l
     and $03
-    jr z, jr7
+    jr z, jr_0182
 
-code3:
     ld hl, $cc96
     inc [hl]
-    jr nz, jr8
+    jr nz, code_0192
     inc hl
     inc [hl]
 
-jr8:
+code_0192:
     ld hl, $cc96
     ld e, [hl]
     inc hl
     ld d, [hl]
     ld hl, $0b08
-    jr jr9
+    jr jr_0170
 
-code4:
-    rst $10
-    dw data1 - @
-
+code_019d:
+    rpush gfx
     pop hl
     vcall $5c
     ld hl, $cc96
@@ -190,21 +166,21 @@ code4:
     ld a, d
     sbc [hl]
     dec hl
-    jr c, jr10
+    jr c, jr_01b7
 
     ld [hl], e
     inc hl
     ld [hl], d
 
-jr10:
+jr_01b7:
     ld hl, $cc98
     ld e, [hl]
     inc hl
     ld d, [hl]
     ld hl, $0b0e
-    jr jr9
+    jr jr_0170
 
-data1:
+gfx:
     db $03, $01, "SHOOTING MASTER\n"
     db $06, $06, "TIME:\n"
     db $06, $08, "SHOT:\n"
