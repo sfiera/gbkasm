@@ -3,17 +3,30 @@ INCLUDE "macro.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
-Header::
-    dw End
-    db $1d
-    db $00
-    db $c0 | (.end - (@ + 1))
-    db $68
-    db "SHOT"
-.end
+def kFileHasIcon2bpp     equ %00011000  ; extra $c0 bytes after title
+def kFileHasIcon1bpp     equ %00010000  ; extra $60 bytes after title
+def kFileMarkerDiamond   equ %00000110  ; executable
+def kFileMarkerCircle    equ %00000100  ; executable
+def kFileMarkerTriangle  equ %00000000  ; non-executable
+def kFileHasTransfers    equ %00000001  ; extra $2e bytes after title/icon
 
+Header::
+    ; Length of entirety of file
+    dw End
+    ; Flags for display in menu
+    db kFileHasIcon2bpp + kFileMarkerCircle + kFileHasTransfers
+    ; Must be $00 for normal files (other than Kiss Mail)
+    db $00
+    ; Length of variable parts of header
+    db Points - @ - 1
+    ; File owner code
+    db $68
+
+Title::
+    db "SHOT"
 Icon::
     INCBIN "gfx/shot-icon.2bpp"
+
 Points::
     dw $0001
 Author::
