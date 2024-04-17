@@ -1,7 +1,7 @@
-IMAGE_DEPS_2BPP = gfx/tiles_0.2bpp gfx/tiles_1.2bpp
-IMAGE_DEPS_1BPP = gfx/font.1bpp
-IMAGE_DEPS_ICON = gfx/shot.icon
-IMAGE_DEPS = $(IMAGE_DEPS_2BPP) $(IMAGE_DEPS_1BPP) $(IMAGE_DEPS_ICON)
+GFX = gfx/tiles_0.2bpp \
+	  gfx/tiles_1.2bpp \
+	  gfx/font.1bpp \
+	  gfx/shot.icon
 
 GBK_ASM = gbk/shot.asm
 ASM = gbkiss.asm $(GBK_ASM)
@@ -24,23 +24,23 @@ all: gbkiss.gb
 %.gbk: %.o
 	rgblink -n $@.sym -x -o $@ $<
 
-$(IMAGE_DEPS_2BPP): %.2bpp: %.2bpp.png
+%.2bpp: %.2bpp.png
 	rgbgfx -d2 -o $@ $<
 
-$(IMAGE_DEPS_1BPP): %.1bpp: %.1bpp.png
+%.1bpp: %.1bpp.png
 	rgbgfx -d1 -o $@ $<
 
-$(IMAGE_DEPS_ICON): %.icon: %.icon.png
+%.icon: %.icon.png
 	rgbgfx -Z -o $@ $<
 
 .PHONY: clean
 clean:
-	rm -f gbkiss.gb gbkiss.sym gbkiss.map $(GBK) $(OBJ) $(DEP) $(IMAGE_DEPS)
+	rm -f gbkiss.gb gbkiss.sym gbkiss.map $(GBK) $(OBJ) $(DEP) $(GFX)
 
 .PHONY: check
 check: gbkiss.gb
 	shasum -c roms.sha1
 
 -include $(DEP)
-gbkiss.o: $(GBK) $(IMAGE_DEPS)
+gbkiss.o: $(GBK) $(GFX)
 gbk/shot.o: gfx/shot.icon
