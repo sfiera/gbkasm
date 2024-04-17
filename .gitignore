@@ -3,6 +3,7 @@
 *.map
 *.sym
 *.o
+*.o.d
 *.1bpp
 *.2bpp
 /gbk/shot.gbk
