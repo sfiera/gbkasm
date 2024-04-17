@@ -3,7 +3,7 @@
 *.map
 *.sym
 *.o
-*.o.d
+*.d
 *.1bpp
 *.2bpp
 *.icon

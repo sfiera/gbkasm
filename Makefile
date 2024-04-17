@@ -1,13 +1,12 @@
-GFX = gfx/tiles_0.2bpp \
-	  gfx/tiles_1.2bpp \
-	  gfx/font.1bpp \
-	  gfx/shot.icon
+GBK_ASM = $(wildcard gbk/*.asm)
+PNG = $(wildcard gfx/*.png)
+GFX = $(PNG:%.png=%)
 
-GBK_ASM = gbk/shot.asm
 ASM = gbkiss.asm $(GBK_ASM)
-
 OBJ = $(ASM:%.asm=%.o)
-DEP = $(ASM:%.asm=%.o.d)
+DEP = $(ASM:%.asm=%.d)
+SYM = $(ASM:%.asm=%.sym)
+MAP = $(ASM:%.asm=%.map)
 GBK = $(GBK_ASM:%.asm=%.gbk)
 
 
@@ -15,14 +14,14 @@ GBK = $(GBK_ASM:%.asm=%.gbk)
 all: gbkiss.gb
 
 %.o: %.asm
-	rgbasm --preserve-ld --nop-after-halt -M $@.d -o $@ $<
+	rgbasm --preserve-ld --nop-after-halt -M $*.d -o $@ $<
 
 %.gb: %.o
-	rgblink -n gbkiss.sym -m gbkiss.map -o $@ $<
+	rgblink -n $*.sym -m $*.map -o $@ $<
 	rgbfix -v -p 255 $@
 
 %.gbk: %.o
-	rgblink -n $@.sym -x -o $@ $<
+	rgblink -n $*.sym -x -o $@ $<
 
 %.2bpp: %.2bpp.png
 	rgbgfx -d2 -o $@ $<
@@ -35,7 +34,7 @@ all: gbkiss.gb
 
 .PHONY: clean
 clean:
-	rm -f gbkiss.gb gbkiss.sym gbkiss.map $(GBK) $(OBJ) $(DEP) $(GFX)
+	rm -f gbkiss.gb $(GBK) $(OBJ) $(SYM) $(MAP) $(GFX) $(DEP)
 
 .PHONY: check
 check: gbkiss.gb
