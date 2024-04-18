@@ -6,31 +6,15 @@
 SECTION "ROM Bank $004", ROMX[$4000], BANK[$4]
 
 j04_4000::
-    jp Jump_004_407a
-
-
-    jp Jump_004_40e9
-
-
-    jp Jump_004_401b
-
-
-    jp Jump_004_402a
-
-
-    jp Jump_004_404b
-
-
-    jp Jump_004_404f
-
-
-    jp Jump_004_4059
-
-
-    jp Jump_004_4063
-
-
-    jp Jump_004_406c
+    jp Jump_004_407a  ; from trap $11
+    jp Jump_004_40e9  ; from trap $12
+    jp Jump_004_401b  ; from trap $13
+    jp Jump_004_402a  ; from trap $14
+    jp Jump_004_404b  ; from trap $15
+    jp Jump_004_404f  ; from trap $16
+    jp Jump_004_4059  ; from trap $17
+    jp Jump_004_4063  ; from trap $18
+    jp Jump_004_406c  ; from trap $19
 
 
 Jump_004_401b:
