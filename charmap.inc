@@ -110,6 +110,11 @@ CHARMAP "\r", $01
 CHARMAP "»", $0e
 CHARMAP "«", $0f
 
+CHARMAP "｢", $a2
+CHARMAP "｣", $a3
+CHARMAP "､", $a4
+CHARMAP "｡", $a5
+
 CHARMAP "ｦ", $a6
 CHARMAP "ｧ", $a7
 CHARMAP "ｨ", $a8
