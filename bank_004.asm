@@ -169,8 +169,8 @@ jr_004_40e2:
 Jump_004_40e9:
     call Call_004_429c
     call Call_004_4118
-    ld hl, $4003
-    call code_00_3fe0
+    ld hl, Jump_003_4053_Origin
+    call Call_000_3fe0
     ld a, [$c021]
     rst $20
     ld a, [$c093]
@@ -210,8 +210,8 @@ jr_004_412f:
     jr c, jr_004_4146
 
     ld a, [$c022]
-    ld hl, $4000
-    call code_00_3fe0
+    ld hl, Jump_003_4006_Origin
+    call Call_000_3fe0
     ld a, [$c022]
     or $80
     ld [$c022], a

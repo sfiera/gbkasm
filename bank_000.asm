@@ -2386,9 +2386,9 @@ strLoadOverwrite::
 
 SECTION "ROM Bank $3fe0", ROM0[$3fe0]
 
-code_00_3fe0::
+Call_000_3fe0::
     push af
-    ld a, BANK(j03_4000)
+    ld a, BANK(Jump_003_4006_Origin)
     rst $20
     pop af
     ld bc, data_00_3fe0

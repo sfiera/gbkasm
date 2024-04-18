@@ -5,10 +5,10 @@
 
 SECTION "ROM Bank $003", ROMX[$4000], BANK[$3]
 
-j03_4000:
+Jump_003_4006_Origin:
     jp Jump_003_4006
 
-
+Jump_003_4053_Origin:
     jp Jump_003_4053
 
 
