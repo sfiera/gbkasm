@@ -24,60 +24,60 @@ SECTION "ROM Bank $001", ROMX[$4000], BANK[$1]
     db $38, $38, $10, $10, $18, $18, $fc, $fc, $fe, $fe, $fc, $fc, $18, $18, $10, $10
     db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
 
-jt01::
-    dw jt01_7dcc  ; $4b
-    dw jt01_7f2f  ; $4c
-    dw jt01_7e77  ; $4d
-    dw jt01_7f04  ; $4e
-    dw jt01_7e90  ; $4f
-    dw jt01_7260  ; $50
-    dw jt01_665c  ; $51
-    dw jt01_7730  ; $52
-    dw jt01_784d  ; $53
-    dw jt01_7863  ; $54
-    dw jt01_793f  ; $55
-    dw jt01_78f0  ; $56
-    dw jt01_7df1  ; $57
-    dw jt01_7e03  ; $58
-    dw jt01_7e43  ; $59
-    dw jt01_7d47  ; $5a
-    dw jt01_7d60  ; $5b
-    dw jt01_776c  ; $5c
-    dw jt01_7daf  ; $5d
-    dw jt01_77ae  ; $5e
-    dw jt01_777b  ; $5f
-    dw jt01_6d2f  ; $60
-    dw jt01_7222  ; $61
-    dw jt01_6d53  ; $62
-    dw jt01_6d72  ; $63
-    dw jt01_6de4  ; $64
-    dw jt01_6e2e  ; $65
-    dw jt01_6f66  ; $66
-    dw jt01_6f7a  ; $67
-    dw jt01_6f8f  ; $68
-    dw jt01_6f9b  ; $69
-    dw jt01_6fda  ; $6a
-    dw jt01_6feb  ; $6b
-    dw jt01_714d  ; $6c
-    dw jt01_70ba  ; $6d
-    dw jt01_71e6  ; $6e
-    dw jt01_7138  ; $6f
-    dw jt01_6e8b  ; $70
-    dw jt01_6e63  ; $71
-    dw jt01_6a93  ; $72
-    dw jt01_6c1b  ; $73
-    dw jt01_6c28  ; $74
-    dw jt01_6c2f  ; $75
-    dw jt01_6c3c  ; $76
-    dw jt01_6c5b  ; $77
-    dw jt01_6c38  ; $78
-    dw jt01_6c67  ; $79
-    dw jt01_6cc3  ; $7a
-    dw jt01_6c8e  ; $7b
-    dw jt01_6c92  ; $7c
-    dw jt01_6cd8  ; $7d
-    dw jt01_6ca5  ; $7e
-    dw jt01_6ca9  ; $7f
+traps1::
+    dw trap_4b_7dcc  ; $4b
+    dw trap_4c_7f2f  ; $4c
+    dw trap_4d_7e77  ; $4d
+    dw trap_4e_7f04  ; $4e
+    dw trap_4f_7e90  ; $4f
+    dw trap_50_7260  ; $50
+    dw trap_51_665c  ; $51
+    dw trap_52_7730  ; $52
+    dw trap_53_784d  ; $53
+    dw trap_54_7863  ; $54
+    dw trap_55_793f  ; $55
+    dw trap_56_78f0  ; $56
+    dw trap_57_7df1  ; $57
+    dw trap_58_7e03  ; $58
+    dw trap_59_7e43  ; $59
+    dw trap_5a_7d47  ; $5a
+    dw trap_5b_7d60  ; $5b
+    dw trap_5c_776c  ; $5c
+    dw trap_5d_7daf  ; $5d
+    dw trap_5e_77ae  ; $5e
+    dw trap_5f_777b  ; $5f
+    dw trap_60_6d2f  ; $60
+    dw trap_61_7222  ; $61
+    dw trap_62_6d53  ; $62
+    dw trap_63_6d72  ; $63
+    dw trap_64_6de4  ; $64
+    dw trap_65_6e2e  ; $65
+    dw trap_66_6f66  ; $66
+    dw trap_67_6f7a  ; $67
+    dw trap_68_6f8f  ; $68
+    dw trap_69_6f9b  ; $69
+    dw trap_6a_6fda  ; $6a
+    dw trap_6b_6feb  ; $6b
+    dw trap_6c_714d  ; $6c
+    dw trap_6d_70ba  ; $6d
+    dw trap_6e_71e6  ; $6e
+    dw trap_6f_7138  ; $6f
+    dw trap_70_6e8b  ; $70
+    dw trap_71_6e63  ; $71
+    dw trap_72_6a93  ; $72
+    dw trap_73_6c1b  ; $73
+    dw trap_74_6c28  ; $74
+    dw trap_75_6c2f  ; $75
+    dw trap_76_6c3c  ; $76
+    dw trap_77_6c5b  ; $77
+    dw trap_78_6c38  ; $78
+    dw trap_79_6c67  ; $79
+    dw trap_7a_6cc3  ; $7a
+    dw trap_7b_6c8e  ; $7b
+    dw trap_7c_6c92  ; $7c
+    dw trap_7d_6cd8  ; $7d
+    dw trap_7e_6ca5  ; $7e
+    dw trap_7f_6ca9  ; $7f
 
 j01_4100::
     ld sp, $e000
@@ -3287,7 +3287,7 @@ Call_001_6627:
     ld bc, $0100
     trap $02
     ld de, $c699
-    call jt01_665c
+    call trap_51_665c
     call Call_001_6651
     ld de, $c400
     ld hl, $c500
@@ -3308,7 +3308,7 @@ Call_001_6651:
     ret
 
 
-jt01_665c::
+trap_51_665c::
     ld l, e
     ld h, d
     push hl
@@ -4076,7 +4076,7 @@ jr_001_6a8e:
     ret
 
 
-jt01_6a93::
+trap_72_6a93::
     call Call_001_6a6d
 
 jr_001_6a96:
@@ -4363,31 +4363,31 @@ Call_001_6c05:
     ret
 
 
-jt01_6c1b::
+trap_73_6c1b::
     call Call_001_6a6d
     ld a, $00
     ld [$c0f9], a
     call Call_001_6a11
     jr jr_001_6c7b
 
-jt01_6c28::
+trap_74_6c28::
     call Call_001_6c81
     jr c, jr_001_6c7b
 
     jr jr_001_6c78
 
-jt01_6c2f::
+trap_75_6c2f::
     ld a, $02
     call Call_001_6ceb
     ld l, e
     ld h, d
     jr jr_001_6c43
 
-jt01_6c38::
+trap_78_6c38::
     ld a, $05
     jr jr_001_6c3e
 
-jt01_6c3c::
+trap_76_6c3c::
     ld a, $03
 
 jr_001_6c3e:
@@ -4410,7 +4410,7 @@ jr_001_6c43:
 
     jr jr_001_6c78
 
-jt01_6c5b::
+trap_77_6c5b::
     ld a, $04
     call Call_001_6ceb
     call Call_001_6c81
@@ -4418,7 +4418,7 @@ jt01_6c5b::
 
     jr jr_001_6c78
 
-jt01_6c67::
+trap_79_6c67::
     ld a, $06
     call Call_001_6ceb
     ld c, $00
@@ -4447,11 +4447,11 @@ Call_001_6c81:
     jp Jump_001_6a58
 
 
-jt01_6c8e::
+trap_7b_6c8e::
     ld a, $09
     jr jr_001_6c94
 
-jt01_6c92::
+trap_7c_6c92::
     ld a, $08
 
 jr_001_6c94:
@@ -4466,11 +4466,11 @@ jr_001_6c94:
     call Call_001_6a58
     jr jr_001_6c7b
 
-jt01_6ca5::
+trap_7e_6ca5::
     ld a, $0c
     jr jr_001_6cab
 
-jt01_6ca9::
+trap_7f_6ca9::
     ld a, $0b
 
 jr_001_6cab:
@@ -4493,7 +4493,7 @@ jr_001_6cbe:
 jr_001_6cc1:
     jr jr_001_6c7b
 
-jt01_6cc3::
+trap_7a_6cc3::
     ld a, $07
     call Call_001_6ceb
     push de
@@ -4508,7 +4508,7 @@ jt01_6cc3::
 
     jr jr_001_6c78
 
-jt01_6cd8::
+trap_7d_6cd8::
     ld a, $0a
     call Call_001_6ceb
     ld l, e
@@ -4587,7 +4587,7 @@ Call_001_6d18:
     ret
 
 
-jt01_6d2f::
+trap_60_6d2f::
     ld b, [hl]
     inc hl
     push hl
@@ -4625,7 +4625,7 @@ Jump_001_6d4f::
     ret
 
 
-jt01_6d53::
+trap_62_6d53::
     ld hl, $c3ca
     ld [hl], e
     inc hl
@@ -4654,7 +4654,7 @@ jr_001_6d6d:
     ret
 
 
-jt01_6d72::
+trap_63_6d72::
     push hl
     push de
 
@@ -4764,7 +4764,7 @@ jr_001_6dde:
     ld a, [hl+]
     jr jr_001_6dd0
 
-jt01_6de4::
+trap_64_6de4::
     trap $ed
     ret nc
 
@@ -4780,7 +4780,7 @@ jt01_6de4::
 
 jr_001_6df4:
     push bc
-    call jt01_714d
+    call trap_6c_714d
     pop bc
     jr c, jr_001_6e2b
 
@@ -4830,7 +4830,7 @@ jr_001_6e2b:
     ret
 
 
-jt01_6e2e::
+trap_65_6e2e::
     trap $e0
     ld hl, $4000
     ld de, $fe00
@@ -4875,7 +4875,7 @@ jr_001_6e36:
     ret
 
 
-jt01_6e63::
+trap_71_6e63::
     add sp, -$04
     push hl
     ld hl, sp+$02
@@ -4913,7 +4913,7 @@ jr_001_6e86:
     ld b, a
     jr nz, jr_001_6e8e
 
-jt01_6e8b::
+trap_70_6e8b::
     ld c, $00
     ld b, c
 
@@ -5018,6 +5018,7 @@ Call_001_6efc:
     ret
 
 
+trap_03_6f05::
     ld c, l
     ld b, h
     ld hl, sp+$00
@@ -5067,6 +5068,7 @@ jr_001_6f34:
     jp hl
 
 
+trap_04_6f35::
     push bc
     push de
     push hl
@@ -5077,6 +5079,7 @@ jr_001_6f34:
     jp hl
 
 
+trap_05_6f3e::
     ld hl, sp+$07
     ld b, [hl]
     dec hl
@@ -5118,7 +5121,7 @@ jr_001_6f62:
     jp hl
 
 
-jt01_6f66::
+trap_66_6f66::
     push bc
 
 jr_001_6f67:
@@ -5145,7 +5148,7 @@ jr_001_6f72:
     ret
 
 
-jt01_6f7a::
+trap_67_6f7a::
     ld a, [de]
     cp [hl]
     jr nz, jr_001_6f89
@@ -5155,7 +5158,7 @@ jt01_6f7a::
     dec bc
     ld a, b
     or c
-    jr nz, jt01_6f7a
+    jr nz, trap_67_6f7a
 
     ld hl, $0000
     ret
@@ -5170,7 +5173,7 @@ jr_001_6f89:
     ret
 
 
-jt01_6f8f::
+trap_68_6f8f::
     ld d, h
     ld e, l
     ld hl, $0000
@@ -5184,7 +5187,7 @@ jr_001_6f94:
     inc hl
     jr jr_001_6f94
 
-jt01_6f9b::
+trap_69_6f9b::
     ldh a, [$92]
     ld e, a
     ld a, [hl+]
@@ -5208,7 +5211,7 @@ jt01_6f9b::
 
 jr_001_6fb3:
     trap $bb
-    jr jt01_6f9b
+    jr trap_69_6f9b
 
 jr_001_6fb7:
     xor a
@@ -5236,9 +5239,9 @@ jr_001_6fba:
 
 jr_001_6fd6:
     trap $b9
-    jr jt01_6f9b
+    jr trap_69_6f9b
 
-jt01_6fda::
+trap_6a_6fda::
     ld a, [hl]
     or a
     ret z
@@ -5249,12 +5252,12 @@ jt01_6fda::
     trap $b8
     pop hl
     push de
-    call jt01_6f9b
+    call trap_69_6f9b
     pop de
     inc e
-    jr jt01_6fda
+    jr trap_6a_6fda
 
-jt01_6feb::
+trap_6b_6feb::
     xor a
     ld b, a
     ld [hl+], a
@@ -5278,7 +5281,7 @@ jr_001_6ff5:
 jr_001_6ffc:
     push de
     push bc
-    call jt01_714d
+    call trap_6c_714d
     pop bc
     pop de
     jr c, jr_001_700c
@@ -5358,7 +5361,7 @@ jr_001_704d:
     jr nz, jr_001_7057
 
     ld b, $00
-    call jt01_6f7a
+    call trap_67_6f7a
     ld a, h
     or l
 
@@ -5381,7 +5384,7 @@ Jump_001_705b:
     ld [hl-], a
 
 jr_001_706b:
-    call jt01_714d
+    call trap_6c_714d
     jr c, jr_001_70af
 
     ld a, [$c409]
@@ -5435,7 +5438,7 @@ jr_001_70af:
     ret
 
 
-jt01_70ba::
+trap_6d_70ba::
     ld a, [hl+]
     or [hl]
     dec hl
@@ -5553,7 +5556,7 @@ Call_001_7129:
     ret
 
 
-jt01_7138::
+trap_6f_7138::
     ldh a, [hROMBank]
     ld e, a
     ldh a, [hRAMBank]
@@ -5569,7 +5572,7 @@ jt01_7138::
     ret
 
 
-jt01_714d::
+trap_6c_714d::
     ld a, [hl+]
     or [hl]
     jr z, jr_001_7158
@@ -5727,7 +5730,7 @@ jr_001_71d4:
     ret
 
 
-jt01_71e6::
+trap_6e_71e6::
     trap $e1
     ret c
 
@@ -5768,7 +5771,7 @@ jt01_71e6::
     ret
 
 
-jt01_7222::
+trap_61_7222::
     call Call_001_7227
 
 jr_001_7225:
@@ -5784,10 +5787,10 @@ Call_001_7227:
     trap $b3
     ld de, gfxGBKissLogo
     ld bc, $c400
-    trap $62  ; prepare to decompress (jt01_6d53)
+    trap $62  ; prepare to decompress (trap_62_6d53)
     ld de, $c600
     ld bc, $08f0
-    trap $63  ; decompress to $c600 (jt01_6d72)
+    trap $63  ; decompress to $c600 (trap_63_6d72)
     ld de, $020c
     ld hl, $c600
     ld bc, $0b68
@@ -5804,7 +5807,7 @@ Call_001_7227:
     ret
 
 
-jt01_7260::
+trap_50_7260::
     ld d, a
     push hl
     ld hl, data_01_72d2
@@ -5995,7 +5998,7 @@ data_01_7576::
     db $80, $b0, $c0, $c3, $00, $80, $0d, $00, $ca, $c3, $01, $c4, $00, $d2, $14, $c7
     db $0d, $00
 
-code_01_76d8::
+trap_06_76d8::
     pop de
     ld a, [de]
     inc de
@@ -6027,7 +6030,7 @@ jr_001_76eb:
     jp hl
 
 
-code_01_76f1::
+trap_07_76f1::
     ld e, l
     ld d, h
     pop hl
@@ -6064,6 +6067,7 @@ jr_001_7709:
     dec hl
     jr jr_001_76eb
 
+trap_08_7712::
     ld e, l
     ld d, h
     pop hl
@@ -6096,7 +6100,7 @@ jr_001_7726:
     ld b, $41
     jr jr_001_7753
 
-jt01_7730::
+trap_52_7730::
     ld a, d
     xor h
     rla
@@ -6147,7 +6151,7 @@ jr_001_7753:
 data_01_7762::
     db $10, $60, $80, $90, $01, $11, $40, $50, $20, $30
 
-jt01_776c::
+trap_5c_776c::
     ld a, [hl+]
     bit 7, a
     ret nz
@@ -6159,9 +6163,9 @@ jt01_776c::
     pop hl
     inc hl
     trap $69
-    jr jt01_776c
+    jr trap_5c_776c
 
-jt01_777b::
+trap_5f_777b::
     add sp, -$0a
     ld hl, sp+$00
     ld [hl+], a
@@ -6207,7 +6211,7 @@ jr_001_77a2:
     ld e, [hl]
     jr jr_001_77f9
 
-jt01_77ae::
+trap_5e_77ae::
     push hl
     push de
     push hl
@@ -6351,7 +6355,7 @@ jr_001_783d:
     ret
 
 
-jt01_784d::
+trap_53_784d::
     ld hl, $ffab
     xor a
     ld [hl+], a
@@ -6370,7 +6374,7 @@ jr_001_785a:
     ret
 
 
-jt01_7863::
+trap_54_7863::
     ld a, d
     ldh [$aa], a
     push de
@@ -6457,7 +6461,7 @@ jr_001_787d:
     ret
 
 
-jt01_78f0::
+trap_56_78f0::
     push hl
     push de
     push bc
@@ -6469,7 +6473,7 @@ jt01_78f0::
     ld a, [hl+]
     ld h, [hl]
     ld l, a
-    call jt01_7f04
+    call trap_4e_7f04
     push af
     ld c, a
     jr jr_001_790a
@@ -6504,7 +6508,7 @@ jr_001_7914:
     ld hl, sp+$3d
     ld a, [hl]
     ld hl, sp+$00
-    call jt01_7e77
+    call trap_4d_7e77
     ld c, a
     ld b, $00
     add hl, bc
@@ -6516,7 +6520,7 @@ jr_001_7914:
     ld a, [hl+]
     ld h, [hl]
     ld l, a
-    call jt01_7e90
+    call trap_4f_7e90
     add sp, $3c
     pop bc
     pop de
@@ -6524,7 +6528,7 @@ jr_001_7914:
     ret
 
 
-jt01_793f::
+trap_55_793f::
     push hl
     ld hl, $ffa2
     ld [hl], d
@@ -6543,7 +6547,7 @@ jt01_793f::
     pop hl
     ldh a, [$a4]
     ld c, a
-    call jt01_7daf
+    call trap_5d_7daf
     ldh a, [$a5]
     ld c, a
     or a
@@ -6833,12 +6837,12 @@ jr_001_7a9f:
     call Call_001_7b07
     add hl, bc
     ld e, [hl]
-    call jt01_7dcc
+    call trap_4b_7dcc
     jr jr_001_7abf
 
 jr_001_7ab1:
     ld e, $20
-    call jt01_7dcc
+    call trap_4b_7dcc
     push hl
     ld hl, $c3ee
     ld a, $ff
@@ -6958,7 +6962,7 @@ Call_001_7b2f:
     add hl, bc
     ld c, $04
     ld e, $01
-    call jt01_7daf
+    call trap_5d_7daf
     ret
 
 
@@ -7148,7 +7152,7 @@ kbdKatakana::
 
 POPC
 
-jt01_7d47::
+trap_5a_7d47::
     push bc
 
 jr_001_7d48:
@@ -7161,12 +7165,12 @@ jr_001_7d48:
     ld e, [hl]
     inc hl
     push hl
-    call jt01_7df1
+    call trap_57_7df1
     ld c, l
     ld b, h
     pop hl
     pop de
-    call jt01_7d60
+    call trap_5b_7d60
     jr jr_001_7d48
 
 jr_001_7d5e:
@@ -7174,7 +7178,7 @@ jr_001_7d5e:
     ret
 
 
-jt01_7d60::
+trap_5b_7d60::
     push hl
 
 jr_001_7d61:
@@ -7251,7 +7255,7 @@ jr_001_7d90:
     ret
 
 
-jt01_7daf::
+trap_5d_7daf::
     push de
     push bc
     ld b, e
@@ -7275,7 +7279,7 @@ Call_001_7dc0:
     push hl
     push de
     push bc
-    call jt01_7dcc
+    call trap_4b_7dcc
     trap $02
     pop bc
     pop de
@@ -7283,7 +7287,7 @@ Call_001_7dc0:
     ret
 
 
-jt01_7dcc::
+trap_4b_7dcc::
     ld b, d
     ld hl, $c3e0
     push hl
@@ -7309,7 +7313,7 @@ jt01_7dcc::
     ret
 
 
-jt01_7df1::
+trap_57_7df1::
     ld h, e
     xor a
     srl h
@@ -7326,8 +7330,8 @@ jt01_7df1::
     ret
 
 
-jt01_7e03::
-    call jt01_7df1
+trap_58_7e03::
+    call trap_57_7df1
     ld a, $79
     ld de, $7778
     call Call_001_7e20
@@ -7377,11 +7381,11 @@ jr_001_7e2b:
     ret
 
 
-jt01_7e43::
+trap_59_7e43::
     push af
     push hl
     add sp, -$20
-    call jt01_7df1
+    call trap_57_7df1
 
 jr_001_7e4a:
     push hl
@@ -7423,7 +7427,7 @@ jr_001_7e55:
     ret
 
 
-jt01_7e77::
+trap_4d_7e77::
     push hl
     push de
     push bc
@@ -7452,7 +7456,7 @@ jr_001_7e8b:
     ret
 
 
-jt01_7e90::
+trap_4f_7e90::
     push hl
     push bc
     ld c, $00
@@ -7561,7 +7565,7 @@ jr_001_7efc:
     ld a, $df
     jr jr_001_7ea4
 
-jt01_7f04::
+trap_4e_7f04::
     push bc
     ld c, $00
 
@@ -7606,13 +7610,13 @@ Call_001_7f24:
     ld c, $04
     ld hl, data_01_7fb0
 
-jt01_7f2f::
+trap_4c_7f2f::
     ld a, e
     push af
     push hl
     push bc
     ld e, d
-    call jt01_7dcc
+    call trap_4b_7dcc
     pop bc
     pop de
     pop af

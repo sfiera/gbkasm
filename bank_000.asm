@@ -23,16 +23,16 @@ Config0::
     db BANK(j01_4100)
 
 Config1::
-    db BANK(jt01)
+    db BANK(traps1)
 
 Config2::
-    db $4a
+    db ((traps1 - $4000) / 2) - 1
 
 Config3::
-    db BANK(jt01)
+    db BANK(traps1)
 
 Config4::
-    db BANK(jt02)
+    db BANK(traps2)
 
 RST_10::
     jp code_00_00c9
@@ -153,7 +153,7 @@ Jump_000_0068:
     jr c, jr_000_0093
 
     ld d, $00
-    ld hl, jt00
+    ld hl, traps0
     add hl, de
     add hl, de
     ld e, [hl]
@@ -198,7 +198,7 @@ jr_000_0093:
     inc hl
     ld [hl], d
 
-jt00_00b9::
+trap_0e_00b9::
     pop hl
     pop de
     pop af
@@ -250,7 +250,7 @@ code_00_00c9::
     ret
 
 
-jt00_00e9::
+trap_00_00e9::
     xor a
     ldh [hRAMBank], a
     inc a
@@ -312,14 +312,14 @@ HeaderComplementCheck::
 HeaderGlobalChecksum::
     db $75, $09
 
-jt00_0150::
+trap_01_0150::
     ld a, [Config0]
     ldh [hROMBank], a
     ld [rROMBank], a
     jp j01_4100
 
 
-jt00_015b::
+trap_02_015b::
     ld a, b
     or c
     ret z
@@ -414,7 +414,7 @@ jr_000_01a8:
     ldh [$89], a
     ei
 
-jt00_01b9::
+trap_09_01b9::
     ret
 
 
@@ -457,37 +457,37 @@ jt00_01b9::
     nop
     nop
 
-jt00::
-    dw jt00_00e9  ; $00
-    dw jt00_0150  ; $01
-    dw jt00_015b  ; $02
-    dw $6f05      ; $03
-    dw $6f35      ; $04
-    dw $6f3e      ; $05
-    dw $76d8      ; $06
-    dw $76f1      ; $07
-    dw $7712      ; $08
-    dw jt00_02fd  ; $09
-    dw jt00_01b9  ; $0a
-    dw jt00_01b9  ; $0b
-    dw jt00_01b9  ; $0c
-    dw jt00_01b9  ; $0d
-    dw jt00_00b9  ; $0e
-    dw 0          ; $0f
-    dw jt00_02ed  ; $10
-    dw jt00_022c  ; $11
-    dw jt00_0230  ; $12
-    dw jt00_0234  ; $13
-    dw jt00_0239  ; $14
-    dw jt00_023d  ; $15
-    dw jt00_0241  ; $16
-    dw jt00_0245  ; $17
-    dw jt00_0249  ; $18
-    dw jt00_024d  ; $19
-    dw jt00_0218  ; $1a
-    dw jt00_0268  ; $1b
+traps0::
+    dw trap_00_00e9  ; $00
+    dw trap_01_0150  ; $01
+    dw trap_02_015b  ; $02
+    dw trap_03_6f05  ; $03 (bank 1)
+    dw trap_04_6f35  ; $04 (bank 1)
+    dw trap_05_6f3e  ; $05 (bank 1)
+    dw trap_06_76d8  ; $06 (bank 1)
+    dw trap_07_76f1  ; $07 (bank 1)
+    dw trap_08_7712  ; $08 (bank 1)
+    dw trap_08_02fd  ; $09
+    dw trap_09_01b9  ; $0a
+    dw trap_09_01b9  ; $0b
+    dw trap_09_01b9  ; $0c
+    dw trap_09_01b9  ; $0d
+    dw trap_0e_00b9  ; $0e
+    dw 0            ; $0f
+    dw trap_10_02ed  ; $10
+    dw trap_11_022c  ; $11
+    dw trap_12_0230  ; $12
+    dw trap_13_0234  ; $13
+    dw trap_14_0239  ; $14
+    dw trap_15_023d  ; $15
+    dw trap_16_0241  ; $16
+    dw trap_17_0245  ; $17
+    dw trap_18_0249  ; $18
+    dw trap_19_024d  ; $19
+    dw trap_1a_0218  ; $1a
+    dw trap_1b_0268  ; $1b
 
-jt00_0218::
+trap_1a_0218::
     ld de, $0038
     ret
 
@@ -498,47 +498,47 @@ Jump_000_021c:
     push hl
     ldh a, [$99]
     bit 2, a
-    call nz, jt00_0230
+    call nz, trap_12_0230
     pop hl
     pop de
     pop bc
     pop af
     reti
 
-jt00_022c::
+trap_11_022c::
     ld l, $00
     jr jr_000_024f
 
-jt00_0230::
+trap_12_0230::
     ld l, $03
     jr jr_000_024f
 
-jt00_0234::
+trap_13_0234::
     xor a
     ld l, $06
     jr jr_000_024f
 
-jt00_0239::
+trap_14_0239::
     ld l, $09
     jr jr_000_024f
 
-jt00_023d::
+trap_15_023d::
     ld l, $0c
     jr jr_000_024f
 
-jt00_0241::
+trap_16_0241::
     ld l, $0f
     jr jr_000_024f
 
-jt00_0245::
+trap_17_0245::
     ld l, $12
     jr jr_000_024f
 
-jt00_0249::
+trap_18_0249::
     ld l, $15
     jr jr_000_024f
 
-jt00_024d::
+trap_19_024d::
     ld l, $18
 
 jr_000_024f:
@@ -563,7 +563,7 @@ jr_000_0263:
     pop af
     ret
 
-jt00_0268::
+trap_1b_0268::
     ld a, d
     cp $80
     jr c, jr_000_0290
@@ -684,8 +684,8 @@ Jump_000_02e6:
     trap $00
     trap $6e
 
-jt00_02ed::
-    ld hl, jt00_02ed
+trap_10_02ed::
+    ld hl, trap_10_02ed
     trap $6f
     jp Jump_000_0300
 
@@ -699,7 +699,7 @@ jt00_02ed::
     nop
     nop
 
-jt00_02fd::
+trap_08_02fd::
     jp Jump_000_0309
 
 
