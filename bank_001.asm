@@ -5760,16 +5760,16 @@ Call_001_7227:
     ld de, $0f10
     ld h, $00
     vcall $b3
-    ld de, data_01_72e7
+    ld de, gfxGBKissLogo
     ld bc, $c400
-    vcall $62
+    vcall $62  ; prepare to decompress (jt01_6d53)
     ld de, $c600
     ld bc, $08f0
-    vcall $63
+    vcall $63  ; decompress to $c600 (jt01_6d72)
     ld de, $020c
     ld hl, $c600
     ld bc, $0b68
-    vcall $c0
+    vcall $c0  ; copy $c600 to VRAM (jt02_5de2)
     ld a, $01
     vcall $b4
     ld a, $f0
@@ -5905,7 +5905,7 @@ data_01_72d2::
     db $00, $c7, $b2, $50, $00, $38, $33, $5d, $00, $8f, $e7, $72, $10, $06, $28, $40
     db $10, $09, $70, $7f, $ff
 
-data_01_72e7::
+gfxGBKissLogo::
     db $ab, $1f, $ef, $11, $1b, $f3, $18, $f7, $80, $1e, $1e, $8b, $1f, $03, $01, $01
     db $f7, $1c, $0b, $02, $19, $18, $de, $1b, $19, $f3, $1f, $19, $1f, $1c, $04, $10
     db $40, $f3, $19, $0f, $0f, $22, $33, $ff, $44, $55, $ff, $66, $0d, $77, $f4, $f7
