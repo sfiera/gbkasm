@@ -338,7 +338,7 @@ jt00_015b::
     cp $80
     jr nz, jr_000_0174
 
-    vcall $fe
+    trap $fe
     db $c9
 
 jr_000_0174:
@@ -359,7 +359,7 @@ jr_000_017d:
 
 jr_000_017f:
     push af
-    vcall $fd
+    trap $fd
     pop af
     push af
     jr nz, jr_000_018a
@@ -396,7 +396,7 @@ jr_000_01a5:
     pop af
 
 Call_000_01a6:
-    vcall $ff
+    trap $ff
 
 jr_000_01a8:
     ld a, [de]
@@ -578,7 +578,7 @@ jt00_0268::
     jp nc, Jump_000_0407
 
     sub $c0
-    vcall $50
+    trap $50
     jp c, Jump_000_0407
 
     ret
@@ -667,7 +667,7 @@ jr_000_02c9:
     rl b
     push hl
     push bc
-    vcall $02
+    trap $02
     pop bc
     pop hl
     add hl, bc
@@ -681,12 +681,12 @@ Jump_000_02e5:
 
 Jump_000_02e6:
     ld sp, $e000
-    vcall $00
-    vcall $6e
+    trap $00
+    trap $6e
 
 jt00_02ed::
     ld hl, jt00_02ed
-    vcall $6f
+    trap $6f
     jp Jump_000_0300
 
 
@@ -720,8 +720,8 @@ Jump_000_0309:
     ld a, [hl+]
     ld h, [hl]
     ld l, a
-    vcall $8d
-    vcall $8e
+    trap $8d
+    trap $8e
     ld d, h
     ld e, l
     ldh a, [hROMBank]
@@ -733,7 +733,7 @@ Jump_000_0309:
     ld l, [hl]
     ld h, d
     push hl
-    vcall $8a
+    trap $8a
     pop hl
     ld a, [$c3b0]
     ld h, a
@@ -787,12 +787,12 @@ jr_000_035e:
     push de
     push bc
     ld hl, $c400
-    vcall $02
+    trap $02
     pop bc
     push bc
     ld de, $c400
     ld hl, $c500
-    vcall $ec
+    trap $ec
     pop bc
     pop hl
     add hl, bc
@@ -830,24 +830,24 @@ Call_000_037f:
     ld hl, $c400
     ld b, $00
     push hl
-    vcall $02
+    trap $02
     pop de
     pop bc
     ld hl, $c500
     push bc
     push de
-    vcall $6b
+    trap $6b
     pop de
     pop bc
     jr c, jr_000_03ae
 
     push bc
     push de
-    vcall $ef
+    trap $ef
     pop de
     pop bc
     ld hl, $c500
-    vcall $6b
+    trap $6b
 
 jr_000_03ae:
     pop hl
@@ -884,7 +884,7 @@ jr_000_03ba:
     ld [hl], a
     ld hl, $c500
     push de
-    vcall $e9
+    trap $e9
     pop de
     pop bc
     ret c
@@ -897,7 +897,7 @@ jr_000_03ba:
     ld b, $00
     ld de, $ffd2
     ld hl, $c500
-    vcall $ea
+    trap $ea
     pop de
     ld hl, $002e
     add hl, de
@@ -914,9 +914,9 @@ jr_000_03ba:
 Jump_000_03f8:
     di
     ld sp, $e000
-    vcall $00
-    vcall $11
-    vcall $61
+    trap $00
+    trap $11
+    trap $61
 
 Jump_000_0402:
     jp Jump_000_0500
@@ -1183,11 +1183,11 @@ Jump_000_0407:
 Jump_000_0500:
     ld sp, $e000
     di
-    vcall $00
+    trap $00
     ld de, $0000
     ld hl, $c654
     ld bc, $0002
-    vcall $e4
+    trap $e4
     ld a, [$c654]
     cp $02
     jr c, jr_000_0525
@@ -1208,18 +1208,18 @@ jr_000_0525:
     ld de, $0000
     ld hl, $c654
     ld bc, $0002
-    vcall $e5
+    trap $e5
 
 jr_000_053a:
     ld a, $20
-    vcall $b3
+    trap $b3
     ld hl, $0400
-    vcall $ca
+    trap $ca
 
 Jump_000_0543:
     call Call_000_07e6
     ld de, $0204
-    vcall $57
+    trap $57
     ld c, $80
     ld de, strPasswordMenu
     ld a, [$c654]
@@ -1255,7 +1255,7 @@ jr_000_0557:
     ld hl, strPasswordMenuMessage
     call Call_000_087f
     ld a, $01
-    vcall $b4
+    trap $b4
     ld c, $00
 
 jr_000_0581:
@@ -1264,7 +1264,7 @@ jr_000_0581:
     ld hl, HeaderLogo
     ld d, $20
     ld e, $3e
-    vcall $5e
+    trap $5e
     jr c, jr_000_05b2
 
     ld c, a
@@ -1277,7 +1277,7 @@ jr_000_0581:
 
     ld l, c
     ld h, $00
-    vcall $06
+    trap $06
     ld [$0117], sp
     nop
     ld [bc], a
@@ -1295,12 +1295,12 @@ jr_000_0581:
     nop
 
 jr_000_05b2:
-    vcall $01
+    trap $01
 
 Call_000_05b4:
     jr nc, jr_000_05b9
 
-    vcall $5b
+    trap $5b
     ret
 
 
@@ -1310,9 +1310,9 @@ jr_000_05b9:
     jr nz, jr_000_05b9
 
     ld a, $0d
-    vcall $b9
+    trap $b9
     ld a, $01
-    vcall $b9
+    trap $b9
     ret
 
 
@@ -1347,20 +1347,20 @@ code_00_06b9::
     ld de, $0204
     ld bc, $1004
     ld hl, $0000
-    vcall $59
+    trap $59
     ld a, $f0
     ld de, $0208
     ld bc, $1003
     ld hl, $0301
-    vcall $59
+    trap $59
     ld hl, $0204
-    vcall $b8
+    trap $b8
     ld hl, strPasswordMenu
-    vcall $69
+    trap $69
     ld hl, $0607
-    vcall $b8
+    trap $b8
     ld hl, strPasswordDashes
-    vcall $69
+    trap $69
     ld hl, strEnterPassword
     ld bc, $9902
     call Call_000_0882
@@ -1368,23 +1368,23 @@ code_00_06b9::
     ldh [$ae], a
     ld de, $900d
     ld hl, $0000
-    vcall $54
+    trap $54
     ld a, $80
     ld de, $0606
     ld bc, $0801
     ld hl, $0100
-    vcall $59
+    trap $59
     ld a, $03
-    vcall $b4
+    trap $b4
     ld hl, $c656
     ld e, $20
     ld bc, $0008
-    vcall $a6
+    trap $a6
     ld de, $8001
     ld b, $08
     ld hl, $c656
     ld c, $00
-    vcall $55
+    trap $55
     jp c, Jump_000_0543
 
     ld hl, strPasswords
@@ -1396,7 +1396,7 @@ jr_000_072f:
     ld de, $c656
     ld bc, $0008
     push bc
-    vcall $67
+    trap $67
     pop bc
     ld a, h
     or l
@@ -1430,7 +1430,7 @@ Jump_000_0755:
     ld de, $0000
     ld hl, $c654
     ld bc, $0002
-    vcall $e5
+    trap $e5
     jp Jump_000_0543
 
 
@@ -1497,33 +1497,33 @@ code_00_07db::
 
 
 Call_000_07e6:
-    vcall $b5
+    trap $b5
     ld a, $0c
-    vcall $b9
+    trap $b9
     ld hl, $8800
     ld e, $00
     ld bc, $0a00
-    vcall $a6
+    trap $a6
     ld de, $0003
     ld bc, $1409
-    vcall $58
+    trap $58
     ld a, $80
     ld de, $0204
     ld bc, $1007
     ld hl, $0701
-    vcall $59
+    trap $59
     ld de, $000d
     ld bc, $1405
-    vcall $58
+    trap $58
     ld a, $f0
     ld de, $020e
     ld bc, $1003
     ld hl, $0301
-    vcall $59
+    trap $59
     ld hl, $0101
-    vcall $b8
+    trap $b8
     ld hl, strPasswordMenuTitle
-    vcall $69
+    trap $69
     ret
 
 
@@ -1550,7 +1550,7 @@ jr_000_0886:
 
     push de
     push bc
-    vcall $5b
+    trap $5b
     pop bc
     ld a, $20
     add c
@@ -1584,12 +1584,12 @@ Jump_000_08a1:
     ld [rROMBank], a
     ld hl, $c604
     ld bc, $0028
-    vcall $02
+    trap $02
     pop af
     ldh [hROMBank], a
     ld [rROMBank], a
     ld de, $0304
-    vcall $57
+    trap $57
     ld b, $07
     ld c, $87
     ld de, $c604
@@ -1626,7 +1626,7 @@ jr_000_08f3:
     push bc
     ld hl, $c634
     ld bc, $0020
-    vcall $02
+    trap $02
     pop bc
     pop af
     ldh [hROMBank], a
@@ -1638,7 +1638,7 @@ jr_000_08f3:
     push bc
     push hl
     ld hl, $c638
-    vcall $5b
+    trap $5b
     pop de
     pop hl
     ld bc, $0020
@@ -1654,7 +1654,7 @@ jr_000_08f3:
 
 jr_000_091e:
     ld a, $01
-    vcall $b4
+    trap $b4
     pop de
     pop hl
     pop bc
@@ -1668,7 +1668,7 @@ jr_000_092b:
     ld d, $20
     ld e, $3e
     push bc
-    vcall $5e
+    trap $5e
     pop bc
     jr c, jr_000_0943
 
@@ -1686,7 +1686,7 @@ jr_000_0943:
     and $04
     ret z
 
-    vcall $01
+    trap $01
     ld hl, $c604
     add a
     add a
@@ -1735,9 +1735,9 @@ jr_000_0973:
     add c
     ld l, a
     ld h, $01
-    vcall $b8
+    trap $b8
     ld a, $2a
-    vcall $bb
+    trap $bb
     ld a, [$c660]
     and $01
     call nz, Call_000_0c95
@@ -1779,7 +1779,7 @@ jr_000_09c2:
     push bc
     ld e, a
     ld d, $02
-    vcall $57
+    trap $57
     ld c, l
     ld b, h
     pop de
@@ -1788,7 +1788,7 @@ jr_000_09c2:
     ld d, a
     ld e, $07
     pop hl
-    vcall $5b
+    trap $5b
     ld hl, strLoadMenuMessage
     call Call_000_087f
     xor a
@@ -1855,12 +1855,12 @@ jr_000_0a2a:
     push de
     push bc
     ld hl, $c900
-    vcall $02
+    trap $02
     pop bc
     push bc
     ld de, $c900
     ld hl, $c500
-    vcall $ec
+    trap $ec
     pop de
     pop hl
     add hl, de
@@ -1910,13 +1910,13 @@ Call_000_0a5c:
     ld hl, $c400
     ld b, $00
     push hl
-    vcall $02
+    trap $02
     pop de
     pop bc
     ld hl, $c500
     push bc
     push de
-    vcall $6b
+    trap $6b
     pop de
     pop bc
     jr nc, jr_000_0ac9
@@ -1952,7 +1952,7 @@ jr_000_0a8a:
     ld [hl], a
     ld hl, $c500
     push de
-    vcall $e9
+    trap $e9
     pop de
     pop bc
     jr c, jr_000_0ad1
@@ -1965,7 +1965,7 @@ jr_000_0a8a:
     ld b, $00
     ld de, $ffd2
     ld hl, $c500
-    vcall $ea
+    trap $ea
     pop de
     ld hl, $002e
     add hl, de
@@ -2020,7 +2020,7 @@ jr_000_0aec:
     push de
     push bc
     ld hl, $c900
-    vcall $02
+    trap $02
     pop bc
     push bc
     ld de, $c900
@@ -2092,7 +2092,7 @@ Call_000_0b32:
     ld hl, $c400
     ld b, $00
     push hl
-    vcall $02
+    trap $02
     pop de
     pop bc
     ld hl, $c700
@@ -2265,7 +2265,7 @@ Call_000_0c95:
     call Call_000_087f
 
 jr_000_0c9b:
-    vcall $d8
+    trap $d8
     bit 1, a
     jr nz, jr_000_0ce8
 
@@ -2286,7 +2286,7 @@ jr_000_0c9b:
     pop hl
     ld de, $c802
     ld bc, $000d
-    vcall $67
+    trap $67
     ld a, h
     or l
     ld a, $06
@@ -2325,8 +2325,8 @@ strGBKissMenu:
     db "GB KISS MENU "
 
 Call_000_0cff:
-    vcall $c3
-    vcall $7c
+    trap $c3
+    trap $7c
     jr jr_000_0d3b
 
 Call_000_0d05:
@@ -2334,43 +2334,43 @@ Call_000_0d05:
     ld de, $ce00
     ld hl, $c800
     ld c, $01
-    vcall $c3
-    vcall $7f
+    trap $c3
+    trap $7f
     jr jr_000_0d3b
 
 Call_000_0d16:
-    vcall $c3
-    vcall $73
+    trap $c3
+    trap $73
     jr jr_000_0d3b
 
     ld hl, $c700
-    vcall $c3
-    vcall $79
+    trap $c3
+    trap $79
     jr jr_000_0d3b
 
 Call_000_0d25:
 Jump_000_0d25:
-    vcall $c3
-    vcall $7d
+    trap $c3
+    trap $7d
     jr jr_000_0d3b
 
 Call_000_0d2b:
-    vcall $c3
-    vcall $77
+    trap $c3
+    trap $77
     jr jr_000_0d3b
 
 Call_000_0d31:
-    vcall $c3
-    vcall $76
+    trap $c3
+    trap $76
     jr jr_000_0d3b
 
 Call_000_0d37:
-    vcall $c3
-    vcall $75
+    trap $c3
+    trap $75
 
 jr_000_0d3b:
     push af
-    vcall $db
+    trap $db
     pop af
     ret
 

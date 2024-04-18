@@ -34,12 +34,12 @@ History::
 
 Main::
     xor a
-    vcall $b3
-    vcall $b5
+    trap $b3
+    trap $b5
     ld hl, $1200
-    vcall $b6
+    trap $b6
     ld a, $01
-    vcall $b4
+    trap $b4
 
 jr_0106:
     rpush code_010d
@@ -54,7 +54,7 @@ code_010d:
     ld hl, wramShot
     ld [hli], a
     ld [hl], a
-    vcall $db
+    trap $db
     rpush code_0121
     rpush code_0167
     ret
@@ -67,7 +67,7 @@ code_0121:
 
 
 code_0128:
-    vcall $da
+    trap $da
     bit 2, l
     jr nz, jr_0159
 
@@ -98,10 +98,10 @@ code_0144:
 
 
 code_014d:
-    vcall $db
+    trap $db
 
 jr_014f:
-    vcall $da
+    trap $da
     bit 3, l
     jr nz, jr_0106
 
@@ -109,7 +109,7 @@ jr_014f:
     jr z, jr_014f
 
 jr_0159:
-    vcall $01
+    trap $01
 
 code_015b:
     ldh a, [$83]
@@ -128,12 +128,12 @@ code_0167:
 
 jr_0170:
     push de
-    vcall $b8
+    trap $b8
     pop de
     ld hl, wramAtoiScratch
-    vcall $a3
+    trap $a3
     ld hl, wramAtoiScratch + 3
-    vcall $69
+    trap $69
     ld a, [wramTime]
     or a
 
@@ -142,7 +142,7 @@ jr_0182:
 
 
 code_0183:
-    vcall $da
+    trap $da
     ld a, l
     and $03
     jr z, jr_0182
@@ -165,7 +165,7 @@ code_0192:
 code_019d:
     rpush gfx
     pop hl
-    vcall $5c
+    trap $5c
     ld hl, wramShot
     ld e, [hl]
     inc hl

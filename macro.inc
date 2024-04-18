@@ -1,6 +1,6 @@
 ; Disassembly of "gbkiss.gb"
 
-MACRO vcall
+MACRO trap
     rst $08
     db \1
 ENDM

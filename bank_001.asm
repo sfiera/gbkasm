@@ -65,7 +65,7 @@ jt01::
 j01_4100::
     ld sp, $e000
     ld hl, j01_4100
-    vcall $6f
+    trap $6f
     xor a
     ldh [$b7], a
     call Call_001_498a
@@ -75,7 +75,7 @@ Jump_001_410e:
     ld hl, $ffc0
     ld de, $ff44
     ld bc, $0001
-    vcall $e4
+    trap $e4
     ld a, $ff
     ldh [$c2], a
     xor a
@@ -101,7 +101,7 @@ Jump_001_413a:
 
     ld h, a
     ld l, c
-    vcall $06
+    trap $06
     ld b, $13
     nop
     push de
@@ -120,7 +120,7 @@ jr_001_4154:
     jr jr_001_4125
 
     ld hl, $c500
-    vcall $6d
+    trap $6d
     ld hl, data_01_4fb1
     jp Jump_001_43b4
 
@@ -169,7 +169,7 @@ jr_001_419b:
 
 Call_001_41a3:
     ld hl, $c500
-    vcall $ef
+    trap $ef
     ret
 
 
@@ -183,7 +183,7 @@ Jump_001_41ab:
 
     push de
     ld hl, $c500
-    vcall $71
+    trap $71
     pop de
     ld hl, $c500
     ld a, [hl+]
@@ -197,7 +197,7 @@ Jump_001_41ab:
 
     push de
     call Call_001_426d
-    vcall $6b
+    trap $6b
     pop de
     jr c, jr_001_422d
 
@@ -209,7 +209,7 @@ Jump_001_41ab:
     ld a, [$c50a]
     ld [$c70a], a
     ld hl, $c700
-    vcall $e9
+    trap $e9
     jr c, jr_001_422c
 
     ld a, [$c509]
@@ -224,14 +224,14 @@ jr_001_41f1:
     ld hl, $c500
     ld de, $c400
     ld bc, $0100
-    vcall $eb
+    trap $eb
     ld a, b
     or c
     jr z, jr_001_420a
 
     ld hl, $c700
     ld de, $c400
-    vcall $ec
+    trap $ec
     jr jr_001_41f1
 
 jr_001_420a:
@@ -253,7 +253,7 @@ jr_001_4212:
 
 jr_001_421d:
     ld hl, $c700
-    vcall $ef
+    trap $ef
     jr jr_001_422c
 
 jr_001_4224:
@@ -281,27 +281,27 @@ Call_001_4235:
     push de
     ld d, $fe
     ld bc, $0004
-    vcall $e4
+    trap $e4
     pop de
     ld hl, sp+$04
     push de
     ld e, d
     ld d, $fe
     ld bc, $0004
-    vcall $e4
+    trap $e4
     pop de
     ld hl, sp+$04
     push de
     ld d, $fe
     ld bc, $0004
-    vcall $e5
+    trap $e5
     pop de
     ld hl, sp+$00
     push de
     ld e, d
     ld d, $fe
     ld bc, $0004
-    vcall $e5
+    trap $e5
     pop de
     ld hl, sp+$00
     ld a, [hl+]
@@ -335,7 +335,7 @@ Jump_001_4283:
     ld hl, data_01_4f76
     call Call_001_4bd2
     ld a, $b4
-    vcall $dc
+    trap $dc
     jp Jump_001_413a
 
 Jump_001_4290:
@@ -347,7 +347,7 @@ Jump_001_4290:
 
     ld hl, $c500
     ld c, $01
-    vcall $8f
+    trap $8f
     jp Jump_001_410e
 
 
@@ -397,8 +397,8 @@ Call_001_42f5:
     ld hl, $ce00
     ld de, $4018
     ld bc, $000f
-    vcall $02
-    vcall $8e
+    trap $02
+    trap $8e
     ld [$ce01], a
     xor a
     ld [$c500], a
@@ -421,7 +421,7 @@ Call_001_42f5:
 
     ld hl, $c500
     ld c, $ff
-    vcall $8f
+    trap $8f
     ld de, data_01_5b4f
     ld hl, data_01_4d1e
     xor a
@@ -447,7 +447,7 @@ jr_001_434f:
 
 Call_001_4358:
 jr_001_4358:
-    vcall $da
+    trap $da
     and $02
     jr nz, jr_001_4358
 
@@ -455,20 +455,20 @@ jr_001_4358:
 
 
 Call_001_435f:
-    vcall $c3
-    vcall $72
+    trap $c3
+    trap $72
     ld a, [$ce00]
     push af
     cp $05
     call z, Call_001_41a3
-    vcall $db
+    trap $db
     pop af
     ret
 
 
 Call_001_4370:
-    vcall $c3
-    vcall $7c
+    trap $c3
+    trap $7c
     jr jr_001_43ac
 
 Call_001_4376:
@@ -477,46 +477,46 @@ Call_001_4376:
     ld d, h
     ld e, l
     ld c, $01
-    vcall $c3
-    vcall $7f
+    trap $c3
+    trap $7f
     jr jr_001_43ac
 
 Call_001_4384:
-    vcall $c3
-    vcall $73
+    trap $c3
+    trap $73
     jr jr_001_43ac
 
 Call_001_438a:
     ld hl, $c700
-    vcall $c3
-    vcall $79
+    trap $c3
+    trap $79
     jr jr_001_43ac
 
 Call_001_4393:
     ld de, $c600
 
 Jump_001_4396:
-    vcall $c3
-    vcall $7d
+    trap $c3
+    trap $7d
     jr jr_001_43ac
 
 Call_001_439c:
-    vcall $c3
-    vcall $77
+    trap $c3
+    trap $77
     jr jr_001_43ac
 
 Call_001_43a2:
-    vcall $c3
-    vcall $76
+    trap $c3
+    trap $76
     jr jr_001_43ac
 
 Call_001_43a8:
-    vcall $c3
-    vcall $75
+    trap $c3
+    trap $75
 
 jr_001_43ac:
     push af
-    vcall $db
+    trap $db
     pop af
     ret
 
@@ -528,7 +528,7 @@ jr_001_43b1:
 Jump_001_43b4:
     call Call_001_4bd2
     ld a, $b4
-    vcall $dc
+    trap $dc
     jp Jump_001_413a
 
 
@@ -559,7 +559,7 @@ Call_001_43e2:
     ld a, $01
     ld bc, $2308
     ld hl, $0302
-    vcall $bf
+    trap $bf
     or a
     ret nz
 
@@ -573,9 +573,9 @@ Call_001_43f1:
 
     push af
     ld hl, $0068
-    vcall $bd
+    trap $bd
     ld hl, $c500
-    vcall $f2
+    trap $f2
     ld e, d
     pop af
     cp e
@@ -583,7 +583,7 @@ Call_001_43f1:
 
     call Call_001_4b45
     ld hl, data_01_440d
-    vcall $69
+    trap $69
     ret
 
 
@@ -594,10 +594,10 @@ data_01_440d::
     ld h, $04
     ld bc, $0301
     ld de, $0d12
-    vcall $b3
+    trap $b3
     ld de, $0000
     ld hl, data_01_44a6
-    vcall $6a
+    trap $6a
     call Call_001_4526
     ld bc, $000a
     ld hl, $c500
@@ -605,38 +605,38 @@ data_01_440d::
     ld hl, $0753
     ld de, $8865
     ld bc, $0791
-    vcall $c2
+    trap $c2
     ld hl, $0153
-    vcall $bd
+    trap $bd
     ld hl, data_01_4510
-    vcall $69
+    trap $69
     ld hl, $c400
     ld de, $ff46
     ld bc, $000a
-    vcall $e4
+    trap $e4
     xor a
     ld [$c40a], a
     ld hl, $c400
     call Call_001_45dd
     ld hl, $015c
-    vcall $bd
+    trap $bd
     ld hl, data_01_4518
-    vcall $69
+    trap $69
     add sp, -$04
     ld hl, sp+$00
     ld de, $ff40
     ld bc, $0004
-    vcall $e4
+    trap $e4
     pop de
     pop bc
     ld hl, $c400
-    vcall $a0
+    trap $a0
     ld hl, $c404
-    vcall $69
+    trap $69
 
 jr_001_4489:
-    vcall $b1
-    vcall $d8
+    trap $b1
+    trap $d8
     and $03
     jr z, jr_001_4489
 
@@ -651,7 +651,7 @@ Jump_001_4491:
 
 Call_001_44a1:
     ld a, $32
-    vcall $dc
+    trap $dc
     ret
 
 
@@ -693,11 +693,11 @@ Call_001_4526:
 
 jr_001_453a:
     ld hl, $c400
-    vcall $a3
+    trap $a3
     ld hl, $0d01
-    vcall $b8
+    trap $b8
     ld hl, $c401
-    vcall $69
+    trap $69
     pop hl
     ld a, [$c502]
     ld bc, $111b
@@ -725,22 +725,22 @@ jr_001_4563:
     ld hl, $c400
     push hl
     push bc
-    vcall $02
+    trap $02
     pop bc
     pop hl
     add hl, bc
     ld [hl], $00
     ld hl, $0400
-    vcall $b8
+    trap $b8
     ld hl, $c400
-    vcall $69
+    trap $69
     pop de
     bit 0, d
     ret z
 
     call Call_001_4934
     ld hl, $0d02
-    vcall $b8
+    trap $b8
     ld hl, $c400
     ld e, [hl]
     inc hl
@@ -749,19 +749,19 @@ jr_001_4563:
     push hl
     ld hl, $c42e
     ld bc, $0000
-    vcall $a0
+    trap $a0
     ld hl, $c434
-    vcall $69
+    trap $69
     pop de
     ld hl, $0505
 
 jr_001_45a3:
     push hl
     push de
-    vcall $b8
+    trap $b8
     ld hl, $c42e
     ld bc, $000a
-    vcall $02
+    trap $02
     xor a
     ld [$c438], a
     ld hl, $c42e
@@ -777,11 +777,11 @@ jr_001_45a3:
     ld h, $0f
     ld e, a
     ld d, $00
-    vcall $b8
+    trap $b8
     ld hl, $c42e
-    vcall $a3
+    trap $a3
     ld hl, $c431
-    vcall $69
+    trap $69
     pop de
     pop hl
     inc l
@@ -797,7 +797,7 @@ Call_001_45dd:
     push af
     or $40
     ldh [$92], a
-    vcall $69
+    trap $69
     pop af
     and $fb
     ldh [$92], a
@@ -850,11 +850,11 @@ jr_001_461f:
     ld hl, $c400
     ld bc, $0010
     push hl
-    vcall $02
+    trap $02
     pop hl
     ld bc, $0108
     pop de
-    vcall $c0
+    trap $c0
     pop de
     pop hl
     ret
@@ -876,7 +876,7 @@ Call_001_4632:
     ld hl, $401a
     ld de, $ce02
     ld bc, $000d
-    vcall $67
+    trap $67
     ld a, h
     or l
     ld hl, data_01_4d8d
@@ -960,7 +960,7 @@ jr_001_46c2:
 
     ld hl, $c500
     ld de, $c600
-    vcall $f0
+    trap $f0
     jr c, jr_001_4721
     ld a, b
     or c
@@ -980,7 +980,7 @@ jr_001_4700:
     ld hl, $c500
     ld de, $c600
     ld bc, $0100
-    vcall $eb
+    trap $eb
     jr c, jr_001_4721
 
 data_01_470d::
@@ -1052,16 +1052,16 @@ Call_001_4752:
 Call_001_475c:
 jr_001_475c:
     xor a
-    vcall $cc
+    trap $cc
     db $3e
 
     or h
-    vcall $dc
+    trap $dc
     db $c9
 
 Call_001_4764:
     ld a, $01
-    vcall $cc
+    trap $cc
     db $c9
 
 Call_001_4769:
@@ -1120,7 +1120,7 @@ jr_001_47a6:
     push bc
     push de
     push hl
-    vcall $71
+    trap $71
     pop hl
     pop de
     pop bc
@@ -1174,7 +1174,7 @@ Jump_001_47eb:
     ld hl, $ffc0
     ld de, $ff44
     ld bc, $0001
-    vcall $e5
+    trap $e5
     ldh a, [$c2]
     ld c, a
     ldh a, [$c0]
@@ -1185,12 +1185,12 @@ Jump_001_47eb:
     call Call_001_47b9
     ld hl, data_01_47da
     ld a, $1c
-    vcall $60
+    trap $60
     jr @+$07
 
 jr_001_480c:
     ld bc, $041c
-    vcall $c4
+    trap $c4
     call Call_001_479d
 
 Jump_001_4814:
@@ -1327,9 +1327,9 @@ jr_001_48af:
     ld d, $00
     ld hl, $001e
     push hl
-    vcall $8a
+    trap $8a
     pop de
-    vcall $89
+    trap $89
     ld a, l
     pop hl
     jr jr_001_48c4
@@ -1412,12 +1412,12 @@ Call_001_490e:
     ld d, a
     ld hl, $c500
     ld bc, $0100
-    vcall $02
+    trap $02
     pop de
     ld a, $00
     ld hl, $0000
     ld bc, $0502
-    vcall $c5
+    trap $c5
     ret
 
 
@@ -1427,7 +1427,7 @@ Call_001_4929:
 Call_001_492c:
     ld de, $ffd2
     ld b, $00
-    vcall $ea
+    trap $ea
     db $c9
 
 Call_001_4934:
@@ -1439,7 +1439,7 @@ Call_001_4934:
     ld hl, $c500
     ld de, $c400
     ld bc, $002e
-    vcall $eb
+    trap $eb
     ret
 
 
@@ -1460,7 +1460,7 @@ jr_001_494a:
     ld e, l
     ld hl, $c400
     ld bc, $002e
-    vcall $02
+    trap $02
     ret
 
 
@@ -1469,12 +1469,12 @@ Call_001_4965:
     push de
     push bc
     ld de, $c600
-    vcall $64
+    trap $64
     ld hl, $c600
     pop de
     push de
     ld bc, $0418
-    vcall $c0
+    trap $c0
     pop bc
     pop de
     pop hl
@@ -1493,7 +1493,7 @@ Call_001_4965:
 
 
 Call_001_498a:
-    vcall $e1
+    trap $e1
     ret nc
 
     jp Jump_001_66ee
@@ -1512,42 +1512,42 @@ Call_001_4997:
     ld h, $04
     ld bc, $0101
     ld de, $0e0e
-    vcall $b3
+    trap $b3
     ld hl, $1200
-    vcall $b6
+    trap $b6
     ld a, $e4
     ldh [$9d], a
     ld a, $1b
     ldh [$9e], a
     ld de, $0000
     ld bc, $1005
-    vcall $58
+    trap $58
     ld a, $80
     ld hl, $0e01
     ld de, $0101
     ld bc, $0e03
-    vcall $59
+    trap $59
     ld a, $83
     ld hl, $0e01
     ld de, $0105
     ld bc, $0e09
-    vcall $59
+    trap $59
     ld de, $000e
     ld bc, $1004
-    vcall $58
+    trap $58
     ld a, $8c
     ld hl, $0e01
     ld de, $010f
     ld bc, $0e02
-    vcall $59
+    trap $59
     ld de, data_01_5d33
     ld bc, $c400
-    vcall $62
+    trap $62
     ld de, $8000
     ld bc, $0380
-    vcall $63
+    trap $63
     ld a, $07
-    vcall $b4
+    trap $b4
     ld h, $0a
     ld d, $8c
     ld e, $14
@@ -1580,7 +1580,7 @@ Call_001_4a2a:
     ld a, h
     ld h, b
     ld bc, $0301
-    vcall $c5
+    trap $c5
     pop hl
     pop de
     ret
@@ -1595,9 +1595,9 @@ Call_001_4a36:
     ld hl, $c400
     ld e, $00
     ld bc, $0011
-    vcall $a6
+    trap $a6
     ld hl, $0060
-    vcall $bd
+    trap $bd
     pop af
     ld hl, $c800
     add h
@@ -1637,17 +1637,17 @@ jr_001_4a72:
     ld e, l
     ld d, h
     ld hl, $c400
-    vcall $02
+    trap $02
 
 jr_001_4a7c:
     ld hl, $c400
-    vcall $69
+    trap $69
     ld a, $0e
-    vcall $b9
+    trap $b9
     ld a, $0e
-    vcall $c8
+    trap $c8
     ld hl, $0068
-    vcall $bd
+    trap $bd
     pop hl
     ld a, [hl+]
     or [hl]
@@ -1677,7 +1677,7 @@ jr_001_4aa3:
 jr_001_4aad:
     call Call_001_4b45
     ld hl, data_01_4ac2
-    vcall $69
+    trap $69
     ldh a, [$c0]
     pop de
     add d
@@ -1781,23 +1781,23 @@ Call_001_4b36:
     ld hl, data_01_4f3b
     call Call_001_4bd2
     ld hl, $090e
-    vcall $bd
+    trap $bd
     xor a
-    vcall $f1
+    trap $f1
     ld e, c
 
 Call_001_4b45:
     ld d, $00
     ld hl, $c400
-    vcall $a3
+    trap $a3
     ld hl, $c403
-    vcall $69
+    trap $69
     ret
 
 
 Call_001_4b52:
     ld a, $01
-    vcall $f1
+    trap $f1
     ld a, b
     or a
     ret z
@@ -1810,12 +1810,12 @@ Call_001_4b52:
 
 Call_001_4b5e:
     ld hl, $0000
-    vcall $bd
+    trap $bd
     call Call_001_4b52
     jr nc, jr_001_4b6d
 
     ld a, $10
-    vcall $c8
+    trap $c8
     ret
 
 
@@ -1824,18 +1824,18 @@ jr_001_4b6d:
     ld d, $00
     push af
     ld hl, $c400
-    vcall $a3
+    trap $a3
     pop af
     ld hl, data_01_4c8a
     or a
     jr z, jr_001_4b85
 
     ld hl, $c404
-    vcall $69
+    trap $69
     ld hl, data_01_4c77
 
 jr_001_4b85:
-    vcall $69
+    trap $69
     ret
 
 
@@ -1862,7 +1862,7 @@ Call_001_4b9d:
     push hl
     ld h, $00
     ld l, a
-    vcall $bd
+    trap $bd
     pop hl
     ret
 
@@ -1874,8 +1874,8 @@ jr_001_4ba5:
     ld a, $10
     call Call_001_4b9d
     ld a, $20
-    vcall $bb
-    vcall $69
+    trap $bb
+    trap $69
     pop hl
     jr jr_001_4be1
 
@@ -1884,7 +1884,7 @@ jr_001_4bba:
     push hl
     ld h, [hl]
     ld l, a
-    vcall $69
+    trap $69
     pop hl
     inc hl
     jr jr_001_4be1
@@ -1898,7 +1898,7 @@ jr_001_4bc4:
 
 jr_001_4bce:
     ld a, $0e
-    vcall $b9
+    trap $b9
 
 Call_001_4bd2:
 jr_001_4bd2:
@@ -1925,12 +1925,12 @@ jr_001_4be1:
     sub $e0
     jr c, jr_001_4bf1
 
-    vcall $c8
+    trap $c8
     jr jr_001_4be1
 
 jr_001_4bf1:
     dec hl
-    vcall $69
+    trap $69
     jr jr_001_4be1
 
 data_01_4bf6::
@@ -2145,12 +2145,12 @@ jr_001_4ff3:
     ld a, $00
     ld l, $00
     ld bc, $0502
-    vcall $c5
+    trap $c5
     call Call_001_44a1
     jr nz, jr_001_5013
 
     ld bc, $0a00
-    vcall $c4
+    trap $c4
     call Call_001_44a1
     jr nz, jr_001_5013
 
@@ -2173,8 +2173,8 @@ Call_001_5019:
 
 Call_001_501f:
 jr_001_501f:
-    vcall $b1
-    vcall $d8
+    trap $b1
+    trap $d8
     and $03
     jr z, jr_001_501f
 
@@ -2194,30 +2194,30 @@ Call_001_5033:
     ld h, $00
     ld bc, $0e02
     ld de, $0310
-    vcall $b3
+    trap $b3
     ld hl, $9800
     ld bc, $0240
     ld e, $04
-    vcall $a6
+    trap $a6
     ld a, $ca
     ld bc, $0e02
     ld de, $0310
-    vcall $c9
+    trap $c9
 
 
     ld de, data_01_50b2
     ld bc, $c400
-    vcall $62
+    trap $62
     ld de, $9000
     ld bc, $0800
-    vcall $63
+    trap $63
     ld de, $8800
     ld bc, $0470
-    vcall $63
+    trap $63
     ld hl, $8c70
     ld bc, $0390
     ld e, $00
-    vcall $a6
+    trap $a6
     ld hl, $99a0
     ld de, data_01_5ccf
     ld b, $05
@@ -2227,7 +2227,7 @@ Call_001_5033:
     ld de, data_01_59cf
     call Call_001_508f
     ld a, $01
-    vcall $b4
+    trap $b4
     ret
 
 
@@ -2246,7 +2246,7 @@ jr_001_509b:
     push de
     ld b, $00
     push bc
-    vcall $02
+    trap $02
     pop bc
     pop hl
     add hl, bc
@@ -2510,13 +2510,13 @@ Jump_001_5ea7:
     call Call_001_66c2
     ld de, data_01_470d
     ld hl, $c699
-    vcall $54
+    trap $54
     ld a, $03
-    vcall $b4
+    trap $b4
 
 jr_001_5ebb:
-    vcall $b1
-    vcall $d8
+    trap $b1
+    trap $d8
     ld c, a
     and $06
     jp nz, Jump_001_5f61
@@ -2549,7 +2549,7 @@ Call_001_5ee7:
     ldh [$c1], a
     call Call_001_6181
     ld c, $11
-    vcall $5d
+    trap $5d
     ret
 
 
@@ -2557,7 +2557,7 @@ jr_001_5ef2:
     xor a
     call Call_001_66c2
     call Call_001_6181
-    vcall $55
+    trap $55
     jr c, jr_001_5f0e
 
     ld a, $01
@@ -2615,7 +2615,7 @@ Call_001_5f2d:
     pop af
     jr z, jr_001_5f44
 
-    vcall $5d
+    trap $5d
     jr jr_001_5f60
 
 jr_001_5f44:
@@ -2626,14 +2626,14 @@ jr_001_5f45:
     push de
     push bc
     ld e, [hl]
-    vcall $4b
+    trap $4b
     push hl
     ld hl, $c3ee
     ld a, $ff
     ld [hl+], a
     ld [hl], a
     pop hl
-    vcall $02
+    trap $02
     pop bc
     pop de
     pop hl
@@ -2656,12 +2656,12 @@ Jump_001_5f67:
 jr_001_5f67:
     xor a
     ld de, data_01_5f82
-    vcall $5f
+    trap $5f
     jp c, Jump_001_5ea7
 
     ld l, a
     ld h, $00
-    vcall $06
+    trap $06
 
 data_01_5f75::
     db $06, $31, $ff, $a7, $00, $f7, $00, $3e, $01, $39, $00, $24, $00
@@ -2683,7 +2683,7 @@ Call_001_5f89:
     ld l, a
     ld d, $30
     ld e, $01
-    vcall $5a
+    trap $5a
     ld a, d
     ldh [$c4], a
     or a
@@ -2703,7 +2703,7 @@ Call_001_5f89:
 
 Jump_001_5fb5:
 jr_001_5fb5:
-    vcall $01
+    trap $01
     call Call_001_657f
     ldh a, [$c0]
     push af
@@ -2712,11 +2712,11 @@ jr_001_5fb5:
     ld a, $07
     call Call_001_5f89
     ld a, $03
-    vcall $b4
+    trap $b4
 
 jr_001_5fca:
-    vcall $b1
-    vcall $d8
+    trap $b1
+    trap $d8
     bit 6, a
     jr nz, jr_001_5fed
 
@@ -2760,16 +2760,16 @@ jr_001_5ffa:
 
 jr_001_6002:
     call Call_001_5ee7
-    vcall $11
+    trap $11
     ld hl, $0400
-    vcall $b6
+    trap $b6
     call Call_001_614f
-    vcall $70
+    trap $70
     call Call_001_5f15
     ld hl, $0404
-    vcall $b6
-    vcall $11
-    vcall $db
+    trap $b6
+    trap $11
+    trap $db
     jr jr_001_5fca
 
     ldh a, [$c0]
@@ -2797,7 +2797,7 @@ jr_001_6037:
     ld [de], a
     ld hl, $c500
     ld c, $00
-    vcall $6b
+    trap $6b
     jr c, jr_001_6059
 
     ld a, $0a
@@ -2806,7 +2806,7 @@ jr_001_6037:
     jr c, jr_001_606b
 
     ld hl, $c500
-    vcall $ef
+    trap $ef
     jr jr_001_6025
 
 jr_001_6059:
@@ -2832,15 +2832,15 @@ jr_001_606b:
     ld a, $0c
     call Call_001_5f89
     ld a, $03
-    vcall $b4
+    trap $b4
     call Call_001_6169
     jp c, Jump_001_5f61
 
     ld a, $0d
     call Call_001_5f89
     ld a, $01
-    vcall $cc
-    vcall $c3
+    trap $cc
+    trap $c3
     call Call_001_611d
     jr c, jr_001_60b0
 
@@ -2848,10 +2848,10 @@ jr_001_606b:
     ld e, l
     ld d, h
     ld c, $99
-    vcall $7f
+    trap $7f
     jr c, jr_001_60b5
 
-    vcall $73
+    trap $73
     jr c, jr_001_60b5
 
     ld a, $0e
@@ -2859,7 +2859,7 @@ jr_001_606b:
 
 jr_001_60a7:
     xor a
-    vcall $cc
+    trap $cc
     call Call_001_6173
     jp Jump_001_5f61
 
@@ -2884,17 +2884,17 @@ jr_001_60b5:
 jr_001_60c9:
     ld a, $11
     call Call_001_5f89
-    vcall $c3
+    trap $c3
     ld de, data_01_661d
     ld hl, $c6d5
     ld bc, $000a
-    vcall $02
+    trap $02
     ld a, $01
-    vcall $cc
-    vcall $72
+    trap $cc
+    trap $72
     push af
     xor a
-    vcall $cc
+    trap $cc
     pop af
     jr c, jr_001_610d
     ld a, [$c6d5]
@@ -2933,7 +2933,7 @@ Call_001_6114:
     call Call_001_5f89
 
 jr_001_6117:
-    vcall $d8
+    trap $d8
     or a
     jr nz, jr_001_6117
 
@@ -2944,13 +2944,13 @@ Call_001_611d:
     ld hl, $c6d5
     ld de, $c400
     ld bc, $000a
-    vcall $7c
+    trap $7c
     jr c, jr_001_6146
 
     ld hl, $c400
     ld de, data_01_661d
     ld bc, $000a
-    vcall $67
+    trap $67
     or a
     jr nz, jr_001_6149
 
@@ -2959,7 +2959,7 @@ Call_001_611d:
     ld [hl], a
     ld de, $c6d5
     ld bc, $000a
-    vcall $7f
+    trap $7f
     ret nc
 
 jr_001_6146:
@@ -2968,7 +2968,7 @@ jr_001_6146:
 
 
 jr_001_6149:
-    vcall $73
+    trap $73
     ld a, $0f
     scf
     ret
@@ -2994,7 +2994,7 @@ jr_001_6160:
     ld [de], a
     pop de
     ld hl, $c6e0
-    vcall $4f
+    trap $4f
     ret
 
 
@@ -3003,12 +3003,12 @@ Call_001_6169:
     ld d, a
     ld e, $01
     ld hl, data_01_64c5
-    vcall $5a
+    trap $5a
 
 Call_001_6173:
 jr_001_6173:
-    vcall $b1
-    vcall $d8
+    trap $b1
+    trap $d8
     and $03
     jr z, jr_001_6173
 
@@ -3043,7 +3043,7 @@ jr_001_618a:
     ld d, a
     ld e, $01
     ld a, b
-    vcall $4d
+    trap $4d
     ld c, a
     ret
 
@@ -3112,13 +3112,13 @@ code_01_64d3::
     jp nz, Jump_001_6678
 
     ld hl, $00d2
-    vcall $e6
+    trap $e6
     bit 7, h
     jr nz, jr_001_64ec
 
-    vcall $e7
+    trap $e7
     xor a
-    vcall $f1
+    trap $f1
     inc b
     dec b
     ret nz
@@ -3126,40 +3126,40 @@ code_01_64d3::
 jr_001_64ec:
     call Call_001_66dc
     ld a, $03
-    vcall $b4
+    trap $b4
     ld a, $13
     call Call_001_5f89
     call Call_001_6169
     jp c, Jump_001_5fb5
 
-    vcall $b5
+    trap $b5
     ret
 
 
 Call_001_6501:
-    vcall $b5
+    trap $b5
     call Call_001_66dc
     ld de, $4078
     ld hl, $9700
     ld bc, $0010
-    vcall $02
+    trap $02
     call Call_001_65db
     ld de, $0204
     ld bc, $1109
-    vcall $58
+    trap $58
     ld hl, data_01_6535
     ld de, $9101
-    vcall $5a
+    trap $5a
     call Call_001_652c
     ld a, $03
-    vcall $b4
+    trap $b4
     ret
 
 
 Call_001_652c:
     ld de, $000d
     ld bc, $1405
-    vcall $58
+    trap $58
     ret
 
 
@@ -3173,7 +3173,7 @@ data_01_6535::
     db $ff
 
 Call_001_657f:
-    vcall $b5
+    trap $b5
     call Call_001_66dc
     ld a, $e4
     ldh [$9d], a
@@ -3181,18 +3181,18 @@ Call_001_657f:
     call Call_001_65db
     ld de, $0103
     ld bc, $130a
-    vcall $58
+    trap $58
     ld a, $73
     ld de, $0103
-    vcall $cd
+    trap $cd
     inc a
     ld d, $13
-    vcall $cd
+    trap $cd
     ld a, $91
     ld hl, $0111
     ld de, $0204
     ld bc, $1108
-    vcall $59
+    trap $59
     ldh a, [$c0]
     push af
     xor a
@@ -3216,11 +3216,11 @@ Call_001_65c6:
     ld hl, $8800
     ld bc, $0f30
     ld e, $00
-    vcall $a6
+    trap $a6
     ld hl, $9800
     ld bc, $0400
     ld e, $7f
-    vcall $a6
+    trap $a6
     ret
 
 
@@ -3238,15 +3238,15 @@ jr_001_65e1:
 
     ld de, $0101
     ld bc, $1303
-    vcall $58
+    trap $58
     ld a, $80
     ld hl, $0111
     ld de, $0702
     ld bc, $0c01
-    vcall $59
+    trap $59
     ld hl, data_01_6607
     ld de, $2001
-    vcall $5a
+    trap $5a
     ret
 
 
@@ -3263,14 +3263,14 @@ Call_001_6627:
     ld de, $c500
     ld hl, $c400
     ld bc, $0100
-    vcall $02
+    trap $02
     ld de, $c699
     call jt01_665c
     call Call_001_6651
     ld de, $c400
     ld hl, $c500
     ld bc, $0100
-    vcall $02
+    trap $02
     xor a
     ldh [$c0], a
     ldh [$c1], a
@@ -3282,7 +3282,7 @@ Call_001_6651:
     ld hl, $c600
     ld bc, $0099
     ld e, $20
-    vcall $a6
+    trap $a6
     ret
 
 
@@ -3318,7 +3318,7 @@ Jump_001_6678:
     ld hl, $c500
     ld de, $c611
     ld bc, $0088
-    vcall $eb
+    trap $eb
     ld hl, $c509
     ld b, [hl]
     inc hl
@@ -3341,7 +3341,7 @@ jr_001_6699:
     ld [hl], $00
     ld hl, $c50d
     ld de, $c600
-    vcall $4e
+    trap $4e
     ret
 
 
@@ -3350,12 +3350,12 @@ Call_001_66ab:
     ld [$c50a], a
     ld bc, $01ff
     ld de, $0088
-    vcall $e9
+    trap $e9
     ret c
 
     ld de, $c611
     ld bc, $0088
-    vcall $ec
+    trap $ec
     or a
     ret
 
@@ -3366,19 +3366,19 @@ Call_001_66c2:
     ld hl, $0102
     ld de, $0003
     ld bc, $0202
-    vcall $59
+    trap $59
     pop af
     ld e, a
     ld d, $30
     ld hl, data_01_7f70
     ld c, $04
-    vcall $4c
+    trap $4c
     ret
 
 
 Call_001_66dc:
     ld h, $04
-    vcall $ca
+    trap $ca
     db $c9
 
 Call_001_66e1:
@@ -3386,7 +3386,7 @@ Call_001_66e1:
     ld bc, $003a
     push hl
     push bc
-    vcall $e4
+    trap $e4
     pop bc
     pop hl
     ret
@@ -3394,16 +3394,16 @@ Call_001_66e1:
 
 Jump_001_66ee:
     ld a, $20
-    vcall $b3
+    trap $b3
     call Call_001_65c6
     call Call_001_6627
     call Call_001_66dc
     ld de, $0000
     ld bc, $140d
-    vcall $58
+    trap $58
     ld hl, data_01_67c2
     ld de, $8001
-    vcall $5a
+    trap $5a
     ld hl, data_01_67fe
 
 jr_001_670e:
@@ -3414,29 +3414,29 @@ jr_001_670e:
     ld a, c
     ld c, $01
     ld hl, $0100
-    vcall $59
+    trap $59
     pop hl
     jr jr_001_670e
 
 jr_001_671f:
     xor a
     ldh [$c3], a
-    vcall $e1
+    trap $e1
     jr nc, jr_001_6731
 
     ld a, $01
     ldh [$c3], a
-    vcall $65
+    trap $65
     ld de, $c699
-    vcall $51
+    trap $51
 
 jr_001_6731:
     ld hl, $c600
     call Call_001_66e1
     ld de, $0001
-    vcall $5d
+    trap $5d
     ld a, $03
-    vcall $b4
+    trap $b4
     ldh a, [$c3]
     or a
     jr nz, jr_001_6757
@@ -3444,7 +3444,7 @@ jr_001_6731:
     call Call_001_652c
     ld hl, data_01_6824
     ld de, $b001
-    vcall $5a
+    trap $5a
     ld a, $10
     call Call_001_685d
     jr c, jr_001_67b3
@@ -3452,7 +3452,7 @@ jr_001_6731:
 jr_001_6757:
     ld de, data_01_470d
     ld hl, $c699
-    vcall $54
+    trap $54
 
 jr_001_675f:
     ld hl, data_01_67fe
@@ -3469,16 +3469,16 @@ jr_001_6762:
     ld d, c
     ld e, $01
     ld a, b
-    vcall $4d
+    trap $4d
     ld c, a
-    vcall $55
+    trap $55
     pop hl
     jr jr_001_6762
 
 jr_001_677b:
     ld hl, data_01_680e
     ld de, $b001
-    vcall $5a
+    trap $5a
     ld a, $0b
     call Call_001_685d
     jr nc, jr_001_6799
@@ -3488,7 +3488,7 @@ jr_001_678a:
     ld de, $030a
     ld bc, $0e02
     ld hl, $0000
-    vcall $59
+    trap $59
     jr jr_001_675f
 
 jr_001_6799:
@@ -3503,14 +3503,14 @@ jr_001_679e:
     cp $20
     jr z, jr_001_679e
 
-    vcall $65
+    trap $65
     ld hl, $c600
     ld de, $ff46
     ld bc, $003a
-    vcall $e5
+    trap $e5
 
 jr_001_67b3:
-    vcall $01
+    trap $01
 
 Call_001_67b5:
     ld d, $06
@@ -3558,31 +3558,31 @@ Call_001_685d:
 jr_001_6861:
     ldh [$90], a
     ld a, $0f
-    vcall $b9
+    trap $b9
     ldh a, [$91]
     ld e, a
     ld d, $07
-    vcall $57
+    trap $57
     ld c, l
     ld b, h
     ld hl, data_01_6855
     ld de, $d301
     ldh a, [$90]
     ldh [$b4], a
-    vcall $5b
+    trap $5b
     inc bc
     inc bc
     inc bc
     ldh a, [$90]
     swap a
     ldh [$b4], a
-    vcall $5b
+    trap $5b
     ld a, $03
     ldh [$b4], a
 
 jr_001_688b:
-    vcall $b1
-    vcall $d8
+    trap $b1
+    trap $d8
     ld b, a
     ld a, $03
     bit 4, b
@@ -4127,7 +4127,7 @@ code_01_6ae7::
 
 code_01_6aed::
     ld hl, $0000
-    vcall $e6
+    trap $e6
     ld a, [$0014]
     jp Jump_001_6ad8
 
@@ -4142,7 +4142,7 @@ code_01_6af8::
     call Call_001_6d18
     ld hl, $c500
     ld de, $c400
-    vcall $6b
+    trap $6b
 
 jr_001_6b10:
     call Call_001_6a8b
@@ -4158,21 +4158,21 @@ code_01_6b1f::
     call Call_001_6b88
     ret c
 
-    vcall $e9
+    trap $e9
     jr jr_001_6b10
 
 code_01_6b27::
     call Call_001_6b88
     ret c
 
-    vcall $e8
+    trap $e8
     jr jr_001_6b10
 
 code_01_6b2f::
     call Call_001_6a87
     call Call_001_6d18
     ld hl, $c500
-    vcall $ea
+    trap $ea
     call Call_001_6a8b
     jp Jump_001_6ad8
 
@@ -4180,7 +4180,7 @@ code_01_6b2f::
 code_01_6b40::
     call Call_001_6b54
     push bc
-    vcall $eb
+    trap $eb
     call Call_001_6a8b
     call Call_001_6ad8
     pop bc
@@ -4212,7 +4212,7 @@ code_01_6b67::
     ret c
 
     call Call_001_6b54
-    vcall $ec
+    trap $ec
     call Call_001_6a8b
     jp Jump_001_6ad8
 
@@ -4221,7 +4221,7 @@ code_01_6b7c::
     call Call_001_6b88
     ret c
 
-    vcall $ef
+    trap $ef
     call Call_001_6a8b
     jp Jump_001_6ad8
 
@@ -4569,7 +4569,7 @@ jt01_6d2f::
     ld b, [hl]
     inc hl
     push hl
-    vcall $c6
+    trap $c6
     jp c, Jump_001_6d4f
     ldh [$a1], a
     ld a, b
@@ -4743,7 +4743,7 @@ jr_001_6dde:
     jr jr_001_6dd0
 
 jt01_6de4::
-    vcall $ed
+    trap $ed
     ret nc
 
     push hl
@@ -4809,7 +4809,7 @@ jr_001_6e2b:
 
 
 jt01_6e2e::
-    vcall $e0
+    trap $e0
     ld hl, $4000
     ld de, $fe00
 
@@ -4839,7 +4839,7 @@ jr_001_6e36:
     push hl
     ld hl, sp+$00
     ld bc, $0004
-    vcall $e5
+    trap $e5
     pop hl
     pop bc
     pop de
@@ -4849,7 +4849,7 @@ jr_001_6e36:
     or h
     jr nz, jr_001_6e36
 
-    vcall $09
+    trap $09
     ret
 
 
@@ -4859,7 +4859,7 @@ jt01_6e63::
     ld hl, sp+$02
     ld d, $fe
     ld bc, $0004
-    vcall $e4
+    trap $e4
     pop bc
     pop hl
     pop de
@@ -4871,7 +4871,7 @@ jt01_6e63::
     cp $ff
     jp z, Jump_001_71a1
 
-    vcall $fc
+    trap $fc
     ret
 
 
@@ -4910,7 +4910,7 @@ jr_001_6e8e:
     dec b
     jr nz, jr_001_6ea1
 
-    vcall $f8
+    trap $f8
     jr jr_001_6e8e
 
 jr_001_6ea1:
@@ -4936,11 +4936,11 @@ jr_001_6ea1:
     dec c
     jr z, jr_001_6ec1
 
-    vcall $f9
+    trap $f9
     jr jr_001_6e8e
 
 jr_001_6ec1:
-    vcall $f8
+    trap $f8
     jr jr_001_6e8e
 
 
@@ -4948,7 +4948,7 @@ jr_001_6ec5:
     ld a, $30
     call Call_001_6efc
     ld a, $35
-    vcall $f8
+    trap $f8
     ld c, $00
     jr jr_001_6e8e
 
@@ -4960,9 +4960,9 @@ jr_001_6ed2:
 
 jr_001_6eda:
     ld a, $23
-    vcall $f8
+    trap $f8
     ld a, $23
-    vcall $f8
+    trap $f8
     jr jr_001_6e8e
 
 jr_001_6ee4:
@@ -4990,9 +4990,9 @@ Call_001_6ef7:
 Call_001_6efc:
     push af
     ld a, $2a
-    vcall $f8
+    trap $f8
     pop af
-    vcall $f8
+    trap $f8
     ret
 
 
@@ -5177,7 +5177,7 @@ jt01_6f9b::
 
     ld e, a
     ld d, [hl]
-    vcall $a7
+    trap $a7
     jr nc, jr_001_6fb3
 
     inc hl
@@ -5185,7 +5185,7 @@ jt01_6f9b::
     jr z, jr_001_6fba
 
 jr_001_6fb3:
-    vcall $bb
+    trap $bb
     jr jt01_6f9b
 
 jr_001_6fb7:
@@ -5205,15 +5205,15 @@ jr_001_6fba:
     ld e, a
     ld b, $01
     ld hl, $c3e0
-    vcall $1b
+    trap $1b
     ld hl, $c3e0
-    vcall $be
+    trap $be
     pop hl
     pop bc
     ld a, $01
 
 jr_001_6fd6:
-    vcall $b9
+    trap $b9
     jr jt01_6f9b
 
 jt01_6fda::
@@ -5224,7 +5224,7 @@ jt01_6fda::
     push hl
     ld l, e
     ld h, d
-    vcall $b8
+    trap $b8
     pop hl
     push de
     call jt01_6f9b
@@ -5352,7 +5352,7 @@ Jump_001_705b:
     push de
     ld hl, $c500
     ld bc, $00ff
-    vcall $02
+    trap $02
     ld hl, $c400
     xor a
     ld [hl+], a
@@ -5390,7 +5390,7 @@ jr_001_7092:
 
     ld hl, $c400
     call Call_001_7118
-    vcall $fb
+    trap $fb
     ld d, h
     ld e, l
 
@@ -5408,7 +5408,7 @@ jr_001_70af:
     pop hl
     ld de, $c500
     ld bc, $00ff
-    vcall $02
+    trap $02
     scf
     ret
 
@@ -5453,7 +5453,7 @@ jr_001_70de:
     and $04
     jp z, Jump_001_705b
 
-    vcall $fb
+    trap $fb
     ld d, h
     ld e, l
     jr jr_001_70ee
@@ -5481,7 +5481,7 @@ jr_001_70fc:
     ld a, b
     sbc h
     ld b, a
-    vcall $a6
+    trap $a6
     ret
 
 
@@ -5490,7 +5490,7 @@ Call_001_710d:
     ld d, b
     ld e, c
     ld bc, $00ff
-    vcall $02
+    trap $02
     ret
 
 
@@ -5541,7 +5541,7 @@ jt01_7138::
     ld hl, sp+$00
     ld de, $ff3c
     ld bc, $0004
-    vcall $e5
+    trap $e5
     pop hl
     pop de
     ret
@@ -5560,7 +5560,7 @@ jt01_714d::
 
 jr_001_7158:
     dec hl
-    vcall $e8
+    trap $e8
     ret nc
     xor a
     ld [hl+], a
@@ -5706,14 +5706,14 @@ jr_001_71d4:
 
 
 jt01_71e6::
-    vcall $e1
+    trap $e1
     ret c
 
     push hl
     ld de, $ff45
     ld bc, $0001
     ld hl, sp+$00
-    vcall $e4
+    trap $e4
     pop hl
     bit 0, l
     ret z
@@ -5729,7 +5729,7 @@ jt01_71e6::
     ld hl, sp+$00
     ld de, $ff3c
     ld bc, $0004
-    vcall $e4
+    trap $e4
     pop de
     pop bc
     ld a, d
@@ -5750,30 +5750,30 @@ jt01_7222::
     call Call_001_7227
 
 jr_001_7225:
-    vcall $01
+    trap $01
 
 Call_001_7227:
-    vcall $11
-    vcall $53
+    trap $11
+    trap $53
     ld a, $a4
     ld bc, $0102
     ld de, $0f10
     ld h, $00
-    vcall $b3
+    trap $b3
     ld de, gfxGBKissLogo
     ld bc, $c400
-    vcall $62  ; prepare to decompress (jt01_6d53)
+    trap $62  ; prepare to decompress (jt01_6d53)
     ld de, $c600
     ld bc, $08f0
-    vcall $63  ; decompress to $c600 (jt01_6d72)
+    trap $63  ; decompress to $c600 (jt01_6d72)
     ld de, $020c
     ld hl, $c600
     ld bc, $0b68
-    vcall $c0  ; copy $c600 to VRAM (jt02_5de2)
+    trap $c0  ; copy $c600 to VRAM (jt02_5de2)
     ld a, $01
-    vcall $b4
+    trap $b4
     ld a, $f0
-    vcall $dc
+    trap $dc
     db $cb
 
     ld d, a
@@ -5857,7 +5857,7 @@ jr_001_7297:
     pop hl
     push bc
     push hl
-    vcall $02
+    trap $02
     pop hl
     pop bc
     add hl, bc
@@ -5871,7 +5871,7 @@ jr_001_72af:
     ld e, l
     ld d, h
     ld bc, $c400
-    vcall $62
+    trap $62
     pop bc
     pop hl
 
@@ -5882,7 +5882,7 @@ jr_001_72ba:
     ld e, l
     ld bc, $0010
     push bc
-    vcall $63
+    trap $63
     pop de
     pop bc
     pop hl
@@ -6133,10 +6133,10 @@ jt01_776c::
     push hl
     ld l, [hl]
     ld h, a
-    vcall $b8
+    trap $b8
     pop hl
     inc hl
-    vcall $69
+    trap $69
     jr jt01_776c
 
 jt01_777b::
@@ -6202,8 +6202,8 @@ jt01_77ae::
     ld [hl], a
 
 jr_001_77c0:
-    vcall $b1
-    vcall $d8
+    trap $b1
+    trap $d8
     ld hl, sp+$03
     ld [hl], a
     ld c, a
@@ -6323,9 +6323,9 @@ jr_001_783d:
     ld h, [hl]
     add b
     ld l, a
-    vcall $b8
+    trap $b8
     ld a, c
-    vcall $bb
+    trap $bb
     ret
 
 
@@ -6375,7 +6375,7 @@ jr_001_787d:
     push de
     ld d, $01
     ld bc, $1305
-    vcall $58
+    trap $58
     pop de
     push de
     ld a, d
@@ -6383,7 +6383,7 @@ jr_001_787d:
     ld d, $02
     ld hl, $010c
     ld bc, $0c03
-    vcall $59
+    trap $59
     pop de
     push de
     inc e
@@ -6391,21 +6391,21 @@ jr_001_787d:
     ld bc, $0001
     ld d, $00
     ld a, $7f
-    vcall $cd
-    vcall $cd
-    vcall $cd
+    trap $cd
+    trap $cd
+    trap $cd
     pop de
     push de
     ld bc, $0001
     ld d, $0e
     ld a, $7e
-    vcall $cd
+    trap $cd
     ld a, $75
-    vcall $cd
-    vcall $cd
-    vcall $cd
+    trap $cd
+    trap $cd
+    trap $cd
     ld a, $7d
-    vcall $cd
+    trap $cd
     pop de
     push de
     inc e
@@ -6415,7 +6415,7 @@ jr_001_787d:
     ld d, $0f
     ld hl, HeaderLogo
     ld bc, $0401
-    vcall $59
+    trap $59
     pop de
     push de
     ld a, d
@@ -6423,7 +6423,7 @@ jr_001_787d:
     ld d, $00
     ld hl, $0102
     ld bc, $0202
-    vcall $59
+    trap $59
     xor a
     call Call_001_7f24
     pop de
@@ -6431,7 +6431,7 @@ jr_001_787d:
     ld de, data_01_7ff0
     ld hl, $87f0
     ld bc, $0010
-    vcall $02
+    trap $02
     ret
 
 
@@ -6478,7 +6478,7 @@ jr_001_7914:
     inc hl
     ld d, [hl]
     ld hl, sp+$00
-    vcall $55
+    trap $55
     ld hl, sp+$3d
     ld a, [hl]
     ld hl, sp+$00
@@ -6538,8 +6538,8 @@ jr_001_795e:
     call Call_001_7f24
 
 jr_001_7969:
-    vcall $b1
-    vcall $d8
+    trap $b1
+    trap $d8
     ld b, a
     and $0c
     jr nz, jr_001_7988
@@ -6825,7 +6825,7 @@ jr_001_7ab1:
     pop hl
 
 jr_001_7abf:
-    vcall $02
+    trap $02
 
 jr_001_7ac1:
     ld hl, $c39c
@@ -7174,14 +7174,14 @@ jr_001_7d6d:
     cp $20
     jr nc, jr_001_7d79
 
-    vcall $b9
+    trap $b9
     jr jr_001_7d6d
 
 jr_001_7d79:
     push de
     ld e, a
     ld d, [hl]
-    vcall $a7
+    trap $a7
     jr nc, jr_001_7d81
 
     inc hl
@@ -7221,7 +7221,7 @@ jr_001_7d90:
     ld a, [hl+]
     ld h, [hl]
     ld l, a
-    vcall $02
+    trap $02
     pop de
     add sp, $20
     pop bc
@@ -7254,7 +7254,7 @@ Call_001_7dc0:
     push de
     push bc
     call jt01_7dcc
-    vcall $02
+    trap $02
     pop bc
     pop de
     pop hl
@@ -7267,7 +7267,7 @@ jt01_7dcc::
     push hl
     ldh a, [$b4]
     ld c, a
-    vcall $ba
+    trap $ba
     ld a, b
     xor $80
     ld h, $00
@@ -7346,7 +7346,7 @@ jr_001_7e2b:
     push bc
     ld c, b
     ld b, $00
-    vcall $02
+    trap $02
     pop bc
     pop de
     ld hl, $0020
@@ -7384,7 +7384,7 @@ jr_001_7e55:
     push bc
     ld c, b
     ld b, $00
-    vcall $02
+    trap $02
     ld hl, sp+$24
     ld a, [hl]
     ld hl, sp+$27
@@ -7551,14 +7551,14 @@ jr_001_7f07:
     cp $20
     jr nc, jr_001_7f13
 
-    vcall $b9
+    trap $b9
     jr jr_001_7f07
 
 jr_001_7f13:
     push de
     ld e, a
     ld d, [hl]
-    vcall $a7
+    trap $a7
     jr nc, jr_001_7f1b
 
     inc hl
@@ -7607,7 +7607,7 @@ jt01_7f2f::
     ld c, l
     ld b, h
     pop hl
-    vcall $02
+    trap $02
     ret
 
 
@@ -7630,7 +7630,7 @@ jr_001_7f52:
     push hl
     ld de, $c3e0
     ld bc, $0010
-    vcall $02
+    trap $02
     pop hl
     ld de, $0010
     add hl, de
