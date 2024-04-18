@@ -458,34 +458,34 @@ jt00_01b9::
     nop
 
 jt00::
-    dw jt00_00e9
-    dw jt00_0150
-    dw jt00_015b
-    dw $6f05
-    dw $6f35
-    dw $6f3e
-    dw $76d8
-    dw $76f1
-    dw $7712
-    dw jt00_02fd
-    dw jt00_01b9
-    dw jt00_01b9
-    dw jt00_01b9
-    dw jt00_01b9
-    dw jt00_00b9
-    dw 0
-    dw jt00_02ed
-    dw jt00_022c
-    dw jt00_0230
-    dw jt00_0234
-    dw jt00_0239
-    dw jt00_023d
-    dw jt00_0241
-    dw jt00_0245
-    dw jt00_0249
-    dw jt00_024d
-    dw jt00_0218
-    dw jt00_0268
+    dw jt00_00e9  ; $00
+    dw jt00_0150  ; $01
+    dw jt00_015b  ; $02
+    dw $6f05      ; $03
+    dw $6f35      ; $04
+    dw $6f3e      ; $05
+    dw $76d8      ; $06
+    dw $76f1      ; $07
+    dw $7712      ; $08
+    dw jt00_02fd  ; $09
+    dw jt00_01b9  ; $0a
+    dw jt00_01b9  ; $0b
+    dw jt00_01b9  ; $0c
+    dw jt00_01b9  ; $0d
+    dw jt00_00b9  ; $0e
+    dw 0          ; $0f
+    dw jt00_02ed  ; $10
+    dw jt00_022c  ; $11
+    dw jt00_0230  ; $12
+    dw jt00_0234  ; $13
+    dw jt00_0239  ; $14
+    dw jt00_023d  ; $15
+    dw jt00_0241  ; $16
+    dw jt00_0245  ; $17
+    dw jt00_0249  ; $18
+    dw jt00_024d  ; $19
+    dw jt00_0218  ; $1a
+    dw jt00_0268  ; $1b
 
 jt00_0218::
     ld de, $0038

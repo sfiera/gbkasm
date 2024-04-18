@@ -6,134 +6,134 @@
 SECTION "ROM Bank $002", ROMX[$4000], BANK[$2]
 
 jt02::
-    dw jt02_5267
-    dw jt02_526e
-    dw jt02_5275
-    dw jt02_527c
-    dw jt02_5283
-    dw jt02_52b3
-    dw jt02_52c8
-    dw jt02_52de
-    dw jt02_52e0
-    dw jt02_52e7
-    dw jt02_5322
-    dw jt02_537a
-    dw jt02_5384
-    dw jt02_53b4
-    dw jt02_5389
-    dw jt02_496e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_54d8
-    dw jt02_53c1
-    dw jt02_53f1
-    dw jt02_547e
-    dw jt02_559e
-    dw jt02_55d2
-    dw jt02_55df
-    dw jt02_5b8d
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_5ff2
-    dw jt02_60c5
-    dw jt02_61c0
-    dw jt02_574b
-    dw jt02_578a
-    dw jt02_58d3
-    dw jt02_605c
-    dw jt02_58f8
-    dw jt02_5901
-    dw jt02_59f5
-    dw jt02_5681
-    dw jt02_593a
-    dw jt02_4100
-    dw jt02_5914
-    dw jt02_5988
-    dw jt02_5e2e
-    dw jt02_5de2
-    dw jt02_5e08
-    dw jt02_69ee
-    dw jt02_4eaf
-    dw jt02_58c4
-    dw jt02_56c4
-    dw jt02_5730
-    dw jt02_571c
-    dw jt02_591b
-    dw jt02_5c54
-    dw jt02_5859
-    dw jt02_417f
-    dw jt02_419f
-    dw jt02_59c1
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_618c
-    dw jt02_6209
-    dw jt02_6178
-    dw jt02_60e2
-    dw jt02_60d2
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_4437
-    dw jt02_4456
-    dw jt02_454a
-    dw jt02_4566
-    dw jt02_4577
-    dw jt02_45ca
-    dw jt02_45da
-    dw jt02_47b7
-    dw jt02_49de
-    dw jt02_4aa0
-    dw jt02_4b98
-    dw jt02_4c9a
-    dw jt02_4ca9
-    dw jt02_4cf1
-    dw jt02_417e
-    dw jt02_48ec
-    dw jt02_4bed
-    dw jt02_4926
-    dw jt02_4881
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_417e
-    dw jt02_41b0
-    dw jt02_4259
-    dw jt02_417e
-    dw jt02_4586
-    dw jt02_4a3c
-    dw jt02_4df6
-    dw jt02_4e7d
-    dw jt02_4e36
+    dw jt02_5267  ; $80
+    dw jt02_526e  ; $81
+    dw jt02_5275  ; $82
+    dw jt02_527c  ; $83
+    dw jt02_5283  ; $84
+    dw jt02_52b3  ; $85
+    dw jt02_52c8  ; $86
+    dw jt02_52de  ; $87
+    dw jt02_52e0  ; $88
+    dw jt02_52e7  ; $89
+    dw jt02_5322  ; $8a
+    dw jt02_537a  ; $8b
+    dw jt02_5384  ; $8c
+    dw jt02_53b4  ; $8d
+    dw jt02_5389  ; $8e
+    dw jt02_496e  ; $8f
+    dw jt02_417e  ; $90
+    dw jt02_417e  ; $91
+    dw jt02_417e  ; $92
+    dw jt02_417e  ; $93
+    dw jt02_417e  ; $94
+    dw jt02_417e  ; $95
+    dw jt02_417e  ; $96
+    dw jt02_417e  ; $97
+    dw jt02_417e  ; $98
+    dw jt02_417e  ; $99
+    dw jt02_417e  ; $9a
+    dw jt02_417e  ; $9b
+    dw jt02_417e  ; $9c
+    dw jt02_417e  ; $9d
+    dw jt02_417e  ; $9e
+    dw jt02_417e  ; $9f
+    dw jt02_54d8  ; $a0
+    dw jt02_53c1  ; $a1
+    dw jt02_53f1  ; $a2
+    dw jt02_547e  ; $a3
+    dw jt02_559e  ; $a4
+    dw jt02_55d2  ; $a5
+    dw jt02_55df  ; $a6
+    dw jt02_5b8d  ; $a7
+    dw jt02_417e  ; $a8
+    dw jt02_417e  ; $a9
+    dw jt02_417e  ; $aa
+    dw jt02_417e  ; $ab
+    dw jt02_417e  ; $ac
+    dw jt02_417e  ; $ad
+    dw jt02_417e  ; $ae
+    dw jt02_417e  ; $af
+    dw jt02_5ff2  ; $b0
+    dw jt02_60c5  ; $b1
+    dw jt02_61c0  ; $b2
+    dw jt02_574b  ; $b3
+    dw jt02_578a  ; $b4
+    dw jt02_58d3  ; $b5
+    dw jt02_605c  ; $b6
+    dw jt02_58f8  ; $b7
+    dw jt02_5901  ; $b8
+    dw jt02_59f5  ; $b9
+    dw jt02_5681  ; $ba
+    dw jt02_593a  ; $bb
+    dw jt02_4100  ; $bc
+    dw jt02_5914  ; $bd
+    dw jt02_5988  ; $be
+    dw jt02_5e2e  ; $bf
+    dw jt02_5de2  ; $c0
+    dw jt02_5e08  ; $c1
+    dw jt02_69ee  ; $c2
+    dw jt02_4eaf  ; $c3
+    dw jt02_58c4  ; $c4
+    dw jt02_56c4  ; $c5
+    dw jt02_5730  ; $c6
+    dw jt02_571c  ; $c7
+    dw jt02_591b  ; $c8
+    dw jt02_5c54  ; $c9
+    dw jt02_5859  ; $ca
+    dw jt02_417f  ; $cb
+    dw jt02_419f  ; $cc
+    dw jt02_59c1  ; $cd
+    dw jt02_417e  ; $ce
+    dw jt02_417e  ; $cf
+    dw jt02_417e  ; $d0
+    dw jt02_417e  ; $d1
+    dw jt02_417e  ; $d2
+    dw jt02_417e  ; $d3
+    dw jt02_417e  ; $d4
+    dw jt02_417e  ; $d5
+    dw jt02_417e  ; $d6
+    dw jt02_417e  ; $d7
+    dw jt02_618c  ; $d8
+    dw jt02_6209  ; $d9
+    dw jt02_6178  ; $da
+    dw jt02_60e2  ; $db
+    dw jt02_60d2  ; $dc
+    dw jt02_417e  ; $dd
+    dw jt02_417e  ; $de
+    dw jt02_417e  ; $df
+    dw jt02_4437  ; $e0
+    dw jt02_4456  ; $e1
+    dw jt02_454a  ; $e2
+    dw jt02_4566  ; $e3
+    dw jt02_4577  ; $e4
+    dw jt02_45ca  ; $e5
+    dw jt02_45da  ; $e6
+    dw jt02_47b7  ; $e7
+    dw jt02_49de  ; $e8
+    dw jt02_4aa0  ; $e9
+    dw jt02_4b98  ; $ea
+    dw jt02_4c9a  ; $eb
+    dw jt02_4ca9  ; $ec
+    dw jt02_4cf1  ; $ed
+    dw jt02_417e  ; $ee
+    dw jt02_48ec  ; $ef
+    dw jt02_4bed  ; $f0
+    dw jt02_4926  ; $f1
+    dw jt02_4881  ; $f2
+    dw jt02_417e  ; $f3
+    dw jt02_417e  ; $f4
+    dw jt02_417e  ; $f5
+    dw jt02_417e  ; $f6
+    dw jt02_417e  ; $f7
+    dw jt02_41b0  ; $f8
+    dw jt02_4259  ; $f9
+    dw jt02_417e  ; $fa
+    dw jt02_4586  ; $fb
+    dw jt02_4a3c  ; $fc
+    dw jt02_4df6  ; $fd
+    dw jt02_4e7d  ; $fe
+    dw jt02_4e36  ; $ff
 
 jt02_4100::
     ld d, a

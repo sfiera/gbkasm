@@ -8,59 +8,59 @@ SECTION "ROM Bank $001", ROMX[$4000], BANK[$1]
     db "Z", $a5, $00, $00, $00, $a0, $1e, $00, $06, $00, $0a, $01, "KISS MAIL", $c3, $9d, "^", $00, $00, "GB KISS MENU ", $00, $00, $00, $82, $82, "DD((", $10, $10, "((DD", $82, $82, $00, $00, $10, $10, "8(8(|D|D", $fe, $82, $fe, $fe, $00, $00, "88|D", $fe, $82, $fe, $82, $fe, $82, "|D88", $00, $00, $10, $10, "8(|D", $fe, $82, "|D8(", $10, $10, $00, $00, "88|D", $fe, $92, $fe, $aa, $fe, $92, "|D88", $10, $10, $18, $18, $fc, $fc, $fe, $fe, $fc, $fc, $18, $18, $10, $10, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
 
 jt01::
-    dw jt01_7dcc
-    dw jt01_7f2f
-    dw jt01_7e77
-    dw jt01_7f04
-    dw jt01_7e90
-    dw jt01_7260
-    dw jt01_665c
-    dw jt01_7730
-    dw jt01_784d
-    dw jt01_7863
-    dw jt01_793f
-    dw jt01_78f0
-    dw jt01_7df1
-    dw jt01_7e03
-    dw jt01_7e43
-    dw jt01_7d47
-    dw jt01_7d60
-    dw jt01_776c
-    dw jt01_7daf
-    dw jt01_77ae
-    dw jt01_777b
-    dw jt01_6d2f
-    dw jt01_7222
-    dw jt01_6d53
-    dw jt01_6d72
-    dw jt01_6de4
-    dw jt01_6e2e
-    dw jt01_6f66
-    dw jt01_6f7a
-    dw jt01_6f8f
-    dw jt01_6f9b
-    dw jt01_6fda
-    dw jt01_6feb
-    dw jt01_714d
-    dw jt01_70ba
-    dw jt01_71e6
-    dw jt01_7138
-    dw jt01_6e8b
-    dw jt01_6e63
-    dw jt01_6a93
-    dw jt01_6c1b
-    dw jt01_6c28
-    dw jt01_6c2f
-    dw jt01_6c3c
-    dw jt01_6c5b
-    dw jt01_6c38
-    dw jt01_6c67
-    dw jt01_6cc3
-    dw jt01_6c8e
-    dw jt01_6c92
-    dw jt01_6cd8
-    dw jt01_6ca5
-    dw jt01_6ca9
+    dw jt01_7dcc  ; $4b
+    dw jt01_7f2f  ; $4c
+    dw jt01_7e77  ; $4d
+    dw jt01_7f04  ; $4e
+    dw jt01_7e90  ; $4f
+    dw jt01_7260  ; $50
+    dw jt01_665c  ; $51
+    dw jt01_7730  ; $52
+    dw jt01_784d  ; $53
+    dw jt01_7863  ; $54
+    dw jt01_793f  ; $55
+    dw jt01_78f0  ; $56
+    dw jt01_7df1  ; $57
+    dw jt01_7e03  ; $58
+    dw jt01_7e43  ; $59
+    dw jt01_7d47  ; $5a
+    dw jt01_7d60  ; $5b
+    dw jt01_776c  ; $5c
+    dw jt01_7daf  ; $5d
+    dw jt01_77ae  ; $5e
+    dw jt01_777b  ; $5f
+    dw jt01_6d2f  ; $60
+    dw jt01_7222  ; $61
+    dw jt01_6d53  ; $62
+    dw jt01_6d72  ; $63
+    dw jt01_6de4  ; $64
+    dw jt01_6e2e  ; $65
+    dw jt01_6f66  ; $66
+    dw jt01_6f7a  ; $67
+    dw jt01_6f8f  ; $68
+    dw jt01_6f9b  ; $69
+    dw jt01_6fda  ; $6a
+    dw jt01_6feb  ; $6b
+    dw jt01_714d  ; $6c
+    dw jt01_70ba  ; $6d
+    dw jt01_71e6  ; $6e
+    dw jt01_7138  ; $6f
+    dw jt01_6e8b  ; $70
+    dw jt01_6e63  ; $71
+    dw jt01_6a93  ; $72
+    dw jt01_6c1b  ; $73
+    dw jt01_6c28  ; $74
+    dw jt01_6c2f  ; $75
+    dw jt01_6c3c  ; $76
+    dw jt01_6c5b  ; $77
+    dw jt01_6c38  ; $78
+    dw jt01_6c67  ; $79
+    dw jt01_6cc3  ; $7a
+    dw jt01_6c8e  ; $7b
+    dw jt01_6c92  ; $7c
+    dw jt01_6cd8  ; $7d
+    dw jt01_6ca5  ; $7e
+    dw jt01_6ca9  ; $7f
 
 j01_4100::
     ld sp, $e000
