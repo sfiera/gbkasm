@@ -28,3 +28,12 @@ FileRoulette::
 
 FileBlackjack::
     INCBIN "gbk/blackjack.gbk"
+
+
+SECTION "ROM Bank $00c", ROMX[$4000], BANK[$c]
+
+FileWorm::
+    INCBIN "gbk/worm.gbk"
+
+FileBinary::
+    INCBIN "gbk/binary.gbk"

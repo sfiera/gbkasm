@@ -35,3 +35,15 @@ FileBiorhythm::
 
 FileBakechuRelay::
     INCBIN "gbk/bakechu-relay.gbk"
+
+
+SECTION "ROM Bank $008", ROMX[$4000], BANK[$8]
+
+FileKissMon::
+    INCBIN "gbk/kiss-mon.gbk"
+
+FileWatchAndTimer::
+    INCBIN "gbk/watch-and-timer.gbk"
+
+FileCalculator::
+    INCBIN "gbk/calculator.gbk"

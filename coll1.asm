@@ -35,3 +35,21 @@ FileMagnetsData::
 
 FileShot::
     INCBIN "gbk/shot.gbk"
+
+
+SECTION "ROM Bank $006", ROMX[$4000], BANK[$6]
+
+FileRandomSelection::
+    db $03
+    dw FileMogutteNanbo
+    dw FileDrive
+    dw FileSameGame
+
+FileMogutteNanbo::
+    INCBIN "gbk/mogutte-nanbo.gbk"
+
+FileDrive::
+    INCBIN "gbk/drive.gbk"
+
+FileSameGame::
+    INCBIN "gbk/samegame.gbk"
