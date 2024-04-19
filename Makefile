@@ -1,17 +1,19 @@
 GBK_ASM = $(wildcard gbk/*.asm)
+GB_ASM = $(wildcard *.asm)
 PNG = $(wildcard gfx/*.png)
 GFX = $(PNG:%.png=%)
 
-ASM = gbkiss.asm $(GBK_ASM)
+ASM = $(GB_ASM) $(GBK_ASM)
 OBJ = $(ASM:%.asm=%.o)
 DEP = $(ASM:%.asm=%.d)
 SYM = $(ASM:%.asm=%.sym)
 MAP = $(ASM:%.asm=%.map)
 GBK = $(GBK_ASM:%.asm=%.gbk)
+GB = $(GB_ASM:%.asm=%.gb)
 
 
 .PHONY: all
-all: gbkiss.gb
+all: $(GB)
 
 %.o: %.asm
 	rgbasm --preserve-ld --nop-after-halt -M $*.d -o $@ $<
@@ -34,10 +36,10 @@ all: gbkiss.gb
 
 .PHONY: clean
 clean:
-	rm -f gbkiss.gb $(GBK) $(OBJ) $(SYM) $(MAP) $(GFX) $(DEP)
+	rm -f $(GB) $(GBK) $(OBJ) $(SYM) $(MAP) $(GFX) $(DEP)
 
 .PHONY: check
-check: gbkiss.gb
+check: $(GB) $(GBK)
 	shasum -c roms.sha1
 
 -include $(DEP)
