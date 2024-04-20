@@ -16,7 +16,7 @@ GB = $(GB_ASM:%.asm=%.gb)
 all: $(GB)
 
 %.o: %.asm
-	rgbasm --preserve-ld --nop-after-halt -M $*.d -o $@ $<
+	rgbasm --preserve-ld -M $*.d -o $@ $<
 
 %.gb: %.o
 	rgblink -n $*.sym -m $*.map -o $@ $<
