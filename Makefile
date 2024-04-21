@@ -48,3 +48,4 @@ gbk/shot.o: gfx/shot.icon
 gbk/koura-1.o: gfx/koura-1.icon
 gbk/koura-2.o: gfx/koura-2.icon
 gbk/koura-3.o: gfx/koura-3.icon
+gbk/sezaki.o: gfx/sezaki.icon
