@@ -9976,7 +9976,27 @@ image_02_6f8e::
     INCBIN "gfx/font.1bpp"
 
 image_02_778e::
-    INCBIN "gfx/tiles_0.2bpp"
+    INCBIN "gfx/borders.icon"
 
-image_02_7f8e::
-    INCBIN "gfx/tiles_1.2bpp"
+    db $01, $81, $40, $41, $42, $43, $44, $45, $ff, $00
+
+gfxLetterIcon::
+    INCBIN "gfx/letter.icon"
+gfxMailIcon::
+    INCBIN "gfx/mail.icon"
+gfxFlyIcon::
+    INCBIN "gfx/hikou0.icon"
+gfxPuzzleIcon::
+    INCBIN "gfx/puzzle0.icon"
+gfxSwordIcon::
+    INCBIN "gfx/ken0.icon"
+gfxCardIcon::
+    INCBIN "gfx/card0.icon"
+gfxMapIcon::
+    INCBIN "gfx/map.icon"
+gfxHouseIcon::
+    INCBIN "gfx/ie2.icon"
+gfxEmptyIcon::
+    INCBIN "gfx/empty.icon"
+gfxHatchIcon::
+    INCBIN "gfx/simula1.icon"
