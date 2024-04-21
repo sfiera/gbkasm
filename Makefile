@@ -1,6 +1,6 @@
 GBK_ASM = $(wildcard gbk/*.asm)
 GB_ASM = $(wildcard *.asm)
-PNG = $(wildcard gfx/*.png)
+PNG = $(wildcard gfx/*.png gfx/*/*.png)
 GFX = $(PNG:%.png=%)
 
 ASM = $(GB_ASM) $(GBK_ASM)
@@ -41,7 +41,7 @@ check: $(GB) $(GBK)
 
 -include $(DEP)
 gbkiss.o: $(GBK) $(GFX) gfx/logo.2bpp.hz
-gbk/shot.o: gfx/shot.2bpp
+gbk/shot.o: gfx/icon/shot.2bpp
 gbk/koura-1.o: gfx/koura-1.2bpp.hz
 gbk/koura-2.o: gfx/koura-2.2bpp.hz
 gbk/koura-3.o: gfx/koura-3.2bpp.hz
