@@ -2582,7 +2582,7 @@ Jump_002_4d44:
 jr_002_4d4c:
     ld b, a
     ld c, $00
-    ld hl, $784e
+    ld hl, data_02_784e
 
 jr_002_4d52:
     ld a, [hl+]
@@ -9978,6 +9978,7 @@ image_02_6f8e::
 image_02_778e::
     INCBIN "gfx/borders.icon"
 
+data_02_784e:
     db $01, $81, $40, $41, $42, $43, $44, $45, $ff, $00
 
 gfxLetterIcon::
