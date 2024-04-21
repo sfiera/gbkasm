@@ -5936,7 +5936,7 @@ data_01_72d2::
     db $10, $09, $70, $7f, $ff
 
 gfxGBKissLogo::
-    INCBIN "gfx/logo.icon.hz"
+    INCBIN "gfx/logo.2bpp.hz"
 
 trap_06_76d8::
     pop de

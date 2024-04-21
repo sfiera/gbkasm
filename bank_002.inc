@@ -9976,28 +9976,28 @@ image_02_6f8e::
     INCBIN "gfx/font.1bpp"
 
 image_02_778e::
-    INCBIN "gfx/borders.icon"
+    INCBIN "gfx/borders.2bpp"
 
 data_02_784e:
     db $01, $81, $40, $41, $42, $43, $44, $45, $ff, $00
 
 gfxLetterIcon::
-    INCBIN "gfx/letter.icon"
+    INCBIN "gfx/letter.2bpp"
 gfxMailIcon::
-    INCBIN "gfx/mail.icon"
+    INCBIN "gfx/mail.2bpp"
 gfxFlyIcon::
-    INCBIN "gfx/hikou0.icon"
+    INCBIN "gfx/hikou0.2bpp"
 gfxPuzzleIcon::
-    INCBIN "gfx/puzzle0.icon"
+    INCBIN "gfx/puzzle0.2bpp"
 gfxSwordIcon::
-    INCBIN "gfx/ken0.icon"
+    INCBIN "gfx/ken0.2bpp"
 gfxCardIcon::
-    INCBIN "gfx/card0.icon"
+    INCBIN "gfx/card0.2bpp"
 gfxMapIcon::
-    INCBIN "gfx/map.icon"
+    INCBIN "gfx/map.2bpp"
 gfxHouseIcon::
-    INCBIN "gfx/ie2.icon"
+    INCBIN "gfx/ie2.2bpp"
 gfxEmptyIcon::
-    INCBIN "gfx/empty.icon"
+    INCBIN "gfx/empty.2bpp"
 gfxHatchIcon::
-    INCBIN "gfx/simula1.icon"
+    INCBIN "gfx/simula1.2bpp"

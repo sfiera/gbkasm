@@ -21,7 +21,7 @@ Header::
 Title::
     db "SHOT"
 Icon::
-    INCBIN "gfx/shot.icon"
+    INCBIN "gfx/shot.2bpp"
 
 Points::
     dw $0001

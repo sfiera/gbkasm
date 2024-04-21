@@ -28,6 +28,6 @@ History::
     ds 11, $00
 
 Body::
-    INCBIN "gfx/sezaki.icon.hz"
+    INCBIN "gfx/sezaki.2bpp.hz"
 
 End:

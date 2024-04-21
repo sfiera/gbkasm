@@ -26,13 +26,10 @@ all: $(GB)
 	rgblink -n $*.sym -x -o $@ $<
 
 %.2bpp: %.2bpp.png
-	rgbgfx -d2 -o $@ $<
+	rgbgfx -Z -d2 -o $@ $<
 
 %.1bpp: %.1bpp.png
 	rgbgfx -d1 -o $@ $<
-
-%.icon: %.icon.png
-	rgbgfx -Z -o $@ $<
 
 .PHONY: clean
 clean:
@@ -43,9 +40,9 @@ check: $(GB) $(GBK)
 	shasum -c roms.sha1
 
 -include $(DEP)
-gbkiss.o: $(GBK) $(GFX) gfx/logo.icon.hz
-gbk/shot.o: gfx/shot.icon
-gbk/koura-1.o: gfx/koura-1.icon.hz
-gbk/koura-2.o: gfx/koura-2.icon.hz
-gbk/koura-3.o: gfx/koura-3.icon.hz
-gbk/sezaki.o: gfx/sezaki.icon.hz
+gbkiss.o: $(GBK) $(GFX) gfx/logo.2bpp.hz
+gbk/shot.o: gfx/shot.2bpp
+gbk/koura-1.o: gfx/koura-1.2bpp.hz
+gbk/koura-2.o: gfx/koura-2.2bpp.hz
+gbk/koura-3.o: gfx/koura-3.2bpp.hz
+gbk/sezaki.o: gfx/sezaki.2bpp.hz

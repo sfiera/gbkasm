@@ -28,6 +28,6 @@ History::
     ds 11, $00
 
 Body::
-    INCBIN "gfx/koura-1.icon.hz"
+    INCBIN "gfx/koura-1.2bpp.hz"
 
 End:
