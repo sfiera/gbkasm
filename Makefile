@@ -45,3 +45,6 @@ check: $(GB) $(GBK)
 -include $(DEP)
 gbkiss.o: $(GBK) $(GFX) gfx/logo.icon.hz
 gbk/shot.o: gfx/shot.icon
+gbk/koura-1.o: gfx/koura-1.icon
+gbk/koura-2.o: gfx/koura-2.icon
+gbk/koura-3.o: gfx/koura-3.icon
