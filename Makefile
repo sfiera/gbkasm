@@ -43,5 +43,5 @@ check: $(GB) $(GBK)
 	shasum -c roms.sha1
 
 -include $(DEP)
-gbkiss.o: $(GBK) $(GFX)
+gbkiss.o: $(GBK) $(GFX) gfx/logo.icon.hz
 gbk/shot.o: gfx/shot.icon
