@@ -28,22 +28,22 @@ FileCollection3::
     TableEntry FilePoker, "ﾎﾟｰｶｰ\n"
 
 FileCannonBall::
-    INCBIN "gbk/cannon-ball.gbk"
+    INCBIN "file/cannon-ball.gbk"
 
 FilePoker::
-    INCBIN "gbk/poker.gbk"
+    INCBIN "file/poker.gbk"
 
 
 SECTION "ROM Bank $00a", ROMX[$4000], BANK[$a]
 
 FileIconSend::
-    INCBIN "gbk/icon-send.gbk"
+    INCBIN "file/icon-send.gbk"
 
 FileIconEdit::
-    INCBIN "gbk/icon-edit.gbk"
+    INCBIN "file/icon-edit.gbk"
 
 FilePuzzleGame::
-    INCBIN "gbk/puzzle-game.gbk"
+    INCBIN "file/puzzle-game.gbk"
 
 FileSlot::
-    INCBIN "gbk/slot.gbk"
+    INCBIN "file/slot.gbk"

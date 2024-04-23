@@ -26,16 +26,16 @@ FileCollection5::
     TableEntry FileNum0Data, "ｽﾄｯﾌﾟｳｫｯﾁ«ｽｳｼﾞ»ﾃﾞｰﾀ\n"
 
 FileKoura1::
-    INCBIN "gbk/koura-1.gbk"
+    INCBIN "file/koura-1.gbk"
 
 FileKoura2::
-    INCBIN "gbk/koura-2.gbk"
+    INCBIN "file/koura-2.gbk"
 
 FileKoura3::
-    INCBIN "gbk/koura-3.gbk"
+    INCBIN "file/koura-3.gbk"
 
 FileSezaki::
-    INCBIN "gbk/sezaki.gbk"
+    INCBIN "file/sezaki.gbk"
 
 FileNum0Data::
-    INCBIN "gbk/num0-data.gbk"
+    INCBIN "file/num0-data.gbk"

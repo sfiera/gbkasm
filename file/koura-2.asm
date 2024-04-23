@@ -1,6 +1,6 @@
 INCLUDE "charmap.inc"
 INCLUDE "macro.inc"
-INCLUDE "gbk/common.inc"
+INCLUDE "file/common.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
@@ -17,7 +17,7 @@ Header::
     db $64
 
 Title::
-    db "KOURA3"
+    db "KOURA2"
 Points::
     dw 100
 Author::
@@ -28,6 +28,6 @@ History::
     ds 11, $00
 
 Body::
-    INCBIN "gfx/koura-3.2bpp.hz"
+    INCBIN "gfx/koura-2.2bpp.hz"
 
 End:

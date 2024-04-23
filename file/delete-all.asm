@@ -1,6 +1,6 @@
 INCLUDE "charmap.inc"
 INCLUDE "macro.inc"
-INCLUDE "gbk/common.inc"
+INCLUDE "file/common.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
@@ -8,26 +8,33 @@ Header::
     ; Length of entirety of file
     dw End
     ; Flags for display in menu
-    db kFileMarkerTriangle + kFileHasTransfers
+    db kFileMarkerCircle
     ; Must be $00 for normal files (other than Kiss Mail)
     db $00
     ; Length of variable parts of header
-    db Points - @ - 1
+    db Main - @ - 1
     ; File owner code
-    db $64
+    db $43
 
 Title::
-    db "KOURA1"
-Points::
-    dw 100
-Author::
-    db "NONCHAN   ", 2
-History::
-    ds 11, $00
-    ds 11, $00
-    ds 11, $00
+    db "DEL_ALL"
 
-Body::
-    INCBIN "gfx/koura-1.2bpp.hz"
+Main::
+    ld hl, $c500
+    xor a
+    ld [hli], a
+    ld [hld], a
+
+jr1:
+    push hl
+    trap $e8
+    jr c, jr2
+
+    trap $ef
+    pop hl
+    jr jr1
+
+jr2:
+    trap $01
 
 End:

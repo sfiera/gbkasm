@@ -1,6 +1,6 @@
 INCLUDE "charmap.inc"
 INCLUDE "macro.inc"
-INCLUDE "gbk/common.inc"
+INCLUDE "file/common.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
@@ -14,20 +14,20 @@ Header::
     ; Length of variable parts of header
     db Points - @ - 1
     ; File owner code
-    db $65
+    db $64
 
 Title::
-    db "SEZAKI"
+    db "KOURA3"
 Points::
-    dw 0
+    dw 100
 Author::
-    db "SEZAKI    ", 2
+    db "NONCHAN   ", 2
 History::
     ds 11, $00
     ds 11, $00
     ds 11, $00
 
 Body::
-    INCBIN "gfx/sezaki.2bpp.hz"
+    INCBIN "gfx/koura-3.2bpp.hz"
 
 End:

@@ -2,7 +2,7 @@
 
 INCLUDE "charmap.inc"
 INCLUDE "macro.inc"
-INCLUDE "gbk/common.inc"
+INCLUDE "file/common.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
