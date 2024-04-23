@@ -41,8 +41,9 @@ check: $(GB) $(GBK)
 
 -include $(DEP)
 gbkiss.o: $(GBK) $(GFX) gfx/logo.2bpp.hz
-gbk/shot.o: gfx/icon/shot.2bpp
 gbk/koura-1.o: gfx/koura-1.2bpp.hz
 gbk/koura-2.o: gfx/koura-2.2bpp.hz
 gbk/koura-3.o: gfx/koura-3.2bpp.hz
 gbk/sezaki.o: gfx/sezaki.2bpp.hz
+gbk/shot.o: gfx/icon/shot.2bpp
+gbk/simula1.o: gfx/icon/simula1.2bpp
