@@ -2389,10 +2389,12 @@ Call_000_3fe0::
     ld a, BANK(Jump_003_4006_Origin)
     rst $20
     pop af
-    ld bc, data_00_3fe0
+    ld bc, code_00_3fea
     push bc
     jp hl
 
 
-data_00_3fe0::
-    db $3e, $04, $e7, $c9
+code_00_3fea::
+    ld a, $04
+    rst $20
+    ret
