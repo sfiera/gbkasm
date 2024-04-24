@@ -176,6 +176,8 @@ CHARMAP "ﾟ", $df
 
 NEWCHARMAP BodyCharmap, ASCIICharmap
 
+CHARMAP "\n", $00
+
 CHARMAP "a", $01
 CHARMAP "b", $02
 CHARMAP "c", $03

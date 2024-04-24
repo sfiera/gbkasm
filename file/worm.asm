@@ -158,7 +158,7 @@ call_0103:
 
 jr_0106:
     trap $b1
-    ld e, $20
+    ld e, " "
     rcall call_0149
     ldh a, [$8b]
     bit 6, a
@@ -178,7 +178,7 @@ jr_011c:
     inc c
 
 jr_0128:
-    ld e, $3e
+    ld e, ">"
     rcall call_0149
     ld a, [$c752]
     inc a
@@ -255,19 +255,23 @@ jr_01f4:
     ret
 
 
+PUSHC
+SETCHARMAP BodyCharmap
+
 call_01fc:
     rcall call_0067
     ld bc, $0000
 
 jr_0206:
+    ; Draw “-” across rows 0 and 16
     ld h, c
     ld l, $00
     trap MoveCursor
-    ld a, $2d
+    ld a, "-"
     trap $bb
     ld l, $10
     trap MoveCursor
-    ld a, $2d
+    ld a, "-"
     trap $bb
     inc c
     ld a, c
@@ -277,37 +281,41 @@ jr_0206:
     ld bc, $0000
 
 jr_0220:
+    ; Draw “|” down columns 0 and 19
     ld l, c
     ld h, $00
     trap MoveCursor
-    ld a, $1c
+    ld a, "|"
     trap $bb
     ld h, $13
     trap MoveCursor
-    ld a, $1c
+    ld a, "|"
     trap $bb
     inc c
     ld a, c
     cp $10
     jr nz, jr_0220
 
+    ; Draw “+” at (x={0,19}, y={0,16})
     ld hl, $0000
     trap MoveCursor
-    ld a, $2b
+    ld a, "+"
     trap $bb
     ld hl, $1300
     trap MoveCursor
-    ld a, $2b
+    ld a, "+"
     trap $bb
     ld hl, $0010
     trap MoveCursor
-    ld a, $2b
+    ld a, "+"
     trap $bb
     ld hl, $1310
     trap MoveCursor
-    ld a, $2b
+    ld a, "+"
     trap $bb
     ret
+
+POPC
 
 
 call_025c:
@@ -574,7 +582,7 @@ call_0403:
     pop af
     ld h, a
     trap MoveCursor
-    ld a, $2b
+    ld a, "+"
     trap $bb
     ld b, $00
     ld c, $01
@@ -589,7 +597,7 @@ call_0403:
     pop af
     ld h, a
     trap MoveCursor
-    ld a, $4f
+    ld a, "O"
     trap $bb
     ld hl, $c600
     ld a, [hl]
@@ -600,7 +608,7 @@ call_0403:
     pop af
     ld h, a
     trap MoveCursor
-    ld a, $51
+    ld a, "Q"
     trap $bb
     ld hl, $c600
     ld a, [hl]
@@ -636,7 +644,7 @@ jr_0460:
     pop af
     ld h, a
     trap MoveCursor
-    ld a, $20
+    ld a, " "
     trap $bb
     ret
 
@@ -819,7 +827,7 @@ jr_055c:
     ld [hl], a
     inc c
     ld a, c
-    cp $4f
+    cp "O"
     jr nz, jr_055c
 
     ret
@@ -1093,7 +1101,7 @@ call_06ec:
     ld a, [$c747]
     ld l, a
     trap MoveCursor
-    ld a, $2a
+    ld a, "*"
     trap $bb
     ld a, [$c741]
     cp $01
