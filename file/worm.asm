@@ -16,6 +16,7 @@ DEF ExitToMenu EQU $01
 DEF MoveCursor EQU $b8
 DEF DrawChar EQU $bb
 DEF DrawString EQU $69
+DEF IntToString EQU $a3
 DEF RandInit EQU $8d
 DEF RandNext EQU $8e
 DEF PlaySound EQU $14
@@ -343,7 +344,7 @@ call_025c:
     ld a, [varScore+1]
     ld d, a
     ld hl, varNumBuffer
-    trap $a3
+    trap IntToString
     ld hl, varNumBuffer+2
     trap DrawString
     ret
@@ -366,7 +367,7 @@ call_027e:
     ld a, [SavedHiScoreHi]
     ld d, a
     ld hl, varNumBuffer
-    trap $a3
+    trap IntToString
     ld hl, varNumBuffer+2
     trap DrawString
     ret
@@ -412,7 +413,7 @@ call_02ce:
     ld e, a
     ld d, $00
     ld hl, varNumBuffer
-    trap $a3
+    trap IntToString
     ld hl, varNumBuffer+4
     trap DrawString
     ret
