@@ -485,7 +485,6 @@ jr_0389:
     bit 0, a
     jr z, jr_0389
 
-jr_038f:
     ret
 
 
@@ -505,16 +504,10 @@ jr_03b9:
 
     add $10
     ld hl, $c600
-
-jr_03c2:
     inc a
     inc a
-
-jr_03c4:
     ld [hl], a
     ld d, a
-
-jr_03c6:
     trap $8e
 
 jr_03c8:
@@ -552,8 +545,6 @@ jr_03d9:
     ld [$c740], a
     ld a, $00
     ld [$c742], a
-
-jr_03fd:
     ld a, $0a
     ld [$c741], a
     ret
