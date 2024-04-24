@@ -12,6 +12,9 @@ MACRO rcall
     ret
 ENDM
 
+DEF MoveCursor EQU $b8
+DEF DrawString EQU $69
+
 Header::
     ; Length of entirety of file
     dw End
@@ -84,23 +87,26 @@ call_0070:
 
 
 call_008d:
+    ; Draw line above title at (x=3, y=3)
     ld hl, $0303
-    trap $b8
+    trap MoveCursor
     rpush data1
     pop hl
-    trap $69
+    trap DrawString
 
+    ; Draw title at (x=3, y=5)
     ld hl, $0305
-    trap $b8
+    trap MoveCursor
     rpush data2
     pop hl
-    trap $69
+    trap DrawString
 
+    ; Draw line below title at (x=3, y=7)
     ld hl, $0307
-    trap $b8
+    trap MoveCursor
     rpush data3
     pop hl
-    trap $69
+    trap DrawString
 
     ret
 
@@ -112,16 +118,20 @@ data3:
     db "+OOOOOOOOOOOOQ\n"
 
 call_00dc:
+    ; Draw “GAME START” at (x=5, y=12)
     ld hl, $050c
-    trap $b8
+    trap MoveCursor
     rpush data4
     pop hl
-    trap $69
+    trap DrawString
+
+    ; Draw “EXIT” at (x=5, y=14)
     ld hl, $050e
-    trap $b8
+    trap MoveCursor
     rpush data5
     pop hl
-    trap $69
+    trap DrawString
+
     ret
 
 
@@ -179,7 +189,7 @@ call_0149:
     sla a
     add $0c
     ld l, a
-    trap $b8
+    trap MoveCursor
     ld a, e
     trap $bb
     ret
@@ -240,11 +250,11 @@ call_01fc:
 jr_000_0206:
     ld h, c
     ld l, $00
-    trap $b8
+    trap MoveCursor
     ld a, $2d
     trap $bb
     ld l, $10
-    trap $b8
+    trap MoveCursor
     ld a, $2d
     trap $bb
     inc c
@@ -257,11 +267,11 @@ jr_000_0206:
 jr_000_0220:
     ld l, c
     ld h, $00
-    trap $b8
+    trap MoveCursor
     ld a, $1c
     trap $bb
     ld h, $13
-    trap $b8
+    trap MoveCursor
     ld a, $1c
     trap $bb
     inc c
@@ -270,30 +280,33 @@ jr_000_0220:
     jr nz, jr_000_0220
 
     ld hl, $0000
-    trap $b8
+    trap MoveCursor
     ld a, $2b
     trap $bb
     ld hl, $1300
-    trap $b8
+    trap MoveCursor
     ld a, $2b
     trap $bb
     ld hl, $0010
-    trap $b8
+    trap MoveCursor
     ld a, $2b
     trap $bb
     ld hl, $1310
-    trap $b8
+    trap MoveCursor
     ld a, $2b
     trap $bb
     ret
 
 
 call_025c:
+    ; Draw “SC:” at (x=8, y=17)
     ld hl, $0811
-    trap $b8
+    trap MoveCursor
     rpush data10
     pop hl
-    trap $69
+    trap DrawString
+
+    ; Convert score to string and draw
     ld a, [$c749]
     ld e, a
     ld a, [$c74a]
@@ -301,7 +314,7 @@ call_025c:
     ld hl, $c74b
     trap $a3
     ld hl, $c74d
-    trap $69
+    trap DrawString
     ret
 
 
@@ -309,13 +322,14 @@ data10:
     db "SC:\n"
 
 call_027e:
+    ; Draw “HI:” at (x=0, y=17)
     ld hl, $0011
-    trap $b8
+    trap MoveCursor
     rpush data6
-
-jr_000_0286:
     pop hl
-    trap $69
+    trap DrawString
+
+    ; Convert high score to string and draw
     ld a, [$a042]
     ld e, a
     ld a, [$a043]
@@ -323,7 +337,7 @@ jr_000_0286:
     ld hl, $c74b
     trap $a3
     ld hl, $c74d
-    trap $69
+    trap DrawString
     ret
 
 data6:
@@ -357,18 +371,20 @@ updateHiScore:
 
 
 call_02ce:
+    ; Draw “P:” at (x=16, y=17)
     ld hl, $1011
-    trap $b8
+    trap MoveCursor
     rpush data14
     pop hl
-    trap $69
+    trap DrawString
+
     ld a, [$c744]
     ld e, a
     ld d, $00
     ld hl, $c74b
     trap $a3
     ld hl, $c74f
-    trap $69
+    trap DrawString
     ret
 
 
@@ -376,33 +392,40 @@ data14:
     db "P:\n"
 
 call_02ed:
+    ; Draw outer top of GAMEOVER box at (x=4, y=6)
     ld hl, $0406
-    trap $b8
+    trap MoveCursor
     rpush data7
-
-jr_000_02f5:
     pop hl
-    trap $69
+    trap DrawString
+
+    ; Draw inner top of GAMEOVER box at (x=4, y=7)
     ld hl, $0407
-    trap $b8
+    trap MoveCursor
     rpush data8
     pop hl
-    trap $69
+    trap DrawString
+
+    ; Draw GAMEOVER at (x=4, y=8)
     ld hl, $0408
-    trap $b8
+    trap MoveCursor
     rpush data9
     pop hl
-    trap $69
+    trap DrawString
+
+    ; Draw inner bottom of GAMEOVER box at (x=4, y=9)
     ld hl, $0409
-    trap $b8
+    trap MoveCursor
     rpush data8
     pop hl
-    trap $69
+    trap DrawString
+
+    ; Draw outer bottom of GAMEOVER box at (x=4, y=10)
     ld hl, $040a
-    trap $b8
+    trap MoveCursor
     rpush data7
     pop hl
-    trap $69
+    trap DrawString
 
 jr_000_0324:
     ldh a, [$8a]
@@ -420,31 +443,40 @@ data9:
     db "| GAMEOVER |\n"
 
 call_0352:
+    ; Draw outer top of PERFECT box at (x=4, y=6)
     ld hl, $0406
-    trap $b8
+    trap MoveCursor
     rpush data11
     pop hl
-    trap $69
+    trap DrawString
+
+    ; Draw inner top of PERFECT box at (x=4, y=7)
     ld hl, $0407
-    trap $b8
+    trap MoveCursor
     rpush data12
     pop hl
-    trap $69
+    trap DrawString
+
+    ; Draw PERFECT at (x=4, y=8)
     ld hl, $0408
-    trap $b8
+    trap MoveCursor
     rpush data13
     pop hl
-    trap $69
+    trap DrawString
+
+    ; Draw inner bottom of PERFECT box at (x=4, y=9)
     ld hl, $0409
-    trap $b8
+    trap MoveCursor
     rpush data12
     pop hl
-    trap $69
+    trap DrawString
+
+    ; Draw outer bottom of PERFECT box at (x=4, y=9)
     ld hl, $040a
-    trap $b8
+    trap MoveCursor
     rpush data11
     pop hl
-    trap $69
+    trap DrawString
 
 jr_000_0389:
     ldh a, [$8a]
@@ -539,7 +571,7 @@ call_0403:
     ld l, a
     pop af
     ld h, a
-    trap $b8
+    trap MoveCursor
     ld a, $2b
     trap $bb
     ld b, $00
@@ -554,7 +586,7 @@ call_0403:
     ld l, a
     pop af
     ld h, a
-    trap $b8
+    trap MoveCursor
     ld a, $4f
     trap $bb
     ld hl, $c600
@@ -565,7 +597,7 @@ call_0403:
     ld l, a
     pop af
     ld h, a
-    trap $b8
+    trap MoveCursor
     ld a, $51
     trap $bb
     ld hl, $c600
@@ -601,7 +633,7 @@ jr_000_0460:
     ld l, a
     pop af
     ld h, a
-    trap $b8
+    trap MoveCursor
     ld a, $20
     trap $bb
     ret
@@ -1058,7 +1090,7 @@ call_06ec:
     ld h, a
     ld a, [$c747]
     ld l, a
-    trap $b8
+    trap MoveCursor
     ld a, $2a
     trap $bb
     ld a, [$c741]
