@@ -12,6 +12,7 @@ MACRO rcall
     ret
 ENDM
 
+DEF ExitToMenu EQU $01
 DEF MoveCursor EQU $b8
 DEF DrawChar EQU $bb
 DEF DrawString EQU $69
@@ -77,7 +78,7 @@ jr_005f:
     jr nz, jr_004a
 
     trap $11
-    trap $01
+    trap ExitToMenu
 
 call_0067:
     ld a, $0c
