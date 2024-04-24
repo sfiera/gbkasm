@@ -15,6 +15,9 @@ ENDM
 DEF MoveCursor EQU $b8
 DEF DrawString EQU $69
 
+DEF SavedHiScoreLo EQU $a042
+DEF SavedHiScoreHi EQU $a043
+
 Header::
     ; Length of entirety of file
     dw End
@@ -175,7 +178,7 @@ jr2:
 
     bit 0, a
     jr z, jr3
-    ld a, [$a043]
+    ld a, [SavedHiScoreHi]
     ld h, a
     ld a, [$c752]
     ld l, a
@@ -330,9 +333,9 @@ call_027e:
     trap DrawString
 
     ; Convert high score to string and draw
-    ld a, [$a042]
+    ld a, [SavedHiScoreLo]
     ld e, a
-    ld a, [$a043]
+    ld a, [SavedHiScoreHi]
     ld d, a
     ld hl, $c74b
     trap $a3
@@ -348,9 +351,9 @@ call_02a0:
     ld e, a
     ld a, [$c74a]
     ld d, a
-    ld a, [$a042]
+    ld a, [SavedHiScoreLo]
     ld l, a
-    ld a, [$a043]
+    ld a, [SavedHiScoreHi]
     ld h, a
     ld c, $06
     trap $84
@@ -358,13 +361,12 @@ call_02a0:
     cp $00
     ret z
 
-updateHiScore:
     ld a, $0a
     ld [$0000], a
     ld a, [$c749]
-    ld [$a042], a
+    ld [SavedHiScoreLo], a
     ld a, [$c74a]
-    ld [$a043], a
+    ld [SavedHiScoreHi], a
     xor a
     ld [$0000], a
     ret
