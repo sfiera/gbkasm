@@ -526,7 +526,7 @@ InitField:
     jr nc, :-
 
     add $10
-    ld hl, $c600
+    ld hl, varSnakeX
     inc a
     inc a
     ld [hl], a
@@ -537,7 +537,7 @@ InitField:
     jr nc, :-
 
     add $0d
-    ld hl, $c650
+    ld hl, varSnakeY
     inc a
     inc a
     ld [hl], a
@@ -546,16 +546,16 @@ InitField:
     ld c, $01
 
 .next
-    ld hl, $c600
+    ld hl, varSnakeX
     add hl, bc
     ld [hl], d
-    ld hl, $c6a0
+    ld hl, varLastX
     add hl, bc
     ld [hl], d
-    ld hl, $c650
+    ld hl, varSnakeY
     add hl, bc
     ld [hl], e
-    ld hl, $c6f0
+    ld hl, varLastY
     add hl, bc
     ld [hl], e
     inc c
@@ -576,11 +576,11 @@ DrawSnake:
     ld b, $00
     ld a, [varSnakeLen]
     ld c, a
-    ld hl, $c600
+    ld hl, varSnakeX
     add hl, bc
     ld a, [hl]
     push af
-    ld hl, $c650
+    ld hl, varSnakeY
     add hl, bc
     ld a, [hl]
     ld l, a
@@ -591,11 +591,11 @@ DrawSnake:
     trap DrawChar
     ld b, $00
     ld c, $01
-    ld hl, $c600
+    ld hl, varSnakeX
     add hl, bc
     ld a, [hl]
     push af
-    ld hl, $c650
+    ld hl, varSnakeY
     add hl, bc
     ld a, [hl]
     ld l, a
@@ -604,10 +604,10 @@ DrawSnake:
     trap MoveCursor
     ld a, "O"
     trap DrawChar
-    ld hl, $c600
+    ld hl, varSnakeX
     ld a, [hl]
     push af
-    ld hl, $c650
+    ld hl, varSnakeY
     ld a, [hl]
     ld l, a
     pop af
@@ -615,18 +615,18 @@ DrawSnake:
     trap MoveCursor
     ld a, "Q"
     trap DrawChar
-    ld hl, $c600
+    ld hl, varSnakeX
     ld a, [hl]
     ld b, a
-    ld hl, $c6a0
+    ld hl, varLastX
     ld a, [hl]
     cp b
     jr nz, .jr_0460
 
-    ld hl, $c650
+    ld hl, varSnakeY
     ld a, [hl]
     ld b, a
-    ld hl, $c6f0
+    ld hl, varLastY
     ld a, [hl]
     cp b
     jr nz, .jr_0460
@@ -638,11 +638,11 @@ DrawSnake:
     ld b, $00
     ld a, [varSnakeLen]
     ld c, a
-    ld hl, $c6a0
+    ld hl, varLastX
     add hl, bc
     ld a, [hl]
     push af
-    ld hl, $c6f0
+    ld hl, varLastY
     add hl, bc
     ld a, [hl]
     ld l, a
@@ -659,16 +659,16 @@ HandleInput:
     ld c, $00
 
 .next
-    ld hl, $c600
+    ld hl, varSnakeX
     add hl, bc
     ld a, [hl]
-    ld hl, $c6a0
+    ld hl, varLastX
     add hl, bc
     ld [hl], a
-    ld hl, $c650
+    ld hl, varSnakeY
     add hl, bc
     ld a, [hl]
-    ld hl, $c6f0
+    ld hl, varLastY
     add hl, bc
     ld [hl], a
     inc c
@@ -736,7 +736,7 @@ HandleInput:
     cp $01
     jr nz, :+
 
-    ld hl, $c600
+    ld hl, varSnakeX
     ld a, [hl]
     cp $00
     jr z, :+
@@ -748,7 +748,7 @@ HandleInput:
     cp $02
     jr nz, :+
 
-    ld hl, $c600
+    ld hl, varSnakeX
     ld a, [hl]
     cp $13
     jr z, :+
@@ -760,7 +760,7 @@ HandleInput:
     cp $03
     jr nz, :+
 
-    ld hl, $c650
+    ld hl, varSnakeY
     ld a, [hl]
     cp $00
     jr z, :+
@@ -772,7 +772,7 @@ HandleInput:
     cp $04
     jr nz, :+
 
-    ld hl, $c650
+    ld hl, varSnakeY
     ld a, [hl]
     cp $10
     jr z, :+
@@ -784,18 +784,18 @@ HandleInput:
     cp $00
     ret z
 
-    ld hl, $c600
+    ld hl, varSnakeX
     ld a, [hl]
     ld b, a
-    ld hl, $c6a0
+    ld hl, varLastX
     ld a, [hl]
     cp b
     jr nz, :+
 
-    ld hl, $c650
+    ld hl, varSnakeY
     ld a, [hl]
     ld b, a
-    ld hl, $c6f0
+    ld hl, varLastY
     ld a, [hl]
     cp b
     jr nz, :+
@@ -806,18 +806,18 @@ HandleInput:
 :   ld bc, $0000
 
 .next2
-    ld hl, $c6a0
+    ld hl, varLastX
     add hl, bc
     ld a, [hl]
-    ld hl, $c600
+    ld hl, varSnakeX
     inc c
     add hl, bc
     dec c
     ld [hl], a
-    ld hl, $c6f0
+    ld hl, varLastY
     add hl, bc
     ld a, [hl]
-    ld hl, $c650
+    ld hl, varSnakeY
     inc c
     add hl, bc
     dec c
@@ -832,7 +832,7 @@ HandleInput:
 
 CheckWallHit:
     ld c, $01
-    ld hl, $c600
+    ld hl, varSnakeX
     ld a, [hl]
     cp $00
     ret z
@@ -840,7 +840,7 @@ CheckWallHit:
     cp $13
     ret z
 
-    ld hl, $c650
+    ld hl, varSnakeY
     ld a, [hl]
     cp $00
     ret z
@@ -853,18 +853,18 @@ CheckWallHit:
 
 
 CheckSelfHit:
-    ld hl, $c600
+    ld hl, varSnakeX
     ld a, [hl]
     ld b, a
-    ld hl, $c6a0
+    ld hl, varLastX
     ld a, [hl]
     cp b
     jr nz, .jr_05af
 
-    ld hl, $c650
+    ld hl, varSnakeY
     ld a, [hl]
     ld b, a
-    ld hl, $c6f0
+    ld hl, varLastY
     ld a, [hl]
     cp b
     jr nz, .jr_05af
@@ -874,23 +874,23 @@ CheckSelfHit:
 
 
 .jr_05af
-    ld hl, $c600
+    ld hl, varSnakeX
     ld a, [hl]
     ld d, a
-    ld hl, $c650
+    ld hl, varSnakeY
     ld a, [hl]
     ld e, a
     ld b, $00
     ld c, $01
 
 .jr_05bd
-    ld hl, $c600
+    ld hl, varSnakeX
     add hl, bc
     ld a, [hl]
     cp d
     jr nz, .jr_05d0
 
-    ld hl, $c650
+    ld hl, varSnakeY
     add hl, bc
     ld a, [hl]
     cp e
@@ -921,14 +921,14 @@ CheckFoodHit:
     ret nz
 
     ld c, $00
-    ld hl, $c600
+    ld hl, varSnakeX
     ld a, [hl]
     ld b, a
     ld a, [varFoodCol]
     cp b
     ret nz
 
-    ld hl, $c650
+    ld hl, varSnakeY
     ld a, [hl]
     ld b, a
     ld a, [varFoodRow]
@@ -1047,7 +1047,7 @@ AddFood:
 .jr_06b1
     ld a, [varFoodCol]
     ld d, a
-    ld hl, $c600
+    ld hl, varSnakeX
     add hl, bc
     ld a, [hl]
     cp d
@@ -1055,7 +1055,7 @@ AddFood:
 
     ld a, [varFoodRow]
     ld e, a
-    ld hl, $c650
+    ld hl, varSnakeY
     add hl, bc
     ld a, [hl]
     cp e
@@ -1121,7 +1121,12 @@ DrawFood:
 End:
 
 
-SECTION "Variables", WRAM0[$c740]
+SECTION "Variables", WRAM0[$c600]
+
+varSnakeX: ds $50   ; X positions of snake segments
+varSnakeY: ds $50   ; Y positions of snake segments
+varLastX: ds $50    ; Previous X positions of snake segments
+varLastY: ds $50    ; Previous Y positions of snake segments
 
 varSnakeLen: ds 1   ; Current snake length
 varCountdown: ds 1  ; Unknown countdown (10 → 0)
