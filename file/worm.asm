@@ -75,11 +75,11 @@ Main::
     rcall call_006c
 
 .jr_004a
-    rcall call_0070
+    rcall MenuMain
     ld a, c
     cp $00
     jr nz, .jr_005f
-    rcall call_0157
+    rcall GameMain
     jr .jr_004a
 
 .jr_005f
@@ -102,7 +102,7 @@ call_006c:
     ret
 
 
-call_0070:
+MenuMain:
     rcall call_0067
     rcall DrawTitle
     rcall DrawMenu
@@ -171,7 +171,7 @@ HandleMenu:
 .jr_0106
     trap $b1
     ld e, " "
-    rcall call_0149
+    rcall DrawSelection
     ldh a, [$8b]
     bit BtnUp, a
     jr z, .jr_011c
@@ -191,7 +191,7 @@ HandleMenu:
 
 .jr_0128
     ld e, ">"
-    rcall call_0149
+    rcall DrawSelection
     ld a, [varTicker]
     inc a
     ld [varTicker], a
@@ -207,7 +207,7 @@ HandleMenu:
     ret
 
 
-call_0149:
+DrawSelection:
     ld h, $03
     ld a, c
     sla a
@@ -219,7 +219,7 @@ call_0149:
     ret
 
 
-call_0157:
+GameMain:
     ld a, $00
     ld [varNeedFood], a
     ld [varGameOver], a
@@ -230,25 +230,25 @@ call_0157:
     ld [varDeadline], a
     ld [varTicker], a
     ld [varPoint], a
-    rcall call_03b7
-    rcall call_01fc
-    rcall call_025c
-    rcall call_027e
-    rcall call_02ce
+    rcall InitField
+    rcall InitBorder
+    rcall DrawScore
+    rcall DrawHighScore
+    rcall DrawPoints
     ld a, $05
     trap $13
 
 .jr_019a
     trap $b1
-    rcall call_0688
-    rcall call_06ec
-    rcall call_047b
-    rcall call_0403
-    rcall call_02ce
-    rcall call_05fe
-    rcall call_0613
-    rcall call_0628
-    rcall call_0675
+    rcall AddFood
+    rcall DrawFood
+    rcall HandleInput
+    rcall DrawSnake
+    rcall DrawPoints
+    rcall HandleWallHit
+    rcall HandleSelfHit
+    rcall HandleFoodHit
+    rcall HandlePerfect
     ld a, [varGameOver]
     cp $01
     jr nz, .jr_019a
@@ -259,18 +259,18 @@ call_0157:
     cp $00
     jr z, .jr_01f4
 
-    rcall call_0352
+    rcall DrawPerfect
     ret
 
 .jr_01f4
-    rcall call_02ed
+    rcall DrawGameOver
     ret
 
 
 PUSHC
 SETCHARMAP BodyCharmap
 
-call_01fc:
+InitBorder:
     rcall call_0067
     ld bc, $0000
 
@@ -330,7 +330,7 @@ call_01fc:
 POPC
 
 
-call_025c:
+DrawScore:
     ; Draw “SC:” at (x=8, y=17)
     ld hl, $0811
     trap MoveCursor
@@ -353,7 +353,7 @@ call_025c:
 strScorePrefix:
     db "SC:\n"
 
-call_027e:
+DrawHighScore:
     ; Draw “HI:” at (x=0, y=17)
     ld hl, $0011
     trap MoveCursor
@@ -375,7 +375,7 @@ call_027e:
 strHiScorePrefix:
     db "HI:\n"
 
-call_02a0:
+UpdateHighScore:
     ld a, [varScore]
     ld e, a
     ld a, [varScore+1]
@@ -401,7 +401,7 @@ call_02a0:
     ret
 
 
-call_02ce:
+DrawPoints:
     ; Draw “P:” at (x=16, y=17)
     ld hl, $1011
     trap MoveCursor
@@ -422,7 +422,7 @@ call_02ce:
 strPointPrefix:
     db "P:\n"
 
-call_02ed:
+DrawGameOver:
     ; Draw outer top of GAMEOVER box at (x=4, y=6)
     ld hl, $0406
     trap MoveCursor
@@ -473,7 +473,7 @@ strGameOverInner:
 strGameOver:
     db "| GAMEOVER |\n"
 
-call_0352:
+DrawPerfect:
     ; Draw outer top of PERFECT box at (x=4, y=6)
     ld hl, $0406
     trap MoveCursor
@@ -524,7 +524,7 @@ strPerfectInner:
 strPerfect:
     db "| PERFECT! |\n"
 
-call_03b7:
+InitField:
     trap RandNext
 
 .jr_03b9
@@ -579,7 +579,7 @@ call_03b7:
     ret
 
 
-call_0403:
+DrawSnake:
     ld b, $00
     ld a, [varSnakeLen]
     ld c, a
@@ -661,7 +661,7 @@ call_0403:
     ret
 
 
-call_047b:
+HandleInput:
     ld b, $00
     ld c, $00
 
@@ -845,7 +845,7 @@ call_047b:
     ret
 
 
-call_057b:
+CheckWallHit:
     ld c, $01
     ld hl, $c600
     ld a, [hl]
@@ -867,7 +867,7 @@ call_057b:
     ret
 
 
-call_0594:
+CheckSelfHit:
     ld hl, $c600
     ld a, [hl]
     ld b, a
@@ -930,7 +930,7 @@ call_0594:
     ret
 
 
-call_05df:
+CheckFoodHit:
     ld a, [varNeedFood]
     cp $01
     ret nz
@@ -954,8 +954,8 @@ call_05df:
     ret
 
 
-call_05fe:
-    rcall call_057b
+HandleWallHit:
+    rcall CheckWallHit
     ld a, c
     cp $00
     ret z
@@ -967,8 +967,8 @@ call_05fe:
     ret
 
 
-call_0613:
-    rcall call_0594
+HandleSelfHit:
+    rcall CheckSelfHit
     ld a, c
     cp $00
     ret z
@@ -980,8 +980,8 @@ call_0613:
     ret
 
 
-call_0628:
-    rcall call_05df
+HandleFoodHit:
+    rcall CheckFoodHit
     ld a, c
     cp $00
     ret z
@@ -1010,13 +1010,13 @@ call_0628:
     ld [varScore], a
     ld a, h
     ld [varScore+1], a
-    rcall call_025c
-    rcall call_02a0
-    rcall call_027e
+    rcall DrawScore
+    rcall UpdateHighScore
+    rcall DrawHighScore
     ret
 
 
-call_0675:
+HandlePerfect:
     ld a, [varSnakeLen]
     cp $50
     ret nz
@@ -1029,7 +1029,7 @@ call_0675:
     ret
 
 
-call_0688:
+AddFood:
     ld a, [varNeedFood]
     cp $01
     ret z
@@ -1078,7 +1078,7 @@ call_0688:
 
     ld a, $00
     ld [varNeedFood], a
-    jr call_0688
+    jr AddFood
 
 .jr_06d0
     inc c
@@ -1103,7 +1103,7 @@ call_0688:
     ret
 
 
-call_06ec:
+DrawFood:
     ld a, [varNeedFood]
     cp $00
     ret z
