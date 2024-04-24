@@ -95,13 +95,13 @@ call_006c:
 
 call_0070:
     rcall call_0067
-    rcall call_008d
-    rcall call_00dc
-    rcall call_0103
+    rcall DrawTitle
+    rcall DrawMenu
+    rcall HandleMenu
     ret
 
 
-call_008d:
+DrawTitle:
     ; Draw line above title at (x=3, y=3)
     ld hl, $0303
     trap MoveCursor
@@ -132,7 +132,7 @@ strTitleMid:
 strTitleBot:
     db "+OOOOOOOOOOOOQ\n"
 
-call_00dc:
+DrawMenu:
     ; Draw “GAME START” at (x=5, y=12)
     ld hl, $050c
     trap MoveCursor
@@ -156,7 +156,7 @@ strExit:
     db "EXIT\n"
 
 
-call_0103:
+HandleMenu:
     ld bc, $0000
 
 .jr_0106
@@ -183,16 +183,16 @@ call_0103:
 .jr_0128
     ld e, ">"
     rcall call_0149
-    ld a, [$c752]
+    ld a, [varTicker]
     inc a
-    ld [$c752], a
+    ld [varTicker], a
     ldh a, [$8b]
 
     bit BtnA, a
     jr z, .jr_0106
     ld a, [SavedHiScoreHi]
     ld h, a
-    ld a, [$c752]
+    ld a, [varTicker]
     ld l, a
     trap $8d
     ret
@@ -212,15 +212,15 @@ call_0149:
 
 call_0157:
     ld a, $00
-    ld [$c753], a
-    ld [$c748], a
-    ld [$c754], a
+    ld [varNeedFood], a
+    ld [varGameOver], a
+    ld [varPerfect], a
     ld a, $00
-    ld [$c749], a
-    ld [$c74a], a
-    ld [$c745], a
-    ld [$c752], a
-    ld [$c744], a
+    ld [varScore], a
+    ld [varScore+1], a
+    ld [varDeadline], a
+    ld [varTicker], a
+    ld [varPoint], a
     rcall call_03b7
     rcall call_01fc
     rcall call_025c
@@ -240,13 +240,13 @@ call_0157:
     rcall call_0613
     rcall call_0628
     rcall call_0675
-    ld a, [$c748]
+    ld a, [varGameOver]
     cp $01
     jr nz, .jr_019a
 
     xor a
     trap $13
-    ld a, [$c754]
+    ld a, [varPerfect]
     cp $00
     jr z, .jr_01f4
 
@@ -330,13 +330,13 @@ call_025c:
     trap DrawString
 
     ; Convert score to string and draw
-    ld a, [$c749]
+    ld a, [varScore]
     ld e, a
-    ld a, [$c74a]
+    ld a, [varScore+1]
     ld d, a
-    ld hl, $c74b
+    ld hl, varNumBuffer
     trap $a3
-    ld hl, $c74d
+    ld hl, varNumBuffer+2
     trap DrawString
     ret
 
@@ -357,9 +357,9 @@ call_027e:
     ld e, a
     ld a, [SavedHiScoreHi]
     ld d, a
-    ld hl, $c74b
+    ld hl, varNumBuffer
     trap $a3
-    ld hl, $c74d
+    ld hl, varNumBuffer+2
     trap DrawString
     ret
 
@@ -367,9 +367,9 @@ strHiScorePrefix:
     db "HI:\n"
 
 call_02a0:
-    ld a, [$c749]
+    ld a, [varScore]
     ld e, a
-    ld a, [$c74a]
+    ld a, [varScore+1]
     ld d, a
     ld a, [SavedHiScoreLo]
     ld l, a
@@ -383,9 +383,9 @@ call_02a0:
 
     ld a, $0a
     ld [$0000], a
-    ld a, [$c749]
+    ld a, [varScore]
     ld [SavedHiScoreLo], a
-    ld a, [$c74a]
+    ld a, [varScore+1]
     ld [SavedHiScoreHi], a
     xor a
     ld [$0000], a
@@ -400,12 +400,12 @@ call_02ce:
     pop hl
     trap DrawString
 
-    ld a, [$c744]
+    ld a, [varPoint]
     ld e, a
     ld d, $00
-    ld hl, $c74b
+    ld hl, varNumBuffer
     trap $a3
-    ld hl, $c74f
+    ld hl, varNumBuffer+4
     trap DrawString
     ret
 
@@ -562,17 +562,17 @@ call_03b7:
     jr nz, .jr_03d9
 
     ld a, $04
-    ld [$c740], a
+    ld [varSnakeLen], a
     ld a, $00
-    ld [$c742], a
+    ld [varHeadDir], a
     ld a, $0a
-    ld [$c741], a
+    ld [varCountdown], a
     ret
 
 
 call_0403:
     ld b, $00
-    ld a, [$c740]
+    ld a, [varSnakeLen]
     ld c, a
     ld hl, $c600
     add hl, bc
@@ -634,7 +634,7 @@ call_0403:
 
 .jr_0460
     ld b, $00
-    ld a, [$c740]
+    ld a, [varSnakeLen]
     ld c, a
     ld hl, $c6a0
     add hl, bc
@@ -678,12 +678,12 @@ call_047b:
     bit BtnLt, a
     jr z, .jr_04ad
 
-    ld a, [$c742]
+    ld a, [varHeadDir]
     cp $02
     jr z, .jr_04e7
 
     ld a, $01
-    ld [$c742], a
+    ld [varHeadDir], a
     jr .jr_04e7
 
 .jr_04ad
@@ -691,12 +691,12 @@ call_047b:
     bit BtnRt, a
     jr z, .jr_04c1
 
-    ld a, [$c742]
+    ld a, [varHeadDir]
     cp $01
     jr z, .jr_04e7
 
     ld a, $02
-    ld [$c742], a
+    ld [varHeadDir], a
     jr .jr_04e7
 
 .jr_04c1
@@ -704,12 +704,12 @@ call_047b:
     bit BtnUp, a
     jr z, .jr_04d5
 
-    ld a, [$c742]
+    ld a, [varHeadDir]
     cp $04
     jr z, .jr_04e7
 
     ld a, $03
-    ld [$c742], a
+    ld [varHeadDir], a
     jr .jr_04e7
 
 .jr_04d5
@@ -717,23 +717,23 @@ call_047b:
     bit BtnDn, a
     jr z, .jr_04e7
 
-    ld a, [$c742]
+    ld a, [varHeadDir]
     cp $03
     jr z, .jr_04e7
 
     ld a, $04
-    ld [$c742], a
+    ld [varHeadDir], a
 
 .jr_04e7
-    ld a, [$c741]
+    ld a, [varCountdown]
     dec a
-    ld [$c741], a
+    ld [varCountdown], a
     cp $00
     ret nz
 
     ld a, $0a
-    ld [$c741], a
-    ld a, [$c742]
+    ld [varCountdown], a
+    ld a, [varHeadDir]
     cp $01
     jr nz, .jr_0507
 
@@ -746,7 +746,7 @@ call_047b:
     ld [hl], a
 
 .jr_0507
-    ld a, [$c742]
+    ld a, [varHeadDir]
     cp $02
     jr nz, .jr_0518
 
@@ -759,7 +759,7 @@ call_047b:
     ld [hl], a
 
 .jr_0518
-    ld a, [$c742]
+    ld a, [varHeadDir]
     cp $03
     jr nz, .jr_0529
 
@@ -772,7 +772,7 @@ call_047b:
     ld [hl], a
 
 .jr_0529
-    ld a, [$c742]
+    ld a, [varHeadDir]
     cp $04
     jr nz, .jr_053a
 
@@ -785,7 +785,7 @@ call_047b:
     ld [hl], a
 
 .jr_053a
-    ld a, [$c742]
+    ld a, [varHeadDir]
     cp $00
     ret z
 
@@ -909,7 +909,7 @@ call_0594:
 .jr_05d0
     inc c
     push bc
-    ld a, [$c740]
+    ld a, [varSnakeLen]
     inc a
     ld b, a
     ld a, c
@@ -922,7 +922,7 @@ call_0594:
 
 
 call_05df:
-    ld a, [$c753]
+    ld a, [varNeedFood]
     cp $01
     ret nz
 
@@ -930,14 +930,14 @@ call_05df:
     ld hl, $c600
     ld a, [hl]
     ld b, a
-    ld a, [$c746]
+    ld a, [varFoodCol]
     cp b
     ret nz
 
     ld hl, $c650
     ld a, [hl]
     ld b, a
-    ld a, [$c747]
+    ld a, [varFoodRow]
     cp b
     ret nz
 
@@ -954,7 +954,7 @@ call_05fe:
     ld a, $03
     trap $14
     ld a, $01
-    ld [$c748], a
+    ld [varGameOver], a
     ret
 
 
@@ -967,7 +967,7 @@ call_0613:
     ld a, $04
     trap $14
     ld a, $01
-    ld [$c748], a
+    ld [varGameOver], a
     ret
 
 
@@ -980,27 +980,27 @@ call_0628:
     ld a, $05
     trap $14
     ld a, $00
-    ld [$c753], a
-    ld a, [$c740]
+    ld [varNeedFood], a
+    ld a, [varSnakeLen]
     cp $50
     jr z, .jr_0647
 
     inc a
-    ld [$c740], a
+    ld [varSnakeLen], a
 
 .jr_0647
-    ld a, [$c749]
+    ld a, [varScore]
     ld e, a
-    ld a, [$c74a]
+    ld a, [varScore+1]
     ld d, a
     ld h, $00
-    ld a, [$c744]
+    ld a, [varPoint]
     ld l, a
     trap $87
     ld a, l
-    ld [$c749], a
+    ld [varScore], a
     ld a, h
-    ld [$c74a], a
+    ld [varScore+1], a
     rcall call_025c
     rcall call_02a0
     rcall call_027e
@@ -1008,20 +1008,20 @@ call_0628:
 
 
 call_0675:
-    ld a, [$c740]
+    ld a, [varSnakeLen]
     cp $50
     ret nz
 
     ld a, $06
     trap $14
     ld a, $01
-    ld [$c748], a
-    ld [$c754], a
+    ld [varGameOver], a
+    ld [varPerfect], a
     ret
 
 
 call_0688:
-    ld a, [$c753]
+    ld a, [varNeedFood]
     cp $01
     ret z
 
@@ -1034,7 +1034,7 @@ call_0688:
     add $10
     inc a
     inc a
-    ld [$c746], a
+    ld [varFoodCol], a
     trap $8e
 
 .jr_069d
@@ -1044,14 +1044,14 @@ call_0688:
     add $0d
     inc a
     inc a
-    ld [$c747], a
+    ld [varFoodRow], a
     ld a, $01
-    ld [$c753], a
+    ld [varNeedFood], a
     ld b, $00
     ld c, $00
 
 .jr_06b1
-    ld a, [$c746]
+    ld a, [varFoodCol]
     ld d, a
     ld hl, $c600
     add hl, bc
@@ -1059,7 +1059,7 @@ call_0688:
     cp d
     jr nz, .jr_06d0
 
-    ld a, [$c747]
+    ld a, [varFoodRow]
     ld e, a
     ld hl, $c650
     add hl, bc
@@ -1068,60 +1068,77 @@ call_0688:
     jr nz, .jr_06d0
 
     ld a, $00
-    ld [$c753], a
+    ld [varNeedFood], a
     jr call_0688
 
 .jr_06d0
     inc c
     push bc
-    ld a, [$c740]
+    ld a, [varSnakeLen]
     ld b, a
     ld a, c
     cp b
     pop bc
     jr nz, .jr_06b1
 
-    ld a, [$c744]
+    ld a, [varPoint]
     cp $05
     jr z, .jr_06e6
 
     inc a
-    ld [$c744], a
+    ld [varPoint], a
 
 .jr_06e6
     ld a, $28
-    ld [$c745], a
+    ld [varDeadline], a
     ret
 
 
 call_06ec:
-    ld a, [$c753]
+    ld a, [varNeedFood]
     cp $00
     ret z
 
-    ld a, [$c746]
+    ld a, [varFoodCol]
     ld h, a
-    ld a, [$c747]
+    ld a, [varFoodRow]
     ld l, a
     trap MoveCursor
     ld a, "*"
     trap DrawChar
-    ld a, [$c741]
+    ld a, [varCountdown]
     cp $01
     ret nz
 
-    ld a, [$c745]
+    ld a, [varDeadline]
     cp $00
     jr z, .jr_0712
 
     dec a
-    ld [$c745], a
+    ld [varDeadline], a
     ret
 
 
 .jr_0712
     ld a, $00
-    ld [$c744], a
+    ld [varPoint], a
     ret
 
 End:
+
+
+SECTION "Variables", WRAM0[$c740]
+
+varSnakeLen: ds 1   ; Current snake length
+varCountdown: ds 1  ; Unknown countdown (10 → 0)
+varHeadDir: ds 2    ; Current facing of snake head
+varPoint: ds 1      ; Current food value (0 → 5)
+varDeadline: ds 1   ; Time left before food value becomes 0
+varFoodCol: ds 1    ; Horizontal position of current food
+varFoodRow: ds 1    ; VerticalPosition of current food
+varGameOver: ds 1   ; If true, game is over and play should stop
+varScore: ds 2      ; Current total score
+varNumBuffer: ds 7  ; Buffer space for converting number to string
+varTicker: ds 1     ; Feeds into random seed for game
+varNeedFood: ds 1   ; If true, a new food object needs to be drawn
+varPerfect: ds 1    ; If true, player completed game perfectly
