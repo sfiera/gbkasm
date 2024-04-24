@@ -13,6 +13,7 @@ MACRO rcall
 ENDM
 
 DEF MoveCursor EQU $b8
+DEF DrawChar EQU $bb
 DEF DrawString EQU $69
 
 DEF SavedHiScoreLo EQU $a042
@@ -203,7 +204,7 @@ call_0149:
     ld l, a
     trap MoveCursor
     ld a, e
-    trap $bb
+    trap DrawChar
     ret
 
 
@@ -268,11 +269,11 @@ jr_0206:
     ld l, $00
     trap MoveCursor
     ld a, "-"
-    trap $bb
+    trap DrawChar
     ld l, $10
     trap MoveCursor
     ld a, "-"
-    trap $bb
+    trap DrawChar
     inc c
     ld a, c
     cp $14
@@ -286,11 +287,11 @@ jr_0220:
     ld h, $00
     trap MoveCursor
     ld a, "|"
-    trap $bb
+    trap DrawChar
     ld h, $13
     trap MoveCursor
     ld a, "|"
-    trap $bb
+    trap DrawChar
     inc c
     ld a, c
     cp $10
@@ -300,19 +301,19 @@ jr_0220:
     ld hl, $0000
     trap MoveCursor
     ld a, "+"
-    trap $bb
+    trap DrawChar
     ld hl, $1300
     trap MoveCursor
     ld a, "+"
-    trap $bb
+    trap DrawChar
     ld hl, $0010
     trap MoveCursor
     ld a, "+"
-    trap $bb
+    trap DrawChar
     ld hl, $1310
     trap MoveCursor
     ld a, "+"
-    trap $bb
+    trap DrawChar
     ret
 
 POPC
@@ -583,7 +584,7 @@ call_0403:
     ld h, a
     trap MoveCursor
     ld a, "+"
-    trap $bb
+    trap DrawChar
     ld b, $00
     ld c, $01
     ld hl, $c600
@@ -598,7 +599,7 @@ call_0403:
     ld h, a
     trap MoveCursor
     ld a, "O"
-    trap $bb
+    trap DrawChar
     ld hl, $c600
     ld a, [hl]
     push af
@@ -609,7 +610,7 @@ call_0403:
     ld h, a
     trap MoveCursor
     ld a, "Q"
-    trap $bb
+    trap DrawChar
     ld hl, $c600
     ld a, [hl]
     ld b, a
@@ -645,7 +646,7 @@ jr_0460:
     ld h, a
     trap MoveCursor
     ld a, " "
-    trap $bb
+    trap DrawChar
     ret
 
 
@@ -1102,7 +1103,7 @@ call_06ec:
     ld l, a
     trap MoveCursor
     ld a, "*"
-    trap $bb
+    trap DrawChar
     ld a, [$c741]
     cp $01
     ret nz
