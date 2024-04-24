@@ -18,6 +18,7 @@ DEF DrawChar EQU $bb
 DEF DrawString EQU $69
 DEF RandInit EQU $8d
 DEF RandNext EQU $8e
+DEF PlaySound EQU $14
 
 DEF SavedHiScoreLo EQU $a042
 DEF SavedHiScoreHi EQU $a043
@@ -30,6 +31,11 @@ DEF BtnRt EQU 4
 DEF BtnLt EQU 5
 DEF BtnUp EQU 6
 DEF BtnDn EQU 7
+
+DEF SndWallHit EQU 3
+DEF SndSelfHit EQU 4
+DEF SndEatFood EQU 5
+DEF SndPerfect EQU 6
 
 Header::
     ; Length of entirety of file
@@ -953,8 +959,8 @@ call_05fe:
     cp $00
     ret z
 
-    ld a, $03
-    trap $14
+    ld a, SndWallHit
+    trap PlaySound
     ld a, $01
     ld [varGameOver], a
     ret
@@ -966,8 +972,8 @@ call_0613:
     cp $00
     ret z
 
-    ld a, $04
-    trap $14
+    ld a, SndSelfHit
+    trap PlaySound
     ld a, $01
     ld [varGameOver], a
     ret
@@ -979,8 +985,8 @@ call_0628:
     cp $00
     ret z
 
-    ld a, $05
-    trap $14
+    ld a, SndEatFood
+    trap PlaySound
     ld a, $00
     ld [varNeedFood], a
     ld a, [varSnakeLen]
@@ -1014,8 +1020,8 @@ call_0675:
     cp $50
     ret nz
 
-    ld a, $06
-    trap $14
+    ld a, SndPerfect
+    trap PlaySound
     ld a, $01
     ld [varGameOver], a
     ld [varPerfect], a
