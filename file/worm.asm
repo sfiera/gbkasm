@@ -43,28 +43,28 @@ History::
     ds 11, $00
 
 Main::
-    jr jr_000_003c
+    jr jr_003c
 
     nop
     nop
 
-jr_000_003c:
+jr_003c:
     ld sp, $e000
     trap $db
     trap $11
     rcall call_006c
 
-jr_000_004a:
+jr_004a:
     rcall call_0070
     ld a, c
     cp $00
-    jr nz, jr_000_005f
+    jr nz, jr_005f
     rcall call_0157
-    jr jr_000_004a
+    jr jr_004a
 
-jr_000_005f:
+jr_005f:
     cp $01
-    jr nz, jr_000_004a
+    jr nz, jr_004a
 
     trap $11
     trap $01
@@ -217,9 +217,9 @@ call_0157:
     ld a, $05
     trap $13
 
-jr_000_019a:
+jr_019a:
     trap $b1
-    rcall jr_000_0688
+    rcall jr_0688
     rcall call_06ec
     rcall call_047b
     rcall call_0403
@@ -230,18 +230,18 @@ jr_000_019a:
     rcall call_0675
     ld a, [$c748]
     cp $01
-    jr nz, jr_000_019a
+    jr nz, jr_019a
 
     xor a
     trap $13
     ld a, [$c754]
     cp $00
-    jr z, jr_000_01f4
+    jr z, jr_01f4
 
     rcall call_0352
     ret
 
-jr_000_01f4:
+jr_01f4:
     rcall call_02ed
     ret
 
@@ -250,7 +250,7 @@ call_01fc:
     rcall call_0067
     ld bc, $0000
 
-jr_000_0206:
+jr_0206:
     ld h, c
     ld l, $00
     trap MoveCursor
@@ -263,11 +263,11 @@ jr_000_0206:
     inc c
     ld a, c
     cp $14
-    jr nz, jr_000_0206
+    jr nz, jr_0206
 
     ld bc, $0000
 
-jr_000_0220:
+jr_0220:
     ld l, c
     ld h, $00
     trap MoveCursor
@@ -280,7 +280,7 @@ jr_000_0220:
     inc c
     ld a, c
     cp $10
-    jr nz, jr_000_0220
+    jr nz, jr_0220
 
     ld hl, $0000
     trap MoveCursor
@@ -429,10 +429,10 @@ call_02ed:
     pop hl
     trap DrawString
 
-jr_000_0324:
+jr_0324:
     ldh a, [$8a]
     bit 0, a
-    jr z, jr_000_0324
+    jr z, jr_0324
 
     ret
 
@@ -480,12 +480,12 @@ call_0352:
     pop hl
     trap DrawString
 
-jr_000_0389:
+jr_0389:
     ldh a, [$8a]
     bit 0, a
-    jr z, jr_000_0389
+    jr z, jr_0389
 
-jr_000_038f:
+jr_038f:
     ret
 
 
@@ -499,27 +499,27 @@ data13:
 call_03b7:
     trap $8e
 
-jr_000_03b9:
+jr_03b9:
     sub $10
-    jr nc, jr_000_03b9
+    jr nc, jr_03b9
 
     add $10
     ld hl, $c600
 
-jr_000_03c2:
+jr_03c2:
     inc a
     inc a
 
-jr_000_03c4:
+jr_03c4:
     ld [hl], a
     ld d, a
 
-jr_000_03c6:
+jr_03c6:
     trap $8e
 
-jr_000_03c8:
+jr_03c8:
     sub $0d
-    jr nc, jr_000_03c8
+    jr nc, jr_03c8
 
     add $0d
     ld hl, $c650
@@ -530,7 +530,7 @@ jr_000_03c8:
     ld b, $00
     ld c, $01
 
-jr_000_03d9:
+jr_03d9:
     ld hl, $c600
     add hl, bc
     ld [hl], d
@@ -546,14 +546,14 @@ jr_000_03d9:
     inc c
     ld a, c
     cp $50
-    jr nz, jr_000_03d9
+    jr nz, jr_03d9
 
     ld a, $04
     ld [$c740], a
     ld a, $00
     ld [$c742], a
 
-jr_000_03fd:
+jr_03fd:
     ld a, $0a
     ld [$c741], a
     ret
@@ -608,7 +608,7 @@ call_0403:
     ld hl, $c6a0
     ld a, [hl]
     cp b
-    jr nz, jr_000_0460
+    jr nz, jr_0460
 
     ld hl, $c650
     ld a, [hl]
@@ -616,12 +616,12 @@ call_0403:
     ld hl, $c6f0
     ld a, [hl]
     cp b
-    jr nz, jr_000_0460
+    jr nz, jr_0460
 
     ret
 
 
-jr_000_0460:
+jr_0460:
     ld b, $00
     ld a, [$c740]
     ld c, a
@@ -645,7 +645,7 @@ call_047b:
     ld b, $00
     ld c, $00
 
-jr_000_047f:
+jr_047f:
     ld hl, $c600
     add hl, bc
     ld a, [hl]
@@ -661,59 +661,59 @@ jr_000_047f:
     inc c
     ld a, c
     cp $50
-    jr nz, jr_000_047f
+    jr nz, jr_047f
 
     ldh a, [$8a]
     bit 5, a
-    jr z, jr_000_04ad
+    jr z, jr_04ad
 
     ld a, [$c742]
     cp $02
-    jr z, jr_000_04e7
+    jr z, jr_04e7
 
     ld a, $01
     ld [$c742], a
-    jr jr_000_04e7
+    jr jr_04e7
 
-jr_000_04ad:
+jr_04ad:
     ldh a, [$8a]
     bit 4, a
-    jr z, jr_000_04c1
+    jr z, jr_04c1
 
     ld a, [$c742]
     cp $01
-    jr z, jr_000_04e7
+    jr z, jr_04e7
 
     ld a, $02
     ld [$c742], a
-    jr jr_000_04e7
+    jr jr_04e7
 
-jr_000_04c1:
+jr_04c1:
     ldh a, [$8a]
     bit 6, a
-    jr z, jr_000_04d5
+    jr z, jr_04d5
 
     ld a, [$c742]
     cp $04
-    jr z, jr_000_04e7
+    jr z, jr_04e7
 
     ld a, $03
     ld [$c742], a
-    jr jr_000_04e7
+    jr jr_04e7
 
-jr_000_04d5:
+jr_04d5:
     ldh a, [$8a]
     bit 7, a
-    jr z, jr_000_04e7
+    jr z, jr_04e7
 
     ld a, [$c742]
     cp $03
-    jr z, jr_000_04e7
+    jr z, jr_04e7
 
     ld a, $04
     ld [$c742], a
 
-jr_000_04e7:
+jr_04e7:
     ld a, [$c741]
     dec a
     ld [$c741], a
@@ -724,56 +724,56 @@ jr_000_04e7:
     ld [$c741], a
     ld a, [$c742]
     cp $01
-    jr nz, jr_000_0507
+    jr nz, jr_0507
 
     ld hl, $c600
     ld a, [hl]
     cp $00
-    jr z, jr_000_0507
+    jr z, jr_0507
 
     dec a
     ld [hl], a
 
-jr_000_0507:
+jr_0507:
     ld a, [$c742]
     cp $02
-    jr nz, jr_000_0518
+    jr nz, jr_0518
 
     ld hl, $c600
     ld a, [hl]
     cp $13
-    jr z, jr_000_0518
+    jr z, jr_0518
 
     inc a
     ld [hl], a
 
-jr_000_0518:
+jr_0518:
     ld a, [$c742]
     cp $03
-    jr nz, jr_000_0529
+    jr nz, jr_0529
 
     ld hl, $c650
     ld a, [hl]
     cp $00
-    jr z, jr_000_0529
+    jr z, jr_0529
 
     dec a
     ld [hl], a
 
-jr_000_0529:
+jr_0529:
     ld a, [$c742]
     cp $04
-    jr nz, jr_000_053a
+    jr nz, jr_053a
 
     ld hl, $c650
     ld a, [hl]
     cp $10
-    jr z, jr_000_053a
+    jr z, jr_053a
 
     inc a
     ld [hl], a
 
-jr_000_053a:
+jr_053a:
     ld a, [$c742]
     cp $00
     ret z
@@ -784,7 +784,7 @@ jr_000_053a:
     ld hl, $c6a0
     ld a, [hl]
     cp b
-    jr nz, jr_000_0559
+    jr nz, jr_0559
 
     ld hl, $c650
     ld a, [hl]
@@ -792,15 +792,15 @@ jr_000_053a:
     ld hl, $c6f0
     ld a, [hl]
     cp b
-    jr nz, jr_000_0559
+    jr nz, jr_0559
 
     ret
 
 
-jr_000_0559:
+jr_0559:
     ld bc, $0000
 
-jr_000_055c:
+jr_055c:
     ld hl, $c6a0
     add hl, bc
     ld a, [hl]
@@ -820,7 +820,7 @@ jr_000_055c:
     inc c
     ld a, c
     cp $4f
-    jr nz, jr_000_055c
+    jr nz, jr_055c
 
     ret
 
@@ -854,7 +854,7 @@ call_0594:
     ld hl, $c6a0
     ld a, [hl]
     cp b
-    jr nz, jr_000_05af
+    jr nz, jr_05af
 
     ld hl, $c650
     ld a, [hl]
@@ -862,13 +862,13 @@ call_0594:
     ld hl, $c6f0
     ld a, [hl]
     cp b
-    jr nz, jr_000_05af
+    jr nz, jr_05af
 
     ld c, $00
     ret
 
 
-jr_000_05af:
+jr_05af:
     ld hl, $c600
     ld a, [hl]
     ld d, a
@@ -878,24 +878,24 @@ jr_000_05af:
     ld b, $00
     ld c, $01
 
-jr_000_05bd:
+jr_05bd:
     ld hl, $c600
     add hl, bc
     ld a, [hl]
     cp d
-    jr nz, jr_000_05d0
+    jr nz, jr_05d0
 
     ld hl, $c650
     add hl, bc
     ld a, [hl]
     cp e
-    jr nz, jr_000_05d0
+    jr nz, jr_05d0
 
     ld c, $01
     ret
 
 
-jr_000_05d0:
+jr_05d0:
     inc c
     push bc
     ld a, [$c740]
@@ -904,7 +904,7 @@ jr_000_05d0:
     ld a, c
     cp b
     pop bc
-    jr nz, jr_000_05bd
+    jr nz, jr_05bd
 
     ld c, $00
     ret
@@ -972,12 +972,12 @@ call_0628:
     ld [$c753], a
     ld a, [$c740]
     cp $50
-    jr z, jr_000_0647
+    jr z, jr_0647
 
     inc a
     ld [$c740], a
 
-jr_000_0647:
+jr_0647:
     ld a, [$c749]
     ld e, a
     ld a, [$c74a]
@@ -1009,16 +1009,16 @@ call_0675:
     ret
 
 
-jr_000_0688:
+jr_0688:
     ld a, [$c753]
     cp $01
     ret z
 
     trap $8e
 
-jr_000_0690:
+jr_0690:
     sub $10
-    jr nc, jr_000_0690
+    jr nc, jr_0690
 
     add $10
     inc a
@@ -1026,9 +1026,9 @@ jr_000_0690:
     ld [$c746], a
     trap $8e
 
-jr_000_069d:
+jr_069d:
     sub $0d
-    jr nc, jr_000_069d
+    jr nc, jr_069d
 
     add $0d
     inc a
@@ -1039,14 +1039,14 @@ jr_000_069d:
     ld b, $00
     ld c, $00
 
-jr_000_06b1:
+jr_06b1:
     ld a, [$c746]
     ld d, a
     ld hl, $c600
     add hl, bc
     ld a, [hl]
     cp d
-    jr nz, jr_000_06d0
+    jr nz, jr_06d0
 
     ld a, [$c747]
     ld e, a
@@ -1054,13 +1054,13 @@ jr_000_06b1:
     add hl, bc
     ld a, [hl]
     cp e
-    jr nz, jr_000_06d0
+    jr nz, jr_06d0
 
     ld a, $00
     ld [$c753], a
-    jr jr_000_0688
+    jr jr_0688
 
-jr_000_06d0:
+jr_06d0:
     inc c
     push bc
     ld a, [$c740]
@@ -1068,16 +1068,16 @@ jr_000_06d0:
     ld a, c
     cp b
     pop bc
-    jr nz, jr_000_06b1
+    jr nz, jr_06b1
 
     ld a, [$c744]
     cp $05
-    jr z, jr_000_06e6
+    jr z, jr_06e6
 
     inc a
     ld [$c744], a
 
-jr_000_06e6:
+jr_06e6:
     ld a, $28
     ld [$c745], a
     ret
@@ -1101,14 +1101,14 @@ call_06ec:
 
     ld a, [$c745]
     cp $00
-    jr z, jr_000_0712
+    jr z, jr_0712
 
     dec a
     ld [$c745], a
     ret
 
 
-jr_000_0712:
+jr_0712:
     ld a, $00
     ld [$c744], a
     ret
