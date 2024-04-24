@@ -16,6 +16,8 @@ DEF ExitToMenu EQU $01
 DEF MoveCursor EQU $b8
 DEF DrawChar EQU $bb
 DEF DrawString EQU $69
+DEF RandInit EQU $8d
+DEF RandNext EQU $8e
 
 DEF SavedHiScoreLo EQU $a042
 DEF SavedHiScoreHi EQU $a043
@@ -194,7 +196,7 @@ HandleMenu:
     ld h, a
     ld a, [varTicker]
     ld l, a
-    trap $8d
+    trap RandInit
     ret
 
 
@@ -516,7 +518,7 @@ strPerfect:
     db "| PERFECT! |\n"
 
 call_03b7:
-    trap $8e
+    trap RandNext
 
 .jr_03b9
     sub $10
@@ -528,7 +530,7 @@ call_03b7:
     inc a
     ld [hl], a
     ld d, a
-    trap $8e
+    trap RandNext
 
 .jr_03c8
     sub $0d
@@ -1025,7 +1027,7 @@ call_0688:
     cp $01
     ret z
 
-    trap $8e
+    trap RandNext
 
 .jr_0690
     sub $10
@@ -1035,7 +1037,7 @@ call_0688:
     inc a
     inc a
     ld [varFoodCol], a
-    trap $8e
+    trap RandNext
 
 .jr_069d
     sub $0d
