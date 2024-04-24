@@ -147,28 +147,28 @@ strExit:
 call_0103:
     ld bc, $0000
 
-jr3:
+jr_0106:
     trap $b1
     ld e, $20
     rcall call_0149
     ldh a, [$8b]
     bit 6, a
-    jr z, jr1
+    jr z, jr_011c
     ld a, c
     and a
-    jr z, jr1
+    jr z, jr_011c
     dec c
 
-jr1:
+jr_011c:
     ldh a, [$8b]
     bit 7, a
-    jr z, jr2
+    jr z, jr_0128
     ld a, c
     cp $01
-    jr z, jr2
+    jr z, jr_0128
     inc c
 
-jr2:
+jr_0128:
     ld e, $3e
     rcall call_0149
     ld a, [$c752]
@@ -177,7 +177,7 @@ jr2:
     ldh a, [$8b]
 
     bit 0, a
-    jr z, jr3
+    jr z, jr_0106
     ld a, [SavedHiScoreHi]
     ld h, a
     ld a, [$c752]
