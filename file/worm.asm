@@ -162,7 +162,7 @@ jr_0106:
     ld e, " "
     rcall call_0149
     ldh a, [$8b]
-    bit 6, a
+    bit BtnUp, a
     jr z, jr_011c
     ld a, c
     and a
@@ -171,7 +171,7 @@ jr_0106:
 
 jr_011c:
     ldh a, [$8b]
-    bit 7, a
+    bit BtnDn, a
     jr z, jr_0128
     ld a, c
     cp $01
@@ -186,7 +186,7 @@ jr_0128:
     ld [$c752], a
     ldh a, [$8b]
 
-    bit 0, a
+    bit BtnA, a
     jr z, jr_0106
     ld a, [SavedHiScoreHi]
     ld h, a
