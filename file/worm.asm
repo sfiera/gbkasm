@@ -18,6 +18,15 @@ DEF DrawString EQU $69
 DEF SavedHiScoreLo EQU $a042
 DEF SavedHiScoreHi EQU $a043
 
+DEF BtnA EQU 0
+DEF BtnB EQU 1
+DEF BtnSel EQU 2
+DEF BtnSta EQU 3
+DEF BtnRt EQU 4
+DEF BtnLt EQU 5
+DEF BtnUp EQU 6
+DEF BtnDn EQU 7
+
 Header::
     ; Length of entirety of file
     dw End
@@ -431,7 +440,7 @@ call_02ed:
 
 jr_0324:
     ldh a, [$8a]
-    bit 0, a
+    bit BtnA, a
     jr z, jr_0324
 
     ret
@@ -482,7 +491,7 @@ call_0352:
 
 jr_0389:
     ldh a, [$8a]
-    bit 0, a
+    bit BtnA, a
     jr z, jr_0389
 
     ret
@@ -655,7 +664,7 @@ jr_047f:
     jr nz, jr_047f
 
     ldh a, [$8a]
-    bit 5, a
+    bit BtnLt, a
     jr z, jr_04ad
 
     ld a, [$c742]
@@ -668,7 +677,7 @@ jr_047f:
 
 jr_04ad:
     ldh a, [$8a]
-    bit 4, a
+    bit BtnRt, a
     jr z, jr_04c1
 
     ld a, [$c742]
@@ -681,7 +690,7 @@ jr_04ad:
 
 jr_04c1:
     ldh a, [$8a]
-    bit 6, a
+    bit BtnUp, a
     jr z, jr_04d5
 
     ld a, [$c742]
@@ -694,7 +703,7 @@ jr_04c1:
 
 jr_04d5:
     ldh a, [$8a]
-    bit 7, a
+    bit BtnDn, a
     jr z, jr_04e7
 
     ld a, [$c742]
