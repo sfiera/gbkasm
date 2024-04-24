@@ -63,28 +63,26 @@ History::
     ds 11, $00
 
 Main::
-    jr .jr_003c
+    jr :+
 
     nop
     nop
 
-.jr_003c
-    ld sp, $e000
+:   ld sp, $e000
     trap $db
     trap $11
     rcall call_006c
 
-.jr_004a
+.next
     rcall MenuMain
     ld a, c
     cp $00
-    jr nz, .jr_005f
+    jr nz, :+
     rcall GameMain
-    jr .jr_004a
+    jr .next
 
-.jr_005f
-    cp $01
-    jr nz, .jr_004a
+:   cp $01
+    jr nz, .next
 
     trap $11
     trap ExitToMenu
@@ -168,29 +166,27 @@ strExit:
 HandleMenu:
     ld bc, $0000
 
-.jr_0106
+.next
     trap $b1
     ld e, " "
     rcall DrawSelection
     ldh a, [$8b]
     bit BtnUp, a
-    jr z, .jr_011c
+    jr z, :+
     ld a, c
     and a
-    jr z, .jr_011c
+    jr z, :+
     dec c
 
-.jr_011c
-    ldh a, [$8b]
+:   ldh a, [$8b]
     bit BtnDn, a
-    jr z, .jr_0128
+    jr z, :+
     ld a, c
     cp $01
-    jr z, .jr_0128
+    jr z, :+
     inc c
 
-.jr_0128
-    ld e, ">"
+:   ld e, ">"
     rcall DrawSelection
     ld a, [varTicker]
     inc a
@@ -198,7 +194,7 @@ HandleMenu:
     ldh a, [$8b]
 
     bit BtnA, a
-    jr z, .jr_0106
+    jr z, .next
     ld a, [SavedHiScoreHi]
     ld h, a
     ld a, [varTicker]
@@ -238,7 +234,7 @@ GameMain:
     ld a, $05
     trap $13
 
-.jr_019a
+.next
     trap $b1
     rcall AddFood
     rcall DrawFood
@@ -251,19 +247,18 @@ GameMain:
     rcall HandlePerfect
     ld a, [varGameOver]
     cp $01
-    jr nz, .jr_019a
+    jr nz, .next
 
     xor a
     trap $13
     ld a, [varPerfect]
     cp $00
-    jr z, .jr_01f4
+    jr z, :+
 
     rcall DrawPerfect
     ret
 
-.jr_01f4
-    rcall DrawGameOver
+:   rcall DrawGameOver
     ret
 
 
@@ -274,7 +269,7 @@ InitBorder:
     rcall call_0067
     ld bc, $0000
 
-.jr_0206
+.nextCol
     ; Draw “-” across rows 0 and 16
     ld h, c
     ld l, $00
@@ -288,11 +283,11 @@ InitBorder:
     inc c
     ld a, c
     cp $14
-    jr nz, .jr_0206
+    jr nz, .nextCol
 
     ld bc, $0000
 
-.jr_0220
+.nextRow
     ; Draw “|” down columns 0 and 19
     ld l, c
     ld h, $00
@@ -306,7 +301,7 @@ InitBorder:
     inc c
     ld a, c
     cp $10
-    jr nz, .jr_0220
+    jr nz, .nextRow
 
     ; Draw “+” at (x={0,19}, y={0,16})
     ld hl, $0000
@@ -458,10 +453,10 @@ DrawGameOver:
     pop hl
     trap DrawString
 
-.jr_0324
+.awaitA
     ldh a, [$8a]
     bit BtnA, a
-    jr z, .jr_0324
+    jr z, .awaitA
 
     ret
 
@@ -509,10 +504,10 @@ DrawPerfect:
     pop hl
     trap DrawString
 
-.jr_0389
+.awaitA
     ldh a, [$8a]
     bit BtnA, a
-    jr z, .jr_0389
+    jr z, .awaitA
 
     ret
 
@@ -527,9 +522,8 @@ strPerfect:
 InitField:
     trap RandNext
 
-.jr_03b9
-    sub $10
-    jr nc, .jr_03b9
+:   sub $10
+    jr nc, :-
 
     add $10
     ld hl, $c600
@@ -539,9 +533,8 @@ InitField:
     ld d, a
     trap RandNext
 
-.jr_03c8
-    sub $0d
-    jr nc, .jr_03c8
+:   sub $0d
+    jr nc, :-
 
     add $0d
     ld hl, $c650
@@ -552,7 +545,7 @@ InitField:
     ld b, $00
     ld c, $01
 
-.jr_03d9
+.next
     ld hl, $c600
     add hl, bc
     ld [hl], d
@@ -568,7 +561,7 @@ InitField:
     inc c
     ld a, c
     cp $50
-    jr nz, .jr_03d9
+    jr nz, .next
 
     ld a, $04
     ld [varSnakeLen], a
@@ -665,7 +658,7 @@ HandleInput:
     ld b, $00
     ld c, $00
 
-.jr_047f
+.next
     ld hl, $c600
     add hl, bc
     ld a, [hl]
@@ -681,59 +674,56 @@ HandleInput:
     inc c
     ld a, c
     cp $50
-    jr nz, .jr_047f
+    jr nz, .next
 
     ldh a, [$8a]
     bit BtnLt, a
-    jr z, .jr_04ad
+    jr z, :+
 
     ld a, [varHeadDir]
     cp $02
-    jr z, .jr_04e7
+    jr z, .count
 
     ld a, $01
     ld [varHeadDir], a
-    jr .jr_04e7
+    jr .count
 
-.jr_04ad
-    ldh a, [$8a]
+:   ldh a, [$8a]
     bit BtnRt, a
-    jr z, .jr_04c1
+    jr z, :+
 
     ld a, [varHeadDir]
     cp $01
-    jr z, .jr_04e7
+    jr z, .count
 
     ld a, $02
     ld [varHeadDir], a
-    jr .jr_04e7
+    jr .count
 
-.jr_04c1
-    ldh a, [$8a]
+:   ldh a, [$8a]
     bit BtnUp, a
-    jr z, .jr_04d5
+    jr z, :+
 
     ld a, [varHeadDir]
     cp $04
-    jr z, .jr_04e7
+    jr z, .count
 
     ld a, $03
     ld [varHeadDir], a
-    jr .jr_04e7
+    jr .count
 
-.jr_04d5
-    ldh a, [$8a]
+:   ldh a, [$8a]
     bit BtnDn, a
-    jr z, .jr_04e7
+    jr z, .count
 
     ld a, [varHeadDir]
     cp $03
-    jr z, .jr_04e7
+    jr z, .count
 
     ld a, $04
     ld [varHeadDir], a
 
-.jr_04e7
+.count
     ld a, [varCountdown]
     dec a
     ld [varCountdown], a
@@ -744,57 +734,53 @@ HandleInput:
     ld [varCountdown], a
     ld a, [varHeadDir]
     cp $01
-    jr nz, .jr_0507
+    jr nz, :+
 
     ld hl, $c600
     ld a, [hl]
     cp $00
-    jr z, .jr_0507
+    jr z, :+
 
     dec a
     ld [hl], a
 
-.jr_0507
-    ld a, [varHeadDir]
+:   ld a, [varHeadDir]
     cp $02
-    jr nz, .jr_0518
+    jr nz, :+
 
     ld hl, $c600
     ld a, [hl]
     cp $13
-    jr z, .jr_0518
+    jr z, :+
 
     inc a
     ld [hl], a
 
-.jr_0518
-    ld a, [varHeadDir]
+:   ld a, [varHeadDir]
     cp $03
-    jr nz, .jr_0529
+    jr nz, :+
 
     ld hl, $c650
     ld a, [hl]
     cp $00
-    jr z, .jr_0529
+    jr z, :+
 
     dec a
     ld [hl], a
 
-.jr_0529
-    ld a, [varHeadDir]
+:   ld a, [varHeadDir]
     cp $04
-    jr nz, .jr_053a
+    jr nz, :+
 
     ld hl, $c650
     ld a, [hl]
     cp $10
-    jr z, .jr_053a
+    jr z, :+
 
     inc a
     ld [hl], a
 
-.jr_053a
-    ld a, [varHeadDir]
+:   ld a, [varHeadDir]
     cp $00
     ret z
 
@@ -804,7 +790,7 @@ HandleInput:
     ld hl, $c6a0
     ld a, [hl]
     cp b
-    jr nz, .jr_0559
+    jr nz, :+
 
     ld hl, $c650
     ld a, [hl]
@@ -812,15 +798,14 @@ HandleInput:
     ld hl, $c6f0
     ld a, [hl]
     cp b
-    jr nz, .jr_0559
+    jr nz, :+
 
     ret
 
 
-.jr_0559
-    ld bc, $0000
+:   ld bc, $0000
 
-.jr_055c
+.next2
     ld hl, $c6a0
     add hl, bc
     ld a, [hl]
@@ -840,7 +825,7 @@ HandleInput:
     inc c
     ld a, c
     cp "O"
-    jr nz, .jr_055c
+    jr nz, .next2
 
     ret
 
