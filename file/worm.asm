@@ -93,54 +93,54 @@ call_008d:
     ; Draw line above title at (x=3, y=3)
     ld hl, $0303
     trap MoveCursor
-    rpush data1
+    rpush strTitleTop
     pop hl
     trap DrawString
 
     ; Draw title at (x=3, y=5)
     ld hl, $0305
     trap MoveCursor
-    rpush data2
+    rpush strTitleMid
     pop hl
     trap DrawString
 
     ; Draw line below title at (x=3, y=7)
     ld hl, $0307
     trap MoveCursor
-    rpush data3
+    rpush strTitleBot
     pop hl
     trap DrawString
 
     ret
 
-data1:
+strTitleTop:
     db "QOOOOOOOOOOOO+\n"
-data2:
+strTitleMid:
     db "  W  O  R  M  \n"
-data3:
+strTitleBot:
     db "+OOOOOOOOOOOOQ\n"
 
 call_00dc:
     ; Draw “GAME START” at (x=5, y=12)
     ld hl, $050c
     trap MoveCursor
-    rpush data4
+    rpush strGameStart
     pop hl
     trap DrawString
 
     ; Draw “EXIT” at (x=5, y=14)
     ld hl, $050e
     trap MoveCursor
-    rpush data5
+    rpush strExit
     pop hl
     trap DrawString
 
     ret
 
 
-data4:
+strGameStart:
     db "GAME START\n"
-data5:
+strExit:
     db "EXIT\n"
 
 
@@ -305,7 +305,7 @@ call_025c:
     ; Draw “SC:” at (x=8, y=17)
     ld hl, $0811
     trap MoveCursor
-    rpush data10
+    rpush strScorePrefix
     pop hl
     trap DrawString
 
@@ -321,14 +321,14 @@ call_025c:
     ret
 
 
-data10:
+strScorePrefix:
     db "SC:\n"
 
 call_027e:
     ; Draw “HI:” at (x=0, y=17)
     ld hl, $0011
     trap MoveCursor
-    rpush data6
+    rpush strHiScorePrefix
     pop hl
     trap DrawString
 
@@ -343,7 +343,7 @@ call_027e:
     trap DrawString
     ret
 
-data6:
+strHiScorePrefix:
     db "HI:\n"
 
 call_02a0:
@@ -376,7 +376,7 @@ call_02ce:
     ; Draw “P:” at (x=16, y=17)
     ld hl, $1011
     trap MoveCursor
-    rpush data14
+    rpush strPointPrefix
     pop hl
     trap DrawString
 
@@ -390,42 +390,42 @@ call_02ce:
     ret
 
 
-data14:
+strPointPrefix:
     db "P:\n"
 
 call_02ed:
     ; Draw outer top of GAMEOVER box at (x=4, y=6)
     ld hl, $0406
     trap MoveCursor
-    rpush data7
+    rpush strGameOverOuter
     pop hl
     trap DrawString
 
     ; Draw inner top of GAMEOVER box at (x=4, y=7)
     ld hl, $0407
     trap MoveCursor
-    rpush data8
+    rpush strGameOverInner
     pop hl
     trap DrawString
 
     ; Draw GAMEOVER at (x=4, y=8)
     ld hl, $0408
     trap MoveCursor
-    rpush data9
+    rpush strGameOver
     pop hl
     trap DrawString
 
     ; Draw inner bottom of GAMEOVER box at (x=4, y=9)
     ld hl, $0409
     trap MoveCursor
-    rpush data8
+    rpush strGameOverInner
     pop hl
     trap DrawString
 
     ; Draw outer bottom of GAMEOVER box at (x=4, y=10)
     ld hl, $040a
     trap MoveCursor
-    rpush data7
+    rpush strGameOverOuter
     pop hl
     trap DrawString
 
@@ -437,46 +437,46 @@ jr_0324:
     ret
 
 
-data7:
+strGameOverOuter:
     db "+----------+\n"
-data8:
+strGameOverInner:
     db "|          |\n"
-data9:
+strGameOver:
     db "| GAMEOVER |\n"
 
 call_0352:
     ; Draw outer top of PERFECT box at (x=4, y=6)
     ld hl, $0406
     trap MoveCursor
-    rpush data11
+    rpush strPerfectOuter
     pop hl
     trap DrawString
 
     ; Draw inner top of PERFECT box at (x=4, y=7)
     ld hl, $0407
     trap MoveCursor
-    rpush data12
+    rpush strPerfectInner
     pop hl
     trap DrawString
 
     ; Draw PERFECT at (x=4, y=8)
     ld hl, $0408
     trap MoveCursor
-    rpush data13
+    rpush strPerfect
     pop hl
     trap DrawString
 
     ; Draw inner bottom of PERFECT box at (x=4, y=9)
     ld hl, $0409
     trap MoveCursor
-    rpush data12
+    rpush strPerfectInner
     pop hl
     trap DrawString
 
     ; Draw outer bottom of PERFECT box at (x=4, y=9)
     ld hl, $040a
     trap MoveCursor
-    rpush data11
+    rpush strPerfectOuter
     pop hl
     trap DrawString
 
@@ -489,11 +489,11 @@ jr_038f:
     ret
 
 
-data11:
+strPerfectOuter:
     db "+----------+\n"
-data12:
+strPerfectInner:
     db "|          |\n"
-data13:
+strPerfect:
     db "| PERFECT! |\n"
 
 call_03b7:
