@@ -165,7 +165,7 @@ code_0192:
 code_019d:
     rpush gfx
     pop hl
-    trap $5c
+    trap DrawLayout
     ld hl, wramShot
     ld e, [hl]
     inc hl
