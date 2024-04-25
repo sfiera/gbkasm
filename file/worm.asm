@@ -12,15 +12,6 @@ MACRO rcall
     ret
 ENDM
 
-DEF ExitToMenu EQU $01
-DEF MoveCursor EQU $b8
-DEF DrawChar EQU $bb
-DEF DrawString EQU $69
-DEF IntToString EQU $a3
-DEF RandInit EQU $8d
-DEF RandNext EQU $8e
-DEF PlaySound EQU $14
-
 DEF SavedHiScoreLo EQU $a042
 DEF SavedHiScoreHi EQU $a043
 

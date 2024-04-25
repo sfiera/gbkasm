@@ -109,7 +109,7 @@ jr_014f:
     jr z, jr_014f
 
 jr_0159:
-    trap $01
+    trap ExitToMenu
 
 code_015b:
     ldh a, [$83]
@@ -128,12 +128,12 @@ code_0167:
 
 jr_0170:
     push de
-    trap $b8
+    trap MoveCursor
     pop de
     ld hl, wramAtoiScratch
-    trap $a3
+    trap IntToString
     ld hl, wramAtoiScratch + 3
-    trap $69
+    trap DrawString
     ld a, [wramTime]
     or a
 
