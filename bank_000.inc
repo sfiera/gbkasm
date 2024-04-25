@@ -37,7 +37,12 @@ Config4::
 RST_10::
     jp code_00_00c9
 
-    db $00, $fe, $03, $00, $bf
+KissCapacity:
+    dw $fe00  ; Total space available for GBKiss files
+KissIndexBank:
+    db $03    ; CRAM block of GBKiss file index
+KissIndexAddr:
+    dw $bf00  ; CRAM address of GBKiss file index
 
 RST_18::
     db $00, $00, $00, $00, $00, $00, $00, $00

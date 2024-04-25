@@ -5,6 +5,12 @@
 
 SECTION "ROM Bank $002", ROMX[$4000], BANK[$2]
 
+DEF ChunkTypeEmpty    EQU $46 ; Available to use
+DEF ChunkTypeFixed    EQU $5a ; Must be located at $a002 (diamond)
+DEF ChunkTypeGeneric  EQU $52 ; May be located anywhere (circle, triangle)
+DEF ChunkTypeUnknown  EQU $44 ; Unknown use
+DEF ChunkTypeIndex    EQU $53 ; Must be located at end of Kiss space
+
 traps2::
     dw trap_80_5267  ; $80
     dw trap_81_526e  ; $81
@@ -530,12 +536,12 @@ jr_002_4466:
     ret
 
 
-Call_002_446c:
-    ld hl, $0016
+FindKissIndex:
+    ld hl, KissIndexAddr
     ld a, [hl+]
     ld h, [hl]
     ld l, a
-    ld a, [$0015]
+    ld a, [KissIndexBank]
 
 Call_002_4475:
 Jump_002_4475:
@@ -545,7 +551,7 @@ Jump_002_4475:
 
 
 Call_002_447b:
-    call Call_002_446c
+    call FindKissIndex
     ld de, data_02_53ac
     ld a, [hl+]
     cp d
@@ -625,19 +631,19 @@ jr_002_44c4:
 
 jr_002_44d0:
     ld a, [hl]
-    cp $46
+    cp ChunkTypeEmpty
     jr z, jr_002_449b
 
-    cp $5a
+    cp ChunkTypeFixed
     jr z, jr_002_449b
 
-    cp $52
+    cp ChunkTypeGeneric
     jr z, jr_002_449b
 
-    cp $44
+    cp ChunkTypeUnknown
     jr z, jr_002_449b
 
-    cp $53
+    cp ChunkTypeIndex
     jr z, jr_002_449b
 
 jr_002_44e5:
@@ -651,7 +657,7 @@ jr_002_44e7:
 
 
 Call_002_44e9:
-    call Call_002_446c
+    call FindKissIndex
     call Call_002_4450
     push hl
     ld bc, $fe1a
@@ -734,7 +740,7 @@ trap_e2_454a::
 
 
 Call_002_4556:
-    call Call_002_446c
+    call FindKissIndex
     ld a, e
     and $1f
     add a
@@ -803,14 +809,14 @@ Call_002_4591:
 
 Call_002_45a8:
 jr_002_45a8:
-    call Call_002_446c
+    call FindKissIndex
     ld d, $00
     add hl, de
     ret
 
 
 jr_002_45af:
-    call Call_002_446c
+    call FindKissIndex
     ld a, $77
     sub e
     jr nc, jr_002_45b9
@@ -858,7 +864,7 @@ jr_002_45e1:
     ldh a, [hRAMBank]
     push af
     push hl
-    call Call_002_446c
+    call FindKissIndex
     pop bc
     ld de, $0000
     push de
@@ -868,14 +874,14 @@ jr_002_45e1:
     ld b, a
     ld a, e
     and $e0
-    ld e, $44
+    ld e, ChunkTypeUnknown
     jr z, jr_002_4606
 
-    ld e, $52
+    ld e, ChunkTypeGeneric
     cp $20
     jr z, jr_002_4606
 
-    ld e, $5a
+    ld e, ChunkTypeFixed
     cp $40
     jp nz, Jump_002_4464
 
@@ -887,8 +893,8 @@ jr_002_4606:
     jp c, Jump_002_46ee
 
     ld a, e
-    cp $5a
-    jr nz, jr_002_461f
+    cp ChunkTypeFixed
+    jr nz, .checkBlockSize
 
     ld a, h
     cp $a0
@@ -898,9 +904,11 @@ jr_002_4606:
     cp $02
     jr nz, jr_002_4606
 
-jr_002_461f:
+.checkBlockSize
     push hl
     push de
+
+    ; Load pointer to next block in de
     inc hl
     inc hl
     inc hl
@@ -909,17 +917,21 @@ jr_002_461f:
     inc hl
     ld d, [hl]
     inc hl
+
+    ; Subtract hl from de to compute available space
     ld a, e
     sub l
     ld e, a
     ld a, d
     sbc h
+
+    ; Check if this block is large enough for file
     ld d, a
     ld a, e
     sub c
     ld a, d
     sbc b
-    jr nc, jr_002_4649
+    jr nc, .haveSpace
 
     push bc
     ld hl, sp+$06
@@ -930,25 +942,25 @@ jr_002_461f:
     sub e
     ld a, b
     sbc d
-    jr nc, jr_002_4644
+    jr nc, .noSpace
 
     ld [hl], d
     dec hl
     ld [hl], e
 
-jr_002_4644:
+.noSpace
     pop bc
     pop de
     pop hl
     jr jr_002_4606
 
-jr_002_4649:
+.haveSpace
     pop de
     pop hl
     push hl
     call Call_002_4450
     ld a, e
-    cp $5a
+    cp ChunkTypeFixed
     jr z, jr_002_467f
 
     push de
@@ -1104,7 +1116,7 @@ Jump_002_46f4:
     push af
 
 jr_002_46f7:
-    call Call_002_446c
+    call FindKissIndex
     ld d, $44
     call Call_002_471e
     jp c, Jump_002_4466
@@ -1173,19 +1185,19 @@ jr_002_4742:
     cp d
     ret z
 
-    cp $46
+    cp ChunkTypeEmpty
     jr z, jr_002_471e
 
-    cp $5a
+    cp ChunkTypeFixed
     jr z, jr_002_471e
 
-    cp $52
+    cp ChunkTypeGeneric
     jr z, jr_002_471e
 
-    cp $44
+    cp ChunkTypeUnknown
     jr z, jr_002_471e
 
-    cp $53
+    cp ChunkTypeIndex
     jr z, jr_002_471e
 
 jr_002_475b:
@@ -1801,7 +1813,7 @@ jr_002_4a00:
 jr_002_4a05:
     ldh a, [hRAMBank]
     push af
-    call Call_002_446c
+    call FindKissIndex
 
 jr_002_4a0b:
     ld e, l
@@ -1838,10 +1850,10 @@ jr_002_4a24:
 
 jr_002_4a2d:
     ld a, [hl]
-    cp $52
+    cp ChunkTypeGeneric
     jr z, jr_002_4a36
 
-    cp $5a
+    cp ChunkTypeFixed
     jr nz, jr_002_4a0b
 
 jr_002_4a36:
