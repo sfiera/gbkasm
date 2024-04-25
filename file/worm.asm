@@ -38,6 +38,16 @@ DEF SndSelfHit EQU 4
 DEF SndEatFood EQU 5
 DEF SndPerfect EQU 6
 
+DEF FaceLt EQU 1
+DEF FaceRt EQU 2
+DEF FaceUp EQU 3
+DEF FaceDn EQU 4
+DEF FaceNone EQU 0
+
+DEF MaxSnakeLen EQU $50
+DEF MaxPoint EQU $05
+DEF EatDeadline EQU $28
+
 Header::
     ; Length of entirety of file
     dw End
@@ -217,7 +227,7 @@ DrawSelection:
 
 GameMain:
     ld a, $00
-    ld [varNeedFood], a
+    ld [varHaveFood], a
     ld [varGameOver], a
     ld [varPerfect], a
     ld a, $00
@@ -245,6 +255,7 @@ GameMain:
     rcall HandleSelfHit
     rcall HandleFoodHit
     rcall HandlePerfect
+
     ld a, [varGameOver]
     cp $01
     jr nz, .next
@@ -560,7 +571,7 @@ InitField:
     ld [hl], e
     inc c
     ld a, c
-    cp $50
+    cp MaxSnakeLen
     jr nz, .next
 
     ld a, $04
@@ -573,6 +584,7 @@ InitField:
 
 
 DrawSnake:
+    ; Draw “+” at tail segment of snake
     ld b, $00
     ld a, [varSnakeLen]
     ld c, a
@@ -589,6 +601,8 @@ DrawSnake:
     trap MoveCursor
     ld a, "+"
     trap DrawChar
+
+    ; Draw “O” at second segment of snake
     ld b, $00
     ld c, $01
     ld hl, varSnakeX
@@ -604,6 +618,8 @@ DrawSnake:
     trap MoveCursor
     ld a, "O"
     trap DrawChar
+
+    ; Draw “Q” at head segment of snake
     ld hl, varSnakeX
     ld a, [hl]
     push af
@@ -615,13 +631,14 @@ DrawSnake:
     trap MoveCursor
     ld a, "Q"
     trap DrawChar
+
     ld hl, varSnakeX
     ld a, [hl]
     ld b, a
     ld hl, varLastX
     ld a, [hl]
     cp b
-    jr nz, .jr_0460
+    jr nz, .moved
 
     ld hl, varSnakeY
     ld a, [hl]
@@ -629,12 +646,12 @@ DrawSnake:
     ld hl, varLastY
     ld a, [hl]
     cp b
-    jr nz, .jr_0460
+    jr nz, .moved
 
     ret
 
-
-.jr_0460
+.moved
+    ; Snake moved, so erase previous tail segment of snake
     ld b, $00
     ld a, [varSnakeLen]
     ld c, a
@@ -658,7 +675,8 @@ HandleInput:
     ld b, $00
     ld c, $00
 
-.next
+    ; Copy all snake segments from current to last
+.copyNext
     ld hl, varSnakeX
     add hl, bc
     ld a, [hl]
@@ -673,115 +691,136 @@ HandleInput:
     ld [hl], a
     inc c
     ld a, c
-    cp $50
-    jr nz, .next
+    cp MaxSnakeLen
+    jr nz, .copyNext
 
+    ; Check if left button pressed
     ldh a, [$8a]
     bit BtnLt, a
     jr z, :+
 
+    ; Do nothing if facing right
     ld a, [varHeadDir]
-    cp $02
-    jr z, .count
+    cp FaceRt
+    jr z, .inputDone
 
-    ld a, $01
+    ; Set facing to left
+    ld a, FaceLt
     ld [varHeadDir], a
-    jr .count
+    jr .inputDone
 
+    ; Check if right button pressed
 :   ldh a, [$8a]
     bit BtnRt, a
     jr z, :+
 
+    ; Do nothing if facing left
     ld a, [varHeadDir]
-    cp $01
-    jr z, .count
+    cp FaceLt
+    jr z, .inputDone
 
-    ld a, $02
+    ; Set facing to right
+    ld a, FaceRt
     ld [varHeadDir], a
-    jr .count
+    jr .inputDone
 
+    ; Check if up button pressed
 :   ldh a, [$8a]
     bit BtnUp, a
     jr z, :+
 
+    ; Do nothing if facing down
     ld a, [varHeadDir]
-    cp $04
-    jr z, .count
+    cp FaceDn
+    jr z, .inputDone
 
-    ld a, $03
+    ; Set facing to up
+    ld a, FaceUp
     ld [varHeadDir], a
-    jr .count
+    jr .inputDone
 
+    ; Check if down button pressed
 :   ldh a, [$8a]
     bit BtnDn, a
-    jr z, .count
+    jr z, .inputDone
 
+    ; Do nothing if facing up
     ld a, [varHeadDir]
-    cp $03
-    jr z, .count
+    cp FaceUp
+    jr z, .inputDone
 
-    ld a, $04
+    ; Set facing to down
+    ld a, FaceDn
     ld [varHeadDir], a
 
-.count
+.inputDone
+    ; Count down from 10 to 0
+    ; If countdown hasn’t yet reached 0, return
     ld a, [varCountdown]
     dec a
     ld [varCountdown], a
     cp $00
     ret nz
 
+    ; Reset countdown to 10
     ld a, $0a
     ld [varCountdown], a
+
+    ; Check if facing left
     ld a, [varHeadDir]
-    cp $01
+    cp FaceLt
     jr nz, :+
 
+    ; Move snake left
     ld hl, varSnakeX
     ld a, [hl]
     cp $00
     jr z, :+
-
     dec a
     ld [hl], a
 
+    ; Check if facing right
 :   ld a, [varHeadDir]
-    cp $02
+    cp FaceRt
     jr nz, :+
 
+    ; Move snake right
     ld hl, varSnakeX
     ld a, [hl]
     cp $13
     jr z, :+
-
     inc a
     ld [hl], a
 
+    ; Check if facing up
 :   ld a, [varHeadDir]
-    cp $03
+    cp FaceUp
     jr nz, :+
 
+    ; Move snake up
     ld hl, varSnakeY
     ld a, [hl]
     cp $00
     jr z, :+
-
     dec a
     ld [hl], a
 
+    ; Check if facing down
 :   ld a, [varHeadDir]
-    cp $04
+    cp FaceDn
     jr nz, :+
 
+    ; Move snake down
     ld hl, varSnakeY
     ld a, [hl]
     cp $10
     jr z, :+
-
     inc a
     ld [hl], a
 
+    ; If not moving, return
 :   ld a, [varHeadDir]
-    cp $00
+    cp FaceNone
     ret z
 
     ld hl, varSnakeX
@@ -831,76 +870,89 @@ HandleInput:
 
 
 CheckWallHit:
+    ; Set c to $01 to indicate collision
     ld c, $01
+
+    ; Check if snake head X is left or right edge of screen
     ld hl, varSnakeX
     ld a, [hl]
     cp $00
     ret z
-
     cp $13
     ret z
 
+    ; Check if snake head Y is top or bottom edge of screen
     ld hl, varSnakeY
     ld a, [hl]
     cp $00
     ret z
-
     cp $10
     ret z
 
+    ; Set c to $00 to indicate no collision
     ld c, $00
     ret
 
 
 CheckSelfHit:
+    ; Check if snake head X position changed
     ld hl, varSnakeX
     ld a, [hl]
     ld b, a
     ld hl, varLastX
     ld a, [hl]
     cp b
-    jr nz, .jr_05af
+    jr nz, .moved
 
+    ; Check if snake head Y position changed
     ld hl, varSnakeY
     ld a, [hl]
     ld b, a
     ld hl, varLastY
     ld a, [hl]
     cp b
-    jr nz, .jr_05af
+    jr nz, .moved
 
+    ; If neither, no need to check collision
     ld c, $00
     ret
 
 
-.jr_05af
+.moved
+    ; Load snake head position to de
     ld hl, varSnakeX
     ld a, [hl]
     ld d, a
     ld hl, varSnakeY
     ld a, [hl]
     ld e, a
+
+    ; Start checking snake segments from index 1
     ld b, $00
     ld c, $01
 
-.jr_05bd
+.nextSegment
+    ; Check if head X equals current segment X
     ld hl, varSnakeX
     add hl, bc
     ld a, [hl]
     cp d
-    jr nz, .jr_05d0
+    jr nz, .noHit
 
+    ; Check if head Y equals current segment Y
     ld hl, varSnakeY
     add hl, bc
     ld a, [hl]
     cp e
-    jr nz, .jr_05d0
+    jr nz, .noHit
 
+    ; If both X and Y match then return true
     ld c, $01
     ret
 
 
-.jr_05d0
+.noHit
+    ; Loop until bc increases to the end of the snake
     inc c
     push bc
     ld a, [varSnakeLen]
@@ -909,18 +961,22 @@ CheckSelfHit:
     ld a, c
     cp b
     pop bc
-    jr nz, .jr_05bd
+    jr nz, .nextSegment
 
+    ; Reached end of snake without detecting collision
     ld c, $00
     ret
 
 
 CheckFoodHit:
-    ld a, [varNeedFood]
+    ; If food hasn’t been placed, nothing to do
+    ld a, [varHaveFood]
     cp $01
     ret nz
 
     ld c, $00
+
+    ; Check if food X equals snake head X
     ld hl, varSnakeX
     ld a, [hl]
     ld b, a
@@ -928,6 +984,7 @@ CheckFoodHit:
     cp b
     ret nz
 
+    ; Check if food Y equals snake head Y
     ld hl, varSnakeY
     ld a, [hl]
     ld b, a
@@ -935,6 +992,7 @@ CheckFoodHit:
     cp b
     ret nz
 
+    ; If X and Y match, snake ate the food
     ld c, $01
     ret
 
@@ -947,6 +1005,7 @@ HandleWallHit:
 
     ld a, SndWallHit
     trap PlaySound
+
     ld a, $01
     ld [varGameOver], a
     ret
@@ -960,6 +1019,7 @@ HandleSelfHit:
 
     ld a, SndSelfHit
     trap PlaySound
+
     ld a, $01
     ld [varGameOver], a
     ret
@@ -973,17 +1033,19 @@ HandleFoodHit:
 
     ld a, SndEatFood
     trap PlaySound
-    ld a, $00
-    ld [varNeedFood], a
-    ld a, [varSnakeLen]
-    cp $50
-    jr z, .jr_0647
 
+    ld a, $00
+    ld [varHaveFood], a
+
+    ; Grow snake if less than maximum length
+    ld a, [varSnakeLen]
+    cp MaxSnakeLen
+    jr z, :+
     inc a
     ld [varSnakeLen], a
 
-.jr_0647
-    ld a, [varScore]
+    ; Add current food value to score
+:   ld a, [varScore]
     ld e, a
     ld a, [varScore+1]
     ld d, a
@@ -995,6 +1057,8 @@ HandleFoodHit:
     ld [varScore], a
     ld a, h
     ld [varScore+1], a
+
+    ; Check for new high score and redraw scores
     rcall DrawScore
     rcall UpdateHighScore
     rcall DrawHighScore
@@ -1002,12 +1066,14 @@ HandleFoodHit:
 
 
 HandlePerfect:
+    ; Do nothing if snake hasn’t reached max length
     ld a, [varSnakeLen]
-    cp $50
+    cp MaxSnakeLen
     ret nz
 
     ld a, SndPerfect
     trap PlaySound
+
     ld a, $01
     ld [varGameOver], a
     ld [varPerfect], a
@@ -1015,57 +1081,63 @@ HandlePerfect:
 
 
 AddFood:
-    ld a, [varNeedFood]
+    ld a, [varHaveFood]
     cp $01
     ret z
 
+    ; Generate random X value in 2..17
     trap RandNext
-
-.jr_0690
-    sub $10
-    jr nc, .jr_0690
-
+:   sub $10
+    jr nc, :-
     add $10
     inc a
     inc a
     ld [varFoodCol], a
+
+    ; Generate random Y value in 2..15
     trap RandNext
-
-.jr_069d
-    sub $0d
-    jr nc, .jr_069d
-
+:   sub $0d
+    jr nc, :-
     add $0d
     inc a
     inc a
     ld [varFoodRow], a
+
+    ; Mark food as having been created
     ld a, $01
-    ld [varNeedFood], a
+    ld [varHaveFood], a
+
+    ; Consider each segment in snake at index bc
     ld b, $00
     ld c, $00
 
-.jr_06b1
+.nextSegment
+    ; Check if food X equals current segment X
     ld a, [varFoodCol]
     ld d, a
     ld hl, varSnakeX
     add hl, bc
     ld a, [hl]
     cp d
-    jr nz, .jr_06d0
+    jr nz, .noHit
 
+    ; Check if food Y equals current segment Y
     ld a, [varFoodRow]
     ld e, a
     ld hl, varSnakeY
     add hl, bc
     ld a, [hl]
     cp e
-    jr nz, .jr_06d0
+    jr nz, .noHit
 
+    ; If both X and Y match, then food is on a snake segment
+    ; Mark food as missing and restart AddFood
     ld a, $00
-    ld [varNeedFood], a
+    ld [varHaveFood], a
     jr AddFood
 
-.jr_06d0
+.noHit
+    ; Loop until bc increases to the end of the snake
     inc c
     push bc
     ld a, [varSnakeLen]
@@ -1073,26 +1145,28 @@ AddFood:
     ld a, c
     cp b
     pop bc
-    jr nz, .jr_06b1
+    jr nz, .nextSegment
 
+    ; Increase food value if less than maximum points
     ld a, [varPoint]
-    cp $05
-    jr z, .jr_06e6
-
+    cp MaxPoint
+    jr z, :+
     inc a
     ld [varPoint], a
 
-.jr_06e6
-    ld a, $28
+    ; Reset eat deadline to initial value
+:   ld a, EatDeadline
     ld [varDeadline], a
     ret
 
 
 DrawFood:
-    ld a, [varNeedFood]
+    ; If food hasn’t been created yet, return
+    ld a, [varHaveFood]
     cp $00
     ret z
 
+    ; Draw “*” at current food position
     ld a, [varFoodCol]
     ld h, a
     ld a, [varFoodRow]
@@ -1100,20 +1174,21 @@ DrawFood:
     trap MoveCursor
     ld a, "*"
     trap DrawChar
+
     ld a, [varCountdown]
     cp $01
     ret nz
 
+    ; Decrease deadline until it reaches zero
     ld a, [varDeadline]
     cp $00
-    jr z, .jr_0712
-
+    jr z, .timeUp
     dec a
     ld [varDeadline], a
     ret
 
-
-.jr_0712
+    ; If food deadline reached zero, set food value to zero
+.timeUp
     ld a, $00
     ld [varPoint], a
     ret
@@ -1123,13 +1198,13 @@ End:
 
 SECTION "Variables", WRAM0[$c600]
 
-varSnakeX: ds $50   ; X positions of snake segments
-varSnakeY: ds $50   ; Y positions of snake segments
-varLastX: ds $50    ; Previous X positions of snake segments
-varLastY: ds $50    ; Previous Y positions of snake segments
+varSnakeX: ds MaxSnakeLen  ; X positions of snake segments
+varSnakeY: ds MaxSnakeLen  ; Y positions of snake segments
+varLastX: ds MaxSnakeLen   ; Previous X positions of snake segments
+varLastY: ds MaxSnakeLen   ; Previous Y positions of snake segments
 
 varSnakeLen: ds 1   ; Current snake length
-varCountdown: ds 1  ; Unknown countdown (10 → 0)
+varCountdown: ds 1  ; Countdown until next movement (10 → 0)
 varHeadDir: ds 2    ; Current facing of snake head
 varPoint: ds 1      ; Current food value (0 → 5)
 varDeadline: ds 1   ; Time left before food value becomes 0
@@ -1139,5 +1214,5 @@ varGameOver: ds 1   ; If true, game is over and play should stop
 varScore: ds 2      ; Current total score
 varNumBuffer: ds 7  ; Buffer space for converting number to string
 varTicker: ds 1     ; Feeds into random seed for game
-varNeedFood: ds 1   ; If true, a new food object needs to be drawn
+varHaveFood: ds 1   ; If true, uneaten food currently exists
 varPerfect: ds 1    ; If true, player completed game perfectly
