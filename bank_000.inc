@@ -37,8 +37,9 @@ Config4::
 RST_10::
     jp code_00_00c9
 
-KissCapacity:
-    dw $fe00  ; Total space available for GBKiss files
+    db $00
+KissBanks:
+    db $fe    ; Unknown constant, related to bank capacity?
 KissIndexBank:
     db $03    ; CRAM block of GBKiss file index
 KissIndexAddr:

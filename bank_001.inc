@@ -835,7 +835,7 @@ Call_001_45ec:
     or a
     jr z, jr_001_4605
 
-    ld hl, $0014
+    ld hl, KissBanks
     cp [hl]
     jr z, jr_001_4605
 
@@ -4155,7 +4155,7 @@ code_01_6ae7::
 code_01_6aed::
     ld hl, $0000
     trap $e6
-    ld a, [$0014]
+    ld a, [KissBanks]
     jp Jump_001_6ad8
 
 
@@ -5311,7 +5311,7 @@ jr_001_700c:
     ld a, b
     adc h
     ld h, a
-    ld a, [$0014]
+    ld a, [KissBanks]
     ld [hl+], a
     ld [hl], c
     inc hl
@@ -5410,7 +5410,7 @@ jr_001_706b:
     jr z, jr_001_7092
 
     ld b, a
-    ld a, [$0014]
+    ld a, [KissBanks]
     cp b
     jr nz, jr_001_706b
 
@@ -5469,7 +5469,7 @@ trap_6d_70ba::
     or a
     jr z, jr_001_70de
 
-    ld a, [$0014]
+    ld a, [KissBanks]
     cp [hl]
     jr z, jr_001_70de
 
