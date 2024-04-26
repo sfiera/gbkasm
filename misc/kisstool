@@ -13,35 +13,31 @@ import unicodedata
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.set_defaults(func=help_command)
     parser.add_argument("-f", "--file", required=True)
     parser.add_argument("-s", "--save")
 
-    sub = parser.add_subparsers(dest="command")
+    subparsers = parser.add_subparsers(dest="command")
 
-    help = sub.add_parser("help", help="Show help")
-    info = sub.add_parser("info", help="Show user info from save file")
-    ls = sub.add_parser("ls", help="List file entries in save file")
-    mv = sub.add_parser("mv", help="Move file entry within save file")
-    get = sub.add_parser("get", help="Extract local file from save file")
-    add = sub.add_parser("add", help="Insert local file into save file")
-    rm = sub.add_parser("rm", help="Delete file entry from save file")
+    def sub(name, func, **kwds):
+        parser = subparsers.add_parser(name, **kwds)
+        parser.set_defaults(func=func)
+        return parser
+
+    sub("help", func=help_command, help="Show help")
+    sub("info", func=info_command, help="Show user info from save file")
+    sub("list", func=list_command, help="List file entries in save file")
+    sub("move", func=move_command, help="Move file entry within save file")
+    get = sub("get", func=get_command, help="Extract local file from save file")
+    add = sub("add", func=add_command, help="Insert local file into save file")
+    sub("del", func=del_command, help="Delete file entry from save file")
 
     add.add_argument("path")
     get.add_argument("title")
     get.add_argument("-o", "--out")
 
     args = parser.parse_args()
-
-    cmd = {
-        "help": help_command,
-        "info": info_command,
-        "ls": ls_command,
-        "add": add_command,
-        "get": get_command,
-        "mv": mv_command,
-        "rm": rm_command,
-    }[args.command or "help"]
-    cmd(parser, args)
+    args.func(parser, args)
 
 
 KissMeta = collections.namedtuple("KissMeta", "cap bank addr".split())
@@ -171,7 +167,7 @@ def info_command(parser, args):
         print("MEMO: " + "\n      ".join(memo))
 
 
-def ls_command(parser, args):
+def list_command(parser, args):
     with open_sav(args, "rb") as (meta, sav):
         profile = read_profile_chunk_header(sav, seek=gb2cram(meta.bank, meta.addr))
         index = read_chunk_header(sav, seek=gb2cram(meta.bank, profile.prev))
@@ -224,11 +220,11 @@ def add_command(parser, args):
     raise NotImplementedError()
 
 
-def mv_command(parser, args):
+def move_command(parser, args):
     raise NotImplementedError()
 
 
-def rm_command(parser, args):
+def del_command(parser, args):
     raise NotImplementedError()
 
 
