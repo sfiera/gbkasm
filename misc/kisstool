@@ -14,9 +14,8 @@ import unicodedata
 def main():
     parser = argparse.ArgumentParser()
     parser.set_defaults(func=help_command)
-    parser.add_argument("-f", "--file", required=True)
+    parser.add_argument("-f", "--file")
     parser.add_argument("-s", "--save")
-
     subparsers = parser.add_subparsers(dest="command")
 
     def sub(name, func, **kwds):
@@ -56,14 +55,23 @@ class KissError(Exception):
 def open_sav(args, mode):
     rom_path = args.file
     sav_path = args.save
+
+    if not (rom_path or sav_path):
+        raise ValueError("at least one of --file or --save is required")
+
     if not sav_path:
         rom_base, ext = os.path.splitext(rom_path)
         sav_path = rom_base + ".sav"
-    with open(rom_path, "rb") as f:
-        f.seek(0x13)
-        meta = KissMeta(*read_struct("<HBH", f))
-    with open(sav_path, mode) as f:
-        yield meta, f
+
+    if rom_path:
+        with open(rom_path, "rb") as f:
+            f.seek(0x13)
+            meta = KissMeta(*read_struct("<HBH", f))
+        with open(sav_path, mode) as f:
+            yield meta, f
+    else:
+        with open(sav_path, mode) as f:
+            yield detect_meta(f), f
 
 
 def gb2cram(bank, addr):
@@ -94,6 +102,51 @@ BUILTIN_ICONS = {
     0x45: "auto",
     0xFF: "auto",
 }
+
+
+def detect_meta(sav):
+    data = sav.read()
+    offset = 0
+    magic = b"\x53\xac"
+    cram_addr = None
+    while offset < len(data):
+        try:
+            i = data.index(magic, offset)
+        except ValueError:
+            break
+        offset = i + 2
+        index_header = i
+        index_next = index_header + 4
+        profile_header = i + 486
+        profile_prev = profile_header + 2
+        profile_end = profile_header + 128
+        if profile_end > len(data):
+            break
+
+        (index_next,) = struct.unpack("<H", data[index_next : index_next + 2])
+        (profile_prev,) = struct.unpack("<H", data[profile_prev : profile_prev + 2])
+        if (
+            (data[profile_header : profile_header + 2] == magic)
+            and (cram2gb(index_header)[1] == profile_prev)
+            and (cram2gb(profile_header)[1] == index_next)
+        ):
+            cram_addr = profile_header
+            break
+
+    if cram_addr is None:
+        raise Exception("GBKiss data not found in save file")
+    else:
+        bank, addr = cram2gb(cram_addr)
+
+    start_bank = bank
+    while start_bank > 0:
+        prev = gb2cram(start_bank - 1, 0xA002)
+        if data[prev] ^ data[prev + 1] == 0xFF:
+            start_bank -= 1
+    start_addr = gb2cram(start_bank, 0xA000)
+    capacity = cram_addr - start_addr
+
+    return KissMeta(capacity, bank, addr)
 
 
 def read_chunk_header(sav, *, seek=None):
