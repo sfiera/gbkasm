@@ -5693,153 +5693,122 @@ jr_002_5a3d:
 
 
 data_02_5a3e::
-    inc a
-    ld e, e
-    ld c, h
-    ld e, e
-    ld b, e
-    ld e, e
-    ld e, l
-    ld e, e
-    ret nc
+    dw code_02_5b3c
+    dw Call_002_5b4c
+    dw code_02_5b43
+    dw code_02_5b5d
+    dw code_02_5ad0
+    dw code_02_5a8a
+    dw code_02_5a90
+    dw code_02_5b09
+    dw code_02_5ae6
+    dw jr_002_5a3d
+    dw code_02_5b35
+    dw code_02_5b11
+    dw code_02_5b41
+    dw code_02_5a96
+    dw code_02_5a99
 
-    ld e, d
-    adc d
-    ld e, d
-    sub b
-    ld e, d
-    add hl, bc
-    ld e, e
-    and $5a
-    dec a
-    ld e, d
-    dec [hl]
-    ld e, e
-    ld de, $415b
-    ld e, e
-    sub [hl]
-    ld e, d
-    sbc c
-    ld e, d
-
+; Control character implementations
 data_02_5a5c::
-    ld l, [hl]
-    ld e, e
-    ld a, l
-    ld e, e
-    ld [hl], a
-    ld e, e
-    add [hl]
-    ld e, e
-    dec a
-    ld e, d
-    adc d
-    ld e, d
-    sub b
-    ld e, d
-    ld h, e
-    ld e, e
-    dec a
-    ld e, d
-    dec a
-    ld e, d
-    dec [hl]
-    ld e, e
-    ld a, b
-    ld e, l
-    ld [hl], l
-    ld e, e
-    sub [hl]
-    ld e, d
-    sbc c
-    ld e, d
-    sbc h
-    ld e, d
-    and c
-    ld e, d
-    xor b
-    ld e, d
-    xor a
-    ld e, d
-    or [hl]
-    ld e, d
-    cp e
-    ld e, d
-    jp nz, $c95a
+    dw code_02_5b6e   ; \x01
+    dw Call_002_5b7d  ; \x02
+    dw code_02_5b77   ; \x03
+    dw code_02_5b86   ; \x04
+    dw jr_002_5a3d    ; \x05: no effect
+    dw code_02_5a8a   ; \x06
+    dw code_02_5a90   ; \x07
+    dw code_02_5b63   ; \x08
+    dw jr_002_5a3d    ; \x09: no effect
+    dw jr_002_5a3d    ; \x0a: no effect
+    dw code_02_5b35   ; \x0b
+    dw code_02_5d78   ; \x0c
+    dw code_02_5b75   ; \x0d
+    dw code_02_5a96   ; \x0e: mode=hiragana
+    dw code_02_5a99   ; \x0f: mode=katakana
+    dw code_02_5a9c   ; \x10: fg=#fff
+    dw code_02_5aa1   ; \x11: fg=#aaa
+    dw code_02_5aa8   ; \x12: fg=#555
+    dw code_02_5aaf   ; \x13: fg=#000
+    dw code_02_5ab6   ; \x14: bg=#fff
+    dw code_02_5abb   ; \x15: bg=#aaa
+    dw code_02_5ac2   ; \x16: bg=#555
+    dw code_02_5ac9   ; \x17: bg=#000
 
-    ld e, d
+
+code_02_5a8a:
     ld hl, $ff92
     res 3, [hl]
     ret
 
-
+code_02_5a90:
     ld hl, $ff92
     set 3, [hl]
     ret
 
-
+code_02_5a96:
     res 2, [hl]
     ret
 
-
+code_02_5a99:
     set 2, [hl]
     ret
 
-
+code_02_5a9c:
     ld a, [hl]
     and $fc
     ld [hl], a
     ret
 
-
+code_02_5aa1:
     ld a, [hl]
     and $fc
     or $01
     ld [hl], a
     ret
 
-
+code_02_5aa8:
     ld a, [hl]
     and $fc
     or $02
     ld [hl], a
     ret
 
-
+code_02_5aaf:
     ld a, [hl]
     and $fc
     or $03
     ld [hl], a
     ret
 
-
+code_02_5ab6:
     ld a, [hl]
     and $cf
     ld [hl], a
     ret
 
-
+code_02_5abb:
     ld a, [hl]
     and $cf
     or $10
     ld [hl], a
     ret
 
-
+code_02_5ac2:
     ld a, [hl]
     and $cf
     or $20
     ld [hl], a
     ret
 
-
+code_02_5ac9:
     ld a, [hl]
     and $cf
     or $30
     ld [hl], a
     ret
 
-
+code_02_5ad0:
     push bc
     push de
     ld e, $20
@@ -5856,7 +5825,7 @@ data_02_5a5c::
     pop bc
     ret
 
-
+code_02_5ae6:
     push bc
     push de
     ld e, $20
@@ -5881,12 +5850,12 @@ data_02_5a5c::
     pop bc
     ret
 
-
+code_02_5b09:
     call Call_002_5b4c
     ld a, $20
     jp Jump_002_5958
 
-
+code_02_5b11:
     push bc
     push de
     ld a, [$c3c8]
@@ -5911,6 +5880,8 @@ jr_002_5b1f:
     pop de
     pop bc
     ld hl, $ff8e
+
+code_02_5b35:
     xor a
     ld [hl+], a
     ld [hl], a
@@ -5919,6 +5890,8 @@ jr_002_5b1f:
 
 Call_002_5b39:
     ld hl, $ff8e
+
+code_02_5b3c:
     inc [hl]
     ld a, [hl]
 
@@ -5926,7 +5899,9 @@ Call_002_5b3e:
     cp $14
     ret c
 
+code_02_5b41:
     ld [hl], $00
+code_02_5b43:
     inc hl
     inc [hl]
     ld a, [hl]
@@ -5958,7 +5933,7 @@ jr_002_5b5b:
 jr_002_5b5c:
     ret
 
-
+code_02_5b5d:
     inc hl
     ld a, [hl]
     or a
@@ -5968,6 +5943,7 @@ jr_002_5b5c:
     ret
 
 
+code_02_5b63:
     call Call_002_5b7d
     ld a, $20
     jp Jump_002_5958
@@ -5975,13 +5951,18 @@ jr_002_5b5c:
 
 Call_002_5b6b:
     ld hl, $ff90
+
+code_02_5b6e:
     inc [hl]
     ld a, [$c3b9]
     dec a
     cp [hl]
     ret nc
 
+code_02_5b75:
     ld [hl], $00
+
+code_02_5b77:
     inc hl
     ld a, [hl]
     add $09
@@ -5998,6 +5979,8 @@ Call_002_5b7d:
     ld a, [$c3b9]
     dec a
     ld [hl], a
+
+code_02_5b86:
     inc hl
     ld a, [hl]
     sub $09
@@ -6447,6 +6430,7 @@ jr_002_5d74:
     ld l, $7c
     jr jr_002_5d64
 
+code_02_5d78:
     ldh a, [$92]
     ld b, a
 

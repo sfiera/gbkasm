@@ -5193,6 +5193,7 @@ jr_001_6f94:
     jr jr_001_6f94
 
 trap_69_6f9b::
+.next
     ldh a, [$92]
     ld e, a
     ld a, [hl+]
@@ -5200,32 +5201,32 @@ trap_69_6f9b::
     ret z
 
     bit 6, e
-    jr nz, jr_001_6fb3
+    jr nz, .jr_001_6fb3
 
     cp $20
-    jr c, jr_001_6fd6
+    jr c, .ctrlChar
 
     ld e, a
     ld d, [hl]
     trap $a7
-    jr nc, jr_001_6fb3
+    jr nc, .jr_001_6fb3
 
     inc hl
     or a
-    jr z, jr_001_6fba
+    jr z, .jr_001_6fba
 
-jr_001_6fb3:
+.jr_001_6fb3
     trap $bb
-    jr trap_69_6f9b
+    jr .next
 
-jr_001_6fb7:
+.jr_001_6fb7
     xor a
-    jr jr_001_6fb3
+    jr .jr_001_6fb3
 
-jr_001_6fba:
+.jr_001_6fba
     ldh a, [$92]
     bit 3, a
-    jr z, jr_001_6fb7
+    jr z, .jr_001_6fb7
 
     push bc
     push hl
@@ -5242,9 +5243,9 @@ jr_001_6fba:
     pop bc
     ld a, $01
 
-jr_001_6fd6:
+.ctrlChar
     trap $b9
-    jr trap_69_6f9b
+    jr .next
 
 trap_6a_6fda::
     ld a, [hl]
