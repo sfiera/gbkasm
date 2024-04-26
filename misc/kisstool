@@ -7,6 +7,7 @@ import contextlib
 import itertools
 import os.path
 import struct
+import sys
 import unicodedata
 
 
@@ -43,8 +44,12 @@ def main():
     cmd(parser, args)
 
 
-KissMeta = collections.namedtuple("KissMeta", ["cap", "bank", "addr"])
-KissChunk = collections.namedtuple("KissChunk", ["type", "prev", "next"])
+KissMeta = collections.namedtuple("KissMeta", "cap bank addr".split())
+KissChunk = collections.namedtuple("KissChunk", "type body prev next".split())
+KissEntry = collections.namedtuple("KissEntry", "addr medium owner".split())
+KissFile = collections.namedtuple(
+    "KissFile", "body size flags owner title icon".split()
+)
 
 
 class KissError(Exception):
@@ -60,7 +65,7 @@ def open_sav(args, mode):
         sav_path = rom_base + ".sav"
     with open(rom_path, "rb") as f:
         f.seek(0x13)
-        meta = KissMeta(*struct.unpack("<HBH", f.read(5)))
+        meta = KissMeta(*read_struct("<HBH", f))
     with open(sav_path, mode) as f:
         yield meta, f
 
@@ -75,11 +80,71 @@ def cram2gb(addr):
     return (addr >> 13), ((addr % 0x2000) + 0xA000)
 
 
-def read_chunk_header(sav, address):
-    sav.seek(address)
-    ctype, inv_ctype, prevc, nextc = struct.unpack("<BBHH", sav.read(6))
+def read_struct(fmt, file):
+    return struct.unpack(fmt, file.read(struct.calcsize(fmt)))
+
+
+ICON_SIZE_2BPP = 0xC0
+ICON_SIZE_1BPP = 0x60
+BUILTIN_ICONS = {
+    0x00: "text",
+    0x01: "auto",
+    0x81: "auto",
+    0x40: "auto",
+    0x41: "auto",
+    0x42: "auto",
+    0x43: "auto",
+    0x44: "auto",
+    0x45: "auto",
+    0xFF: "auto",
+}
+
+
+def read_chunk_header(sav, *, seek=None):
+    if seek is not None:
+        sav.seek(seek)
+    ctype, inv_ctype, prevc, nextc = read_struct("<BBHH", sav)
     assert (ctype ^ inv_ctype) == 0xFF
-    return KissChunk(ctype, prevc, nextc)
+    return KissChunk(ctype, sav.tell(), prevc, nextc)
+
+
+def read_profile_chunk_header(sav, *, seek=None):
+    profile = read_chunk_header(sav, seek=seek)
+    assert profile.type == 0x53
+    assert (profile.next % 0x2000) == 0
+    _, addr = cram2gb(profile.body)
+    assert (addr - profile.prev) == 492
+    return profile
+
+
+def read_index_chunk_header(sav, *, seek=None):
+    index = read_chunk_header(sav, seek=seek)
+    assert index.type == 0x53
+    return index
+
+
+def read_index(sav, *, seek=None):
+    _ = read_index_chunk_header(sav, seek=seek)
+    entries = []
+    for i in range(120):
+        entries.append(KissEntry(*read_struct("<HBB", sav)))
+    return entries
+
+
+def read_file_header(sav, *, seek=None):
+    if seek is not None:
+        sav.seek(seek)
+    size, flags, reserved, header_size, owner = read_struct("<HBBBB", sav)
+    assert reserved == 0
+    icon_size = {
+        0x10: ICON_SIZE_1BPP,
+        0x18: ICON_SIZE_2BPP,
+    }.get(flags & 0x18, 0)
+    title = sav.read(header_size - icon_size - 1).decode("gbkiss_string")
+    icon = None
+    if icon_size:
+        icon = sav.read(icon_size)
+    return KissFile(sav.tell(), size, flags, owner, title, icon)
 
 
 def help_command(parser, args):
@@ -88,22 +153,19 @@ def help_command(parser, args):
 
 def info_command(parser, args):
     with open_sav(args, "rb") as (meta, sav):
-        profile = read_chunk_header(sav, gb2cram(meta.bank, meta.addr))
-        assert profile.type == 0x53
-        assert (profile.next % 0x2000) == 0
-        assert (meta.addr - profile.prev) == 486
+        profile = read_profile_chunk_header(sav, seek=gb2cram(meta.bank, meta.addr))
 
-        _ = sav.read(64)  # not sure what is here
-        profile = sav.read(58)
-        name = profile[0:10].decode("gbkiss_char").rstrip()
-        number = profile[10:22].decode("gbkiss_char").rstrip()
+        profile = sav.read(122)
+        name = profile[64:74].decode("gbkiss_char").rstrip()
+        number = profile[74:86].decode("gbkiss_char").rstrip()
         memo = [
-            profile[22:34].decode("gbkiss_char").rstrip(),
-            profile[34:46].decode("gbkiss_char").rstrip(),
-            profile[46:58].decode("gbkiss_char").rstrip(),
+            profile[86:98].decode("gbkiss_char").rstrip(),
+            profile[98:110].decode("gbkiss_char").rstrip(),
+            profile[110:122].decode("gbkiss_char").rstrip(),
         ]
         while memo and not memo[-1]:
             memo.pop()
+
         print(f"NAME: {name}")
         print(f"NUM:  {number}")
         print("MEMO: " + "\n      ".join(memo))
@@ -111,95 +173,51 @@ def info_command(parser, args):
 
 def ls_command(parser, args):
     with open_sav(args, "rb") as (meta, sav):
-        profile = read_chunk_header(sav, gb2cram(meta.bank, meta.addr))
-        assert profile.type == 0x53
-        assert (profile.next % 0x2000) == 0
-        assert (meta.addr - profile.prev) == 486
+        profile = read_profile_chunk_header(sav, seek=gb2cram(meta.bank, meta.addr))
+        index = read_chunk_header(sav, seek=gb2cram(meta.bank, profile.prev))
+        index = read_index(sav, seek=gb2cram(meta.bank, profile.prev))
 
-        index = read_chunk_header(sav, gb2cram(meta.bank, profile.prev))
-        assert index.type == 0x53
-        assert index.next == meta.addr
-
-        entries = []
-        for i in range(120):
-            entries.append(struct.unpack("<HBB", sav.read(4)))
-
-        table = [("N", "TITLE", "SIZE", "MARK", "OWNER", "ICON")]
-        for i, entry in enumerate(entries):
-            if not entry[0]:
+        table = [("N", "TITLE", "ADDR", "SIZE", "MARK", "OWNER", "ICON")]
+        for i, entry in enumerate(index):
+            if entry.addr == 0:
                 continue
-            elif entry[1] != 0:
-                table.append((i, "KISS MAIL", "n/a", "◎", "$01", "auto"))
+            elif entry.medium == 0xFF:
+                table.append((i, "KISS MAIL", "n/a", "n/a", "◎", "$01", "auto"))
                 continue
-            chunk = read_chunk_header(sav, entry[0] - 6)
-            size, flags, reserved, header, owner = struct.unpack("<HBBBB", sav.read(6))
-            if not flags & 0x10:
-                icon_size = 0x00
-                icon_kind = ""
-            elif not flags & 0x08:
-                icon_size = 0x60
-                icon_kind = "1bpp"
-            else:
-                icon_size = 0xC0
-                icon_kind = "2bpp"
-            if not flags & 0x04:
-                kind = "△"
-            elif not flags & 0x02:
-                kind = "○"
-            else:
-                kind = "◇"
-            if not icon_size:
-                if owner in (0x01, 0x81, 0x40, 0x41, 0x42, 0x43, 0x44, 0x45, 0xFF):
-                    icon_kind = "auto"
-                elif owner == 0x00:
-                    icon_kind = "text"
-            title = sav.read(header - icon_size - 1).decode("gbkiss_string")
-            table.append((i, title, size, kind, "$%02x" % owner, icon_kind))
+            assert entry.medium == 0x00
+
+            file = read_file_header(sav, seek=entry.addr)
+            icon_kind = BUILTIN_ICONS.get(file.owner, "")
+            if file.icon:
+                icon_kind = "%dbpp" % (len(file.icon) // 0x60)
+            mark = {0x04: "○", 0x06: "◇"}.get(file.flags & 0x06, "△")
+            owner = "$%02x" % file.owner
+            addr = "$%02x:$%04x" % cram2gb(entry.addr)
+            table.append((i, file.title, addr, file.size, mark, owner, icon_kind))
 
         _columnify(table)
 
 
 def get_command(parser, args):
+    out_path = args.out
+    if out_path is None:
+        out_path = args.title + ".gbk"
+
     with open_sav(args, "rb") as (meta, sav):
-        profile = read_chunk_header(sav, gb2cram(meta.bank, meta.addr))
-        assert profile.type == 0x53
-        assert (profile.next % 0x2000) == 0
-        assert (meta.addr - profile.prev) == 486
-
-        index = read_chunk_header(sav, gb2cram(meta.bank, profile.prev))
-        assert index.type == 0x53
-        assert index.next == meta.addr
-
-        entries = []
-        for i in range(120):
-            entries.append(struct.unpack("<HBB", sav.read(4)))
-
-        for i, entry in enumerate(entries):
-            if entry[1] or not entry[0]:
-                continue
-            chunk = read_chunk_header(sav, entry[0] - 6)
-            start = sav.tell()
-            size, flags, reserved, header, owner = struct.unpack("<HBBBB", sav.read(6))
-            if not flags & 0x10:
-                icon_size = 0x00
-            elif not flags & 0x08:
-                icon_size = 0x60
-            else:
-                icon_size = 0xC0
-            title = sav.read(header - icon_size - 1).decode("gbkiss_string")
-            if title == args.title:
-                break
+        profile = read_profile_chunk_header(sav, seek=gb2cram(meta.bank, meta.addr))
+        for entry in read_index(sav, seek=gb2cram(meta.bank, profile.prev)):
+            if entry.addr > 0 and entry.medium == 0x00:
+                file = read_file_header(sav, seek=entry.addr)
+                if file.title == args.title:
+                    break
         else:
             raise KeyError(args.title)
 
-        sav.seek(start)
-        data = sav.read(size)
-        out_path = args.out
-        if out_path is None:
-            out_path = title + ".gbk"
+        sav.seek(entry.addr)
+        data = sav.read(file.size)
         with open(out_path, "wb") as out:
             out.write(data)
-        print(f"Wrote {size} bytes to {out_path}")
+        print(f"Wrote {file.size} bytes to {out_path}", file=sys.stderr)
 
 
 def add_command(parser, args):
@@ -236,70 +254,59 @@ def _ljust(text: str, width: int) -> str:
     return text + (" " * (width - _strwidth(text)))
 
 
-_chars = {}
-_katakana = {}
-_hiragana = {}
-_dakuten = {}
-_handakuten = {}
+_chars = dict(
+    enumerate(
+        "\0abcdefghijklmno"
+        "pqrstuvwxyz｢|｣¯\\"
+        " !\"#$%&'()*+,-./"
+        "0123456789:;<=>?"
+        "@ABCDEFGHIJKLMNO"
+        "PQRSTUVWXYZ[¥]^_"
+        "をあいうえおかきくけこさしすせそ"
+        "たちつてとなにぬねのはひふへほま"
+        "みむめもやゆよらりるれろわんがぎ"
+        "ぐげござじずぜぞだぢづでどばびぶ"
+        "べぼぱぴぷぺぽぁぃぅぇぉゃゅょっ"
+        "ヲアイウエオカキクケコサシスセソ"
+        "タチツテトナニヌネノハヒフヘホマ"
+        "ミムメモヤユヨラリルレロワンガギ"
+        "グゲごザジズゼゾダヂヅデドバビブ"
+        "ベボパピプペポァィゥェォャュョッ"
+    )
+)
 
+_katakana = {0: "\0"}
+_katakana.update(
+    enumerate(
+        " !\"#$%&'()*+,-./0123456789:;<=>?"
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[¥]^_"
+        "\0abcdefghijklmnopqrstuvwxyz｢|｣¯\\",
+        start=0x20,
+    )
+)
+_hiragana = dict(_katakana)
+_katakana.update(enumerate("ヲァィゥェォャュョッー", start=0xA6))
+_katakana.update(enumerate("アイウエオカキクケコサシスセソタチツテトナニヌネノ", start=0xB1))
+_katakana.update(enumerate("ハヒフヘホマミムメモヤユヨラリルレロワン", start=0xCA))
+_hiragana.update(enumerate("をぁぃぅぇぉゃゅょっー", start=0xA6))
+_hiragana.update(enumerate("あいうえおかきくけこさしすせそたちつてとなにぬねの", start=0xB1))
+_hiragana.update(enumerate("はひふへほまみむめもやゆよらりるれろわん", start=0xCA))
 
-def _load_chars(charmaps, mapping):
-    for base, chars in mapping.items():
-        for i, ch in enumerate(chars):
-            for charmap in charmaps:
-                charmap[base + i] = ch
-
-
-_load_chars(
-    [_chars, _katakana, _hiragana],
-    {
-        0x00: "\0",
-        0x20: " !\"#$%&'()*+,-./",
-        0x30: "0123456789",
-        0x3A: ":;<=>?@",
-        0x41: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-        0x5B: "[\\]^_`",
-    },
-)
-_load_chars(
-    [_chars],
-    {
-        0x01: "abcdefghijklmnopqrstuvwxyz",
-    },
-)
-_load_chars(
-    [_katakana, _hiragana],
-    {
-        0x61: "abcdefghijklmnopqrstuvwxyz",
-        0x7B: "{|}",
-    },
-)
-_load_chars(
-    [_katakana],
-    {
-        0xA6: "ヲァィゥェォャュョッー",
-        0xB1: "アイウエオカキクケコサシスセソタチツテトナニヌネノ",
-        0xCA: "ハヒフヘホマミムメモヤユヨラリルレロワン",
-    },
-)
-_load_chars(
-    [_hiragana],
-    {
-        0xA6: "をぁぃぅぇぉゃゅょっー",
-        0xB1: "あいうえおかきくけこさしすせそたちつてとなにぬねの",
-        0xCA: "はひふへほまみむめもやゆよらりるれろわん",
-    },
-)
-for src, dst in zip(
-    "カキクケコサシスセソタチツテトハヒフヘホかきくけこさしすせそたちつてとはひふへほ",
-    "ガギグゲゴザジズゼゾダヂヅデドバビブベボがぎぐげござじずぜぞだぢづでどばびぶべぼ",
-):
-    _dakuten[src] = dst
-for src, dst in zip(
-    "ハヒフヘホはひふへほ",
-    "パピプペポぱぴぷぺぽ",
-):
-    _handakuten[src] = dst
+_charmaps = {0x0E: _katakana, 0x0F: _hiragana}
+_diacritics = {
+    0xDE: dict(
+        zip(
+            "カキクケコサシスセソタチツテトハヒフヘホかきくけこさしすせそたちつてとはひふへほ",
+            "ガギグゲゴザジズゼゾダヂヅデドバビブベボがぎぐげござじずぜぞだぢづでどばびぶべぼ",
+        )
+    ),
+    0xDF: dict(
+        zip(
+            "ハヒフヘホはひふへほ",
+            "パピプペポぱぴぷぺぽ",
+        )
+    ),
+}
 
 
 def _no_encode(text: str):
@@ -310,29 +317,21 @@ def _decode_string(data: bytes):
     charmap = _katakana
     text = ""
     for byte in data:
-        if byte == 0x0E:
-            charmap = _katakana
-        elif byte == 0x0F:
-            charmap = _hiragana
-        elif byte == 0xDE:
-            if text[-1:] not in _dakuten:
-                raise UnicodeDecodeError("dakuten without preceding kana")
-            text = text[:-1] + _dakuten[text[-1:]]
-        elif byte == 0xDF:
-            if text[-1:] not in _handakuten:
-                raise UnicodeDecodeError("handakuten without preceding kana")
-            text = text[:-1] + _handakuten[text[-1:]]
-        elif byte not in charmap:
-            raise UnicodeDecodeError("invalid byte")
+        if byte in _charmaps:
+            charmap = _charmaps[byte]
+        elif byte in _diacritics:
+            if text[-1:] not in _diacritics[byte]:
+                raise UnicodeDecodeError("modifier without valid preceder")
+            text = text[:-1] + _diacritics[byte][text[-1:]]
         else:
+            if byte not in charmap:
+                raise UnicodeDecodeError("invalid byte")
             text += charmap[byte]
     return text, len(text)
 
 
 def _decode_chars(data: bytes):
-    text = ""
-    for byte in data:
-        text += _chars[byte]
+    text = "".join(_chars[byte] for byte in data)
     return text, len(text)
 
 
