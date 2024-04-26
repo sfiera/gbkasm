@@ -25,15 +25,17 @@ def main():
 
     sub("help", func=help_command, help="Show help")
     sub("info", func=info_command, help="Show user info from save file")
+    sub("check", func=check_command, help="Check validity of save file")
     sub("list", func=list_command, help="List file entries in save file")
     sub("move", func=move_command, help="Move file entry within save file")
     get = sub("get", func=get_command, help="Extract local file from save file")
     add = sub("add", func=add_command, help="Insert local file into save file")
-    sub("del", func=del_command, help="Delete file entry from save file")
+    delete = sub("del", func=del_command, help="Delete file entry from save file")
 
     add.add_argument("path")
     get.add_argument("title")
     get.add_argument("-o", "--out")
+    delete.add_argument("title")
 
     args = parser.parse_args()
     args.func(parser, args)
@@ -88,6 +90,16 @@ def read_struct(fmt, file):
     return struct.unpack(fmt, file.read(struct.calcsize(fmt)))
 
 
+def write_struct(fmt, file, *args):
+    file.write(struct.pack(fmt, *args))
+
+
+CHUNK_FREE = ord("F")
+CHUNK_REGULAR = ord("R")
+CHUNK_INITIAL = ord("Z")
+CHUNK_FILE = [CHUNK_REGULAR, CHUNK_INITIAL]
+CHUNK_SPECIAL = ord("S")
+CHUNK_VALID = [CHUNK_FREE, CHUNK_REGULAR, CHUNK_INITIAL, CHUNK_SPECIAL]
 ICON_SIZE_2BPP = 0xC0
 ICON_SIZE_1BPP = 0x60
 BUILTIN_ICONS = {
@@ -149,7 +161,7 @@ def read_chunk_header(sav, *, seek=None):
 
 def read_profile_chunk_header(sav, *, seek=None):
     profile = read_chunk_header(sav, seek=seek)
-    assert profile.type == 0x53
+    assert profile.type == CHUNK_SPECIAL
     assert (profile.next % 0x2000) == 0
     _, addr = cram2gb(profile.body)
     assert (addr - profile.prev) == 492
@@ -158,7 +170,7 @@ def read_profile_chunk_header(sav, *, seek=None):
 
 def read_index_chunk_header(sav, *, seek=None):
     index = read_chunk_header(sav, seek=seek)
-    assert index.type == 0x53
+    assert index.type == CHUNK_SPECIAL
     return index
 
 
@@ -190,6 +202,80 @@ def help_command(parser, args):
     parser.print_help()
 
 
+def check_command(parser, args):
+    ok = True
+    with open_sav(args, "rb") as (meta, sav):
+        profile = read_profile_chunk_header(sav, seek=gb2cram(meta.bank, meta.addr))
+
+        files = {}
+        for entry in read_index(sav, seek=gb2cram(meta.bank, profile.prev)):
+            if entry.addr > 0 and entry.medium == 0x00:
+                files[entry.addr] = read_file_header(sav, seek=entry.addr)
+
+        chunks = {}
+        for bank in range(0, meta.bank + 1):
+            chunk = read_chunk_header(sav, seek=gb2cram(bank, 0xA002))
+            chunks[chunk.body] = chunk
+            while chunk.next != 0xC000:
+                prev = chunk
+                chunk = read_chunk_header(sav, seek=gb2cram(bank, chunk.next))
+                chunks[chunk.body] = chunk
+                prev_cram = gb2cram(bank, chunk.prev)
+                if prev_cram != prev.body - 6:
+                    print(
+                        f"Chunk ${chunk.body - 6:04x} has bad back-reference"
+                        f" to ${prev_cram:04x}; expected ${prev.body - 6:04x}"
+                    )
+                    ok = False
+
+        file_chunks = {k: v for k, v in chunks.items() if v.type in CHUNK_FILE}
+        for addr in frozenset(files) | frozenset(file_chunks):
+            if addr not in chunks:
+                print(f"Index references non-chunk ${missing_file:04x}")
+                ok = False
+            elif addr not in file_chunks:
+                print(f"Index references non-file chunk ${missing_file:04x}")
+                ok = False
+            elif addr not in files:
+                print(f"Index lacks reference to file chunk ${missing_chunk:04x}")
+                ok = False
+            else:
+                chunk = chunks[addr]
+                file = files[addr]
+                _, gb_addr = cram2gb(addr)
+                calc_size = chunk.next - gb_addr
+                if (calc_size < file.size) or (calc_size > file.size + 5):
+                    print(
+                        f"File chunk ${addr:04x} has bad size ${calc_size:04x};"
+                        f" expected ${file.size:04x}"
+                    )
+                    ok = False
+
+        special_chunks = {k: v for k, v in chunks.items() if v.type == CHUNK_SPECIAL}
+        del special_chunks[gb2cram(meta.bank, meta.addr) + 6]  # profile
+        del special_chunks[gb2cram(meta.bank, profile.prev) + 6]  # index
+        for addr in special_chunks:
+            print(f"Invalid special chunk ${addr:04x}")
+            ok = False
+
+        free_chunks = {k: v for k, v in chunks.items() if v.type == CHUNK_FREE}
+        for addr, chunk in free_chunks.items():
+            bank, _ = cram2gb(addr)
+            next_cram = gb2cram(bank, chunk.next) + 6
+            if next_cram in free_chunks:
+                print(f"Consecutive free chunks ${addr:04x} and ${next_cram:04x}")
+                ok = False
+
+        invalid_chunks = {k: v for k, v in chunks.items() if v.type not in CHUNK_VALID}
+        for addr, chunk in invalid_chunks.items():
+            print(f"Invalid chunk type ${chunk.type:02x} at ${addr:04x}")
+            ok = False
+    if ok:
+        print(f"Validated {len(files)} files in {len(chunks)} chunks")
+    else:
+        sys.exit(1)
+
+
 def info_command(parser, args):
     with open_sav(args, "rb") as (meta, sav):
         profile = read_profile_chunk_header(sav, seek=gb2cram(meta.bank, meta.addr))
@@ -213,7 +299,6 @@ def info_command(parser, args):
 def list_command(parser, args):
     with open_sav(args, "rb") as (meta, sav):
         profile = read_profile_chunk_header(sav, seek=gb2cram(meta.bank, meta.addr))
-        index = read_chunk_header(sav, seek=gb2cram(meta.bank, profile.prev))
         index = read_index(sav, seek=gb2cram(meta.bank, profile.prev))
 
         table = [("N", "TITLE", "ADDR", "SIZE", "MARK", "OWNER", "ICON")]
@@ -268,7 +353,51 @@ def move_command(parser, args):
 
 
 def del_command(parser, args):
-    raise NotImplementedError()
+    with open_sav(args, "rb+") as (meta, sav):
+        profile = read_profile_chunk_header(sav, seek=gb2cram(meta.bank, meta.addr))
+        index = read_index(sav, seek=gb2cram(meta.bank, profile.prev))
+        for i, entry in enumerate(index):
+            if entry.addr > 0 and entry.medium == 0x00:
+                file = read_file_header(sav, seek=entry.addr)
+                if file.title == args.title:
+                    break
+        else:
+            raise KeyError(args.title)
+
+        # Set the chunk type to $46 (free)
+        chunk = read_chunk_header(sav, seek=entry.addr - 6)
+        sav.seek(entry.addr - 6)
+        write_struct("<BB", sav, CHUNK_FREE, CHUNK_FREE ^ 0xFF)
+
+        # Merge this chunk into previous, if previous chunk is free too
+        bank, addr = cram2gb(entry.addr)
+        if addr != 0xA008:
+            prev = read_chunk_header(sav, seek=gb2cram(bank, chunk.prev))
+            if prev.type == CHUNK_FREE:
+                sav.seek(gb2cram(bank, chunk.prev))
+                write_struct(
+                    "<BBHH", sav, CHUNK_FREE, CHUNK_FREE ^ 0xFF, prev.prev, chunk.next
+                )
+                chunk = KissChunk(CHUNK_FREE, prev.body, prev.prev, chunk.next)
+
+        # Merge next chunk into this, if next chunk is free too
+        if cram2gb(chunk.next)[1] != 0xC000:
+            next = read_chunk_header(sav, seek=gb2cram(bank, chunk.next))
+            if next.type == CHUNK_FREE:
+                sav.seek(gb2cram(bank, entry.addr - 2))
+                write_struct("<H", sav, next.next)
+                chunk = KissChunk(CHUNK_FREE, chunk.body, chunk.prev, next.next)
+
+        # Ensure next chunk points to this, if there is a next chunk
+        if cram2gb(chunk.next)[1] != 0xC000:
+            sav.seek(gb2cram(bank, chunk.next + 2))
+            write_struct("<H", sav, cram2gb(chunk.body - 6)[1])
+
+        # Zero out the entry in the index
+        sav.seek(gb2cram(meta.bank, profile.prev) + 6 + (4 * i))
+        write_struct("<HBB", sav, 0, 0, 0)
+
+        print(f"Reclaimed {file.size+6} bytes of space", file=sys.stderr)
 
 
 def _columnify(table):
