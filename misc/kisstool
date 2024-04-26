@@ -65,8 +65,8 @@ def open_sav(args, mode):
 
     if rom_path:
         with open(rom_path, "rb") as f:
-            f.seek(0x13)
-            meta = KissMeta(*read_struct("<HBH", f))
+            f.seek(0x14)
+            meta = KissMeta(*read_struct("<BBH", f))
         with open(sav_path, mode) as f:
             yield meta, f
     else:
@@ -135,18 +135,8 @@ def detect_meta(sav):
 
     if cram_addr is None:
         raise Exception("GBKiss data not found in save file")
-    else:
-        bank, addr = cram2gb(cram_addr)
-
-    start_bank = bank
-    while start_bank > 0:
-        prev = gb2cram(start_bank - 1, 0xA002)
-        if data[prev] ^ data[prev + 1] == 0xFF:
-            start_bank -= 1
-    start_addr = gb2cram(start_bank, 0xA000)
-    capacity = cram_addr - start_addr
-
-    return KissMeta(capacity, bank, addr)
+    bank, addr = cram2gb(cram_addr)
+    return KissMeta(None, bank, addr)
 
 
 def read_chunk_header(sav, *, seek=None):
