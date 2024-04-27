@@ -182,6 +182,21 @@ def read_index(sav, *, seek=None):
     return entries
 
 
+def read_all_chunks(sav, banks):
+    chunks = []
+    for bank in range(0, banks):
+        addr = 0xA002
+        while addr != 0xC000:
+            chunks.append(read_chunk_header(sav, seek=gb2cram(bank, addr)))
+            addr = chunks[-1].next
+    return chunks
+
+
+def chunk_size(chunk):
+    bank, _ = cram2gb(chunk.body)
+    return gb2cram(bank, chunk.next) - chunk.body
+
+
 def read_file_header(sav, *, seek=None):
     if seek is not None:
         sav.seek(seek)
@@ -212,21 +227,22 @@ def check_command(parser, args):
             if entry.addr > 0 and entry.medium == 0x00:
                 files[entry.addr] = read_file_header(sav, seek=entry.addr)
 
-        chunks = {}
-        for bank in range(0, meta.bank + 1):
-            chunk = read_chunk_header(sav, seek=gb2cram(bank, 0xA002))
-            chunks[chunk.body] = chunk
-            while chunk.next != 0xC000:
-                prev = chunk
-                chunk = read_chunk_header(sav, seek=gb2cram(bank, chunk.next))
-                chunks[chunk.body] = chunk
-                prev_cram = gb2cram(bank, chunk.prev)
-                if prev_cram != prev.body - 6:
-                    print(
-                        f"Chunk ${chunk.body - 6:04x} has bad back-reference"
-                        f" to ${prev_cram:04x}; expected ${prev.body - 6:04x}"
-                    )
-                    ok = False
+        chunks = {chunk.body: chunk for chunk in read_all_chunks(sav, meta.bank + 1)}
+        for addr, chunk in chunks.items():
+            bank, addr = cram2gb(addr)
+            if chunk.next == 0xC000:
+                continue
+            next = chunks[gb2cram(bank, chunk.next) + 6]
+            back_cram = gb2cram(bank, next.prev)
+            if back_cram != chunk.body - 6:
+                print(
+                    f"Chunk ${next.body - 6:04x} has bad back-reference"
+                    f" to ${back_cram:04x}; expected ${chunk.body - 6:04x}"
+                )
+                ok = False
+            if chunk.type not in CHUNK_VALID:
+                print(f"Invalid chunk type ${chunk.type:02x} at ${addr:04x}")
+                ok = False
 
         file_chunks = {k: v for k, v in chunks.items() if v.type in CHUNK_FILE}
         for addr in frozenset(files) | frozenset(file_chunks):
@@ -266,10 +282,6 @@ def check_command(parser, args):
                 print(f"Consecutive free chunks ${addr:04x} and ${next_cram:04x}")
                 ok = False
 
-        invalid_chunks = {k: v for k, v in chunks.items() if v.type not in CHUNK_VALID}
-        for addr, chunk in invalid_chunks.items():
-            print(f"Invalid chunk type ${chunk.type:02x} at ${addr:04x}")
-            ok = False
     if ok:
         print(f"Validated {len(files)} files in {len(chunks)} chunks")
     else:
@@ -345,7 +357,39 @@ def get_command(parser, args):
 
 
 def add_command(parser, args):
-    raise NotImplementedError()
+    with open(args.path, "rb") as f:
+        data = f.read()
+        file = read_file_header(f, seek=0)
+
+    diamond = (file.flags & 0x06) == 0x06
+    if file.size != len(data):
+        print(
+            f"Declared file size ${file.size:04x} != observed ${len(data):04x}",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    with open_sav(args, "rb+") as (meta, sav):
+        profile = read_profile_chunk_header(sav, seek=gb2cram(meta.bank, meta.addr))
+        index = read_index(sav, seek=gb2cram(meta.bank, profile.prev))
+        if all(entry.addr > 0 for entry in index):
+            print(f"No space in index", file=sys.stderr)
+            sys.exit(1)
+
+        chunks = read_all_chunks(sav, meta.bank + 1)
+        chunks = {c for c in chunks if c.type == CHUNK_FREE}
+        chunks = {c for c in chunks if chunk_size(c) >= file.size}
+        if not chunks:
+            print(f"No space in CRAM", file=sys.stderr)
+            sys.exit(1)
+        if diamond:
+            chunks = {c for c in chunks if cram2gb(c.body)[1] == 0xA008}
+            if not chunks:
+                print(f"No valid diamond space in CRAM", file=sys.stderr)
+                sys.exit(1)
+        chunk = max(chunks, key=lambda chunk: chunk.body)
+
+        print(chunk)
 
 
 def move_command(parser, args):
