@@ -5103,8 +5103,8 @@ trap_b3_574b::
     ld hl, $9800
     call trap_b7_58f8
     xor a
-    ldh [$8e], a
-    ldh [$8f], a
+    ldh [hCursorX], a
+    ldh [hCursorY], a
     call Call_002_58e1
     call Call_002_5831
     call Call_002_5843
@@ -5146,7 +5146,7 @@ Call_002_5798:
     jr nz, jr_002_57cb
 
     ld a, $03
-    ldh [$92], a
+    ldh [hDrawMode], a
     ld e, $20
     call Call_002_5850
     ld hl, $8800
@@ -5192,7 +5192,7 @@ jr_002_57d1:
     push de
     and $83
     or $08
-    ldh [$92], a
+    ldh [hDrawMode], a
     ld e, $7f
     call Call_002_5850
     pop de
@@ -5400,14 +5400,14 @@ trap_b7_58f8::
 
 
 trap_b8_5901::
-    ldh a, [$92]
-    bit 3, a
+    ldh a, [hDrawMode]
+    bit DrawMode_Bit3, a
     jr nz, jr_002_590e
 
     ld a, h
-    ldh [$8e], a
+    ldh [hCursorX], a
     ld a, l
-    ldh [$8f], a
+    ldh [hCursorY], a
     ret
 
 
@@ -5421,21 +5421,21 @@ jr_002_590e:
 
 trap_bd_5914::
     ld a, h
-    ldh [$90], a
+    ldh [hDraw90], a
     ld a, l
-    ldh [$91], a
+    ldh [hDraw91], a
     ret
 
 
 trap_c8_591b::
     push bc
     ld c, a
-    ldh a, [$92]
-    bit 3, a
-    ldh a, [$90]
+    ldh a, [hDrawMode]
+    bit DrawMode_Bit3, a
+    ldh a, [hDraw90]
     jr nz, jr_002_5927
 
-    ldh a, [$8e]
+    ldh a, [hCursorX]
 
 jr_002_5927:
     ld b, a
@@ -5464,8 +5464,8 @@ trap_bb_593a::
     push de
     push hl
     ld e, a
-    ldh a, [$92]
-    bit 3, a
+    ldh a, [hDrawMode]
+    bit DrawMode_Bit3, a
     jr nz, jr_002_594e
 
     call Call_002_5970
@@ -5491,8 +5491,8 @@ Jump_002_5958:
     push de
     push hl
     ld e, a
-    ldh a, [$92]
-    bit 3, a
+    ldh a, [hDrawMode]
+    bit DrawMode_Bit3, a
     jr nz, jr_002_5969
 
     call Call_002_5970
@@ -5511,9 +5511,9 @@ jr_002_5969:
 
 
 Call_002_5970:
-    ldh a, [$8e]
+    ldh a, [hCursorX]
     ld h, a
-    ldh a, [$8f]
+    ldh a, [hCursorY]
     ld l, a
     call Call_002_59dc
     ld bc, $0001
@@ -5529,9 +5529,9 @@ Call_002_597f:
 
 trap_be_5988::
     push hl
-    ldh a, [$90]
+    ldh a, [hDraw90]
     ld h, a
-    ldh a, [$91]
+    ldh a, [hDraw91]
     ld l, a
     call Call_002_5999
     pop de
@@ -5640,15 +5640,15 @@ trap_b9_59f5::
 
 
 Call_002_59ff:
-    ld hl, $ff92
-    bit 7, [hl]
+    ld hl, hDrawMode
+    bit DrawMode_Bit7, [hl]
     jr z, jr_002_5a15
 
-    bit 3, [hl]
+    bit DrawMode_Bit3, [hl]
     jr z, jr_002_5a19
 
     ld de, data_02_5a5c
-    ld bc, $ff90
+    ld bc, hDraw90
     cp $18
     jr c, jr_002_5a23
 
@@ -5661,7 +5661,7 @@ jr_002_5a15:
 
 jr_002_5a19:
     ld de, data_02_5a3e
-    ld bc, $ff8e
+    ld bc, hCursorX
     cp $10
     jr nc, jr_002_5a3d
 
@@ -5686,7 +5686,7 @@ jr_002_5a23:
     ld h, b
     jr c, jr_002_5a3d
 
-    ld hl, $ff92
+    ld hl, hDrawMode
 
 jr_002_5a3d:
     ret
@@ -5737,13 +5737,13 @@ data_02_5a5c::
 
 
 code_02_5a8a:
-    ld hl, $ff92
-    res 3, [hl]
+    ld hl, hDrawMode
+    res DrawMode_Bit3, [hl]
     ret
 
 code_02_5a90:
-    ld hl, $ff92
-    set 3, [hl]
+    ld hl, hDrawMode
+    set DrawMode_Bit3, [hl]
     ret
 
 code_02_5a96:
@@ -5842,7 +5842,7 @@ code_02_5ae6:
     call Call_002_59dc
     call trap_a6_55df
     pop af
-    ld hl, $ff8e
+    ld hl, hCursorX
     add [hl]
     ld [hl], a
     call Call_002_5b3e
@@ -5879,7 +5879,7 @@ jr_002_5b1f:
 
     pop de
     pop bc
-    ld hl, $ff8e
+    ld hl, hCursorX
 
 code_02_5b35:
     xor a
@@ -5889,7 +5889,7 @@ code_02_5b35:
 
 
 Call_002_5b39:
-    ld hl, $ff8e
+    ld hl, hCursorX
 
 code_02_5b3c:
     inc [hl]
@@ -5950,7 +5950,7 @@ code_02_5b63:
 
 
 Call_002_5b6b:
-    ld hl, $ff90
+    ld hl, hDraw90
 
 code_02_5b6e:
     inc [hl]
@@ -5991,14 +5991,14 @@ code_02_5b86:
 
 
 trap_a7_5b8d::
-    ldh a, [$92]
-    bit 6, a
+    ldh a, [hDrawMode]
+    bit DrawMode_Bit6, a
     jr nz, jr_002_5bb4
 
-    bit 7, a
+    bit DrawMode_Bit7, a
     jr z, jr_002_5bca
 
-    bit 3, a
+    bit DrawMode_Bit3, a
     jr nz, jr_002_5bb7
 
     ld a, e
@@ -6147,9 +6147,9 @@ jr_002_5c2f:
 Call_002_5c31:
 jr_002_5c31:
     push hl
-    ld hl, $ff92
+    ld hl, hDrawMode
     or a
-    bit 2, [hl]
+    bit DrawMode_Bit2, [hl]
     pop hl
     ret z
 
@@ -6431,7 +6431,7 @@ jr_002_5d74:
     jr jr_002_5d64
 
 code_02_5d78:
-    ldh a, [$92]
+    ldh a, [hDrawMode]
     ld b, a
 
 Call_002_5d7b:
@@ -6453,8 +6453,8 @@ Call_002_5d7b:
     ld b, $0e
     call Call_002_69c9
     xor a
-    ldh [$90], a
-    ldh [$91], a
+    ldh [hDraw90], a
+    ldh [hDraw91], a
     ld a, [$c3bc]
     ld l, a
     ld a, [$c3bd]
@@ -6488,8 +6488,8 @@ jr_002_5da9:
 jr_002_5dc1:
     push de
     xor a
-    ldh [$90], a
-    ldh [$91], a
+    ldh [hDraw90], a
+    ldh [hDraw91], a
     ld a, [$c3bc]
     ld e, a
     ld a, [$c3bd]
@@ -7543,9 +7543,9 @@ jr_002_62b6:
     ldh [$94], a
     ldh [$95], a
     ld [de], a
-    ldh a, [$92]
-    and $fb
-    ldh [$92], a
+    ldh a, [hDrawMode]
+    and ~(1 << DrawMode_Bit2)
+    ldh [hDrawMode], a
     ld a, h
     sub l
     ld l, a
@@ -7564,9 +7564,9 @@ Call_002_62c8:
 
 Call_002_62d5:
     ld bc, $0000
-    ldh a, [$92]
-    and $fb
-    ldh [$92], a
+    ldh a, [hDrawMode]
+    and ~(1 << DrawMode_Bit2)
+    ldh [hDrawMode], a
     ldh a, [$96]
     and $07
     cp $04
@@ -7583,10 +7583,10 @@ jr_002_62eb:
 Call_002_62ee:
 jr_002_62ee:
     ld bc, $0404
-    ldh a, [$92]
-    and $fb
+    ldh a, [hDrawMode]
+    and ~(1 << DrawMode_Bit2)
     or b
-    ldh [$92], a
+    ldh [hDrawMode], a
     ldh a, [$96]
     and $f8
     or $04
@@ -7727,9 +7727,9 @@ jr_002_636c:
 
 jr_002_638d:
     ld b, h
-    ld hl, $ff92
+    ld hl, hDrawMode
     ld a, [hl]
-    and $fb
+    and ~(1 << DrawMode_Bit2)
     or b
     ld [hl], a
     pop hl

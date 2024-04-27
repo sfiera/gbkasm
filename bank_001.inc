@@ -810,14 +810,14 @@ jr_001_45a3:
 
 
 Call_001_45dd:
-    ldh a, [$92]
+    ldh a, [hDrawMode]
     push af
-    or $40
-    ldh [$92], a
+    or (1 << DrawMode_Bit6)
+    ldh [hDrawMode], a
     trap $69
     pop af
-    and $fb
-    ldh [$92], a
+    and ~(1 << DrawMode_Bit2)
+    ldh [hDrawMode], a
     ret
 
 
@@ -3579,14 +3579,14 @@ data_01_6855::
     db "ｲｲｴ\n"
 
 Call_001_685d:
-    ldh [$91], a
+    ldh [hDraw91], a
     ld a, $03
 
 jr_001_6861:
-    ldh [$90], a
+    ldh [hDraw90], a
     ld a, $0f
     trap $b9
-    ldh a, [$91]
+    ldh a, [hDraw91]
     ld e, a
     ld d, $07
     trap $57
@@ -3594,13 +3594,13 @@ jr_001_6861:
     ld b, h
     ld hl, data_01_6855
     ld de, $d301
-    ldh a, [$90]
+    ldh a, [hDraw90]
     ldh [$b4], a
     trap $5b
     inc bc
     inc bc
     inc bc
-    ldh a, [$90]
+    ldh a, [hDraw90]
     swap a
     ldh [$b4], a
     trap $5b
@@ -3626,7 +3626,7 @@ jr_001_688b:
     bit 0, b
     jr z, jr_001_688b
 
-    ldh a, [$90]
+    ldh a, [hDraw90]
     cp $30
     ret
 
@@ -5194,13 +5194,13 @@ jr_001_6f94:
 
 trap_69_6f9b::
 .next
-    ldh a, [$92]
+    ldh a, [hDrawMode]
     ld e, a
     ld a, [hl+]
     or a
     ret z
 
-    bit 6, e
+    bit DrawMode_Bit6, e
     jr nz, .jr_001_6fb3
 
     cp $20
@@ -5224,8 +5224,8 @@ trap_69_6f9b::
     jr .jr_001_6fb3
 
 .jr_001_6fba
-    ldh a, [$92]
-    bit 3, a
+    ldh a, [hDrawMode]
+    bit DrawMode_Bit3, a
     jr z, .jr_001_6fb7
 
     push bc
