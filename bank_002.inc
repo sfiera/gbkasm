@@ -2751,7 +2751,7 @@ Call_002_4dee:
 
 
 jr_002_4df5:
-    db $76
+    halt
 
 trap_fd_4df6::
     ldh a, [$89]
@@ -2781,7 +2781,7 @@ trap_fd_4df6::
 
 
 jr_002_4e15:
-    db $76
+    halt
 
 Call_002_4e16:
     ldh a, [$89]
@@ -2811,7 +2811,7 @@ Call_002_4e16:
 
 
 jr_002_4e35:
-    db $76
+    halt
 
 trap_ff_4e36::
     ldh a, [$88]
@@ -2834,7 +2834,7 @@ trap_ff_4e36::
     jr jr_002_4e50
 
 jr_002_4e4f:
-    db $76
+    halt
 
 jr_002_4e50:
     ldh a, [$89]
@@ -2925,7 +2925,7 @@ jr_002_4eab:
 
 trap_c3_4eaf::
     ei
-    db $76
+    halt
     ldh a, [$89]
     or a
     jr nz, trap_c3_4eaf
@@ -2934,7 +2934,7 @@ trap_c3_4eaf::
 
 
 jr_002_4eb7:
-    db $76
+    halt
 
 Call_002_4eb8:
     ldh a, [$88]
@@ -2953,7 +2953,7 @@ Call_002_4eb8:
     jr jr_002_4ecd
 
 jr_002_4ecc:
-    db $76
+    halt
 
 jr_002_4ecd:
     ldh a, [$89]
@@ -4805,7 +4805,7 @@ jr_002_5607:
     jr jr_002_55f8
 
 jr_002_5622:
-    db $76
+    halt
 
 Call_002_5623:
 jr_002_5623:
@@ -4824,7 +4824,7 @@ jr_002_5623:
     jr jr_002_5637
 
 jr_002_5636:
-    db $76
+    halt
 
 jr_002_5637:
     ldh a, [$89]
@@ -4874,7 +4874,7 @@ data_02_5653::
 
 
 jr_002_566d:
-    db $76
+    halt
 
 Call_002_566e:
     ldh a, [$89]
@@ -6843,7 +6843,7 @@ jr_002_5f48:
 
 
 jr_002_5f59:
-    db $76
+    halt
 
 Call_002_5f5a:
     ldh a, [$89]
@@ -6915,7 +6915,7 @@ jr_002_5f8a:
     jr jr_002_5f7b
 
 jr_002_5fa5:
-    db $76
+    halt
 
 Call_002_5fa6:
 jr_002_5fa6:
@@ -6936,7 +6936,7 @@ jr_002_5fa6:
     jr jr_002_5fbd
 
 jr_002_5fbc:
-    db $76
+    halt
 
 jr_002_5fbd:
     ldh a, [$89]
@@ -7138,7 +7138,7 @@ trap_b1_60c5::
     ei
 
 jr_002_60c9:
-    db $76
+    halt
     ldh a, [$82]
     dec a
     jr nz, jr_002_60c9
