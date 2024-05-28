@@ -2,50 +2,36 @@
 
 import sys
 
-flag_queue = []
-run_queue = []
+def read(queue, bits):
+    mask = (1 << bits) - 1
+    if not queue:
+        b = sys.stdin.buffer.read(1)
+        if not b:
+            raise EOFError
+        shift = 8 - bits
+        for i in range(8 // bits):
+            queue.append((b[0] >> shift) & mask)
+            shift -= bits
+    return queue.pop(0)
 
-def read_byte():
-    b = sys.stdin.buffer.read(1)
-    if b:
-        return b[0]
-    raise EOFError
+def write(byte):
+    sys.stdout.buffer.write(bytearray([byte]))
 
-def get_flag():
-    if not flag_queue:
-        byte = read_byte()
-        for i in range(8):
-            flag_queue.append(bool((byte << i) & 0x80))
-    return flag_queue.pop(0)
-
-def get_run():
-    if not run_queue:
-        byte = read_byte()
-        run_queue.append(0xf & (byte >> 4))
-        run_queue.append(0xf & (byte >> 0))
-    return run_queue.pop(0)
-
-def get_lit():
-    return read_byte()
-
-def get_src():
-    return read_byte()
-
+lits, srcs, flags, runs = [], [], [], []
 buffer = bytearray(0x100)
 dst = 0xef
-while True:
-    try:
-        if get_flag():
-            buffer[dst] = get_lit()
-            sys.stdout.buffer.write(bytearray([buffer[dst]]))
+try:
+    while True:
+        if read(flags, 1):
+            buffer[dst] = read(lits, 8)
+            write(buffer[dst])
             dst = (dst + 1) & 0xff
         else:
-            src = get_src()
-            run = get_run()
-            for i in range(run + 2):
+            src = read(srcs, 8)
+            for i in range(2 + read(runs, 4)):
                 buffer[dst] = buffer[src]
-                sys.stdout.buffer.write(bytearray([buffer[dst]]))
+                write(buffer[dst])
                 src = (src + 1) & 0xff
                 dst = (dst + 1) & 0xff
-    except EOFError:
-        break
+except EOFError:
+    pass
