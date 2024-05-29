@@ -412,7 +412,7 @@ def add_command(parser, args):
             write_struct(
                 "<BBHH", sav, chunk2.type, chunk2.type ^ 0xFF, chunk2.prev, chunk2.next
             )
-            if cram2gb(chunk2.next)[1] != 0xC000:
+            if chunk2.next != 0xC000:
                 sav.seek(gb2cram(bank, chunk2.next + 2))
                 write_struct("<H", sav, cram2gb(chunk2.body)[1] - 6)
             if not diamond:
