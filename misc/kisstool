@@ -155,7 +155,7 @@ def read_chunk_header(sav, *, seek=None):
     if seek is not None:
         sav.seek(seek)
     ctype, inv_ctype, prevc, nextc = read_struct("<BBHH", sav)
-    assert (ctype ^ inv_ctype) == 0xFF
+    assert (ctype ^ inv_ctype) == 0xFF, f"invalid chunk at ${sav.tell():x}"
     return KissChunk(ctype, sav.tell(), prevc, nextc)
 
 
@@ -247,13 +247,13 @@ def check_command(parser, args):
         file_chunks = {k: v for k, v in chunks.items() if v.type in CHUNK_FILE}
         for addr in frozenset(files) | frozenset(file_chunks):
             if addr not in chunks:
-                print(f"Index references non-chunk ${missing_file:04x}")
+                print(f"Index references non-chunk ${addr:04x}")
                 ok = False
             elif addr not in file_chunks:
-                print(f"Index references non-file chunk ${missing_file:04x}")
+                print(f"Index references non-file chunk ${addr:04x}")
                 ok = False
             elif addr not in files:
-                print(f"Index lacks reference to file chunk ${missing_chunk:04x}")
+                print(f"Index lacks reference to file chunk ${addr:04x}")
                 ok = False
             else:
                 chunk = chunks[addr]
@@ -372,7 +372,11 @@ def add_command(parser, args):
     with open_sav(args, "rb+") as (meta, sav):
         profile = read_profile_chunk_header(sav, seek=gb2cram(meta.bank, meta.addr))
         index = read_index(sav, seek=gb2cram(meta.bank, profile.prev))
-        if all(entry.addr > 0 for entry in index):
+        for i, entry in enumerate(index):
+            if entry.addr == 0:
+                index_loc = i
+                break
+        else:
             print(f"No space in index", file=sys.stderr)
             sys.exit(1)
 
@@ -388,8 +392,42 @@ def add_command(parser, args):
                 print(f"No valid diamond space in CRAM", file=sys.stderr)
                 sys.exit(1)
         chunk = max(chunks, key=lambda chunk: chunk.body)
+        bank, addr = cram2gb(chunk.body)
 
-        print(chunk)
+        # if large enough to split in two
+        if chunk_size(chunk) >= (file.size + 6):
+            if diamond:
+                new_addr = addr + file.size
+            else:
+                new_addr = chunk.next - file.size - 6
+            chunk2 = KissChunk(
+                CHUNK_FREE, gb2cram(bank, new_addr) + 6, addr - 6, chunk.next
+            )
+            chunk = KissChunk(CHUNK_FREE, chunk.body, chunk.prev, new_addr)
+            sav.seek(chunk.body - 6)
+            write_struct(
+                "<BBHH", sav, chunk.type, chunk.type ^ 0xFF, chunk.prev, chunk.next
+            )
+            sav.seek(chunk2.body - 6)
+            write_struct(
+                "<BBHH", sav, chunk2.type, chunk2.type ^ 0xFF, chunk2.prev, chunk2.next
+            )
+            if cram2gb(chunk2.next)[1] != 0xC000:
+                sav.seek(gb2cram(bank, chunk2.next + 2))
+                write_struct("<H", sav, cram2gb(chunk2.body)[1] - 6)
+            if not diamond:
+                chunk = chunk2
+
+        sav.seek(chunk.body - 6)
+        if diamond:
+            write_struct("<BB", sav, CHUNK_INITIAL, CHUNK_INITIAL ^ 0xFF)
+        else:
+            write_struct("<BB", sav, CHUNK_REGULAR, CHUNK_REGULAR ^ 0xFF)
+        sav.seek(chunk.body)
+        sav.write(data)
+
+        sav.seek(gb2cram(meta.bank, profile.prev) + 6 + (4 * index_loc))
+        meta = write_struct("<HBB", sav, chunk.body, 0x00, data[5])
 
 
 def move_command(parser, args):
