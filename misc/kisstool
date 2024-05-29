@@ -78,6 +78,7 @@ def open_sav(args, mode):
 
 def gb2cram(bank, addr):
     """Convert addr in CRAM memory space to Game Boy space"""
+    assert 0xA000 <= addr <= 0xC000
     return (bank << 13) + (addr - 0xA000)
 
 
@@ -463,15 +464,15 @@ def del_command(parser, args):
                 chunk = KissChunk(CHUNK_FREE, prev.body, prev.prev, chunk.next)
 
         # Merge next chunk into this, if next chunk is free too
-        if cram2gb(chunk.next)[1] != 0xC000:
+        if chunk.next != 0xC000:
             next = read_chunk_header(sav, seek=gb2cram(bank, chunk.next))
             if next.type == CHUNK_FREE:
-                sav.seek(gb2cram(bank, entry.addr - 2))
+                sav.seek(entry.addr - 2)
                 write_struct("<H", sav, next.next)
                 chunk = KissChunk(CHUNK_FREE, chunk.body, chunk.prev, next.next)
 
         # Ensure next chunk points to this, if there is a next chunk
-        if cram2gb(chunk.next)[1] != 0xC000:
+        if chunk.next != 0xC000:
             sav.seek(gb2cram(bank, chunk.next + 2))
             write_struct("<H", sav, cram2gb(chunk.body - 6)[1])
 
