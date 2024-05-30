@@ -537,10 +537,14 @@ _katakana.update(
 )
 _hiragana = dict(_katakana)
 _katakana.update(enumerate("ヲァィゥェォャュョッー", start=0xA6))
-_katakana.update(enumerate("アイウエオカキクケコサシスセソタチツテトナニヌネノ", start=0xB1))
+_katakana.update(
+    enumerate("アイウエオカキクケコサシスセソタチツテトナニヌネノ", start=0xB1)
+)
 _katakana.update(enumerate("ハヒフヘホマミムメモヤユヨラリルレロワン", start=0xCA))
 _hiragana.update(enumerate("をぁぃぅぇぉゃゅょっー", start=0xA6))
-_hiragana.update(enumerate("あいうえおかきくけこさしすせそたちつてとなにぬねの", start=0xB1))
+_hiragana.update(
+    enumerate("あいうえおかきくけこさしすせそたちつてとなにぬねの", start=0xB1)
+)
 _hiragana.update(enumerate("はひふへほまみむめもやゆよらりるれろわん", start=0xCA))
 
 _charmaps = {0x0E: _katakana, 0x0F: _hiragana}
