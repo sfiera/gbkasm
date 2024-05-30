@@ -3,11 +3,13 @@
 import itertools
 import sys
 
+
 def read_byte():
     b = sys.stdin.buffer.read(1)
     if b:
         return b[0]
     raise EOFError
+
 
 output = bytearray()
 
@@ -16,14 +18,16 @@ flag_cnt = 8
 run_idx = None
 run_cnt = 2
 
+
 def write_flag(flag):
     global flag_idx, flag_cnt
     if flag_cnt == 8:
         flag_idx = len(output)
         flag_cnt = 0
         output.append(0)
-    output[flag_idx] |= ((flag << 7) & 0xff) >> flag_cnt
+    output[flag_idx] |= ((flag << 7) & 0xFF) >> flag_cnt
     flag_cnt += 1
+
 
 def write_run(run):
     global run_idx, run_cnt
@@ -31,11 +35,13 @@ def write_run(run):
         run_idx = len(output)
         run_cnt = 0
         output.append(0)
-    output[run_idx] |= ((run << 4) & 0xff) >> (4 * run_cnt)
+    output[run_idx] |= ((run << 4) & 0xFF) >> (4 * run_cnt)
     run_cnt += 1
+
 
 def write_lit(lit):
     output.append(lit)
+
 
 def write_src(src):
     output.append(src)
@@ -44,8 +50,9 @@ def write_src(src):
 buffer = bytearray(0x100)
 queue = bytearray()
 history = []
-dst = 0xef
+dst = 0xEF
 flush_idx = -1
+
 
 def flush_until(pos):
     global flush_idx
@@ -53,6 +60,7 @@ def flush_until(pos):
         write_flag(1)
         write_lit(queue.pop(0))
         flush_idx += 1
+
 
 for idx in itertools.count():
     try:
@@ -70,7 +78,7 @@ for idx in itertools.count():
     this = history[-1]
 
     for off in range(1, 0x101):
-        src = (0x100 + dst - off) & 0xff
+        src = (0x100 + dst - off) & 0xFF
         if buffer[src] == byte:
             this[off] = prev.get(off, 0) + 1
 
@@ -82,7 +90,7 @@ for idx in itertools.count():
         # Flush now and restart.
         flush_until(idx - this_max)
         write_flag(0)
-        write_src((0x1f0 + idx - this_off - this_max) & 0xff)
+        write_src((0x1F0 + idx - this_off - this_max) & 0xFF)
         write_run(this_max - 2)
         queue = []
         history = []
@@ -92,7 +100,7 @@ for idx in itertools.count():
         # Flush it and continue from here.
         flush_until(idx - prev_max - 1)
         write_flag(0)
-        write_src((0x1ef + idx - prev_off - prev_max) & 0xff)
+        write_src((0x1EF + idx - prev_off - prev_max) & 0xFF)
         write_run(prev_max - 2)
         queue[:-1] = []
         history = [{k: 1 for k in this}]
@@ -108,6 +116,6 @@ for idx in itertools.count():
         break
 
     buffer[dst] = byte
-    dst = (dst + 1) & 0xff
+    dst = (dst + 1) & 0xFF
 
 sys.stdout.buffer.write(output)
