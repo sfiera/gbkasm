@@ -28,15 +28,11 @@ Main::
     ld bc, $0201
     ld de, $0d12
     ld h, $04
-    rst $08
-    or e
-    rst $08
-    ld de, $0021
-    add $d7
-    ld b, $00
-    rst $10
-    ld [hl], a
-    nop
+    trap $b3
+    trap $11
+    ld hl, $c600
+    rpush @+6
+    rpush @+$77
     ret
 
     ld a, d
@@ -59,34 +55,26 @@ Main::
     ld [hli], a
     xor a
     ld [hli], a
-    rst $10
-    ld b, $00
-    rst $10
-    ld [$c900], a
-    rst $10
-    ld b, $00
-    rst $10
-    ld [hli], a
-    ld bc, $d7c9
-    ld b, $00
-    rst $10
-    ld [hl], $01
+    rpush @+6
+    rpush @+$ea
+    ret
+    rpush @+6
+    rpush @+$122
+    ret
+    rpush @+6
+    rpush @+$136
     ret
 
-    rst $10
-    ld b, $00
-    rst $10
-    ld c, d
-    ld bc, $d7c9
-    ld b, $00
-    rst $10
-    ld e, [hl]
-    ld bc, $d7c9
-    ld b, $00
-    rst $10
-    ld [hl], d
-    ld bc, $cfc9
-    or c
+    rpush @+6
+    rpush @+$14a
+    ret
+    rpush @+6
+    rpush @+$15e
+    ret
+    rpush @+6
+    rpush @+$172
+    ret
+    trap $b1
     ld de, $011b
     ld bc, $1a09
     ld l, $06
@@ -94,8 +82,7 @@ Main::
 
 jr_0134:
     ld h, $37
-    rst $08
-    cp a
+    trap $bf
 
 jr_0138:
     bit 1, h
@@ -106,17 +93,11 @@ jr_0138:
     push de
     push hl
     push af
-    rst $10
-    ld b, $00
-    rst $10
-
-jr_0148:
-    rra
-    nop
+    rpush @+6
+    rpush @+$1f
     ret
 
-    rst $08
-    ret c
+    trap $d8
 
     pop bc
     and $37
@@ -129,15 +110,14 @@ jr_0148:
     jr jr_0138
 
 jr_0159:
-    rst $08
-    ld bc, $14fa
+    trap $01
+    dw $14fa
     nop
     ld de, $1b38
     cp $01
     ret z
 
-    rst $08
-    ld a, [de]
+    trap $1a
     ret
 
     cp $04
@@ -145,89 +125,68 @@ jr_0159:
     bit 0, h
     ret z
 
-    rst $08
-    jr jr_0148
-    ld b, $00
-    rst $10
-    ld d, e
-    ld bc, $c9c9
+    trap $18
+    rpush @+6
+    rpush @+$153
+    ret
+    ret
 
 jr_0178:
     bit 0, h
     jr z, jr_01a4
-    rst $10
-    ld b, $00
-    rst $10
-    rlca
-    nop
+    rpush @+6
+    rpush @+7
     ret
 
-    rst $10
-    ld b, e
-    ld bc, $d7e9
-    and e
-    nop
+    rpush @+$143
+    jp hl
+    rpush @+$a3
     pop hl
     or a
     ret z
 
-    rst $10
-    cp b
-    nop
+    rpush @+$b8
     pop hl
     dec a
     ret z
 
-    rst $10
-    call $e100
-    dec a
-    ret z
-
-    rst $10
-    ldh [c], a
-    nop
+    rpush @+$cd
     pop hl
     dec a
     ret z
 
-    rst $10
-    rst $30
-    nop
+    rpush @+$e2
+    pop hl
+    dec a
+    ret z
+
+    rpush @+$f7
     pop hl
     ret
 
 jr_01a4:
     ld c, h
-    rst $10
-    sbc b
-    nop
+    rpush @+$98
     pop hl
     ld de, $c600
     or a
     jr z, jr_01d4
-    rst $10
-    xor c
-    nop
+    rpush @+$a9
     pop hl
     ld de, $c602
     dec a
     jr z, jr_01d4
-    rst $10
-    cp d
-    nop
+    rpush @+$ba
     pop hl
     ld de, $c604
     dec a
     jr z, jr_01d4
-    rst $10
-    rlc b
+    rpush @+$cb
     pop hl
     ld de, $c606
     dec a
     jr z, jr_01d4
-    rst $10
-    pop hl
-    nop
+    rpush @+$e1
     pop hl
     ld de, $c608
 
@@ -244,9 +203,7 @@ jr_01d4:
 
 jr_01e0:
     ld [de], a
-    rst $10
-    push hl
-    nop
+    rpush @+$e5
     jp hl
 
 jr_01e5:
@@ -256,121 +213,85 @@ jr_01e5:
     inc a
     jr jr_01e0
     ld de, $0103
-    rst $10
-    ld a, [bc]
-    ld bc, $cfe1
-    ld l, d
-    ld hl, $0101
-    rst $08
-    cp b
-    rst $10
-    rst $28
-    nop
+    rpush @+$10a
     pop hl
-    rst $08
-    ld l, c
+    trap $6a
+    ld hl, $0101
+    trap $b8
+    rpush @+$ef
+    pop hl
+    trap $69
     ld hl, $000a
-    rst $08
-    cp b
-    rst $10
-    ld c, c
-    ld bc, $cfe1
-    ld l, c
-    rst $10
-    ld b, $00
-    rst $10
-    ld [hli], a
-    nop
+    trap $b8
+    rpush @+$149
+    pop hl
+    trap $69
+    rpush @+6
+    rpush @+$22
     ret
 
-    rst $10
-    ld b, $00
-    rst $10
-    ld [hl], $00
+    rpush @+6
+    rpush @+$36
     ret
 
-    rst $10
-    ld b, $00
-    rst $10
-    ld c, d
-    nop
+    rpush @+6
+    rpush @+$4a
     ret
 
-    rst $10
-    ld b, $00
-    rst $10
-    ld e, [hl]
-    nop
+    rpush @+6
+    rpush @+$5e
     ret
 
-    rst $10
-    ld a, d
-    nop
+    rpush @+$7a
     ret
 
     ld a, [$c601]
-    rst $08
-    inc de
+    trap $13
     ret
 
     ld hl, $0f03
     ld a, [$c600]
-    rst $10
-    ld b, $00
-    rst $10
-    ld a, d
-    nop
+    rpush @+6
+    rpush @+$7a
     ret
 
     ld hl, $0b03
     ld a, [$c601]
     jr jr_02b5
     ld a, [$c603]
-    rst $08
-    inc d
+    trap $14
     ret
 
     ld hl, $0f04
     ld a, [$c602]
-    rst $10
-    ld b, $00
-    rst $10
-    ld e, a
-    nop
+    rpush @+6
+    rpush @+$5f
     ret
 
     ld hl, $0b04
     ld a, [$c603]
     jr jr_02b5
     ld a, [$c605]
-    rst $08
-    dec d
+    trap $15
     ret
 
     ld hl, $0f05
     ld a, [$c604]
-    rst $10
-    ld b, $00
-    rst $10
-    ld b, h
-    nop
+    rpush @+6
+    rpush @+$44
     ret
 
     ld hl, $0b05
     ld a, [$c605]
     jr jr_02b5
     ld a, [$c607]
-    rst $08
-    add hl, de
+    trap $19
     ret
 
     ld hl, $0f06
     ld a, [$c606]
-    rst $10
-    ld b, $00
-    rst $10
-    add hl, hl
-    nop
+    rpush @+6
+    rpush @+$29
     ret
 
     ld hl, $0b06
@@ -381,15 +302,13 @@ jr_01e5:
     add a
     ld h, a
     ld l, $bc
-    rst $08
-    set 1, c
+    trap $cb
+    ret
+
     ld hl, $0f08
     ld a, [$c608]
-    rst $10
-    ld b, $00
-    rst $10
-    add hl, bc
-    nop
+    rpush @+6
+    rpush @+$9
     ret
 
     ld hl, $0b08
@@ -397,49 +316,35 @@ jr_01e5:
 
 jr_02b5:
     push af
-    rst $08
-    cp b
+    trap $b8
     pop af
     ld e, a
     ld d, $00
     ld hl, $c400
-    rst $08
-    and e
+    trap $a3
     ld hl, $c403
-    rst $08
-    ld l, c
+    trap $69
     ret
 
     ld hl, $040a
-    rst $08
-    cp b
-    rst $08
-    ld d, $d7
-    ld b, $00
-    rst $10
-    ld a, [bc]
-    nop
+    trap $b8
+    trap $16
+    rpush @+6
+    rpush @+$0a
     ret
 
     ld hl, $0e0a
-    rst $08
-    cp b
-    rst $08
-    rla
-    rst $10
-    add l
-    nop
+    trap $b8
+    trap $17
+    rpush @+$85
     pop hl
     or a
     jr z, jr_02e7
-    rst $10
-    add e
-    nop
+    rpush @+$83
     pop hl
 
 jr_02e7:
-    rst $08
-    ld l, c
+    trap $69
     ret
 
 Interface:
