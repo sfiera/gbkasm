@@ -96,7 +96,7 @@ jr_0138:
     jr jr_0138
 
 jr_0159:
-    trap $01
+    trap ExitToMenu
     dw $14fa
     nop
     ld de, $1b38
@@ -198,15 +198,15 @@ jr_01e5:
     pop hl
     trap $6a
     ld hl, $0101
-    trap $b8
+    trap MoveCursor
     rpush @+$ef
     pop hl
-    trap $69
+    trap DrawString
     ld hl, $000a
-    trap $b8
+    trap MoveCursor
     rpush @+$149
     pop hl
-    trap $69
+    trap DrawString
     rcall @+$22
     rcall @+$36
     rcall @+$4a
@@ -225,7 +225,7 @@ jr_01e5:
     ld a, [$c601]
     jr jr_02b5
     ld a, [$c603]
-    trap $14
+    trap PlaySound
     ret
 
     ld hl, $0f04
@@ -270,22 +270,22 @@ jr_01e5:
 
 jr_02b5:
     push af
-    trap $b8
+    trap MoveCursor
     pop af
     ld e, a
     ld d, $00
     ld hl, $c400
-    trap $a3
+    trap IntToString
     ld hl, $c403
-    trap $69
+    trap DrawString
     ret
 
     ld hl, $040a
-    trap $b8
+    trap MoveCursor
     trap $16
     rcall @+$0a
     ld hl, $0e0a
-    trap $b8
+    trap MoveCursor
     trap $17
     rpush @+$85
     pop hl
@@ -295,7 +295,7 @@ jr_02b5:
     pop hl
 
 jr_02e7:
-    trap $69
+    trap DrawString
     ret
 
 Interface:
