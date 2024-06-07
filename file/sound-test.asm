@@ -37,7 +37,7 @@ Main::
     trap $b3
     trap $11
     ld hl, $c600
-    rcall @+$77
+    rcall call_015b
     ld a, d
     ld [hli], a
     xor a
@@ -58,12 +58,12 @@ Main::
     ld [hli], a
     xor a
     ld [hli], a
-    rcall @+$ea
-    rcall @+$122
-    rcall @+$136
-    rcall @+$14a
-    rcall @+$15e
-    rcall @+$172
+    rcall call_01ec
+    rcall call_022b
+    rcall call_0246
+    rcall call_0261
+    rcall call_027c
+    rcall call_0297
     trap $b1
     ld de, $011b
     ld bc, $1a09
@@ -83,7 +83,7 @@ jr_0138:
     push de
     push hl
     push af
-    rcall @+$1f
+    rcall call_0167
     trap $d8
     pop bc
     and $37
@@ -97,77 +97,81 @@ jr_0138:
 
 jr_0159:
     trap ExitToMenu
+
+call_015b:
     dw $14fa
     nop
     ld de, $1b38
     cp $01
     ret z
-
     trap $1a
     ret
 
+call_0167:
     cp $04
     jr nz, jr_0178
     bit 0, h
     ret z
 
     trap $18
-    rcall @+$153
+    rcall call_02c7
     ret
 
 jr_0178:
     bit 0, h
     jr z, jr_01a4
-    rcall @+7
-    rpush @+$143
+    rcall call_0187
+    rpush call_02c7
     jp hl
-    rpush @+$a3
+
+call_0187:
+    rpush call_022b
     pop hl
     or a
     ret z
 
-    rpush @+$b8
+    rpush call_0246
     pop hl
     dec a
     ret z
 
-    rpush @+$cd
+    rpush call_0261
     pop hl
     dec a
     ret z
 
-    rpush @+$e2
+    rpush call_027c
     pop hl
     dec a
     ret z
 
-    rpush @+$f7
+    rpush call_0297
     pop hl
     ret
 
 jr_01a4:
     ld c, h
-    rpush @+$98
+    rpush code_023e
     pop hl
     ld de, $c600
     or a
     jr z, jr_01d4
-    rpush @+$a9
+    rpush code_0259
     pop hl
     ld de, $c602
     dec a
     jr z, jr_01d4
-    rpush @+$ba
+    rpush code_0274
     pop hl
     ld de, $c604
     dec a
     jr z, jr_01d4
-    rpush @+$cb
+    rpush code_028f
     pop hl
     ld de, $c606
     dec a
     jr z, jr_01d4
-    rpush @+$e1
+    rpush code_02af
     pop hl
     ld de, $c608
 
@@ -184,7 +188,7 @@ jr_01d4:
 
 jr_01e0:
     ld [de], a
-    rpush @+$e5
+    rpush call_02c7
     jp hl
 
 jr_01e5:
@@ -193,67 +197,90 @@ jr_01e5:
     jr z, jr_01e0
     inc a
     jr jr_01e0
+
+call_01ec:
     ld de, $0103
-    rpush @+$10a
+    rpush StrInterface
     pop hl
     trap $6a
     ld hl, $0101
     trap MoveCursor
-    rpush @+$ef
+    rpush StrTitle
     pop hl
     trap DrawString
     ld hl, $000a
     trap MoveCursor
-    rpush @+$149
+    rpush StrStatus
     pop hl
     trap DrawString
-    rcall @+$22
-    rcall @+$36
-    rcall @+$4a
-    rcall @+$5e
-    rpush @+$7a
+    rcall call_0231
+    rcall call_024c
+    rcall call_0267
+    rcall call_0282
+    rpush call_02a2
     ret
 
+call_022b:
     ld a, [$c601]
     trap $13
     ret
 
+call_0231:
     ld hl, $0f03
     ld a, [$c600]
-    rcall @+$7a
+    rcall call_02b5
+
+code_023e:
     ld hl, $0b03
     ld a, [$c601]
-    jr jr_02b5
+    jr call_02b5
+
+call_0246:
     ld a, [$c603]
     trap PlaySound
     ret
 
+call_024c:
     ld hl, $0f04
     ld a, [$c602]
-    rcall @+$5f
+    rcall call_02b5
+
+code_0259:
     ld hl, $0b04
     ld a, [$c603]
-    jr jr_02b5
+    jr call_02b5
+
+call_0261:
     ld a, [$c605]
     trap $15
     ret
 
+call_0267:
     ld hl, $0f05
     ld a, [$c604]
-    rcall @+$44
+    rcall call_02b5
+
+code_0274:
     ld hl, $0b05
     ld a, [$c605]
-    jr jr_02b5
+    jr call_02b5
+
+call_027c:
     ld a, [$c607]
     trap $19
     ret
 
+call_0282:
     ld hl, $0f06
     ld a, [$c606]
-    rcall @+$29
+    rcall call_02b5
+
+code_028f:
     ld hl, $0b06
     ld a, [$c607]
-    jr jr_02b5
+    jr call_02b5
+
+call_0297:
     ld a, [$c609]
     add a
     add a
@@ -262,13 +289,16 @@ jr_01e5:
     trap $cb
     ret
 
+call_02a2:
     ld hl, $0f08
     ld a, [$c608]
-    rcall @+$9
+    rcall call_02b5
+
+code_02af:
     ld hl, $0b08
     ld a, [$c609]
 
-jr_02b5:
+call_02b5:
     push af
     trap MoveCursor
     pop af
@@ -280,26 +310,30 @@ jr_02b5:
     trap DrawString
     ret
 
+call_02c7:
     ld hl, $040a
     trap MoveCursor
     trap $16
-    rcall @+$0a
+    rcall call_02dc
     ld hl, $0e0a
     trap MoveCursor
     trap $17
-    rpush @+$85
+
+call_02dc:
+    rpush StrStop
     pop hl
     or a
     jr z, jr_02e7
-    rpush @+$83
+    rpush StrPlay
     pop hl
 
 jr_02e7:
     trap DrawString
     ret
 
-Interface:
+StrTitle:
     db "SOUND TEST ROOM\n"
+StrInterface:
     db "MUSIC No.    /\n"
     db "EFECT No.    /\n"
     db "OffChannel   /\n"
@@ -307,8 +341,8 @@ Interface:
     db "M_PAUSE \n"
     db "VsyncTimer   /\n"
     db "\n"
+StrStatus:
     db "Mst=STOP  Est=STOP\n"
-
 StrStop:
     db "STOP\n"
 StrPlay:
