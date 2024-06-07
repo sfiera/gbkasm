@@ -39,7 +39,7 @@ Main::
     ld de, $0d12
     ld h, $04
     trap DrawBox
-    trap $11
+    trap StopAudio
 
     ld hl, varMusicMax
     rcall LoadAudioCount
@@ -65,12 +65,12 @@ Main::
     ld [hli], a  ; [varEnd] = 0
 
     rcall DrawInterface
-    rcall SelectMusic
-    rcall SelectSound
-    rcall SelectOffCh
-    rcall SelectVol
-    rcall SelectTimer
-    trap $b1
+    rcall ApplyMusic
+    rcall ApplySound
+    rcall ApplyOffCh
+    rcall ApplyVol
+    rcall ApplyTimer
+    trap AwaitFrame
     ld de, $011b
     ld bc, $1a09
     ld l, $06
@@ -78,7 +78,7 @@ Main::
 
 jr_0134:
     ld h, $37
-    trap $bf
+    trap DoMenu
 
 .loop
     bit 1, h      ; if B pressed
@@ -89,7 +89,7 @@ jr_0134:
     push de
     push hl
     push af
-    rcall SelectSetting
+    rcall HandleSetting
     trap $d8
     pop bc
     and $37
@@ -112,7 +112,7 @@ LoadAudioCount:
     trap GetAudioCount
     ret
 
-SelectSetting:
+HandleSetting:
     cp $04
     jr nz, .notPause
     bit 0, h
@@ -122,92 +122,98 @@ SelectSetting:
     rcall DrawState
     ret
 
-.notPause:
+.notPause
     bit 0, h
-    jr z, jr_01a4
-    rcall GetSelectProcedure
+    jr z, ChangeSetting
+    rcall GetApplyProcedure
     rpush DrawState
     jp hl
 
-GetSelectProcedure:
-    rpush SelectMusic
+GetApplyProcedure:
+    rpush ApplyMusic
     pop hl
     or a
     ret z
 
-    rpush SelectSound
+    rpush ApplySound
     pop hl
     dec a
     ret z
 
-    rpush SelectOffCh
+    rpush ApplyOffCh
     pop hl
     dec a
     ret z
 
-    rpush SelectVol
+    rpush ApplyVol
     pop hl
     dec a
     ret z
 
-    rpush SelectTimer
+    rpush ApplyTimer
     pop hl
     ret
 
-jr_01a4:
+ChangeSetting:
     ld c, h
     rpush DrawMusicCur
     pop hl
     ld de, varMusicMax
     or a
-    jr z, jr_01d4
+    jr z, .apply
+
     rpush DrawSoundCur
     pop hl
     ld de, varSoundMax
     dec a
-    jr z, jr_01d4
+    jr z, .apply
+
     rpush DrawOffChCur
     pop hl
     ld de, varOffChMax
     dec a
-    jr z, jr_01d4
+    jr z, .apply
+
     rpush DrawVolCur
     pop hl
     ld de, varVolMax
     dec a
-    jr z, jr_01d4
+    jr z, .apply
+
     rpush DrawTimerCur
     pop hl
     ld de, varTimerMax
 
-jr_01d4:
+.apply
     ld a, [de]
     inc de
     ld b, a
     bit 4, c
-    jr nz, jr_01e5
+    jr nz, .inc
+
+.dec
     ld a, [de]
     or a
-    jr z, jr_01e0
+    jr z, .done
     dec a
 
-jr_01e0:
+.done
     ld [de], a
     rpush DrawState
     jp hl
 
-jr_01e5:
+.inc
     ld a, [de]
     cp b
-    jr z, jr_01e0
+    jr z, .done
     inc a
-    jr jr_01e0
+    jr .done
 
 DrawInterface:
     ld de, $0103
     rpush StrInterface
     pop hl
-    trap $6a
+    trap DrawStringList
     ld hl, $0101
     trap MoveCursor
     rpush StrTitle
@@ -225,7 +231,7 @@ DrawInterface:
     rpush DrawTimerMaxCur
     ret
 
-SelectMusic:
+ApplyMusic:
     ld a, [varMusicCur]
     trap PlayMusic
     ret
@@ -240,7 +246,7 @@ DrawMusicCur:
     ld a, [varMusicCur]
     jr DrawInt
 
-SelectSound:
+ApplySound:
     ld a, [varSoundCur]
     trap PlaySound
     ret
@@ -255,9 +261,9 @@ DrawSoundCur:
     ld a, [varSoundCur]
     jr DrawInt
 
-SelectOffCh:
+ApplyOffCh:
     ld a, [varOffChCur]
-    trap $15
+    trap SilenceChannels
     ret
 
 DrawOffChMaxCur:
@@ -270,9 +276,9 @@ DrawOffChCur:
     ld a, [varOffChCur]
     jr DrawInt
 
-SelectVol:
+ApplyVol:
     ld a, [varVolCur]
-    trap $19
+    trap SetVolume
     ret
 
 DrawVolMaxCur:
@@ -285,7 +291,7 @@ DrawVolCur:
     ld a, [varVolCur]
     jr DrawInt
 
-SelectTimer:
+ApplyTimer:
     ld a, [varTimerCur]
     add a
     add a
