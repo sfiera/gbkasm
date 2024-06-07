@@ -9,12 +9,14 @@ def kFileMarkerTriangle  equ %00000000  ; non-executable
 def kFileHasTransfers    equ %00000001  ; extra $2e bytes after title/icon
 
 DEF ExitToMenu   EQU $01
+DEF PlayMusic    EQU $13
 DEF PlaySound    EQU $14
 
 DEF MoveCursor   EQU $b8
 DEF DrawChar     EQU $bb
 DEF DrawString   EQU $69
 DEF DrawLayout   EQU $5c
+DEF DrawBox      EQU $b3
 DEF IntToString  EQU $a3
 
 DEF RandInit     EQU $8d
