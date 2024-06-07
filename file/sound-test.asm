@@ -34,7 +34,7 @@ Main::
     ld bc, $0201
     ld de, $0d12
     ld h, $04
-    trap $b3
+    trap DrawBox
     trap $11
 
     ld hl, varMusicMax
@@ -223,7 +223,7 @@ call_01ec:
 
 call_022b:
     ld a, [varMusicCur]
-    trap $13
+    trap PlayMusic
     ret
 
 call_0231:
