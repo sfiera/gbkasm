@@ -1,5 +1,11 @@
 ; Disassembly of "gbkiss.gb"
 
+MACRO rcall
+    rpush @+6
+    rpush \1
+    ret
+ENDM
+
 INCLUDE "charmap.inc"
 INCLUDE "macro.inc"
 INCLUDE "file/common.inc"
@@ -31,10 +37,7 @@ Main::
     trap $b3
     trap $11
     ld hl, $c600
-    rpush @+6
-    rpush @+$77
-    ret
-
+    rcall @+$77
     ld a, d
     ld [hli], a
     xor a
@@ -55,25 +58,12 @@ Main::
     ld [hli], a
     xor a
     ld [hli], a
-    rpush @+6
-    rpush @+$ea
-    ret
-    rpush @+6
-    rpush @+$122
-    ret
-    rpush @+6
-    rpush @+$136
-    ret
-
-    rpush @+6
-    rpush @+$14a
-    ret
-    rpush @+6
-    rpush @+$15e
-    ret
-    rpush @+6
-    rpush @+$172
-    ret
+    rcall @+$ea
+    rcall @+$122
+    rcall @+$136
+    rcall @+$14a
+    rcall @+$15e
+    rcall @+$172
     trap $b1
     ld de, $011b
     ld bc, $1a09
@@ -93,12 +83,8 @@ jr_0138:
     push de
     push hl
     push af
-    rpush @+6
-    rpush @+$1f
-    ret
-
+    rcall @+$1f
     trap $d8
-
     pop bc
     and $37
     pop hl
@@ -126,18 +112,13 @@ jr_0159:
     ret z
 
     trap $18
-    rpush @+6
-    rpush @+$153
-    ret
+    rcall @+$153
     ret
 
 jr_0178:
     bit 0, h
     jr z, jr_01a4
-    rpush @+6
-    rpush @+7
-    ret
-
+    rcall @+7
     rpush @+$143
     jp hl
     rpush @+$a3
@@ -226,22 +207,10 @@ jr_01e5:
     rpush @+$149
     pop hl
     trap $69
-    rpush @+6
-    rpush @+$22
-    ret
-
-    rpush @+6
-    rpush @+$36
-    ret
-
-    rpush @+6
-    rpush @+$4a
-    ret
-
-    rpush @+6
-    rpush @+$5e
-    ret
-
+    rcall @+$22
+    rcall @+$36
+    rcall @+$4a
+    rcall @+$5e
     rpush @+$7a
     ret
 
@@ -251,10 +220,7 @@ jr_01e5:
 
     ld hl, $0f03
     ld a, [$c600]
-    rpush @+6
-    rpush @+$7a
-    ret
-
+    rcall @+$7a
     ld hl, $0b03
     ld a, [$c601]
     jr jr_02b5
@@ -264,10 +230,7 @@ jr_01e5:
 
     ld hl, $0f04
     ld a, [$c602]
-    rpush @+6
-    rpush @+$5f
-    ret
-
+    rcall @+$5f
     ld hl, $0b04
     ld a, [$c603]
     jr jr_02b5
@@ -277,10 +240,7 @@ jr_01e5:
 
     ld hl, $0f05
     ld a, [$c604]
-    rpush @+6
-    rpush @+$44
-    ret
-
+    rcall @+$44
     ld hl, $0b05
     ld a, [$c605]
     jr jr_02b5
@@ -290,10 +250,7 @@ jr_01e5:
 
     ld hl, $0f06
     ld a, [$c606]
-    rpush @+6
-    rpush @+$29
-    ret
-
+    rcall @+$29
     ld hl, $0b06
     ld a, [$c607]
     jr jr_02b5
@@ -307,10 +264,7 @@ jr_01e5:
 
     ld hl, $0f08
     ld a, [$c608]
-    rpush @+6
-    rpush @+$9
-    ret
-
+    rcall @+$9
     ld hl, $0b08
     ld a, [$c609]
 
@@ -329,10 +283,7 @@ jr_02b5:
     ld hl, $040a
     trap $b8
     trap $16
-    rpush @+6
-    rpush @+$0a
-    ret
-
+    rcall @+$0a
     ld hl, $0e0a
     trap $b8
     trap $17
