@@ -36,28 +36,30 @@ Main::
     ld h, $04
     trap $b3
     trap $11
+
     ld hl, varMusicMax
     rcall call_015b
     ld a, d
-    ld [hli], a
+    ld [hli], a  ; [varMusicMax] = d
     xor a
-    ld [hli], a
+    ld [hli], a  ; [varMusicCur] = 0
     ld a, e
-    ld [hli], a
+    ld [hli], a  ; [varSoundMax] = e
     xor a
-    ld [hli], a
-    ld a, $0f
-    ld [hli], a
+    ld [hli], a  ; [varSoundCur] = 0
+    ld a, 15
+    ld [hli], a  ; [varOffChMax] = 15
     xor a
-    ld [hli], a
-    ld a, $07
-    ld [hli], a
-    ld [hli], a
+    ld [hli], a  ; [varOffChCur] = 0
+    ld a, 7
+    ld [hli], a  ; [varVolMax] = 7
+    ld [hli], a  ; [varVolCur] = 0
     ld a, $01
-    ld [hli], a
-    ld [hli], a
+    ld [hli], a  ; [varTimerMax] = 1
+    ld [hli], a  ; [varTimerCur] = 1
     xor a
-    ld [hli], a
+    ld [hli], a  ; [varEnd] = 0
+
     rcall call_01ec
     rcall call_022b
     rcall call_0246
@@ -362,3 +364,4 @@ varVolMax: ds 1
 varVolCur: ds 1
 varTimerMax: ds 1
 varTimerCur: ds 1
+varEnd:
