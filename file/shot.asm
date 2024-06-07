@@ -34,7 +34,7 @@ History::
 
 Main::
     xor a
-    trap $b3
+    trap DrawBox
     trap $b5
     ld hl, $1200
     trap $b6

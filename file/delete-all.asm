@@ -35,6 +35,6 @@ jr1:
     jr jr1
 
 jr2:
-    trap $01
+    trap ExitToMenu
 
 End:

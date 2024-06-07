@@ -19,6 +19,7 @@ DEF SndWallHit EQU 3
 DEF SndSelfHit EQU 4
 DEF SndEatFood EQU 5
 DEF SndPerfect EQU 6
+DEF MusicTrack EQU 5
 
 DEF FaceLt EQU 1
 DEF FaceRt EQU 2
@@ -62,7 +63,7 @@ Main::
 
 :   ld sp, $e000
     trap $db
-    trap $11
+    trap StopAudio
     rcall call_006c
 
 .next
@@ -76,7 +77,7 @@ Main::
 :   cp $01
     jr nz, .next
 
-    trap $11
+    trap StopAudio
     trap ExitToMenu
 
 
@@ -88,7 +89,7 @@ call_0067:
 
 call_006c:
     xor a
-    trap $b3
+    trap DrawBox
     ret
 
 
@@ -159,7 +160,7 @@ HandleMenu:
     ld bc, $0000
 
 .next
-    trap $b1
+    trap AwaitFrame
     ld e, " "
     rcall DrawSelection
     ldh a, [$8b]
@@ -223,11 +224,12 @@ GameMain:
     rcall DrawScore
     rcall DrawHighScore
     rcall DrawPoints
-    ld a, $05
-    trap $13
+
+    ld a, MusicTrack
+    trap PlayMusic
 
 .next
-    trap $b1
+    trap AwaitFrame
     rcall AddFood
     rcall DrawFood
     rcall HandleInput
@@ -243,7 +245,7 @@ GameMain:
     jr nz, .next
 
     xor a
-    trap $13
+    trap PlayMusic
     ld a, [varPerfect]
     cp $00
     jr z, :+

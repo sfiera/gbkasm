@@ -46,7 +46,7 @@ jr0:
     ld a, [hl]
     or a
     jr nz, jr1
-    trap $01
+    trap ExitToMenu
 
 jr1:
     ld a, [hli]
@@ -86,7 +86,7 @@ jr3:
     pop hl
     jr nc, jr0
 
-    trap $01
+    trap ExitToMenu
 
 strings:
     dw content - @
