@@ -99,8 +99,7 @@ jr_0159:
     trap ExitToMenu
 
 call_015b:
-    dw $14fa
-    nop
+    ld a, [$0014]
     ld de, $1b38
     cp $01
     ret z
