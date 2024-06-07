@@ -81,10 +81,11 @@ jr_0134:
     trap DoMenu
 
 .loop
-    bit 1, h      ; if B pressed
-    jr nz, .exit  ;   exit
-    bit 2, h      ; if Select pressed
-    jr nz, .exit  ;   exit
+    bit BtnB, h
+    jr nz, .exit
+    bit BtnSel, h
+    jr nz, .exit
+
     push bc
     push de
     push hl
@@ -115,7 +116,7 @@ LoadAudioCount:
 HandleSetting:
     cp $04
     jr nz, .notPause
-    bit 0, h
+    bit BtnA, h
     ret z
 
     trap PauseMusic
@@ -123,7 +124,7 @@ HandleSetting:
     ret
 
 .notPause
-    bit 0, h
+    bit BtnA, h
     jr z, ChangeSetting
     rcall GetApplyProcedure
     rpush DrawState
@@ -188,10 +189,9 @@ ChangeSetting:
     ld a, [de]
     inc de
     ld b, a
-    bit 4, c
+    bit BtnRt, c
     jr nz, .inc
 
-.dec
     ld a, [de]
     or a
     jr z, .done
