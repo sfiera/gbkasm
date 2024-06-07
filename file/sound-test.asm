@@ -36,7 +36,7 @@ Main::
     ld h, $04
     trap $b3
     trap $11
-    ld hl, $c600
+    ld hl, varMusicMax
     rcall call_015b
     ld a, d
     ld [hli], a
@@ -153,27 +153,27 @@ jr_01a4:
     ld c, h
     rpush code_023e
     pop hl
-    ld de, $c600
+    ld de, varMusicMax
     or a
     jr z, jr_01d4
     rpush code_0259
     pop hl
-    ld de, $c602
+    ld de, varSoundMax
     dec a
     jr z, jr_01d4
     rpush code_0274
     pop hl
-    ld de, $c604
+    ld de, varOffChMax
     dec a
     jr z, jr_01d4
     rpush code_028f
     pop hl
-    ld de, $c606
+    ld de, varVolMax
     dec a
     jr z, jr_01d4
     rpush code_02af
     pop hl
-    ld de, $c608
+    ld de, varTimerMax
 
 jr_01d4:
     ld a, [de]
@@ -221,67 +221,67 @@ call_01ec:
     ret
 
 call_022b:
-    ld a, [$c601]
+    ld a, [varMusicCur]
     trap $13
     ret
 
 call_0231:
     ld hl, $0f03
-    ld a, [$c600]
+    ld a, [varMusicMax]
     rcall call_02b5
 
 code_023e:
     ld hl, $0b03
-    ld a, [$c601]
+    ld a, [varMusicCur]
     jr call_02b5
 
 call_0246:
-    ld a, [$c603]
+    ld a, [varSoundCur]
     trap PlaySound
     ret
 
 call_024c:
     ld hl, $0f04
-    ld a, [$c602]
+    ld a, [varSoundMax]
     rcall call_02b5
 
 code_0259:
     ld hl, $0b04
-    ld a, [$c603]
+    ld a, [varSoundCur]
     jr call_02b5
 
 call_0261:
-    ld a, [$c605]
+    ld a, [varOffChCur]
     trap $15
     ret
 
 call_0267:
     ld hl, $0f05
-    ld a, [$c604]
+    ld a, [varOffChMax]
     rcall call_02b5
 
 code_0274:
     ld hl, $0b05
-    ld a, [$c605]
+    ld a, [varOffChCur]
     jr call_02b5
 
 call_027c:
-    ld a, [$c607]
+    ld a, [varVolCur]
     trap $19
     ret
 
 call_0282:
     ld hl, $0f06
-    ld a, [$c606]
+    ld a, [varVolMax]
     rcall call_02b5
 
 code_028f:
     ld hl, $0b06
-    ld a, [$c607]
+    ld a, [varVolCur]
     jr call_02b5
 
 call_0297:
-    ld a, [$c609]
+    ld a, [varTimerCur]
     add a
     add a
     ld h, a
@@ -291,12 +291,12 @@ call_0297:
 
 call_02a2:
     ld hl, $0f08
-    ld a, [$c608]
+    ld a, [varTimerMax]
     rcall call_02b5
 
 code_02af:
     ld hl, $0b08
-    ld a, [$c609]
+    ld a, [varTimerCur]
 
 call_02b5:
     push af
@@ -349,3 +349,17 @@ StrPlay:
     db "PLAY\n"
 
 End:
+
+
+SECTION "Variables", WRAM0[$c600]
+
+varMusicMax: ds 1
+varMusicCur: ds 1
+varSoundMax: ds 1
+varSoundCur: ds 1
+varOffChMax: ds 1
+varOffChCur: ds 1
+varVolMax: ds 1
+varVolCur: ds 1
+varTimerMax: ds 1
+varTimerCur: ds 1
