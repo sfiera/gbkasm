@@ -6,6 +6,10 @@ MACRO rcall
     ret
 ENDM
 
+DEF GameIdentifier         EQU $0014
+DEF SuperBDaman            EQU $01
+DEF SuperBDamanAudioCount  EQU (27 << 8) + 56
+
 INCLUDE "charmap.inc"
 INCLUDE "macro.inc"
 INCLUDE "file/common.inc"
@@ -38,7 +42,7 @@ Main::
     trap $11
 
     ld hl, varMusicMax
-    rcall call_015b
+    rcall LoadAudioCount
     ld a, d
     ld [hli], a  ; [varMusicMax] = d
     xor a
@@ -60,12 +64,12 @@ Main::
     xor a
     ld [hli], a  ; [varEnd] = 0
 
-    rcall call_01ec
-    rcall call_022b
-    rcall call_0246
-    rcall call_0261
-    rcall call_027c
-    rcall call_0297
+    rcall DrawInterface
+    rcall SelectMusic
+    rcall SelectSound
+    rcall SelectOffCh
+    rcall SelectVol
+    rcall SelectTimer
     trap $b1
     ld de, $011b
     ld bc, $1a09
@@ -76,16 +80,16 @@ jr_0134:
     ld h, $37
     trap $bf
 
-jr_0138:
-    bit 1, h
-    jr nz, jr_0159
-    bit 2, h
-    jr nz, jr_0159
+.loop
+    bit 1, h      ; if B pressed
+    jr nz, .exit  ;   exit
+    bit 2, h      ; if Select pressed
+    jr nz, .exit  ;   exit
     push bc
     push de
     push hl
     push af
-    rcall call_0167
+    rcall SelectSetting
     trap $d8
     pop bc
     and $37
@@ -95,84 +99,84 @@ jr_0138:
     ld a, b
     pop bc
     jr z, jr_0134
-    jr jr_0138
+    jr .loop
 
-jr_0159:
+.exit
     trap ExitToMenu
 
-call_015b:
-    ld a, [$0014]
-    ld de, $1b38
-    cp $01
+LoadAudioCount:
+    ld a, [GameIdentifier]
+    ld de, SuperBDamanAudioCount
+    cp SuperBDaman
     ret z
-    trap $1a
+    trap GetAudioCount
     ret
 
-call_0167:
+SelectSetting:
     cp $04
-    jr nz, jr_0178
+    jr nz, .notPause
     bit 0, h
     ret z
 
-    trap $18
-    rcall call_02c7
+    trap PauseMusic
+    rcall DrawState
     ret
 
-jr_0178:
+.notPause:
     bit 0, h
     jr z, jr_01a4
-    rcall call_0187
-    rpush call_02c7
+    rcall GetSelectProcedure
+    rpush DrawState
     jp hl
 
-call_0187:
-    rpush call_022b
+GetSelectProcedure:
+    rpush SelectMusic
     pop hl
     or a
     ret z
 
-    rpush call_0246
+    rpush SelectSound
     pop hl
     dec a
     ret z
 
-    rpush call_0261
+    rpush SelectOffCh
     pop hl
     dec a
     ret z
 
-    rpush call_027c
+    rpush SelectVol
     pop hl
     dec a
     ret z
 
-    rpush call_0297
+    rpush SelectTimer
     pop hl
     ret
 
 jr_01a4:
     ld c, h
-    rpush code_023e
+    rpush DrawMusicCur
     pop hl
     ld de, varMusicMax
     or a
     jr z, jr_01d4
-    rpush code_0259
+    rpush DrawSoundCur
     pop hl
     ld de, varSoundMax
     dec a
     jr z, jr_01d4
-    rpush code_0274
+    rpush DrawOffChCur
     pop hl
     ld de, varOffChMax
     dec a
     jr z, jr_01d4
-    rpush code_028f
+    rpush DrawVolCur
     pop hl
     ld de, varVolMax
     dec a
     jr z, jr_01d4
-    rpush code_02af
+    rpush DrawTimerCur
     pop hl
     ld de, varTimerMax
 
@@ -189,7 +193,7 @@ jr_01d4:
 
 jr_01e0:
     ld [de], a
-    rpush call_02c7
+    rpush DrawState
     jp hl
 
 jr_01e5:
@@ -199,7 +203,7 @@ jr_01e5:
     inc a
     jr jr_01e0
 
-call_01ec:
+DrawInterface:
     ld de, $0103
     rpush StrInterface
     pop hl
@@ -214,74 +218,74 @@ call_01ec:
     rpush StrStatus
     pop hl
     trap DrawString
-    rcall call_0231
-    rcall call_024c
-    rcall call_0267
-    rcall call_0282
-    rpush call_02a2
+    rcall DrawMusicMaxCur
+    rcall DrawSoundMaxCur
+    rcall DrawOffChMaxCur
+    rcall DrawVolMaxCur
+    rpush DrawTimerMaxCur
     ret
 
-call_022b:
+SelectMusic:
     ld a, [varMusicCur]
     trap PlayMusic
     ret
 
-call_0231:
+DrawMusicMaxCur:
     ld hl, $0f03
     ld a, [varMusicMax]
-    rcall call_02b5
+    rcall DrawInt
 
-code_023e:
+DrawMusicCur:
     ld hl, $0b03
     ld a, [varMusicCur]
-    jr call_02b5
+    jr DrawInt
 
-call_0246:
+SelectSound:
     ld a, [varSoundCur]
     trap PlaySound
     ret
 
-call_024c:
+DrawSoundMaxCur:
     ld hl, $0f04
     ld a, [varSoundMax]
-    rcall call_02b5
+    rcall DrawInt
 
-code_0259:
+DrawSoundCur:
     ld hl, $0b04
     ld a, [varSoundCur]
-    jr call_02b5
+    jr DrawInt
 
-call_0261:
+SelectOffCh:
     ld a, [varOffChCur]
     trap $15
     ret
 
-call_0267:
+DrawOffChMaxCur:
     ld hl, $0f05
     ld a, [varOffChMax]
-    rcall call_02b5
+    rcall DrawInt
 
-code_0274:
+DrawOffChCur:
     ld hl, $0b05
     ld a, [varOffChCur]
-    jr call_02b5
+    jr DrawInt
 
-call_027c:
+SelectVol:
     ld a, [varVolCur]
     trap $19
     ret
 
-call_0282:
+DrawVolMaxCur:
     ld hl, $0f06
     ld a, [varVolMax]
-    rcall call_02b5
+    rcall DrawInt
 
-code_028f:
+DrawVolCur:
     ld hl, $0b06
     ld a, [varVolCur]
-    jr call_02b5
+    jr DrawInt
 
-call_0297:
+SelectTimer:
     ld a, [varTimerCur]
     add a
     add a
@@ -290,16 +294,16 @@ call_0297:
     trap $cb
     ret
 
-call_02a2:
+DrawTimerMaxCur:
     ld hl, $0f08
     ld a, [varTimerMax]
-    rcall call_02b5
+    rcall DrawInt
 
-code_02af:
+DrawTimerCur:
     ld hl, $0b08
     ld a, [varTimerCur]
 
-call_02b5:
+DrawInt:
     push af
     trap MoveCursor
     pop af
@@ -311,25 +315,24 @@ call_02b5:
     trap DrawString
     ret
 
-call_02c7:
+DrawState:
     ld hl, $040a
     trap MoveCursor
-    trap $16
-    rcall call_02dc
+    trap GetMusicState
+    rcall DrawStopPlay
+
     ld hl, $0e0a
     trap MoveCursor
-    trap $17
+    trap GetSoundState
 
-call_02dc:
+DrawStopPlay:
     rpush StrStop
     pop hl
     or a
-    jr z, jr_02e7
+    jr z, :+
     rpush StrPlay
     pop hl
-
-jr_02e7:
-    trap DrawString
+:   trap DrawString
     ret
 
 StrTitle:
