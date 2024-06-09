@@ -50,7 +50,7 @@ Main::
     trap $b4
 
 jump_010c:
-    rcall call_0213
+    rcall ShowTitleScreen
 
 jump_0113:
     ld hl, $cc65
@@ -106,7 +106,7 @@ jump_0122:
     rpush strGameOver
     pop hl
     trap DrawString
-    rcall call_023a
+    rcall ShowNewGame
     rpush jump_0113
     ret
 
@@ -162,33 +162,33 @@ strPerfect:
 strGameOver:
     db "GAME OVER\n"
 
-call_0213:
+ShowTitleScreen:
     ld a, $0c
     trap $b9
     rpush strCredits
     pop hl
     trap DrawLayout
-    rcall call_0245
+    rcall ShowHiScore
 
-jump_0224:
+.loop
     trap AwaitFrame
     rcall call_0684
     trap $d8
     bit BtnSel, a
-    jr nz, .jr_0238
-    and $08
-    jr z, jump_0224
+    jr nz, .exit
+    and (1 << BtnSta)
+    jr z, .loop
     ret
 
-.jr_0238
+.exit
     trap ExitToMenu
 
-call_023a:
-    rcall call_0245
-    rpush jump_0224
+ShowNewGame:
+    rcall ShowHiScore
+    rpush ShowTitleScreen.loop
     ret
 
-call_0245:
+ShowHiScore:
     rpush strMenu
     pop hl
     trap DrawLayout
