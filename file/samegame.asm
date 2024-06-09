@@ -56,6 +56,8 @@ Main::
     rcall call_06d9
     ld a, $03
     trap $b4
+
+jump_010c:
     rcall call_0213
 
 jump_0113:
@@ -70,9 +72,11 @@ jump_0113:
 jump_0122:
     rcall call_05d5
     rcall call_0514
-    jr c, @+$46
+    jr c, .jr_0176
+.jr_0132
     rcall call_0322
     rcall call_057d
+.jr_0140
     trap AwaitFrame
     rcall call_0684
     trap $d8
@@ -80,27 +84,31 @@ jump_0122:
     push af
     rcall call_04f1
     pop af
-    jr c, @+$d7-$100
+    jr c, .jr_0132
     rcall call_03b7
-    jr c, @+$be-$100
+    jr c, jump_0122
     ldh a, [$8b]
     bit 3, a
-    jr nz, @+$a9-$100
+    jr nz, jump_0113
     bit 1, a
-    jr nz, @+$3d
+    jr nz, .jr_01ab
     bit 2, a
-    jr nz, @+$9a-$100
-    jr @+$cc-$100
+    jr nz, jump_010c
+    jr .jr_0140
+
+.jr_0176
     rcall call_0322
     rcall call_057d
     ld a, [$c9a0]
     or a
-    jr nz, @+$0d
+    jr nz, .jr_0195
     ld hl, $0505
     trap MoveCursor
     rpush strPerfect
     pop hl
     trap DrawString
+
+.jr_0195
     ld hl, $0507
     trap MoveCursor
     rpush strGameOver
@@ -116,7 +124,7 @@ jump_0122:
     ld b, [hl]
     ld c, a
     or a, b
-    jr z, @+$8e-$100
+    jr z, .jr_0140
     dec bc
     dec bc
     ld [hl], b
@@ -130,7 +138,9 @@ jump_0122:
     ld [hli], a
     ld [hl], a
     ld hl, $c700
-    jr @+$24
+    jr .jr_01ef
+
+.jr_01cd
     push bc
     push hl
     rcall call_0322
@@ -141,6 +151,8 @@ jump_0122:
     pop bc
     dec bc
     dec bc
+
+.jr_01ef
     ld de, $cc60
     ld a, [hli]
     ld [de], a
@@ -149,7 +161,7 @@ jump_0122:
     ld [de], a
     ld a, c
     or a, b
-    jr nz, @+$d4-$100
+    jr nz, .jr_01cd
     rpush jump_0122
     ret
 
@@ -173,7 +185,7 @@ jump_0224:
     bit BtnSel, a
     jr nz, .jr_0238
     and $08
-    jr z, @+$ef-$100
+    jr z, jump_0224
     ret
 
 .jr_0238
@@ -197,7 +209,7 @@ call_0245:
     inc hl
     ld a, [de]
     sbc [hl]
-    jr c, @+$2e
+    jr c, .jr_0286
     push hl
     push de
     ld hl, $cc40
@@ -217,13 +229,17 @@ call_0245:
     rpush @+$0495
     pop de
     ld b, $0a
+
+.jr_027c
     ld a, [hli]
     ld [de], a
     inc de
     dec b
-    jr nz, @+$fc-$100
+    jr nz, .jr_027c
     xor a
     ld [$0000], a
+
+.jr_0286
     ld hl, $c300
     xor a
     ld [hl], a
@@ -266,15 +282,17 @@ strCredits:
 call_0322:
     ld hl, $c9a0
     ld c, $14
+.jr_0327
     ld b, $10
+.jr_0329
     res 7, [hl]
     inc hl
     dec b
-    jr nz, @+$fc-$100
+    jr nz, .jr_0329
     ld de, $0010
     add hl, de
     dec c
-    jr nz, @+$f3-$100
+    jr nz, .jr_0327
     ld a, $0f
     ld hl, $cc61
     sub [hl]
@@ -301,19 +319,22 @@ call_0322:
     ld a, b
     ldh [$c1], a
     sub $02
-    jr nc, @+$03
+    jr nc, .jr_0365
     xor a
+.jr_0365
     ld e, a
     ld d, $00
     ld l, d
     ld h, d
+.jr_036a
     rra
-    jr nc, @+$03
+    jr nc, .jr_036e
     add hl, de
+.jr_036e
     sla e
     rl d
     or a
-    jr nz, @+$f7-$100
+    jr nz, .jr_036a
     ld e, l
     ld d, h
     ld hl, $cc63
@@ -385,27 +406,31 @@ call_03b7:
     rcall call_057d
     trap $c3
     rcall call_0445
-    jr nc, @+$12
+    jr nc, .jr_041d
     rcall call_0514
     rcall call_057d
     trap $c3
+.jr_041d
     scf
     ret
 
 call_041f:
     ld hl, $c9a0
     ld c, $14
+.jr_0424
     ld b, $10
+.jr_0426
     bit 7, [hl]
-    jr z, @+$04
+    jr z, .jr_042c
     ld [hl], $00
+.jr_042c
     inc hl
     dec b
-    jr nz, @-$08
+    jr nz, .jr_0426
     ld de, $0010
     add hl, de
     dec c
-    jr nz, @+$ef-$100
+    jr nz, .jr_0424
     ld hl, $cc63
     ld e, [hl]
     inc hl
@@ -422,13 +447,14 @@ call_041f:
 call_0445:
     ld hl, $c9a0
     ld b, $14
+.jr_044a
     ld a, [hl]
     or a
-    jr z, @+$0b
+    jr z, .jr_0457
     ld de, $0020
     add hl, de
     dec b
-    jr nz, @+$f7-$100
+    jr nz, .jr_044a
     or a
     ret
 
@@ -437,18 +463,23 @@ call_0445:
     ld c, b
     ld e, l
     ld d, h
+.jr_045b
     push hl
     ld l, e
     ld h, d
+.jr_045e
     dec c
-    jr z, @+$0c
+    jr z, .jr_046b
     ld de, $0020
     add hl, de
     ld a, [hl]
     or a
-    jr nz, @+$05
-    jr @+$f5-$100
+    jr nz, .jr_046c
+    jr .jr_045e
+
+.jr_046b
     inc c
+.jr_046c
     ld e, l
     ld d, h
     pop hl
@@ -456,24 +487,26 @@ call_0445:
     push bc
     push hl
     ld b, $10
+.jr_0474
     ld a, [de]
     inc de
     ld [hli], a
     dec b
-    jr nz, @+$fc-$100
+    jr nz, .jr_0474
     pop hl
     ld bc, $0020
     add hl, bc
     pop bc
     pop de
     dec b
-    jr nz, @+$d9-$100
+    jr nz, .jr_045b
     scf
     ret
 
 call_0486:
     ld hl, $c9a0
     ld c, $14
+.jr_048b
     push bc
     push hl
     ld b, $10
@@ -481,25 +514,29 @@ call_0486:
     inc c
     ld e, l
     ld d, h
+.jr_0493
     dec c
-    jr z, @+$08
+    jr z, .jr_049c
     ld a, [hli]
     or a
-    jr nz, @+$07
-    jr @+$f9-$100
+    jr nz, .jr_049f
+    jr .jr_0493
+
+.jr_049c
     dec hl
     inc c
     xor a
+.jr_049f
     ld [de], a
     inc de
     dec b
-    jr nz, @+$f1-$100
+    jr nz, .jr_0493
     pop hl
     ld bc, $0020
     add hl, bc
     pop bc
     dec c
-    jr nz, @+$e0-$100
+    jr nz, .jr_048b
     ret
 
 call_04ae:
@@ -513,31 +550,35 @@ call_04ae:
     ld e, [hl]
     dec hl
     bit 5, b
-    jr z, @+$09
+    jr z, .jr_04c6
     dec d
     bit 7, d
-    jr z, @+$04
+    jr z, .jr_04c6
     ld d, $13
+.jr_04c6
     bit 4, b
-    jr z, @+$0a
+    jr z, .jr_04d2
     inc d
     ld a, d
     cp $14
-    jr c, @+$04
+    jr c, .jr_04d2
     ld d, $00
+.jr_04d2
     bit 6, b
-    jr z, @+$09
+    jr z, .jr_04dd
     dec e
     bit 7, e
-    jr z, @+$04
+    jr z, .jr_04dd
     ld e, $0f
+.jr_04dd
     bit 7, b
-    jr z, @+$0a
+    jr z, .jr_04e9
     inc e
     ld a, e
     cp $10
-    jr c, @+$04
+    jr c, .jr_04e9
     ld e, $00
+.jr_04e9
     ld [hl], d
     inc hl
     ld [hl], e
@@ -577,48 +618,55 @@ call_0514:
     ldh [$c0], a
     ld hl, $c9a0
     ld c, $14
+.jr_051c
     push hl
     push bc
     ld b, $10
+.jr_0520
     push bc
     push hl
     ld b, $00
     ld a, [hl]
     and $f0
-    jr z, @+$34
+    jr z, .jr_055b
     ld c, a
     ld de, $0020
     add hl, de
     ld a, [hl]
     and $f0
     cp c
-    jr nz, @+$03
+    jr nz, .jr_0535
     inc b
+.jr_0535
     ld de, $ffc0
     add hl, de
     ld a, [hl]
     sla b
     and $f0
     cp c
-    jr nz, @+$03
+    jr nz, .jr_0542
     inc b
+.jr_0542
     ld de, $001f
     add hl, de
     ld a, [hli]
     sla b
     and $f0
     cp c
-    jr nz, @+$03
+    jr nz, .jr_054f
     inc b
+.jr_054f
     inc hl
     ld a, [hl]
     sla b
     and $f0
     cp c
-    jr nz, @+$03
+    jr nz, .jr_0559
     inc b
+.jr_0559
     ld a, b
     add c
+.jr_055b
     pop hl
     ld [hl], a
     and $0f
@@ -629,16 +677,17 @@ call_0514:
     pop bc
     inc hl
     dec b
-    jr nz, @+$b8-$100
+    jr nz, .jr_0520
     pop bc
     pop hl
     ld de, $0020
     add hl, de
     ld a, [hl]
     or a
-    jr z, @+$05
+    jr z, .jr_0577
     dec c
-    jr nz, @+$a7-$100
+    jr nz, .jr_051c
+.jr_0577
     ldh a, [$c0]
     or a
     ret nz
@@ -649,21 +698,24 @@ call_057d:
     ld hl, $9800
     ld de, $c9af
     ld c, $10
+.jr_0585
     push de
     push hl
     ld l, e
     ld h, d
     ld de, $cc40
     ld b, $14
+.jr_058e
     push bc
     ld a, [hl]
     ld c, $a0
     bit 7, a
-    jr nz, @+$09
+    jr nz, .jr_059d
     ld c, $50
     or a
-    jr nz, @+$04
+    jr nz, .jr_059d
     ld c, $20
+.jr_059d
     and $7f
     add c
     ld [de], a
@@ -672,7 +724,7 @@ call_057d:
     add hl, bc
     pop bc
     dec b
-    jr nz, @+$e6-$100
+    jr nz, .jr_058e
     pop hl
     push bc
     push hl
@@ -686,7 +738,7 @@ call_057d:
     pop de
     dec de
     dec c
-    jr nz, @+$c7-$100
+    jr nz, .jr_0585
     ld hl, $0611
     trap MoveCursor
     ld hl, $cc63
@@ -726,33 +778,38 @@ strStatus:
 call_060d:
     ld hl, $c3b2
     ld de, $cc6b
-    jr @+$1a
+    jr jump_062d
 
 call_0615:
     ldh a, [$8a]
     and $03
-    jr z, @+$0e
+    jr z, call_0627
+.jr_061b
     rcall call_0627
     cp $55
-    jr c, @+$f7-$100
+    jr c, .jr_061b
     ret
 
 call_0627:
     ld de, $c3b2
     ld hl, $cc6b
+jump_062d:
     ld bc, $0003
     trap $02
     ld hl, $cc90
     ld b, $05
     xor a
+.jr_0638
     ld [hli], a
     dec b
-    jr nz, @+$fe-$100
+    jr nz, .jr_0638
     ld de, $c9a0
     ld c, $14
+.jr_0641
     push de
     push bc
     ld b, $10
+.jr_0645
     rcall call_0684
     add hl, hl
     add hl, hl
@@ -775,7 +832,7 @@ call_0627:
     ld [de], a
     inc de
     dec b
-    jr nz, @+$df-$100
+    jr nz, .jr_0645
     pop bc
     pop de
     ld hl, $0020
@@ -783,16 +840,18 @@ call_0627:
     ld e, l
     ld d, h
     dec c
-    jr nz, @+$d0-$100
+    jr nz, .jr_0641
     ld hl, $cc90
     ld c, $00
     ld b, $05
+.jr_067a
     ld a, [hli]
     cp c
-    jr c, @+$03
+    jr c, .jr_067f
     ld c, a
+.jr_067f
     dec b
-    jr nz, @+$fa-$100
+    jr nz, .jr_067a
     ld a, c
     ret
 
@@ -855,6 +914,7 @@ call_06d9:
     trap $63
     ld b, $60
     ld c, $05
+.jr_06d4
     push bc
     ld de, $c980
     push de
@@ -882,7 +942,7 @@ call_06d9:
     inc b
     swap b
     dec c
-    jr nz, @+$d7-$100
+    jr nz, .jr_06d4
     ld hl, $c980
     ld bc, $02c0
     ld e, $00
