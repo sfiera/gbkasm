@@ -94,12 +94,12 @@ Main::
     jr nz, @+$0d
     ld hl, $0505
     trap MoveCursor
-    rpush @+$006f
+    rpush strPerfect
     pop hl
     trap DrawString
     ld hl, $0507
     trap MoveCursor
-    rpush @+$006e
+    rpush strGameOver
     pop hl
     trap DrawString
     rcall @+$0096
@@ -155,7 +155,7 @@ strGameOver:
 
     ld a, $0c
     trap $b9
-    rpush @+$00c8
+    rpush strCredits
     pop hl
     trap DrawLayout
     rcall @+$0024
@@ -174,7 +174,7 @@ strGameOver:
     rpush @+$ffe2
     ret
 
-    rpush @+$0072
+    rpush strMenu
     pop hl
     trap DrawLayout
     ld de, $cc65
@@ -240,11 +240,12 @@ strGameOver:
     trap $59
     ret
 
+strMenu:
     db 3, 2, "SAME GAME KISS\n"
     db 2, 12, "HIGH SCORE\n"
     db 2, 13, "NAME: \n"
     db $ff
-
+strCredits:
     db 2, 5, "ORIGINAL DESIGN\n"
     db 3, 6, "BY KYOTO 1992\n"
     db 2, 8, "SPECIAL THANKS\n"
@@ -252,7 +253,6 @@ strGameOver:
     db $ff
 
     ld hl, $c9a0
-
     ld c, $14
     ld b, $10
     res 7, [hl]
@@ -691,11 +691,12 @@ strGameOver:
     pop hl
     trap DrawString
     ld de, $0010
-    rpush @+$0006
+    rpush strStatus
     pop hl
     trap DrawStringList
     ret
 
+strStatus:
     db "SAME     GET  SCORE\n"
     db "GAME\n"
     db "\n"
