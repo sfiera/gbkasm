@@ -226,7 +226,7 @@ call_0245:
     ld a, [de]
     ld [hl], a
     ld hl, $cc40
-    rpush @+$0495
+    rpush data_070c
     pop de
     ld b, $0a
 
@@ -245,7 +245,7 @@ call_0245:
     ld [hl], a
     ld hl, $0c0c
     trap MoveCursor
-    rpush @+$0479
+    rpush data_070a
     pop hl
     ld e, [hl]
     inc hl
@@ -255,7 +255,7 @@ call_0245:
     trap IntToString
     pop hl
     trap DrawString
-    rpush @+$046b
+    rpush data_070c
     pop hl
     ld de, $0001
     ld c, $0a
@@ -950,7 +950,9 @@ call_06d9:
     ret
 
 data_070a:
-    db 0, 0, "          "
+    dw 0
+data_070c:
+    db "          "
 
 data_0716:
     db $ff, $c0, $c0, $e0, $a0, $f0
