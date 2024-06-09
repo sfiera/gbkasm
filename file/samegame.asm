@@ -901,10 +901,10 @@ call_06d9:
     rpush gfxTileset
     pop de
     ld b, $c6
-    trap $62
+    trap InitDecompress
     ld de, $8000
     ld bc, $0010
-    trap $63
+    trap RunDecompress
     ld b, $60
     ld c, $05
 .jr_06d4
@@ -912,7 +912,7 @@ call_06d9:
     ld de, $c980
     push de
     ld bc, $0100
-    trap $63
+    trap RunDecompress
     pop hl
     pop bc
     ld a, b
