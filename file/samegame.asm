@@ -51,7 +51,7 @@ History::
 
 Main::
     xor a
-    trap $b3
+    trap DrawBox
     trap $b5
     rcall @+$05a4
     ld a, $03
@@ -69,7 +69,7 @@ Main::
     jr c, @+$46
     rcall @+$01ec
     rcall @+$0440
-    trap $b1
+    trap AwaitFrame
     rcall @+$053e
     trap $d8
     rcall @+$035f
@@ -93,15 +93,15 @@ Main::
     or a
     jr nz, @+$0d
     ld hl, $0505
-    trap $b8
+    trap MoveCursor
     rpush @+$006f
     pop hl
-    trap $69
+    trap DrawString
     ld hl, $0507
-    trap $b8
+    trap MoveCursor
     rpush @+$006e
     pop hl
-    trap $69
+    trap DrawString
     rcall @+$0096
     rpush @+$ff6b
     ret
@@ -157,9 +157,9 @@ strGameOver:
     trap $b9
     rpush @+$00c8
     pop hl
-    trap $5c
+    trap DrawLayout
     rcall @+$0024
-    trap $b1
+    trap AwaitFrame
     rcall @+$045a
     trap $d8
     bit 2, a
@@ -168,14 +168,15 @@ strGameOver:
     jr z, @+$ef-$100
     ret
 
-    trap $01
+    trap ExitToMenu
+
     rcall @+$0007
     rpush @+$ffe2
     ret
 
     rpush @+$0072
     pop hl
-    trap $5c
+    trap DrawLayout
     ld de, $cc65
     rpush @+$04bb
     pop hl
@@ -216,7 +217,7 @@ strGameOver:
     xor a
     ld [hl], a
     ld hl, $0c0c
-    trap $b8
+    trap MoveCursor
     rpush @+$0479
     pop hl
     ld e, [hl]
@@ -224,9 +225,9 @@ strGameOver:
     ld d, [hl]
     ld hl, $cc40
     push hl
-    trap $a3
+    trap IntToString
     pop hl
-    trap $69
+    trap DrawString
     rpush @+$046b
     pop hl
     ld de, $0001
@@ -666,33 +667,33 @@ strGameOver:
     dec c
     jr nz, @+$c7-$100
     ld hl, $0611
-    trap $b8
+    trap MoveCursor
     ld hl, $cc63
     ld e, [hl]
     inc hl
     ld d, [hl]
     ld hl, $cc40
     push hl
-    trap $a3
+    trap IntToString
     pop hl
-    trap $69
+    trap DrawString
     ret
 
     ld hl, $0d11
-    trap $b8
+    trap MoveCursor
     ld hl, $cc65
     ld e, [hl]
     inc hl
     ld d, [hl]
     ld hl, $cc40
     push hl
-    trap $a3
+    trap IntToString
     pop hl
-    trap $69
+    trap DrawString
     ld de, $0010
     rpush @+$0006
     pop hl
-    trap $6a
+    trap DrawStringList
     ret
 
     db "SAME     GET  SCORE\n"
