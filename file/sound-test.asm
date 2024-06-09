@@ -1,18 +1,12 @@
 ; Disassembly of "gbkiss.gb"
 
-MACRO rcall
-    rpush @+6
-    rpush \1
-    ret
-ENDM
+INCLUDE "charmap.inc"
+INCLUDE "macro.inc"
+INCLUDE "file/common.inc"
 
 DEF GameIdentifier         EQU $0014
 DEF SuperBDaman            EQU $01
 DEF SuperBDamanAudioCount  EQU (27 << 8) + 56
-
-INCLUDE "charmap.inc"
-INCLUDE "macro.inc"
-INCLUDE "file/common.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 

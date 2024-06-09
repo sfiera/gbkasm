@@ -46,3 +46,9 @@ DEF BtnRt EQU 4
 DEF BtnLt EQU 5
 DEF BtnUp EQU 6
 DEF BtnDn EQU 7
+
+MACRO rcall
+    rpush @+6
+    rpush \1
+    ret
+ENDM
