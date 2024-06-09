@@ -193,7 +193,7 @@ ShowHiScore:
     pop hl
     trap DrawLayout
     ld de, $cc65
-    rpush data_070a
+    rpush intHiScore
     pop hl
     ld a, [de]
     inc de
@@ -218,7 +218,7 @@ ShowHiScore:
     ld a, [de]
     ld [hl], a
     ld hl, $cc40
-    rpush data_070c
+    rpush strHiScoreName
     pop de
     ld b, $0a
 
@@ -237,7 +237,7 @@ ShowHiScore:
     ld [hl], a
     ld hl, $0c0c
     trap MoveCursor
-    rpush data_070a
+    rpush intHiScore
     pop hl
     ld e, [hl]
     inc hl
@@ -247,7 +247,7 @@ ShowHiScore:
     trap IntToString
     pop hl
     trap DrawString
-    rpush data_070c
+    rpush strHiScoreName
     pop hl
     ld de, $0001
     ld c, $0a
@@ -890,7 +890,7 @@ call_06d9:
     ld [hli], a
     ld [hli], a
     ld [hl], a
-    rpush data_070a
+    rpush intHiScore
     pop hl
     ld de, $cc69
     ld a, [hli]
@@ -898,7 +898,7 @@ call_06d9:
     inc de
     ld a, [hl]
     ld [de], a
-    rpush data_0716
+    rpush gfxTileset
     pop de
     ld b, $c6
     trap $62
@@ -942,12 +942,12 @@ call_06d9:
     trap $a6
     ret
 
-data_070a:
+intHiScore:
     dw 0
-data_070c:
+strHiScoreName:
     db "          "
 
-data_0716:
+gfxTileset:
     INCBIN "gfx/sametiles.2bpp.hz"
 
 End:
