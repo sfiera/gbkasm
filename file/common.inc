@@ -33,6 +33,8 @@ DEF IntToString      EQU $a3
 DEF RandInit         EQU $8d
 DEF RandNext         EQU $8e
 
+DEF InitDecompress   EQU $62
+
 DEF BtnA EQU 0
 DEF BtnB EQU 1
 DEF BtnSel EQU 2
