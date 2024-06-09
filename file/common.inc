@@ -30,6 +30,8 @@ DEF DrawLayout       EQU $5c
 DEF DrawBox          EQU $b3
 DEF IntToString      EQU $a3
 
+DEF LoadTiles        EQU $4c
+
 DEF RandInit         EQU $8d
 DEF RandNext         EQU $8e
 
