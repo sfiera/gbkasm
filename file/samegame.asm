@@ -47,7 +47,7 @@ jump_010c:
     rcall ShowTitleScreen
 
 jump_0113:
-    ld hl, $cc65
+    ld hl, varScore
     xor a
     ld [hli], a
     ld [hli], a
@@ -85,7 +85,7 @@ jump_0122:
 .jr_0176
     rcall call_0322
     rcall call_057d
-    ld a, [$c9a0]
+    ld a, [varField]
     or a
     jr nz, .jr_0195
     ld hl, $0505
@@ -105,7 +105,7 @@ jump_0122:
     ret
 
 .jr_01ab
-    ld hl, $cc67
+    ld hl, varCC67
     ld a, [hli]
     ld b, [hl]
     ld c, a
@@ -119,7 +119,7 @@ jump_0122:
     push bc
     rcall call_060d
     pop bc
-    ld hl, $cc65
+    ld hl, varScore
     xor a
     ld [hli], a
     ld [hl], a
@@ -186,7 +186,7 @@ ShowHiScore:
     rpush strMenu
     pop hl
     trap DrawLayout
-    ld de, $cc65
+    ld de, varScore
     rpush intHiScore
     pop hl
     ld a, [de]
@@ -266,7 +266,7 @@ strCredits:
     db $ff
 
 call_0322:
-    ld hl, $c9a0
+    ld hl, varField
     ld c, FieldWidth
 .jr_0327
     ld b, FieldHeight
@@ -280,7 +280,7 @@ call_0322:
     dec c
     jr nz, .jr_0327
     ld a, $0f
-    ld hl, $cc61
+    ld hl, varCursor.y
     sub [hl]
     ld e, a
     dec hl
@@ -295,7 +295,7 @@ call_0322:
     rra
     or a, e
     ld e, a
-    ld hl, $c9a0
+    ld hl, varField
     add hl, de
     ld a, [hl]
     and $f0
@@ -323,7 +323,7 @@ call_0322:
     jr nz, .jr_036a
     ld e, l
     ld d, h
-    ld hl, $cc63
+    ld hl, varAward
     ld [hl], e
     inc hl
     ld [hl], d
@@ -363,7 +363,7 @@ call_03b7:
     cp $02
     ccf
     ret nc
-    ld hl, $cc67
+    ld hl, varCC67
     ld e, [hl]
     inc hl
     ld d, [hl]
@@ -401,7 +401,7 @@ call_03b7:
     ret
 
 call_041f:
-    ld hl, $c9a0
+    ld hl, varField
     ld c, FieldWidth
 .nextColumn
     ld b, FieldHeight
@@ -417,7 +417,7 @@ call_041f:
     add hl, de
     dec c
     jr nz, .nextColumn
-    ld hl, $cc63
+    ld hl, varAward
     ld e, [hl]
     inc hl
     ld d, [hl]
@@ -431,7 +431,7 @@ call_041f:
     ret
 
 call_0445:
-    ld hl, $c9a0
+    ld hl, varField
     ld b, FieldWidth
 .jr_044a
     ld a, [hl]
@@ -490,7 +490,7 @@ call_0445:
     ret
 
 call_0486:
-    ld hl, $c9a0
+    ld hl, varField
     ld c, FieldWidth
 .jr_048b
     push bc
@@ -580,13 +580,13 @@ call_04f1:
     ld [hli], a
     ld [hld], a
     push hl
-    ld hl, $cc62
+    ld hl, varTimer
     ld a, [hl]
     inc [hl]
     bit 4, a
     pop hl
     ret nz
-    ld a, [$cc61]
+    ld a, [varCursor.y]
     add a
     add a
     add a
@@ -603,7 +603,7 @@ call_04f1:
 call_0514:
     xor a
     ldh [$c0], a
-    ld hl, $c9a0
+    ld hl, varField
     ld c, FieldWidth
 .jr_051c
     push hl
@@ -728,7 +728,7 @@ call_057d:
     jr nz, .jr_0585
     ld hl, $0611
     trap MoveCursor
-    ld hl, $cc63
+    ld hl, varAward
     ld e, [hl]
     inc hl
     ld d, [hl]
@@ -742,7 +742,7 @@ call_057d:
 call_05d5:
     ld hl, $0d11
     trap MoveCursor
-    ld hl, $cc65
+    ld hl, varScore
     ld e, [hl]
     inc hl
     ld d, [hl]
@@ -790,7 +790,7 @@ jump_062d:
     ld [hli], a
     dec b
     jr nz, .jr_0638
-    ld de, $c9a0
+    ld de, varField
     ld c, FieldWidth
 .jr_0641
     push de
@@ -886,7 +886,7 @@ SetupGfx:
     ld [hl], a
     rpush intHiScore
     pop hl
-    ld de, $cc69
+    ld de, varHiScore
     ld a, [hli]
     ld [de], a
     inc de
@@ -903,7 +903,7 @@ SetupGfx:
     ld c, $05
 .jr_06d4
     push bc
-    ld de, $c980
+    ld de, varC980
     push de
     ld bc, $0100
     trap RunDecompress
@@ -930,7 +930,7 @@ SetupGfx:
     swap b
     dec c
     jr nz, .jr_06d4
-    ld hl, $c980
+    ld hl, varC980
     ld bc, $02c0
     ld e, $00
     trap $a6
@@ -947,8 +947,21 @@ gfxTileset:
 End:
 
 
+SECTION "Field", WRAM0[$c980]
+
+varC980: ds 32
+varField: ds 320
+
 SECTION "Variables", WRAM0[$cc60]
+
+; 0C 0C A3 E4 06 B9 00 7C 00 46 0C D8 03 ED 00 00
 
 varCursor:
 .x ds 1
 .y ds 1
+varTimer: ds 1
+varAward: ds 2
+varScore: ds 2
+varCC67: ds 1
+varCC68: ds 1
+varHiScore: ds 2
