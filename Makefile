@@ -51,3 +51,4 @@ file/sezaki.o: gfx/sezaki.2bpp.hz
 file/shot.o: gfx/icon/shot.2bpp
 file/simula1.o: gfx/icon/simula1.2bpp
 file/sound-test.o: gfx/icon/sound-test.2bpp
+file/watch-and-timer.o: gfx/icon/tokei.2bpp
