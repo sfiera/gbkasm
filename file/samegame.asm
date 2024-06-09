@@ -53,31 +53,35 @@ Main::
     xor a
     trap DrawBox
     trap $b5
-    rcall @+$05a4
+    rcall call_06d9
     ld a, $03
     trap $b4
-    rcall @+$0103
+    rcall call_0213
+
+jump_0113:
     ld hl, $cc65
     xor a
     ld [hli], a
     ld [hli], a
     ld [hli], a
     ld [hl], a
-    rcall @+$04f6
-    rcall @+$04af
-    rcall @+$03e7
+    rcall call_0615
+
+jump_0122:
+    rcall call_05d5
+    rcall call_0514
     jr c, @+$46
-    rcall @+$01ec
-    rcall @+$0440
+    rcall call_0322
+    rcall call_057d
     trap AwaitFrame
-    rcall @+$053e
+    rcall call_0684
     trap $d8
-    rcall @+$035f
+    rcall call_04ae
     push af
-    rcall @+$039a
+    rcall call_04f1
     pop af
     jr c, @+$d7-$100
-    rcall @+$0256
+    rcall call_03b7
     jr c, @+$be-$100
     ldh a, [$8b]
     bit 3, a
@@ -87,8 +91,8 @@ Main::
     bit 2, a
     jr nz, @+$9a-$100
     jr @+$cc-$100
-    rcall @+$01a8
-    rcall @+$03fc
+    rcall call_0322
+    rcall call_057d
     ld a, [$c9a0]
     or a
     jr nz, @+$0d
@@ -102,10 +106,11 @@ Main::
     rpush strGameOver
     pop hl
     trap DrawString
-    rcall @+$0096
-    rpush @+$ff6b
+    rcall call_023a
+    rpush jump_0113
     ret
 
+.jr_01ab
     ld hl, $cc67
     ld a, [hli]
     ld b, [hl]
@@ -118,7 +123,7 @@ Main::
     dec hl
     ld [hl], c
     push bc
-    rcall @+$044f
+    rcall call_060d
     pop bc
     ld hl, $cc65
     xor a
@@ -128,10 +133,10 @@ Main::
     jr @+$24
     push bc
     push hl
-    rcall @+$014f
-    rcall @+$0245
-    rcall @+$02a5
-    rcall @+$025d
+    rcall call_0322
+    rcall call_041f
+    rcall call_0486
+    rcall call_0445
     pop hl
     pop bc
     dec bc
@@ -145,7 +150,7 @@ Main::
     ld a, c
     or a, b
     jr nz, @+$d4-$100
-    rpush @+$ff26
+    rpush jump_0122
     ret
 
 strPerfect:
@@ -153,32 +158,38 @@ strPerfect:
 strGameOver:
     db "GAME OVER\n"
 
+call_0213:
     ld a, $0c
     trap $b9
     rpush strCredits
     pop hl
     trap DrawLayout
-    rcall @+$0024
+    rcall call_0245
+
+jump_0224:
     trap AwaitFrame
-    rcall @+$045a
+    rcall call_0684
     trap $d8
-    bit 2, a
-    jr nz, @+$07
+    bit BtnSel, a
+    jr nz, .jr_0238
     and $08
     jr z, @+$ef-$100
     ret
 
+.jr_0238
     trap ExitToMenu
 
-    rcall @+$0007
-    rpush @+$ffe2
+call_023a:
+    rcall call_0245
+    rpush jump_0224
     ret
 
+call_0245:
     rpush strMenu
     pop hl
     trap DrawLayout
     ld de, $cc65
-    rpush @+$04bb
+    rpush data_070a
     pop hl
     ld a, [de]
     inc de
@@ -252,6 +263,7 @@ strCredits:
     db 4, 9, "TO MORISUKE\n"
     db $ff
 
+call_0322:
     ld hl, $c9a0
     ld c, $14
     ld b, $10
@@ -285,7 +297,7 @@ strCredits:
     and $f0
     ld c, a
     ld b, $00
-    rcall @+$0024
+    rcall call_037e
     ld a, b
     ldh [$c1], a
     sub $02
@@ -310,6 +322,7 @@ strCredits:
     ld [hl], d
     ret
 
+call_037e:
     ld a, [hl]
     or a
     ret z
@@ -321,20 +334,21 @@ strCredits:
     set 7, [hl]
     inc b
     inc hl
-    rcall @+$ffee
+    rcall call_037e
     dec hl
     dec hl
-    rcall @+$ffe5
+    rcall call_037e
     ld de, $ffe1
     add hl, de
-    rcall @+$ffda
+    rcall call_037e
     ld de, $0040
     add hl, de
-    rcall @+$ffcf
+    rcall call_037e
     ld de, $ffe0
     add hl, de
     ret
 
+call_03b7:
     ldh a, [$8b]
     and $01
     ret z
@@ -363,21 +377,22 @@ strCredits:
     ld [hli], a
     ld a, [de]
     ld [hl], a
-    rcall @+$003e
-    rcall @+$0195
+    rcall call_041f
+    rcall call_057d
     trap $c3
-    rcall @+$0095
-    rcall @+$011c
-    rcall @+$017e
+    rcall call_0486
+    rcall call_0514
+    rcall call_057d
     trap $c3
-    rcall @+$003d
+    rcall call_0445
     jr nc, @+$12
-    rcall @+$0103
-    rcall @+$0165
+    rcall call_0514
+    rcall call_057d
     trap $c3
     scf
     ret
 
+call_041f:
     ld hl, $c9a0
     ld c, $14
     ld b, $10
@@ -404,6 +419,7 @@ strCredits:
     ld [hl], a
     ret
 
+call_0445:
     ld hl, $c9a0
     ld b, $14
     ld a, [hl]
@@ -416,6 +432,7 @@ strCredits:
     or a
     ret
 
+.jr_0457
     inc b
     ld c, b
     ld e, l
@@ -454,6 +471,7 @@ strCredits:
     scf
     ret
 
+call_0486:
     ld hl, $c9a0
     ld c, $14
     push bc
@@ -484,6 +502,7 @@ strCredits:
     jr nz, @+$e0-$100
     ret
 
+call_04ae:
     ldh a, [$b6]
     ld b, a
     and $f0
@@ -527,6 +546,7 @@ strCredits:
     scf
     ret
 
+call_04f1:
     ld hl, $c300
     xor a
     ld [hli], a
@@ -552,10 +572,10 @@ strCredits:
     ld [hli], a
     ret
 
+call_0514:
     xor a
     ldh [$c0], a
     ld hl, $c9a0
-
     ld c, $14
     push hl
     push bc
@@ -625,6 +645,7 @@ strCredits:
     scf
     ret
 
+call_057d:
     ld hl, $9800
     ld de, $c9af
     ld c, $10
@@ -679,6 +700,7 @@ strCredits:
     trap DrawString
     ret
 
+call_05d5:
     ld hl, $0d11
     trap MoveCursor
     ld hl, $cc65
@@ -701,17 +723,21 @@ strStatus:
     db "GAME\n"
     db "\n"
 
+call_060d:
     ld hl, $c3b2
     ld de, $cc6b
     jr @+$1a
+
+call_0615:
     ldh a, [$8a]
     and $03
     jr z, @+$0e
-    rcall @+$0008
+    rcall call_0627
     cp $55
     jr c, @+$f7-$100
     ret
 
+call_0627:
     ld de, $c3b2
     ld hl, $cc6b
     ld bc, $0003
@@ -727,7 +753,7 @@ strStatus:
     push de
     push bc
     ld b, $10
-    rcall @+$003b
+    rcall call_0684
     add hl, hl
     add hl, hl
     add l
@@ -770,6 +796,7 @@ strStatus:
     ld a, c
     ret
 
+call_0684:
     push de
     ld hl, $c3b2
     ld a, [hli]
@@ -803,6 +830,7 @@ strStatus:
     ld h, $00
     ret
 
+call_06d9:
     ld a, $e4
     ldh [$9d], a
     ld hl, $cc60
@@ -810,7 +838,7 @@ strStatus:
     ld [hli], a
     ld [hli], a
     ld [hl], a
-    rpush @+$0055
+    rpush data_070a
     pop hl
     ld de, $cc69
     ld a, [hli]
@@ -818,7 +846,7 @@ strStatus:
     inc de
     ld a, [hl]
     ld [de], a
-    rpush @+$0055
+    rpush data_0716
     pop de
     ld b, $c6
     trap $62
@@ -861,8 +889,10 @@ strStatus:
     trap $a6
     ret
 
+data_070a:
     db 0, 0, "          "
 
+data_0716:
     db $ff, $c0, $c0, $e0, $a0, $f0
     db $90, $f8, $88, $ff, $fc, $84, $fe, $9a, $e7, $a5, $c3, $c3, $50, $ed, $01, $18
     db $01, $7e, $05, $12, $01, $ff, $44, $0f, $08, $e3, $a8, $0f, $2e, $e4, $e9, $f8
