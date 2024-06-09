@@ -4,14 +4,6 @@ INCLUDE "charmap.inc"
 INCLUDE "macro.inc"
 INCLUDE "file/common.inc"
 
-SECTION "ROM Bank $000", ROM0[$0]
-
-MACRO rcall
-    rpush @+6
-    rpush \1
-    ret
-ENDM
-
 DEF SavedHiScoreLo EQU $a042
 DEF SavedHiScoreHi EQU $a043
 
@@ -30,6 +22,8 @@ DEF FaceNone EQU 0
 DEF MaxSnakeLen EQU $50
 DEF MaxPoint EQU $05
 DEF EatDeadline EQU $28
+
+SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
     ; Length of entirety of file

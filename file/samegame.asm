@@ -4,12 +4,6 @@ INCLUDE "charmap.inc"
 INCLUDE "macro.inc"
 INCLUDE "file/common.inc"
 
-MACRO rcall
-    rpush @+6
-    rpush \1
-    ret
-ENDM
-
 DEF FieldWidth   EQU $14
 DEF FieldHeight  EQU $10
 
