@@ -34,6 +34,7 @@ DEF RandInit         EQU $8d
 DEF RandNext         EQU $8e
 
 DEF InitDecompress   EQU $62
+DEF RunDecompress    EQU $63
 
 DEF BtnA EQU 0
 DEF BtnB EQU 1
