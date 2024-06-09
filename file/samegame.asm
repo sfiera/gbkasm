@@ -45,7 +45,7 @@ Main::
     xor a
     trap DrawBox
     trap $b5
-    rcall call_06d9
+    rcall SetupGfx
     ld a, $03
     trap $b4
 
@@ -882,7 +882,7 @@ call_0684:
     ld h, $00
     ret
 
-call_06d9:
+SetupGfx:
     ld a, $e4
     ldh [$9d], a
     ld hl, varCursor
@@ -922,14 +922,14 @@ call_06d9:
     ld d, a
     ld e, $00
     ld c, $10
-    trap $4c
+    trap LoadTiles
     pop hl
     pop af
     add $50
     ld d, a
     ld e, $01
     ld c, $10
-    trap $4c
+    trap LoadTiles
     pop bc
     swap b
     inc b
