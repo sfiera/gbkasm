@@ -10,6 +10,9 @@ MACRO rcall
     ret
 ENDM
 
+DEF FieldWidth   EQU $14
+DEF FieldHeight  EQU $10
+
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
@@ -142,7 +145,7 @@ jump_0122:
     dec bc
 
 .jr_01ef
-    ld de, $cc60
+    ld de, varCursor
     ld a, [hli]
     ld [de], a
     inc de
@@ -270,9 +273,9 @@ strCredits:
 
 call_0322:
     ld hl, $c9a0
-    ld c, $14
+    ld c, FieldWidth
 .jr_0327
-    ld b, $10
+    ld b, FieldHeight
 .jr_0329
     res 7, [hl]
     inc hl
@@ -381,7 +384,7 @@ call_03b7:
     ld h, d
     ld de, $c700
     add hl, de
-    ld de, $cc60
+    ld de, varCursor
     ld a, [de]
     inc de
     ld [hli], a
@@ -405,21 +408,21 @@ call_03b7:
 
 call_041f:
     ld hl, $c9a0
-    ld c, $14
-.jr_0424
-    ld b, $10
-.jr_0426
+    ld c, FieldWidth
+.nextColumn
+    ld b, FieldHeight
+.nextTile
     bit 7, [hl]
     jr z, .jr_042c
     ld [hl], $00
 .jr_042c
     inc hl
     dec b
-    jr nz, .jr_0426
+    jr nz, .nextTile
     ld de, $0010
     add hl, de
     dec c
-    jr nz, .jr_0424
+    jr nz, .nextColumn
     ld hl, $cc63
     ld e, [hl]
     inc hl
@@ -435,7 +438,7 @@ call_041f:
 
 call_0445:
     ld hl, $c9a0
-    ld b, $14
+    ld b, FieldWidth
 .jr_044a
     ld a, [hl]
     or a
@@ -475,7 +478,7 @@ call_0445:
     push de
     push bc
     push hl
-    ld b, $10
+    ld b, FieldHeight
 .jr_0474
     ld a, [de]
     inc de
@@ -494,11 +497,11 @@ call_0445:
 
 call_0486:
     ld hl, $c9a0
-    ld c, $14
+    ld c, FieldWidth
 .jr_048b
     push bc
     push hl
-    ld b, $10
+    ld b, FieldHeight
     ld c, b
     inc c
     ld e, l
@@ -533,41 +536,42 @@ call_04ae:
     ld b, a
     and $f0
     ret z
-    ld hl, $cc60
+    ld hl, varCursor
     ld d, [hl]
     inc hl
     ld e, [hl]
     dec hl
-    bit 5, b
-    jr z, .jr_04c6
+.left
+    bit BtnLt, b
+    jr z, .right
     dec d
     bit 7, d
-    jr z, .jr_04c6
-    ld d, $13
-.jr_04c6
-    bit 4, b
-    jr z, .jr_04d2
+    jr z, .right
+    ld d, FieldWidth - 1
+.right
+    bit BtnRt, b
+    jr z, .up
     inc d
     ld a, d
-    cp $14
-    jr c, .jr_04d2
+    cp FieldWidth
+    jr c, .up
     ld d, $00
-.jr_04d2
-    bit 6, b
-    jr z, .jr_04dd
+.up
+    bit BtnUp, b
+    jr z, .down
     dec e
     bit 7, e
-    jr z, .jr_04dd
-    ld e, $0f
-.jr_04dd
-    bit 7, b
-    jr z, .jr_04e9
+    jr z, .down
+    ld e, FieldHeight - 1
+.down
+    bit BtnDn, b
+    jr z, .done
     inc e
     ld a, e
-    cp $10
-    jr c, .jr_04e9
+    cp FieldHeight
+    jr c, .done
     ld e, $00
-.jr_04e9
+.done
     ld [hl], d
     inc hl
     ld [hl], e
@@ -592,9 +596,9 @@ call_04f1:
     add a
     add a
     add a
-    add $14
+    add FieldWidth
     ld [hli], a
-    ld a, [$cc60]
+    ld a, [varCursor]
     add a
     add a
     add a
@@ -606,11 +610,11 @@ call_0514:
     xor a
     ldh [$c0], a
     ld hl, $c9a0
-    ld c, $14
+    ld c, FieldWidth
 .jr_051c
     push hl
     push bc
-    ld b, $10
+    ld b, FieldHeight
 .jr_0520
     push bc
     push hl
@@ -686,14 +690,14 @@ call_0514:
 call_057d:
     ld hl, $9800
     ld de, $c9af
-    ld c, $10
+    ld c, FieldHeight
 .jr_0585
     push de
     push hl
     ld l, e
     ld h, d
     ld de, $cc40
-    ld b, $14
+    ld b, FieldWidth
 .jr_058e
     push bc
     ld a, [hl]
@@ -793,11 +797,11 @@ jump_062d:
     dec b
     jr nz, .jr_0638
     ld de, $c9a0
-    ld c, $14
+    ld c, FieldWidth
 .jr_0641
     push de
     push bc
-    ld b, $10
+    ld b, FieldHeight
 .jr_0645
     rcall call_0684
     add hl, hl
@@ -881,7 +885,7 @@ call_0684:
 call_06d9:
     ld a, $e4
     ldh [$9d], a
-    ld hl, $cc60
+    ld hl, varCursor
     xor a
     ld [hli], a
     ld [hli], a
@@ -947,3 +951,10 @@ data_0716:
     INCBIN "gfx/sametiles.2bpp.hz"
 
 End:
+
+
+SECTION "Variables", WRAM0[$cc60]
+
+varCursor:
+.x ds 1
+.y ds 1
