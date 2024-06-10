@@ -22,10 +22,10 @@ FileCollection6::
     TableEntry FileCharView, "CHAR DUMP\n"
 
 FileSRAMGetAndClear::
-    INCBIN "file/sram-get-and-clear.gbk"
+    INCBIN "file/sram-get-and-clear.gbf"
 
 FileDeleteAll::
-    INCBIN "file/delete-all.gbk"
+    INCBIN "file/delete-all.gbf"
 
 FileCharView::
-    INCBIN "file/char-view.gbk"
+    INCBIN "file/char-view.gbf"

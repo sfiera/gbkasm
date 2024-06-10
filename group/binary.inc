@@ -24,16 +24,16 @@ FileCollection4::
     TableEntry FileBlackjack, "ﾌﾞﾗｯｸｼﾞｬｯｸ\n"
 
 FileRoulette::
-    INCBIN "file/roulette.gbk"
+    INCBIN "file/roulette.gbf"
 
 FileBlackjack::
-    INCBIN "file/blackjack.gbk"
+    INCBIN "file/blackjack.gbf"
 
 
 SECTION "ROM Bank $00c", ROMX[$4000], BANK[$c]
 
 FileWorm::
-    INCBIN "file/worm.gbk"
+    INCBIN "file/worm.gbf"
 
 FileBinary::
-    INCBIN "file/binary.gbk"
+    INCBIN "file/binary.gbf"
