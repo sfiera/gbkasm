@@ -1,14 +1,14 @@
-GBK_ASM = $(wildcard file/*.asm)
+GBF_ASM = $(wildcard file/*.asm)
 GB_ASM = $(wildcard *.asm)
 PNG = $(wildcard gfx/*.png gfx/*/*.png)
 GFX = $(PNG:%.png=%)
 
-ASM = $(GB_ASM) $(GBK_ASM)
+ASM = $(GB_ASM) $(GBF_ASM)
 OBJ = $(ASM:%.asm=%.o)
 DEP = $(ASM:%.asm=%.d)
 SYM = $(ASM:%.asm=%.sym)
 MAP = $(ASM:%.asm=%.map)
-GBK = $(GBK_ASM:%.asm=%.gbk)
+GBF = $(GBF_ASM:%.asm=%.gbf)
 GB = $(GB_ASM:%.asm=%.gb)
 
 
@@ -22,7 +22,7 @@ all: $(GB)
 	rgblink -n $*.sym -m $*.map -o $@ $<
 	rgbfix -v -p 255 $@
 
-%.gbk: %.o
+%.gbf: %.o
 	rgblink -n $*.sym -x -o $@ $<
 
 %.2bpp: %.2bpp.png
@@ -33,14 +33,14 @@ all: $(GB)
 
 .PHONY: clean
 clean:
-	rm -f $(GB) $(GBK) $(OBJ) $(SYM) $(MAP) $(GFX) $(DEP)
+	rm -f $(GB) $(GBF) $(OBJ) $(SYM) $(MAP) $(GFX) $(DEP)
 
 .PHONY: check
-check: $(GB) $(GBK)
+check: $(GB) $(GBF)
 	shasum -c roms.sha1
 
 -include $(DEP)
-gbkiss.o: $(GBK) $(GFX) gfx/logo.2bpp.hz
+gbkiss.o: $(GBF) $(GFX) gfx/logo.2bpp.hz
 file/bakechu-relay.o: gfx/icon/bakechu-relay.2bpp
 file/calculator.o: gfx/icon/calculator.2bpp
 file/koura-1.o: gfx/koura-1.2bpp.hz

@@ -28,13 +28,13 @@ FileCollection1::
     TableEntry FileShot, "SHOOTING MASTER\n"
 
 FileMagnets::
-    INCBIN "file/magnets.gbk"
+    INCBIN "file/magnets.gbf"
 
 FileMagnetsData::
-    INCBIN "file/magnets-data.gbk"
+    INCBIN "file/magnets-data.gbf"
 
 FileShot::
-    INCBIN "file/shot.gbk"
+    INCBIN "file/shot.gbf"
 
 
 SECTION "ROM Bank $006", ROMX[$4000], BANK[$6]
@@ -46,10 +46,10 @@ FileRandomSelection::
     dw FileSameGame
 
 FileMogutteNanbo::
-    INCBIN "file/mogutte-nanbo.gbk"
+    INCBIN "file/mogutte-nanbo.gbf"
 
 FileDrive::
-    INCBIN "file/drive.gbk"
+    INCBIN "file/drive.gbf"
 
 FileSameGame::
-    INCBIN "file/samegame.gbk"
+    INCBIN "file/samegame.gbf"
