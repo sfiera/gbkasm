@@ -7,16 +7,11 @@ INCLUDE "file/common.inc"
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    ; Length of entirety of file
     dw End
-    ; Flags for display in menu
     db kFileMarkerCircle
-    ; Must be $00 for normal files (other than Kiss Mail)
-    db $00
-    ; Length of variable parts of header
-    db Main - @ - 1
-    ; File owner code
-    db $00
+    db CartridgeCodeUniversal  ; where file can run
+    db Main - @ - 1            ; length of variable parts of header
+    db $00                     ; owner code
 
 Title::
     db "ICON-SEND"

@@ -4,23 +4,16 @@ INCLUDE "charmap.inc"
 INCLUDE "macro.inc"
 INCLUDE "file/common.inc"
 
-DEF GameIdentifier         EQU $0014
-DEF SuperBDaman            EQU $01
 DEF SuperBDamanAudioCount  EQU (27 << 8) + 56
 
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    ; Length of entirety of file
     dw End
-    ; Flags for display in menu
     db kFileHasIcon2bpp + kFileMarkerCircle
-    ; Must be $00 for normal files (other than Kiss Mail)
-    db $00
-    ; Length of variable parts of header
-    db Main - @ - 1
-    ; File owner code
-    db $05
+    db CartridgeCodeUniversal  ; where file can run
+    db Main - @ - 1            ; length of variable parts of header
+    db $05                     ; owner code
 
 Title::
     db "ｻｳﾝﾄﾞ ﾃｽﾄ"
@@ -100,9 +93,9 @@ jr_0134:
     trap ExitToMenu
 
 LoadAudioCount:
-    ld a, [GameIdentifier]
+    ld a, [CartridgeCodeAddress]
     ld de, SuperBDamanAudioCount
-    cp SuperBDaman
+    cp CartridgeCodeSuperBDaman
     ret z
     trap GetAudioCount
     ret

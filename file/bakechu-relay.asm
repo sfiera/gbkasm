@@ -7,16 +7,11 @@ INCLUDE "file/common.inc"
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    ; Length of entirety of file
     dw End
-    ; Flags for display in menu
     db kFileHasIcon2bpp + kFileMarkerCircle + kFileHasTransfers
-    ; Must be $00 for normal files (other than Kiss Mail)
-    db $00
-    ; Length of variable parts of header
-    db Points - @ - 1
-    ; File owner code
-    db $70
+    db CartridgeCodeUniversal  ; where file can run
+    db Points - @ - 1          ; length of variable parts of header
+    db $70                     ; owner code
 
 Title::
     db "ﾊﾞｹ«ﾁｭ»ﾘﾚｰ"
