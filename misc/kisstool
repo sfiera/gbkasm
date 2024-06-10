@@ -201,8 +201,7 @@ def chunk_size(chunk):
 def read_file_header(sav, *, seek=None):
     if seek is not None:
         sav.seek(seek)
-    size, flags, reserved, header_size, owner = read_struct("<HBBBB", sav)
-    assert reserved == 0
+    size, flags, cart_id, header_size, owner = read_struct("<HBBBB", sav)
     icon_size = {
         0x10: ICON_SIZE_1BPP,
         0x18: ICON_SIZE_2BPP,
