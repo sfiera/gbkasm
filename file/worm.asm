@@ -247,7 +247,7 @@ GameMain:
 
 
 PUSHC
-SETCHARMAP BodyCharmap
+SETCHARMAP PlainText
 
 InitBorder:
     rcall call_0067
