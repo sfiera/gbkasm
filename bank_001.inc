@@ -7045,7 +7045,7 @@ kbdTable::
     dw kbdMemo
 
 PUSHC
-SETCHARMAP BodyCharmap
+SETCHARMAP PlainText
 
 kbdMemo::
     db $05

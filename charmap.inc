@@ -1,6 +1,6 @@
 ; Disassembly of "gbkiss.gb"
 
-NEWCHARMAP ASCIICharmap
+NEWCHARMAP ASCIIText
 
 CHARMAP " ", $20
 CHARMAP "!", $21
@@ -103,7 +103,7 @@ CHARMAP "\{", $7b
 CHARMAP "|", $7c
 CHARMAP "\}", $7d
 
-NEWCHARMAP TitleCharmap, ASCIICharmap
+NEWCHARMAP RichText, ASCIIText
 
 CHARMAP "\n", $00
 CHARMAP "\r", $01
@@ -174,7 +174,7 @@ CHARMAP "ﾝ", $dd
 CHARMAP "ﾞ", $de
 CHARMAP "ﾟ", $df
 
-NEWCHARMAP BodyCharmap, ASCIICharmap
+NEWCHARMAP PlainText, ASCIIText
 
 CHARMAP "\n", $00
 
@@ -380,4 +380,4 @@ CHARMAP "。", $2e
 CHARMAP "！", $21
 CHARMAP "？", $3f
 
-SETCHARMAP TitleCharmap
+SETCHARMAP RichText
