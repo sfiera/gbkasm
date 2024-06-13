@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import argparse
 import struct
@@ -10,6 +10,7 @@ def main():
     parser.add_argument("path")
     parser.add_argument("-k", "--key", default="C")
     parser.add_argument("-m", "--measure", type=int, default=16)
+    parser.add_argument("-l", "--lead-in", type=int, default=0)
     args = parser.parse_args()
 
     try:
@@ -28,6 +29,7 @@ def main():
     while all((length % 2) == 0 for _, length in notes) and (args.measure % 2 == 0):
         unit //= 2
         args.measure //= 2
+        args.lead_in //= 2
         notes = [(pitch, length // 2) for pitch, length in notes]
 
     print(f"X: 1")
@@ -35,13 +37,13 @@ def main():
     print(f"K: {args.key}")
     print(f"L: 1/{unit}")
     print(f"% {unknown[0]:02X} {unknown[1]:02X}")
-    beats = 0
+    beats = -args.lead_in
     for i, (pitch, length) in enumerate(notes):
         end = " "
         beats += length
         if (i == len(notes) - 1):
             end = " |]\n"
-        if beats >= (4 * args.measure):
+        elif beats >= (4 * args.measure):
             end = " |\n"
             beats = 0
         elif (beats % args.measure) == 0:
@@ -119,13 +121,13 @@ def read_pattern(pattern):
             length = LENGTHS[byte & 0x0F]
             notes.append((None, length))
         elif byte & 0xF0 == 0xA0:
-            transposition = byte & 0x0F
+            transposition = (byte & 0x0F) << 1
         else:
             raise LoadError(f"unrecognized command (${byte:02X})")
     return pattern[0:2], notes
 
 
-NOTE_BASE = 52  # From MIDI: E3=52
+NOTE_BASE = 45  # From MIDI: A2=45
 LENGTHS = [1, 2, 3, 4, 6, 8, 12, 16]
 PITCHES = "=C ^C =D ^D =E =F ^F =G ^G =A ^A =B".split()
 CHR = (
