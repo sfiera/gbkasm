@@ -1,0 +1,157 @@
+#!/usr/bin/env python
+
+import argparse
+import struct
+import sys
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("path")
+    parser.add_argument("-k", "--key", default="C")
+    parser.add_argument("-m", "--measure", type=int, default=16)
+    args = parser.parse_args()
+
+    try:
+        key = KEYS[args.key]
+    except KeyError:
+        print(f"{args.key}: invalid key", file=sys.stderr)
+        sys.exit(1)
+
+    try:
+        title, unknown, notes = load(args.path)
+    except LoadError as e:
+        print(f"{args.path}: {e}", file=sys.stderr)
+        sys.exit(1)
+
+    unit = 16
+    while all((length % 2) == 0 for _, length in notes) and (args.measure % 2 == 0):
+        unit //= 2
+        args.measure //= 2
+        notes = [(pitch, length // 2) for pitch, length in notes]
+
+    print(f"X: 1")
+    print(f"T: {title}")
+    print(f"K: {args.key}")
+    print(f"L: 1/{unit}")
+    print(f"% {unknown[0]:02X} {unknown[1]:02X}")
+    beats = 0
+    for i, (pitch, length) in enumerate(notes):
+        end = " "
+        beats += length
+        if (i == len(notes) - 1):
+            end = " |]\n"
+        if beats >= (4 * args.measure):
+            end = " |\n"
+            beats = 0
+        elif (beats % args.measure) == 0:
+            end = " | "
+
+        if length == 1:
+            length = ""
+
+        if pitch is None:
+            print(f"z{length}", end=end)
+        else:
+            octave = (pitch // 12) - 5
+            pitch = PITCHES[pitch % 12]
+            if pitch in key:
+                pitch = pitch[1:]
+            if octave >= 0:
+                octave = "'" * octave
+            else:
+                octave = "," * -octave
+            print(f"{pitch}{octave}{length}", end=end)
+
+
+class LoadError(Exception):
+    pass
+
+
+def load(path):
+    with open(path, "rb") as f:
+        data = f.read()
+    if len(data) < 6:
+        raise LoadError(f"file is too short ({len(data)} < 6)")
+    file_size, flags, cart, header_size, creator = struct.unpack("<HBBBB", data[:6])
+    if len(data) != file_size:
+        raise LoadError(f"reported file size mismatch ({len(data)} != {file_size})")
+    if creator != 0x76:
+        raise LoadError(f"not an alarm tone (${creator:02X} != $76)")
+
+    title_start = 5 + header_size
+    if flags & 0x01:
+        title_start += 46
+    if title_start >= file_size:
+        raise LoadError(f"eof before title ({title_start} >= {file_size})")
+    title_end = title_start + data[title_start] + 1
+    title = "".join(CHR[b] for b in data[1 + title_start : title_end])
+    if not title or "\0" in title:
+        raise LoadError(f"invalid title ({title})")
+
+    pattern_start = title_end
+    if pattern_start >= file_size:
+        raise LoadError(f"eof before pattern ({pattern_start} >= {file_size})")
+    pattern_end = pattern_start + data[pattern_start] + 1
+    if pattern_end != file_size:
+        raise LoadError(f"extra data after pattern ({pattern_end} != {file_size})")
+    unknown, notes = read_pattern(data[1 + pattern_start : pattern_end])
+
+    return title, unknown, notes
+
+
+def read_pattern(pattern):
+    if len(pattern) < 5:
+        raise LoadError(f"pattern is too short ({len(pattern)} < 4)")
+    elif pattern[2] & 0xF0 != 0xA0:
+        raise LoadError(f"pattern lacks initial transposition ({pattern[2]} != $Ax)")
+    elif pattern[-1] != 0xB0:
+        raise LoadError(f"pattern is too short ({pattern[-1]} != $B0)")
+
+    transposition = None  # set by initial transposition
+    notes = []
+    for byte in pattern[2:-1]:
+        if byte & 0x80 == 0:
+            pitch = NOTE_BASE + transposition + (byte & 0x0F)
+            length = LENGTHS[byte >> 4]
+            notes.append((pitch, length))
+        elif byte & 0xF0 == 0x80:
+            length = LENGTHS[byte & 0x0F]
+            notes.append((None, length))
+        elif byte & 0xF0 == 0xA0:
+            transposition = byte & 0x0F
+        else:
+            raise LoadError(f"unrecognized command (${byte:02X})")
+    return pattern[0:2], notes
+
+
+NOTE_BASE = 52  # From MIDI: E3=52
+LENGTHS = [1, 2, 3, 4, 6, 8, 12, 16]
+PITCHES = "=C ^C =D ^D =E =F ^F =G ^G =A ^A =B".split()
+CHR = (
+    "\0abcdefghijklmnopqrstuvwxyz｢|｣¯\\"
+    " !\"#$%&'()*+,-./0123456789:;<=>?"
+    "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[¥]^_"
+    "をあいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほま"
+    "みむめもやゆよらりるれろわんがぎぐげござじずぜぞだぢづでどばびぶ"
+    "べぼぱぴぷぺぽぁぃぅぇぉゃゅょっヲアイウエオカキクケコサシスセソ"
+    "タチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワンガギ"
+    "グゲごザジズゼゾダヂヅデドバビブベボパピプペポァィゥェォャュョッ"
+)
+
+KEYS = {}
+for pos, name in [(0, ""), (0, "maj"), (5, "m"), (5, "min")] + list(
+    enumerate("ionian dorian phrygian lydian mixolydian aeolian locrian".split())
+):
+    scale = "_C _D _E _F _G _A _B".split()
+    while True:
+        tonic = scale[pos][1] + {"=": "", "^": "#", "_": "b"}[scale[pos][0]]
+        KEYS[tonic + name[:3]] = scale[pos:] + scale[:pos]
+        scale = scale[4:] + scale[:4]
+        if scale[6][0] == "^":
+            break
+        scale[6] = {"_": "=", "=": "^"}[scale[6][0]] + scale[6][1]
+
+
+if __name__ == "__main__":
+    main()
