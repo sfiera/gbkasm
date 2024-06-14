@@ -11,25 +11,29 @@ MAP = $(ASM:%.asm=%.map)
 GBF = $(GBF_ASM:%.asm=%.gbf)
 GB = $(GB_ASM:%.asm=%.gb)
 
+RGBASM=rgbasm -Werror
+RGBLINK=rgblink
+RGBFIX=rgbfix
+RGBGFX=rgbgfx
 
 .PHONY: all
 all: $(GB)
 
 %.o: %.asm
-	rgbasm -M $*.d -o $@ $<
+	$(RGBASM) -M $*.d -o $@ $<
 
 %.gb: %.o
-	rgblink -n $*.sym -m $*.map -o $@ $<
-	rgbfix -v -p 255 $@
+	$(RGBLINK) -n $*.sym -m $*.map -o $@ $<
+	$(RGBFIX) -v -p 255 $@
 
 %.gbf: %.o
-	rgblink -n $*.sym -x -o $@ $<
+	$(RGBLINK) -n $*.sym -x -o $@ $<
 
 %.2bpp: %.2bpp.png
-	rgbgfx -Z -d2 -o $@ $<
+	$(RGBGFX) -Z -d2 -o $@ $<
 
 %.1bpp: %.1bpp.png
-	rgbgfx -d1 -o $@ $<
+	$(RGBGFX) -d1 -o $@ $<
 
 .PHONY: clean
 clean:
