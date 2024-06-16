@@ -15,15 +15,15 @@ FileCollection1::
     TableBlank
 
 .mogutteNanbo
-    TableEntry FileMogutteNanbo, "ﾓｸﾞ«ｯﾃ»ﾅﾝﾎﾞ\n"
+    TableEntry FileMogutteNanbo, "モグってナンボ\n"
 .sameGame
     TableEntry FileSameGame, "SAMEGAME KISS\n"
 .drive
-    TableEntry FileDrive, "ｼﾞｬｶｼﾞｬｶｼﾞｬﾝﾌﾟ«ﾃﾞ»ﾎﾟﾝ\n"
+    TableEntry FileDrive, "ジャカジャカジャンプでポン\n"
 .magnets
-    TableEntry FileMagnets, "«ｶﾞﾝﾊﾞﾚ»ﾏｸﾞﾈｯﾂMAIN\n"
+    TableEntry FileMagnets, "がんばれマグネッツMAIN\n"
 .magnetsData
-    TableEntry FileMagnetsData, "«ｶﾞﾝﾊﾞﾚ»ﾏｸﾞﾈｯﾂDATA\n"
+    TableEntry FileMagnetsData, "がんばれマグネッツDATA\n"
 .shot
     TableEntry FileShot, "SHOOTING MASTER\n"
 

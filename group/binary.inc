@@ -17,11 +17,11 @@ FileCollection4::
 .worm
     TableEntry FileWorm, "WORM\n"
 .binary
-    TableEntry FileBinary, "ﾊﾞｲﾅﾘｰﾗﾝﾄﾞ\n"
+    TableEntry FileBinary, "バイナリーランド\n"
 .roulette
-    TableEntry FileRoulette, "ﾙｰﾚｯﾄ\n"
+    TableEntry FileRoulette, "ルーレット\n"
 .blackjack
-    TableEntry FileBlackjack, "ﾌﾞﾗｯｸｼﾞｬｯｸ\n"
+    TableEntry FileBlackjack, "ブラックジャック\n"
 
 FileRoulette::
     INCBIN "file/roulette.gbf"

@@ -15,17 +15,17 @@ FileCollection3::
     TableBlank
 
 .iconSend
-    TableEntry FileIconSend, "ｱｲｺﾝﾃﾞｰﾀ«ｼｭｳ»\n"
+    TableEntry FileIconSend, "アイコンデータしゅう»\n"
 .iconEdit
-    TableEntry FileIconEdit, "ｱｲｺﾝ ｴﾃﾞｨﾀｰ\n"
+    TableEntry FileIconEdit, "アイコン　エディター\n"
 .puzzleGame
-    TableEntry FilePuzzleGame, "15ﾊﾟｽﾞﾙ&ﾊﾟﾈﾙ«ﾃﾞ»ﾎﾟﾝ\n"
+    TableEntry FilePuzzleGame, "15パズル&パネルでポン\n"
 .slot
-    TableEntry FileSlot, "ｽﾛｯﾄ ﾏｼﾝ\n"
+    TableEntry FileSlot, "スロット　マシン\n"
 .cannonBall
-    TableEntry FileCannonBall, "ｷｬﾉﾝﾎﾞｰﾙ\n"
+    TableEntry FileCannonBall, "キャノンボール\n"
 .poker
-    TableEntry FilePoker, "ﾎﾟｰｶｰ\n"
+    TableEntry FilePoker, "ポーカー\n"
 
 FileCannonBall::
     INCBIN "file/cannon-ball.gbf"

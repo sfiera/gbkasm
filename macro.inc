@@ -15,7 +15,7 @@ MACRO TableEntry
     dw \1
 SHIFT
 REPT _NARG
-    db \1
+    dk \1
     SHIFT
 ENDR
 ENDM

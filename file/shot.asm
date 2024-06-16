@@ -14,14 +14,14 @@ Header::
     db $68                     ; owner code
 
 Title::
-    db "SHOT"
+    dk "SHOT"
 Icon::
     INCBIN "gfx/icon/shot.2bpp"
 
 Points::
     dw $0001
 Author::
-    db "TOBI      ", $02
+    dp "TOBI      ", $02
 History::
     ds 11, $00
     ds 11, $00
@@ -188,12 +188,12 @@ code_019d:
 
 
 gfx:
-    db $03, $01, "SHOOTING MASTER\n"
-    db $06, $06, "TIME:\n"
-    db $06, $08, "SHOT:\n"
-    db $05, $0c, "»HIGH SCORE\n"
-    db $06, $0e, "SHOT:\n"
-    db $ff
+    dk $03, $01, "SHOOTING MASTER\n"
+    dk $06, $06, "TIME:\n"
+    dk $06, $08, "SHOT:\n"
+    dk $05, $0c, "»HIGH SCORE\n"
+    dk $06, $0e, "SHOT:\n"
+    dk $ff
 
 End:
 

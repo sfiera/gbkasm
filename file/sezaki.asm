@@ -12,11 +12,11 @@ Header::
     db $65                     ; owner code
 
 Title::
-    db "SEZAKI"
+    dk "SEZAKI"
 Points::
     dw 0
 Author::
-    db "SEZAKI    ", 2
+    dp "SEZAKI    ", 2
 History::
     ds 11, $00
     ds 11, $00

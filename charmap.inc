@@ -1,383 +1,285 @@
 ; Disassembly of "gbkiss.gb"
 
-NEWCHARMAP ASCIIText
+NEWCHARMAP PlainText
 
-CHARMAP " ", $20
-CHARMAP "!", $21
-CHARMAP "\"", $22
-CHARMAP "#", $23
-CHARMAP "$", $24
-CHARMAP "%", $25
-CHARMAP "&", $26
-CHARMAP "'", $27
-CHARMAP "(", $28
-CHARMAP ")", $29
-CHARMAP "*", $2a
-CHARMAP "+", $2b
-CHARMAP ",", $2c
-CHARMAP "-", $2d
-CHARMAP ".", $2e
-CHARMAP "/", $2f
+NEWCHARMAP Diacritics
+CHARMAP "«", $00
+CHARMAP "»", $00
 
-CHARMAP "0", $30
-CHARMAP "1", $31
-CHARMAP "2", $32
-CHARMAP "3", $33
-CHARMAP "4", $34
-CHARMAP "5", $35
-CHARMAP "6", $36
-CHARMAP "7", $37
-CHARMAP "8", $38
-CHARMAP "9", $39
-
-CHARMAP ":", $3a
-CHARMAP ";", $3b
-CHARMAP "<", $3c
-CHARMAP "=", $3d
-CHARMAP ">", $3e
-CHARMAP "?", $3f
-CHARMAP "@", $40
-
-CHARMAP "A", $41
-CHARMAP "B", $42
-CHARMAP "C", $43
-CHARMAP "D", $44
-CHARMAP "E", $45
-CHARMAP "F", $46
-CHARMAP "G", $47
-CHARMAP "H", $48
-CHARMAP "I", $49
-CHARMAP "J", $4a
-CHARMAP "K", $4b
-CHARMAP "L", $4c
-CHARMAP "M", $4d
-CHARMAP "N", $4e
-CHARMAP "O", $4f
-CHARMAP "P", $50
-CHARMAP "Q", $51
-CHARMAP "R", $52
-CHARMAP "S", $53
-CHARMAP "T", $54
-CHARMAP "U", $55
-CHARMAP "V", $56
-CHARMAP "W", $57
-CHARMAP "X", $58
-CHARMAP "Y", $59
-CHARMAP "Z", $5a
-
-CHARMAP "[", $5b
-CHARMAP "¥", $5c
-CHARMAP "]", $5d
-CHARMAP "^", $5e
-CHARMAP "_", $5f
-CHARMAP "`", $60
-
-CHARMAP "a", $61
-CHARMAP "b", $62
-CHARMAP "c", $63
-CHARMAP "d", $64
-CHARMAP "e", $65
-CHARMAP "f", $66
-CHARMAP "g", $67
-CHARMAP "h", $68
-CHARMAP "i", $69
-CHARMAP "j", $6a
-CHARMAP "k", $6b
-CHARMAP "l", $6c
-CHARMAP "m", $6d
-CHARMAP "n", $6e
-CHARMAP "o", $6f
-CHARMAP "p", $70
-CHARMAP "q", $71
-CHARMAP "r", $72
-CHARMAP "s", $73
-CHARMAP "t", $74
-CHARMAP "u", $75
-CHARMAP "v", $76
-CHARMAP "w", $77
-CHARMAP "x", $78
-CHARMAP "y", $79
-CHARMAP "z", $7a
-
-CHARMAP "\{", $7b
-CHARMAP "|", $7c
-CHARMAP "\}", $7d
-
-NEWCHARMAP RichText, ASCIIText
-
-CHARMAP "\n", $00
-CHARMAP "\r", $01
+NEWCHARMAP RichKatakanaText
 CHARMAP "»", $0e
 CHARMAP "«", $0f
 
-CHARMAP "｢", $a2
-CHARMAP "｣", $a3
-CHARMAP "､", $a4
-CHARMAP "｡", $a5
+NEWCHARMAP RichHiraganaText, RichKatakanaText
 
-CHARMAP "ｦ", $a6
-CHARMAP "ｧ", $a7
-CHARMAP "ｨ", $a8
-CHARMAP "ｩ", $a9
-CHARMAP "ｪ", $aa
-CHARMAP "ｫ", $ab
-CHARMAP "ｬ", $ac
-CHARMAP "ｭ", $ad
-CHARMAP "ｮ", $ae
-CHARMAP "ｯ", $af
-CHARMAP "ｰ", $b0
-CHARMAP "ｱ", $b1
-CHARMAP "ｲ", $b2
-CHARMAP "ｳ", $b3
-CHARMAP "ｴ", $b4
-CHARMAP "ｵ", $b5
-CHARMAP "ｶ", $b6
-CHARMAP "ｷ", $b7
-CHARMAP "ｸ", $b8
-CHARMAP "ｹ", $b9
-CHARMAP "ｺ", $ba
-CHARMAP "ｻ", $bb
-CHARMAP "ｼ", $bc
-CHARMAP "ｽ", $bd
-CHARMAP "ｾ", $be
-CHARMAP "ｿ", $bf
-CHARMAP "ﾀ", $c0
-CHARMAP "ﾁ", $c1
-CHARMAP "ﾂ", $c2
-CHARMAP "ﾃ", $c3
-CHARMAP "ﾄ", $c4
-CHARMAP "ﾅ", $c5
-CHARMAP "ﾆ", $c6
-CHARMAP "ﾇ", $c7
-CHARMAP "ﾈ", $c8
-CHARMAP "ﾉ", $c9
-CHARMAP "ﾊ", $ca
-CHARMAP "ﾋ", $cb
-CHARMAP "ﾌ", $cc
-CHARMAP "ﾍ", $cd
-CHARMAP "ﾎ", $ce
-CHARMAP "ﾏ", $cf
-CHARMAP "ﾐ", $d0
-CHARMAP "ﾑ", $d1
-CHARMAP "ﾒ", $d2
-CHARMAP "ﾓ", $d3
-CHARMAP "ﾔ", $d4
-CHARMAP "ﾕ", $d5
-CHARMAP "ﾖ", $d6
-CHARMAP "ﾗ", $d7
-CHARMAP "ﾘ", $d8
-CHARMAP "ﾙ", $d9
-CHARMAP "ﾚ", $da
-CHARMAP "ﾛ", $db
-CHARMAP "ﾜ", $dc
-CHARMAP "ﾝ", $dd
-CHARMAP "ﾞ", $de
-CHARMAP "ﾟ", $df
+MACRO HALFCHARMAP
+    SETCHARMAP PlainText
+    CHARMAP \1, \2
+    SETCHARMAP RichKatakanaText
+    CHARMAP \1, \3
+    SETCHARMAP RichHiraganaText
+    CHARMAP \1, \3
+    SETCHARMAP Diacritics
+    CHARMAP \1, $00
+ENDM
 
-NEWCHARMAP PlainText, ASCIIText
+MACRO FULLCHARMAP
+    HALFCHARMAP \1, \3, \4
+    HALFCHARMAP \2, \3, \4
+ENDM
 
-CHARMAP "\n", $00
+MACRO KANACHARMAP
+    SETCHARMAP PlainText
+    CHARMAP \1, \3
+    CHARMAP \2, \3 + $50
+    SETCHARMAP RichKatakanaText
+    CHARMAP \1, $0f
+    CHARMAP \2, \4
+    SETCHARMAP RichHiraganaText
+    CHARMAP \1, \4
+    CHARMAP \2, $0e
+    SETCHARMAP Diacritics
+    CHARMAP \1, \5
+    CHARMAP \2, \5
+ENDM
 
-CHARMAP "a", $01
-CHARMAP "b", $02
-CHARMAP "c", $03
-CHARMAP "d", $04
-CHARMAP "e", $05
-CHARMAP "f", $06
-CHARMAP "g", $07
-CHARMAP "h", $08
-CHARMAP "i", $09
-CHARMAP "j", $0a
-CHARMAP "k", $0b
-CHARMAP "l", $0c
-CHARMAP "m", $0d
-CHARMAP "n", $0e
-CHARMAP "o", $0f
-CHARMAP "p", $10
-CHARMAP "q", $11
-CHARMAP "r", $12
-CHARMAP "s", $13
-CHARMAP "t", $14
-CHARMAP "u", $15
-CHARMAP "v", $16
-CHARMAP "w", $17
-CHARMAP "x", $18
-CHARMAP "y", $19
-CHARMAP "z", $1a
+    HALFCHARMAP "\n", $00, $00
+    FULLCHARMAP " ", "　", $20, $20
+    FULLCHARMAP "!", "！", $21, $21
+    FULLCHARMAP "\"", "＂", $22, $22
+    FULLCHARMAP "#", "＃", $23, $23
+    FULLCHARMAP "$", "＄", $24, $24
+    FULLCHARMAP "%", "％", $25, $25
+    FULLCHARMAP "&", "＆", $26, $26
+    FULLCHARMAP "'", "＇", $27, $27
+    FULLCHARMAP "(", "（", $28, $28
+    FULLCHARMAP ")", "）", $29, $29
+    FULLCHARMAP "*", "＊", $2a, $2a
+    FULLCHARMAP "+", "＋", $2b, $2b
+    FULLCHARMAP ",", "，", $2c, $2c
+    FULLCHARMAP "-", "－", $2d, $2d
+    FULLCHARMAP ".", "．", $2e, $2e
+    FULLCHARMAP "/", "／", $2f, $2f
 
-CHARMAP "｢", $1b
-CHARMAP "|", $1c
-CHARMAP "｣", $1d
-CHARMAP "¯", $1e
-CHARMAP "\\", $1f
+    FULLCHARMAP "0", "０", $30, $30
+    FULLCHARMAP "1", "１", $31, $31
+    FULLCHARMAP "2", "２", $32, $32
+    FULLCHARMAP "3", "３", $33, $33
+    FULLCHARMAP "4", "４", $34, $34
+    FULLCHARMAP "5", "５", $35, $35
+    FULLCHARMAP "6", "６", $36, $36
+    FULLCHARMAP "7", "７", $37, $37
+    FULLCHARMAP "8", "８", $38, $38
+    FULLCHARMAP "9", "９", $39, $39
 
-CHARMAP "を", $60
-CHARMAP "あ", $61
-CHARMAP "い", $62
-CHARMAP "う", $63
-CHARMAP "え", $64
-CHARMAP "お", $65
-CHARMAP "か", $66
-CHARMAP "き", $67
-CHARMAP "く", $68
-CHARMAP "け", $69
-CHARMAP "こ", $6a
-CHARMAP "さ", $6b
-CHARMAP "し", $6c
-CHARMAP "す", $6d
-CHARMAP "せ", $6e
-CHARMAP "そ", $6f
-CHARMAP "た", $70
-CHARMAP "ち", $71
-CHARMAP "つ", $72
-CHARMAP "て", $73
-CHARMAP "と", $74
-CHARMAP "な", $75
-CHARMAP "に", $76
-CHARMAP "ぬ", $77
-CHARMAP "ね", $78
-CHARMAP "の", $79
-CHARMAP "は", $7a
-CHARMAP "ひ", $7b
-CHARMAP "ふ", $7c
-CHARMAP "へ", $7d
-CHARMAP "ほ", $7e
-CHARMAP "ま", $7f
-CHARMAP "み", $80
-CHARMAP "む", $81
-CHARMAP "め", $82
-CHARMAP "も", $83
-CHARMAP "や", $84
-CHARMAP "ゆ", $85
-CHARMAP "よ", $86
-CHARMAP "ら", $87
-CHARMAP "り", $88
-CHARMAP "る", $89
-CHARMAP "れ", $8a
-CHARMAP "ろ", $8b
-CHARMAP "わ", $8c
-CHARMAP "ん", $8d
-CHARMAP "が", $8e
-CHARMAP "ぎ", $8f
-CHARMAP "ぐ", $90
-CHARMAP "げ", $91
-CHARMAP "ご", $92
-CHARMAP "ざ", $93
-CHARMAP "じ", $94
-CHARMAP "ず", $95
-CHARMAP "ぜ", $96
-CHARMAP "ぞ", $97
-CHARMAP "だ", $98
-CHARMAP "ぢ", $99
-CHARMAP "づ", $9a
-CHARMAP "で", $9b
-CHARMAP "ど", $9c
-CHARMAP "ば", $9d
-CHARMAP "び", $9e
-CHARMAP "ぶ", $9f
-CHARMAP "べ", $a0
-CHARMAP "ぼ", $a1
-CHARMAP "ぱ", $a2
-CHARMAP "ぴ", $a3
-CHARMAP "ぷ", $a4
-CHARMAP "ぺ", $a5
-CHARMAP "ぽ", $a6
-CHARMAP "ぁ", $a7
-CHARMAP "ぃ", $a8
-CHARMAP "ぅ", $a9
-CHARMAP "ぇ", $aa
-CHARMAP "ぉ", $ab
-CHARMAP "ゃ", $ac
-CHARMAP "ゅ", $ad
-CHARMAP "ょ", $ae
-CHARMAP "っ", $af
+    FULLCHARMAP ":", "：", $3a, $3a
+    FULLCHARMAP ";", "；", $3b, $3b
+    FULLCHARMAP "<", "＜", $3c, $3c
+    FULLCHARMAP "=", "＝", $3d, $3d
+    FULLCHARMAP ">", "＞", $3e, $3e
+    FULLCHARMAP "?", "？", $3f, $3f
+    FULLCHARMAP "@", "＠", $40, $40
 
-CHARMAP "ヲ", $b0
-CHARMAP "ア", $b1
-CHARMAP "イ", $b2
-CHARMAP "ウ", $b3
-CHARMAP "エ", $b4
-CHARMAP "オ", $b5
-CHARMAP "カ", $b6
-CHARMAP "キ", $b7
-CHARMAP "ク", $b8
-CHARMAP "ケ", $b9
-CHARMAP "コ", $ba
-CHARMAP "サ", $bb
-CHARMAP "シ", $bc
-CHARMAP "ス", $bd
-CHARMAP "セ", $be
-CHARMAP "ソ", $bf
-CHARMAP "タ", $c0
-CHARMAP "チ", $c1
-CHARMAP "ツ", $c2
-CHARMAP "テ", $c3
-CHARMAP "ト", $c4
-CHARMAP "ナ", $c5
-CHARMAP "ニ", $c6
-CHARMAP "ヌ", $c7
-CHARMAP "ネ", $c8
-CHARMAP "ノ", $c9
-CHARMAP "ハ", $ca
-CHARMAP "ヒ", $cb
-CHARMAP "フ", $cc
-CHARMAP "ヘ", $cd
-CHARMAP "ホ", $ce
-CHARMAP "マ", $cf
-CHARMAP "ミ", $d0
-CHARMAP "ム", $d1
-CHARMAP "メ", $d2
-CHARMAP "モ", $d3
-CHARMAP "ヤ", $d4
-CHARMAP "ユ", $d5
-CHARMAP "ヨ", $d6
-CHARMAP "ラ", $d7
-CHARMAP "リ", $d8
-CHARMAP "ル", $d9
-CHARMAP "レ", $da
-CHARMAP "ロ", $db
-CHARMAP "ワ", $dc
-CHARMAP "ン", $dd
-CHARMAP "ガ", $de
-CHARMAP "ギ", $df
-CHARMAP "グ", $e0
-CHARMAP "ゲ", $e1
-CHARMAP "ゴ", $e2
-CHARMAP "ザ", $e3
-CHARMAP "ジ", $e4
-CHARMAP "ズ", $e5
-CHARMAP "ゼ", $e6
-CHARMAP "ゾ", $e7
-CHARMAP "ダ", $e8
-CHARMAP "ヂ", $e9
-CHARMAP "ヅ", $ea
-CHARMAP "デ", $eb
-CHARMAP "ド", $ec
-CHARMAP "バ", $ed
-CHARMAP "ビ", $ee
-CHARMAP "ブ", $ef
-CHARMAP "ベ", $f0
-CHARMAP "ボ", $f1
-CHARMAP "パ", $f2
-CHARMAP "ピ", $f3
-CHARMAP "プ", $f4
-CHARMAP "ペ", $f5
-CHARMAP "ポ", $f6
-CHARMAP "ァ", $f7
-CHARMAP "ィ", $f8
-CHARMAP "ゥ", $f9
-CHARMAP "ェ", $fa
-CHARMAP "ォ", $fb
-CHARMAP "ャ", $fc
-CHARMAP "ュ", $fd
-CHARMAP "ョ", $fe
-CHARMAP "ッ", $ff
+    FULLCHARMAP "A", "Ａ", $41, $41
+    FULLCHARMAP "B", "Ｂ", $42, $42
+    FULLCHARMAP "C", "Ｃ", $43, $43
+    FULLCHARMAP "D", "Ｄ", $44, $44
+    FULLCHARMAP "E", "Ｅ", $45, $45
+    FULLCHARMAP "F", "Ｆ", $46, $46
+    FULLCHARMAP "G", "Ｇ", $47, $47
+    FULLCHARMAP "H", "Ｈ", $48, $48
+    FULLCHARMAP "I", "Ｉ", $49, $49
+    FULLCHARMAP "J", "Ｊ", $4a, $4a
+    FULLCHARMAP "K", "Ｋ", $4b, $4b
+    FULLCHARMAP "L", "Ｌ", $4c, $4c
+    FULLCHARMAP "M", "Ｍ", $4d, $4d
+    FULLCHARMAP "N", "Ｎ", $4e, $4e
+    FULLCHARMAP "O", "Ｏ", $4f, $4f
+    FULLCHARMAP "P", "Ｐ", $50, $50
+    FULLCHARMAP "Q", "Ｑ", $51, $51
+    FULLCHARMAP "R", "Ｒ", $52, $52
+    FULLCHARMAP "S", "Ｓ", $53, $53
+    FULLCHARMAP "T", "Ｔ", $54, $54
+    FULLCHARMAP "U", "Ｕ", $55, $55
+    FULLCHARMAP "V", "Ｖ", $56, $56
+    FULLCHARMAP "W", "Ｗ", $57, $57
+    FULLCHARMAP "X", "Ｘ", $58, $58
+    FULLCHARMAP "Y", "Ｙ", $59, $59
+    FULLCHARMAP "Z", "Ｚ", $5a, $5a
 
-CHARMAP "　", $20
-CHARMAP "ー", $2d
-CHARMAP "、", $2c
-CHARMAP "。", $2e
-CHARMAP "！", $21
-CHARMAP "？", $3f
+    FULLCHARMAP "[", "［", $5b, $5b
+    FULLCHARMAP "¥", "￥", $5c, $5c
+    FULLCHARMAP "]", "］", $5d, $5d
+    FULLCHARMAP "^", "＾", $5e, $5e
+    FULLCHARMAP "_", "＿", $5f, $5f
 
-SETCHARMAP RichText
+    FULLCHARMAP "a", "ａ", $01, $61
+    FULLCHARMAP "b", "ｂ", $02, $62
+    FULLCHARMAP "c", "ｃ", $03, $63
+    FULLCHARMAP "d", "ｄ", $04, $64
+    FULLCHARMAP "e", "ｅ", $05, $65
+    FULLCHARMAP "f", "ｆ", $06, $66
+    FULLCHARMAP "g", "ｇ", $07, $67
+    FULLCHARMAP "h", "ｈ", $08, $68
+    FULLCHARMAP "i", "ｉ", $09, $69
+    FULLCHARMAP "j", "ｊ", $0a, $6a
+    FULLCHARMAP "k", "ｋ", $0b, $6b
+    FULLCHARMAP "l", "ｌ", $0c, $6c
+    FULLCHARMAP "m", "ｍ", $0d, $6d
+    FULLCHARMAP "n", "ｎ", $0e, $6e
+    FULLCHARMAP "o", "ｏ", $0f, $6f
+    FULLCHARMAP "p", "ｐ", $10, $70
+    FULLCHARMAP "q", "ｑ", $11, $71
+    FULLCHARMAP "r", "ｒ", $12, $72
+    FULLCHARMAP "s", "ｓ", $13, $73
+    FULLCHARMAP "t", "ｔ", $14, $74
+    FULLCHARMAP "u", "ｕ", $15, $75
+    FULLCHARMAP "v", "ｖ", $16, $76
+    FULLCHARMAP "w", "ｗ", $17, $77
+    FULLCHARMAP "x", "ｘ", $18, $78
+    FULLCHARMAP "y", "ｙ", $19, $79
+    FULLCHARMAP "z", "ｚ", $1a, $7a
+
+    FULLCHARMAP "｢", "「", $1b, $7b
+    FULLCHARMAP "|", "｜", $1c, $7c
+    FULLCHARMAP "｣", "」", $1d, $7d
+    FULLCHARMAP "¯", "￣", $1e, $7e
+    FULLCHARMAP "\\", "＼", $1f, $7f
+
+    HALFCHARMAP "、", $2c, $a4
+    HALFCHARMAP "ー", $2d, $b0
+    HALFCHARMAP "。", $2e, $a1
+
+    KANACHARMAP "を", "ヲ", $60, $a6, $00
+    KANACHARMAP "あ", "ア", $61, $b1, $00
+    KANACHARMAP "い", "イ", $62, $b2, $00
+    KANACHARMAP "う", "ウ", $63, $b3, $00
+    KANACHARMAP "え", "エ", $64, $b4, $00
+    KANACHARMAP "お", "オ", $65, $b5, $00
+    KANACHARMAP "か", "カ", $66, $b6, $00
+    KANACHARMAP "き", "キ", $67, $b7, $00
+    KANACHARMAP "く", "ク", $68, $b8, $00
+    KANACHARMAP "け", "ケ", $69, $b9, $00
+    KANACHARMAP "こ", "コ", $6a, $ba, $00
+    KANACHARMAP "さ", "サ", $6b, $bb, $00
+    KANACHARMAP "し", "シ", $6c, $bc, $00
+    KANACHARMAP "す", "ス", $6d, $bd, $00
+    KANACHARMAP "せ", "セ", $6e, $be, $00
+    KANACHARMAP "そ", "ソ", $6f, $bf, $00
+    KANACHARMAP "た", "タ", $70, $c0, $00
+    KANACHARMAP "ち", "チ", $71, $c1, $00
+    KANACHARMAP "つ", "ツ", $72, $c2, $00
+    KANACHARMAP "て", "テ", $73, $c3, $00
+    KANACHARMAP "と", "ト", $74, $c4, $00
+    KANACHARMAP "な", "ナ", $75, $c5, $00
+    KANACHARMAP "に", "ニ", $76, $c6, $00
+    KANACHARMAP "ぬ", "ヌ", $77, $c7, $00
+    KANACHARMAP "ね", "ネ", $78, $c8, $00
+    KANACHARMAP "の", "ノ", $79, $c9, $00
+    KANACHARMAP "は", "ハ", $7a, $ca, $00
+    KANACHARMAP "ひ", "ヒ", $7b, $cb, $00
+    KANACHARMAP "ふ", "フ", $7c, $cc, $00
+    KANACHARMAP "へ", "ヘ", $7d, $cd, $00
+    KANACHARMAP "ほ", "ホ", $7e, $ce, $00
+    KANACHARMAP "ま", "マ", $7f, $cf, $00
+    KANACHARMAP "み", "ミ", $80, $d0, $00
+    KANACHARMAP "む", "ム", $81, $d1, $00
+    KANACHARMAP "め", "メ", $82, $d2, $00
+    KANACHARMAP "も", "モ", $83, $d3, $00
+    KANACHARMAP "や", "ヤ", $84, $d4, $00
+    KANACHARMAP "ゆ", "ユ", $85, $d5, $00
+    KANACHARMAP "よ", "ヨ", $86, $d6, $00
+    KANACHARMAP "ら", "ラ", $87, $d7, $00
+    KANACHARMAP "り", "リ", $88, $d8, $00
+    KANACHARMAP "る", "ル", $89, $d9, $00
+    KANACHARMAP "れ", "レ", $8a, $da, $00
+    KANACHARMAP "ろ", "ロ", $8b, $db, $00
+    KANACHARMAP "わ", "ワ", $8c, $dc, $00
+    KANACHARMAP "ん", "ン", $8d, $dd, $00
+    KANACHARMAP "が", "ガ", $8e, $b6, $de
+    KANACHARMAP "ぎ", "ギ", $8f, $b7, $de
+    KANACHARMAP "ぐ", "グ", $90, $b8, $de
+    KANACHARMAP "げ", "ゲ", $91, $b9, $de
+    KANACHARMAP "ご", "ゴ", $92, $ba, $de
+    KANACHARMAP "ざ", "ザ", $93, $bb, $de
+    KANACHARMAP "じ", "ジ", $94, $bc, $de
+    KANACHARMAP "ず", "ズ", $95, $bd, $de
+    KANACHARMAP "ぜ", "ゼ", $96, $be, $de
+    KANACHARMAP "ぞ", "ゾ", $97, $bf, $de
+    KANACHARMAP "だ", "ダ", $98, $c0, $de
+    KANACHARMAP "ぢ", "ヂ", $99, $c1, $de
+    KANACHARMAP "づ", "ヅ", $9a, $c2, $de
+    KANACHARMAP "で", "デ", $9b, $c3, $de
+    KANACHARMAP "ど", "ド", $9c, $c4, $de
+    KANACHARMAP "ば", "バ", $9d, $ca, $de
+    KANACHARMAP "び", "ビ", $9e, $cb, $de
+    KANACHARMAP "ぶ", "ブ", $9f, $cc, $de
+    KANACHARMAP "べ", "ベ", $a0, $cd, $de
+    KANACHARMAP "ぼ", "ボ", $a1, $ce, $de
+    KANACHARMAP "ぱ", "パ", $a2, $ca, $df
+    KANACHARMAP "ぴ", "ピ", $a3, $cb, $df
+    KANACHARMAP "ぷ", "プ", $a4, $cc, $df
+    KANACHARMAP "ぺ", "ペ", $a5, $cd, $df
+    KANACHARMAP "ぽ", "ポ", $a6, $ce, $df
+    KANACHARMAP "ぁ", "ァ", $a7, $a7, $00
+    KANACHARMAP "ぃ", "ィ", $a8, $a8, $00
+    KANACHARMAP "ぅ", "ゥ", $a9, $a9, $00
+    KANACHARMAP "ぇ", "ェ", $aa, $aa, $00
+    KANACHARMAP "ぉ", "ォ", $ab, $ab, $00
+    KANACHARMAP "ゃ", "ャ", $ac, $ac, $00
+    KANACHARMAP "ゅ", "ュ", $ad, $ad, $00
+    KANACHARMAP "ょ", "ョ", $ae, $ae, $00
+    KANACHARMAP "っ", "ッ", $af, $af, $00
+
+SETCHARMAP RichKatakanaText
+
+MACRO drich
+    PUSHC
+    SETCHARMAP \1
+    SHIFT
+    REPT _NARG
+        PUSHC
+        IF STRSUB("\1", 1, 1) == "\"" && STRSUB("\1", -1) == "\""
+            FOR _DX_I, 1, CHARLEN(\1) + 1
+                IF CHARSUB(\1, _DX_I) == $0f
+                    db $0f
+                    SETCHARMAP RichHiraganaText
+                ELIF CHARSUB(\1, _DX_I) == $0e
+                    db $0e
+                    SETCHARMAP RichKatakanaText
+                ENDC
+
+                IF CHARSUB(\1, _DX_I) != $0f && CHARSUB(\1, _DX_I) != $0e
+                    db CHARSUB(\1, _DX_I)
+                ENDC
+
+                PUSHC
+                SETCHARMAP Diacritics
+                IF CHARSUB(\1, _DX_I) != $00
+                    db CHARSUB(\1, _DX_I)
+                ENDC
+                POPC
+            ENDR
+        ELSE
+            db \1
+        ENDC
+        SHIFT
+        POPC
+    ENDR
+    POPC
+ENDM
+
+MACRO dk
+    drich RichKatakanaText, \#
+ENDM
+
+MACRO dh
+    drich RichHiraganaText, \#
+ENDM
+
+MACRO dp
+    PUSHC
+    SETCHARMAP PlainText
+    db \#
+    POPC
+ENDM
