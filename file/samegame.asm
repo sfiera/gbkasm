@@ -17,14 +17,14 @@ Header::
     db $67                     ; owner code
 
 Title::
-    db "SAMEGAME"
+    dk "SAMEGAME"
 Icon::
     INCBIN "gfx/icon/samegame.2bpp"
 
 Points::
     dw 1
 Author::
-    db "TOBI      ", 2
+    dp "TOBI      ", 2
 History::
     ds 11
     ds 11
@@ -147,9 +147,9 @@ jump_0122:
     ret
 
 strPerfect:
-    db "PERFECT!!\n"
+    dk "PERFECT!!\n"
 strGameOver:
-    db "GAME OVER\n"
+    dk "GAME OVER\n"
 
 ShowTitleScreen:
     ld a, $0c
@@ -249,16 +249,16 @@ ShowHiScore:
     ret
 
 strMenu:
-    db 3, 2, "SAME GAME KISS\n"
-    db 2, 12, "HIGH SCORE\n"
-    db 2, 13, "NAME: \n"
-    db $ff
+    dk 3, 2, "SAME GAME KISS\n"
+    dk 2, 12, "HIGH SCORE\n"
+    dk 2, 13, "NAME: \n"
+    dk $ff
 strCredits:
-    db 2, 5, "ORIGINAL DESIGN\n"
-    db 3, 6, "BY KYOTO 1992\n"
-    db 2, 8, "SPECIAL THANKS\n"
-    db 4, 9, "TO MORISUKE\n"
-    db $ff
+    dk 2, 5, "ORIGINAL DESIGN\n"
+    dk 3, 6, "BY KYOTO 1992\n"
+    dk 2, 8, "SPECIAL THANKS\n"
+    dk 4, 9, "TO MORISUKE\n"
+    dk $ff
 
 call_0322:
     ld hl, varField
@@ -753,9 +753,9 @@ call_05d5:
     ret
 
 strStatus:
-    db "SAME     GET  SCORE\n"
-    db "GAME\n"
-    db "\n"
+    dk "SAME     GET  SCORE\n"
+    dk "GAME\n"
+    dk "\n"
 
 call_060d:
     ld hl, $c3b2
@@ -934,7 +934,7 @@ SetupGfx:
 intHiScore:
     dw 0
 strHiScoreName:
-    db "          "
+    dk "          "
 
 gfxTileset:
     INCBIN "gfx/sametiles.2bpp.hz"

@@ -14,7 +14,7 @@ Header::
     db $83                     ; owner code
 
 Title::
-    db "SIMULA1"
+    dk "SIMULA1"
 
 Icon::
     INCBIN "gfx/icon/simula1.2bpp"
@@ -22,7 +22,7 @@ Icon::
 Points::
     dw 250
 Author::
-    db "          ", 00
+    dp "          ", 00
 History::
     ds 11, $00
     ds 11, $00

@@ -14,7 +14,7 @@ Header::
     db $43                     ; owner code
 
 Title::
-    db "DEL_ALL"
+    dk "DEL_ALL"
 
 Main::
     ld hl, $c500

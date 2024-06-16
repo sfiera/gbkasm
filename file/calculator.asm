@@ -14,14 +14,14 @@ Header::
     db $04                     ; owner code
 
 Title::
-    db "DEN TAKU"
+    dk "DEN TAKU"
 Icon::
     INCBIN "gfx/icon/calculator.2bpp"
 
 Points::
     dw 1980
 Author::
-    db "Y.MOTOSAKO", 2
+    dp "Y.MOTOSAKO", 2
 History::
     ds 11
     ds 11

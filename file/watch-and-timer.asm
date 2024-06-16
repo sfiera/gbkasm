@@ -14,14 +14,14 @@ Header::
     db $6a                     ; owner code
 
 Title::
-    db "WATCH&TIMER"
+    dk "WATCH&TIMER"
 Icon::
     INCBIN "gfx/icon/tokei.2bpp"
 
 Points::
     dw $03e8
 Author::
-    db "Y.MOTOSAKO", 2
+    dp "Y.MOTOSAKO", 2
 History::
     ds 11
     ds 11

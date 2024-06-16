@@ -17,15 +17,15 @@ FileCollection2::
 .kissMon
     TableEntry FileKissMon, "KISS MONSTER\n"
 .watchAndTimer
-    TableEntry FileWatchAndTimer, "ｽﾄｯﾌﾟｳｫｯﾁ&ﾀｲﾏｰ\n"
+    TableEntry FileWatchAndTimer, "ストップウォッチ&タイマー\n"
 .calculator
-    TableEntry FileCalculator, "«ｶﾝｲ ﾃﾞﾝﾀｸ»\n"
+    TableEntry FileCalculator, "かんい　でんたく»\n"
 .biorhythm
-    TableEntry FileBiorhythm, "ﾊﾞｲｵﾘｽﾞﾑ\n"
+    TableEntry FileBiorhythm, "バイオリズム\n"
 .soundTest
-    TableEntry FileSoundTest, "ｻｳﾝﾄﾞ ﾙｰﾑ\n"
+    TableEntry FileSoundTest, "サウンド　ルーム\n"
 .bakechuRelay
-    TableEntry FileBakechuRelay, "ﾊﾞｹ«ﾁｭ»ﾘﾚｰ\n"
+    TableEntry FileBakechuRelay, "バケちゅリレー\n"
 
 FileSoundTest::
     INCBIN "file/sound-test.gbf"

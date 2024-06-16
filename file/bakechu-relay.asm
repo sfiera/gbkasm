@@ -14,14 +14,14 @@ Header::
     db $70                     ; owner code
 
 Title::
-    db "ﾊﾞｹ«ﾁｭ»ﾘﾚｰ"
+    dk "バケちゅリレー"
 Icon::
     INCBIN "gfx/icon/bakechu-relay.2bpp"
 
 Points::
     dw 1
 Author::
-    db "TOBI      ", 2
+    dp "TOBI      ", 2
 History::
     ds 11
     ds 11

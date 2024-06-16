@@ -286,7 +286,7 @@ HeaderLogo::
     db $bb, $bb, $67, $63, $6e, $0e, $ec, $cc, $dd, $dc, $99, $9f, $bb, $b9, $33, $3e
 
 HeaderTitle::
-    db "GBKISS MINIGAME", $00
+    dp "GBKISS MINIGAME", $00
 
 HeaderNewLicenseeCode::
     db $31, $38
@@ -1323,29 +1323,29 @@ jr_000_05b9:
 
 
 strPasswordMenu::
-    db " PASSWORD INPUT»", $0d, "\r\n"
-    db " ｷｬﾗﾊﾞﾝﾊﾞｰｼﾞｮﾝ 5ｹﾞｰﾑ", $0d, "\r\n"
-    db " ｷｽﾓﾝ&ﾊﾞｹ«ﾁｭ»ﾘﾚｰ«ﾎｶ4»", $0d, "\r\n"
-    db " 15ﾊﾟｽﾞﾙ&ｷｬﾉﾝ« ﾎｶ4ｺ»", $0d, "\r\n"
-    db " ﾊﾞｲﾅﾘｰﾗﾝﾄﾞ«&BJﾎｶ2ｺ»", $0d, "\r\n"
-    db " ﾐﾆｹﾞｰﾑ«ｶﾞｿﾞｳｲﾚｶｴ»ﾃﾞｰﾀ", $0d, "\r\n"
-    db " GB KISS TOOLS", $0d, "\r\n"
+    dk "　PASSWORD INPUT»", $0d, $01, "\n"
+    dk "　キャラバンバージョン　5ゲーム", $0d, $01, "\n"
+    dk "　キスモン&バケちゅリレーほか4»", $0d, $01, "\n"
+    dk "　15パズル&キャノン«　ほか4こ»", $0d, $01, "\n"
+    dk "　バイナリーランド«&BJほか2こ»", $0d, $01, "\n"
+    dk "　ミニゲームがぞういれかえデータ", $0d, $01, "\n"
+    dk "　GB KISS TOOLS", $0d, $01, "\n"
 
 strPasswords::
-    db "KISSMON "
-    db "CANNON  "
-    db "BINARY  "
-    db "GAMEDATA"
-    db "KISSTOOL"
+    dp "KISSMON "
+    dp "CANNON  "
+    dp "BINARY  "
+    dp "GAMEDATA"
+    dp "KISSTOOL"
 
 strPasswordMenuMessage::
-    db "  ﾒﾆｭｰ«ｦ ｾﾝﾀｸｼﾃ»\n"
-    db " \n"
-    db "«START/Aｦ ｵｼﾃｸﾀﾞｻｲ»\n"
-    db "\n"
+    dk "　　メニューを　せんたくして»\n"
+    dk "　\n"
+    dk "«START/Aを　おしてください»\n"
+    dk "\n"
 
 strPasswordDashes::
-    db "--------\n"
+    dp "--------\n"
 
 code_00_06b9::
     call Call_000_07e6
@@ -1455,10 +1455,10 @@ jr_000_0772:
 
 
 strEnterPassword::
-    db " \n"
-    db "ﾊﾟｽﾜｰﾄﾞ«ｦ ﾆｭｳﾘｮｸｼﾃ »\n"
-    db "«STARTｦ ｵｼﾃｸﾀﾞｻｲ  »\n"
-    db "\n"
+    dk "　\n"
+    dk "パスワードを　にゅうりょくして　»\n"
+    dk "«STARTを　おしてください　　»\n"
+    dk "\n"
 
 code_00_07a4::
     ld de, $4000
@@ -1534,13 +1534,13 @@ Call_000_07e6:
 
 
 strPasswordMenuTitle::
-    db "GB KISS  MINI GAME\n"
+    dk "GB KISS  MINI GAME\n"
 
 strLoadMenuMessage::
-    db "«ｼﾃｲﾉ»ﾃﾞｰﾀ«ｦ ﾃﾝｿｳｼﾏｽ»\n"
-    db "«  AﾃﾞGBKISSﾃﾝｿｳ  »\n"
-    db "«STARTﾃﾞ ｼﾞﾌﾞﾝﾉSRAMﾍ»\n"
-    db "\n"
+    dk "していのデータを　てんそうします»\n"
+    dk "«　　AでGBKISSてんそう　　»\n"
+    dk "«STARTで　じぶんのSRAMへ»\n"
+    dk "\n"
 
 Call_000_087f:
     ld bc, $99c2
@@ -2255,16 +2255,16 @@ jr_000_0c02:
 
 
 strBeamFilePrep::
-    db "«ﾂｳｼﾝｼﾞｭﾝﾋﾞﾁｭｳ ﾆｼﾃ  »\n"
-    db "ｹﾞｰﾑﾎﾞｰｲ«ﾄﾞｳｼｦ ｸｯﾂｹ »\n"
-    db "Aﾎﾞﾀﾝ«ｦ ｵｼﾃｸﾀﾞｻｲ   »\n"
-    db "\n"
+    dk "つうしんじゅんびちゅう　にして　　»\n"
+    dk "ゲームボーイどうしを　くっつけ　»\n"
+    dk "Aボタンを　おしてください　　　»\n"
+    dk "\n"
 
 strBeamFileStarted::
-    db "«ﾂｳｼﾝｦ ﾁｭｳｼｽﾙﾊﾞｱｲﾊ »\n"
-    db "                \n"
-    db "Bﾎﾞﾀﾝ«ｦ ｵｼﾃｸﾀﾞｻｲ   »\n"
-    db "\n"
+    dk "つうしんを　ちゅうしするばあいは　»\n"
+    dk "                \n"
+    dk "Bボタンを　おしてください　　　»\n"
+    dk "\n"
 
 Call_000_0c95:
     ld hl, strBeamFilePrep
@@ -2326,7 +2326,7 @@ jr_000_0cea:
 
 
 strGBKissMenu:
-    db "GB KISS MENU "
+    dp "GB KISS MENU "
 
 Call_000_0cff:
     trap $c3
@@ -2380,13 +2380,13 @@ jr_000_0d3b:
 
 
 strLoadSuccess::
-    db "«- <ﾃﾝｿｳ ｻﾚﾏｼﾀ> -»\n"
+    dk "«- <てんそう　されました> -»\n"
 
 strLoadFailure::
-    db "«- ﾃﾝｿｳﾃﾞｷﾏｾﾝﾃﾞｼﾀ -»\n"
+    dk "«- てんそうできませんでした -»\n"
 
 strLoadOverwrite::
-    db "«- ｵﾅｼﾞ»ﾌｧｲﾙ«ｶﾞｱﾘﾏｽ -»\n"
+    dk "«- おなじファイルがあります -»\n"
 
 SECTION "ROM Bank $3fe0", ROM0[$3fe0]
 

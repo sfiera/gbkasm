@@ -14,11 +14,11 @@ Header::
     db $64                     ; owner code
 
 Title::
-    db "KOURA2"
+    dk "KOURA2"
 Points::
     dw 100
 Author::
-    db "NONCHAN   ", 2
+    dp "NONCHAN   ", 2
 History::
     ds 11, $00
     ds 11, $00

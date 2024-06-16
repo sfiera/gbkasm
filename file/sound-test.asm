@@ -16,7 +16,7 @@ Header::
     db $05                     ; owner code
 
 Title::
-    db "ｻｳﾝﾄﾞ ﾃｽﾄ"
+    dk "サウンド　テスト"
 Icon::
     INCBIN "gfx/icon/sound-test.2bpp"
 
@@ -329,21 +329,21 @@ DrawStopPlay:
     ret
 
 StrTitle:
-    db "SOUND TEST ROOM\n"
+    dk "SOUND TEST ROOM\n"
 StrInterface:
-    db "MUSIC No.    /\n"
-    db "EFECT No.    /\n"
-    db "OffChannel   /\n"
-    db "VOLUME       /\n"
-    db "M_PAUSE \n"
-    db "VsyncTimer   /\n"
-    db "\n"
+    dk "MUSIC No.    /\n"
+    dk "EFECT No.    /\n"
+    dk "OffChannel   /\n"
+    dk "VOLUME       /\n"
+    dk "M_PAUSE \n"
+    dk "VsyncTimer   /\n"
+    dk "\n"
 StrStatus:
-    db "Mst=STOP  Est=STOP\n"
+    dk "Mst=STOP  Est=STOP\n"
 StrStop:
-    db "STOP\n"
+    dk "STOP\n"
 StrPlay:
-    db "PLAY\n"
+    dk "PLAY\n"
 
 End:
 

@@ -33,12 +33,12 @@ Header::
     db $00                     ; owner code
 
 Title::
-    db "WORM"
+    dk "WORM"
 
 Points::
     dw $0001
 Author::
-    db "KEI KONDOH", 2
+    dp "KEI KONDOH", 2
 History::
     ds 11, $00
     ds 11, $00
@@ -115,11 +115,11 @@ DrawTitle:
     ret
 
 strTitleTop:
-    db "QOOOOOOOOOOOO+\n"
+    dk "QOOOOOOOOOOOO+\n"
 strTitleMid:
-    db "  W  O  R  M  \n"
+    dk "  W  O  R  M  \n"
 strTitleBot:
-    db "+OOOOOOOOOOOOQ\n"
+    dk "+OOOOOOOOOOOOQ\n"
 
 DrawMenu:
     ; Draw “GAME START” at (x=5, y=12)
@@ -140,9 +140,9 @@ DrawMenu:
 
 
 strGameStart:
-    db "GAME START\n"
+    dk "GAME START\n"
 strExit:
-    db "EXIT\n"
+    dk "EXIT\n"
 
 
 HandleMenu:
@@ -330,7 +330,7 @@ DrawScore:
 
 
 strScorePrefix:
-    db "SC:\n"
+    dk "SC:\n"
 
 DrawHighScore:
     ; Draw “HI:” at (x=0, y=17)
@@ -352,7 +352,7 @@ DrawHighScore:
     ret
 
 strHiScorePrefix:
-    db "HI:\n"
+    dk "HI:\n"
 
 UpdateHighScore:
     ld a, [varScore]
@@ -399,7 +399,7 @@ DrawPoints:
 
 
 strPointPrefix:
-    db "P:\n"
+    dk "P:\n"
 
 DrawGameOver:
     ; Draw outer top of GAMEOVER box at (x=4, y=6)
@@ -446,11 +446,11 @@ DrawGameOver:
 
 
 strGameOverOuter:
-    db "+----------+\n"
+    dk "+----------+\n"
 strGameOverInner:
-    db "|          |\n"
+    dk "|          |\n"
 strGameOver:
-    db "| GAMEOVER |\n"
+    dk "| GAMEOVER |\n"
 
 DrawPerfect:
     ; Draw outer top of PERFECT box at (x=4, y=6)
@@ -497,11 +497,11 @@ DrawPerfect:
 
 
 strPerfectOuter:
-    db "+----------+\n"
+    dk "+----------+\n"
 strPerfectInner:
-    db "|          |\n"
+    dk "|          |\n"
 strPerfect:
-    db "| PERFECT! |\n"
+    dk "| PERFECT! |\n"
 
 InitField:
     trap RandNext
