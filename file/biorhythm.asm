@@ -1,26 +1,30 @@
 ; Disassembly of "biorhythm.gbf"
-; This file was created with:
-; mgbdis v2.0 - Game Boy ROM disassembler by Matt Currie and contributors.
-; https://github.com/mattcurrie/mgbdis
+
+INCLUDE "charmap.inc"
+INCLUDE "hardware.inc"
+INCLUDE "macro.inc"
+INCLUDE "file/common.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    db $18, $13, $0f, $00, $09, $00
+    dw End
+    db kFileBit4 + kFileMarkerDiamond + kFileHasTransfers
+    db CartridgeCodeUniversal  ; where file can run
+    db Points - @ - 1          ; length of variable parts of header
+    db $00                     ; owner code
 
 Title::
-    db $42, $49, $4f, $52, $59, $54, $48, $4d
+    dk "BIORYTHM"
 
 Points::
-    db $01, $00
-
+    dw $0001
 Author::
     db $4b, $45, $49, $20, $4b, $4f, $4e, $44, $4f, $48, $02
-
 History::
-    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
-    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
-    db $00
+    ds 11
+    ds 11
+    ds 11
 
 Main::
     ld sp, $e000
@@ -4411,3 +4415,5 @@ jr_000_12d7:
     nop
     nop
     nop
+
+End:

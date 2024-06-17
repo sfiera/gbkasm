@@ -1,6 +1,7 @@
-; Disassembly of "gbkiss.gb"
+; Disassembly of "simula1.gbf"
 
 INCLUDE "charmap.inc"
+INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "file/common.inc"
 
@@ -15,7 +16,6 @@ Header::
 
 Title::
     dk "SIMULA1"
-
 Icon::
     INCBIN "gfx/icon/simula1.2bpp"
 

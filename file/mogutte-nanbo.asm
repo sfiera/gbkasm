@@ -1,33 +1,32 @@
 ; Disassembly of "mogutte-nanbo.gbf"
-; This file was created with:
-; mgbdis v2.0 - Game Boy ROM disassembler by Matt Currie and contributors.
-; https://github.com/mattcurrie/mgbdis
 
-include "hardware.inc"
+INCLUDE "charmap.inc"
+INCLUDE "hardware.inc"
+INCLUDE "macro.inc"
+INCLUDE "file/common.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    db $d6, $1e, $1f, $00, $cd, $65
+    dw End
+    db kFileHasIcon2bpp + kFileMarkerDiamond + kFileHasTransfers
+    db CartridgeCodeUniversal  ; where file can run
+    db Points - @ - 1          ; length of variable parts of header
+    db $65                     ; owner code
 
 Title::
-    db $0e, $d3, $b8, $de, $0f, $af, $c3, $0e, $c5, $dd, $ce, $de
-
+    dh "モグってナンボ"
 Icon::
     INCBIN "gfx/icon/mogutte-nanbo.2bpp"
 
 Points::
-    db $01, $00
-
+    dw $0001
 Author::
-    db "TEAMMOGURA"
-
-    db $02
-
+    db "TEAMMOGURA", 2
 History::
-    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
-    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
-    db $00
+    ds 11
+    ds 11
+    ds 11
 
 Main::
     ld sp, $dff0
@@ -61,10 +60,10 @@ jr_000_0103:
     ld hl, $b754
     rst $08
 
-    db "i!", $10, $04, $cf, $b8, "!v", $b8, $cf, "i"
+    db $69, $21, $10, $04, $cf, $b8, $21, $76, $b8, $cf, $69
 
 HeaderManufacturerCode::
-    db "!", $01, $03, $cf
+    db $21, $01, $03, $cf
 
 HeaderCGBFlag::
     db $b8
@@ -6199,3 +6198,5 @@ jr_000_1ea1:
     ldh a, [$6f]
     call $0000
     ld a, a
+
+End:

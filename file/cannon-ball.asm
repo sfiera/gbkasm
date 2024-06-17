@@ -1,33 +1,32 @@
 ; Disassembly of "cannon-ball.gbf"
-; This file was created with:
-; mgbdis v2.0 - Game Boy ROM disassembler by Matt Currie and contributors.
-; https://github.com/mattcurrie/mgbdis
 
-include "hardware.inc"
+INCLUDE "charmap.inc"
+INCLUDE "hardware.inc"
+INCLUDE "macro.inc"
+INCLUDE "file/common.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    db $4c, $1a, $1d, $00, $cc, $6d
+    dw End
+    db kFileHasIcon2bpp + kFileMarkerCircle + kFileHasTransfers
+    db CartridgeCodeUniversal  ; where file can run
+    db Points - @ - 1          ; length of variable parts of header
+    db $6d                     ; owner code
 
 Title::
-    db "CANNON BALL"
-
+    dk "CANNON BALL"
 Icon::
     INCBIN "gfx/icon/cannon-ball.2bpp"
 
 Points::
-    db $01, $00
-
+    dw $0001
 Author::
-    db "GBKISS LAB"
-
-    db $02
-
+    db "GBKISS LAB", 2
 History::
-    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
-    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
-    db $00
+    ds 11
+    ds 11
+    ds 11
 
 Main::
     rst $08
@@ -5909,3 +5908,5 @@ jr_000_1a00:
     ld bc, $0c04
     ld c, $1b
     dec d
+
+End:

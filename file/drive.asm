@@ -1,33 +1,32 @@
 ; Disassembly of "drive.gbf"
-; This file was created with:
-; mgbdis v2.0 - Game Boy ROM disassembler by Matt Currie and contributors.
-; https://github.com/mattcurrie/mgbdis
 
-include "hardware.inc"
+INCLUDE "charmap.inc"
+INCLUDE "hardware.inc"
+INCLUDE "macro.inc"
+INCLUDE "file/common.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    db $d0, $13, $1d, $00, $c6, $69
+    dw End
+    db kFileHasIcon2bpp + kFileMarkerCircle + kFileHasTransfers
+    db CartridgeCodeUniversal  ; where file can run
+    db Points - @ - 1          ; length of variable parts of header
+    db $69                     ; owner code
 
 Title::
-    db "DRIVE"
-
+    dk "DRIVE"
 Icon::
     INCBIN "gfx/icon/drive.2bpp"
 
 Points::
-    db $01, $00
-
+    dw $0001
 Author::
-    db " T.OHNISHI"
-
-    db $02
-
+    db " T.OHNISHI", 2
 History::
-    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
-    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
-    db $00
+    ds 11
+    ds 11
+    ds 11
 
 Main::
     rst $10
@@ -75,7 +74,7 @@ Main::
     dec [hl]
     nop
 
-    db $c9, $d7, $06, $00, $d7, "\\", $01, $c9, $c9, $cf, $b5
+    db $c9, $d7, $06, $00, $d7, $5c, $01, $c9, $c9, $cf, $b5
 
 HeaderManufacturerCode::
     db $d7, $06, $00, $d7
@@ -3966,3 +3965,4 @@ jr_000_139a:
     db $ed
     ret
 
+End:

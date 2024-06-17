@@ -1,33 +1,33 @@
 ; Disassembly of "slot.gbf"
-; This file was created with:
-; mgbdis v2.0 - Game Boy ROM disassembler by Matt Currie and contributors.
-; https://github.com/mattcurrie/mgbdis
 
-include "hardware.inc"
+INCLUDE "charmap.inc"
+INCLUDE "hardware.inc"
+INCLUDE "macro.inc"
+INCLUDE "file/common.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    db $05, $0c, $1d, $00, $c5, $6c
+    dw End
+    db kFileHasIcon2bpp + kFileMarkerCircle + kFileHasTransfers
+    db CartridgeCodeUniversal  ; where file can run
+    db Points - @ - 1          ; length of variable parts of header
+    db $6c                     ; owner code
 
 Title::
-    db "SLOT"
-
+    dk "SLOT"
 Icon::
     INCBIN "gfx/icon/slot.2bpp"
 
 Points::
-    db $64, $00
+    dw $0064
 
 Author::
-    db "Y.MOTOSAKO"
-
-    db $02
-
+    db "Y.MOTOSAKO", 2
 History::
-    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
-    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
-    db $00
+    ds 11
+    ds 11
+    ds 11
 
 Main::
     rst $10
@@ -80,7 +80,7 @@ Main::
     dec a
     db $e0
 
-    db $c9, " ", $17, $af, $e0, $c3, $11, $00, $00, $0e, $00
+    db $c9, $20, $17, $af, $e0, $c3, $11, $00, $00, $0e, $00
 
 HeaderManufacturerCode::
     db $d7, $06, $00, $d7
@@ -2454,3 +2454,5 @@ jr_000_0c01:
     jr nz, @+$22
 
     jr nz, @+$02
+
+End:

@@ -1,31 +1,32 @@
 ; Disassembly of "magnets.gbf"
-; This file was created with:
-; mgbdis v2.0 - Game Boy ROM disassembler by Matt Currie and contributors.
-; https://github.com/mattcurrie/mgbdis
+
+INCLUDE "charmap.inc"
+INCLUDE "hardware.inc"
+INCLUDE "macro.inc"
+INCLUDE "file/common.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    db $8b, $1d, $1f, $00, $c8, $66
+    dw End
+    db kFileHasIcon2bpp + kFileMarkerDiamond + kFileHasTransfers
+    db CartridgeCodeUniversal  ; where file can run
+    db Points - @ - 1          ; length of variable parts of header
+    db $66                     ; owner code
 
 Title::
-    db "MAGNETS"
-
+    dk "MAGNETS"
 Icon::
     INCBIN "gfx/icon/magnets.2bpp"
 
 Points::
-    db $01, $00
-
+    dw $0001
 Author::
-    db "<TEAM MAG>"
-
-    db $02
-
+    db "<TEAM MAG>", 2
 History::
-    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
-    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
-    db $00
+    ds 11
+    ds 11
+    ds 11
 
 Main::
     jp $b093
@@ -80,7 +81,7 @@ Main::
     pop de
     pop bc
 
-    db $f1, $c9, $f5, $c5, $d5, $e5, "x", $cd, $10, $a1, $e1
+    db $f1, $c9, $f5, $c5, $d5, $e5, $78, $cd, $10, $a1, $e1
 
 HeaderManufacturerCode::
     db $d1, $c1, $f1, $c9
@@ -5419,3 +5420,5 @@ jr_000_1d87:
     pop bc
     dec c
     jr jr_000_1d21
+
+End:

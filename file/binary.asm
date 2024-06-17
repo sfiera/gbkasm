@@ -1,33 +1,32 @@
 ; Disassembly of "binary.gbf"
-; This file was created with:
-; mgbdis v2.0 - Game Boy ROM disassembler by Matt Currie and contributors.
-; https://github.com/mattcurrie/mgbdis
 
-include "hardware.inc"
+INCLUDE "charmap.inc"
+INCLUDE "hardware.inc"
+INCLUDE "macro.inc"
+INCLUDE "file/common.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    db $f3, $1f, $1f, $00, $c7, $71
+    dw End
+    db kFileHasIcon2bpp + kFileMarkerDiamond + kFileHasTransfers
+    db CartridgeCodeUniversal  ; where file can run
+    db Points - @ - 1          ; length of variable parts of header
+    db $71                     ; owner code
 
 Title::
-    db "BINARY"
-
+    dk "BINARY"
 Icon::
     INCBIN "gfx/icon/binary.2bpp"
 
 Points::
-    db $01, $00
-
+    dw $0001
 Author::
-    db "T.OHNISHI "
-
-    db $02
-
+    db "T.OHNISHI ", 2
 History::
-    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
-    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
-    db $00
+    ds 11
+    ds 11
+    ds 11
 
 Main::
     jp $bfbc
@@ -72,7 +71,7 @@ jr_000_0127:
     ld e, $aa
     ld [hl], e
 
-    db "#~", $cb, "?", $b6, "\"", $cb, $0b, $0d, " ", $f4
+    db "#", $7e, $cb, "?", $b6, "\"", $cb, $0b, $0d, " ", $f4
 
 HeaderManufacturerCode::
     db "x", $05, $a7, " "
@@ -6081,3 +6080,4 @@ jr_000_1fc1:
     call $b31a
     jp $bfc2
 
+End:

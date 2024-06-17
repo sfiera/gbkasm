@@ -1,26 +1,30 @@
 ; Disassembly of "blackjack.gbf"
-; This file was created with:
-; mgbdis v2.0 - Game Boy ROM disassembler by Matt Currie and contributors.
-; https://github.com/mattcurrie/mgbdis
+
+INCLUDE "charmap.inc"
+INCLUDE "hardware.inc"
+INCLUDE "macro.inc"
+INCLUDE "file/common.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    db $2f, $0c, $0d, $00, $0b, $43
+    dw End
+    db kFileBit4 + kFileMarkerCircle + kFileHasTransfers
+    db CartridgeCodeUniversal  ; where file can run
+    db Points - @ - 1          ; length of variable parts of header
+    db $43                     ; owner code
 
 Title::
-    db $42, $4c, $41, $43, $4b, $20, $4a, $41, $43, $4b
+    dk "BLACK JACK"
 
 Points::
-    db $14, $00
-
+    dw $0014
 Author::
-    db $54, $41, $52, $4b, $55, $4e, $20, $20, $20, $20, $02
-
+    db "TARKUN    ", 2
 History::
-    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
-    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
-    db $00
+    ds 11
+    ds 11
+    ds 11
 
 Main::
     ld hl, $c600
@@ -2733,3 +2737,5 @@ jr_000_0c28:
     ld b, $00
     rst $10
     ld hl, $c9f4
+
+End:
