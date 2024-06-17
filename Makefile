@@ -46,13 +46,23 @@ check: $(GB) $(GBF)
 -include $(DEP)
 gbkiss.o: $(GBF) $(GFX) gfx/logo.2bpp.hz
 file/bakechu-relay.o: gfx/icon/bakechu-relay.2bpp
+file/binary.o: gfx/icon/binary.2bpp
 file/calculator.o: gfx/icon/calculator.2bpp
+file/cannon-ball.o: gfx/icon/cannon-ball.2bpp
+file/drive.o: gfx/icon/drive.2bpp
+file/icon-edit.o: gfx/icon/icon-edit.2bpp
+file/kiss-mon.o: gfx/icon/kiss-mon.2bpp
 file/koura-1.o: gfx/koura-1.2bpp.hz
 file/koura-2.o: gfx/koura-2.2bpp.hz
 file/koura-3.o: gfx/koura-3.2bpp.hz
+file/magnets.o: gfx/icon/magnets.2bpp
+file/mogutte-nanbo.o: gfx/icon/mogutte-nanbo.2bpp
+file/puzzle-game.o: gfx/icon/puzzle-game.2bpp
+file/roulette.o: gfx/icon/roulette.2bpp
 file/samegame.o: gfx/icon/samegame.2bpp gfx/sametiles.2bpp.hz
 file/sezaki.o: gfx/sezaki.2bpp.hz
 file/shot.o: gfx/icon/shot.2bpp
+file/slot.o: gfx/icon/slot.2bpp
 file/simula1.o: gfx/icon/simula1.2bpp
 file/sound-test.o: gfx/icon/sound-test.2bpp
 file/watch-and-timer.o: gfx/icon/tokei.2bpp
