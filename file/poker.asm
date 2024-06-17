@@ -1,30 +1,30 @@
 ; Disassembly of "poker.gbf"
-; This file was created with:
-; mgbdis v2.0 - Game Boy ROM disassembler by Matt Currie and contributors.
-; https://github.com/mattcurrie/mgbdis
 
-include "hardware.inc"
+INCLUDE "charmap.inc"
+INCLUDE "hardware.inc"
+INCLUDE "macro.inc"
+INCLUDE "file/common.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    db $1f, $14, $0d, $00, $0d, $43
+    dw End
+    db kFileBit4 + kFileMarkerCircle + kFileHasTransfers
+    db CartridgeCodeUniversal  ; where file can run
+    db Points - @ - 1          ; length of variable parts of header
+    db $43                     ; owner code
 
 Title::
-    db "POKER       "
+    dk "POKER       "
 
 Points::
-    db $01, $00
-
+    dw $0001
 Author::
-    db "S.KIMURA", $00, $00
-
-    db $02
-
+    db "S.KIMURA\n\n", 2
 History::
-    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
-    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
-    db $00
+    ds 11
+    ds 11
+    ds 11
 
 Main::
     rst $10
@@ -188,7 +188,7 @@ jr_000_008e:
     ld b, a
     push af
 
-    db ">", $80, $e1, $a5, $cb, $bd, $b5, $e1, $cb, $e5, $a5
+    db $3e, $80, $e1, $a5, $cb, $bd, $b5, $e1, $cb, $e5, $a5
 
 HeaderManufacturerCode::
     db $e1, $cb, $e5, $a5
@@ -4349,3 +4349,4 @@ jr_000_13d4:
     inc d
     ret
 
+End:

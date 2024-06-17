@@ -1,33 +1,32 @@
 ; Disassembly of "roulette.gbf"
-; This file was created with:
-; mgbdis v2.0 - Game Boy ROM disassembler by Matt Currie and contributors.
-; https://github.com/mattcurrie/mgbdis
 
-include "hardware.inc"
+INCLUDE "charmap.inc"
+INCLUDE "hardware.inc"
+INCLUDE "macro.inc"
+INCLUDE "file/common.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    db $61, $14, $1d, $00, $c6, $72
+    dw End
+    db kFileHasIcon2bpp + kFileMarkerCircle + kFileHasTransfers
+    db CartridgeCodeUniversal  ; where file can run
+    db Points - @ - 1          ; length of variable parts of header
+    db $72                     ; owner code
 
 Title::
-    db $d9, $b0, $da, $af, $c4
-
+    dk "ルーレット"
 Icon::
     INCBIN "gfx/icon/roulette.2bpp"
 
 Points::
-    db $64, $00
-
+    dw $0064
 Author::
-    db "r", $83, $88, $00, $00, $00, $00, $00, $00, $00
-
-    db $02
-
+    dp "つもり\n\n\n\n\n\n\n", 2
 History::
-    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
-    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
-    db $00
+    ds 11
+    ds 11
+    ds 11
 
 Main::
     rst $10
@@ -4045,3 +4044,4 @@ jr_000_1430:
 
     jp $00de
 
+End:

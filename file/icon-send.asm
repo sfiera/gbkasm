@@ -1,6 +1,7 @@
-; Disassembly of "gbkiss.gb"
+; Disassembly of "icon-send.gbf"
 
 INCLUDE "charmap.inc"
+INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "file/common.inc"
 

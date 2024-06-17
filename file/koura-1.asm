@@ -1,6 +1,7 @@
-; Disassembly of "gbkiss.gb"
+; Disassembly of "koura-1.gbf"
 
 INCLUDE "charmap.inc"
+INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "file/common.inc"
 

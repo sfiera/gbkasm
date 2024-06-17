@@ -1,33 +1,32 @@
 ; Disassembly of "kiss-mon.gbf"
-; This file was created with:
-; mgbdis v2.0 - Game Boy ROM disassembler by Matt Currie and contributors.
-; https://github.com/mattcurrie/mgbdis
 
-include "hardware.inc"
+INCLUDE "charmap.inc"
+INCLUDE "hardware.inc"
+INCLUDE "macro.inc"
+INCLUDE "file/common.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    db $0f, $16, $1d, $00, $c9, $6e
+    dw End
+    db kFileHasIcon2bpp + kFileMarkerCircle + kFileHasTransfers
+    db CartridgeCodeUniversal  ; where file can run
+    db Points - @ - 1          ; length of variable parts of header
+    db $6e                     ; owner code
 
 Title::
-    db "KISS-MON"
-
+    dk "KISS-MON"
 Icon::
     INCBIN "gfx/icon/kiss-mon.2bpp"
 
 Points::
-    db $01, $00
-
+    dw $0001
 Author::
-    db "TOBI      "
-
-    db $02
-
+    db "TOBI      ", 2
 History::
-    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
-    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
-    db $00
+    ds 11
+    ds 11
+    ds 11
 
 Main::
     rst $08
@@ -84,7 +83,7 @@ jr_000_0113:
 
     db $3e
 
-    db $03, $cf, $b4, $af, "!", $00, $00, $11, "@", $18, $01
+    db $03, $cf, $b4, $af, $21, $00, $00, $11, $40, $18, $01
 
 HeaderManufacturerCode::
     db $03, $03, $cf, $c5
@@ -4756,3 +4755,5 @@ jr_000_15dd:
     ld sp, $ee6e
     add b
     add b
+
+End:
