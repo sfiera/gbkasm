@@ -11,7 +11,7 @@ MAP = $(ASM:%.asm=%.map)
 GBF = $(GBF_ASM:%.asm=%.gbf)
 GB = $(GB_ASM:%.asm=%.gb)
 
-RGBASM=rgbasm -Werror
+RGBASM=rgbasm -Wall -Werror
 RGBLINK=rgblink
 RGBFIX=rgbfix
 RGBGFX=rgbgfx
