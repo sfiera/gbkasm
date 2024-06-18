@@ -29,8 +29,17 @@ History::
     ds 11
 
 Main::
-    db $d7, $13, $00, $d1, $01, $00, $c4, $cf, $62, $11, $00, $c8, $01, $00, $10, $cf
-    db $63, $c3, $00, $c8, $ff, $31, $00, $e0, $cd, $6d, $c8, $cd, $6e, $ff, $ca, $11
+    rpush Compressed
+    pop de
+    ld bc, $c400
+    trap $62
+    ld de, $c800
+    ld bc, $1000
+    trap $63
+    jp $c800
+
+Compressed:
+    db $ff, $31, $00, $e0, $cd, $6d, $c8, $cd, $6e, $ff, $ca, $11
     db $1d, $01, $01, $0c, $53, $2e, $ff, $1e, $3e, $00, $26, $03, $cf, $bf, $cb, $ff
     db $4c, $20, $0d, $f5, $c5, $d5, $e5, $cd, $ff, $2a, $c8, $e1, $d1, $c1, $f1, $18
     db $eb, $ff, $cf, $01, $6f, $26, $00, $23, $cf, $03, $ff, $1e, $1e, $02, $24, $02
