@@ -36,7 +36,7 @@ Main::
 jr_0108:
     ld sp, $e000
     xor a
-    trap DrawBox
+    trap DrawInit
     trap $b5
     rpush layout_037a
     pop hl
@@ -98,7 +98,7 @@ jr_000_0163:
 
 jr_000_016c:
     ld a, $20
-    trap DrawBox
+    trap DrawInit
     rcall @+$0764
     ld a, $50
     ld [$ccc8], a
@@ -268,7 +268,7 @@ layout_037a:
 
 call_040c:
     xor a
-    trap DrawBox
+    trap DrawInit
     trap $b5
     rcall @+$04c3
     xor a

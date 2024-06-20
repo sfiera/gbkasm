@@ -78,7 +78,7 @@ call_0067:
 
 call_006c:
     xor a
-    trap DrawBox
+    trap DrawInit
     ret
 
 

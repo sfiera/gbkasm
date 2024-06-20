@@ -44,7 +44,7 @@ call_a105:
 
 call_a10d:
     ld a, $20
-    trap DrawBox
+    trap DrawInit
     ld a, $e4
     ldh [$9d], a
     ldh [$9c], a

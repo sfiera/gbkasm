@@ -26,7 +26,7 @@ Main::
     ld bc, $0201
     ld de, $0d12
     ld h, $04
-    trap DrawBox
+    trap DrawInit
     trap StopAudio
 
     ld hl, varMusicMax
