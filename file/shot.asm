@@ -30,7 +30,7 @@ History::
 
 Main::
     xor a
-    trap DrawBox
+    trap DrawInit
     trap $b5
     ld hl, $1200
     trap $b6

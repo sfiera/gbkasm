@@ -33,7 +33,7 @@ History::
 
 Main::
     xor a
-    trap DrawBox
+    trap DrawInit
     trap $b5
     rcall SetupGfx
     ld a, $03
