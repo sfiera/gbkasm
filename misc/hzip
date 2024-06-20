@@ -77,13 +77,13 @@ for idx in itertools.count():
     history.append({})
     this = history[-1]
 
-    for off in range(1, 0x101):
+    for off in range(1, 0x100):
         src = (0x100 + dst - off) & 0xFF
         if buffer[src] == byte:
             this[off] = prev.get(off, 0) + 1
 
-    this_off, this_max = max(this.items(), key=lambda kv: kv[1], default=(0, 0))
-    prev_off, prev_max = max(prev.items(), key=lambda kv: kv[1], default=(0, 0))
+    this_off, this_max = max(this.items(), key=lambda kv: (kv[1], kv[0]), default=(0, 0))
+    prev_off, prev_max = max(prev.items(), key=lambda kv: (kv[1], kv[0]), default=(0, 0))
 
     if this_max == 17:
         # Maximum size run.
@@ -95,7 +95,7 @@ for idx in itertools.count():
         queue = []
         history = []
         flush_idx = idx
-    elif this_max < prev_max and prev_max >= 2:
+    elif (this_max <= prev_max) and prev_max >= 2:
         # Previous run ended.
         # Flush it and continue from here.
         flush_until(idx - prev_max - 1)
