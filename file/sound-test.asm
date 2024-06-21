@@ -30,7 +30,7 @@ Main::
     trap StopAudio
 
     ld hl, varMusicMax
-    rcall LoadAudioCount
+    callx LoadAudioCount
     ld a, d
     ld [hli], a  ; [varMusicMax] = d
     xor a
@@ -52,12 +52,12 @@ Main::
     xor a
     ld [hli], a  ; [varEnd] = 0
 
-    rcall DrawInterface
-    rcall ApplyMusic
-    rcall ApplySound
-    rcall ApplyOffCh
-    rcall ApplyVol
-    rcall ApplyTimer
+    callx DrawInterface
+    callx ApplyMusic
+    callx ApplySound
+    callx ApplyOffCh
+    callx ApplyVol
+    callx ApplyTimer
     trap AwaitFrame
     ld de, $011b
     ld bc, $1a09
@@ -78,7 +78,7 @@ jr_0134:
     push de
     push hl
     push af
-    rcall HandleSetting
+    callx HandleSetting
     trap $d8
     pop bc
     and $37
@@ -108,69 +108,59 @@ HandleSetting:
     ret z
 
     trap PauseMusic
-    rcall DrawState
+    callx DrawState
     ret
 
 .notPause
     bit BtnA, h
     jr z, ChangeSetting
-    rcall GetApplyProcedure
-    rpush DrawState
+    callx GetApplyProcedure
+    pushx DrawState
     jp hl
 
 GetApplyProcedure:
-    rpush ApplyMusic
-    pop hl
+    ldx hl, ApplyMusic
     or a
     ret z
 
-    rpush ApplySound
-    pop hl
+    ldx hl, ApplySound
     dec a
     ret z
 
-    rpush ApplyOffCh
-    pop hl
+    ldx hl, ApplyOffCh
     dec a
     ret z
 
-    rpush ApplyVol
-    pop hl
+    ldx hl, ApplyVol
     dec a
     ret z
 
-    rpush ApplyTimer
-    pop hl
+    ldx hl, ApplyTimer
     ret
 
 ChangeSetting:
     ld c, h
-    rpush DrawMusicCur
-    pop hl
+    ldx hl, DrawMusicCur
     ld de, varMusicMax
     or a
     jr z, .apply
 
-    rpush DrawSoundCur
-    pop hl
+    ldx hl, DrawSoundCur
     ld de, varSoundMax
     dec a
     jr z, .apply
 
-    rpush DrawOffChCur
-    pop hl
+    ldx hl, DrawOffChCur
     ld de, varOffChMax
     dec a
     jr z, .apply
 
-    rpush DrawVolCur
-    pop hl
+    ldx hl, DrawVolCur
     ld de, varVolMax
     dec a
     jr z, .apply
 
-    rpush DrawTimerCur
-    pop hl
+    ldx hl, DrawTimerCur
     ld de, varTimerMax
 
 .apply
@@ -187,7 +177,7 @@ ChangeSetting:
 
 .done
     ld [de], a
-    rpush DrawState
+    pushx DrawState
     jp hl
 
 .inc
@@ -199,25 +189,21 @@ ChangeSetting:
 
 DrawInterface:
     ld de, $0103
-    rpush StrInterface
-    pop hl
+    ldx hl, StrInterface
     trap DrawStringList
     ld hl, $0101
     trap MoveCursor
-    rpush StrTitle
-    pop hl
+    ldx hl, StrTitle
     trap DrawString
     ld hl, $000a
     trap MoveCursor
-    rpush StrStatus
-    pop hl
+    ldx hl, StrStatus
     trap DrawString
-    rcall DrawMusicMaxCur
-    rcall DrawSoundMaxCur
-    rcall DrawOffChMaxCur
-    rcall DrawVolMaxCur
-    rpush DrawTimerMaxCur
-    ret
+    callx DrawMusicMaxCur
+    callx DrawSoundMaxCur
+    callx DrawOffChMaxCur
+    callx DrawVolMaxCur
+    jx DrawTimerMaxCur
 
 ApplyMusic:
     ld a, [varMusicCur]
@@ -227,7 +213,7 @@ ApplyMusic:
 DrawMusicMaxCur:
     ld hl, $0f03
     ld a, [varMusicMax]
-    rcall DrawInt
+    callx DrawInt
 
 DrawMusicCur:
     ld hl, $0b03
@@ -242,7 +228,7 @@ ApplySound:
 DrawSoundMaxCur:
     ld hl, $0f04
     ld a, [varSoundMax]
-    rcall DrawInt
+    callx DrawInt
 
 DrawSoundCur:
     ld hl, $0b04
@@ -257,7 +243,7 @@ ApplyOffCh:
 DrawOffChMaxCur:
     ld hl, $0f05
     ld a, [varOffChMax]
-    rcall DrawInt
+    callx DrawInt
 
 DrawOffChCur:
     ld hl, $0b05
@@ -272,7 +258,7 @@ ApplyVol:
 DrawVolMaxCur:
     ld hl, $0f06
     ld a, [varVolMax]
-    rcall DrawInt
+    callx DrawInt
 
 DrawVolCur:
     ld hl, $0b06
@@ -291,7 +277,7 @@ ApplyTimer:
 DrawTimerMaxCur:
     ld hl, $0f08
     ld a, [varTimerMax]
-    rcall DrawInt
+    callx DrawInt
 
 DrawTimerCur:
     ld hl, $0b08
@@ -313,19 +299,17 @@ DrawState:
     ld hl, $040a
     trap MoveCursor
     trap GetMusicState
-    rcall DrawStopPlay
+    callx DrawStopPlay
 
     ld hl, $0e0a
     trap MoveCursor
     trap GetSoundState
 
 DrawStopPlay:
-    rpush StrStop
-    pop hl
+    ldx hl, StrStop
     or a
     jr z, :+
-    rpush StrPlay
-    pop hl
+    ldx hl, StrPlay
 :   trap DrawString
     ret
 

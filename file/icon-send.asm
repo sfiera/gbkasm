@@ -18,8 +18,7 @@ Title::
     dk "ICON-SEND"
 
 Main::
-    rpush strings
-    pop hl
+    ldx hl, strings
     push hl
     ld e, [hl]
     inc hl

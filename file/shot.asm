@@ -38,12 +38,7 @@ Main::
     trap $b4
 
 jr_0106:
-    rpush code_010d
-    rpush code_019d
-    ret
-
-
-code_010d:
+    callx code_019d
     ld a, $0a
     ld [wramTime], a
     xor a
@@ -51,16 +46,8 @@ code_010d:
     ld [hli], a
     ld [hl], a
     trap $db
-    rpush code_0121
-    rpush code_0167
-    ret
-
-
-code_0121:
-    rpush code_0128
-    rpush code_0192
-    ret
-
+    callx code_0167
+    callx code_0192
 
 code_0128:
     trap $da
@@ -75,25 +62,10 @@ code_0128:
     ldh [$83], a
 
 jr_0136:
-    rpush code_013d
-    rpush code_0183
-    ret
-
-
-code_013d:
-    rpush code_0144
-    rpush code_015b
-    ret
-
-
-code_0144:
+    callx code_0183
+    callx code_015b
     jr nz, jr_0136
-    rpush code_014d
-    rpush code_019d
-    ret
-
-
-code_014d:
+    callx code_019d
     trap $db
 
 jr_014f:
@@ -159,8 +131,7 @@ code_0192:
 
 
 code_019d:
-    rpush gfx
-    pop hl
+    ldx hl, gfx
     trap DrawLayout
     ld hl, wramShot
     ld e, [hl]

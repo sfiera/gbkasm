@@ -59,9 +59,3 @@ DEF CartridgeCodeRobotPoncots        EQU $08
 DEF CartridgeCodeGBKissMiniGames     EQU $fe
 DEF CartridgeCodeBuiltIn             EQU $ff  ; file can run without installation
 DEF CartridgeCodeUniversal           EQU $00  ; file can run anywhere after installation
-
-MACRO rcall
-    rpush @+6
-    rpush \1
-    ret
-ENDM

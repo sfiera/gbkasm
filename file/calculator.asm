@@ -29,8 +29,7 @@ History::
     ds 11
 
 Main::
-    rpush Compressed
-    pop de
+    ldx de, Compressed
     ld bc, $c400
     trap $62
     ld de, $c800
