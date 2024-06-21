@@ -2286,7 +2286,7 @@ jr_000_0c9b:
     call Call_000_0cff
     jr c, jr_000_0ce8
 
-    rpush strGBKissMenu
+    pushx strGBKissMenu
     pop hl
     ld de, $c802
     ld bc, $000d

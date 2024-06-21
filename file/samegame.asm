@@ -35,12 +35,12 @@ Main::
     xor a
     trap DrawInit
     trap $b5
-    rcall SetupGfx
+    callx SetupGfx
     ld a, $03
     trap $b4
 
 jump_010c:
-    rcall ShowTitleScreen
+    callx ShowTitleScreen
 
 jump_0113:
     ld hl, varScore
@@ -49,25 +49,25 @@ jump_0113:
     ld [hli], a
     ld [hli], a
     ld [hl], a
-    rcall call_0615
+    callx call_0615
 
 jump_0122:
-    rcall call_05d5
-    rcall call_0514
+    callx call_05d5
+    callx call_0514
     jr c, .jr_0176
 .jr_0132
-    rcall call_0322
-    rcall call_057d
+    callx call_0322
+    callx call_057d
 .jr_0140
     trap AwaitFrame
-    rcall call_0684
+    callx call_0684
     trap $d8
-    rcall call_04ae
+    callx call_04ae
     push af
-    rcall call_04f1
+    callx call_04f1
     pop af
     jr c, .jr_0132
-    rcall call_03b7
+    callx call_03b7
     jr c, jump_0122
     ldh a, [$8b]
     bit 3, a
@@ -79,26 +79,23 @@ jump_0122:
     jr .jr_0140
 
 .jr_0176
-    rcall call_0322
-    rcall call_057d
+    callx call_0322
+    callx call_057d
     ld a, [varField]
     or a
     jr nz, .jr_0195
     ld hl, $0505
     trap MoveCursor
-    rpush strPerfect
-    pop hl
+    ldx hl, strPerfect
     trap DrawString
 
 .jr_0195
     ld hl, $0507
     trap MoveCursor
-    rpush strGameOver
-    pop hl
+    ldx hl, strGameOver
     trap DrawString
-    rcall ShowNewGame
-    rpush jump_0113
-    ret
+    callx ShowNewGame
+    jx jump_0113
 
 .jr_01ab
     ld hl, varCC67
@@ -113,7 +110,7 @@ jump_0122:
     dec hl
     ld [hl], c
     push bc
-    rcall call_060d
+    callx call_060d
     pop bc
     ld hl, varScore
     xor a
@@ -125,10 +122,10 @@ jump_0122:
 .jr_01cd
     push bc
     push hl
-    rcall call_0322
-    rcall call_041f
-    rcall call_0486
-    rcall call_0445
+    callx call_0322
+    callx call_041f
+    callx call_0486
+    callx call_0445
     pop hl
     pop bc
     dec bc
@@ -144,8 +141,7 @@ jump_0122:
     ld a, c
     or a, b
     jr nz, .jr_01cd
-    rpush jump_0122
-    ret
+    jx jump_0122
 
 strPerfect:
     dk "PERFECT!!\n"
@@ -155,14 +151,13 @@ strGameOver:
 ShowTitleScreen:
     ld a, $0c
     trap $b9
-    rpush strCredits
-    pop hl
+    ldx hl, strCredits
     trap DrawLayout
-    rcall ShowHiScore
+    callx ShowHiScore
 
 .loop
     trap AwaitFrame
-    rcall call_0684
+    callx call_0684
     trap $d8
     bit BtnSel, a
     jr nz, .exit
@@ -174,17 +169,14 @@ ShowTitleScreen:
     trap ExitToMenu
 
 ShowNewGame:
-    rcall ShowHiScore
-    rpush ShowTitleScreen.loop
-    ret
+    callx ShowHiScore
+    jx ShowTitleScreen.loop
 
 ShowHiScore:
-    rpush strMenu
-    pop hl
+    ldx hl, strMenu
     trap DrawLayout
     ld de, varScore
-    rpush intHiScore
-    pop hl
+    ldx hl, intHiScore
     ld a, [de]
     inc de
     sub [hl]
@@ -208,8 +200,7 @@ ShowHiScore:
     ld a, [de]
     ld [hl], a
     ld hl, $cc40
-    rpush strHiScoreName
-    pop de
+    ldx de, strHiScoreName
     ld b, $0a
 
 .jr_027c
@@ -227,8 +218,7 @@ ShowHiScore:
     ld [hl], a
     ld hl, $0c0c
     trap MoveCursor
-    rpush intHiScore
-    pop hl
+    ldx hl, intHiScore
     ld e, [hl]
     inc hl
     ld d, [hl]
@@ -237,8 +227,7 @@ ShowHiScore:
     trap IntToString
     pop hl
     trap DrawString
-    rpush strHiScoreName
-    pop hl
+    ldx hl, strHiScoreName
     ld de, $0001
     ld c, $0a
     trap $5d
@@ -297,7 +286,7 @@ call_0322:
     and $f0
     ld c, a
     ld b, $00
-    rcall call_037e
+    callx call_037e
     ld a, b
     ldh [$c1], a
     sub $02
@@ -337,16 +326,16 @@ call_037e:
     set 7, [hl]
     inc b
     inc hl
-    rcall call_037e
+    callx call_037e
     dec hl
     dec hl
-    rcall call_037e
+    callx call_037e
     ld de, $ffe1
     add hl, de
-    rcall call_037e
+    callx call_037e
     ld de, $0040
     add hl, de
-    rcall call_037e
+    callx call_037e
     ld de, $ffe0
     add hl, de
     ret
@@ -380,17 +369,17 @@ call_03b7:
     ld [hli], a
     ld a, [de]
     ld [hl], a
-    rcall call_041f
-    rcall call_057d
+    callx call_041f
+    callx call_057d
     trap $c3
-    rcall call_0486
-    rcall call_0514
-    rcall call_057d
+    callx call_0486
+    callx call_0514
+    callx call_057d
     trap $c3
-    rcall call_0445
+    callx call_0445
     jr nc, .jr_041d
-    rcall call_0514
-    rcall call_057d
+    callx call_0514
+    callx call_057d
     trap $c3
 .jr_041d
     scf
@@ -748,8 +737,7 @@ call_05d5:
     pop hl
     trap DrawString
     ld de, $0010
-    rpush strStatus
-    pop hl
+    ldx hl, strStatus
     trap DrawStringList
     ret
 
@@ -768,7 +756,7 @@ call_0615:
     and $03
     jr z, call_0627
 .jr_061b
-    rcall call_0627
+    callx call_0627
     cp $55
     jr c, .jr_061b
     ret
@@ -793,7 +781,7 @@ jump_062d:
     push bc
     ld b, FieldHeight
 .jr_0645
-    rcall call_0684
+    callx call_0684
     add hl, hl
     add hl, hl
     add l
@@ -880,16 +868,14 @@ SetupGfx:
     ld [hli], a
     ld [hli], a
     ld [hl], a
-    rpush intHiScore
-    pop hl
+    ldx hl, intHiScore
     ld de, varHiScore
     ld a, [hli]
     ld [de], a
     inc de
     ld a, [hl]
     ld [de], a
-    rpush gfxTileset
-    pop de
+    ldx de, gfxTileset
     ld b, $c6
     trap InitDecompress
     ld de, $8000

@@ -53,14 +53,14 @@ Main::
 :   ld sp, $e000
     trap $db
     trap StopAudio
-    rcall call_006c
+    callx call_006c
 
 .next
-    rcall MenuMain
+    callx MenuMain
     ld a, c
     cp $00
     jr nz, :+
-    rcall GameMain
+    callx GameMain
     jr .next
 
 :   cp $01
@@ -83,10 +83,10 @@ call_006c:
 
 
 MenuMain:
-    rcall call_0067
-    rcall DrawTitle
-    rcall DrawMenu
-    rcall HandleMenu
+    callx call_0067
+    callx DrawTitle
+    callx DrawMenu
+    callx HandleMenu
     ret
 
 
@@ -94,22 +94,19 @@ DrawTitle:
     ; Draw line above title at (x=3, y=3)
     ld hl, $0303
     trap MoveCursor
-    rpush strTitleTop
-    pop hl
+    ldx hl, strTitleTop
     trap DrawString
 
     ; Draw title at (x=3, y=5)
     ld hl, $0305
     trap MoveCursor
-    rpush strTitleMid
-    pop hl
+    ldx hl, strTitleMid
     trap DrawString
 
     ; Draw line below title at (x=3, y=7)
     ld hl, $0307
     trap MoveCursor
-    rpush strTitleBot
-    pop hl
+    ldx hl, strTitleBot
     trap DrawString
 
     ret
@@ -125,15 +122,13 @@ DrawMenu:
     ; Draw “GAME START” at (x=5, y=12)
     ld hl, $050c
     trap MoveCursor
-    rpush strGameStart
-    pop hl
+    ldx hl, strGameStart
     trap DrawString
 
     ; Draw “EXIT” at (x=5, y=14)
     ld hl, $050e
     trap MoveCursor
-    rpush strExit
-    pop hl
+    ldx hl, strExit
     trap DrawString
 
     ret
@@ -151,7 +146,7 @@ HandleMenu:
 .next
     trap AwaitFrame
     ld e, " "
-    rcall DrawSelection
+    callx DrawSelection
     ldh a, [$8b]
     bit BtnUp, a
     jr z, :+
@@ -169,7 +164,7 @@ HandleMenu:
     inc c
 
 :   ld e, ">"
-    rcall DrawSelection
+    callx DrawSelection
     ld a, [varTicker]
     inc a
     ld [varTicker], a
@@ -208,26 +203,26 @@ GameMain:
     ld [varDeadline], a
     ld [varTicker], a
     ld [varPoint], a
-    rcall InitField
-    rcall InitBorder
-    rcall DrawScore
-    rcall DrawHighScore
-    rcall DrawPoints
+    callx InitField
+    callx InitBorder
+    callx DrawScore
+    callx DrawHighScore
+    callx DrawPoints
 
     ld a, MusicTrack
     trap PlayMusic
 
 .next
     trap AwaitFrame
-    rcall AddFood
-    rcall DrawFood
-    rcall HandleInput
-    rcall DrawSnake
-    rcall DrawPoints
-    rcall HandleWallHit
-    rcall HandleSelfHit
-    rcall HandleFoodHit
-    rcall HandlePerfect
+    callx AddFood
+    callx DrawFood
+    callx HandleInput
+    callx DrawSnake
+    callx DrawPoints
+    callx HandleWallHit
+    callx HandleSelfHit
+    callx HandleFoodHit
+    callx HandlePerfect
 
     ld a, [varGameOver]
     cp $01
@@ -239,10 +234,10 @@ GameMain:
     cp $00
     jr z, :+
 
-    rcall DrawPerfect
+    callx DrawPerfect
     ret
 
-:   rcall DrawGameOver
+:   callx DrawGameOver
     ret
 
 
@@ -250,7 +245,7 @@ PUSHC
 SETCHARMAP PlainText
 
 InitBorder:
-    rcall call_0067
+    callx call_0067
     ld bc, $0000
 
 .nextCol
@@ -313,8 +308,7 @@ DrawScore:
     ; Draw “SC:” at (x=8, y=17)
     ld hl, $0811
     trap MoveCursor
-    rpush strScorePrefix
-    pop hl
+    ldx hl, strScorePrefix
     trap DrawString
 
     ; Convert score to string and draw
@@ -336,8 +330,7 @@ DrawHighScore:
     ; Draw “HI:” at (x=0, y=17)
     ld hl, $0011
     trap MoveCursor
-    rpush strHiScorePrefix
-    pop hl
+    ldx hl, strHiScorePrefix
     trap DrawString
 
     ; Convert high score to string and draw
@@ -384,8 +377,7 @@ DrawPoints:
     ; Draw “P:” at (x=16, y=17)
     ld hl, $1011
     trap MoveCursor
-    rpush strPointPrefix
-    pop hl
+    ldx hl, strPointPrefix
     trap DrawString
 
     ld a, [varPoint]
@@ -405,36 +397,31 @@ DrawGameOver:
     ; Draw outer top of GAMEOVER box at (x=4, y=6)
     ld hl, $0406
     trap MoveCursor
-    rpush strGameOverOuter
-    pop hl
+    ldx hl, strGameOverOuter
     trap DrawString
 
     ; Draw inner top of GAMEOVER box at (x=4, y=7)
     ld hl, $0407
     trap MoveCursor
-    rpush strGameOverInner
-    pop hl
+    ldx hl, strGameOverInner
     trap DrawString
 
     ; Draw GAMEOVER at (x=4, y=8)
     ld hl, $0408
     trap MoveCursor
-    rpush strGameOver
-    pop hl
+    ldx hl, strGameOver
     trap DrawString
 
     ; Draw inner bottom of GAMEOVER box at (x=4, y=9)
     ld hl, $0409
     trap MoveCursor
-    rpush strGameOverInner
-    pop hl
+    ldx hl, strGameOverInner
     trap DrawString
 
     ; Draw outer bottom of GAMEOVER box at (x=4, y=10)
     ld hl, $040a
     trap MoveCursor
-    rpush strGameOverOuter
-    pop hl
+    ldx hl, strGameOverOuter
     trap DrawString
 
 .awaitA
@@ -456,36 +443,31 @@ DrawPerfect:
     ; Draw outer top of PERFECT box at (x=4, y=6)
     ld hl, $0406
     trap MoveCursor
-    rpush strPerfectOuter
-    pop hl
+    ldx hl, strPerfectOuter
     trap DrawString
 
     ; Draw inner top of PERFECT box at (x=4, y=7)
     ld hl, $0407
     trap MoveCursor
-    rpush strPerfectInner
-    pop hl
+    ldx hl, strPerfectInner
     trap DrawString
 
     ; Draw PERFECT at (x=4, y=8)
     ld hl, $0408
     trap MoveCursor
-    rpush strPerfect
-    pop hl
+    ldx hl, strPerfect
     trap DrawString
 
     ; Draw inner bottom of PERFECT box at (x=4, y=9)
     ld hl, $0409
     trap MoveCursor
-    rpush strPerfectInner
-    pop hl
+    ldx hl, strPerfectInner
     trap DrawString
 
     ; Draw outer bottom of PERFECT box at (x=4, y=9)
     ld hl, $040a
     trap MoveCursor
-    rpush strPerfectOuter
-    pop hl
+    ldx hl, strPerfectOuter
     trap DrawString
 
 .awaitA
@@ -971,7 +953,7 @@ CheckFoodHit:
 
 
 HandleWallHit:
-    rcall CheckWallHit
+    callx CheckWallHit
     ld a, c
     cp $00
     ret z
@@ -985,7 +967,7 @@ HandleWallHit:
 
 
 HandleSelfHit:
-    rcall CheckSelfHit
+    callx CheckSelfHit
     ld a, c
     cp $00
     ret z
@@ -999,7 +981,7 @@ HandleSelfHit:
 
 
 HandleFoodHit:
-    rcall CheckFoodHit
+    callx CheckFoodHit
     ld a, c
     cp $00
     ret z
@@ -1032,9 +1014,9 @@ HandleFoodHit:
     ld [varScore+1], a
 
     ; Check for new high score and redraw scores
-    rcall DrawScore
-    rcall UpdateHighScore
-    rcall DrawHighScore
+    callx DrawScore
+    callx UpdateHighScore
+    callx DrawHighScore
     ret
 
 

@@ -30,19 +30,16 @@ Main::
     ld sp, $e000
     xor a
     trap DrawInit
-    rpush data_00e9
-    pop hl
+    ldx hl, data_00e9
     trap DrawString
     ld hl, $0106
     trap MoveCursor
-    rcall call_0188
+    callx call_0188
     ld hl, $c6a6
     trap DrawString
-    rpush data_0183
-    pop hl
+    ldx hl, data_0183
     trap DrawString
-    rpush data_0491
-    pop de
+    ldx de, data_0491
     ld bc, $c400
     trap InitDecompress
     ld de, $dc40
@@ -90,8 +87,8 @@ jr_00a9:
     ld a, [$dc3f]
     bit 0, a
     jr z, jr_00c4
-    rcall call_0188
-    rcall call_03ab
+    callx call_0188
+    callx call_03ab
 
 jr_00c4:
     ld hl, $9c00
@@ -111,7 +108,7 @@ jr_00cc:
     ldh a, [rLCDC & $FF] ; =$40
     or $e0
     ldh [rLCDC & $FF], a ; =$40
-    rcall call_01f9
+    callx call_01f9
 
 jr_00e7:
     trap ExitToMenu
@@ -158,16 +155,16 @@ call_0188:
     ld hl, $c6aa
     ld a, $2f
     ld [hli], a
-    rcall call_01e6
+    callx call_01e6
     ld a, $2f
     ld [hli], a
-    rcall call_01ea
+    callx call_01ea
     ld a, $20
     ld [hli], a
-    rcall call_01d9
+    callx call_01d9
     ld a, $3a
     ld [hli], a
-    rcall call_01d5
+    callx call_01d5
     xor a
     ld [hl], a
     ret
@@ -224,8 +221,8 @@ jr_0212:
     push hl
     push bc
     push de
-    rcall call_0356
-    rcall call_0356
+    callx call_0356
+    callx call_0356
     pop hl
     pop bc
     push bc
@@ -236,7 +233,7 @@ jr_0212:
     add $10
     ld d, a
     ld e, $08
-    rcall call_0289
+    callx call_0289
     pop de
     ld hl, $0280
     add hl, de
@@ -290,7 +287,7 @@ jr_028b:
     ld c, $14
     push de
 jr_028e:
-    rcall call_02ad
+    callx call_02ad
     ld a, l
     add $10
     ld l, a
@@ -356,7 +353,7 @@ jr_02c7:
     ld a, [hli]
     ld h, [hl]
     ld l, a
-    rcall call_02fe
+    callx call_02fe
     pop hl
     pop de
     pop bc
@@ -446,8 +443,8 @@ call_0356:
     push hl
     ld b, $14
 jr_0359:
-    rcall call_039b
-    rcall call_037b
+    callx call_039b
+    callx call_037b
     dec hl
     ld a, l
     inc a
@@ -478,7 +475,7 @@ call_037b:
     add hl, bc
     ld b, $10
 jr_038c:
-    rcall call_039b
+    callx call_039b
     ld [de], a
     inc de
     dec b
@@ -527,7 +524,7 @@ jr_03bb:
     ld c, a
 jr_03d3:
     ld a, c
-    rcall call_040b
+    callx call_040b
     ld a, h
     xor $01
     ld h, a
@@ -575,8 +572,7 @@ call_040b:
     add a
     add a
     sub e
-    rpush data_0436
-    pop de
+    ldx de, data_0436
     add e
     ld e, a
     ld a, $00

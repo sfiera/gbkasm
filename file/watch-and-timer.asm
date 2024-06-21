@@ -29,23 +29,23 @@ History::
     ds 11
 
 Main::
-    rcall call_06e7
+    callx call_06e7
 jr_0106:
-    rcall call_011a
+    callx call_011a
     db $20, $09
-    rcall call_01e8
+    callx call_01e8
     jr z, jr_0106
     trap ExitToMenu
 
 call_011a:
     ld bc, $0700
     trap $c4
-    rcall call_01a0
+    callx call_01a0
 jr_0126:
     ld h, $01
     ld de, $060a
     ld bc, $0000
-    rcall call_0778
+    callx call_0778
     trap $d8
     ldh [$c4], a
     bit 1, a
@@ -61,18 +61,17 @@ jr_014a:
     and $7f
     inc a
     ld hl, $ffc7
-    rcall call_06ac
+    callx call_06ac
     ldh a, [$cc]
     add $30
     rst $08
     cp e
     jr jr_0166
 jr_015f:
-    rcall call_01a0
+    callx call_01a0
 jr_0166:
-    rcall call_07d3
-    rpush jr_0126
-    ret
+    callx call_07d3
+    jx jr_0126
 
 data_0171:
     dk "STOP WATCH\n"
@@ -82,9 +81,8 @@ data_018d:
     dk "[START] :Timer    \n"
 
 call_01a0:
-    rpush data_0171
-    pop hl
-    rcall call_0671
+    ldx hl, data_0171
+    callx call_0671
     xor a
     ldh [$c7], a
     ldh [$c8], a
@@ -96,12 +94,12 @@ jp_01b6:
     xor a
     ldh [$c1], a
     ldh [$c2], a
-    rcall call_05af
-    rcall call_05b5
-    rcall call_05d9
-    rcall call_05bb
-    rcall call_05c1
-    rcall call_059d
+    callx call_05af
+    callx call_05b5
+    callx call_05d9
+    callx call_05bb
+    callx call_05c1
+    callx call_059d
     ret
 
 call_01e8:
@@ -109,12 +107,12 @@ call_01e8:
     ldh [$c5], a
     inc a
     ldh [$c6], a
-    rcall call_03c2
+    callx call_03c2
 jp_01f5:
     ld h, $ff
     ld de, $ffff
     ld bc, $0509
-    rcall call_0778
+    callx call_0778
     ldh a, [$c3]
     and $80
     jr z, jr_022b
@@ -129,8 +127,8 @@ jr_0210:
     or a
     jr nz, jr_022b
     ldh [$cc], a
-    rcall call_059d
-    rcall call_032a
+    callx call_059d
+    callx call_032a
     xor a
     ldh [$c3], a
 jr_022b:
@@ -151,7 +149,7 @@ jr_0241:
     ld a, $01
     ldh [$c6], a
 jr_0247:
-    rcall call_03cd
+    callx call_03cd
 jr_024e:
     ldh a, [$c4]
     bit 0, a
@@ -159,9 +157,9 @@ jr_024e:
     ldh a, [$c3]
     or a
     jr nz, jr_0260
-    rcall call_03cd
+    callx call_03cd
 jr_0260:
-    rcall call_07d3
+    callx call_07d3
     ldh a, [$c4]
     bit 4, a
     jr z, jr_027e
@@ -172,7 +170,7 @@ jr_0260:
     xor a
 jr_0275:
     ldh [$c6], a
-    rcall call_0418
+    callx call_0418
 jr_027e:
     ldh a, [$c4]
     bit 5, a
@@ -183,20 +181,19 @@ jr_027e:
     ld a, $04
 jr_028c:
     ldh [$c6], a
-    rcall call_0418
+    callx call_0418
 jr_0295:
     ldh a, [$c4]
     bit 6, a
     jr z, jr_02a2
-    rcall call_02b8
+    callx call_02b8
 jr_02a2:
     ldh a, [$c4]
     bit 7, a
     jr z, jr_02af
-    rcall call_02c8
+    callx call_02c8
 jr_02af:
-    rpush jp_01f5
-    ret
+    jx jp_01f5
 
 call_02b3:
     add hl, bc
@@ -205,7 +202,7 @@ call_02b3:
     add hl, bc
     inc b
 call_02b8:
-    rcall call_030e
+    callx call_030e
     inc [hl]
     ld a, b
     cp [hl]
@@ -215,7 +212,7 @@ jr_02c6:
     jr jr_02d6
 
 call_02c8:
-    rcall call_030e
+    callx call_030e
     ld a, [hl]
     sub $01
     jr nc, jr_02d5
@@ -233,7 +230,7 @@ jr_02d6:
     trap $02
     ldh a, [$c5]
     add $02
-    rcall call_0698
+    callx call_0698
     ldh a, [$c6]
     or a
     jr z, jr_0305
@@ -261,9 +258,8 @@ call_030e:
     ldh a, [$c6]
     ld c, a
     ld b, $00
-    rcall call_0407
-    rpush call_02b3
-    pop hl
+    callx call_0407
+    ldx hl, call_02b3
     add hl, bc
     ld a, [hl]
     ld l, e
@@ -323,7 +319,7 @@ jr_0360:
 jr_0362:
     ld a, $2e
     trap PlaySound
-    rcall jr_0341
+    callx jr_0341
     ld a, $0a
     trap $dc
     dec b
@@ -344,17 +340,15 @@ data_0393:
     dk "[START] :StopWatch\n"
 
 call_03c2:
-    rpush data_0393
-    pop hl
-    rcall call_0671
+    ldx hl, data_0393
+    callx call_0671
 call_03cd:
-    rpush data_0375
-    pop hl
+    ldx hl, data_0375
     ld bc, $0602
 jr_03d4:
     push bc
     ld a, c
-    rcall call_06ac
+    callx call_06ac
     ld a, [hli]
     add "0"
     trap DrawChar
@@ -362,20 +356,18 @@ jr_03d4:
     inc c
     dec b
     jr nz, jr_03d4
-    rcall call_0418
-    rcall call_0407
+    callx call_0418
+    callx call_0407
     ld hl, $ffc7
     ld bc, $0005
     trap $02
     ld a, $0a
     ldh [$cc], a
     ld a, $01
-    rpush jp_01b6
-    ret
+    jx jp_01b6
 
 call_0407:
-    rpush data_0375
-    pop de
+    ldx de, data_0375
     ldh a, [$c5]
     ld l, a
     add a
@@ -391,7 +383,7 @@ call_0407:
 call_0418:
     ldh a, [$c5]
     add $02
-    rcall call_0698
+    callx call_0698
     ld a, h
     add a
     add a
@@ -406,17 +398,17 @@ call_0418:
     ld e, a
     ld h, $00
     ld l, $00
-    rcall call_046d
+    callx call_046d
     ld l, $01
-    rcall call_046b
+    callx call_046b
     ld l, $ff
-    rcall call_046b
+    callx call_046b
     ld l, $02
-    rcall call_046b
+    callx call_046b
     ld l, $03
-    rcall call_046b
+    callx call_046b
     ld l, $ff
-    rcall call_046b
+    callx call_046b
     ld l, $04
 call_046b:
     ld h, $ff
@@ -661,8 +653,7 @@ call_0671:
     trap DrawString
     ld hl, $0002
     trap MoveCursor
-    rpush data_060d
-    pop hl
+    ldx hl, data_060d
     trap DrawString
     ret
 
@@ -686,7 +677,7 @@ call_0698:
 
 call_06ac:
     push hl
-    rcall call_0698
+    callx call_0698
     trap MoveCursor
     pop hl
     ld a, [hli]
@@ -760,8 +751,7 @@ call_06e7:
 
 jr_072c:
     ld hl, $c613
-    rpush data_04c4
-    pop de
+    ldx de, data_04c4
     ld bc, $00d9
     trap $02
 
@@ -769,8 +759,7 @@ jr_0738:
     ld hl, $0791
     trap $ca
     ld hl, $8000
-    rpush data_0484
-    pop de
+    ldx de, data_0484
     ld bc, $0040
     trap $02
     ld de, $0005
@@ -779,8 +768,7 @@ jr_0738:
     ld a, $07
     trap $b4
     ld hl, $c600
-    rpush call_06d4
-    pop de
+    ldx de, call_06d4
     ld bc, $0013
     trap $02
     di
@@ -834,24 +822,23 @@ call_0778:
     ld a, c
 jr_07a5:
     ldh [$c7], a
-    rcall call_05af
+    callx call_05af
     ld a, c
 jr_07af:
     ldh [$c8], a
-    rcall call_05b5
+    callx call_05b5
     ld a, b
 jr_07b9:
     ldh [$c9], a
-    rcall call_05bb
+    callx call_05bb
     ld a, c
 jr_07c3:
     ldh [$ca], a
-    rcall call_05c1
+    callx call_05c1
     ld a, c
 jr_07cd:
     ldh [$cc], a
-    rpush call_059d
-    ret
+    jx call_059d
 
 call_07d3:
     ldh a, [$c4]
