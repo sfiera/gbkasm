@@ -31,7 +31,7 @@ FileMagnets::
     INCBIN "file/magnets.gbf"
 
 FileMagnetsData::
-    INCBIN "file/magnets-data.gbf"
+    INCBIN "file/mag_data.gbf"
 
 FileShot::
     INCBIN "file/shot.gbf"
@@ -46,7 +46,7 @@ FileRandomSelection::
     dw FileSameGame
 
 FileMogutteNanbo::
-    INCBIN "file/mogutte-nanbo.gbf"
+    INCBIN "file/mogura.gbf"
 
 FileDrive::
     INCBIN "file/drive.gbf"

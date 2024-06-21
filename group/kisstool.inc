@@ -19,13 +19,13 @@ FileCollection6::
 .deleteAll
     TableEntry FileDeleteAll, "FILE ALL DELETE\n"
 .charView
-    TableEntry FileCharView, "CHAR DUMP\n"
+    TableEntry FileCharDump, "CHAR DUMP\n"
 
 FileSRAMGetAndClear::
-    INCBIN "file/sram-get-and-clear.gbf"
+    INCBIN "file/sramtool.gbf"
 
 FileDeleteAll::
-    INCBIN "file/delete-all.gbf"
+    INCBIN "file/del_all.gbf"
 
-FileCharView::
-    INCBIN "file/char-view.gbf"
+FileCharDump::
+    INCBIN "file/chardump.gbf"

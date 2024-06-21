@@ -27,7 +27,7 @@ FileRoulette::
     INCBIN "file/roulette.gbf"
 
 FileBlackjack::
-    INCBIN "file/blackjack.gbf"
+    INCBIN "file/bj.gbf"
 
 
 SECTION "ROM Bank $00c", ROMX[$4000], BANK[$c]
@@ -36,4 +36,4 @@ FileWorm::
     INCBIN "file/worm.gbf"
 
 FileBinary::
-    INCBIN "file/binary.gbf"
+    INCBIN "file/bland.gbf"
