@@ -82,7 +82,7 @@ jr_000_014f:
     xor a
     ld [$ccc5], a
     callx call_040c
-    callx @+$0092
+    callx call_01f0
     jr nc, jr_000_014f
 
 jr_000_0163:
@@ -97,10 +97,10 @@ jr_000_0163:
 jr_000_016c:
     ld a, $20
     trap DrawInit
-    callx @+$0764
+    callx call_08d8
     ld a, $50
     ld [$ccc8], a
-    callx @+$03ad
+    callx call_052d
     ld a, $08
     ldh [$a0], a
     ld a, $18
@@ -109,9 +109,11 @@ jr_000_016c:
     trap $b4
     ld a, $14
     ld [$cc96], a
+jr_0194:
     ldx hl, layout_0262
     trap DrawLayout
     trap $c3
+jr_019c:
     ld hl, $ccc1
     ld [hl], $42
     inc hl
@@ -125,9 +127,9 @@ jr_000_016c:
 
     ld hl, $cc96
     dec [hl]
-    jr nz, @-$17
+    jr nz, jr_019c
 
-    jx @+$ff4f
+    jx jr_0108
 
 
 jr_000_01b9:
@@ -135,10 +137,10 @@ jr_000_01b9:
     inc [hl]
     ld a, $01
     ld [$ccc5], a
-    callx @+$053c
+    callx call_0702
 
 jr_000_01c9:
-    callx @+$023f
+    callx call_040c
     ld a, [$ccc4]
     cp $01
     jr z, jr_000_01e3
@@ -147,14 +149,15 @@ jr_000_01c9:
     trap DrawLayout
     ld a, $b4
     trap $dc
-    jr @-$4d
+    jr jr_0194
 
 jr_000_01e3:
-    callx @+$0009
+    callx call_01f0
     xor a
     ld [$ccc5], a
     jr jr_000_01c9
 
+call_01f0:
     ldx hl, layout_023c
     trap DrawLayout
     trap $c3
@@ -264,7 +267,7 @@ call_040c:
     xor a
     trap DrawInit
     trap $b5
-    callx @+$04c3
+    callx call_08d8
     xor a
     ldh [$9b], a
     ldh [$9a], a
@@ -287,7 +290,7 @@ call_040c:
     ld [hl], $08
     inc hl
     ld [hl], $00
-    callx @+$02c2
+    callx call_070c
     xor a
     ldh [$83], a
 
@@ -298,21 +301,21 @@ jr_000_0450:
 
 jr_000_0457:
     trap AwaitFrame
-    callx @+$03e8
+    callx call_0845
     trap $d8
     and $04
     jr nz, jr_000_04c9
 
     ld bc, $2800
     trap $c4
-    callx @+$02fc
-    callx @+$02a7
-    callx @+$02e5
-    callx @+$0205
-    callx @+$00b1
-    callx @+$0062
-    callx @+$0094
-    callx @+$03c1
+    callx call_076b
+    callx call_071d
+    callx call_0762
+    callx call_0689
+    callx call_053c
+    callx call_04f4
+    callx call_052d
+    callx call_0861
     ld a, [$ccc4]
     or a
     jr z, jr_000_0457
@@ -340,7 +343,7 @@ jr_000_04b7:
     jr jr_000_0450
 
 jr_000_04c9:
-    jx @+$fc3b
+    jx jr_0108
 
 
 jr_000_04cd:
@@ -351,7 +354,7 @@ jr_000_04cd:
     ld hl, $cc4c
     trap DrawString
     ld a, $1e
-    callx @+$0433
+    callx call_0916
 
 jr_000_04e6:
     trap AwaitFrame
@@ -363,6 +366,7 @@ jr_000_04e6:
 
     jr jr_000_04c9
 
+call_04f4:
     ld hl, $ccc7
     ldh a, [$8a]
     ld b, a
@@ -426,6 +430,8 @@ call_052d:
     ld e, $78
     jr jr_000_054b
 
+
+call_053c:
     ld a, [$ccc9]
     srl a
     srl a
@@ -589,7 +595,7 @@ Call_000_069f:
     ld [$ccc4], a
 
 jr_000_06a5:
-    jx @+$005c
+    jx call_0702
 
 
 jr_000_06a9:
@@ -612,7 +618,7 @@ jr_000_06b9:
     ret z
 
     ld a, $25
-    callx @+$0252
+    callx call_0916
     ld a, [$ccc8]
     add $08
     ld hl, $ccca
@@ -637,7 +643,7 @@ Call_000_06d7:
     ld a, $01
     ld [$ccc9], a
     ld a, $0f
-    jx @+$022e
+    jx call_0916
 
 
 jr_000_06eb:
@@ -652,7 +658,7 @@ jr_000_06eb:
     ld [hl+], a
     ld [hl], $18
     ld a, $07
-    jx @+$0217
+    jx call_0916
 
 
 call_0702:
@@ -714,7 +720,7 @@ jr_000_0735:
     cp $a8
     jr c, jr_000_075b
 
-    callx @+$ffb7
+    callx call_070c
     ld de, $f000
 
 jr_000_075b:
@@ -745,12 +751,12 @@ call_076b:
     ld hl, $ccca
     ld a, [hl+]
     cp $ff
-    jr z, @+$22
+    jr z, jr_079e
 
     ld d, a
     ld a, [hl]
     cp $21
-    jr nc, @+$1c
+    jr nc, jr_079e
 
     ld a, [$cccd]
     sub $02
@@ -763,7 +769,9 @@ call_076b:
     ld a, $01
     ld [$ccc9], a
     ld a, $0f
-    callx @+$017b
+    callx call_0916
+
+jr_079e:
     or a
     ret
 
@@ -777,9 +785,9 @@ jr_000_07a0:
     ld [$ccc5], a
     ld [$ccc3], a
     ld [$cccc], a
-    callx @+$ff4a
+    callx call_0702
     ld a, $04
-    callx @+$0155
+    callx call_0916
     scf
     ret
 
@@ -805,21 +813,21 @@ jr_000_07c6:
     ld [hl], $ff
     ld hl, $cc65
     inc [hl]
-    callx @+$ff19
+    callx call_0702
     xor a
     ld [$ccc5], a
     ld a, $20
-    callx @+$0120
+    callx call_0916
     ld a, [$ccc6]
     or a
     jr nz, jr_000_081d
-    callx @+$fd2a
+    callx call_052d
     ldx hl, layout_032a
     trap DrawLayout
     ld a, $78
     trap $dc
     trap $b5
-    callx @+$00c2
+    callx call_08d8
     ld a, $63
     trap $b4
 
@@ -883,17 +891,17 @@ call_0845:
 call_0861:
     ld hl, $cc40
     ldx de, data_08b4
-    callx @+$0065
+    callx call_08d1
     ld a, [$ccd3]
-    callx @+$004a
+    callx call_08c0
     ldx de, data_08b9
-    callx @+$0050
+    callx call_08d1
     ld a, [$ccd6]
-    callx @+$0035
+    callx call_08c0
     ld [hl], $3a
     inc hl
     ld a, [$ccd5]
-    callx @+$0028
+    callx call_08c0
     ld [hl], $2e
     inc hl
     ld a, [$ccd4]
@@ -934,15 +942,17 @@ jr_000_08c2:
     ret
 
 
-jr_000_08d1:
+call_08d1:
     ld a, [de]
     inc de
     or a
     ret z
 
     ld [hl+], a
-    jr jr_000_08d1
+    jr call_08d1
 
+
+call_08d8:
     ld b, $c6
     ldx de, data_0928
     trap InitDecompress
@@ -954,11 +964,11 @@ jr_000_08d1:
     trap RunDecompress
     ld de, $9800
     ld c, $03
-    callx @+$0008
+    callx call_0901
     ld c, $0f
     ld de, $9c00
 
-jr_000_0901:
+call_0901:
     push bc
     ld bc, $0020
     trap RunDecompress
@@ -976,7 +986,7 @@ jr_000_090f:
 
     pop bc
     dec c
-    jr nz, jr_000_0901
+    jr nz, call_0901
 
     ret
 
