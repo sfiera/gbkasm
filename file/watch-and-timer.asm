@@ -29,119 +29,866 @@ History::
     ds 11
 
 Main::
-    db $d7
-    db $06, $00, $d7, $e4, $05, $c9, $d7, $06, $00, $d7, $10, $00, $c9, $20, $09, $d7
-    db $06, $00, $d7, $d5, $00, $c9, $28, $ee, $cf, $01, $01, $00, $07, $cf, $c4, $d7
-    db $06, $00, $d7, $7d, $00, $c9, $26, $01, $11, $0a, $06, $01, $00, $00, $d7, $06
-    db $00, $d7, $46, $06, $c9, $cf, $d8, $e0, $c4, $cb, $4f, $28, $29, $f0, $c3, $cb
-    db $7f, $28, $1c, $fe, $86, $30, $03, $3c, $e0, $c3, $e6, $7f, $3c, $21, $c7, $ff
-    db $d7, $06, $00, $d7, $58, $05, $c9, $f0, $cc, $c6, $30, $cf, $bb, $18, $07, $d7
-    db $06, $00, $d7, $3d, $00, $c9, $d7, $06, $00, $d7, $69, $06, $c9, $d7, $b8, $ff
-    db $c9, $53, $54, $4f, $50, $20, $57, $41, $54, $43, $48, $00, $5b, $42, $5d, $3a
-    db $4c, $61, $70, $2f, $43, $6c, $65, $61, $72, $20, $20, $20, $00, $5b, $53, $54
-    db $41, $52, $54, $5d, $20, $3a, $54, $69, $6d, $65, $72, $20, $20, $20, $20, $00
-    db $d7, $d0, $ff, $e1, $d7, $06, $00, $d7, $c9, $04, $c9, $af, $e0, $c7, $e0, $c8
-    db $e0, $c9, $e0, $ca, $e0, $cc, $e0, $c3, $af, $e0, $c1, $e0, $c2, $d7, $06, $00
-    db $d7, $ee, $03, $c9, $d7, $06, $00, $d7, $ed, $03, $c9, $d7, $06, $00, $d7, $0a
-    db $04, $c9, $d7, $06, $00, $d7, $e5, $03, $c9, $d7, $06, $00, $d7, $e4, $03, $c9
-    db $d7, $06, $00, $d7, $b9, $03, $c9, $c9, $af, $e0, $c5, $3c, $e0, $c6, $d7, $06
-    db $00, $d7, $d0, $01, $c9, $26, $ff, $11, $ff, $ff, $01, $09, $05, $d7, $06, $00
-    db $d7, $77, $05, $c9, $f0, $c3, $e6, $80, $28, $21, $21, $c7, $ff, $06, $04, $af
-    db $b6, $23, $05, $20, $fb, $b7, $20, $13, $e0, $cc, $d7, $06, $00, $d7, $7f, $03
-    db $c9, $d7, $06, $00, $d7, $05, $01, $c9, $af, $e0, $c3, $cf, $d8, $e0, $c4, $cb
-    db $4f, $28, $1b, $f0, $c3, $cb, $7f, $20, $0e, $f0, $c5, $3c, $fe, $06, $38, $01
-    db $af, $e0, $c5, $3e, $01, $e0, $c6, $d7, $06, $00, $d7, $82, $01, $c9, $f0, $c4
-    db $cb, $47, $28, $0c, $f0, $c3, $b7, $20, $07, $d7, $06, $00, $d7, $70, $01, $c9
-    db $d7, $06, $00, $d7, $6f, $05, $c9, $f0, $c4, $cb, $67, $28, $11, $f0, $c6, $3c
-    db $fe, $05, $38, $01, $af, $e0, $c6, $d7, $06, $00, $d7, $9d, $01, $c9, $f0, $c4
-    db $cb, $6f, $28, $11, $f0, $c6, $d6, $01, $30, $02, $3e, $04, $e0, $c6, $d7, $06
-    db $00, $d7, $86, $01, $c9, $f0, $c4, $cb, $77, $28, $07, $d7, $06, $00, $d7, $19
-    db $00, $c9, $f0, $c4, $cb, $7f, $28, $07, $d7, $06, $00, $d7, $1c, $00, $c9, $d7
-    db $45, $ff, $c9, $09, $09, $05, $09, $04, $d7, $06, $00, $d7, $52, $00, $c9, $34
-    db $78, $be, $30, $02, $36, $00, $18, $0e, $d7, $06, $00, $d7, $42, $00, $c9, $7e
-    db $d6, $01, $30, $01, $78, $77, $af, $ea, $00, $00, $7e, $c6, $30, $f5, $21, $c7
-    db $ff, $01, $05, $00, $cf, $02, $f0, $c5, $c6, $02, $d7, $06, $00, $d7, $aa, $03
-    db $c9, $f0, $c6, $b7, $28, $0f, $24, $3d, $28, $0b, $24, $24, $3d, $28, $06, $24
-    db $3d, $28, $02, $24, $24, $cf, $b8, $f1, $cf, $bb, $af, $e0, $c3, $c9, $f0, $c6
-    db $4f, $06, $00, $d7, $06, $00, $d7, $f0, $00, $c9, $d7, $98, $ff, $e1, $09, $7e
-    db $6b, $62, $09, $47, $3e, $0a, $ea, $00, $00, $c9, $f0, $cb, $3d, $28, $0a, $3d
-    db $28, $0b, $3d, $28, $14, $3d, $28, $28, $c9, $3e, $1d, $18, $02, $3e, $36, $cf
-    db $14, $cf, $b1, $cf, $17, $b7, $20, $f9, $c9, $0e, $04, $06, $04, $3e, $2b, $cf
-    db $14, $3e, $05, $cf, $dc, $05, $20, $f5, $3e, $19, $cf, $dc, $0d, $20, $ec, $c9
-    db $06, $04, $3e, $2e, $cf, $14, $d7, $06, $00, $d7, $d7, $ff, $c9, $3e, $0a, $cf
-    db $dc, $05, $20, $ee, $c9, $00, $01, $00, $00, $01, $00, $02, $00, $00, $02, $00
-    db $03, $00, $00, $03, $00, $04, $00, $00, $04, $00, $05, $00, $00, $03, $06, $00
-    db $00, $00, $04, $20, $20, $54, $49, $4d, $45, $52, $20, $20, $20, $00, $5b, $42
-    db $5d, $3a, $52, $65, $63, $2e, $4e, $6f, $2f, $43, $6c, $65, $61, $72, $00, $5b
-    db $53, $54, $41, $52, $54, $5d, $20, $3a, $53, $74, $6f, $70, $57, $61, $74, $63
-    db $68, $00, $d7, $d0, $ff, $e1, $d7, $06, $00, $d7, $a7, $02, $c9, $d7, $a7, $ff
-    db $e1, $01, $02, $06, $c5, $79, $d7, $06, $00, $d7, $d2, $02, $c9, $2a, $c6, $30
-    db $cf, $bb, $c1, $0c, $05, $20, $ed, $d7, $06, $00, $d7, $2d, $00, $c9, $d7, $06
-    db $00, $d7, $15, $00, $c9, $21, $c7, $ff, $01, $05, $00, $cf, $02, $3e, $0a, $e0
-    db $cc, $3e, $01, $d7, $b2, $fd, $c9, $d7, $6d, $ff, $d1, $f0, $c5, $6f, $87, $87
-    db $85, $83, $5f, $3e, $00, $8a, $57, $c9, $f0, $c5, $c6, $02, $d7, $06, $00, $d7
-    db $78, $02, $c9, $7c, $87, $87, $87, $c6, $08, $57, $7d, $87, $87, $87, $c6, $10
-    db $5f, $26, $00, $2e, $00, $d7, $06, $00, $d7, $34, $00, $c9, $2e, $01, $d7, $06
-    db $00, $d7, $29, $00, $c9, $2e, $ff, $d7, $06, $00, $d7, $20, $00, $c9, $2e, $02
-    db $d7, $06, $00, $d7, $17, $00, $c9, $2e, $03, $d7, $06, $00, $d7, $0e, $00, $c9
-    db $2e, $ff, $d7, $06, $00, $d7, $05, $00, $c9, $2e, $04, $26, $ff, $f0, $c6, $95
-    db $28, $02, $3e, $02, $6f, $7c, $26, $80, $01, $01, $01, $d5, $cf, $c5, $d1, $7a
-    db $c6, $08, $57, $c9, $ff, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
-    db $00, $00, $00, $00, $ff, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
-    db $00, $00, $00, $00, $ff, $00, $ff, $00, $ff, $00, $ff, $00, $ff, $00, $ff, $00
-    db $ff, $00, $ff, $00, $ff, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
-    db $00, $00, $00, $00, $00, $00, $00, $00, $20, $00, $00, $20, $00, $00, $20, $00
-    db $00, $20, $00, $00, $20, $00, $00, $00, $00, $20, $00, $20, $20, $00, $20, $20
-    db $00, $20, $20, $00, $20, $20, $00, $20, $20, $00, $20, $20, $00, $20, $00, $00
-    db $00, $00, $20, $00, $20, $20, $00, $00, $00, $00, $00, $20, $20, $00, $20, $20
-    db $00, $00, $00, $00, $00, $00, $00, $20, $00, $20, $20, $00, $20, $00, $00, $20
-    db $20, $00, $00, $20, $00, $00, $00, $00, $00, $20, $00, $00, $20, $00, $00, $20
-    db $00, $00, $00, $00, $20, $20, $00, $20, $20, $00, $20, $20, $00, $00, $00, $00
-    db $00, $20, $20, $00, $20, $20, $00, $00, $00, $20, $20, $00, $00, $20, $00, $00
-    db $00, $00, $00, $00, $00, $00, $20, $00, $00, $20, $20, $00, $00, $00, $00, $20
-    db $00, $00, $20, $00, $00, $00, $00, $00, $00, $00, $20, $20, $00, $20, $20, $00
-    db $20, $20, $00, $20, $20, $00, $20, $20, $00, $20, $20, $00, $00, $00, $00, $00
-    db $20, $00, $00, $20, $00, $00, $00, $00, $00, $20, $00, $00, $20, $00, $00, $00
-    db $00, $00, $00, $00, $00, $20, $00, $00, $20, $00, $00, $00, $00, $20, $20, $00
-    db $00, $20, $00, $00, $00, $00, $20, $00, $20, $20, $20, $00, $20, $21, $0c, $12
-    db $cf, $b8, $f0, $cc, $c6, $30, $fe, $3a, $20, $02, $3e, $20, $cf, $bb, $c9, $f0
-    db $c7, $26, $01, $18, $10, $f0, $c8, $26, $05, $18, $0a, $f0, $c9, $26, $0b, $18
-    db $04, $f0, $ca, $26, $0f, $5f, $87, $87, $83, $87, $87, $83, $11, $13, $c6, $83
-    db $5f, $3e, $00, $8a, $57, $3e, $03, $18, $07, $26, $09, $11, $e5, $c6, $3e, $01
-    db $c5, $4c, $21, $06, $00, $44, $29, $29, $29, $29, $29, $09, $01, $00, $98, $09
-    db $4f, $06, $07, $c5, $d5, $e5, $06, $00, $cf, $02, $e1, $01, $20, $00, $09, $d1
-    db $c1, $79, $83, $5f, $3e, $00, $8a, $57, $05, $20, $e8, $c1, $c9, $31, $3d, $20
-    db $20, $20, $20, $20, $20, $20, $20, $20, $32, $3d, $20, $20, $20, $20, $20, $20
-    db $20, $33, $3d, $20, $20, $20, $20, $20, $20, $20, $20, $20, $34, $3d, $20, $20
-    db $20, $20, $20, $20, $20, $35, $3d, $20, $20, $20, $20, $20, $20, $20, $20, $20
-    db $36, $3d, $20, $20, $20, $20, $20, $20, $20, $0d, $0d, $0d, $0d, $0d, $0d, $0d
-    db $0d, $0d, $5b, $41, $5d, $3a, $53, $74, $61, $72, $74, $2f, $53, $74, $6f, $70
-    db $0d, $0d, $0d, $5b, $53, $45, $4c, $45, $43, $54, $5d, $3a, $45, $78, $69, $74
-    db $00, $e5, $21, $00, $05, $cf, $b8, $e1, $cf, $69, $e5, $21, $0f, $00, $cf, $b8
-    db $e1, $cf, $69, $e5, $21, $10, $00, $cf, $b8, $e1, $cf, $69, $21, $02, $00, $cf
-    db $b8, $d7, $7b, $ff, $e1, $cf, $69, $c9, $6f, $e6, $01, $67, $87, $87, $84, $87
-    db $84, $c6, $02, $67, $7d, $e6, $fe, $0f, $c6, $01, $6f, $c9, $e5, $d7, $06, $00
-    db $d7, $e7, $ff, $c9, $cf, $b8, $e1, $2a, $c6, $30, $cf, $bb, $2a, $c6, $30, $cf
-    db $bb, $3e, $3a, $cf, $bb, $2a, $c6, $30, $cf, $bb, $2a, $c6, $30, $cf, $bb, $3e
-    db $2e, $cf, $bb, $c9, $cd, $00, $01, $f0, $c0, $3c, $e0, $c0, $d6, $e1, $d8, $e0
-    db $c0, $f0, $83, $3c, $e0, $83, $c9, $3e, $20, $cf, $b3, $21, $00, $c5, $2a, $b6
-    db $28, $3a, $2b, $11, $00, $00, $06, $00, $e5, $cf, $ea, $e1, $11, $13, $c6, $01
-    db $d9, $00, $e5, $cf, $eb, $21, $27, $ff, $09, $7c, $b5, $e1, $20, $1e, $11, $ec
-    db $c6, $01, $00, $08, $cf, $eb, $78, $b1, $28, $1e, $11, $ec, $c6, $01, $00, $c4
-    db $cf, $62, $11, $00, $88, $01, $00, $08, $cf, $63, $18, $0c, $21, $13, $c6, $d7
-    db $94, $fd, $d1, $01, $d9, $00, $cf, $02, $21, $91, $07, $cf, $ca, $21, $00, $80
-    db $d7, $43, $fd, $d1, $01, $40, $00, $cf, $02, $11, $05, $00, $01, $09, $14, $cf
-    db $58, $3e, $07, $cf, $b4, $21, $00, $c6, $d7, $7b, $ff, $d1, $01, $13, $00, $cf
-    db $02, $f3, $21, $12, $c0, $01, $00, $c6, $5e, $71, $23, $56, $70, $03, $69, $60
-    db $73, $23, $72, $af, $e0, $c0, $fb, $c9, $cf, $b1, $f0, $c3, $e6, $80, $c8, $f0
-    db $83, $d6, $06, $d8, $e0, $83, $f0, $cc, $84, $bb, $20, $41, $f0, $ca, $84, $bb
-    db $20, $31, $f0, $c9, $84, $ba, $20, $21, $f0, $c8, $84, $bb, $20, $11, $f0, $c7
-    db $84, $bb, $20, $01, $79, $e0, $c7, $d7, $06, $00, $d7, $04, $fe, $c9, $79, $e0
-    db $c8, $d7, $06, $00, $d7, $00, $fe, $c9, $78, $e0, $c9, $d7, $06, $00, $d7, $fc
-    db $fd, $c9, $79, $e0, $ca, $d7, $06, $00, $d7, $f8, $fd, $c9, $79, $e0, $cc, $d7
-    db $cd, $fd, $c9, $f0, $c4, $cb, $57, $28, $04, $f1, $f6, $01, $c9, $cb, $5f, $28
-    db $03, $f1, $af, $c9, $cb, $47, $c8, $f0, $c3, $cb, $7f, $28, $0d, $e6, $7f, $e0
-    db $c3, $f0, $83, $e0, $c1, $f0, $c0, $e0, $c2, $c9, $f6, $80, $e0, $c3, $f0, $c1
-    db $e0, $83, $f0, $c2, $e0, $c0, $c9
+    rcall call_06e7
+jr_0106:
+    rcall call_011a
+    db $20, $09
+    rcall call_01e8
+    jr z, jr_0106
+    trap ExitToMenu
+
+call_011a:
+    ld bc, $0700
+    trap $c4
+    rcall call_01a0
+jr_0126:
+    ld h, $01
+    ld de, $060a
+    ld bc, $0000
+    rcall call_0778
+    trap $d8
+    ldh [$c4], a
+    bit 1, a
+    jr z, jr_0166
+    ldh a, [$c3]
+    bit 7, a
+    jr z, jr_015f
+    cp $86
+    jr nc, jr_014a
+    inc a
+    ldh [$c3], a
+jr_014a:
+    and $7f
+    inc a
+    ld hl, $ffc7
+    rcall call_06ac
+    ldh a, [$cc]
+    add $30
+    rst $08
+    cp e
+    jr jr_0166
+jr_015f:
+    rcall call_01a0
+jr_0166:
+    rcall call_07d3
+    rpush jr_0126
+    ret
+
+data_0171:
+    dk "STOP WATCH\n"
+data_017c:
+    dk "[B]:Lap/Clear   \n"
+data_018d:
+    dk "[START] :Timer    \n"
+
+call_01a0:
+    rpush data_0171
+    pop hl
+    rcall call_0671
+    xor a
+    ldh [$c7], a
+    ldh [$c8], a
+    ldh [$c9], a
+    ldh [$ca], a
+    ldh [$cc], a
+jp_01b6:
+    ldh [$c3], a
+    xor a
+    ldh [$c1], a
+    ldh [$c2], a
+    rcall call_05af
+    rcall call_05b5
+    rcall call_05d9
+    rcall call_05bb
+    rcall call_05c1
+    rcall call_059d
+    ret
+
+call_01e8:
+    xor a
+    ldh [$c5], a
+    inc a
+    ldh [$c6], a
+    rcall call_03c2
+jp_01f5:
+    ld h, $ff
+    ld de, $ffff
+    ld bc, $0509
+    rcall call_0778
+    ldh a, [$c3]
+    and $80
+    jr z, jr_022b
+    ld hl, $ffc7
+    ld b, $04
+    xor a
+jr_0210:
+    or [hl]
+    inc hl
+    dec b
+    jr nz, jr_0210
+    or a
+    jr nz, jr_022b
+    ldh [$cc], a
+    rcall call_059d
+    rcall call_032a
+    xor a
+    ldh [$c3], a
+jr_022b:
+    trap $d8
+    ldh [$c4], a
+    bit 1, a
+    jr z, jr_024e
+    ldh a, [$c3]
+    bit 7, a
+    jr nz, jr_0247
+    ldh a, [$c5]
+    inc a
+    cp $06
+    jr c, jr_0241
+    xor a
+jr_0241:
+    ldh [$c5], a
+    ld a, $01
+    ldh [$c6], a
+jr_0247:
+    rcall call_03cd
+jr_024e:
+    ldh a, [$c4]
+    bit 0, a
+    jr z, jr_0260
+    ldh a, [$c3]
+    or a
+    jr nz, jr_0260
+    rcall call_03cd
+jr_0260:
+    rcall call_07d3
+    ldh a, [$c4]
+    bit 4, a
+    jr z, jr_027e
+    ldh a, [$c6]
+    inc a
+    cp $05
+    jr c, jr_0275
+    xor a
+jr_0275:
+    ldh [$c6], a
+    rcall call_0418
+jr_027e:
+    ldh a, [$c4]
+    bit 5, a
+    jr z, jr_0295
+    ldh a, [$c6]
+    sub $01
+    jr nc, jr_028c
+    ld a, $04
+jr_028c:
+    ldh [$c6], a
+    rcall call_0418
+jr_0295:
+    ldh a, [$c4]
+    bit 6, a
+    jr z, jr_02a2
+    rcall call_02b8
+jr_02a2:
+    ldh a, [$c4]
+    bit 7, a
+    jr z, jr_02af
+    rcall call_02c8
+jr_02af:
+    rpush jp_01f5
+    ret
+
+call_02b3:
+    add hl, bc
+    add hl, bc
+    dec b
+    add hl, bc
+    inc b
+call_02b8:
+    rcall call_030e
+    inc [hl]
+    ld a, b
+    cp [hl]
+    jr nc, jr_02c6
+    ld [hl], $00
+jr_02c6:
+    jr jr_02d6
+
+call_02c8:
+    rcall call_030e
+    ld a, [hl]
+    sub $01
+    jr nc, jr_02d5
+    ld a, b
+jr_02d5:
+    ld [hl], a
+jr_02d6:
+    xor a
+    ld [$0000], a
+    ld a, [hl]
+    add $30
+    push af
+    ld hl, $ffc7
+    ld bc, $0005
+    trap $02
+    ldh a, [$c5]
+    add $02
+    rcall call_0698
+    ldh a, [$c6]
+    or a
+    jr z, jr_0305
+    inc h
+    dec a
+    jr z, jr_0305
+    inc h
+    inc h
+    dec a
+    jr z, jr_0305
+    inc h
+    dec a
+    jr z, jr_0305
+    inc h
+    inc h
+jr_0305:
+    trap MoveCursor
+    pop af
+    trap DrawChar
+    xor a
+    ldh [$c3], a
+    ret
+
+call_030e:
+    ldh a, [$c6]
+    ld c, a
+    ld b, $00
+    rcall call_0407
+    rpush call_02b3
+    pop hl
+    add hl, bc
+    ld a, [hl]
+    ld l, e
+    ld h, d
+    add hl, bc
+    ld b, a
+    ld a, $0a
+    ld [$0000], a
+    ret
+
+call_032a:
+    ldh a, [$cb]
+    dec a
+    jr z, jr_0339
+    dec a
+    jr z, jr_033d
+    dec a
+    jr z, jr_0349
+    dec a
+    jr z, jr_0360
+    ret
+
+jr_0339:
+    ld a, $1d
+    jr jr_033f
+
+jr_033d:
+    ld a, $36
+jr_033f:
+    trap PlaySound
+jr_0341:
+    trap AwaitFrame
+    trap GetSoundState
+    or a
+    jr nz, jr_0341
+    ret
+
+jr_0349:
+    ld c, $04
+jr_034b:
+    ld b, $04
+jr_034d:
+    ld a, $2b
+    trap PlaySound
+    ld a, $05
+    trap $dc
+    dec b
+    jr nz, jr_034d
+    ld a, $19
+    trap $dc
+    dec c
+    jr nz, jr_034b
+    ret
+
+jr_0360:
+    ld b, $04
+jr_0362:
+    ld a, $2e
+    trap PlaySound
+    rcall jr_0341
+    ld a, $0a
+    trap $dc
+    dec b
+    jr nz, jr_0362
+    ret
+
+data_0375:
+    db 0, 1, 0, 0, $01  ; 01:00, alarm 1
+    db 0, 2, 0, 0, $02  ; 02:00, alarm 2
+    db 0, 3, 0, 0, $03  ; 03:00, alarm 3
+    db 0, 4, 0, 0, $04  ; 04:00, alarm 4
+    db 0, 5, 0, 0, $03  ; 05:00, alarm 3
+    db 6, 0, 0, 0, $04  ; 60:00, alarm 4
+
+data_0393:
+    dk "  TIMER   \n"
+    dk "[B]:Rec.No/Clear\n"
+    dk "[START] :StopWatch\n"
+
+call_03c2:
+    rpush data_0393
+    pop hl
+    rcall call_0671
+call_03cd:
+    rpush data_0375
+    pop hl
+    ld bc, $0602
+jr_03d4:
+    push bc
+    ld a, c
+    rcall call_06ac
+    ld a, [hli]
+    add "0"
+    trap DrawChar
+    pop bc
+    inc c
+    dec b
+    jr nz, jr_03d4
+    rcall call_0418
+    rcall call_0407
+    ld hl, $ffc7
+    ld bc, $0005
+    trap $02
+    ld a, $0a
+    ldh [$cc], a
+    ld a, $01
+    rpush jp_01b6
+    ret
+
+call_0407:
+    rpush data_0375
+    pop de
+    ldh a, [$c5]
+    ld l, a
+    add a
+    add a
+    add l
+    add e
+    ld e, a
+    ld a, $00
+    adc d
+    ld d, a
+    ret
+
+call_0418:
+    ldh a, [$c5]
+    add $02
+    rcall call_0698
+    ld a, h
+    add a
+    add a
+    add a
+    add $08
+    ld d, a
+    ld a, l
+    add a
+    add a
+    add a
+    add $10
+    ld e, a
+    ld h, $00
+    ld l, $00
+    rcall call_046d
+    ld l, $01
+    rcall call_046b
+    ld l, $ff
+    rcall call_046b
+    ld l, $02
+    rcall call_046b
+    ld l, $03
+    rcall call_046b
+    ld l, $ff
+    rcall call_046b
+    ld l, $04
+call_046b:
+    ld h, $ff
+call_046d:
+    ldh a, [$c6]
+    sub l
+    jr z, jr_0474
+    ld a, $02
+jr_0474:
+    ld l, a
+    ld a, h
+    ld h, $80
+    ld bc, $0101
+    push de
+    trap $c5
+    pop de
+    ld a, d
+    add $08
+    ld d, a
+    ret
+
+data_0484:
+    db $ff, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+    db $ff, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+    db $ff, $00, $ff, $00, $ff, $00, $ff, $00, $ff, $00, $ff, $00, $ff, $00, $ff, $00
+    db $ff, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+
+PUSHC
+NEWCHARMAP TimerDigits
+CHARMAP "数", $00
+CHARMAP "　", $20
+data_04c4:
+    db "数数数"
+    db "数　数"
+    db "数　数"
+    db "数　数"
+    db "数　数"
+    db "数　数"
+    db "数数数"
+
+    db "　数　"
+    db "　数　"
+    db "　数　"
+    db "　数　"
+    db "　数　"
+    db "　数　"
+    db "　数　"
+
+    db "数数数"
+    db "数　数"
+    db "　　数"
+    db "数数数"
+    db "数　　"
+    db "数　　"
+    db "数数数"
+
+    db "数数数"
+    db "数　数"
+    db "　　数"
+    db "　数数"
+    db "　　数"
+    db "数　数"
+    db "数数数"
+
+    db "数　数"
+    db "数　数"
+    db "数　数"
+    db "数数数"
+    db "　　数"
+    db "　　数"
+    db "　　数"
+
+    db "数数数"
+    db "数　　"
+    db "数　　"
+    db "数数数"
+    db "　　数"
+    db "数　数"
+    db "数数数"
+
+    db "数数数"
+    db "数　数"
+    db "数　　"
+    db "数数数"
+    db "数　数"
+    db "数　数"
+    db "数数数"
+
+    db "数数数"
+    db "　　数"
+    db "　　数"
+    db "　　数"
+    db "　　数"
+    db "　　数"
+    db "　　数"
+
+    db "数数数"
+    db "数　数"
+    db "数　数"
+    db "数数数"
+    db "数　数"
+    db "数　数"
+    db "数数数"
+
+    db "数数数"
+    db "数　数"
+    db "数　数"
+    db "数数数"
+    db "　　数"
+    db "数　数"
+    db "数数数"
+
+    db "　"
+    db "数"
+    db "　"
+    db "　"
+    db "　"
+    db "数"
+    db "　"
+POPC
+
+call_059d:
+    ld hl, $120c
+    trap MoveCursor
+    ldh a, [$cc]
+    add "0"
+    cp $3a
+    jr nz, jr_05ac
+    ld a, $20
+jr_05ac:
+    trap DrawChar
+    ret
+
+call_05af:
+    ldh a, [$c7]
+    ld h, $01
+    jr jr_05c5
+
+call_05b5:
+    ldh a, [$c8]
+    ld h, $05
+    jr jr_05c5
+
+call_05bb:
+    ldh a, [$c9]
+    ld h, $0b
+    jr jr_05c5
+
+call_05c1:
+    ldh a, [$ca]
+    ld h, $0f
+jr_05c5:
+    ld e, a
+    add a
+    add a
+    add e
+    add a
+    add a
+    add e
+    ld de, $c613
+    add e
+    ld e, a
+    ld a, $00
+    adc d
+    ld d, a
+    ld a, $03
+    jr jr_05e0
+
+call_05d9:
+    ld h, $09
+    ld de, $c6e5
+    ld a, $01
+jr_05e0:
+    push bc
+    ld c, h
+    ld hl, $0006
+    ld b, h
+    add hl, hl
+    add hl, hl
+    add hl, hl
+    add hl, hl
+    add hl, hl
+    add hl, bc
+    ld bc, $9800
+    add hl, bc
+    ld c, a
+    ld b, $07
+jr_05f3:
+    push bc
+    push de
+    push hl
+    ld b, $00
+    trap $02
+    pop hl
+    ld bc, $0020
+    add hl, bc
+    pop de
+    pop bc
+    ld a, c
+    add e
+    ld e, a
+    ld a, $00
+    adc d
+    ld d, a
+    dec b
+    jr nz, jr_05f3
+    pop bc
+    ret
+
+data_060d:
+    dk "1=         2=       "
+    dk "3=         4=       "
+    dk "5=         6=       ", $0d
+    dk $0d
+    dk $0d
+    dk $0d
+    dk $0d
+    dk $0d
+    dk $0d
+    dk $0d
+    dk $0d
+    dk "[A]:Start/Stop", $0d
+    dk $0d
+    dk $0d
+    dk "[SELECT]:Exit\n"
+
+call_0671:
+    push hl
+    ld hl, $0500
+    trap MoveCursor
+    pop hl
+    trap DrawString
+    push hl
+    ld hl, $000f
+    trap MoveCursor
+    pop hl
+    trap DrawString
+    push hl
+    ld hl, $0010
+    trap MoveCursor
+    pop hl
+    trap DrawString
+    ld hl, $0002
+    trap MoveCursor
+    rpush data_060d
+    pop hl
+    trap DrawString
+    ret
+
+call_0698:
+    ld l, a
+    and $01
+    ld h, a
+    add a
+    add a
+    add h
+    add a
+    add h
+    add $02
+    ld h, a
+    ld a, l
+    and $fe
+    rrca
+    add $01
+    ld l, a
+    ret
+
+call_06ac:
+    push hl
+    rcall call_0698
+    trap MoveCursor
+    pop hl
+    ld a, [hli]
+    add "0"
+    trap DrawChar
+    ld a, [hli]
+    add "0"
+    trap DrawChar
+    ld a, ":"
+    trap DrawChar
+    ld a, [hli]
+    add "0"
+    trap DrawChar
+    ld a, [hli]
+    add "0"
+    trap DrawChar
+    ld a, "."
+    trap DrawChar
+    ret
+
+call_06d4:
+    call $0100
+    ldh a, [$c0]
+    inc a
+    ldh [$c0], a
+    sub $e1
+    ret c
+    ldh [$c0], a
+    ldh a, [$83]
+    inc a
+    ldh [$83], a
+    ret
+
+call_06e7:
+    ld a, $20
+    trap DrawInit
+    ld hl, $c500
+    ld a, [hli]
+    or [hl]
+    jr z, jr_072c
+
+    dec hl
+    ld de, $0000
+    ld b, $00
+    push hl
+    trap $ea
+    pop hl
+    ld de, $c613
+    ld bc, $00d9
+    push hl
+    trap $eb
+    ld hl, $ff27
+    add hl, bc
+    ld a, h
+    or l
+    pop hl
+    jr nz, jr_072c
+    ld de, $c6ec
+    ld bc, $0800
+    trap $eb
+    ld a, b
+    or c
+    jr z, jr_0738
+    ld de, $c6ec
+    ld bc, $c400
+    trap InitDecompress
+    ld de, $8800
+    ld bc, $0800
+    trap RunDecompress
+    jr jr_0738
+
+jr_072c:
+    ld hl, $c613
+    rpush data_04c4
+    pop de
+    ld bc, $00d9
+    trap $02
+
+jr_0738:
+    ld hl, $0791
+    trap $ca
+    ld hl, $8000
+    rpush data_0484
+    pop de
+    ld bc, $0040
+    trap $02
+    ld de, $0005
+    ld bc, $1409
+    trap $58
+    ld a, $07
+    trap $b4
+    ld hl, $c600
+    rpush call_06d4
+    pop de
+    ld bc, $0013
+    trap $02
+    di
+    ld hl, $c012
+    ld bc, $c600
+    ld e, [hl]
+    ld [hl], c
+    inc hl
+    ld d, [hl]
+    ld [hl], b
+    inc bc
+    ld l, c
+    ld h, b
+    ld [hl], e
+    inc hl
+    ld [hl], d
+    xor a
+    ldh [$c0], a
+    ei
+    ret
+
+call_0778:
+    trap AwaitFrame
+    ldh a, [$c3]
+    and $80
+    ret z
+    ldh a, [$83]
+    sub $06
+    ret c
+    ldh [$83], a
+    ldh a, [$cc]
+    add h
+    cp e
+    jr nz, jr_07cd
+    ldh a, [$ca]
+    add h
+    cp e
+    jr nz, jr_07c3
+    ldh a, [$c9]
+    add h
+    cp d
+    jr nz, jr_07b9
+    ldh a, [$c8]
+    add h
+    cp e
+    jr nz, jr_07af
+    ldh a, [$c7]
+    add h
+    cp e
+    jr nz, jr_07a5
+    ld a, c
+jr_07a5:
+    ldh [$c7], a
+    rcall call_05af
+    ld a, c
+jr_07af:
+    ldh [$c8], a
+    rcall call_05b5
+    ld a, b
+jr_07b9:
+    ldh [$c9], a
+    rcall call_05bb
+    ld a, c
+jr_07c3:
+    ldh [$ca], a
+    rcall call_05c1
+    ld a, c
+jr_07cd:
+    ldh [$cc], a
+    rpush call_059d
+    ret
+
+call_07d3:
+    ldh a, [$c4]
+    bit 2, a
+    jr z, jr_07dd
+    pop af
+    or $01
+    ret
+
+jr_07dd:
+    bit 3, a
+    jr z, jr_07e4
+    pop af
+    xor a
+    ret
+
+jr_07e4:
+    bit 0, a
+    ret z
+    ldh a, [$c3]
+    bit 7, a
+    jr z, jr_07fa
+    and $7f
+    ldh [$c3], a
+    ldh a, [$83]
+    ldh [$c1], a
+    ldh a, [$c0]
+    ldh [$c2], a
+    ret
+
+jr_07fa:
+    or $80
+    ldh [$c3], a
+    ldh a, [$c1]
+    ldh [$83], a
+    ldh a, [$c2]
+    ldh [$c0], a
+    ret
 
 End:
