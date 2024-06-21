@@ -44,6 +44,7 @@ MACRO KANACHARMAP
 ENDM
 
     HALFCHARMAP "\n", $00, $00
+    HALFCHARMAP "\r", $0d, $0d
     FULLCHARMAP " ", "　", $20, $20
     FULLCHARMAP "!", "！", $21, $21
     FULLCHARMAP "\"", "＂", $22, $22

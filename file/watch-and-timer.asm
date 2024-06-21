@@ -629,18 +629,18 @@ jr_05f3:
 data_060d:
     dk "1=         2=       "
     dk "3=         4=       "
-    dk "5=         6=       ", $0d
-    dk $0d
-    dk $0d
-    dk $0d
-    dk $0d
-    dk $0d
-    dk $0d
-    dk $0d
-    dk $0d
-    dk "[A]:Start/Stop", $0d
-    dk $0d
-    dk $0d
+    dk "5=         6=       \r"
+    dk "\r"
+    dk "\r"
+    dk "\r"
+    dk "\r"
+    dk "\r"
+    dk "\r"
+    dk "\r"
+    dk "\r"
+    dk "[A]:Start/Stop\r"
+    dk "\r"
+    dk "\r"
     dk "[SELECT]:Exit\n"
 
 call_0671:
