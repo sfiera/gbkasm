@@ -31,6 +31,7 @@ DEF DrawStringList   EQU $6a
 DEF DrawLayout       EQU $5c
 
 DEF IntToString      EQU $a3
+DEF IntToStringHex   EQU $a4
 
 DEF LoadTiles        EQU $4c
 
