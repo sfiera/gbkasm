@@ -16,6 +16,8 @@ RGBLINK=rgblink
 RGBFIX=rgbfix
 RGBGFX=rgbgfx
 
+.SECONDARY:
+
 .PHONY: all
 all: $(GB)
 
