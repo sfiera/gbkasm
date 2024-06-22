@@ -58,6 +58,11 @@ file/koura3.o: gfx/koura-3.2bpp.hz
 file/magnets.o: gfx/icon/magnets.2bpp
 file/mogura.o: gfx/icon/mogutte-nanbo.2bpp
 file/puzzle.o: gfx/icon/puzzle-game.2bpp
+file/puzzle.o: gfx/puzzle/arrow.2bpp
+file/puzzle.o: gfx/puzzle/hand.2bpp
+file/puzzle.o: gfx/puzzle/tile.2bpp
+file/puzzle.o: gfx/puzzle/boxes.2bpp.hz
+file/puzzle.o: gfx/puzzle/numbers.2bpp.hz
 file/roulette.o: gfx/icon/roulette.2bpp
 file/samegame.o: gfx/icon/samegame.2bpp gfx/sametiles.2bpp.hz
 file/sezaki.o: gfx/sezaki.2bpp.hz
