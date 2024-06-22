@@ -33,7 +33,7 @@ Main::
     callx @+$03c7
     callx @+$0645
     callx @+$0440
-    trap $b1
+    trap AwaitFrame
     ldh a, [$c6]
     ld l, a
     ld h, $00
@@ -133,7 +133,7 @@ jr_000_01bb::
     ld de, $0002
     ld c, $20
     callx @+$0260
-    trap $8e
+    trap RandNext
     jr jr_000_01ed
 
     callx @+$03d5
@@ -162,7 +162,7 @@ jr_000_01f7::
     and c
     jr z, jr_000_01fe
 
-    trap $01
+    trap ExitToMenu
 
 jr_000_01fe:
     ldh a, [$c6]
@@ -204,7 +204,7 @@ jr_000_021c::
 
 jr_000_022b::
     ld a, $20
-    trap $14
+    trap PlaySound
     ld hl, $c760
     inc [hl]
     callx @+$0112
@@ -339,7 +339,7 @@ jr_000_02e2::
     jr jr_000_0301
 
 jr_000_02f0::
-    trap $8e
+    trap RandNext
     and b
     add c
     ldh [$c9], a
@@ -369,17 +369,17 @@ jr_000_0301::
 
 jr_000_0329::
     ld l, $0d
-    trap $b8
+    trap MoveCursor
     ld l, e
     ld h, d
-    trap $69
+    trap DrawString
     ret
 
 
 jr_000_0332::
     push af
     ld a, $07
-    trap $14
+    trap PlaySound
     pop af
     add a
     add a
@@ -407,7 +407,7 @@ jr_000_0347::
 
 jr_000_035b::
     ld hl, $1110
-    trap $b8
+    trap MoveCursor
     ldx hl, @+$ffe2
     ldh a, [$c7]
     cp $01
@@ -416,13 +416,13 @@ jr_000_035b::
     ld e, a
     ld d, $00
     ld hl, $c400
-    trap $a3
+    trap IntToString
     ldx hl, @+$ffd4
-    trap $69
+    trap DrawString
     ld hl, $c404
 
 jr_000_037b::
-    trap $69
+    trap DrawString
     ld a, [$c760]
     ld h, $4f
     ld de, $4f4f
@@ -456,15 +456,15 @@ jr_000_039c::
     ld l, $0d
     push hl
     ld h, $02
-    trap $b8
+    trap MoveCursor
     pop hl
     ld a, h
     push hl
-    trap $bb
+    trap DrawChar
     ld h, $11
-    trap $b8
+    trap MoveCursor
     pop af
-    trap $bb
+    trap DrawChar
     ret
 
 
@@ -511,12 +511,12 @@ jr_000_0407::
     callx @+$0007
     ld hl, $0b10
     pop de
-    trap $b8
+    trap MoveCursor
     ld hl, $c400
     push hl
-    trap $a3
+    trap IntToString
     pop hl
-    trap $69
+    trap DrawString
     ret
 
 
@@ -648,13 +648,13 @@ jr_000_04c1::
     ld bc, $0100
     trap $02
     ld a, $20
-    trap $b3
+    trap DrawInit
     ldx de, @+$02f0
     ld bc, $c400
-    trap $62
+    trap InitDecompress
     ld de, $8800
     ld bc, $0480
-    trap $63
+    trap RunDecompress
     ld hl, $8c80
     ld de, $c300
     ld b, $06
@@ -667,7 +667,7 @@ jr_000_04c1::
     ld b, $00
 
 jr_000_04fb::
-    trap $8e
+    trap RandNext
     and $0f
     add b
     ld hl, $ffc0
@@ -747,7 +747,7 @@ jr_000_051b::
     ldh [$c9], a
     ldh [$cb], a
     ldx hl, @+$0665
-    trap $69
+    trap DrawString
     ld de, $0302
     ld bc, $0e0b
     trap $58
@@ -811,7 +811,7 @@ jr_000_051b::
     jr nz, jr_000_065d
 
     ld a, $2f
-    trap $14
+    trap PlaySound
     ld bc, $0000
     callx @+$fde6
     ldx hl, @+$01a3
@@ -824,18 +824,18 @@ jr_000_051b::
     ld a, $78
     trap $dc
     xor a
-    trap $b3
+    trap DrawInit
     ld hl, $0307
-    trap $b8
+    trap MoveCursor
     ldx hl, @+$0070
-    trap $69
+    trap DrawString
     ld hl, $0109
-    trap $b8
+    trap MoveCursor
     ldx hl, @+$0077
-    trap $69
+    trap DrawString
 
 jr_000_0646::
-    trap $b1
+    trap AwaitFrame
     ldh a, [$8a]
     or a
     jr nz, jr_000_0646
@@ -847,7 +847,7 @@ jr_000_0646::
     trap $dc
     ld a, $f0
     trap $dc
-    trap $01
+    trap ExitToMenu
 
 jr_000_065d::
     ld hl, $c762
@@ -862,7 +862,7 @@ jr_000_0666::
     push bc
     push de
     ld a, $24
-    trap $14
+    trap PlaySound
     ldx hl, @+$0152
     ld e, [hl]
     inc hl
@@ -877,7 +877,7 @@ jr_000_0666::
     jr nz, jr_000_0666
 
     xor a
-    trap $14
+    trap PlaySound
     ld a, $3c
     trap $dc
     ld hl, $c762
@@ -1010,20 +1010,20 @@ jr_000_0713::
     pop de
     ld h, $02
     ld l, d
-    trap $b8
+    trap MoveCursor
     ld a, $cc
-    trap $bb
+    trap DrawChar
     ld h, $11
     ld l, e
-    trap $b8
+    trap MoveCursor
     ld a, $cc
-    trap $bb
+    trap DrawChar
     ret
 
 
     trap $b5
     ldx hl, @+$03f8
-    trap $69
+    trap DrawString
     ld bc, $0302
     ld d, $30
     callx @+$fd17
@@ -1052,7 +1052,7 @@ jr_000_0713::
     trap $b4
 
 jr_000_07b4::
-    trap $b1
+    trap AwaitFrame
     trap $d8
     bit 0, a
     ret nz
@@ -1060,7 +1060,7 @@ jr_000_07b4::
     and $06
     jr z, jr_000_07b4
 
-    trap $01
+    trap ExitToMenu
     ld h, h
     nop
     ld a, a

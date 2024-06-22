@@ -52,19 +52,19 @@ jr_000_0103::
     trap $b4
     call $a328
     ld hl, $0902
-    trap $b8
+    trap MoveCursor
     ld hl, $b754
-    trap $69
+    trap DrawString
     ld hl, $0410
-    trap $b8
+    trap MoveCursor
     ld hl, $b876
-    trap $69
+    trap DrawString
 
 HeaderManufacturerCode::
     ld hl, $0301
-    trap $b8
+    trap MoveCursor
     ld hl, $b735
-    trap $69
+    trap DrawString
     ld a, $02
     ld [$d026], a
     ld a, $1e
@@ -153,7 +153,7 @@ jr_000_01e8::
     ld [$d026], a
 
 jr_000_01ed::
-    trap $b1
+    trap AwaitFrame
     ldh a, [$8a]
     and a
     jp z, $a15b
@@ -201,7 +201,7 @@ jr_000_01ed::
     ld b, $14
 
 jr_000_0233::
-    trap $b1
+    trap AwaitFrame
     dec b
     jr nz, jr_000_0233
 
@@ -236,7 +236,7 @@ jr_000_0233::
 
 jr_000_0262::
     push bc
-    trap $b1
+    trap AwaitFrame
     ld h, $40
     push af
     push de
@@ -276,7 +276,7 @@ jr_000_0262::
     push af
 
 jr_000_0295::
-    trap $b1
+    trap AwaitFrame
     pop af
     push af
     push bc
@@ -304,7 +304,7 @@ jr_000_02ad::
     ld d, $38
     push hl
     call $a2cb
-    trap $b1
+    trap AwaitFrame
     pop hl
     ld a, h
     dec a
@@ -355,7 +355,7 @@ jr_000_02ad::
     call $a341
     call $b2d2
     call $a419
-    trap $11
+    trap StopAudio
     ld hl, $04bc
     trap $cb
     xor a
@@ -369,7 +369,7 @@ jr_000_02ad::
     ld b, $05
     ld e, $11
     ld d, $0a
-    trap $b3
+    trap DrawInit
     ld a, $03
     trap $b4
     ret
@@ -536,7 +536,7 @@ jr_000_03ed::
     ld [$c64c], a
     ld a, h
     ld [$c64d], a
-    trap $8d
+    trap RandInit
     ret
 
 
@@ -566,35 +566,35 @@ jr_000_0424::
 
 
     xor a
-    trap $b3
+    trap DrawInit
     ld hl, $0601
-    trap $b8
+    trap MoveCursor
     ld hl, $a64f
-    trap $69
+    trap DrawString
     ld hl, $0003
-    trap $b8
+    trap MoveCursor
     ld hl, $a65c
-    trap $69
+    trap DrawString
     ld hl, $0606
-    trap $b8
+    trap MoveCursor
     ld hl, $a6a0
-    trap $69
+    trap DrawString
     ld hl, $0808
-    trap $b8
+    trap MoveCursor
     ld hl, $a6ac
-    trap $69
+    trap DrawString
     ld hl, $080a
-    trap $b8
+    trap MoveCursor
     ld hl, $a6b2
-    trap $69
+    trap DrawString
     ld hl, $080c
-    trap $b8
+    trap MoveCursor
     ld hl, $a6b7
-    trap $69
+    trap DrawString
     ld hl, $080e
-    trap $b8
+    trap MoveCursor
     ld hl, $a6bf
-    trap $69
+    trap DrawString
     ld a, $03
     trap $b4
     ld hl, $8000
@@ -612,7 +612,7 @@ jr_000_0424::
     ld a, $40
     ld [hl+], a
     ld a, $00
-    trap $8e
+    trap RandNext
     trap $d8
     bit 2, a
     jp nz, $a571
@@ -655,14 +655,14 @@ jr_000_04ce::
 jr_000_04d7::
     push bc
     ld hl, $0003
-    trap $b8
+    trap MoveCursor
     ld hl, $a686
-    trap $69
-    trap $b1
+    trap DrawString
+    trap AwaitFrame
     ld hl, $0003
-    trap $b8
+    trap MoveCursor
     ld hl, $a671
-    trap $69
+    trap DrawString
     pop bc
     dec c
     jr nz, jr_000_04d7
@@ -676,47 +676,47 @@ jr_000_04f3::
 
 
     xor a
-    trap $b3
+    trap DrawInit
     ld hl, $0001
-    trap $b8
+    trap MoveCursor
     ld hl, $a573
-    trap $69
+    trap DrawString
     ld hl, $0002
-    trap $b8
+    trap MoveCursor
     ld hl, $a586
-    trap $69
+    trap DrawString
     ld hl, $0003
-    trap $b8
+    trap MoveCursor
     ld hl, $a59c
-    trap $69
+    trap DrawString
     ld hl, $0005
-    trap $b8
+    trap MoveCursor
     ld hl, $a5b4
-    trap $69
+    trap DrawString
     ld hl, $0007
-    trap $b8
+    trap MoveCursor
     ld hl, $a5ca
-    trap $69
+    trap DrawString
     ld hl, $0008
-    trap $b8
+    trap MoveCursor
     ld hl, $a5e1
-    trap $69
+    trap DrawString
     ld hl, $000a
-    trap $b8
+    trap MoveCursor
     ld hl, $a5f4
-    trap $69
+    trap DrawString
     ld hl, $000b
-    trap $b8
+    trap MoveCursor
     ld hl, $a60f
-    trap $69
+    trap DrawString
     ld hl, $000d
-    trap $b8
+    trap MoveCursor
     ld hl, $a628
-    trap $69
+    trap DrawString
     ld hl, $000e
-    trap $b8
+    trap MoveCursor
     ld hl, $a63c
-    trap $69
+    trap DrawString
 
 jr_000_0560::
     ldh a, [$8a]
@@ -728,7 +728,7 @@ jr_000_0560::
     ret
 
 
-    trap $01
+    trap ExitToMenu
     ld c, $20
     jr nz, @+$22
 
@@ -1098,7 +1098,7 @@ jr_000_06dd::
     jr nz, jr_000_070f
 
     ld a, $0c
-    trap $13
+    trap PlayMusic
 
 jr_000_070f::
     call $a87d
@@ -1128,32 +1128,32 @@ jr_000_070f::
     ld [$c650], a
     ld [$c65f], a
     ld a, $1d
-    trap $14
+    trap PlaySound
     call $a1fe
 
 jr_000_0759::
-    trap $17
+    trap GetSoundState
     cp $01
     jr z, jr_000_0759
 
     ld a, $09
-    trap $13
+    trap PlayMusic
     ret
 
 
     xor a
-    trap $13
+    trap PlayMusic
     ld a, $1e
-    trap $14
+    trap PlaySound
     call $a208
 
 jr_000_076e::
-    trap $17
+    trap GetSoundState
     cp $01
     jr z, jr_000_076e
 
     ld a, $00
-    trap $14
+    trap PlaySound
     ld a, [$c65d]
     cp $01
     jr z, jr_000_078d
@@ -1200,12 +1200,12 @@ jr_000_079f::
     jr nc, jr_000_07c4
 
 jr_000_07b7::
-    trap $17
+    trap GetSoundState
     cp $01
     jr z, jr_000_07b7
 
     ld a, $1f
-    trap $14
+    trap PlaySound
     call $a2b3
 
 jr_000_07c4::
@@ -1219,9 +1219,9 @@ jr_000_07c4::
     ld a, $06
     trap $b9
     ld hl, $0802
-    trap $b8
+    trap MoveCursor
     ld hl, $a80d
-    trap $69
+    trap DrawString
     ld a, [$c600]
     ld l, a
     ld a, [$c601]
@@ -1234,16 +1234,16 @@ jr_000_07c4::
     ld d, a
     ld [$c601], a
     ld hl, $c655
-    trap $a3
+    trap IntToString
     push hl
     trap $68
     ld a, $14
     sub l
     ld h, a
     ld l, $02
-    trap $b8
+    trap MoveCursor
     pop hl
-    trap $69
+    trap DrawString
     ld a, $07
     trap $b9
     ret
@@ -1258,21 +1258,21 @@ jr_000_07c4::
     ld a, $06
     trap $b9
     ld hl, $0800
-    trap $b8
+    trap MoveCursor
     ld hl, $a842
-    trap $69
+    trap DrawString
     ld a, [$c64b]
     ld e, a
     ld a, [$c64c]
     ld d, a
     ld hl, $c655
-    trap $a3
+    trap IntToString
     ld hl, $0d00
-    trap $b8
+    trap MoveCursor
     ld hl, $c656
-    trap $69
+    trap DrawString
     ld hl, $a849
-    trap $69
+    trap DrawString
     ld a, $07
     trap $b9
     ret
@@ -1292,25 +1292,25 @@ jr_000_0841::
     ld a, $06
     trap $b9
     ld hl, $0000
-    trap $b8
+    trap MoveCursor
     ld hl, $a878
-    trap $69
+    trap DrawString
     ld a, [$c65c]
     ld d, $00
     ld e, a
     ld hl, $c655
 
 jr_000_085b::
-    trap $a3
+    trap IntToString
     push hl
     trap $68
     ld a, $07
     sub l
     ld h, a
     ld l, $00
-    trap $b8
+    trap MoveCursor
     pop hl
-    trap $69
+    trap DrawString
     ld a, $07
     trap $b9
     ret
@@ -1333,7 +1333,7 @@ jr_000_0875::
 
 jr_000_0880::
     ld [$c65f], a
-    trap $18
+    trap PauseMusic
 
 jr_000_0885:
     ld a, [$c65f]
@@ -1354,8 +1354,8 @@ jr_000_0885:
 
 jr_000_089e::
     xor a
-    trap $13
-    trap $01
+    trap PlayMusic
+    trap ExitToMenu
     ld a, [$c652]
     dec a
     ld [$c652], a
@@ -1365,7 +1365,7 @@ jr_000_089e::
     cp $00
     jr nz, jr_000_08c5
 
-    trap $8e
+    trap RandNext
     ld d, h
     ld e, l
     ld h, $00
@@ -1381,7 +1381,7 @@ jr_000_08c5::
     cp $01
     jr nz, jr_000_08dc
 
-    trap $8e
+    trap RandNext
     ld d, h
     ld e, l
     ld h, $00
@@ -1394,7 +1394,7 @@ jr_000_08c5::
     jr jr_000_08ed
 
 jr_000_08dc::
-    trap $8e
+    trap RandNext
     ld d, h
     ld e, l
     ld h, $00
@@ -1407,7 +1407,7 @@ jr_000_08dc::
 
 jr_000_08ed::
     ld [$c652], a
-    trap $8e
+    trap RandNext
     ld d, h
     ld e, l
     ld h, $00
@@ -1483,7 +1483,7 @@ jr_000_0951::
     ld e, $25
 
 jr_000_0955::
-    trap $8e
+    trap RandNext
     cp e
     jr c, jr_000_095e
 
@@ -1516,7 +1516,7 @@ jr_000_0967::
     ld b, a
     ld a, [$c647]
     ld c, a
-    trap $8e
+    trap RandNext
     ld d, h
     ld e, l
     ld h, $00
@@ -1627,7 +1627,7 @@ jr_000_0967::
     ld b, a
     ld a, [$c645]
     ld c, a
-    trap $8e
+    trap RandNext
     ld d, h
     ld e, l
     ld h, $00
@@ -2151,7 +2151,7 @@ jr_000_0bee::
     ld a, h
     ld [$c64c], a
     ld a, $35
-    trap $14
+    trap PlaySound
     ld a, [$c649]
     ld a, a
     sla a
@@ -2241,7 +2241,7 @@ jr_000_0d19::
     ld a, h
     ld [$c64c], a
     ld a, $27
-    trap $14
+    trap PlaySound
     ld a, [$c649]
     ld a, a
     sla a
@@ -2361,7 +2361,7 @@ jr_000_0daa::
     jr nz, jr_000_0daa
 
     ld a, $1b
-    trap $14
+    trap PlaySound
     ld a, [$c649]
     ld a, a
     sla a
@@ -2442,7 +2442,7 @@ Call_000_0e00::
     ld a, h
     ld [$c64c], a
     ld a, $05
-    trap $14
+    trap PlaySound
     pop hl
     ret
 
@@ -2514,28 +2514,28 @@ jr_000_0eab::
     ld c, $01
 
 jr_000_0ebe::
-    trap $b1
+    trap AwaitFrame
     dec c
     jr nz, jr_000_0ebe
 
     xor a
-    trap $b3
+    trap DrawInit
     ld hl, $0506
-    trap $b8
+    trap MoveCursor
     ld hl, $b1f0
-    trap $69
+    trap DrawString
     ld hl, $020a
-    trap $b8
+    trap MoveCursor
     ld hl, $b1ff
-    trap $69
+    trap DrawString
     ld hl, $020c
-    trap $b8
+    trap MoveCursor
     ld hl, $b211
-    trap $69
+    trap DrawString
     ld hl, $000e
-    trap $b8
+    trap MoveCursor
     ld hl, $b222
-    trap $69
+    trap DrawString
     ld a, [$c65d]
     cp $01
     jr z, jr_000_0f62
@@ -2544,9 +2544,9 @@ jr_000_0ebe::
     jp z, $afd1
 
     ld hl, $0208
-    trap $b8
+    trap MoveCursor
     ld hl, $b237
-    trap $69
+    trap DrawString
     ld a, [$b240]
     ld l, a
     ld a, [$b241]
@@ -2597,22 +2597,22 @@ jr_000_0f38::
 jr_000_0f4b::
     ld hl, $c655
     push hl
-    trap $a3
+    trap IntToString
     ld h, $0a
     ld l, $08
-    trap $b8
+    trap MoveCursor
     pop hl
-    trap $69
+    trap DrawString
     ld hl, $a849
-    trap $69
+    trap DrawString
     jp $b036
 
 
 jr_000_0f62::
     ld hl, $0208
-    trap $b8
+    trap MoveCursor
     ld hl, $b237
-    trap $69
+    trap DrawString
     ld a, [$b242]
     ld l, a
     ld a, [$b243]
@@ -2663,20 +2663,20 @@ jr_000_0fa0::
 jr_000_0fb3::
     ld hl, $c655
     push hl
-    trap $a3
+    trap IntToString
     ld h, $0a
     ld l, $08
-    trap $b8
+    trap MoveCursor
     pop hl
-    trap $69
+    trap DrawString
     ld hl, $a849
-    trap $69
+    trap DrawString
     jr jr_000_102e
 
     ld hl, $0208
-    trap $b8
+    trap MoveCursor
     ld hl, $b237
-    trap $69
+    trap DrawString
     ld a, [$b244]
     ld l, a
     ld a, [$b245]
@@ -2727,14 +2727,14 @@ jr_000_1007::
 jr_000_101a::
     ld hl, $c655
     push hl
-    trap $a3
+    trap IntToString
     ld h, $0a
     ld l, $08
-    trap $b8
+    trap MoveCursor
     pop hl
-    trap $69
+    trap DrawString
     ld hl, $a849
-    trap $69
+    trap DrawString
 
 jr_000_102e::
     ldh a, [$8a]
@@ -2751,7 +2751,7 @@ jr_000_102e::
     bit 2, a
     jr z, jr_000_102e
 
-    trap $01
+    trap ExitToMenu
     ret
 
 
@@ -2811,43 +2811,43 @@ jr_000_107f::
 
 jr_000_1096::
     xor a
-    trap $b3
+    trap DrawInit
     ld hl, $0000
-    trap $b8
+    trap MoveCursor
     ld hl, $b129
-    trap $69
+    trap DrawString
     ld hl, $0002
-    trap $b8
+    trap MoveCursor
     ld hl, $b136
-    trap $69
+    trap DrawString
     ld hl, $0004
-    trap $b8
+    trap MoveCursor
     ld hl, $b151
-    trap $69
+    trap DrawString
     ld hl, $0005
-    trap $b8
+    trap MoveCursor
     ld hl, $b169
-    trap $69
+    trap DrawString
     ld hl, $0007
-    trap $b8
+    trap MoveCursor
     ld hl, $b17e
-    trap $69
+    trap DrawString
     ld hl, $0008
-    trap $b8
+    trap MoveCursor
     ld hl, $b197
-    trap $69
+    trap DrawString
     ld hl, $000a
-    trap $b8
+    trap MoveCursor
     ld hl, $b1ad
-    trap $69
+    trap DrawString
     ld hl, $000c
-    trap $b8
+    trap MoveCursor
     ld hl, $b1c5
-    trap $69
+    trap DrawString
     ld hl, $000f
-    trap $b8
+    trap MoveCursor
     ld hl, $b1de
-    trap $69
+    trap DrawString
     ld hl, $c400
 
 jr_000_10f6::
@@ -2857,13 +2857,13 @@ jr_000_10f6::
     xor a
     ld [$c40a], a
     ld hl, $0510
-    trap $b8
+    trap MoveCursor
     ld hl, $c400
     ldh a, [$92]
     push af
     or $40
     ldh [$92], a
-    trap $69
+    trap DrawString
     pop af
     and $fb
     ldh [$92], a
@@ -3298,10 +3298,10 @@ jr_000_128e::
     pop de
     ld hl, $c400
     ld b, h
-    trap $62
+    trap InitDecompress
     pop bc
     ld de, $8800
-    trap $63
+    trap RunDecompress
     ld a, $03
     trap $b4
     ret

@@ -854,7 +854,7 @@ call_0826:
     ld hl, $cc40
     trap IntToString
     ld hl, $cc43
-    trap $69
+    trap DrawString
     ret
 
 

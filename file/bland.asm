@@ -35,9 +35,9 @@ Main::
 
 call_a105:
     xor a
-    trap $13
+    trap PlayMusic
     xor a
-    trap $14
+    trap PlaySound
     trap ExitToMenu
 
 call_a10d:
@@ -158,31 +158,31 @@ call_a1a8:
     ldh [$9b], a
     ldh [$9a], a
     ld hl, $0505
-    trap $b8
+    trap MoveCursor
     ld hl, data_b597
-    trap $69
+    trap DrawString
     ld hl, $0409
-    trap $b8
+    trap MoveCursor
     ld hl, data_b5a3
-    trap $69
+    trap DrawString
     ld hl, $040b
-    trap $b8
+    trap MoveCursor
     ld hl, data_b5b1
-    trap $69
+    trap DrawString
     call call_b500
     call call_a23a
     ld a, $02
     call call_b580
     ld hl, $060e
-    trap $b8
+    trap MoveCursor
     ld hl, data_b609
-    trap $69
+    trap DrawString
     ld hl, $090e
     call call_a591
 
 jr_000_a20e:
-    trap $b1
-    trap $8e
+    trap AwaitFrame
+    trap RandNext
     ldh a, [$8b]
     bit 2, a
     jp nz, call_a105
@@ -199,7 +199,7 @@ jr_000_a20e:
 
 jr_000_a227:
     xor a
-    trap $13
+    trap PlayMusic
     trap $b5
     ld a, $f4
     ldh [$9b], a
@@ -318,18 +318,18 @@ jr_000_a2bd:
 
 jr_000_a2ce:
     ld hl, $0508
-    trap $b8
+    trap MoveCursor
     ld hl, data_b5bf
-    trap $69
+    trap DrawString
     ld a, [$c8e3]
     inc a
     ld de, $2710
     add e
     ld e, a
     ld hl, $cbf2
-    trap $a3
+    trap IntToString
     ld hl, $cbf6
-    trap $69
+    trap DrawString
     call call_b500
     ld a, $17
     call call_b580
@@ -419,7 +419,7 @@ jr_000_a38d:
 
 
 call_a393:
-    trap $b1
+    trap AwaitFrame
     ldh a, [$8a]
     and a
     jr nz, call_a393
@@ -431,7 +431,7 @@ call_a39b:
     call call_a393
 
 jr_000_a39e:
-    trap $b1
+    trap AwaitFrame
     ldh a, [$8b]
     and a
     jr z, jr_000_a39e
@@ -629,11 +629,11 @@ jr_000_a497:
 
 jr_000_a49e:
     push hl
-    trap $8e
+    trap RandNext
     and $03
     add $03
     ld b, a
-    trap $8e
+    trap RandNext
     pop hl
     call call_a4c5
     ld a, e
@@ -645,7 +645,7 @@ jr_000_a49e:
 jr_000_a4b3:
     ld hl, $cbeb
     push hl
-    trap $8e
+    trap RandNext
     pop hl
     ld e, $28
     ld b, $07
@@ -665,9 +665,9 @@ call_a4c5:
 
 jr_000_a4ce:
     push hl
-    trap $8e
+    trap RandNext
     ld b, a
-    trap $8e
+    trap RandNext
     pop hl
     and $0f
     jr z, jr_000_a4ce
@@ -702,25 +702,25 @@ jr_000_a4ce:
 
 call_a4f9:
     ld hl, $0002
-    trap $b8
+    trap MoveCursor
     ld hl, data_b5f8
-    trap $69
+    trap DrawString
     ld hl, $0a02
-    trap $b8
+    trap MoveCursor
     ld hl, data_b5ff
-    trap $69
+    trap DrawString
     ld hl, $0003
-    trap $b8
+    trap MoveCursor
     ld hl, data_b605
-    trap $69
+    trap DrawString
     ld hl, $0903
-    trap $b8
+    trap MoveCursor
     ld hl, data_b609
-    trap $69
+    trap DrawString
     ld hl, $0a11
-    trap $b8
+    trap MoveCursor
     ld hl, data_b60d
-    trap $69
+    trap DrawString
     ret
 
 
@@ -754,9 +754,9 @@ call_a542:
     ld e, a
     call call_a52c
     ld hl, $0602
-    trap $b8
+    trap MoveCursor
     ld hl, $cbfb
-    trap $69
+    trap DrawString
     ret
 
 
@@ -768,9 +768,9 @@ call_a55c:
     ld e, a
     call call_a52c
     ld hl, $0f02
-    trap $b8
+    trap MoveCursor
     ld hl, $cbfb
-    trap $69
+    trap DrawString
     ret
 
 
@@ -786,9 +786,9 @@ call_a575:
     ld hl, $cbf2
     call call_a52c
     ld hl, $0303
-    trap $b8
+    trap MoveCursor
     ld hl, $cbf8
-    trap $69
+    trap DrawString
     ret
 
 
@@ -805,9 +805,9 @@ call_a591:
     ld hl, $cbf2
     call call_a52c
     pop hl
-    trap $b8
+    trap MoveCursor
     ld hl, $cbf8
-    trap $69
+    trap DrawString
     ret
 
 
@@ -819,9 +819,9 @@ call_a5ac:
     ld hl, $cbf2
     call call_a52c
     ld hl, $0f11
-    trap $b8
+    trap MoveCursor
     ld hl, $cbfb
-    trap $69
+    trap DrawString
     ret
 
 
@@ -2187,7 +2187,7 @@ jr_000_acf2:
 
 jr_000_acf3:
     push hl
-    trap $8e
+    trap RandNext
     pop hl
     ld b, a
     and $03
@@ -2305,7 +2305,7 @@ jr_000_ad7e:
     call call_aa00
     ld b, a
     push hl
-    trap $8e
+    trap RandNext
     pop hl
     and $0f
     inc a
@@ -2692,9 +2692,9 @@ jr_000_af82:
     srl a
     add $05
     ld l, a
-    trap $b8
+    trap MoveCursor
     ld a, $22
-    trap $bb
+    trap DrawChar
     ld hl, $c8f0
     ld a, [hl]
     push af
@@ -2974,9 +2974,9 @@ jr_000_b12b:
     srl a
     add $05
     ld l, a
-    trap $b8
+    trap MoveCursor
     ld a, [$c8e4]
-    trap $bb
+    trap DrawChar
     ret
 
 
@@ -3224,9 +3224,9 @@ call_b26a:
     ld a, c
     add $05
     ld l, a
-    trap $b8
+    trap MoveCursor
     ld a, e
-    trap $bb
+    trap DrawChar
     ret
 
 
@@ -3455,9 +3455,9 @@ jr_000_b390:
     ldh [$9b], a
     ldh [$9a], a
     ld hl, $0204
-    trap $b8
+    trap MoveCursor
     ld hl, data_b5de
-    trap $69
+    trap DrawString
     call call_b500
     ld a, $01
     ld [$c801], a
@@ -3513,20 +3513,20 @@ call_b42a:
     ret z
 
     xor a
-    trap $13
+    trap PlayMusic
     trap $b5
     call call_b553
     xor a
     ldh [$9b], a
     ldh [$9a], a
     ld hl, $0807
-    trap $b8
+    trap MoveCursor
     ld hl, data_b5ac
-    trap $69
+    trap DrawString
     ld hl, $0809
-    trap $b8
+    trap MoveCursor
     ld hl, data_b5d3
-    trap $69
+    trap DrawString
     call call_b500
     call call_b469
     trap $b5
@@ -3627,9 +3627,9 @@ jr_000_b4d4:
     ld a, $3f
     ld [$c916], a
     ld hl, $0609
-    trap $b8
+    trap MoveCursor
     ld hl, data_b5ef
-    trap $69
+    trap DrawString
     ld hl, $c801
     inc [hl]
     ret
@@ -3641,7 +3641,7 @@ jr_000_b4eb:
     call call_a63f
     call call_b3f6
     xor a
-    trap $13
+    trap PlayMusic
     ld a, $57
     ld [$c800], a
     ret
@@ -3657,7 +3657,7 @@ call_b505:
     ld hl, $ff83
 
 jr_000_b508:
-    trap $b1
+    trap AwaitFrame
     ld a, [hl]
     cp c
     jr nc, jr_000_b510
@@ -3680,18 +3680,18 @@ call_b513:
     ret z
 
     ld hl, $0011
-    trap $b8
+    trap MoveCursor
     ld hl, data_b5d8
-    trap $69
+    trap DrawString
     ld a, $2c
     call call_b58a
     call call_b572
     ld a, $02
-    trap $19
+    trap SetVolume
     call call_a393
 
 jr_000_b537:
-    trap $b1
+    trap AwaitFrame
     ldh a, [$8b]
     bit 3, a
     jr z, jr_000_b537
@@ -3701,9 +3701,9 @@ jr_000_b537:
     ld e, $2b
     ld bc, $0005
     trap $a6
-    trap $b1
+    trap AwaitFrame
     ld a, $07
-    trap $19
+    trap SetVolume
     ret
 
 
@@ -3716,12 +3716,12 @@ call_b553:
 
 
 call_b55e:
-    trap $b1
+    trap AwaitFrame
     ld a, [$c802]
     and a
     jr nz, jr_000_b56c
 
-    trap $16
+    trap GetMusicState
     and a
     jr nz, call_b55e
 
@@ -3735,12 +3735,12 @@ jr_000_b56c:
 
 
 call_b572:
-    trap $b1
+    trap AwaitFrame
     ld a, [$c802]
     and a
     jr nz, jr_000_b56c
 
-    trap $17
+    trap GetSoundState
     and a
     jr nz, call_b572
 
@@ -3754,7 +3754,7 @@ call_b580:
     ret nz
 
     ld a, l
-    trap $13
+    trap PlayMusic
     ret
 
 
@@ -3765,7 +3765,7 @@ call_b58a:
     ret nz
 
     ld a, l
-    trap $14
+    trap PlaySound
     ret
 
 
