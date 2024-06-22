@@ -35,11 +35,9 @@ Main::
 
 call_a105:
     xor a
-    rst $08
-    inc de
+    trap $13
     xor a
-    rst $08
-    inc d
+    trap $14
     trap ExitToMenu
 
 call_a10d:
@@ -121,8 +119,7 @@ call_a189:
     ld e, $00
     ld bc, $0400
     ld hl, $c800
-    rst $08
-    and [hl]
+    trap $a6
     ld a, $02
     ld [$c8f4], a
     ld hl, data_b594
@@ -155,48 +152,37 @@ call_a1a8:
     ld [$c800], a
     ld a, c
     ld [$c8e3], a
-    rst $08
-    or l
+    trap $b5
     call call_b553
     xor a
     ldh [$9b], a
     ldh [$9a], a
     ld hl, $0505
-    rst $08
-    cp b
+    trap $b8
     ld hl, data_b597
-    rst $08
-    ld l, c
+    trap $69
     ld hl, $0409
-    rst $08
-    cp b
+    trap $b8
     ld hl, data_b5a3
-    rst $08
-    ld l, c
+    trap $69
     ld hl, $040b
-    rst $08
-    cp b
+    trap $b8
     ld hl, data_b5b1
-    rst $08
-    ld l, c
+    trap $69
     call call_b500
     call call_a23a
     ld a, $02
     call call_b580
     ld hl, $060e
-    rst $08
-    cp b
+    trap $b8
     ld hl, data_b609
-    rst $08
-    ld l, c
+    trap $69
     ld hl, $090e
     call call_a591
 
 jr_000_a20e:
-    rst $08
-    or c
-    rst $08
-    adc [hl]
+    trap $b1
+    trap $8e
     ldh a, [$8b]
     bit 2, a
     jp nz, call_a105
@@ -213,10 +199,8 @@ jr_000_a20e:
 
 jr_000_a227:
     xor a
-    rst $08
-    inc de
-    rst $08
-    or l
+    trap $13
+    trap $b5
     ld a, $f4
     ldh [$9b], a
     ld a, $04
@@ -228,8 +212,7 @@ jr_000_a227:
 
 call_a23a:
     ld hl, $1f0a
-    rst $08
-    or [hl]
+    trap $b6
     ld de, $ff44
     ld hl, $cbfe
     ld a, $80
@@ -285,8 +268,7 @@ jr_000_a267:
 
 jr_000_a280:
     ld hl, $1f0f
-    rst $08
-    or [hl]
+    trap $b6
     ret
 
 
@@ -295,8 +277,7 @@ call_a286:
     bit 6, a
     ret z
 
-    rst $08
-    or l
+    trap $b5
     xor a
     ldh [$83], a
     call call_b553
@@ -337,22 +318,18 @@ jr_000_a2bd:
 
 jr_000_a2ce:
     ld hl, $0508
-    rst $08
-    cp b
+    trap $b8
     ld hl, data_b5bf
-    rst $08
-    ld l, c
+    trap $69
     ld a, [$c8e3]
     inc a
     ld de, $2710
     add e
     ld e, a
     ld hl, $cbf2
-    rst $08
-    and e
+    trap $a3
     ld hl, $cbf6
-    rst $08
-    ld l, c
+    trap $69
     call call_b500
     ld a, $17
     call call_b580
@@ -389,8 +366,7 @@ jr_000_a325:
     ld [hl], a
     ld c, $0a
     call call_b505
-    rst $08
-    or l
+    trap $b5
     ld bc, $4850
     ld de, $0001
     ld hl, $c8f5
@@ -443,8 +419,7 @@ jr_000_a38d:
 
 
 call_a393:
-    rst $08
-    or c
+    trap $b1
     ldh a, [$8a]
     and a
     jr nz, call_a393
@@ -456,8 +431,7 @@ call_a39b:
     call call_a393
 
 jr_000_a39e:
-    rst $08
-    or c
+    trap $b1
     ldh a, [$8b]
     and a
     jr z, jr_000_a39e
@@ -470,17 +444,14 @@ call_a3a9:
     ld bc, $00cc
     ld e, $22
     ld hl, $c817
-    rst $08
-    and [hl]
+    trap $a6
     ld bc, $0011
     ld e, $23
     ld hl, $c817
-    rst $08
-    and [hl]
+    trap $a6
     ld bc, $0011
     ld hl, $c8d2
-    rst $08
-    and [hl]
+    trap $a6
     ld bc, $230a
     ld de, $0008
     ld hl, $c828
@@ -622,8 +593,7 @@ jr_000_a467:
     ld bc, $0011
     push hl
     push de
-    rst $08
-    ld [bc], a
+    trap $02
     pop de
     ld hl, $0011
     add hl, de
@@ -659,13 +629,11 @@ jr_000_a497:
 
 jr_000_a49e:
     push hl
-    rst $08
-    adc [hl]
+    trap $8e
     and $03
     add $03
     ld b, a
-    rst $08
-    adc [hl]
+    trap $8e
     pop hl
     call call_a4c5
     ld a, e
@@ -677,8 +645,7 @@ jr_000_a49e:
 jr_000_a4b3:
     ld hl, $cbeb
     push hl
-    rst $08
-    adc [hl]
+    trap $8e
     pop hl
     ld e, $28
     ld b, $07
@@ -698,11 +665,9 @@ call_a4c5:
 
 jr_000_a4ce:
     push hl
-    rst $08
-    adc [hl]
+    trap $8e
     ld b, a
-    rst $08
-    adc [hl]
+    trap $8e
     pop hl
     and $0f
     jr z, jr_000_a4ce
@@ -737,42 +702,31 @@ jr_000_a4ce:
 
 call_a4f9:
     ld hl, $0002
-    rst $08
-    cp b
+    trap $b8
     ld hl, data_b5f8
-    rst $08
-    ld l, c
+    trap $69
     ld hl, $0a02
-    rst $08
-    cp b
+    trap $b8
     ld hl, data_b5ff
-    rst $08
-    ld l, c
+    trap $69
     ld hl, $0003
-    rst $08
-    cp b
+    trap $b8
     ld hl, data_b605
-    rst $08
-    ld l, c
+    trap $69
     ld hl, $0903
-    rst $08
-    cp b
+    trap $b8
     ld hl, data_b609
-    rst $08
-    ld l, c
+    trap $69
     ld hl, $0a11
-    rst $08
-    cp b
+    trap $b8
     ld hl, data_b60d
-    rst $08
-    ld l, c
+    trap $69
     ret
 
 
 call_a52c:
     ld hl, $cbf2
-    rst $08
-    and b
+    trap $a0
     ld hl, $cbf2
     ld c, $0c
 
@@ -800,11 +754,9 @@ call_a542:
     ld e, a
     call call_a52c
     ld hl, $0602
-    rst $08
-    cp b
+    trap $b8
     ld hl, $cbfb
-    rst $08
-    ld l, c
+    trap $69
     ret
 
 
@@ -816,11 +768,9 @@ call_a55c:
     ld e, a
     call call_a52c
     ld hl, $0f02
-    rst $08
-    cp b
+    trap $b8
     ld hl, $cbfb
-    rst $08
-    ld l, c
+    trap $69
     ret
 
 
@@ -836,11 +786,9 @@ call_a575:
     ld hl, $cbf2
     call call_a52c
     ld hl, $0303
-    rst $08
-    cp b
+    trap $b8
     ld hl, $cbf8
-    rst $08
-    ld l, c
+    trap $69
     ret
 
 
@@ -857,11 +805,9 @@ call_a591:
     ld hl, $cbf2
     call call_a52c
     pop hl
-    rst $08
-    cp b
+    trap $b8
     ld hl, $cbf8
-    rst $08
-    ld l, c
+    trap $69
     ret
 
 
@@ -873,11 +819,9 @@ call_a5ac:
     ld hl, $cbf2
     call call_a52c
     ld hl, $0f11
-    rst $08
-    cp b
+    trap $b8
     ld hl, $cbfb
-    rst $08
-    ld l, c
+    trap $69
     ret
 
 
@@ -985,12 +929,10 @@ call_a63f:
     ld bc, $0140
     ld e, $00
     ld hl, $c8f5
-    rst $08
-    and [hl]
+    trap $a6
     ld bc, $0190
     ld hl, $ca48
-    rst $08
-    and [hl]
+    trap $a6
     ret
 
 
@@ -1096,8 +1038,7 @@ jr_000_a6d4:
 
 jr_000_a6e5:
     ld hl, $0101
-    rst $08
-    or [hl]
+    trap $b6
     ret
 
 
@@ -1131,8 +1072,7 @@ call_a6eb:
     call call_a71d
     pop de
     ld a, $ff
-    rst $08
-    ld h, b
+    trap $60
     cp $29
     ccf
     ret
@@ -1433,8 +1373,7 @@ call_a852:
 
 jr_000_a8a8:
     ld [$ca3c], a
-    rst $08
-    adc h
+    trap $8c
     ld a, l
     ld [$ca3a], a
     ld a, h
@@ -1452,8 +1391,7 @@ jr_000_a8a8:
 
 jr_000_a8c0:
     ld [$ca46], a
-    rst $08
-    adc h
+    trap $8c
     ld a, l
     ld [$ca44], a
     ld a, h
@@ -1464,8 +1402,7 @@ jr_000_a8c0:
     push hl
     push de
     ld c, $07
-    rst $08
-    add h
+    trap $84
     ld a, l
     and a
     jr nz, jr_000_a8e0
@@ -1482,8 +1419,7 @@ jr_000_a8e0:
 
 jr_000_a8e4:
     ld [$ca47], a
-    rst $08
-    adc e
+    trap $8b
     ld a, l
     ld [$ca42], a
     ld a, h
@@ -1492,8 +1428,7 @@ jr_000_a8e4:
     call call_a82a
     ld de, $ca35
     ld bc, $0014
-    rst $08
-    ld [bc], a
+    trap $02
     ret
 
 
@@ -1504,8 +1439,7 @@ call_a8fe:
     ld d, h
     ld hl, $ca35
     ld bc, $0014
-    rst $08
-    ld [bc], a
+    trap $02
     ld a, [$ca47]
     and a
     jr z, jr_000_a91c
@@ -1522,8 +1456,7 @@ jr_000_a91c:
     call call_a82a
     ld de, $ca35
     ld bc, $0014
-    rst $08
-    ld [bc], a
+    trap $02
     ret
 
 
@@ -1620,8 +1553,7 @@ call_a9a9:
     ld h, a
     sla l
     rl h
-    rst $08
-    adc b
+    trap $88
     ld a, l
     ld [$ca42], a
     ld a, h
@@ -2255,8 +2187,7 @@ jr_000_acf2:
 
 jr_000_acf3:
     push hl
-    rst $08
-    adc [hl]
+    trap $8e
     pop hl
     ld b, a
     and $03
@@ -2374,8 +2305,7 @@ jr_000_ad7e:
     call call_aa00
     ld b, a
     push hl
-    rst $08
-    adc [hl]
+    trap $8e
     pop hl
     and $0f
     inc a
@@ -2762,11 +2692,9 @@ jr_000_af82:
     srl a
     add $05
     ld l, a
-    rst $08
-    cp b
+    trap $b8
     ld a, $22
-    rst $08
-    cp e
+    trap $bb
     ld hl, $c8f0
     ld a, [hl]
     push af
@@ -3046,11 +2974,9 @@ jr_000_b12b:
     srl a
     add $05
     ld l, a
-    rst $08
-    cp b
+    trap $b8
     ld a, [$c8e4]
-    rst $08
-    cp e
+    trap $bb
     ret
 
 
@@ -3298,11 +3224,9 @@ call_b26a:
     ld a, c
     add $05
     ld l, a
-    rst $08
-    cp b
+    trap $b8
     ld a, e
-    rst $08
-    cp e
+    trap $bb
     ret
 
 
@@ -3504,16 +3428,14 @@ call_b34d:
 
 
 jr_000_b390:
-    rst $08
-    or l
+    trap $b5
     xor a
     ld [$c8f0], a
     call call_b553
     ld hl, $98c0
     ld bc, $0040
     ld e, $22
-    rst $08
-    and [hl]
+    trap $a6
     call call_a63f
     ld bc, $9810
     ld de, $0001
@@ -3533,11 +3455,9 @@ jr_000_b390:
     ldh [$9b], a
     ldh [$9a], a
     ld hl, $0204
-    rst $08
-    cp b
+    trap $b8
     ld hl, data_b5de
-    rst $08
-    ld l, c
+    trap $69
     call call_b500
     ld a, $01
     ld [$c801], a
@@ -3593,30 +3513,23 @@ call_b42a:
     ret z
 
     xor a
-    rst $08
-    inc de
-    rst $08
-    or l
+    trap $13
+    trap $b5
     call call_b553
     xor a
     ldh [$9b], a
     ldh [$9a], a
     ld hl, $0807
-    rst $08
-    cp b
+    trap $b8
     ld hl, data_b5ac
-    rst $08
-    ld l, c
+    trap $69
     ld hl, $0809
-    rst $08
-    cp b
+    trap $b8
     ld hl, data_b5d3
-    rst $08
-    ld l, c
+    trap $69
     call call_b500
     call call_b469
-    rst $08
-    or l
+    trap $b5
     call call_b553
     call call_b3f6
     call call_b500
@@ -3628,8 +3541,7 @@ call_b42a:
 
 call_b469:
     ld hl, $1f0a
-    rst $08
-    or [hl]
+    trap $b6
     ld de, $ff44
     ld hl, $cbfe
     xor a
@@ -3683,8 +3595,7 @@ jr_000_b4a0:
 
 jr_000_b4b4:
     ld hl, $1f0f
-    rst $08
-    or [hl]
+    trap $b6
     ret
 
 
@@ -3716,11 +3627,9 @@ jr_000_b4d4:
     ld a, $3f
     ld [$c916], a
     ld hl, $0609
-    rst $08
-    cp b
+    trap $b8
     ld hl, data_b5ef
-    rst $08
-    ld l, c
+    trap $69
     ld hl, $c801
     inc [hl]
     ret
@@ -3732,8 +3641,7 @@ jr_000_b4eb:
     call call_a63f
     call call_b3f6
     xor a
-    rst $08
-    inc de
+    trap $13
     ld a, $57
     ld [$c800], a
     ret
@@ -3741,8 +3649,7 @@ jr_000_b4eb:
 
 call_b500:
     ld a, $03
-    rst $08
-    or h
+    trap $b4
     ret
 
 
@@ -3750,8 +3657,7 @@ call_b505:
     ld hl, $ff83
 
 jr_000_b508:
-    rst $08
-    or c
+    trap $b1
     ld a, [hl]
     cp c
     jr nc, jr_000_b510
@@ -3774,22 +3680,18 @@ call_b513:
     ret z
 
     ld hl, $0011
-    rst $08
-    cp b
+    trap $b8
     ld hl, data_b5d8
-    rst $08
-    ld l, c
+    trap $69
     ld a, $2c
     call call_b58a
     call call_b572
     ld a, $02
-    rst $08
-    add hl, de
+    trap $19
     call call_a393
 
 jr_000_b537:
-    rst $08
-    or c
+    trap $b1
     ldh a, [$8b]
     bit 3, a
     jr z, jr_000_b537
@@ -3798,13 +3700,10 @@ jr_000_b537:
     ld hl, $9a20
     ld e, $2b
     ld bc, $0005
-    rst $08
-    and [hl]
-    rst $08
-    or c
+    trap $a6
+    trap $b1
     ld a, $07
-    rst $08
-    add hl, de
+    trap $19
     ret
 
 
@@ -3812,20 +3711,18 @@ call_b553:
     ld bc, $0400
     ld e, $2b
     ld hl, $9800
-    rst $08
-    and [hl]
+    trap $a6
     ret
 
 
 call_b55e:
-    rst $08
-    or c
+    trap $b1
     ld a, [$c802]
     and a
     jr nz, jr_000_b56c
 
-    rst $08
-    ld d, $a7
+    trap $16
+    and a
     jr nz, call_b55e
 
     ret
@@ -3838,14 +3735,12 @@ jr_000_b56c:
 
 
 call_b572:
-    rst $08
-    or c
+    trap $b1
     ld a, [$c802]
     and a
     jr nz, jr_000_b56c
 
-    rst $08
-    rla
+    trap $17
     and a
     jr nz, call_b572
 
@@ -3859,8 +3754,7 @@ call_b580:
     ret nz
 
     ld a, l
-    rst $08
-    inc de
+    trap $13
     ret
 
 
@@ -3871,8 +3765,7 @@ call_b58a:
     ret nz
 
     ld a, l
-    rst $08
-    inc d
+    trap $14
     ret
 
 
