@@ -49,8 +49,8 @@ Main::
     ld d, $00
     ld e, a
     ld hl, $a106
-    trap $a4
-    trap $69
+    trap IntToStringHex
+    trap DrawString
     ld a, $01
     trap $b9
     pop hl
@@ -69,8 +69,8 @@ jr_000_0123:
     ld d, $00
     ld e, a
     ld hl, $a106
-    trap $a3
-    trap $69
+    trap IntToString
+    trap DrawString
     ld a, $01
     trap $b9
     pop hl
@@ -168,10 +168,10 @@ HeaderCGBFlag::
     ld e, c
     ld d, b
     ld hl, $a106
-    trap $a4
+    trap IntToStringHex
     dec hl
     dec hl
-    trap $69
+    trap DrawString
     ld a, $01
     trap $b9
     pop hl
@@ -186,10 +186,10 @@ HeaderCGBFlag::
     push de
     push hl
     ld hl, $a106
-    trap $a4
+    trap IntToStringHex
     dec hl
     dec hl
-    trap $69
+    trap DrawString
     ld a, $01
     trap $b9
     pop hl
@@ -206,10 +206,10 @@ HeaderCGBFlag::
     ld e, l
     ld d, h
     ld hl, $a106
-    trap $a4
+    trap IntToStringHex
     dec hl
     dec hl
-    trap $69
+    trap DrawString
     ld a, $01
     trap $b9
     pop hl
@@ -314,7 +314,7 @@ jr_000_0203::
     ret nc
 
 jr_000_0224::
-    trap $01
+    trap ExitToMenu
     push bc
     ld hl, $c500
     ld b, $00
@@ -332,7 +332,7 @@ jr_000_0224::
     push de
     ld de, $c700
     ld b, $c6
-    trap $62
+    trap InitDecompress
     pop de
     ld b, $01
     ld a, c
@@ -350,12 +350,12 @@ jr_000_024c::
     rl b
     sla c
     rl b
-    trap $63
+    trap RunDecompress
     ret
 
 
     xor a
-    trap $b3
+    trap DrawInit
     ld a, $e4
     ldh [$9d], a
     ld a, $d8
@@ -462,7 +462,7 @@ Call_000_0303::
 
 
     xor a
-    trap $b3
+    trap DrawInit
     trap $b5
     ld e, $f8
     ld bc, $0400
@@ -501,12 +501,12 @@ jr_000_0354::
     ld a, $03
     trap $b4
     ld a, $02
-    trap $13
+    trap PlayMusic
     call $afd6
     ld a, $01
     call $a382
     xor a
-    trap $13
+    trap PlayMusic
     ret
 
 
@@ -560,10 +560,10 @@ jr_000_03b8::
     jr nz, jr_000_03b6
 
     pop hl
-    trap $b1
-    trap $b1
-    trap $b1
-    trap $b1
+    trap AwaitFrame
+    trap AwaitFrame
+    trap AwaitFrame
+    trap AwaitFrame
     sla b
     jr c, jr_000_03b4
 
@@ -977,11 +977,11 @@ jr_000_0630::
     ld a, [de]
     inc de
     ld l, a
-    trap $b8
+    trap MoveCursor
     ld a, $11
-    trap $bb
+    trap DrawChar
     ld a, $12
-    trap $bb
+    trap DrawChar
     ld a, $03
     trap $b9
     ld a, $02
@@ -989,9 +989,9 @@ jr_000_0630::
     ld a, $02
     trap $b9
     ld a, $13
-    trap $bb
+    trap DrawChar
     ld a, $14
-    trap $bb
+    trap DrawChar
     dec c
     jr nz, jr_000_0630
 
@@ -1021,7 +1021,7 @@ jr_000_0630::
     ld a, [de]
     inc de
     ld l, a
-    trap $b8
+    trap MoveCursor
 
 jr_000_067b::
     ld a, [de]
@@ -1030,11 +1030,11 @@ jr_000_067b::
     ret z
 
     add $20
-    trap $bb
+    trap DrawChar
     ld c, $05
 
 jr_000_0686::
-    trap $b1
+    trap AwaitFrame
     ldh a, [$8a]
     bit 1, a
     jr nz, jr_000_067b
@@ -1241,7 +1241,7 @@ jr_000_079c::
     jr nz, jr_000_07ac
 
     ld a, $0c
-    trap $14
+    trap PlaySound
 
 jr_000_07ac::
     ld a, [$cf30]
@@ -2258,9 +2258,9 @@ jr_000_0d19::
     jr nc, jr_000_0d7a
 
     xor a
-    trap $14
+    trap PlaySound
     ld a, $25
-    trap $14
+    trap PlaySound
     ld a, $01
     ld [$d061], a
     ld a, [$cf1b]
@@ -2292,12 +2292,12 @@ jr_000_0d7a::
     jr jr_000_0d19
 
     xor a
-    trap $b3
+    trap DrawInit
     call $adbe
     ld a, $12
     ld [$d0a7], a
     ld a, $0b
-    trap $13
+    trap PlayMusic
     ld hl, $ae92
 
 jr_000_0d96::
@@ -2320,7 +2320,7 @@ jr_000_0d96::
 jr_000_0daf::
     call $afd6
     xor a
-    trap $13
+    trap PlayMusic
     ret
 
 
@@ -2480,7 +2480,7 @@ jr_000_0e7a::
     ldh [$9a], a
 
 jr_000_0e81::
-    trap $b1
+    trap AwaitFrame
     dec b
     jr nz, jr_000_0e81
 
@@ -3018,7 +3018,7 @@ jr_000_1059::
     and a
     ret z
 
-    trap $17
+    trap GetSoundState
     and a
     ret nz
 
@@ -3067,7 +3067,7 @@ jr_000_1059::
     ld a, $03
     trap $b4
     ld a, $09
-    trap $13
+    trap PlayMusic
     ld a, $01
     ld [$d0a6], a
     call $b8c3
@@ -3104,7 +3104,7 @@ jr_000_10fb::
     call $afd6
     call $a586
     ld a, $1d
-    trap $14
+    trap PlaySound
 
 jr_000_1105::
     ldh a, [$8a]
@@ -3151,7 +3151,7 @@ jr_000_110b::
 
 jr_000_1161::
     ld a, $19
-    trap $13
+    trap PlayMusic
     ld a, [$cf2b]
     cp $4e
     jr nz, jr_000_1179
@@ -3192,7 +3192,7 @@ jr_000_1190::
 
 jr_000_11a3::
     ld a, $18
-    trap $13
+    trap PlayMusic
     ld a, $0f
     call $a66c
     call $afd6
@@ -3283,22 +3283,22 @@ jr_000_1252::
     ret z
 
     xor a
-    trap $14
+    trap PlaySound
     ld a, $02
-    trap $14
+    trap PlaySound
     call $b963
     call $a660
     ldh a, [$8a]
     and $02
     jr nz, jr_000_1252
 
-    trap $b1
+    trap AwaitFrame
     jr jr_000_1252
 
     ld c, $01
 
 jr_000_1277::
-    trap $b1
+    trap AwaitFrame
     dec c
     jr nz, jr_000_1277
 
@@ -3306,8 +3306,8 @@ jr_000_1277::
 
 
     xor a
-    trap $13
-    trap $01
+    trap PlayMusic
+    trap ExitToMenu
     call nz, $d2b2
     or d
     rst $20

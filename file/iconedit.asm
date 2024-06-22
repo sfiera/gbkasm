@@ -57,7 +57,7 @@ jr_000_0119::
 
 jr_000_0128::
     xor a
-    trap $b3
+    trap DrawInit
     trap $b5
     callx @+$0493
     ld a, $03
@@ -90,7 +90,7 @@ jr_000_0139::
     ld a, a
     rst $00
     dec b
-    trap $01
+    trap ExitToMenu
     callx @+$0447
     jx @+$007e
 
@@ -170,7 +170,7 @@ jr_000_01d7::
 
 
     xor a
-    trap $b3
+    trap DrawInit
     trap $b5
     callx @+$0366
     callx @+$023e
@@ -178,7 +178,7 @@ jr_000_01d7::
     trap $b4
 
 jr_000_01f7::
-    trap $b1
+    trap AwaitFrame
     ld bc, $2800
     trap $c4
     trap $d8
@@ -423,20 +423,20 @@ jr_000_0362::
     ld e, a
     ld d, $00
     ld hl, $c758
-    trap $a3
+    trap IntToString
     ld hl, $0a22
-    trap $b8
+    trap MoveCursor
     ld hl, $c75c
-    trap $69
+    trap DrawString
     ld a, [$c762]
     ld e, a
     ld d, $00
     ld hl, $c758
-    trap $a3
+    trap IntToString
     ld hl, $0a23
-    trap $b8
+    trap MoveCursor
     ld hl, $c75c
-    trap $69
+    trap DrawString
     ret
 
 
@@ -644,7 +644,7 @@ jr_000_043d::
 
 
 jr_000_04dc::
-    trap $b1
+    trap AwaitFrame
     trap $d8
     and $03
     jr z, jr_000_04dc
@@ -741,7 +741,7 @@ jr_000_0501::
     ld bc, $0010
     trap $02
     ldx hl, @+$0089
-    trap $5c
+    trap DrawLayout
     callx @+$fdce
     ret
 
