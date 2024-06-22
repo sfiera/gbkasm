@@ -64,8 +64,7 @@ jr_014a:
     callx call_06ac
     ldh a, [$cc]
     add $30
-    rst $08
-    cp e
+    trap DrawChar
     jr jr_0166
 jr_015f:
     callx call_01a0
