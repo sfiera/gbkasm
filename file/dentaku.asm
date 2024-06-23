@@ -17,7 +17,7 @@ Header::
 Title::
     dk "DEN TAKU"
 Icon::
-    INCBIN "gfx/icon/calculator.2bpp"
+    INCBIN "gfx/dentaku/icon.2bpp"
 
 Points::
     dw 1980

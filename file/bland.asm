@@ -18,7 +18,7 @@ Header::
 Title::
     dk "BINARY"
 Icon::
-    INCBIN "gfx/icon/binary.2bpp"
+    INCBIN "gfx/bland/icon.2bpp"
 
 Points::
     dw $0001
@@ -4170,7 +4170,7 @@ data_b891:
     db $f7, $00, $3a, $50
 
 data_b896:
-    INCBIN "gfx/binary.2bpp.hz"
+    INCBIN "gfx/bland/sprites.2bpp.hz"
 
 data_bb0b:
     ; 30 compressed blocks of 20 bytes each. Level data?

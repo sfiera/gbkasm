@@ -130,6 +130,6 @@ strings:
     dk $00
 
 content:
-    INCBIN "gfx/icons.2bpp.hz"
+    INCBIN "gfx/iconsend/icons.2bpp.hz"
 
 End::

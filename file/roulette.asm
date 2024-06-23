@@ -17,7 +17,7 @@ Header::
 Title::
     dk "ルーレット"
 Icon::
-    INCBIN "gfx/icon/roulette.2bpp"
+    INCBIN "gfx/roulette/icon.2bpp"
 
 Points::
     dw $0064

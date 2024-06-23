@@ -17,7 +17,7 @@ Header::
 Title::
     dk "ICON-EDIT"
 Icon::
-    INCBIN "gfx/icon/icon-edit.2bpp"
+    INCBIN "gfx/iconedit/icon.2bpp"
 
 Points::
     dw $0001

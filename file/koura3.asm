@@ -26,6 +26,6 @@ History::
     ds 11, $00
 
 Body::
-    INCBIN "gfx/koura-3.2bpp.hz"
+    INCBIN "gfx/puzzle/koura-3.2bpp.hz"
 
 End:

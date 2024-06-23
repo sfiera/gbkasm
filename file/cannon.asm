@@ -17,7 +17,7 @@ Header::
 Title::
     dk "CANNON BALL"
 Icon::
-    INCBIN "gfx/icon/cannon-ball.2bpp"
+    INCBIN "gfx/cannon/icon.2bpp"
 
 Points::
     dw $0001

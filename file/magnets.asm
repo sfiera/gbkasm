@@ -17,7 +17,7 @@ Header::
 Title::
     dk "MAGNETS"
 Icon::
-    INCBIN "gfx/icon/magnets.2bpp"
+    INCBIN "gfx/magnets/icon.2bpp"
 
 Points::
     dw $0001

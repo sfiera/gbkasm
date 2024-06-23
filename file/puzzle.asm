@@ -17,7 +17,7 @@ Header::
 Title::
     dk "Puzzle Game"
 Icon::
-    INCBIN "gfx/icon/puzzle-game.2bpp"
+    INCBIN "gfx/puzzle/icon.2bpp"
 
 Points::
     dw $0001
