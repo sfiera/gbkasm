@@ -20,7 +20,7 @@ Icon::
     INCBIN "gfx/puzzle/icon.2bpp"
 
 Points::
-    dw $0001
+    dw 1
 Author::
     db "TARKUN    ", 2
 History::

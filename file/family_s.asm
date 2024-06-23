@@ -18,7 +18,7 @@ Title::
     dk "ファミリショット"
 
 Points::
-    dw $0001
+    dw 1
 Author::
     dp "HORI&KUMA ", 2
 History::

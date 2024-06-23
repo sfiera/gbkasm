@@ -18,7 +18,7 @@ Title::
     dk "POKER       "
 
 Points::
-    dw $0001
+    dw 1
 Author::
     db "S.KIMURA\n\n", 2
 History::

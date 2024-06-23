@@ -22,10 +22,10 @@ Icon::
 Points::
     dw 250
 Author::
-    dp "          ", 00
+    dp "          ", 0
 History::
-    ds 11, $00
-    ds 11, $00
-    ds 11, $00
+    ds 11
+    ds 11
+    ds 11
 
 End::

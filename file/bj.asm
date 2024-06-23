@@ -18,7 +18,7 @@ Title::
     dk "BLACK JACK"
 
 Points::
-    dw $0014
+    dw 20
 Author::
     db "TARKUN    ", 2
 History::

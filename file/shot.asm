@@ -20,13 +20,13 @@ Icon::
     INCBIN "gfx/shot/icon.2bpp"
 
 Points::
-    dw $0001
+    dw 1
 Author::
-    dp "TOBI      ", $02
+    dp "TOBI      ", 2
 History::
-    ds 11, $00
-    ds 11, $00
-    ds 11, $00
+    ds 11
+    ds 11
+    ds 11
 
 Main::
     xor a

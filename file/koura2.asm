@@ -21,9 +21,9 @@ Points::
 Author::
     dp "NONCHAN   ", 2
 History::
-    ds 11, $00
-    ds 11, $00
-    ds 11, $00
+    ds 11
+    ds 11
+    ds 11
 
 Body::
     INCBIN "gfx/puzzle/koura-2.2bpp.hz"

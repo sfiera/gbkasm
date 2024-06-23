@@ -20,7 +20,7 @@ Icon::
     INCBIN "gfx/cannon/icon.2bpp"
 
 Points::
-    dw $0001
+    dw 1
 Author::
     db "GBKISS LAB", 2
 History::

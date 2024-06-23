@@ -20,7 +20,7 @@ Icon::
     INCBIN "gfx/magnets/icon.2bpp"
 
 Points::
-    dw $0001
+    dw 1
 Author::
     db "<TEAM MAG>", 2
 History::

@@ -20,8 +20,7 @@ Icon::
     INCBIN "gfx/slot/icon.2bpp"
 
 Points::
-    dw $0064
-
+    dw 100
 Author::
     db "Y.MOTOSAKO", 2
 History::

@@ -18,9 +18,9 @@ Title::
     dk "BIORYTHM"
 
 Points::
-    dw $0001
+    dw 1
 Author::
-    db $4b, $45, $49, $20, $4b, $4f, $4e, $44, $4f, $48, $02
+    db "KEI KONDOH", 2
 History::
     ds 11
     ds 11
