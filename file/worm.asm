@@ -2,6 +2,7 @@
 
 INCLUDE "charmap.inc"
 INCLUDE "macro.inc"
+INCLUDE "trap.inc"
 INCLUDE "file/common.inc"
 
 DEF SavedHiScoreLo EQU $a042

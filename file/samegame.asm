@@ -3,6 +3,7 @@
 INCLUDE "charmap.inc"
 INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
+INCLUDE "trap.inc"
 INCLUDE "file/common.inc"
 
 DEF FieldWidth   EQU $14

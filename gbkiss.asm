@@ -14,6 +14,7 @@ def rIgnored    equ $6000
 def rIR         equ $a000
 
 INCLUDE "macro.inc"
+INCLUDE "trap.inc"
 INCLUDE "charmap.inc"
 INCLUDE "hram.inc"
 INCLUDE "bank_000.inc"

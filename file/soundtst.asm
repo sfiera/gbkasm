@@ -3,6 +3,7 @@
 INCLUDE "charmap.inc"
 INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
+INCLUDE "trap.inc"
 INCLUDE "file/common.inc"
 
 DEF SuperBDamanAudioCount  EQU (27 << 8) + 56
