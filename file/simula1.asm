@@ -9,24 +9,24 @@ INCLUDE "file/common.inc"
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    dw End
+    dw SIZEOF(SECTION(Header))
     db kFileHasIcon2bpp + kFileMarkerTriangle + kFileHasTransfers
     db CartridgeCodeUniversal  ; where file can run
-    db Points - @ - 1          ; length of variable parts of header
+    db .end - @ - 1            ; length of variable parts of header
     db $83                     ; owner code
-
-Title::
+.title
     dk "SIMULA1"
-Icon::
+.icon
     INCBIN "gfx/icon/simula1.2bpp"
+.end
 
-Points::
+History:
+.points
     dw 250
-Author::
+.author
     dp "          ", 0
-History::
+.history
     ds 11
     ds 11
     ds 11
-
-End::
+.end

@@ -9,25 +9,27 @@ INCLUDE "file/common.inc"
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    dw End
+    dw SIZEOF(SECTION(Header))
     db kFileHasIcon2bpp + kFileMarkerDiamond + kFileHasTransfers
     db CartridgeCodeUniversal  ; where file can run
-    db Points - @ - 1          ; length of variable parts of header
+    db .end - @ - 1            ; length of variable parts of header
     db $65                     ; owner code
-
-Title::
+.title
     dh "モグってナンボ"
-Icon::
+.icon
     INCBIN "gfx/mogura/icon.2bpp"
+.end
 
-Points::
+History:
+.points
     dw 1
-Author::
+.author
     db "TEAMMOGURA", 2
-History::
+.history
     ds 11
     ds 11
     ds 11
+.end
 
 Main::
     ld sp, $dff0
@@ -6005,5 +6007,3 @@ jr_000_1ea1::
     ldh a, [$6f]
     call Header
     ld a, a
-
-End:

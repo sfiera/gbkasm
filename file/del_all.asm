@@ -9,14 +9,18 @@ INCLUDE "file/common.inc"
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    dw End
+    dw SIZEOF(SECTION(Header))
     db kFileMarkerCircle
     db CartridgeCodeUniversal  ; where file can run
-    db Main - @ - 1            ; length of variable parts of header
+    db .end - @ - 1            ; length of variable parts of header
     db $43                     ; owner code
-
-Title::
+.title
     dk "DEL_ALL"
+.icon
+.end
+
+History:
+.end
 
 Main::
     ld hl, $c500
@@ -35,5 +39,3 @@ jr1:
 
 jr2:
     trap ExitToMenu
-
-End:

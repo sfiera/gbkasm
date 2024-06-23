@@ -9,25 +9,27 @@ INCLUDE "file/common.inc"
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    dw End
+    dw SIZEOF(SECTION(Header))
     db kFileHasIcon2bpp + kFileMarkerCircle + kFileHasTransfers
     db CartridgeCodeUniversal  ; where file can run
-    db Points - @ - 1          ; length of variable parts of header
+    db .end - @ - 1          ; length of variable parts of header
     db $72                     ; owner code
-
-Title::
+.title
     dk "ルーレット"
-Icon::
+.icon
     INCBIN "gfx/roulette/icon.2bpp"
+.end
 
-Points::
+History:
+.points
     dw 100
-Author::
+.author
     dp "つもり\n\n\n\n\n\n\n", 2
-History::
+.history
     ds 11
     ds 11
     ds 11
+.end
 
 Main::
     ldx de, @+$000f
@@ -1237,7 +1239,7 @@ jr_000_062f::
 
     ret c
 
-    call Title
+    call $0006
     sbc $23
     xor b
     sub d
@@ -3701,5 +3703,3 @@ jr_000_1430::
 
 
     jp $00de
-
-End:

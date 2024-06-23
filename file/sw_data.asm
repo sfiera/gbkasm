@@ -9,14 +9,18 @@ INCLUDE "file/common.inc"
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    dw End
+    dw SIZEOF(SECTION(Header))
     db kFileMarkerTriangle
     db CartridgeCodeUniversal  ; where file can run
-    db Body - @ - 1            ; length of variable parts of header
+    db .end - @ - 1            ; length of variable parts of header
     db $6a                     ; owner code
-
-Title::
+.title
     dk "NUM0_DATA"
+.icon
+.end
+
+History:
+.end
 
 Body::
     db $89, $89, $89, $80, $81, $82, $8c, $8d, $8e, $8f, $89, $92, $8f, $89, $92, $a2
@@ -67,5 +71,3 @@ Body::
     db $84, $84, $2a, $01, $f8, $9f, $00, $f3, $20, $61, $28, $4c, $07, $2a, $02, $6b
     db $6b, $26, $26, $0c, $83, $22, $85, $21, $64, $2f, $7e, $7e, $25, $84, $28, $00
     db $e5, $04, $2f
-
-End:

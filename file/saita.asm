@@ -9,14 +9,18 @@ INCLUDE "file/common.inc"
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    dw End
+    dw SIZEOF(SECTION(Header))
     db kFileMarkerTriangle
     db CartridgeCodeUniversal  ; where file can run
-    db Body - @ - 1          ; length of variable parts of header
+    db .end - @ - 1          ; length of variable parts of header
     db $76                     ; owner code
-
-Title::
+.title
     dk "MUSIC.さいたさいた"
+.icon
+.end
+
+History:
+.end
 
 Body::
     db AlarmTitle.end - AlarmTitle
@@ -38,5 +42,3 @@ Pattern:
     db $35, $35, $33, $33, $51, $83            ; e e d d c2 -
     db $b0                                     ; unknown pattern end
 .end
-
-End:

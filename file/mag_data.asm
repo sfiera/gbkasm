@@ -9,23 +9,26 @@ INCLUDE "file/common.inc"
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    dw End
+    dw SIZEOF(SECTION(Header))
     db kFileMarkerTriangle + kFileHasTransfers
     db CartridgeCodeUniversal  ; where file can run
-    db Points - @ - 1          ; length of variable parts of header
+    db .end - @ - 1            ; length of variable parts of header
     db $66                     ; owner code
-
-Title::
+.title
     dk "MAGNETS DATA"
+.icon
+.end
 
-Points::
+History:
+.points
     dw 1
-Author::
+.author
     dp "<TEAM MAG>", 2
-History::
+.history
     ds 11
     ds 11
     ds 11
+.end
 
 Body::
     db $00, $00, $3e, $3e, $79, $79, $3c, $3c, $1e, $1e, $4f, $4f, $3e, $3e, $00, $00
@@ -413,5 +416,3 @@ Body::
     db $40, $d6, $13, $0f, $aa, $b6, $7e, $10, $10, $f8, $00, $f2, $1e, $01, $5d, $01
     db $ce, $0e, $01, $10, $5c, $10, $70, $0f, $38, $4c, $37, $8c, $00, $c3, $ff, $fc
     db $5d, $00, $ff, $e0, $1f, $00, $5b
-
-End:

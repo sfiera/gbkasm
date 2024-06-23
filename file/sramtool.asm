@@ -9,22 +9,26 @@ INCLUDE "file/common.inc"
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    dw End
+    dw SIZEOF(SECTION(Header))
     db kFileMarkerCircle + kFileHasTransfers
     db CartridgeCodeUniversal  ; where file can run
-    db Points - @ - 1          ; length of variable parts of header
+    db .end - @ - 1            ; length of variable parts of header
     db $00                     ; owner code
-
-Title::
+.title
     dk "SRAM GET&CLR"
+.icon
+.end
 
-Points::
+History:
+.points
     dw 1
-Author::
+.author
     dp "Y.MOTOSAKO", 2
+.history
     ds 11
     ds 11
     ds 11
+.end
 
 Main::
     db $af, $cf, $b3, $d7, $06, $00, $d7, $3b, $02, $c9, $38, $0a, $b7, $28, $09, $3d
@@ -91,5 +95,3 @@ Main::
     db $4e, $23, $5e, $23, $56, $7a, $e6, $1f, $57, $21, $80, $00, $19, $7c, $fe, $20
     db $38, $03, $0c, $26, $00, $06, $04, $fa, $49, $01, $fe, $03, $c8, $06, $10, $d0
     db $06, $00, $c9
-
-End:

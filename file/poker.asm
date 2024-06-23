@@ -9,23 +9,26 @@ INCLUDE "file/common.inc"
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    dw End
+    dw SIZEOF(SECTION(Header))
     db kFileBit4 + kFileMarkerCircle + kFileHasTransfers
     db CartridgeCodeUniversal  ; where file can run
-    db Points - @ - 1          ; length of variable parts of header
+    db .end - @ - 1            ; length of variable parts of header
     db $43                     ; owner code
-
-Title::
+.title
     dk "POKER       "
+.icon
+.end
 
-Points::
+History:
+.points
     dw 1
-Author::
+.author
     db "S.KIMURA\n\n", 2
-History::
+.history
     ds 11
     ds 11
     ds 11
+.end
 
 Main::
     jx @+$0e7b
@@ -3481,5 +3484,3 @@ jr_000_13d4::
     ld a, l
     trap PlaySound
     ret
-
-End:

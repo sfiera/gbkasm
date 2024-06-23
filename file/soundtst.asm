@@ -11,16 +11,19 @@ DEF SuperBDamanAudioCount  EQU (27 << 8) + 56
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    dw End
+    dw SIZEOF(SECTION(Header))
     db kFileHasIcon2bpp + kFileMarkerCircle
     db CartridgeCodeUniversal  ; where file can run
-    db Main - @ - 1            ; length of variable parts of header
+    db .end - @ - 1            ; length of variable parts of header
     db $05                     ; owner code
-
-Title::
+.title
     dk "サウンド　テスト"
-Icon::
+.icon
     INCBIN "gfx/soundtst/icon.2bpp"
+.end
+
+History:
+.end
 
 Main::
     ld a, $c4
@@ -330,8 +333,6 @@ StrStop:
     dk "STOP\n"
 StrPlay:
     dk "PLAY\n"
-
-End:
 
 
 SECTION "Variables", WRAM0[$c600]

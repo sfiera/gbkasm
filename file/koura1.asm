@@ -9,24 +9,26 @@ INCLUDE "file/common.inc"
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    dw End
+    dw SIZEOF(SECTION(Header))
     db kFileMarkerTriangle + kFileHasTransfers
     db CartridgeCodeUniversal  ; where file can run
-    db Points - @ - 1          ; length of variable parts of header
+    db .end - @ - 1            ; length of variable parts of header
     db $64                     ; owner code
-
-Title::
+.title
     dk "KOURA1"
-Points::
+.icon
+.end
+
+History:
+.points
     dw 100
-Author::
+.author
     dp "NONCHAN   ", 2
-History::
+.history
     ds 11
     ds 11
     ds 11
+.end
 
 Body::
     INCBIN "gfx/puzzle/koura-1.2bpp.hz"
-
-End:
