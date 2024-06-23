@@ -48,6 +48,7 @@ check: $(GB) $(GBF)
 -include $(DEP)
 gbkiss.o: $(GBF) $(GFX) gfx/logo.2bpp.hz
 file/baketu.o: gfx/baketu/icon.2bpp
+file/baketu.o: gfx/baketu/tiles.2bpp.hz
 file/bland.o: gfx/bland/icon.2bpp
 file/bland.o: gfx/bland/sprites.2bpp.hz
 file/cannon.o: gfx/cannon/icon.2bpp
