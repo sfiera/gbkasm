@@ -10,25 +10,27 @@ SECTION "ROM Bank $000", ROM0[$0]
 LOAD "CRAM Code", SRAM[$a008]
 
 Header::
-    dw End
+    dw SIZEOF(SECTION(Header))
     db kFileHasIcon2bpp + kFileMarkerDiamond + kFileHasTransfers
     db CartridgeCodeUniversal  ; where file can run
-    db Points - @ - 1          ; length of variable parts of header
+    db .end - @ - 1            ; length of variable parts of header
     db $71                     ; owner code
-
-Title::
+.title
     dk "BINARY"
-Icon::
+.icon
     INCBIN "gfx/bland/icon.2bpp"
+.end
 
-Points::
+History:
+.points
     dw 1
-Author::
+.author
     db "T.OHNISHI ", 2
-History::
+.history
     ds 11
     ds 11
     ds 11
+.end
 
 Main::
     jp jp_bfbc
@@ -4430,5 +4432,3 @@ jr_000_bfc9:
     jp jp_bfc2
 
 ENDL
-
-End:

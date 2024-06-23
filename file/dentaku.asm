@@ -9,25 +9,27 @@ INCLUDE "file/common.inc"
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    dw End
+    dw SIZEOF(SECTION(Header))
     db kFileHasIcon2bpp + kFileMarkerCircle + kFileHasTransfers
     db CartridgeCodeUniversal  ; where file can run
-    db Points - @ - 1          ; length of variable parts of header
+    db .end - @ - 1            ; length of variable parts of header
     db $04                     ; owner code
-
-Title::
+.title
     dk "DEN TAKU"
-Icon::
+.icon
     INCBIN "gfx/dentaku/icon.2bpp"
+.end
 
-Points::
+History:
+.points
     dw 1980
-Author::
+.author
     dp "Y.MOTOSAKO", 2
-History::
+.history
     ds 11
     ds 11
     ds 11
+.end
 
 Main::
     ldx de, Compressed
@@ -94,5 +96,3 @@ Compressed:
     db $5c, $25, $22, $2d, $40, $00, $21, $68, $25, $20, $39, $0a, $0b, $01, $c9, $0e
     db $0a, $74, $89, $12, $23, $df, $e5, $c5, $80, $28, $11, $cf, $a4, $e1, $fc, $cf
     db $bd, $3e, $20, $cf, $bb, $72, $20, $6f, $f0, $69, $c9, $cf, $a3, $6f, $12, $7a
-
-End:

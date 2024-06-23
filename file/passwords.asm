@@ -9,23 +9,26 @@ INCLUDE "file/common.inc"
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    dw End
+    dw SIZEOF(SECTION(Header))
     db kFileHasTransfers
     db CartridgeCodeUniversal  ; where file can run
-    db Points - @ - 1          ; length of variable parts of header
+    db .end - @ - 1            ; length of variable parts of header
     db $81                     ; owner code
-
-Title::
+.title
     dk "Passwords"
+.icon
+.end
 
-Points::
+History:
+.points
     dw 190
-Author::
+.author
     dp "GBKiss.org", 0
-History::
+.history
     ds 11
     ds 11
     ds 11
+.end
 
 Body::
     dp "1: KISSMON       "
@@ -36,5 +39,3 @@ Body::
     dp "                 "
     dp "                 "
     dp "                 "
-
-End::

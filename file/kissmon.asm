@@ -9,25 +9,27 @@ INCLUDE "file/common.inc"
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    dw End
+    dw SIZEOF(SECTION(Header))
     db kFileHasIcon2bpp + kFileMarkerCircle + kFileHasTransfers
     db CartridgeCodeUniversal  ; where file can run
-    db Points - @ - 1          ; length of variable parts of header
+    db .end - @ - 1            ; length of variable parts of header
     db $6e                     ; owner code
-
-Title::
+.title
     dk "KISS-MON"
-Icon::
+.icon
     INCBIN "gfx/kissmon/icon.2bpp"
+.end
 
-Points::
+History:
+.points
     dw 1
-Author::
+.author
     db "TOBI      ", 2
-History::
+.history
     ds 11
     ds 11
     ds 11
+.end
 
 Main::
     trap StopAudio
@@ -3993,5 +3995,3 @@ jr_000_15dd::
     ld sp, $ee6e
     add b
     add b
-
-End:

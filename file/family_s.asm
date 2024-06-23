@@ -9,23 +9,26 @@ INCLUDE "file/common.inc"
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    dw End
+    dw SIZEOF(SECTION(Header))
     db kFileMarkerCircle + kFileHasTransfers
     db CartridgeCodePocketFamily  ; where file can run
-    db Points - @ - 1             ; length of variable parts of header
+    db .end - @ - 1               ; length of variable parts of header
     db $00                        ; owner code
-
-Title::
+.title
     dk "ファミリショット"
+.icon
+.end
 
-Points::
+History:
+.points
     dw 1
-Author::
+.author
     dp "HORI&KUMA ", 2
-History::
+.history
     ds 11
     ds 11
     ds 11
+.end
 
 Main::
     ld sp, $e000
@@ -647,5 +650,3 @@ data_0491:
     db $02, $3c, $73, $54, $79, $c9, $7e, $33, $22, $39, $3d, $c9, $4a, $00, $31, $c0
     db $0a, $38, $30, $71, $48, $c5, $ca, $03, $bb, $f8, $0f, $7b, $cb, $3f, $65, $20
     db $4f, $06, $b8, $00, $29, $00, $98, $09, $b1, $00
-
-End:

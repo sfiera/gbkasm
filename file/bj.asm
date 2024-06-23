@@ -9,23 +9,26 @@ INCLUDE "file/common.inc"
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    dw End
+    dw SIZEOF(SECTION(Header))
     db kFileBit4 + kFileMarkerCircle + kFileHasTransfers
     db CartridgeCodeUniversal  ; where file can run
-    db Points - @ - 1          ; length of variable parts of header
+    db .end - @ - 1            ; length of variable parts of header
     db $43                     ; owner code
-
-Title::
+.title
     dk "BLACK JACK"
+.icon
+.end
 
-Points::
+History:
+.points
     dw 20
-Author::
+.author
     db "TARKUN    ", 2
-History::
+.history
     ds 11
     ds 11
     ds 11
+.end
 
 Main::
     ld hl, $c600
@@ -2089,5 +2092,3 @@ jr_000_0be6::
 
 jr_000_0c28::
     callx @+$f421
-
-End:

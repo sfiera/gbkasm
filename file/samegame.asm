@@ -12,25 +12,27 @@ DEF FieldHeight  EQU $10
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    dw End
+    dw SIZEOF(SECTION(Header))
     db kFileHasIcon2bpp + kFileMarkerCircle + kFileHasTransfers
     db CartridgeCodeUniversal  ; where file can run
-    db Points - @ - 1          ; length of variable parts of header
+    db .end - @ - 1          ; length of variable parts of header
     db $67                     ; owner code
-
-Title::
+.title
     dk "SAMEGAME"
-Icon::
+.icon
     INCBIN "gfx/samegame/icon.2bpp"
+.end
 
-Points::
+History:
+.points
     dw 1
-Author::
+.author
     dp "TOBI      ", 2
-History::
+.history
     ds 11
     ds 11
     ds 11
+.end
 
 Main::
     xor a
@@ -926,8 +928,6 @@ strHiScoreName:
 
 gfxTileset:
     INCBIN "gfx/samegame/tiles.2bpp.hz"
-
-End:
 
 
 SECTION "Field", WRAM0[$c980]

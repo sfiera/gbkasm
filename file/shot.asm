@@ -9,25 +9,27 @@ INCLUDE "file/common.inc"
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
-    dw End
+    dw SIZEOF(SECTION(Header))
     db kFileHasIcon2bpp + kFileMarkerCircle + kFileHasTransfers
     db CartridgeCodeUniversal  ; where file can run
-    db Points - @ - 1          ; length of variable parts of header
+    db .end - @ - 1            ; length of variable parts of header
     db $68                     ; owner code
-
-Title::
+.title
     dk "SHOT"
-Icon::
+.icon
     INCBIN "gfx/shot/icon.2bpp"
+.end
 
-Points::
+History:
+.points
     dw 1
-Author::
+.author
     dp "TOBI      ", 2
-History::
+.history
     ds 11
     ds 11
     ds 11
+.end
 
 Main::
     xor a
@@ -167,8 +169,6 @@ gfx:
     dk $05, $0c, "»HIGH SCORE\n"
     dk $06, $0e, "SHOT:\n"
     dk $ff
-
-End:
 
 
 SECTION "WRAM 0", WRAM0[$cc40]
