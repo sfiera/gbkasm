@@ -62,9 +62,9 @@ file/koura2.o: gfx/puzzle/koura-2.2bpp.hz
 file/koura3.o: gfx/puzzle/koura-3.2bpp.hz
 file/magnets.o: gfx/magnets/icon.2bpp
 file/mogura.o: gfx/mogura/icon.2bpp
+file/puzzle.o: gfx/puzzle/icon.2bpp
 file/puzzle.o: gfx/puzzle/arrow.2bpp
 file/puzzle.o: gfx/puzzle/hand.2bpp
-file/puzzle.o: gfx/puzzle/icon.2bpp
 file/puzzle.o: gfx/puzzle/tile.2bpp
 file/puzzle.o: gfx/puzzle/boxes.2bpp.hz
 file/puzzle.o: gfx/puzzle/numbers.2bpp.hz
@@ -76,4 +76,5 @@ file/shot.o: gfx/shot/icon.2bpp
 file/simula1.o: gfx/icon/simula1.2bpp
 file/slot.o: gfx/slot/icon.2bpp
 file/soundtst.o: gfx/soundtst/icon.2bpp
+file/sw_data.o: gfx/sw_timer/digits.2bpp.hz
 file/sw_timer.o: gfx/sw_timer/icon.2bpp
