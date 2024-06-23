@@ -20,7 +20,7 @@ Icon::
     INCBIN "gfx/roulette/icon.2bpp"
 
 Points::
-    dw $0064
+    dw 100
 Author::
     dp "つもり\n\n\n\n\n\n\n", 2
 History::

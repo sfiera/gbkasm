@@ -20,11 +20,11 @@ Title::
 Points::
     dw 190
 Author::
-    dp "GBKiss.org", 00
+    dp "GBKiss.org", 0
 History::
-    ds 11, $00
-    ds 11, $00
-    ds 11, $00
+    ds 11
+    ds 11
+    ds 11
 
 Body::
     dp "1: KISSMON       "

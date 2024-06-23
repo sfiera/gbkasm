@@ -21,7 +21,7 @@ Icon::
     INCBIN "gfx/bland/icon.2bpp"
 
 Points::
-    dw $0001
+    dw 1
 Author::
     db "T.OHNISHI ", 2
 History::

@@ -20,7 +20,7 @@ Icon::
     INCBIN "gfx/sw_timer/icon.2bpp"
 
 Points::
-    dw $03e8
+    dw 1000
 Author::
     dp "Y.MOTOSAKO", 2
 History::

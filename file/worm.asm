@@ -36,13 +36,13 @@ Title::
     dk "WORM"
 
 Points::
-    dw $0001
+    dw 1
 Author::
     dp "KEI KONDOH", 2
 History::
-    ds 11, $00
-    ds 11, $00
-    ds 11, $00
+    ds 11
+    ds 11
+    ds 11
 
 Main::
     jr :+

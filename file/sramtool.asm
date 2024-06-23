@@ -18,9 +18,9 @@ Title::
     dk "SRAM GET&CLR"
 
 Points::
-    dw $0001
+    dw 1
 Author::
-    dp "Y.MOTOSAKO", $02
+    dp "Y.MOTOSAKO", 2
     ds 11
     ds 11
     ds 11

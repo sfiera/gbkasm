@@ -21,9 +21,9 @@ Points::
 Author::
     dp "SEZAKI    ", 2
 History::
-    ds 11, $00
-    ds 11, $00
-    ds 11, $00
+    ds 11
+    ds 11
+    ds 11
 
 Body::
     INCBIN "gfx/mogura/sezaki.2bpp.hz"

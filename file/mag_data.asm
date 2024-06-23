@@ -18,9 +18,9 @@ Title::
     dk "MAGNETS DATA"
 
 Points::
-    dw $0001
+    dw 1
 Author::
-    dp "<TEAM MAG>", $02
+    dp "<TEAM MAG>", 2
 History::
     ds 11
     ds 11
