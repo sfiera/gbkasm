@@ -1,10 +1,5 @@
 ; Disassembly of "gbkiss.gb"
 
-MACRO trap
-    rst $08
-    db \1
-ENDM
-
 MACRO pushx
     rst $10
     dw \1 - @
