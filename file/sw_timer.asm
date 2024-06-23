@@ -17,7 +17,7 @@ Header::
 Title::
     dk "WATCH&TIMER"
 Icon::
-    INCBIN "gfx/icon/tokei.2bpp"
+    INCBIN "gfx/sw_timer/icon.2bpp"
 
 Points::
     dw $03e8

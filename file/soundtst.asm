@@ -19,7 +19,7 @@ Header::
 Title::
     dk "サウンド　テスト"
 Icon::
-    INCBIN "gfx/icon/sound-test.2bpp"
+    INCBIN "gfx/soundtst/icon.2bpp"
 
 Main::
     ld a, $c4

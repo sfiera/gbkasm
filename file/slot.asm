@@ -17,7 +17,7 @@ Header::
 Title::
     dk "SLOT"
 Icon::
-    INCBIN "gfx/icon/slot.2bpp"
+    INCBIN "gfx/slot/icon.2bpp"
 
 Points::
     dw $0064

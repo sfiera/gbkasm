@@ -26,6 +26,6 @@ History::
     ds 11, $00
 
 Body::
-    INCBIN "gfx/sezaki.2bpp.hz"
+    INCBIN "gfx/mogura/sezaki.2bpp.hz"
 
 End:

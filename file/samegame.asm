@@ -20,7 +20,7 @@ Header::
 Title::
     dk "SAMEGAME"
 Icon::
-    INCBIN "gfx/icon/samegame.2bpp"
+    INCBIN "gfx/samegame/icon.2bpp"
 
 Points::
     dw 1
@@ -924,7 +924,7 @@ strHiScoreName:
     dk "          "
 
 gfxTileset:
-    INCBIN "gfx/sametiles.2bpp.hz"
+    INCBIN "gfx/samegame/tiles.2bpp.hz"
 
 End:
 

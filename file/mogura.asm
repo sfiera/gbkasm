@@ -17,7 +17,7 @@ Header::
 Title::
     dh "モグってナンボ"
 Icon::
-    INCBIN "gfx/icon/mogutte-nanbo.2bpp"
+    INCBIN "gfx/mogura/icon.2bpp"
 
 Points::
     dw $0001

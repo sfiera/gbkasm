@@ -17,7 +17,7 @@ Header::
 Title::
     dk "KISS-MON"
 Icon::
-    INCBIN "gfx/icon/kiss-mon.2bpp"
+    INCBIN "gfx/kissmon/icon.2bpp"
 
 Points::
     dw $0001

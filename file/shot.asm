@@ -17,7 +17,7 @@ Header::
 Title::
     dk "SHOT"
 Icon::
-    INCBIN "gfx/icon/shot.2bpp"
+    INCBIN "gfx/shot/icon.2bpp"
 
 Points::
     dw $0001

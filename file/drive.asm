@@ -17,7 +17,7 @@ Header::
 Title::
     dk "DRIVE"
 Icon::
-    INCBIN "gfx/icon/drive.2bpp"
+    INCBIN "gfx/drive/icon.2bpp"
 
 Points::
     dw $0001

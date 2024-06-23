@@ -17,7 +17,7 @@ Header::
 Title::
     dk "バケちゅリレー"
 Icon::
-    INCBIN "gfx/icon/bakechu-relay.2bpp"
+    INCBIN "gfx/baketu/icon.2bpp"
 
 Points::
     dw 1
