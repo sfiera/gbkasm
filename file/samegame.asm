@@ -705,7 +705,7 @@ call_057d:
     push hl
     ld de, $cc40
     ld bc, $0014
-    trap $02
+    trap MemCopy
     pop hl
     ld bc, $0020
     add hl, bc
@@ -769,7 +769,7 @@ call_0627:
     ld hl, $cc6b
 jump_062d:
     ld bc, $0003
-    trap $02
+    trap MemCopy
     ld hl, $cc90
     ld b, $05
     xor a

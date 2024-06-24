@@ -53,7 +53,7 @@ Main::
     ld hl, $c600
     ld de, $c400
     ld bc, $0100
-    trap $02
+    trap MemCopy
     ld hl, $9200
     ld bc, $03b0
 
@@ -99,31 +99,31 @@ jr_000_008e::
     ld bc, $0010
     ld de, $9210
     ld hl, $95b0
-    trap $02
+    trap MemCopy
     ld bc, $0010
     ld de, $9240
     ld hl, $95c0
-    trap $02
+    trap MemCopy
     ld bc, $0010
     ld de, $92b0
     ld hl, $95d0
-    trap $02
+    trap MemCopy
     ld bc, $0010
     ld de, $92d0
     ld hl, $95e0
-    trap $02
+    trap MemCopy
     ld bc, $0010
     ld de, $92e0
     ld hl, $95f0
-    trap $02
+    trap MemCopy
     ld bc, $01f0
     ld de, $8b10
     ld hl, $9010
-    trap $02
+    trap MemCopy
     ld bc, $00e0
     ld de, $8d00
     ld hl, $9210
-    trap $02
+    trap MemCopy
     ldx de, @+$0ab1
     ld b, $c7
     trap InitDecompress
@@ -133,7 +133,7 @@ jr_000_008e::
     ld bc, $0020
     ldx de, @+$0be7
     ld hl, $8000
-    trap $02
+    trap MemCopy
     ld a, $e4
     ldh [$9c], a
     ld a, $e4
@@ -438,7 +438,7 @@ jr_000_0202::
     ldx de, @+$0c18
     ld hl, $ca79
     ld bc, $0004
-    trap $02
+    trap MemCopy
     xor a
     ld [$ca77], a
     callx @+$0ee2
@@ -507,7 +507,7 @@ jr_000_02f4::
     ldx de, @+$0b5e
     ld hl, $c9fb
     ld bc, $0014
-    trap $02
+    trap MemCopy
     callx @+$0c5c
     callx @+$0e43
     xor a
@@ -931,7 +931,7 @@ jr_000_0589::
     ldx de, @+$08ad
     ld hl, $ca79
     ld bc, $000a
-    trap $02
+    trap MemCopy
     callx @+$09c3
     ld a, $10
     ld [$c9f9], a
@@ -2998,7 +2998,7 @@ jr_000_10f3::
     ldx de, @+$fd71
     ld hl, $ca1c
     ld bc, $0004
-    trap $02
+    trap MemCopy
     ret
 
 
@@ -3097,7 +3097,7 @@ jr_000_117e::
     ldx de, @+$fcd4
     ld hl, $ca79
     ld bc, $000a
-    trap $02
+    trap MemCopy
     ret
 
 
@@ -3127,7 +3127,7 @@ jr_000_1208::
     ld de, $98e0
     ld hl, $caa6
     ld bc, $0060
-    trap $02
+    trap MemCopy
 
 jr_000_1218::
     ld hl, $98e0
@@ -3141,7 +3141,7 @@ jr_000_1218::
     ld hl, $98e0
     ld de, $caa6
     ld bc, $0060
-    trap $02
+    trap MemCopy
     trap AwaitFrame
     trap AwaitFrame
     trap AwaitFrame

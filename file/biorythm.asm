@@ -86,11 +86,11 @@ jr_000_0085::
     ldx de, @+$001a
     ldx hl, @+$1208
     ld bc, $0040
-    trap $02
+    trap MemCopy
     ldx de, @+$004d
     ldx hl, @+$123b
     ld bc, $0020
-    trap $02
+    trap MemCopy
     ret
 
 
@@ -1146,7 +1146,7 @@ jr_000_0670::
     ld e, l
     ld hl, $c610
     ld bc, $0008
-    trap $02
+    trap MemCopy
     ld a, [$b2bf]
     sla a
     sla a
@@ -1175,7 +1175,7 @@ jr_000_0670::
     add hl, bc
     ld de, $c610
     ld bc, $0008
-    trap $02
+    trap MemCopy
     ld a, [$b2bf]
     sla a
     sla a

@@ -34,7 +34,7 @@ Main::
     ld hl, $c600
     ld de, $c400
     ld bc, $0100
-    trap $02
+    trap MemCopy
     jx @+$0b6e
 
 
@@ -1248,7 +1248,7 @@ jr_000_084c::
     ld bc, $0002
     ld de, $c8cf
     ldx hl, @+$020c
-    trap $02
+    trap MemCopy
     xor a
     ld [$0000], a
     ld hl, $030a

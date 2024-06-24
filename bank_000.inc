@@ -332,49 +332,49 @@ trap_02_015b::
 
     ldh a, [$86]
     or a
-    jr z, jr_000_0174
+    jr z, .copyNonVRAM
 
     ld a, h
     and $e0
-    cp $80
-    jr z, jr_000_017d
+    cp HIGH(_VRAM)
+    jr z, .copyVRAM
 
     ld a, d
     and $e0
-    cp $80
-    jr nz, jr_000_0174
+    cp HIGH(_VRAM)
+    jr nz, .copyNonVRAM
 
     trap $fe
-    db $c9
+    ret
 
-jr_000_0174:
+.copyNonVRAM
     ld a, [de]
     inc de
     ld [hl+], a
     dec bc
     ld a, b
     or c
-    jr nz, jr_000_0174
+    jr nz, .copyNonVRAM
 
     ret
 
 
-jr_000_017d:
+.copyVRAM
     ld a, b
     or a
 
-jr_000_017f:
+.jr_000_017f
     push af
     trap $fd
     pop af
     push af
-    jr nz, jr_000_018a
+    jr nz, .jr_000_018a
 
     ld a, b
     cp c
-    jr nc, jr_000_01a5
+    jr nc, .jr_000_01a5
 
-jr_000_018a:
+.jr_000_018a
     push bc
     push hl
     ld c, b
@@ -396,9 +396,9 @@ jr_000_018a:
     sbc $00
     ld b, a
     pop hl
-    jr jr_000_017f
+    jr .jr_000_017f
 
-jr_000_01a5:
+.jr_000_01a5
     pop af
 
 Call_000_01a6:
@@ -673,7 +673,7 @@ jr_000_02c9:
     rl b
     push hl
     push bc
-    trap $02
+    trap MemCopy
     pop bc
     pop hl
     add hl, bc
@@ -793,7 +793,7 @@ jr_000_035e:
     push de
     push bc
     ld hl, $c400
-    trap $02
+    trap MemCopy
     pop bc
     push bc
     ld de, $c400
@@ -836,7 +836,7 @@ Call_000_037f:
     ld hl, $c400
     ld b, $00
     push hl
-    trap $02
+    trap MemCopy
     pop de
     pop bc
     ld hl, $c500
@@ -1590,7 +1590,7 @@ Jump_000_08a1:
     ld [rROMBank], a
     ld hl, $c604
     ld bc, $0028
-    trap $02
+    trap MemCopy
     pop af
     ldh [hROMBank], a
     ld [rROMBank], a
@@ -1632,7 +1632,7 @@ jr_000_08f3:
     push bc
     ld hl, $c634
     ld bc, $0020
-    trap $02
+    trap MemCopy
     pop bc
     pop af
     ldh [hROMBank], a
@@ -1861,7 +1861,7 @@ jr_000_0a2a:
     push de
     push bc
     ld hl, $c900
-    trap $02
+    trap MemCopy
     pop bc
     push bc
     ld de, $c900
@@ -1916,7 +1916,7 @@ Call_000_0a5c:
     ld hl, $c400
     ld b, $00
     push hl
-    trap $02
+    trap MemCopy
     pop de
     pop bc
     ld hl, $c500
@@ -2026,7 +2026,7 @@ jr_000_0aec:
     push de
     push bc
     ld hl, $c900
-    trap $02
+    trap MemCopy
     pop bc
     push bc
     ld de, $c900
@@ -2098,7 +2098,7 @@ Call_000_0b32:
     ld hl, $c400
     ld b, $00
     push hl
-    trap $02
+    trap MemCopy
     pop de
     pop bc
     ld hl, $c700

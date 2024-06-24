@@ -35,7 +35,7 @@ Main::
     ldx de, @+$000f
     ld hl, $c600
     ld bc, $0036
-    trap $02
+    trap MemCopy
     jx @+$06a1
 
 

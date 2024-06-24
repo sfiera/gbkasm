@@ -217,7 +217,7 @@ jr_000_0211::
 jr_000_023c::
     ld hl, $9000
     ld bc, $0010
-    trap $02
+    trap MemCopy
     ret
 
 
@@ -492,7 +492,7 @@ jr_000_03c1::
     ld d, h
     ld h, $91
     ld bc, $0002
-    trap $02
+    trap MemCopy
     ld a, [$c762]
     ld h, a
     ld l, $00
@@ -509,7 +509,7 @@ jr_000_03c1::
     add hl, de
     ld de, $c764
     ld bc, $0001
-    trap $02
+    trap MemCopy
     ret
 
 
@@ -632,7 +632,7 @@ jr_000_043d::
     ld de, $c769
     ld hl, $c791
     ld bc, $0028
-    trap $02
+    trap MemCopy
     ld de, $3801
     ld hl, $c791
     ld b, $0a
@@ -738,11 +738,11 @@ jr_000_0501::
     ldx de, @+$012a
     ld hl, $9010
     ld bc, $0030
-    trap $02
+    trap MemCopy
     ldx de, @+$015e
     ld hl, $8000
     ld bc, $0010
-    trap $02
+    trap MemCopy
     ldx hl, @+$0089
     trap DrawLayout
     callx @+$fdce
@@ -752,7 +752,7 @@ jr_000_0501::
     ld hl, $9100
     ld de, $c600
     ld bc, $0100
-    trap $02
+    trap MemCopy
     ret
 
 
@@ -777,7 +777,7 @@ jr_000_0501::
     ldx de, @+$0025
     ld hl, $9040
     ld bc, $0010
-    trap $02
+    trap MemCopy
     ld de, $0205
     ld bc, $1006
     trap $58

@@ -626,7 +626,7 @@ jr_000_04a0::
     push hl
     push de
     ld bc, $0004
-    trap $02
+    trap MemCopy
     pop de
     inc de
     inc de
@@ -648,7 +648,7 @@ jr_000_04c1::
     ld hl, $c600
     ld de, $c400
     ld bc, $0100
-    trap $02
+    trap MemCopy
     ld a, $20
     trap DrawInit
     ldx de, @+$02f0

@@ -103,11 +103,11 @@ HeaderManufacturerCode::
     ld bc, $0003
     ldx de, @+$102e
     ld hl, $cb50
-    trap $02
+    trap MemCopy
     ld bc, $0008
     ldx de, @+$1025
     ld hl, $cb53
-    trap $02
+    trap MemCopy
     ldx hl, @+$1024
     ld a, [hl]
     ld [$cb5b], a
@@ -416,7 +416,7 @@ jr_000_0365::
     add hl, bc
     ld bc, $0020
     ld de, $c90d
-    trap $02
+    trap MemCopy
     ret
 
 
@@ -471,7 +471,7 @@ jr_000_0365::
     add hl, bc
     ld bc, $0020
     ld de, $c90d
-    trap $02
+    trap MemCopy
     ret
 
 
@@ -1407,7 +1407,7 @@ jr_000_098a::
     ld bc, $0003
     ld de, $cb39
     ld hl, $cb50
-    trap $02
+    trap MemCopy
     ld de, $cb52
     ld hl, $c352
     callx @+$0041
@@ -1817,7 +1817,7 @@ jr_000_0c21::
     ld bc, $0009
     ld de, $cb53
     ldx hl, @+$05a2
-    trap $02
+    trap MemCopy
     xor a
     ld [$0000], a
     trap StopAudio
@@ -2496,7 +2496,7 @@ jr_000_0f9a::
     ret nz
 
     trap $00
-    trap $02
+    trap MemCopy
     ld b, $34
     ld [hl], d
     nop
@@ -3223,7 +3223,7 @@ jr_000_139a::
     ld bc, $000c
     ld de, $cb50
     ldx hl, @+$fe0d
-    trap $02
+    trap MemCopy
     xor a
     ld [$0000], a
     jx @+$ed2c

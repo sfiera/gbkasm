@@ -229,7 +229,7 @@ jr_02d6:
     push af
     ld hl, $ffc7
     ld bc, $0005
-    trap $02
+    trap MemCopy
     ldh a, [$c5]
     add $02
     callx call_0698
@@ -362,7 +362,7 @@ jr_03d4:
     callx call_0407
     ld hl, $ffc7
     ld bc, $0005
-    trap $02
+    trap MemCopy
     ld a, $0a
     ldh [$cc], a
     ld a, $01
@@ -603,7 +603,7 @@ jr_05f3:
     push de
     push hl
     ld b, $00
-    trap $02
+    trap MemCopy
     pop hl
     ld bc, $0020
     add hl, bc
@@ -755,7 +755,7 @@ jr_072c:
     ld hl, $c613
     ldx de, data_04c4
     ld bc, $00d9
-    trap $02
+    trap MemCopy
 
 jr_0738:
     ld hl, $0791
@@ -763,7 +763,7 @@ jr_0738:
     ld hl, $8000
     ldx de, data_0484
     ld bc, $0040
-    trap $02
+    trap MemCopy
     ld de, $0005
     ld bc, $1409
     trap $58
@@ -772,7 +772,7 @@ jr_0738:
     ld hl, $c600
     ldx de, call_06d4
     ld bc, $0013
-    trap $02
+    trap MemCopy
     di
     ld hl, $c012
     ld bc, $c600

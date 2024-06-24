@@ -414,7 +414,7 @@ Call_001_42f5:
     ld hl, $ce00
     ld de, $4018
     ld bc, $000f
-    trap $02
+    trap MemCopy
     trap $8e
     ld [$ce01], a
     xor a
@@ -742,7 +742,7 @@ jr_001_4563:
     ld hl, $c400
     push hl
     push bc
-    trap $02
+    trap MemCopy
     pop bc
     pop hl
     add hl, bc
@@ -778,7 +778,7 @@ jr_001_45a3:
     trap $b8
     ld hl, $c42e
     ld bc, $000a
-    trap $02
+    trap MemCopy
     xor a
     ld [$c438], a
     ld hl, $c42e
@@ -867,7 +867,7 @@ jr_001_461f:
     ld hl, $c400
     ld bc, $0010
     push hl
-    trap $02
+    trap MemCopy
     pop hl
     ld bc, $0108
     pop de
@@ -1429,7 +1429,7 @@ Call_001_490e:
     ld d, a
     ld hl, $c500
     ld bc, $0100
-    trap $02
+    trap MemCopy
     pop de
     ld a, $00
     ld hl, $0000
@@ -1477,7 +1477,7 @@ jr_001_494a:
     ld e, l
     ld hl, $c400
     ld bc, $002e
-    trap $02
+    trap MemCopy
     ret
 
 
@@ -1654,7 +1654,7 @@ jr_001_4a72:
     ld e, l
     ld d, h
     ld hl, $c400
-    trap $02
+    trap MemCopy
 
 jr_001_4a7c:
     ld hl, $c400
@@ -2263,7 +2263,7 @@ jr_001_509b:
     push de
     ld b, $00
     push bc
-    trap $02
+    trap MemCopy
     pop bc
     pop hl
     add hl, bc
@@ -2655,7 +2655,7 @@ jr_001_5f45:
     ld [hl+], a
     ld [hl], a
     pop hl
-    trap $02
+    trap MemCopy
     pop bc
     pop de
     pop hl
@@ -2910,7 +2910,7 @@ jr_001_60c9:
     ld de, data_01_661d
     ld hl, $c6d5
     ld bc, $000a
-    trap $02
+    trap MemCopy
     ld a, $01
     trap $cc
     trap $72
@@ -3164,7 +3164,7 @@ Call_001_6501:
     ld de, $4078
     ld hl, $9700
     ld bc, $0010
-    trap $02
+    trap MemCopy
     call Call_001_65db
     ld de, $0204
     ld bc, $1109
@@ -3285,14 +3285,14 @@ Call_001_6627:
     ld de, $c500
     ld hl, $c400
     ld bc, $0100
-    trap $02
+    trap MemCopy
     ld de, $c699
     call trap_51_665c
     call Call_001_6651
     ld de, $c400
     ld hl, $c500
     ld bc, $0100
-    trap $02
+    trap MemCopy
     xor a
     ldh [$c0], a
     ldh [$c1], a
@@ -5383,7 +5383,7 @@ Jump_001_705b:
     push de
     ld hl, $c500
     ld bc, $00ff
-    trap $02
+    trap MemCopy
     ld hl, $c400
     xor a
     ld [hl+], a
@@ -5439,7 +5439,7 @@ jr_001_70af:
     pop hl
     ld de, $c500
     ld bc, $00ff
-    trap $02
+    trap MemCopy
     scf
     ret
 
@@ -5521,7 +5521,7 @@ Call_001_710d:
     ld d, b
     ld e, c
     ld bc, $00ff
-    trap $02
+    trap MemCopy
     ret
 
 
@@ -5888,7 +5888,7 @@ jr_001_7297:
     pop hl
     push bc
     push hl
-    trap $02
+    trap MemCopy
     pop hl
     pop bc
     add hl, bc
@@ -6398,7 +6398,7 @@ jr_001_787d:
     ld de, data_01_7ff0
     ld hl, $87f0
     ld bc, $0010
-    trap $02
+    trap MemCopy
     ret
 
 
@@ -6792,7 +6792,7 @@ jr_001_7ab1:
     pop hl
 
 jr_001_7abf:
-    trap $02
+    trap MemCopy
 
 jr_001_7ac1:
     ld hl, $c39c
@@ -7183,7 +7183,7 @@ jr_001_7d90:
     ld a, [hl+]
     ld h, [hl]
     ld l, a
-    trap $02
+    trap MemCopy
     pop de
     add sp, $20
     pop bc
@@ -7216,7 +7216,7 @@ Call_001_7dc0:
     push de
     push bc
     call trap_4b_7dcc
-    trap $02
+    trap MemCopy
     pop bc
     pop de
     pop hl
@@ -7308,7 +7308,7 @@ jr_001_7e2b:
     push bc
     ld c, b
     ld b, $00
-    trap $02
+    trap MemCopy
     pop bc
     pop de
     ld hl, $0020
@@ -7346,7 +7346,7 @@ jr_001_7e55:
     push bc
     ld c, b
     ld b, $00
-    trap $02
+    trap MemCopy
     ld hl, sp+$24
     ld a, [hl]
     ld hl, sp+$27
@@ -7569,7 +7569,7 @@ trap_4c_7f2f::
     ld c, l
     ld b, h
     pop hl
-    trap $02
+    trap MemCopy
     ret
 
 
@@ -7592,7 +7592,7 @@ jr_001_7f52:
     push hl
     ld de, $c3e0
     ld bc, $0010
-    trap $02
+    trap MemCopy
     pop hl
     ld de, $0010
     add hl, de

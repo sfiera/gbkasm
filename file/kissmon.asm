@@ -815,7 +815,7 @@ call_07cc:
     ld de, $c3b2
     ld hl, $cca9
     ld bc, $0003
-    trap $02
+    trap MemCopy
     xor a
     ld [$ccbd], a
     ld hl, $cc9c
@@ -881,7 +881,7 @@ call_07cc:
     ld de, $ccb7
     ld hl, $c3b2
     ld bc, $0003
-    trap $02
+    trap MemCopy
     ld a, $01
     ld [$ccbd], a
     or a
@@ -1559,7 +1559,7 @@ call_0cf8:
     ld d, h
     pop hl
     ld bc, $0090
-    trap $02
+    trap MemCopy
     ret
 
 
