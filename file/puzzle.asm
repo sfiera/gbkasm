@@ -667,7 +667,7 @@ jr_000_0522:
     pop de
     pop hl
     ld bc, $0030
-    trap $02
+    trap MemCopy
     ld a, [$d5a8]
     add $30
     ld [$d5a8], a
@@ -1887,7 +1887,7 @@ call_0c54:
     ld hl, $8000
     ld bc, $0040
     ldx de, data_0f28
-    trap $02
+    trap MemCopy
     ld hl, $c300
     ld a, [$d5a1]
     ld [hl+], a
@@ -1919,7 +1919,7 @@ call_0c8d:
     ld hl, $8000
     ld bc, $0010
     ldx de, data_0f18
-    trap $02
+    trap MemCopy
     ld a, $03
     trap $b4
     pop af

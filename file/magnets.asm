@@ -375,7 +375,7 @@ jr_000_024c::
     ld bc, $0014
     ld de, $b85f
     ld hl, $cf07
-    trap $02
+    trap MemCopy
     ld a, $05
     ld [$cf05], a
     ld [$cf06], a
@@ -396,7 +396,7 @@ jr_000_024c::
     ld bc, $0110
     ld de, $c700
     ld hl, $9000
-    trap $02
+    trap MemCopy
     call $a2df
     ld de, $0110
     ld bc, $0566
@@ -450,7 +450,7 @@ Call_000_0303::
     rl b
     add hl, bc
     ld bc, $0010
-    trap $02
+    trap MemCopy
     pop hl
     pop af
     inc a
@@ -460,7 +460,7 @@ Call_000_0303::
     ld bc, $0520
     ld de, $cf00
     ld hl, $9200
-    trap $02
+    trap MemCopy
     ret
 
 
@@ -882,11 +882,11 @@ jr_000_0542::
     ld bc, $0010
     ld de, $b873
     ld hl, $9160
-    trap $02
+    trap MemCopy
     ld bc, $0010
     ld de, $b873
     ld hl, $d020
-    trap $02
+    trap MemCopy
     ld a, [$d020]
     or $ff
     ld [$d020], a
@@ -896,11 +896,11 @@ jr_000_0542::
     ld bc, $0010
     ld de, $d020
     ld hl, $9150
-    trap $02
+    trap MemCopy
     ld bc, $0040
     ld de, $b883
     ld hl, $9110
-    trap $02
+    trap MemCopy
     ret
 
 
@@ -1004,7 +1004,7 @@ jr_000_0630::
     ld bc, $0014
     ld de, $cf07
     ld hl, $9800
-    trap $02
+    trap MemCopy
     ret
 
 
@@ -2427,7 +2427,7 @@ jr_000_0ddd::
     add hl, bc
     ld bc, $0014
     ld de, $d0a8
-    trap $02
+    trap MemCopy
     pop hl
     ld bc, $0014
     add hl, bc
@@ -4818,7 +4818,7 @@ jr_000_18b4::
     ld e, l
     ld d, h
     ld hl, $d092
-    trap $02
+    trap MemCopy
     ret
 
 
@@ -4836,7 +4836,7 @@ jr_000_18b4::
     add hl, bc
     ld bc, $0010
     ld de, $d092
-    trap $02
+    trap MemCopy
     ret
 
 

@@ -917,7 +917,7 @@ call_0861:
 
 jr_000_08ae:
     ld bc, $0013
-    trap $02
+    trap MemCopy
     ret
 
 

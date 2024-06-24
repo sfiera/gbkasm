@@ -381,7 +381,7 @@ jr_000_02ad::
     ld hl, $8000
     ld de, $b2e9
     ld bc, $0440
-    trap $02
+    trap MemCopy
     ret
 
 
@@ -399,7 +399,7 @@ jr_000_02ad::
     ld hl, $c602
     ld de, $a34d
     ld bc, $0042
-    trap $02
+    trap MemCopy
     ret
 
 
@@ -472,7 +472,7 @@ jr_000_02ad::
     ld hl, $8800
     ld de, $b729
     ld bc, $0b40
-    trap $02
+    trap MemCopy
     ret
 
 
@@ -564,7 +564,7 @@ jr_000_0424::
     ld hl, $c660
     ld de, $b886
     ld bc, $09c4
-    trap $02
+    trap MemCopy
     ret
 
 
@@ -603,7 +603,7 @@ jr_000_0424::
     ld hl, $8000
     ld bc, $0010
     ld de, $a6cb
-    trap $02
+    trap MemCopy
     ld hl, $c300
     ld a, [$c65d]
     sla a

@@ -7,6 +7,8 @@ ENDM
 
 DEF ExitToMenu       EQU $01
 
+DEF MemCopy          EQU $02  ; [de, de+bc) → [hl, hl+bc)
+
 DEF StopAudio        EQU $11
 DEF PlayMusic        EQU $13
 DEF PlaySound        EQU $14

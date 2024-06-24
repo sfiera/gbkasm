@@ -596,7 +596,7 @@ jr_000_a467:
     ld bc, $0011
     push hl
     push de
-    trap $02
+    trap MemCopy
     pop de
     ld hl, $0011
     add hl, de
@@ -1431,7 +1431,7 @@ jr_000_a8e4:
     call call_a82a
     ld de, $ca35
     ld bc, $0014
-    trap $02
+    trap MemCopy
     ret
 
 
@@ -1442,7 +1442,7 @@ call_a8fe:
     ld d, h
     ld hl, $ca35
     ld bc, $0014
-    trap $02
+    trap MemCopy
     ld a, [$ca47]
     and a
     jr z, jr_000_a91c
@@ -1459,7 +1459,7 @@ jr_000_a91c:
     call call_a82a
     ld de, $ca35
     ld bc, $0014
-    trap $02
+    trap MemCopy
     ret
 
 
