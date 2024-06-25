@@ -58,6 +58,7 @@ file/iconedit.o: gfx/iconedit/icon.2bpp
 file/iconsend.o: gfx/iconsend/icons.2bpp.hz
 file/kissmon.o: gfx/kissmon/icon.2bpp
 file/kissmon.o: gfx/kissmon/monsters.2bpp
+file/kissmon2.o: gfx/kissmon/icon2.2bpp
 file/koura1.o: gfx/puzzle/koura-1.2bpp.hz
 file/koura2.o: gfx/puzzle/koura-2.2bpp.hz
 file/koura3.o: gfx/puzzle/koura-3.2bpp.hz
