@@ -1809,31 +1809,27 @@ call_ad9a:
 
 
 data_addd:
-    ds 10, $00
-data_ade7:
-    db $00
-data_ade8:
-    db $00
-    db $00
-    db $00
-    db $00
-    db $00
-    db $00
-data_adee:
-    db $00
-    db $00
-    db $00
-    db $00
-    db $00
-    db $00
-    db $00
-data_adf5:
-    db $00
-    db $00
-data_adf7:
-    db $00
-data_adf8:
-    ds 5, $00
+    ds 10, $00  ; player name
+data_ade7:      ;
+    db $00      ; initialized?
+data_ade8:      ;
+    ds 5, $00   ; monster name
+    db $00      ; unknown
+data_adee:      ;
+    db $00      ; level
+    db $00      ; attack
+    db $00      ; defense
+    db $00      ; speed
+    db $00      ; luck
+    db $00      ; hp
+    db $00      ; unknown
+data_adf5:      ;
+    db $00      ; wins
+    db $00      ; losses
+data_adf7:      ;
+    db $00      ; ties
+data_adf8:      ;
+    ds 5, $00   ; unknown
 
 
 call_adfd:

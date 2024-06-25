@@ -1318,20 +1318,20 @@ call_0b27:
 
 data_0b75:
     ds 10, $00  ; player name
-data_0b7f:
+data_0b7f:      ;
     db $00      ; initialized?
-    db "     "  ; monster name
+    ds 5, $20   ; monster name
     db $00      ; unknown
     db $00      ; attack
     db $00      ; defense
     db $00      ; speed
     db $00      ; luck
     db $00      ; hp
-data_0b8b:
-    db $00  ; wins
-    db $00  ; losses
-data_0b8d:
-    db $00  ; ties
+data_0b8b:      ;
+    db $00      ; wins
+    db $00      ; losses
+data_0b8d:      ;
+    db $00      ; ties
 
 
 call_0b8e:
