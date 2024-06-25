@@ -2613,6 +2613,21 @@ call_b2b1:
 
 
 data_b2c0:
-    INCBIN "gfx/kissmon/monsters2.2bpp"
+    INCBIN "gfx/kissmon/moncroc.2bpp"
+    INCBIN "gfx/kissmon/monocto.2bpp"
+    INCBIN "gfx/kissmon/monmouse.2bpp"
+    INCBIN "gfx/kissmon/monrobo3.2bpp"
+    INCBIN "gfx/kissmon/monrobo2.2bpp"
+    INCBIN "gfx/kissmon/mondora.2bpp"
+    INCBIN "gfx/kissmon/monbird1.2bpp"
+    INCBIN "gfx/kissmon/monfly.2bpp"
+    INCBIN "gfx/kissmon/monpoop.2bpp"
+    INCBIN "gfx/kissmon/monfish2.2bpp"
+    INCBIN "gfx/kissmon/monghost.2bpp"
+    INCBIN "gfx/kissmon/monwolf2.2bpp"
+    INCBIN "gfx/kissmon/monbird2.2bpp"
+    INCBIN "gfx/kissmon/monbird3.2bpp"
+    INCBIN "gfx/kissmon/monwhale.2bpp"
+    INCBIN "gfx/kissmon/monpig.2bpp"
 
 ENDL
