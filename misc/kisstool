@@ -14,8 +14,7 @@ import unicodedata
 def main():
     parser = argparse.ArgumentParser()
     parser.set_defaults(func=help_command)
-    parser.add_argument("-f", "--file")
-    parser.add_argument("-s", "--save")
+    parser.add_argument("file")
     subparsers = parser.add_subparsers(dest="command")
 
     def sub(name, func, **kwds):
@@ -38,14 +37,22 @@ def main():
     delete.add_argument("title")
 
     args = parser.parse_args()
-    args.func(parser, args)
+    try:
+        args.func(parser, args)
+    except ToolError as e:
+        print(f"{args.path}: {e}", file=sys.stderr)
+        exit(1)
+
+
+class ToolError(Exception):
+    pass
 
 
 KissMeta = collections.namedtuple("KissMeta", "cap bank addr".split())
 KissChunk = collections.namedtuple("KissChunk", "type body prev next".split())
 KissEntry = collections.namedtuple("KissEntry", "addr cart_id owner".split())
 KissFile = collections.namedtuple(
-    "KissFile", "body size flags owner title icon".split()
+    "KissFile", "body size flags cart_id owner title icon".split()
 )
 
 
@@ -54,26 +61,19 @@ class KissError(Exception):
 
 
 @contextlib.contextmanager
-def open_sav(args, mode):
-    rom_path = args.file
-    sav_path = args.save
+def open_kiss(args, mode):
+    with open(args.file, mode) as f:
+        rom_info = detect_rom(f)
+        if rom_info is not None:
+            yield None, rom_info, f
+            return
 
-    if not (rom_path or sav_path):
-        raise ValueError("at least one of --file or --save is required")
+        meta = detect_meta(f)
+        if meta is not None:
+            yield meta, None, f
+            return
 
-    if not sav_path:
-        rom_base, ext = os.path.splitext(rom_path)
-        sav_path = rom_base + ".sav"
-
-    if rom_path:
-        with open(rom_path, "rb") as f:
-            f.seek(0x14)
-            meta = KissMeta(*read_struct("<BBH", f))
-        with open(sav_path, mode) as f:
-            yield meta, f
-    else:
-        with open(sav_path, mode) as f:
-            yield detect_meta(f), f
+    raise Exception("file contains neither ROM data nor GBKiss data")
 
 
 def gb2cram(bank, addr):
@@ -117,7 +117,57 @@ BUILTIN_ICONS = {
 }
 
 
+NINTENDO_LOGO = (
+    b"\xCE\xED\x66\x66\xCC\x0D\x00\x0B\x03\x73\x00\x83\x00\x0C\x00\x0D"
+    b"\x00\x08\x11\x1F\x88\x89\x00\x0E\xDC\xCC\x6E\xE6\xDD\xDD\xD9\x99"
+    b"\xBB\xBB\x67\x63\x6E\x0E\xEC\xCC\xDD\xDC\x99\x9F\xBB\xB9\x33\x3E"
+)
+ROMS = {
+    b"POKEBOM": [0x74003],
+    b"GBKISS MINIGAME": [
+        0x18007,
+        0x19EDD,
+        0x1B2AD,
+        0x1C09A,
+        0x1DE25,
+        0x1F66C,
+        0x20000,
+        0x2160F,
+        0x21E16,
+        0x2407A,
+        0x243E6,
+        0x256FE,
+        0x28000,
+        0x29690,
+        0x29F1A,
+        0x2B2DF,
+        0x2C07A,
+        0x2DAC6,
+        0x30000,
+        0x30718,
+        0x3404D,
+        0x354AE,
+        0x3807F,
+        0x385DC,
+        0x38BEB,
+        0x391A8,
+        0x39811,
+        0x3C04F,
+        0x3c482,
+        0x3C4A1,
+    ],
+}
+
+
+def detect_rom(rom):
+    rom.seek(0x0104)
+    if rom.read(len(NINTENDO_LOGO)) != NINTENDO_LOGO:
+        return None
+    return rom.read(16).rstrip(b"\0")
+
+
 def detect_meta(sav):
+    sav.seek(0)
     data = sav.read()
     offset = 0
     magic = b"\x53\xac"
@@ -147,7 +197,7 @@ def detect_meta(sav):
             break
 
     if cram_addr is None:
-        raise Exception("GBKiss data not found in save file")
+        return None
     bank, addr = cram2gb(cram_addr)
     return KissMeta(None, bank, addr)
 
@@ -210,7 +260,7 @@ def read_file_header(sav, *, seek=None):
     icon = None
     if icon_size:
         icon = sav.read(icon_size)
-    return KissFile(sav.tell(), size, flags, owner, title, icon)
+    return KissFile(sav.tell(), size, flags, cart_id, owner, title, icon)
 
 
 def help_command(parser, args):
@@ -219,7 +269,10 @@ def help_command(parser, args):
 
 def check_command(parser, args):
     ok = True
-    with open_sav(args, "rb") as (meta, sav):
+    with open_kiss(args, "rb") as (meta, rom, sav):
+        if rom is not None:
+            raise ToolError("cannot check ROM file")
+
         profile = read_profile_chunk_header(sav, seek=gb2cram(meta.bank, meta.addr))
 
         files = {}
@@ -289,7 +342,10 @@ def check_command(parser, args):
 
 
 def info_command(parser, args):
-    with open_sav(args, "rb") as (meta, sav):
+    with open_kiss(args, "rb") as (meta, rom, sav):
+        if rom is not None:
+            raise ToolError("cannot get user info from ROM file")
+
         profile = read_profile_chunk_header(sav, seek=gb2cram(meta.bank, meta.addr))
 
         profile = sav.read(122)
@@ -309,25 +365,42 @@ def info_command(parser, args):
 
 
 def list_command(parser, args):
-    with open_sav(args, "rb") as (meta, sav):
-        profile = read_profile_chunk_header(sav, seek=gb2cram(meta.bank, meta.addr))
-        index = read_index(sav, seek=gb2cram(meta.bank, profile.prev))
-
+    with open_kiss(args, "rb") as (meta, rom, sav):
         table = [("N", "TITLE", "ADDR", "SIZE", "MARK", "OWNER", "ICON")]
-        for i, entry in enumerate(index):
-            if entry.addr == 0:
-                continue
-            elif entry.cart_id == 0xFF:
-                table.append((i, "KISS MAIL", "n/a", "n/a", "◎", "$01", "auto"))
-                continue
 
-            file = read_file_header(sav, seek=entry.addr)
+        if meta is not None:
+            profile = read_profile_chunk_header(sav, seek=gb2cram(meta.bank, meta.addr))
+            index = read_index(sav, seek=gb2cram(meta.bank, profile.prev))
+
+            addrs = []
+            for i, entry in enumerate(index):
+                if entry.addr == 0:
+                    continue
+                elif entry.cart_id == 0xFF:
+                    table.append((i, "KISS MAIL", "n/a", "n/a", "◎", "$01", "auto"))
+                    continue
+                else:
+                    addrs.append((i, entry.addr))
+        else:
+            if rom not in ROMS:
+                raise ToolError("ROM contains no GBKiss files")
+            addrs = list(enumerate(ROMS[rom]))
+
+        for i, addr in addrs:
+            file = read_file_header(sav, seek=addr)
             icon_kind = BUILTIN_ICONS.get(file.owner, "")
             if file.icon:
                 icon_kind = "%dbpp" % (len(file.icon) // 0x60)
-            mark = {0x04: "○", 0x06: "◇"}.get(file.flags & 0x06, "△")
+            if file.cart_id == 0xFF:
+                mark = "×"
+            elif file.flags & 0x06 == 0x06:
+                mark = "◇"
+            elif file.flags & 0x06 == 0x04:
+                mark = "○"
+            else:
+                mark = "△"
             owner = "$%02x" % file.owner
-            addr = "$%02x:$%04x" % cram2gb(entry.addr)
+            addr = "$%04x" % addr
             table.append((i, file.title, addr, file.size, mark, owner, icon_kind))
 
         _columnify(table)
@@ -338,17 +411,27 @@ def get_command(parser, args):
     if out_path is None:
         out_path = args.title + ".gbf"
 
-    with open_sav(args, "rb") as (meta, sav):
-        profile = read_profile_chunk_header(sav, seek=gb2cram(meta.bank, meta.addr))
-        for entry in read_index(sav, seek=gb2cram(meta.bank, profile.prev)):
-            if entry.addr > 0 and entry.cart_id == 0x00:
-                file = read_file_header(sav, seek=entry.addr)
-                if file.title == args.title:
-                    break
+    with open_kiss(args, "rb") as (meta, rom, sav):
+        if meta is not None:
+            profile = read_profile_chunk_header(sav, seek=gb2cram(meta.bank, meta.addr))
+            index = read_index(sav, seek=gb2cram(meta.bank, profile.prev))
+            addrs = []
+            for i, entry in enumerate(index):
+                if (entry.addr != 0) and (entry.cart_id != 0xFF):
+                    addrs.append((i, entry.addr))
         else:
-            raise KeyError(args.title)
+            if rom not in ROMS:
+                raise ToolError("ROM contains no GBKiss files")
+            addrs = list(enumerate(ROMS[rom]))
 
-        sav.seek(entry.addr)
+        for i, addr in addrs:
+            file = read_file_header(sav, seek=addr)
+            if (file.title == args.title) or (str(i) == args.title):
+                break
+        else:
+            raise ToolError(f"file {args.title}: not found")
+
+        sav.seek(addr)
         data = sav.read(file.size)
         with open(out_path, "wb") as out:
             out.write(data)
@@ -362,13 +445,14 @@ def add_command(parser, args):
 
     diamond = (file.flags & 0x06) == 0x06
     if file.size != len(data):
-        print(
-            f"Declared file size ${file.size:04x} != observed ${len(data):04x}",
-            file=sys.stderr,
+        raise ToolError(
+            f"declared file size ${file.size:04x} != observed ${len(data):04x}"
         )
-        sys.exit(1)
 
-    with open_sav(args, "rb+") as (meta, sav):
+    with open_kiss(args, "rb+") as (meta, rom, sav):
+        if rom is not None:
+            raise ToolError("cannot add file to ROM file")
+
         profile = read_profile_chunk_header(sav, seek=gb2cram(meta.bank, meta.addr))
         index = read_index(sav, seek=gb2cram(meta.bank, profile.prev))
         for i, entry in enumerate(index):
@@ -376,20 +460,17 @@ def add_command(parser, args):
                 index_loc = i
                 break
         else:
-            print(f"No space in index", file=sys.stderr)
-            sys.exit(1)
+            raise ToolError(f"no space in index")
 
         chunks = read_all_chunks(sav, meta.bank + 1)
         chunks = {c for c in chunks if c.type == CHUNK_FREE}
         chunks = {c for c in chunks if chunk_size(c) >= file.size}
         if not chunks:
-            print(f"No space in CRAM", file=sys.stderr)
-            sys.exit(1)
+            raise ToolError(f"no space in CRAM")
         if diamond:
             chunks = {c for c in chunks if cram2gb(c.body)[1] == 0xA008}
             if not chunks:
-                print(f"No valid diamond space in CRAM", file=sys.stderr)
-                sys.exit(1)
+                raise ToolError(f"no valid diamond space in CRAM")
         chunk = max(chunks, key=lambda chunk: chunk.body)
         bank, addr = cram2gb(chunk.body)
 
@@ -434,7 +515,10 @@ def move_command(parser, args):
 
 
 def del_command(parser, args):
-    with open_sav(args, "rb+") as (meta, sav):
+    with open_kiss(args, "rb+") as (meta, rom, sav):
+        if rom is not None:
+            raise ToolError("cannot delete file from ROM file")
+
         profile = read_profile_chunk_header(sav, seek=gb2cram(meta.bank, meta.addr))
         index = read_index(sav, seek=gb2cram(meta.bank, profile.prev))
         for i, entry in enumerate(index):
@@ -535,14 +619,10 @@ _katakana.update(
 )
 _hiragana = dict(_katakana)
 _katakana.update(enumerate("ヲァィゥェォャュョッー", start=0xA6))
-_katakana.update(
-    enumerate("アイウエオカキクケコサシスセソタチツテトナニヌネノ", start=0xB1)
-)
+_katakana.update(enumerate("アイウエオカキクケコサシスセソタチツテトナニヌネノ", start=0xB1))
 _katakana.update(enumerate("ハヒフヘホマミムメモヤユヨラリルレロワン", start=0xCA))
 _hiragana.update(enumerate("をぁぃぅぇぉゃゅょっー", start=0xA6))
-_hiragana.update(
-    enumerate("あいうえおかきくけこさしすせそたちつてとなにぬねの", start=0xB1)
-)
+_hiragana.update(enumerate("あいうえおかきくけこさしすせそたちつてとなにぬねの", start=0xB1))
 _hiragana.update(enumerate("はひふへほまみむめもやゆよらりるれろわん", start=0xCA))
 
 _charmaps = {0x0E: _katakana, 0x0F: _hiragana}
