@@ -19,23 +19,24 @@ DEF PauseMusic       EQU $18
 DEF SetVolume        EQU $19
 DEF GetAudioCount    EQU $1a
 
-DEF AwaitFrame       EQU $b1
-DEF DoMenu           EQU $bf
+DEF LoadTiles        EQU $4c
 
-DEF MoveCursor       EQU $b8
-DEF DrawInit         EQU $b3
-DEF DrawChar         EQU $bb
-DEF DrawString       EQU $69
-DEF DrawStringList   EQU $6a
 DEF DrawLayout       EQU $5c
 
-DEF IntToString      EQU $a3
-DEF IntToStringHex   EQU $a4
+DEF InitDecompress   EQU $62
+DEF RunDecompress    EQU $63
 
-DEF LoadTiles        EQU $4c
+DEF DrawString       EQU $69
+DEF DrawStringList   EQU $6a
 
 DEF RandInit         EQU $8d
 DEF RandNext         EQU $8e
 
-DEF InitDecompress   EQU $62
-DEF RunDecompress    EQU $63
+DEF IntToString      EQU $a3
+DEF IntToStringHex   EQU $a4
+
+DEF AwaitFrame       EQU $b1
+DEF DrawInit         EQU $b3
+DEF MoveCursor       EQU $b8
+DEF DrawChar         EQU $bb
+DEF DoMenu           EQU $bf
