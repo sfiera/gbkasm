@@ -81,7 +81,7 @@ HeaderManufacturerCode::
     ld e, $00
     ld bc, $0262
     ld hl, $c900
-    trap $a6
+    trap MemSet
     ld a, $1f
     ld [$c904], a
     ld a, $0a
@@ -424,7 +424,7 @@ jr_000_0365::
     ld e, $41
     ld bc, $0020
     ld hl, $c90d
-    trap $a6
+    trap MemSet
     callx @+$00d9
     ld a, [$c907]
     inc a

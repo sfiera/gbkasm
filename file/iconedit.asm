@@ -711,11 +711,11 @@ jr_000_0501::
     ld hl, $c700
     ld bc, $0058
     ld e, $20
-    trap $a6
+    trap MemSet
     ld hl, $c791
     ld bc, $0028
     ld e, $20
-    trap $a6
+    trap MemSet
     xor a
     ld [$c769], a
     ld de, $c700
@@ -767,7 +767,7 @@ jr_000_0501::
     ld hl, $c600
     ld bc, $0100
     ld e, $00
-    trap $a6
+    trap MemSet
     ret
 
 
@@ -805,7 +805,7 @@ jr_000_0501::
     ld hl, $9800
     ld bc, $0400
     ld e, $7f
-    trap $a6
+    trap MemSet
     ret
 
 

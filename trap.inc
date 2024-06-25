@@ -34,6 +34,7 @@ DEF RandNext         EQU $8e
 
 DEF IntToString      EQU $a3
 DEF IntToStringHex   EQU $a4
+DEF MemSet           EQU $a6  ; e → [hl, hl+bc)
 
 DEF AwaitFrame       EQU $b1
 DEF DrawInit         EQU $b3

@@ -371,7 +371,7 @@ jr_000_024c::
     ld e, $00
     ld bc, $0520
     ld hl, $cf00
-    trap $a6
+    trap MemSet
     ld bc, $0014
     ld de, $b85f
     ld hl, $cf07
@@ -470,7 +470,7 @@ Call_000_0303::
     ld e, $f8
     ld bc, $0400
     ld hl, $9800
-    trap $a6
+    trap MemSet
     ld de, $0b66
     ld bc, $367b
     call $a22e
@@ -629,7 +629,7 @@ jr_000_040d::
     sla a
     sla a
     ld c, a
-    trap $a6
+    trap MemSet
     ret
 
 
@@ -793,7 +793,7 @@ jr_000_04fa::
     ld e, $00
     ld bc, $0080
     ld hl, $cf1c
-    trap $a6
+    trap MemSet
     call $a52a
     ld a, $00
     ld [$cf40], a
@@ -907,7 +907,7 @@ jr_000_0542::
     ld e, $15
     ld bc, $0014
     ld hl, $9820
-    trap $a6
+    trap MemSet
     ld c, $10
 
 jr_000_05d1::
@@ -928,7 +928,7 @@ jr_000_05d1::
     add hl, de
     ld e, $16
     ld bc, $0014
-    trap $a6
+    trap MemSet
     pop bc
     dec c
     jr nz, jr_000_05d1
@@ -939,7 +939,7 @@ jr_000_05d1::
     ld e, $00
     ld bc, $0022
     ld hl, $d063
-    trap $a6
+    trap MemSet
     ld hl, $b810
     ld b, $00
     ld a, [$cf00]
@@ -2449,7 +2449,7 @@ jr_000_0e45::
     add hl, bc
     ld e, $20
     ld bc, $0014
-    trap $a6
+    trap MemSet
     pop hl
     inc hl
     ret

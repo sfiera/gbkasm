@@ -122,7 +122,7 @@ call_a189:
     ld e, $00
     ld bc, $0400
     ld hl, $c800
-    trap $a6
+    trap MemSet
     ld a, $02
     ld [$c8f4], a
     ld hl, data_b594
@@ -447,14 +447,14 @@ call_a3a9:
     ld bc, $00cc
     ld e, $22
     ld hl, $c817
-    trap $a6
+    trap MemSet
     ld bc, $0011
     ld e, $23
     ld hl, $c817
-    trap $a6
+    trap MemSet
     ld bc, $0011
     ld hl, $c8d2
-    trap $a6
+    trap MemSet
     ld bc, $230a
     ld de, $0008
     ld hl, $c828
@@ -932,10 +932,10 @@ call_a63f:
     ld bc, $0140
     ld e, $00
     ld hl, $c8f5
-    trap $a6
+    trap MemSet
     ld bc, $0190
     ld hl, $ca48
-    trap $a6
+    trap MemSet
     ret
 
 
@@ -3438,7 +3438,7 @@ jr_000_b390:
     ld hl, $98c0
     ld bc, $0040
     ld e, $22
-    trap $a6
+    trap MemSet
     call call_a63f
     ld bc, $9810
     ld de, $0001
@@ -3703,7 +3703,7 @@ jr_000_b537:
     ld hl, $9a20
     ld e, $2b
     ld bc, $0005
-    trap $a6
+    trap MemSet
     trap AwaitFrame
     ld a, $07
     trap SetVolume
@@ -3714,7 +3714,7 @@ call_b553:
     ld bc, $0400
     ld e, $2b
     ld hl, $9800
-    trap $a6
+    trap MemSet
     ret
 
 

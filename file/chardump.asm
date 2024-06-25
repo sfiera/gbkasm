@@ -153,7 +153,7 @@ DrawGrid:
     ld e, $00
     ld hl, $8800
     ld bc, $0800
-    trap $a6
+    trap MemSet
     ld hl, varAddr
     ld e, [hl]
     inc hl
