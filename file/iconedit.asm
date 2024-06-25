@@ -64,7 +64,7 @@ jr_000_0128::
     trap $b5
     callx @+$0493
     ld a, $03
-    trap $b4
+    trap HideScreen
     xor a
 
 jr_000_0139::
@@ -178,7 +178,7 @@ jr_000_01d7::
     callx @+$0366
     callx @+$023e
     ld a, $63
-    trap $b4
+    trap HideScreen
 
 jr_000_01f7::
     trap AwaitFrame
@@ -628,7 +628,7 @@ jr_000_043d::
     ld hl, $0100
     trap $59
     ld a, $03
-    trap $b4
+    trap HideScreen
     ld de, $c769
     ld hl, $c791
     ld bc, $0028
@@ -1218,7 +1218,7 @@ jr_000_07ca::
 
 
     push bc
-    trap $b4
+    trap HideScreen
     and [hl]
     add $ad
     or e
@@ -1244,7 +1244,7 @@ jr_000_07ca::
 
 
     push bc
-    trap $b4
+    trap HideScreen
     jp $cede
 
 
@@ -1317,7 +1317,7 @@ jr_000_0835::
     push bc
     cp h
     sbc $c5
-    trap $b4
+    trap HideScreen
     ret
 
 

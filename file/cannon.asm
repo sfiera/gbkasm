@@ -53,7 +53,7 @@ Main::
     callx @+$0a1b
     callx @+$009c
     ld a, $07
-    trap $b4
+    trap HideScreen
     ld a, $01
     ld [$c665], a
     xor a
@@ -141,7 +141,7 @@ jr_000_0204:
     ld [$c66d], a
     callx @+$00e9
     ld a, $07
-    trap $b4
+    trap HideScreen
     trap AwaitFrame
     trap $d8
     ld a, [$c656]
@@ -267,7 +267,7 @@ jr_000_02e2::
     xor a
     ld [$c656], a
     ld a, $07
-    trap $b4
+    trap HideScreen
     xor a
     trap PlayMusic
     xor a

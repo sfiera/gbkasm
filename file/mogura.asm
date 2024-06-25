@@ -52,7 +52,7 @@ jr_000_0103::
     ld l, a
     call $b2a6
     ld a, $03
-    trap $b4
+    trap HideScreen
     call $a328
     ld hl, $0902
     trap MoveCursor
@@ -374,7 +374,7 @@ jr_000_02ad::
     ld d, $0a
     trap DrawInit
     ld a, $03
-    trap $b4
+    trap HideScreen
     ret
 
 
@@ -599,7 +599,7 @@ jr_000_0424::
     ld hl, $a6bf
     trap DrawString
     ld a, $03
-    trap $b4
+    trap HideScreen
     ld hl, $8000
     ld bc, $0010
     ld de, $a6cb
@@ -3306,7 +3306,7 @@ jr_000_128e::
     ld de, $8800
     trap RunDecompress
     ld a, $03
-    trap $b4
+    trap HideScreen
     ret
 
 

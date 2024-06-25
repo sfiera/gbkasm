@@ -162,7 +162,7 @@ DrawGrid:
     ld hl, $8800
     trap $1b
     ld a, $03
-    trap $b4
+    trap HideScreen
     ret
 
 DrawDigit:

@@ -52,7 +52,7 @@ Main::
     ld a, $01
     ld [$c882], a
     ld a, $03
-    trap $b4
+    trap HideScreen
     ld a, [$0014]
     cp $01
     ret nz

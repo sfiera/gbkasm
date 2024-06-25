@@ -253,7 +253,7 @@ jx_02c4:
     jr nz, jr_000_02af
 
     ld a, $07
-    trap $b4
+    trap HideScreen
     xor a
     ld [$d5e5], a
     ret
@@ -1921,7 +1921,7 @@ call_0c8d:
     ldx de, data_0f18
     trap MemCopy
     ld a, $03
-    trap $b4
+    trap HideScreen
     pop af
     ld [$d5a0], a
     ld a, $60

@@ -53,7 +53,7 @@ Main::
     ld hl, $8000
     call call_b2a6
     ld a, $03
-    trap $b4
+    trap HideScreen
     xor a
     ld hl, $0000
     ld de, $4c48
@@ -187,7 +187,7 @@ call_a21f:
     ld bc, $0303
     trap $c5
     ld a, $03
-    trap $b4
+    trap HideScreen
 
 .jr_a285
     trap AwaitFrame
@@ -284,7 +284,7 @@ call_a33a:
     ld de, $0310
     call call_a3ba
     ld a, $03
-    trap $b4
+    trap HideScreen
 
 .jr_a372
     trap AwaitFrame
@@ -382,7 +382,7 @@ call_a464:
     inc hl
     ld [hl], a
     ld a, $03
-    trap $b4
+    trap HideScreen
     ld hl, $c85c
     ld [hl], $05
     inc hl
@@ -1381,7 +1381,7 @@ call_aa58:
     ld hl, $0100
     trap $59
     ld a, $03
-    trap $b4
+    trap HideScreen
     ld de, $3d01
     ld b, $05
     ld hl, $c862
@@ -1515,7 +1515,7 @@ call_ab98:
     trap DrawLayout
     call call_abef
     ld a, $03
-    trap $b4
+    trap HideScreen
     xor a
     ld [$c85d], a
     call call_acbe
@@ -2081,7 +2081,7 @@ call_af4f:
     call call_b1a8
     call call_b154
     ld a, $63
-    trap $b4
+    trap HideScreen
 
 .jr_af62
     trap AwaitFrame
