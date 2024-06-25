@@ -38,7 +38,7 @@ Main::
     ld hl, $1200
     trap $b6
     ld a, $01
-    trap $b4
+    trap HideScreen
 
 jr_0106:
     callx code_019d

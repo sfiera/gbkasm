@@ -3652,7 +3652,7 @@ jr_000_b4eb:
 
 call_b500:
     ld a, $03
-    trap $b4
+    trap HideScreen
     ret
 
 

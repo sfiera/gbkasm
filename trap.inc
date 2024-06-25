@@ -37,6 +37,7 @@ DEF IntToStringHex   EQU $a4
 
 DEF AwaitFrame       EQU $b1
 DEF DrawInit         EQU $b3
+DEF HideScreen       EQU $b4  ; a|$80 → LCDC; $00 → BGP/OBP1/OBP2
 DEF MoveCursor       EQU $b8
 DEF DrawChar         EQU $bb
 DEF DoMenu           EQU $bf

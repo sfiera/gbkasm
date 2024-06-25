@@ -44,7 +44,7 @@ jr_0108:
     ldx hl, layout_037a
     trap DrawLayout
     ld a, $03
-    trap $b4
+    trap HideScreen
     xor a
     ld [$ccc6], a
     ldx de, data_0131
@@ -109,7 +109,7 @@ jr_000_016c:
     ld a, $18
     ldh [$9f], a
     ld a, $63
-    trap $b4
+    trap HideScreen
     ld a, $14
     ld [$cc96], a
 jr_0194:
@@ -279,7 +279,7 @@ call_040c:
     ld a, $18
     ldh [$9f], a
     ld a, $63
-    trap $b4
+    trap HideScreen
     xor a
     ld [$cc65], a
     ld a, $50
@@ -832,7 +832,7 @@ jr_000_07c6:
     trap $b5
     callx call_08d8
     ld a, $63
-    trap $b4
+    trap HideScreen
 
 jr_000_081d:
     scf
