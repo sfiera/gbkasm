@@ -232,7 +232,7 @@ call_02f5:
     ld hl, $8800
     ld e, $00
     ld bc, $0800
-    trap $a6
+    trap MemSet
     callx call_0c38
     ld hl, $cca8
     ld a, [hl+]

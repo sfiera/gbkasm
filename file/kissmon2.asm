@@ -371,7 +371,7 @@ call_a464:
     ld hl, $8800
     ld e, $00
     ld bc, $0800
-    trap $a6
+    trap MemSet
     call call_ae98
     ld hl, $c86d
     ld a, [hl+]
@@ -2528,7 +2528,7 @@ call_b187:
     ld hl, $c700
     ld bc, $0100
     ld e, $00
-    trap $a6
+    trap MemSet
     xor a
     ld [$c9bc], a
     ld a, $03

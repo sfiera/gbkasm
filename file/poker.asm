@@ -43,7 +43,7 @@ Main::
     ld e, $00
     ld bc, $040a
     ld hl, $c700
-    trap $a6
+    trap MemSet
     ldx de, @+$0cbf
     ld b, $c7
     trap InitDecompress
@@ -3133,7 +3133,7 @@ jr_000_1218::
     ld hl, $98e0
     ld bc, $0060
     ld e, $20
-    trap $a6
+    trap MemSet
     trap AwaitFrame
     trap AwaitFrame
     trap AwaitFrame
@@ -3229,7 +3229,7 @@ jr_000_1299::
     ld hl, $98e0
     ld bc, $0060
     ld e, $20
-    trap $a6
+    trap MemSet
     ld e, $04
 
 jr_000_12cc::

@@ -918,7 +918,7 @@ SetupGfx:
     ld hl, varC980
     ld bc, $02c0
     ld e, $00
-    trap $a6
+    trap MemSet
     ret
 
 intHiScore:

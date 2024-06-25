@@ -65,7 +65,7 @@ Main::
     ld e, $00
     ld bc, $00d1
     ld hl, $c800
-    trap $a6
+    trap MemSet
     ret
 
 
@@ -97,7 +97,7 @@ Main::
     ld hl, $c800
     ld bc, $0081
     ld e, $00
-    trap $a6
+    trap MemSet
     ld a, [$c883]
     ld h, a
     ld l, a
@@ -1334,7 +1334,7 @@ jr_000_0912::
     ld e, $00
     ld bc, $0018
     ld hl, $c869
-    trap $a6
+    trap MemSet
     ld hl, $0506
     trap MoveCursor
     ldx hl, @+$022a

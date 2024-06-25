@@ -1385,7 +1385,7 @@ code_00_06b9::
     ld hl, $c656
     ld e, $20
     ld bc, $0008
-    trap $a6
+    trap MemSet
     ld de, $8001
     ld b, $08
     ld hl, $c656
@@ -1509,7 +1509,7 @@ Call_000_07e6:
     ld hl, $8800
     ld e, $00
     ld bc, $0a00
-    trap $a6
+    trap MemSet
     ld de, $0003
     ld bc, $1409
     trap $58

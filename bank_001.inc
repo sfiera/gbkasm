@@ -1612,7 +1612,7 @@ Call_001_4a36:
     ld hl, $c400
     ld e, $00
     ld bc, $0011
-    trap $a6
+    trap MemSet
     ld hl, $0060
     trap $bd
     pop af
@@ -2215,7 +2215,7 @@ Call_001_5033:
     ld hl, $9800
     ld bc, $0240
     ld e, $04
-    trap $a6
+    trap MemSet
     ld a, $ca
     ld bc, $0e02
     ld de, $0310
@@ -2234,7 +2234,7 @@ Call_001_5033:
     ld hl, $8c70
     ld bc, $0390
     ld e, $00
-    trap $a6
+    trap MemSet
     ld hl, $99a0
     ld de, data_01_5ccf
     ld b, $05
@@ -3238,11 +3238,11 @@ Call_001_65c6:
     ld hl, $8800
     ld bc, $0f30
     ld e, $00
-    trap $a6
+    trap MemSet
     ld hl, $9800
     ld bc, $0400
     ld e, $7f
-    trap $a6
+    trap MemSet
     ret
 
 
@@ -3304,7 +3304,7 @@ Call_001_6651:
     ld hl, $c600
     ld bc, $0099
     ld e, $20
-    trap $a6
+    trap MemSet
     ret
 
 
@@ -5512,7 +5512,7 @@ jr_001_70fc:
     ld a, b
     sbc h
     ld b, a
-    trap $a6
+    trap MemSet
     ret
 
 

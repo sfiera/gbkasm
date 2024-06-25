@@ -195,7 +195,7 @@ call_027b:
     ld hl, $d5b9
     ld bc, $0024
     ld e, $00
-    trap $a6
+    trap MemSet
     ld a, $01
     ld [$d5e5], a
     ld hl, $d5b9
@@ -265,7 +265,7 @@ call_02eb:
     ld hl, $d5aa
     ld bc, $0010
     ld e, $00
-    trap $a6
+    trap MemSet
     pop hl
     trap RandInit
     ld hl, $d5b9

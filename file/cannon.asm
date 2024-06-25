@@ -110,15 +110,15 @@ jr_000_01a4::
     ld hl, $9800
     ld bc, $0200
     ld e, $20
-    trap $a6
+    trap MemSet
     ld hl, $9a00
     ld bc, $0014
     ld e, $c4
-    trap $a6
+    trap MemSet
     ld hl, $c66e
     ld bc, $0014
     ld e, $20
-    trap $a6
+    trap MemSet
     ldx hl, @+$0911
     trap DrawLayout
     callx @+$056e
@@ -896,7 +896,7 @@ jr_000_0676::
     ld e, $ae
     push hl
     push bc
-    trap $a6
+    trap MemSet
     pop bc
     pop hl
     ld a, l
@@ -908,7 +908,7 @@ jr_000_0676::
 jr_000_068d::
     ld l, a
     ld e, $af
-    trap $a6
+    trap MemSet
     ret
 
 
@@ -942,7 +942,7 @@ jr_000_06b4::
     ld a, [$c65e]
     ld bc, $0001
     ld e, $20
-    trap $a6
+    trap MemSet
     ld a, [$c65f]
     or a
     ret nz
