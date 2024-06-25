@@ -448,7 +448,7 @@ jr_000_054b:
     ld l, a
     ld h, $00
     add hl, hl
-    ldx bc, data_055e
+    ldx bc, Sprites
     add hl, bc
     ld c, [hl]
     inc hl
@@ -460,120 +460,120 @@ jr_000_054b:
     ret
 
 
-data_055e:
-    dw data_057e - @
-    dw data_0583 - @
-    dw data_0594 - @
-    dw data_05a5 - @
-    dw data_05b6 - @
-    dw data_05b6 - @
-    dw data_05b6 - @
-    dw data_05b6 - @
-    dw data_05db - @
-    dw data_05f8 - @
-    dw data_05db - @
-    dw data_0615 - @
-    dw data_0632 - @
-    dw data_064f - @
-    dw data_0632 - @
-    dw data_066c - @
+Sprites:
+    dw .ball - @
+    dw .splat1 - @
+    dw .splat2 - @
+    dw .splat3 - @
+    dw .mouseWait1 - @
+    dw .mouseWait1 - @
+    dw .mouseWait1 - @
+    dw .mouseWait1 - @
+    dw .mouseRight1 - @
+    dw .mouseRight2 - @
+    dw .mouseRight1 - @
+    dw .mouseRight3 - @
+    dw .mouseLeft1 - @
+    dw .mouseLeft2 - @
+    dw .mouseLeft1 - @
+    dw .mouseLeft3 - @
 
-data_057e:
+.ball
     db $01
-    db $00, $00, $1e, $00
+    db $00, $00, $1e, 0
 
-data_0583:
+.splat1
     db $04
-    db $fc, $fc, $1f, $00
-    db $04, $fc, $20, $00
-    db $fc, $04, $21, $00
-    db $04, $04, $22, $00
+    db $fc, $fc, $1f, 0
+    db $04, $fc, $20, 0
+    db $fc, $04, $21, 0
+    db $04, $04, $22, 0
 
-data_0594:
+.splat2
     db $04
-    db $fc, $fc, $23, $00
-    db $04, $fc, $24, $00
-    db $fc, $04, $25, $00
-    db $04, $04, $26, $00
+    db $fc, $fc, $23, 0
+    db $04, $fc, $24, 0
+    db $fc, $04, $25, 0
+    db $04, $04, $26, 0
 
-data_05a5:
+.splat3
     db $04
-    db $fc, $fc, $27, $00
-    db $04, $fc, $28, $00
-    db $fc, $04, $29, $00
-    db $04, $04, $2a, $00
+    db $fc, $fc, $27, 0
+    db $04, $fc, $28, 0
+    db $fc, $04, $29, 0
+    db $04, $04, $2a, 0
 
-data_05b6:
+.mouseWait1
     db $09
-    db $00, $00, $00, $00
-    db $08, $00, $01, $00
-    db $10, $00, $02, $00
-    db $00, $08, $03, $00
-    db $08, $08, $04, $00
-    db $10, $08, $05, $00
-    db $00, $10, $06, $00
-    db $08, $10, $07, $00
-    db $10, $10, $08, $00
+    db $00, $00, $00, 0
+    db $08, $00, $01, 0
+    db $10, $00, $02, 0
+    db $00, $08, $03, 0
+    db $08, $08, $04, 0
+    db $10, $08, $05, 0
+    db $00, $10, $06, 0
+    db $08, $10, $07, 0
+    db $10, $10, $08, 0
 
-data_05db:
+.mouseRight1
     db $07
-    db $00, $00, $09, $00
-    db $08, $00, $0a, $00
-    db $10, $00, $0b, $00
-    db $08, $08, $0c, $00
-    db $10, $08, $0d, $00
-    db $08, $10, $0e, $00
-    db $10, $10, $0f, $00
+    db $00, $00, $09, 0
+    db $08, $00, $0a, 0
+    db $10, $00, $0b, 0
+    db $08, $08, $0c, 0
+    db $10, $08, $0d, 0
+    db $08, $10, $0e, 0
+    db $10, $10, $0f, 0
 
-data_05f8:
+.mouseRight2
     db $07
-    db $00, $00, $10, $00
-    db $08, $00, $11, $00
-    db $10, $00, $12, $00
-    db $08, $08, $13, $00
-    db $10, $08, $14, $00
-    db $08, $10, $15, $00
-    db $10, $10, $16, $00
+    db $00, $00, $10, 0
+    db $08, $00, $11, 0
+    db $10, $00, $12, 0
+    db $08, $08, $13, 0
+    db $10, $08, $14, 0
+    db $08, $10, $15, 0
+    db $10, $10, $16, 0
 
-data_0615:
+.mouseRight3
     db $07
-    db $00, $00, $17, $00
-    db $08, $00, $18, $00
-    db $10, $00, $19, $00
-    db $08, $08, $1a, $00
-    db $10, $08, $1b, $00
-    db $08, $10, $1c, $00
-    db $10, $10, $1d, $00
+    db $00, $00, $17, 0
+    db $08, $00, $18, 0
+    db $10, $00, $19, 0
+    db $08, $08, $1a, 0
+    db $10, $08, $1b, 0
+    db $08, $10, $1c, 0
+    db $10, $10, $1d, 0
 
-data_0632:
+.mouseLeft1
     db $07
-    db $08, $00, $0e, $20
-    db $10, $00, $0f, $20
-    db $08, $08, $0c, $20
-    db $10, $08, $0d, $20
-    db $00, $10, $09, $20
-    db $08, $10, $0a, $20
-    db $10, $10, $0b, $20
+    db $08, $00, $0e, OAMF_XFLIP
+    db $10, $00, $0f, OAMF_XFLIP
+    db $08, $08, $0c, OAMF_XFLIP
+    db $10, $08, $0d, OAMF_XFLIP
+    db $00, $10, $09, OAMF_XFLIP
+    db $08, $10, $0a, OAMF_XFLIP
+    db $10, $10, $0b, OAMF_XFLIP
 
-data_064f:
+.mouseLeft2
     db $07
-    db $08, $00, $15, $20
-    db $10, $00, $16, $20
-    db $08, $08, $13, $20
-    db $10, $08, $14, $20
-    db $00, $10, $10, $20
-    db $08, $10, $11, $20
-    db $10, $10, $12, $20
+    db $08, $00, $15, OAMF_XFLIP
+    db $10, $00, $16, OAMF_XFLIP
+    db $08, $08, $13, OAMF_XFLIP
+    db $10, $08, $14, OAMF_XFLIP
+    db $00, $10, $10, OAMF_XFLIP
+    db $08, $10, $11, OAMF_XFLIP
+    db $10, $10, $12, OAMF_XFLIP
 
-data_066c:
+.mouseLeft3
     db $07
-    db $08, $00, $1c, $20
-    db $10, $00, $1d, $20
-    db $08, $08, $1a, $20
-    db $10, $08, $1b, $20
-    db $00, $10, $17, $20
-    db $08, $10, $18, $20
-    db $10, $10, $19, $20
+    db $08, $00, $1c, OAMF_XFLIP
+    db $10, $00, $1d, OAMF_XFLIP
+    db $08, $08, $1a, OAMF_XFLIP
+    db $10, $08, $1b, OAMF_XFLIP
+    db $00, $10, $17, OAMF_XFLIP
+    db $08, $10, $18, OAMF_XFLIP
+    db $10, $10, $19, OAMF_XFLIP
 
 call_0689:
     ld hl, $ccc9
@@ -901,16 +901,16 @@ call_0861:
     callx call_08d1
     ld a, [$ccd6]
     callx call_08c0
-    ld [hl], $3a
+    ld [hl], ":"
     inc hl
     ld a, [$ccd5]
     callx call_08c0
-    ld [hl], $2e
+    ld [hl], "."
     inc hl
     ld a, [$ccd4]
-    add $30
+    add "0"
     ld [hl+], a
-    ld [hl], $00
+    ld [hl], "\n"
     ld de, $012e
     trap $57
     ld de, $cc40
@@ -928,19 +928,19 @@ data_08b9:
     dk " TIME \n"
 
 call_08c0:
-    ld c, $2f
+    ld c, "0" - 1
 
 jr_000_08c2:
     inc c
-    sub $0a
+    sub 10
     jr nc, jr_000_08c2
 
-    add $0a
+    add 10
     ld b, a
     ld [hl], c
     inc hl
     ld a, b
-    add $30
+    add "0"
     ld [hl+], a
     ret
 
@@ -996,11 +996,11 @@ jr_000_090f:
 
 call_0916:
     push af
-    ld a, [$0014]
-    cp $01
+    ld a, [CartridgeCodeAddress]
+    cp CartridgeCodeSuperBDaman
     jr z, jr_000_0924
 
-    cp $fe
+    cp CartridgeCodeGBKissMiniGames
     jr z, jr_000_0924
 
     pop af
