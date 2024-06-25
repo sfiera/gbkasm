@@ -1564,4 +1564,19 @@ call_0cf8:
 
 
 data_0d0f:
-    INCBIN "gfx/kissmon/monsters.2bpp"
+    INCBIN "gfx/kissmon/moncroc.2bpp"
+    INCBIN "gfx/kissmon/monwolf1.2bpp"
+    INCBIN "gfx/kissmon/monpig.2bpp"
+    INCBIN "gfx/kissmon/monrodent.2bpp"
+    INCBIN "gfx/kissmon/monplant.2bpp"
+    INCBIN "gfx/kissmon/monrobo1.2bpp"
+    INCBIN "gfx/kissmon/monknight.2bpp"
+    INCBIN "gfx/kissmon/monocto.2bpp"
+    INCBIN "gfx/kissmon/monbird1.2bpp"
+    INCBIN "gfx/kissmon/monfly.2bpp"
+    INCBIN "gfx/kissmon/monslug.2bpp"
+    INCBIN "gfx/kissmon/mondevil.2bpp"
+    INCBIN "gfx/kissmon/monseal.2bpp"
+    INCBIN "gfx/kissmon/mondora.2bpp"
+    INCBIN "gfx/kissmon/monrobo2.2bpp"
+    INCBIN "gfx/kissmon/monfish1.2bpp"
