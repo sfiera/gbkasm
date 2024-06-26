@@ -37,10 +37,10 @@ History:
 Main::
     xor a
     trap DrawInit
-    trap $b5
+    trap LCDDisable
     callx SetupGfx
     ld a, $03
-    trap HideScreen
+    trap LCDEnable
 
 jump_010c:
     callx ShowTitleScreen

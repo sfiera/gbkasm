@@ -53,7 +53,7 @@ Main::
     callx @+$0a1b
     callx @+$009c
     ld a, $07
-    trap HideScreen
+    trap LCDEnable
     ld a, $01
     ld [$c665], a
     xor a
@@ -130,7 +130,7 @@ jr_000_0202::
     trap ExitToMenu
 
 jr_000_0204:
-    trap $b5
+    trap LCDDisable
     ld bc, $2800
     trap $c4
     callx @+$ffc0
@@ -141,7 +141,7 @@ jr_000_0204:
     ld [$c66d], a
     callx @+$00e9
     ld a, $07
-    trap HideScreen
+    trap LCDEnable
     trap AwaitFrame
     trap $d8
     ld a, [$c656]
@@ -260,14 +260,14 @@ jr_000_02e2::
     and $02
     jr z, jr_000_0308
 
-    trap $b5
+    trap LCDDisable
     ld a, $01
     ld [$c665], a
     callx @+$fedc
     xor a
     ld [$c656], a
     ld a, $07
-    trap HideScreen
+    trap LCDEnable
     xor a
     trap PlayMusic
     xor a

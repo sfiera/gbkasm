@@ -155,7 +155,7 @@ call_a1a8:
     ld [$c800], a
     ld a, c
     ld [$c8e3], a
-    trap $b5
+    trap LCDDisable
     call call_b553
     xor a
     ldh [$9b], a
@@ -203,7 +203,7 @@ jr_000_a20e:
 jr_000_a227:
     xor a
     trap PlayMusic
-    trap $b5
+    trap LCDDisable
     ld a, $f4
     ldh [$9b], a
     ld a, $04
@@ -280,7 +280,7 @@ call_a286:
     bit 6, a
     ret z
 
-    trap $b5
+    trap LCDDisable
     xor a
     ldh [$83], a
     call call_b553
@@ -369,7 +369,7 @@ jr_000_a325:
     ld [hl], a
     ld c, $0a
     call call_b505
-    trap $b5
+    trap LCDDisable
     ld bc, $4850
     ld de, $0001
     ld hl, $c8f5
@@ -3431,7 +3431,7 @@ call_b34d:
 
 
 jr_000_b390:
-    trap $b5
+    trap LCDDisable
     xor a
     ld [$c8f0], a
     call call_b553
@@ -3517,7 +3517,7 @@ call_b42a:
 
     xor a
     trap PlayMusic
-    trap $b5
+    trap LCDDisable
     call call_b553
     xor a
     ldh [$9b], a
@@ -3532,7 +3532,7 @@ call_b42a:
     trap DrawString
     call call_b500
     call call_b469
-    trap $b5
+    trap LCDDisable
     call call_b553
     call call_b3f6
     call call_b500
@@ -3652,7 +3652,7 @@ jr_000_b4eb:
 
 call_b500:
     ld a, $03
-    trap HideScreen
+    trap LCDEnable
     ret
 
 

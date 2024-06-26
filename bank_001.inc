@@ -1564,7 +1564,7 @@ Call_001_4997:
     ld bc, $0380
     trap $63
     ld a, $07
-    trap HideScreen
+    trap LCDEnable
     ld h, $0a
     ld d, $8c
     ld e, $14
@@ -2244,7 +2244,7 @@ Call_001_5033:
     ld de, data_01_59cf
     call Call_001_508f
     ld a, $01
-    trap HideScreen
+    trap LCDEnable
     ret
 
 
@@ -2534,7 +2534,7 @@ Jump_001_5ea7:
     ld hl, $c699
     trap $54
     ld a, $03
-    trap HideScreen
+    trap LCDEnable
 
 jr_001_5ebb:
     trap $b1
@@ -2734,7 +2734,7 @@ jr_001_5fb5:
     ld a, $07
     call Call_001_5f89
     ld a, $03
-    trap HideScreen
+    trap LCDEnable
 
 jr_001_5fca:
     trap $b1
@@ -2854,7 +2854,7 @@ jr_001_606b:
     ld a, $0c
     call Call_001_5f89
     ld a, $03
-    trap HideScreen
+    trap LCDEnable
     call Call_001_6169
     jp c, Jump_001_5f61
 
@@ -3148,7 +3148,7 @@ Call_001_64d3::
 jr_001_64ec:
     call Call_001_66dc
     ld a, $03
-    trap HideScreen
+    trap LCDEnable
     ld a, $13
     call Call_001_5f89
     call Call_001_6169
@@ -3174,7 +3174,7 @@ Call_001_6501:
     trap $5a
     call Call_001_652c
     ld a, $03
-    trap HideScreen
+    trap LCDEnable
     ret
 
 
@@ -3458,7 +3458,7 @@ jr_001_6731:
     ld de, $0001
     trap $5d
     ld a, $03
-    trap HideScreen
+    trap LCDEnable
     ldh a, [$c3]
     or a
     jr nz, jr_001_6757
@@ -5802,7 +5802,7 @@ Call_001_7227:
     ld bc, $0b68
     trap $c0  ; copy $c600 to VRAM (jt02_5de2)
     ld a, $01
-    trap HideScreen
+    trap LCDEnable
     ld a, $f0
     trap $dc
     db $cb

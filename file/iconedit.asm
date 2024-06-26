@@ -61,10 +61,10 @@ jr_000_0119::
 jr_000_0128::
     xor a
     trap DrawInit
-    trap $b5
+    trap LCDDisable
     callx @+$0493
     ld a, $03
-    trap HideScreen
+    trap LCDEnable
     xor a
 
 jr_000_0139::
@@ -174,11 +174,11 @@ jr_000_01d7::
 
     xor a
     trap DrawInit
-    trap $b5
+    trap LCDDisable
     callx @+$0366
     callx @+$023e
     ld a, $63
-    trap HideScreen
+    trap LCDEnable
 
 jr_000_01f7::
     trap AwaitFrame
@@ -603,7 +603,7 @@ jr_000_043d::
     ret
 
 
-    trap $b5
+    trap LCDDisable
     callx @+$019a
     callx @+$0127
     ld de, $420d
@@ -628,7 +628,7 @@ jr_000_043d::
     ld hl, $0100
     trap $59
     ld a, $03
-    trap HideScreen
+    trap LCDEnable
     ld de, $c769
     ld hl, $c791
     ld bc, $0028
@@ -1218,7 +1218,7 @@ jr_000_07ca::
 
 
     push bc
-    trap HideScreen
+    trap LCDEnable
     and [hl]
     add $ad
     or e
@@ -1244,7 +1244,7 @@ jr_000_07ca::
 
 
     push bc
-    trap HideScreen
+    trap LCDEnable
     jp $cede
 
 
@@ -1317,7 +1317,7 @@ jr_000_0835::
     push bc
     cp h
     sbc $c5
-    trap HideScreen
+    trap LCDEnable
     ret
 
 
