@@ -66,15 +66,13 @@ Main::
 
 
     trap $b5
-
-HeaderManufacturerCode::
     callx @+$00a8
     callx @+$0139
     callx @+$013b
     callx @+$00d3
     callx @+$082f
     ld a, $03
-    trap $b4
+    trap HideScreen
     ret
 
 
@@ -395,7 +393,7 @@ jr_000_0365::
     xor a
     ld [$c90c], a
     ld a, $03
-    trap $b4
+    trap HideScreen
     ret
 
 
@@ -1498,7 +1496,7 @@ jr_000_0a02::
     ld a, $0c
     trap $b9
     ld a, $03
-    trap $b4
+    trap HideScreen
     callx @+$0072
     callx @+$008c
     callx @+$00e1

@@ -50,7 +50,7 @@ Main::
     ld hl, $8000
     callx call_0cf8
     ld a, $03
-    trap $b4
+    trap HideScreen
     xor a
     ld hl, $0000
     ld de, $1840
@@ -158,7 +158,7 @@ call_0245:
     jr nz, .jr_0276
 
     ld a, $03
-    trap $b4
+    trap HideScreen
     xor a
     ld hl, $0000
     ld de, $4840
@@ -241,7 +241,7 @@ call_02f5:
     ld a, [hl+]
     ld [hl], a
     ld a, $03
-    trap $b4
+    trap HideScreen
     ld hl, $cc60
     ld [hl], $05
     inc hl
@@ -1021,7 +1021,7 @@ call_08e9:
     ld hl, $0100
     trap $59
     ld a, $03
-    trap $b4
+    trap HideScreen
     ld de, $3d01
     ld b, $05
     ld hl, $cc9e
@@ -1054,7 +1054,7 @@ call_095d:
     ldx hl, layout_0a7b
     trap DrawLayout
     ld a, $03
-    trap $b4
+    trap HideScreen
     xor a
     ld [$cc61], a
     callx call_0a6a

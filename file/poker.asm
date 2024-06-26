@@ -2575,7 +2575,7 @@ jr_000_0e04::
     ld sp, $e000
     callx @+$f186
     ld a, $03
-    trap $b4
+    trap HideScreen
     ld a, $01
     ld [$cb09], a
     ld a, [$0014]
@@ -3299,7 +3299,7 @@ jr_000_12f4::
     ld hl, $c9ec
     trap DrawString
     ld a, $01
-    trap $b4
+    trap HideScreen
     ld hl, $1f02
     trap $b6
     ld l, $1f

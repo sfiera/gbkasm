@@ -40,7 +40,7 @@ Main::
     trap $b5
     callx SetupGfx
     ld a, $03
-    trap $b4
+    trap HideScreen
 
 jump_010c:
     callx ShowTitleScreen

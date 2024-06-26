@@ -502,7 +502,7 @@ jr_000_0354::
     jr nz, jr_000_034f
 
     ld a, $03
-    trap $b4
+    trap HideScreen
     ld a, $02
     trap PlayMusic
     call $afd6
@@ -2405,7 +2405,7 @@ jr_000_0ddd::
     jr nz, jr_000_0ddd
 
     ld a, $03
-    trap $b4
+    trap HideScreen
     ret
 
 
@@ -3060,15 +3060,15 @@ jr_000_1059::
     trap $b5
     call $a2a5
     ld a, $03
-    trap $b4
+    trap HideScreen
     call $a278
     trap $b5
     ld a, $03
-    trap $b4
+    trap HideScreen
     trap $b5
     call $a509
     ld a, $03
-    trap $b4
+    trap HideScreen
     ld a, $09
     trap PlayMusic
     ld a, $01
