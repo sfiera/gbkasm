@@ -52,6 +52,7 @@ file/baketu.o: gfx/baketu/tiles.2bpp.hz
 file/bland.o: gfx/bland/icon.2bpp
 file/bland.o: gfx/bland/sprites.2bpp.hz
 file/cannon.o: gfx/cannon/icon.2bpp
+file/cannon.o: gfx/cannon/tiles.2bpp.hz
 file/dentaku.o: gfx/dentaku/icon.2bpp
 file/drive.o: gfx/drive/icon.2bpp
 file/iconedit.o: gfx/iconedit/icon.2bpp
