@@ -664,7 +664,7 @@ jr_000_04c1::
     ld hl, $0400
     trap $ca
     ld a, $01
-    trap $b4
+    trap HideScreen
     ld de, $0000
     ld b, $00
 
@@ -1051,7 +1051,7 @@ jr_000_0713::
     ld d, $35
     callx @+$fcc3
     ld a, $01
-    trap $b4
+    trap HideScreen
 
 jr_000_07b4::
     trap AwaitFrame
