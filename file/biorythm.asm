@@ -83,116 +83,47 @@ jr_000_0085::
     ld [$b2bd], a
     ld a, c
     ld [$b2be], a
-    ldx de, @+$001a
-    ldx hl, @+$1208
+    ldx de, data_00c6
+    ldx hl, data_12b8
     ld bc, $0040
     trap MemCopy
-    ldx de, @+$004d
-    ldx hl, @+$123b
+    ldx de, data_0106
+    ldx hl, data_12f8
     ld bc, $0020
     trap MemCopy
     ret
 
 
-    ld d, l
-    ld d, e
-    ld b, l
-    ld d, d
-    jr nz, jr_000_010d
+data_00c6:
+    dk "USER A \n"
+    dk "USER B \n"
+    dk "USER C \n"
+    dk "USER D \n"
+    dk "USER E \n"
+    dk "USER F \n"
+    dk "USER G \n"
+    dk "USER H \n"
 
-    jr nz, jr_000_00ce
 
-jr_000_00ce::
-    ld d, l
-    ld d, e
-    ld b, l
-    ld d, d
-    jr nz, @+$44
+data_0106:
+    db $c6, $07, $04, $01
+    db $b6, $07, $04, $01
+    db $b6, $07, $04, $01
+    db $b6, $07, $04, $01
+    db $b6, $07, $04, $01
+    db $b6, $07, $04, $01
+    db $b6, $07, $04, $01
+    db $b6, $07, $04, $01
 
-    jr nz, jr_000_00d6
 
-jr_000_00d6::
-    ld d, l
-    ld d, e
-    ld b, l
-    ld d, d
-    jr nz, @+$45
-
-    jr nz, jr_000_00de
-
-jr_000_00de::
-    ld d, l
-    ld d, e
-    ld b, l
-    ld d, d
-    jr nz, jr_000_0128
-
-    jr nz, jr_000_00e6
-
-jr_000_00e6::
-    ld d, l
-    ld d, e
-    ld b, l
-    ld d, d
-    jr nz, jr_000_0131
-
-    jr nz, jr_000_00ee
-
-jr_000_00ee::
-    ld d, l
-    ld d, e
-    ld b, l
-    ld d, d
-    jr nz, @+$48
-
-    jr nz, jr_000_00f6
-
-jr_000_00f6::
-    ld d, l
-    ld d, e
-    ld b, l
-    ld d, d
-    jr nz, @+$49
-
-    jr nz, jr_000_00fe
-
-jr_000_00fe::
-    ld d, l
-    ld d, e
-    ld b, l
-    ld d, d
-    jr nz, @+$4a
-
-    jr nz, jr_000_0106
-
-jr_000_0106::
-    add $07
-    inc b
-    ld bc, $07b6
-    inc b
-
-jr_000_010d::
-    ld bc, $07b6
-    inc b
-    ld bc, $07b6
-    inc b
-    ld bc, $07b6
-    inc b
-    ld bc, $07b6
-    inc b
-    ld bc, $07b6
-    inc b
-    ld bc, $07b6
-    inc b
-    ld bc, $0321
-
-jr_000_0128::
-    nop
+call_0126:
+    ld hl, $0003
     trap $82
     ld a, l
     ret
 
 
+call_012d:
     push de
     ld hl, $0190
 
@@ -247,7 +178,7 @@ jr_000_0131::
     ld c, a
     ld b, $00
     push hl
-    ldx hl, @+$002e
+    ldx hl, data_01b0
     add hl, bc
     ld a, [hl+]
     ld e, a
@@ -281,22 +212,19 @@ jr_000_01ad::
     ret
 
 
-    nop
-    nop
-    rra
-    nop
-    dec sp
-    nop
-    ld e, d
-    nop
-    ld a, b
-    nop
-    sub a
-    nop
-    or l
-    nop
-    call nc, $f300
-    nop
+data_01b0:
+    db $00, $00
+    db $1f, $00
+    db $3b, $00
+    db $5a, $00
+    db $78, $00
+    db $97, $00
+    db $b5, $00
+    db $d4, $00
+    db $f3, $00
+
+
+call_01c2:
     ld de, $3001
     ld bc, $014e
     callx @+$ff8f
@@ -313,7 +241,7 @@ jr_000_01ad::
     push bc
     ld c, b
     ld b, $00
-    ldx hl, @+$0019
+    ldx hl, data_01fd
     add hl, bc
     ld a, [hl]
     pop bc
@@ -332,19 +260,21 @@ jr_000_01ad::
     ret
 
 
-    nop
-    rra
-    inc e
-    rra
-    ld e, $1f
-    ld e, $1f
-    rra
-    ld e, $1f
-    ld e, $1f
+data_01fd:
+    db $00
+    db $1f, $1c
+    db $1f, $1e
+    db $1f, $1e
+    db $1f, $1f
+    db $1e, $1f
+    db $1e, $1f
+
+
+call_020a:
     ld d, b
     ld e, c
     ld bc, $0000
-    ldx hl, @+$001e
+    ldx hl, data_022e
 
 jr_000_0213::
     push bc
@@ -372,24 +302,22 @@ jr_000_0213::
     ret
 
 
-    ld bc, jr_000_0213
-    ld [de], a
-    inc bc
-    inc d
-    inc b
-    inc de
-    dec b
-    inc d
-    ld b, $15
-    rlca
-    ld d, $08
-    ld d, $09
-    ld d, $0a
-    rla
-    dec bc
-    rla
-    inc c
-    dec d
+data_022e:
+    db $01, $13
+    db $02, $12
+    db $03, $14
+    db $04, $13
+    db $05, $14
+    db $06, $15
+    db $07, $16
+    db $08, $16
+    db $09, $16
+    db $0a, $17
+    db $0b, $17
+    db $0c, $15
+
+
+call_0246:
     push bc
     callx @+$ff94
     ld e, c
@@ -629,7 +557,7 @@ jr_000_0384::
     pop hl
     jr jr_000_0319
 
-    jr nz, @+$22
+    dh "　　"
 
     jr nz, jr_000_03b1
 
@@ -859,75 +787,23 @@ jr_000_0500::
     ret
 
 
-    ldx hl, @+$0009
+call_0507:
+    ldx hl, data_0511
     ld de, $0307
     trap DrawStringList
     ret
 
 
-    ld b, d
-    jr nz, jr_000_055d
-
-    jr nz, @+$51
-
-    jr nz, jr_000_0545
-
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    nop
-    jr nz, jr_000_0542
-
-    jr nz, @+$22
-
-    jr nz, jr_000_0546
-
-    jr nz, @+$22
-
-    jr nz, @+$22
-
-    jr nz, jr_000_054c
-
-    jr nz, @+$22
-
-    nop
-    dec l
-    dec l
-    dec l
-    dec l
-    jr nz, @+$54
-
-    jr nz, @+$5b
-
-    jr nz, @+$56
-
-    jr nz, @+$4a
-
-    jr nz, @+$4f
-
-    nop
-    nop
-    pushx @+$0006
-
-jr_000_0542::
-    pushx @+$fd16
-
-jr_000_0545::
-    ret
+data_0511:
+    dk "B I O --------\n"
+    dk "              \n"
+    dk "---- R Y T H M\n"
+    db $00
 
 
-jr_000_0546::
-    pushx @+$0006
-    pushx @+$fd14
-
-jr_000_054c::
-    ret
-
-
+call_053f:
+    callx @+$fd16
+    callx @+$fd14
     callx @+$00b9
     trap AwaitFrame
     callx @+$0118
@@ -1025,122 +901,30 @@ jr_000_05dc::
     ld [$c61b], a
     jr jr_000_05d0
 
-    ldx hl, @+$0009
+    ldx hl, data_0614
     ld de, jr_000_0306
     trap DrawStringList
     ret
 
 
-    push bc
-    trap LCDEnable
-    jr nz, @+$3c
+data_0614:
+    dh "なまえ　：　　　　　　　さん\n"
+    dh "－－－－－－－－－－－－－－\n"
+    dh "　　　　　　　　　　　　　　\n"
+    dh "たんじょうび：　　　　　　　\n"
+    dh "　　　　ねん　　がつ　　にち\n"
+    dh "－－－－－－－－－－－－－－\n"
+    db $00
 
-    jr nz, @+$22
 
-    jr nz, @+$22
-
-    jr nz, @+$22
-
-    jr nz, jr_000_05dc
-
-    db $dd
-    nop
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    nop
-    jr nz, jr_000_0654
-
-    jr nz, jr_000_0656
-
-    jr nz, jr_000_0658
-
-    jr nz, jr_000_065a
-
-    jr nz, @+$22
-
-    jr nz, @+$22
-
-    jr nz, @+$22
-
-    nop
-    ret nz
-
-    db $dd
-    cp h
-    sbc $ae
-    or e
-    set 3, [hl]
-    ld a, [hl-]
-    jr nz, jr_000_066c
-
-    jr nz, jr_000_066e
-
-    jr nz, jr_000_0670
-
-    jr nz, jr_000_0652
-
-jr_000_0652::
-    jr nz, @+$22
-
-jr_000_0654::
-    jr nz, @+$22
-
-jr_000_0656::
-    ret z
-
-    db $dd
-
-jr_000_0658::
-    jr nz, @+$22
-
-jr_000_065a::
-    or [hl]
-    sbc $c2
-    jr nz, @+$22
-
-    add $c1
-    nop
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-
-jr_000_066c::
-    dec l
-    dec l
-
-jr_000_066e::
-    dec l
-    dec l
-
-jr_000_0670::
-    nop
-    nop
+call_0672:
     ld a, [$b2bf]
     sla a
     sla a
     sla a
     ld b, $00
     ld c, a
-    ldx hl, @+$0c39
+    ldx hl, data_12b8
     add hl, bc
     ld d, h
     ld e, l
@@ -1152,7 +936,7 @@ jr_000_0670::
     sla a
     ld b, $00
     ld c, a
-    ldx hl, @+$0c60
+    ldx hl, data_12f8
     add hl, bc
     ld a, [hl+]
     ld [$c618], a
@@ -1171,7 +955,7 @@ jr_000_0670::
     sla a
     ld b, $00
     ld c, a
-    ldx hl, @+$0bfe
+    ldx hl, data_12b8
     add hl, bc
     ld de, $c610
     ld bc, $0008
@@ -1181,7 +965,7 @@ jr_000_0670::
     sla a
     ld b, $00
     ld c, a
-    ldx hl, @+$0c27
+    ldx hl, data_12f8
     add hl, bc
     ld a, [$c618]
     ld [hl+], a
@@ -1269,64 +1053,20 @@ jr_000_0739::
     ret
 
 
-    ldx hl, @+$0009
+    ldx hl, data_077e
     ld de, $0307
     trap DrawStringList
     ret
 
 
-    cp h
-    db $dd
-    ret nz
-
-    sbc $dd
-    cp l
-    reti
+data_077e:
+    dh "しんだんするひづけ：　　　　\n"
+    dh "　　　　ねん　　がつ　　にち\n"
+    dh "－－－－－－－－－－－－－－\n"
+    db $00
 
 
-    set 0, d
-    sbc $b9
-    ld a, [hl-]
-    jr nz, jr_000_07ac
-
-    jr nz, jr_000_07ae
-
-    nop
-    jr nz, @+$22
-
-    jr nz, jr_000_07b3
-
-    ret z
-
-    db $dd
-    jr nz, jr_000_07b7
-
-    or [hl]
-    sbc $c2
-    jr nz, @+$22
-
-    add $c1
-    nop
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-
-jr_000_07ac::
-    dec l
-    nop
-
-jr_000_07ae::
-    nop
+code_07af:
     ld a, [$b2bb]
     ld e, a
 
@@ -1443,16 +1183,17 @@ jr_000_08a3::
     ret
 
 
-    ldx hl, @+$00a8
+call_08a7:
+    ldx hl, data_0950
     ld de, $0003
     trap DrawStringList
     ld hl, $0001
     trap MoveCursor
     callx @+$f9a5
-    ldx hl, @+$00c1
+    ldx hl, data_097e
     trap DrawString
     callx @+$f99d
-    ldx hl, @+$00c2
+    ldx hl, data_098c
     trap DrawString
     ld hl, $0201
     trap MoveCursor
@@ -1479,17 +1220,17 @@ jr_000_08a3::
     cp $0f
     jr z, jr_000_090f
 
-    ldx hl, @+$008f
+    ldx hl, data_0997
     trap DrawString
     jr jr_000_0920
 
 jr_000_090f::
     ld a, [$c61e]
     cp $02
-    ldx hl, @+$0096
+    ldx hl, data_09ab
     jr nz, jr_000_091e
 
-    ldx hl, @+$00a4
+    ldx hl, data_09bf
 
 jr_000_091e::
     trap DrawString
@@ -1508,7 +1249,7 @@ jr_000_0920::
     callx @+$f88f
     ld b, $00
     ld c, a
-    ldx hl, @+$0093
+    ldx hl, data_09d3
     add hl, bc
     ld c, $00
 
@@ -1525,175 +1266,59 @@ jr_000_094d::
     ret
 
 
-    dec hl
-    nop
-    ld a, h
-    nop
-    ld a, h
-    nop
-    ld a, h
-    nop
-    ld a, h
-    nop
-    ld a, h
-    nop
-    jr nc, jr_000_098b
+data_0950:
+    dh "＋\n"
+    dh "｜\n"
+    dh "｜\n"
+    dh "｜\n"
+    dh "｜\n"
+    dh "｜\n"
+    dh "０－－－－－－－－－－－－－－－－－－－\n"
+    dh "｜\n"
+    dh "｜\n"
+    dh "｜\n"
+    dh "｜\n"
+    dh "｜\n"
+    dh "－\n"
+    db $00
 
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    nop
-    ld a, h
-    nop
-    ld a, h
-    nop
-    ld a, h
-    nop
-    ld a, h
-    nop
-    ld a, h
-    nop
-    dec l
-    nop
-    nop
-    ld a, [hl+]
-    jr nz, @+$22
+data_097e:
+    dh "＊　　　　　ねん　　がつ\n"
 
-    jr nz, jr_000_09a3
+data_098c:
+    dk "バイオリズム　＊\n"
 
-    jr nz, jr_000_094d
+data_0997:
+    dh "１．．．５．．．．１０．．．１５．．．\n"
 
-    db $dd
-    jr nz, jr_000_09a8
+data_09ab:
+    dh "１５．．．２０．．．２５．．．３０．．\n"
 
-    or [hl]
-    sbc $c2
+data_09bf:
+    dh "１５．．．２０．．．２５．２８．．．．\n"
 
-jr_000_098b::
-    nop
-    jp z, $b2de
+data_09d3:
+    dh "　　　　　　＾　　　　　　＾　　　　　　＾　　　　　　＾"
 
-    or l
-    ret c
 
-    cp l
-    sbc $d1
-    jr nz, @+$2c
-
-    nop
-    ld sp, $2e2e
-    ld l, $35
-    ld l, $2e
-    ld l, $2e
-    ld sp, $2e30
-
-jr_000_09a3::
-    ld l, $2e
-    ld sp, $2e35
-
-jr_000_09a8::
-    ld l, $2e
-    nop
-    ld sp, $2e35
-    ld l, $2e
-    ld [hl-], a
-    jr nc, jr_000_09e1
-
-    ld l, $2e
-    ld [hl-], a
-    dec [hl]
-    ld l, $2e
-    ld l, $33
-    jr nc, @+$30
-
-    ld l, $00
-    ld sp, $2e35
-    ld l, $2e
-    ld [hl-], a
-    jr nc, @+$30
-
-    ld l, $2e
-    ld [hl-], a
-    dec [hl]
-    ld l, $32
-    jr c, @+$30
-
-    ld l, $2e
-    ld l, $00
-    jr nz, @+$22
-
-    jr nz, jr_000_09f7
-
-    jr nz, @+$22
-
-    ld e, [hl]
-    jr nz, @+$22
-
-    jr nz, jr_000_09fe
-
-    jr nz, @+$22
-
-    ld e, [hl]
-
-jr_000_09e1::
-    jr nz, @+$22
-
-    jr nz, jr_000_0a05
-
-    jr nz, jr_000_0a07
-
-    ld e, [hl]
-    jr nz, jr_000_0a0a
-
-    jr nz, @+$22
-
-    jr nz, jr_000_0a0e
-
-    ld e, [hl]
+call_09ef:
     ld a, [$c625]
     ld l, a
     ld a, [$c626]
     ld h, a
-
-jr_000_09f7::
     ld a, [$c629]
     ld e, a
     ld a, [$c62a]
-
-jr_000_09fe::
     ld d, a
     trap $88
     push hl
     ld de, $0000
-
-jr_000_0a05::
     ld c, $04
-
-jr_000_0a07::
     trap $84
     ld a, l
-
-jr_000_0a0a::
     pop hl
     cp $00
     ret z
-
-jr_000_0a0e::
     push hl
     ld de, $0012
     ld c, $02
@@ -1733,7 +1358,7 @@ jr_000_0a0e::
 
 jr_000_0a4c::
     push hl
-    ldx hl, @+$0046
+    ldx hl, data_0a94
     add hl, bc
     ld a, [hl]
     pop hl
@@ -1789,28 +1414,14 @@ jr_000_0a8d::
     ret
 
 
-    nop
-    rst $38
-    db $fd
-    db $fc
-    ei
-    ei
-    ei
-    ei
-    db $fc
-    db $fd
-    rst $38
-    nop
-    ld bc, $0403
-    dec b
-    dec b
-    dec b
-    dec b
-    inc b
-    inc bc
-    ld bc, $2100
-    inc e
-    nop
+data_0a94:
+    db $00, $ff, $fd, $fc, $fb, $fb, $fb, $fb, $fc, $fd, $ff
+    db $00, $01, $03, $04, $05, $05, $05, $05, $04, $03, $01
+    db $00
+
+
+call_0aab:
+    ld hl, $001c
     ld a, [$c621]
     ld e, a
     ld a, [$c622]
@@ -1827,7 +1438,7 @@ jr_000_0a8d::
 
 jr_000_0ac9::
     push hl
-    ldx hl, @+$0046
+    ldx hl, data_0b11
     add hl, bc
     ld a, [hl]
     pop hl
@@ -1883,30 +1494,12 @@ jr_000_0b0a::
     ret
 
 
-    nop
-    rst $38
-    cp $fd
-    db $fc
-    ei
-    ei
-    ei
-    ei
-    ei
-    db $fc
-    db $fd
-    cp $00
-    nop
-    ld [bc], a
-    inc bc
-    inc b
-    dec b
-    dec b
-    dec b
-    dec b
-    dec b
-    inc b
-    inc bc
-    ld [bc], a
+data_0b11:
+    db $00, $ff, $fe, $fd, $fc, $fb, $fb, $fb, $fb, $fb, $fc, $fd, $fe
+    db $00, $00, $02, $03, $04, $05, $05, $05, $05, $05, $04, $03, $02
+
+
+call_0b2b:
     ld bc, $2100
     ld hl, $fa00
     ld hl, $5fc6
@@ -1924,7 +1517,7 @@ jr_000_0b0a::
 
 jr_000_0b4b::
     push hl
-    ldx hl, @+$0046
+    ldx hl, data_0b93
     add hl, bc
     ld a, [hl]
     pop hl
@@ -1980,36 +1573,15 @@ jr_000_0b8c::
     ret
 
 
-    nop
-    rst $38
-    cp $fd
-    db $fc
-    db $fc
-    ei
-    ei
-    ei
-    ei
-    ei
-    db $fc
-    db $fc
-    db $fd
-    cp $ff
-    nop
-    ld bc, $0302
-    inc b
-    inc b
-    dec b
-    dec b
-    dec b
-    dec b
-    dec b
-    inc b
-    inc b
-    inc bc
-    ld [bc], a
-    ld bc, $fa00
-    dec h
-    add $5f
+data_0b93:
+    db $00, $ff, $fe, $fd, $fc, $fc, $fb, $fb, $fb, $fb, $fb, $fc, $fc, $fd, $fe, $ff
+    db $00, $01, $02, $03, $04, $04, $05, $05, $05, $05, $05, $04, $04, $03, $02, $01
+    db $00
+
+
+call_0bb4:
+    ld a, [$c625]
+    ld e, a
     ld a, [$c626]
     ld d, a
     ld a, [$c627]
@@ -2042,8 +1614,9 @@ jr_000_0b8c::
     ret
 
 
+call_0bef:
     callx @+$f66b
-    ldx hl, @+$000f
+    ldx hl, data_0c06
     ld de, $0101
     trap DrawStringList
 
@@ -2055,367 +1628,27 @@ jr_000_0bff::
     ret
 
 
-    dec hl
-
-jr_000_0c07::
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec hl
-    nop
-    ld a, h
-
-jr_000_0c1a::
-    jr z, @+$52
-
-    add hl, hl
-    cp h
-    db $dd
-    ret nz
-
-    or d
-    ret c
-
-    cp l
-    sbc $d1
-    jr nz, jr_000_0c47
-
-    jr nz, jr_000_0c49
-
-    jr nz, jr_000_0c4b
-
-    ld a, h
-    nop
-    ld a, h
-    jr nz, @+$22
-
-    jr nz, jr_000_0c5d
-
-    jr nz, @-$3e
-
-    or d
-    ret c
-
-    xor [hl]
-    cp b
-    cp d
-    or e
-    pop bc
-    xor [hl]
-    or e
-    jr nz, @+$7e
-
-    nop
-    ld a, h
-    jr nz, jr_000_0c63
-
-    jr nz, jr_000_0c75
-
-    jr nz, jr_000_0c07
-
-jr_000_0c47::
-    or d
-    pop bc
-
-jr_000_0c49::
-    xor [hl]
-    or e
-
-jr_000_0c4b::
-    call z, $ddb1
-    jp $20b2
-
-
-    ld a, h
-    nop
-    ld a, h
-    jr nz, @+$22
-
-    jr nz, jr_000_0c85
-
-    jr nz, jr_000_0c1a
-
-    or d
-    ret c
-
-    xor [hl]
-
-jr_000_0c5d::
-    cp b
-    jp $c1b2
-
-
-    xor [hl]
-    or e
-
-jr_000_0c63::
-    jr nz, jr_000_0ce1
-
-    nop
-
-jr_000_0c66::
-    ld a, h
-    jr nz, jr_000_0c89
-
-    jr nz, jr_000_0c8b
-
-    jr nz, jr_000_0c8d
-
-    jr nz, jr_000_0c8f
-
-    jr nz, jr_000_0c91
-
-    jr nz, jr_000_0c93
-
-    jr nz, jr_000_0c95
-
-jr_000_0c75::
-    jr nz, jr_000_0c97
-
-    ld a, h
-    nop
-    ld a, h
-    jr z, jr_000_0ccf
-
-    add hl, hl
-    or [hl]
-    db $dd
-    cp h
-    sbc $ae
-    or e
-    ret c
-
-    cp l
-
-jr_000_0c85::
-    sbc $d1
-    jr nz, @+$22
-
-jr_000_0c89::
-    jr nz, @+$22
-
-jr_000_0c8b::
-    jr nz, @+$7e
-
-jr_000_0c8d::
-    nop
-    ld a, h
-
-jr_000_0c8f::
-    jr nz, @+$22
-
-jr_000_0c91::
-    jr nz, jr_000_0cbe
-
-jr_000_0c93::
-    jr nz, @-$47
-
-jr_000_0c95::
-    ret c
-
-    xor [hl]
-
-jr_000_0c97::
-    cp b
-    cp h
-    sbc $ad
-    or e
-    cp h
-    sbc $c2
-    jr nz, jr_000_0cc1
-
-    ld a, h
-    nop
-    ld a, h
-    jr nz, @+$22
-
-    jr nz, @+$32
-
-    jr nz, jr_000_0c66
-
-    sbc $ae
-    or e
-    pop bc
-    xor [hl]
-    call z, $ddb1
-    jp $20b2
-
-
-    ld a, h
-    nop
-    ld a, h
-    jr nz, @+$22
-
-    jr nz, @+$2f
-
-    jr nz, jr_000_0c75
-
-jr_000_0cbe::
-    ret c
-
-    xor [hl]
-    cp b
-
-jr_000_0cc1::
-    pop bc
-    db $dd
-    ret nz
-
-    or d
-    jr nz, @+$22
-
-    jr nz, @+$7e
-
-    nop
-    ld a, h
-    jr nz, @+$22
-
-jr_000_0ccd::
-    jr nz, @+$22
-
-jr_000_0ccf::
-    jr nz, jr_000_0cf1
-
-    jr nz, @+$22
-
-    jr nz, @+$22
-
-    jr nz, @+$22
-
-    jr nz, jr_000_0cf9
-
-    jr nz, jr_000_0cfb
-
-    ld a, h
-    nop
-    ld a, h
-    jr z, @+$4b
-
-jr_000_0ce0::
-    add hl, hl
-
-jr_000_0ce1::
-    pop bc
-    cp [hl]
-    or d
-    ret c
-
-    cp l
-    sbc $d1
-    jr nz, jr_000_0d0a
-
-    jr nz, jr_000_0d0c
-
-    jr nz, jr_000_0d0e
-
-    jr nz, @+$7e
-
-    nop
-
-jr_000_0cf1::
-    ld a, h
-    jr nz, @+$22
-
-    jr nz, @+$2d
-
-    jr nz, @-$3d
-
-    ret c
-
-jr_000_0cf9::
-    xor [hl]
-    cp b
-
-jr_000_0cfb::
-    or [hl]
-    jp nz, $dec4
-
-    or e
-    jr nz, jr_000_0d22
-
-    jr nz, @+$7e
-
-    nop
-    ld a, h
-    jr nz, jr_000_0d28
-
-    jr nz, jr_000_0d3a
-
-jr_000_0d0a::
-    jr nz, jr_000_0ccd
-
-jr_000_0d0c::
-    ret c
-
-    xor [hl]
-
-jr_000_0d0e::
-    cp b
-    call z, $ddb1
-    jp $20b2
-
-
-    jr nz, jr_000_0d93
-
-    nop
-    ld a, h
-    jr nz, jr_000_0d3b
-
-    jr nz, jr_000_0d4a
-
-    jr nz, jr_000_0ce0
-
-    jp $b9b7
-
-
-jr_000_0d22::
-    sbc $dd
-    cp l
-    or d
-    jr nz, @+$22
-
-jr_000_0d28::
-    jr nz, jr_000_0d4a
-
-    ld a, h
-    nop
-    dec hl
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-
-jr_000_0d3a::
-    dec l
-
-jr_000_0d3b::
-    dec l
-    dec l
-    dec hl
-    nop
-    nop
+data_0c06:
+    dh "＋－－－－－－－－－－－－－－－－＋\n"
+    dh "｜（Ｐ）しんたいりずむ　　　　　　｜\n"
+    dh "｜　　　＋　たいりょくこうちょう　｜\n"
+    dh "｜　　　０　たいちょうふあんてい　｜\n"
+    dh "｜　　　－　たいりょくていちょう　｜\n"
+    dh "｜　　　　　　　　　　　　　　　　｜\n"
+    dh "｜（Ｓ）かんじょうりずむ　　　　　｜\n"
+    dh "｜　　　＋　きりょくじゅうじつ　　｜\n"
+    dh "｜　　　０　じょうちょふあんてい　｜\n"
+    dh "｜　　　－　きりょくちんたい　　　｜\n"
+    dh "｜　　　　　　　　　　　　　　　　｜\n"
+    dh "｜（Ｉ）ちせいりずむ　　　　　　　｜\n"
+    dh "｜　　　＋　ちりょくかつどう　　　｜\n"
+    dh "｜　　　０　ちりょくふあんてい　　｜\n"
+    dh "｜　　　－　ちてきげんすい　　　　｜\n"
+    dh "＋－－－－－－－－－－－－－－－－＋\n"
+    db $00
+
+
+call_0d40:
     callx @+$f51a
     pushx @+$0112
 
@@ -2465,7 +1698,7 @@ jr_000_0d93::
     trap IntToString
     ld hl, $c604
     trap DrawString
-    ldx hl, @+$5569
+    ldx hl, $6304
     trap MoveCursor
     ld a, [$b2bb]
     ld e, a
@@ -2497,7 +1730,7 @@ jr_000_0dc2::
     trap $89
     ld b, h
     ld c, l
-    ldx hl, @+$01b8
+    ldx hl, data_0f85
     add hl, bc
     trap DrawString
     ld a, [$c618]
@@ -2525,7 +1758,7 @@ jr_000_0dc2::
     sla a
     ld c, a
     ld b, $00
-    ldx hl, @+$0158
+    ldx hl, data_0f69
     add hl, bc
     trap DrawString
     ld hl, $0a09
@@ -2541,7 +1774,7 @@ jr_000_0dc2::
     sla a
     ld c, a
     ld b, $00
-    ldx hl, @+$00d3
+    ldx hl, data_0f09
     add hl, bc
     trap DrawString
     ld hl, $090b
@@ -2563,595 +1796,62 @@ jr_000_0e53::
     ret
 
 
-    dec hl
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-
-jr_000_0e62::
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec hl
-    nop
-    ld a, h
-    jr nz, @+$22
-
-    jr nz, jr_000_0e92
-
-    jr nz, jr_000_0e94
-
-    jr nz, jr_000_0e96
-
-    jr nz, jr_000_0e98
-
-    jr nz, jr_000_0e9a
-
-    jr nz, @-$43
-
-    or d
-    jr nz, jr_000_0efb
-
-    nop
-    ld a, h
-    jr nz, @+$22
-
-    jr nz, @+$22
-
-jr_000_0e85::
-    jr nz, jr_000_0ea7
-
-    jr nz, jr_000_0ea9
-
-    jr nz, jr_000_0eab
-
-    jr nz, jr_000_0ead
-
-    jr nz, jr_000_0eaf
-
-    jr nz, jr_000_0eb1
-
-    ld a, h
-
-jr_000_0e92::
-    nop
-    ld a, h
-
-jr_000_0e94::
-    jr nz, @+$22
-
-jr_000_0e96::
-    jr nz, @+$22
-
-jr_000_0e98::
-    jr nz, jr_000_0e62
-
-jr_000_0e9a::
-    db $dd
-    jr nz, jr_000_0ebd
-
-    or [hl]
-    sbc $c2
-    jr nz, @+$22
-
-    add $c1
-    jr nz, jr_000_0f22
-
-    ld a, h
-
-jr_000_0ea7::
-    nop
-    ld a, h
-
-jr_000_0ea9::
-    jr nz, jr_000_0ecb
-
-jr_000_0eab::
-    jr nz, jr_000_0ecd
-
-jr_000_0ead::
-    sub $b3
-
-jr_000_0eaf::
-    set 3, [hl]
-
-jr_000_0eb1::
-    jr nz, @+$22
-
-    jr nz, @+$22
-
-    jr nz, jr_000_0ed7
-
-    jr nz, jr_000_0ed9
-
-    jr nz, @+$7e
-
-    nop
-    ld a, h
-
-jr_000_0ebd::
-    jr nz, @+$22
-
-    jr nz, jr_000_0ee1
-
-    jr nz, jr_000_0ee3
-
-    jr nz, jr_000_0ee5
-
-    jr nz, jr_000_0ee7
-
-    jr nz, jr_000_0ee9
-
-    jr nz, jr_000_0eeb
-
-jr_000_0ecb::
-    jr nz, jr_000_0eed
-
-jr_000_0ecd::
-    ld a, h
-    nop
-    ld a, h
-    jr nz, jr_000_0e85
-
-    trap $da
-    jp $d7b6
-
-
-jr_000_0ed7::
-    jr nz, jr_000_0ef9
-
-jr_000_0ed9::
-    jr nz, jr_000_0efb
-
-    jr nz, @-$38
-
-    pop bc
-    jp nc, $7c20
-
-jr_000_0ee1::
-    nop
-    ld a, h
-
-jr_000_0ee3::
-    jr nz, jr_000_0f05
-
-jr_000_0ee5::
-    jr nz, jr_000_0f07
-
-jr_000_0ee7::
-    jr nz, jr_000_0f09
-
-jr_000_0ee9::
-    jr nz, @+$22
-
-jr_000_0eeb::
-    jr nz, jr_000_0f0d
-
-jr_000_0eed::
-    jr nz, jr_000_0f0f
-
-    jr nz, jr_000_0f11
-
-    jr nz, jr_000_0f13
-
-    ld a, h
-    nop
-    dec hl
-    dec l
-    dec l
-    dec l
-
-jr_000_0ef9::
-    dec l
-    dec l
-
-jr_000_0efb::
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-
-jr_000_0f05::
-    dec l
-    dec hl
-
-jr_000_0f07::
-    nop
-    nop
-
-jr_000_0f09::
-    call nc, $deb7
-    cp e
-
-jr_000_0f0d::
-    sbc $20
-
-jr_000_0f0f::
-    jr nz, jr_000_0f11
-
-jr_000_0f11::
-    ret nc
-
-    cp l
-
-jr_000_0f13::
-    sbc $b6
-    sbc $d2
-    jr nz, jr_000_0f19
-
-jr_000_0f19::
-    or e
-    or l
-    cp e
-    sbc $20
-    jr nz, jr_000_0f40
-
-    nop
-    or l
-
-jr_000_0f22::
-    set 0, d
-    cp h
-    sbc $bb
-    sbc $00
-    or l
-    or e
-    cp h
-    cp e
-    sbc $20
-    jr nz, jr_000_0f31
-
-jr_000_0f31::
-    call z, $bac0
-    sbc $bb
-    sbc $20
-    nop
-    or [hl]
-    add $bb
-    sbc $20
-    jr nz, @+$22
-
-jr_000_0f40::
-    nop
-    cp h
-    cp h
-    cp e
-    sbc $20
-    jr nz, @+$22
-
-    nop
-    or l
-    call nz, $bbd2
-    sbc $20
-    jr nz, jr_000_0f51
-
-jr_000_0f51::
-    jp $cbdd
-
-
-    sbc $dd
-    cp e
-    sbc $00
-    cp e
-    cp a
-    ret c
-
-    cp e
-    sbc $20
-    jr nz, jr_000_0f61
-
-jr_000_0f61::
-    or d
-    jp $debb
-
-
-    jr nz, jr_000_0f87
-
-    jr nz, jr_000_0f69
-
-jr_000_0f69::
-    cp c
-    sbc $c2
-    nop
-    or [hl]
-    jr nz, @+$22
-
-    nop
-    cp l
-    or d
-    jr nz, jr_000_0f75
-
-jr_000_0f75::
-    db $d3
-    cp b
-    jr nz, jr_000_0f79
-
-jr_000_0f79::
-    or a
-    db $dd
-    jr nz, jr_000_0f7d
-
-jr_000_0f7d::
-    call nz, $20de
-    nop
-    add $c1
-    jr nz, jr_000_0f85
-
-jr_000_0f85::
-    jr nz, jr_000_0fa7
-
-jr_000_0f87::
-    jr nz, jr_000_0fa9
-
-    jr nz, jr_000_0fab
-
-    jr nz, jr_000_0fad
-
-    jr nz, jr_000_0faf
-
-    jr nz, jr_000_0f91
-
-jr_000_0f91::
-    jr nz, jr_000_0fb3
-
-    jr nz, jr_000_0fb5
-
-    jr nz, jr_000_0fb7
-
-    jr nz, jr_000_0fb9
-
-    jr nz, @+$22
-
-    jr nz, jr_000_0f9d
-
-jr_000_0f9d::
-    jr nz, jr_000_0fbf
-
-    jr nz, jr_000_0fc1
-
-    jr nz, jr_000_0fc3
-
-    jr nz, jr_000_0fc5
-
-    jr nz, @+$22
-
-jr_000_0fa7::
-    jr nz, jr_000_0fa9
-
-jr_000_0fa9::
-    jr nz, jr_000_0fcb
-
-jr_000_0fab::
-    jr nz, jr_000_0fcd
-
-jr_000_0fad::
-    jr nz, jr_000_0fcf
-
-jr_000_0faf::
-    jr nz, jr_000_0fd1
-
-    jr nz, @+$22
-
-jr_000_0fb3::
-    jr nz, jr_000_0fb5
-
-jr_000_0fb5::
-    sub $b3
-
-jr_000_0fb7::
-    pop bc
-    or h
-
-jr_000_0fb9::
-    db $dd
-    jr nz, @-$36
-
-    db $dd
-    cp h
-    xor [hl]
-
-jr_000_0fbf::
-    or e
-    nop
-
-jr_000_0fc1::
-    sub $b3
-
-jr_000_0fc3::
-    pop bc
-    or h
-
-jr_000_0fc5::
-    db $dd
-    jr nz, @-$36
-
-    db $dd
-    pop bc
-    xor l
-
-jr_000_0fcb::
-    or e
-    nop
-
-jr_000_0fcd::
-    sub $b3
-
-jr_000_0fcf::
-    pop bc
-    or h
-
-jr_000_0fd1::
-    db $dd
-    jr nz, @-$36
-
-    db $dd
-    pop bc
-    xor [hl]
-    or e
-    nop
-    cp h
-    xor [hl]
-    or e
-    or [hl]
-    sbc $b8
-    ld sp, $ddc8
-    cp [hl]
-    or d
-    nop
-    cp h
-    xor [hl]
-    or e
-    or [hl]
-    sbc $b8
-    ld [hl-], a
-    ret z
-
-    db $dd
-    cp [hl]
-    or d
-    nop
-    cp h
-    xor [hl]
-    or e
-    or [hl]
-    sbc $b8
-    inc sp
-    ret z
-
-    db $dd
-    cp [hl]
-    or d
-    nop
-    cp h
-    xor [hl]
-    or e
-    or [hl]
-    sbc $b8
-    inc [hl]
-    ret z
-
-    db $dd
-    cp [hl]
-    or d
-    nop
-    cp h
-    xor [hl]
-    or e
-    or [hl]
-    sbc $b8
-    dec [hl]
-    ret z
-
-    db $dd
-    cp [hl]
-    or d
-    nop
-    cp h
-    xor [hl]
-    or e
-    or [hl]
-    sbc $b8
-    ld [hl], $c8
-    db $dd
-    cp [hl]
-    or d
-    nop
-    pop bc
-    xor l
-    or e
-    or [hl]
-    sbc $b8
-    ld sp, $ddc8
-    cp [hl]
-    or d
-    nop
-    pop bc
-    xor l
-    or e
-    or [hl]
-    sbc $b8
-    ld [hl-], a
-    ret z
-
-    db $dd
-    cp [hl]
-    or d
-    nop
-    pop bc
-    xor l
-    or e
-    or [hl]
-    sbc $b8
-    inc sp
-    ret z
-
-    db $dd
-    cp [hl]
-    or d
-    nop
-    cp d
-    or e
-    cp d
-    or e
-    ld sp, $ddc8
-    cp [hl]
-    or d
-    jr nz, @+$22
-
-    nop
-    cp d
-    or e
-    cp d
-    or e
-    ld [hl-], a
-    ret z
-
-    db $dd
-    cp [hl]
-    or d
-    jr nz, jr_000_107c
-
-    nop
-    cp d
-    or e
-    cp d
-    or e
-    inc sp
-    ret z
-
-    db $dd
-    cp [hl]
-    or d
-    jr nz, jr_000_1088
-
-    nop
-    jr nz, jr_000_108b
-
-    jr nz, jr_000_108d
-
-    jr nz, @+$22
-
-    jr nz, jr_000_1091
-
-    jr nz, @+$22
-
-    jr nz, jr_000_1075
+data_0e5a:
+    dh "＋－－－－－－－－－－－－－－－－＋\n"
+    dh "｜　　　　　　　　　　　　　さい　｜\n"
+    dh "｜　　　　　　　　　　　　　　　　｜\n"
+    dh "｜　　　　　ねん　　がつ　　にち　｜｜\n"
+    dh "｜　　　　ようび　　　　　　　　　｜\n"
+    dh "｜　　　　　　　　　　　　　　　　｜\n"
+    dh "｜　うまれてから　　　　　にちめ　｜\n"
+    dh "｜　　　　　　　　　　　　　　　　｜\n"
+    db "＋－－－－－－－－－－－－－－－－＋\n"
+    db $00
+
+data_0f09:
+    dh "やぎざ　　\n"
+    dh "みずがめ　\n"
+    dh "うおざ　　　\n"
+    dh "おひつじざ\n"
+    dh "おうしざ　　\n"
+    dh "ふたござ　\n"
+    dh "かにざ　　　\n"
+    dh "ししざ　　　\n"
+    dh "おとめざ　　\n"
+    dh "てんびんざ\n"
+    dh "さそりざ　　\n"
+    dh "いてざ　　　\n"
+
+data_0f69:
+    dh "げつ\n"
+    dh "か　　\n"
+    dh "すい　\n"
+    dh "もく　\n"
+    dh "きん　\n"
+    dh "ど　\n"
+    dh "にち　\n"
+
+data_0f85:
+    dh "　　　　　　　　　　　\n"
+    dh "　　　　　　　　　　　\n"
+    dh "　　　　　　　　　　　\n"
+    dh "　　　　　　　　　　　\n"
+    dh "ようちえん　ねんしょう\n"
+    dh "ようちえん　ねんちゅう\n"
+    dh "ようちえん　ねんちょう\n"
+    dh "しょうがく１ねんせい\n"
+    dh "しょうがく２ねんせい\n"
+    dh "しょうがく３ねんせい\n"
+    dh "しょうがく４ねんせい\n"
+    dh "しょうがく５ねんせい\n"
+    dh "しょうがく６ねんせい\n"
+    dh "ちゅうがく１ねんせい\n"
+    dh "ちゅうがく２ねんせい\n"
+    dh "ちゅうがく３ねんせい\n"
+    dh "こうこう１ねんせい　　\n"
+    dh "こうこう２ねんせい　　\n"
+    dh "こうこう３ねんせい　　\n"
+    dh "　　　　　　　　　　　\n"
 
 jr_000_1075::
     ld a, [$c61c]
@@ -3338,9 +2038,10 @@ jr_000_118e::
     ret
 
 
+call_1191:
     callx @+$f0c9
-    ldx hl, @+$0093
-    ld de, jr_000_0106
+    ldx hl, data_122c
+    ld de, $0106
     trap DrawStringList
     ld hl, $0709
     trap MoveCursor
@@ -3425,295 +2126,19 @@ jr_000_1225::
     ret
 
 
-    dec hl
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec hl
-    nop
-    ld a, h
-    jr nz, jr_000_1263
+data_122c:
+    dk "＋－－－－－－－－－－－－－－－－＋\n"
+    dh "｜　！　　ようちゅういのひ　　！　｜\n"
+    dk "｜　　　　　　　　　　　　　　　　｜\n"
+    dk "｜　Ｐ　：　　　　　　　　　　　　｜\n"
+    dk "｜　Ｓ　：　　　　　　　　　　　　｜\n"
+    dk "｜　Ｉ　：　　　　　　　　　　　　｜\n"
+    dk "＋－－－－－－－－－－－－－－－－＋\n"
+    db $00
 
-    jr nz, jr_000_1264
+    ds 6
 
-    sub $b3
-    pop bc
-    xor l
-    or e
-    or d
-    ret
-
-
-    sla b
-    jr nz, jr_000_1270
-
-    jr nz, jr_000_12cd
-
-    nop
-    ld a, h
-    jr nz, @+$22
-
-    jr nz, jr_000_1277
-
-    jr nz, jr_000_1279
-
-    jr nz, jr_000_127b
-
-    jr nz, jr_000_127d
-
-    jr nz, jr_000_127f
-
-    jr nz, jr_000_1281
-
-    jr nz, jr_000_1283
-
-jr_000_1263::
-    ld a, h
-
-jr_000_1264::
-    nop
-    ld a, h
-    jr nz, jr_000_12b8
-
-    jr nz, jr_000_12a4
-
-    jr nz, jr_000_128c
-
-    jr nz, jr_000_128e
-
-    jr nz, jr_000_1290
-
-jr_000_1270::
-    jr nz, jr_000_1292
-
-    jr nz, jr_000_1294
-
-    jr nz, jr_000_1296
-
-    ld a, h
-
-jr_000_1277::
-    nop
-    ld a, h
-
-jr_000_1279::
-    jr nz, jr_000_12ce
-
-jr_000_127b::
-    jr nz, jr_000_12b7
-
-jr_000_127d::
-    jr nz, jr_000_129f
-
-jr_000_127f::
-    jr nz, jr_000_12a1
-
-jr_000_1281::
-    jr nz, jr_000_12a3
-
-jr_000_1283::
-    jr nz, jr_000_12a5
-
-    jr nz, jr_000_12a7
-
-    jr nz, jr_000_12a9
-
-    ld a, h
-    nop
-    ld a, h
-
-jr_000_128c::
-    jr nz, jr_000_12d7
-
-jr_000_128e::
-    jr nz, jr_000_12ca
-
-jr_000_1290::
-    jr nz, jr_000_12b2
-
-jr_000_1292::
-    jr nz, jr_000_12b4
-
-jr_000_1294::
-    jr nz, jr_000_12b6
-
-jr_000_1296::
-    jr nz, jr_000_12b8
-
-    jr nz, jr_000_12ba
-
-    jr nz, jr_000_12bc
-
-    ld a, h
-    nop
-    dec hl
-
-jr_000_129f::
-    dec l
-    dec l
-
-jr_000_12a1::
-    dec l
-    dec l
-
-jr_000_12a3::
-    dec l
-
-jr_000_12a4::
-    dec l
-
-jr_000_12a5::
-    dec l
-    dec l
-
-jr_000_12a7::
-    dec l
-    dec l
-
-jr_000_12a9::
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec hl
-    nop
-    nop
-
-jr_000_12b2::
-    nop
-    nop
-
-jr_000_12b4::
-    nop
-    nop
-
-jr_000_12b6::
-    nop
-
-jr_000_12b7::
-    nop
-
-jr_000_12b8::
-    nop
-    nop
-
-jr_000_12ba::
-    nop
-    nop
-
-jr_000_12bc::
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-
-jr_000_12ca::
-    nop
-    nop
-    nop
-
-jr_000_12cd::
-    nop
-
-jr_000_12ce::
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-
-jr_000_12d7::
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
+data_12b8:
+    ds 64
+data_12f8:
+    ds 32
