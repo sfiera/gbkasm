@@ -36,7 +36,7 @@ Main::
     trap StopAudio
     ld hl, $04bc
     trap $cb
-    trap $b5
+    trap LCDDisable
     call call_b187
 
 .jr_a111
@@ -53,7 +53,7 @@ Main::
     ld hl, $8000
     call call_b2a6
     ld a, $03
-    trap HideScreen
+    trap LCDEnable
     xor a
     ld hl, $0000
     ld de, $4c48
@@ -187,7 +187,7 @@ call_a21f:
     ld bc, $0303
     trap $c5
     ld a, $03
-    trap HideScreen
+    trap LCDEnable
 
 .jr_a285
     trap AwaitFrame
@@ -284,7 +284,7 @@ call_a33a:
     ld de, $0310
     call call_a3ba
     ld a, $03
-    trap HideScreen
+    trap LCDEnable
 
 .jr_a372
     trap AwaitFrame
@@ -382,7 +382,7 @@ call_a464:
     inc hl
     ld [hl], a
     ld a, $03
-    trap HideScreen
+    trap LCDEnable
     ld hl, $c85c
     ld [hl], $05
     inc hl
@@ -1381,7 +1381,7 @@ call_aa58:
     ld hl, $0100
     trap $59
     ld a, $03
-    trap HideScreen
+    trap LCDEnable
     ld de, $3d01
     ld b, $05
     ld hl, $c862
@@ -1408,7 +1408,7 @@ data_aa9f:
 
 
 call_ab17:
-    trap $b5
+    trap LCDDisable
     ld a, [$c867]
     call call_b2b1
     ld hl, $c700
@@ -1515,7 +1515,7 @@ call_ab98:
     trap DrawLayout
     call call_abef
     ld a, $03
-    trap HideScreen
+    trap LCDEnable
     xor a
     ld [$c85d], a
     call call_acbe
@@ -2081,7 +2081,7 @@ call_af4f:
     call call_b1a8
     call call_b154
     ld a, $63
-    trap HideScreen
+    trap LCDEnable
 
 .jr_af62
     trap AwaitFrame

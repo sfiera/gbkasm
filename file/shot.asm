@@ -34,11 +34,11 @@ History:
 Main::
     xor a
     trap DrawInit
-    trap $b5
+    trap LCDDisable
     ld hl, $1200
     trap $b6
     ld a, $01
-    trap HideScreen
+    trap LCDEnable
 
 jr_0106:
     callx code_019d

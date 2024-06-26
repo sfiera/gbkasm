@@ -176,7 +176,7 @@ call_0239:
     cp $01
     jr nz, jr_000_0265
 
-    trap $b5
+    trap LCDDisable
     callx call_07a9
     callx call_027b
     callx call_0c4a
@@ -253,7 +253,7 @@ jx_02c4:
     jr nz, jr_000_02af
 
     ld a, $07
-    trap HideScreen
+    trap LCDEnable
     xor a
     ld [$d5e5], a
     ret
@@ -1921,7 +1921,7 @@ call_0c8d:
     ldx de, data_0f18
     trap MemCopy
     ld a, $03
-    trap HideScreen
+    trap LCDEnable
     pop af
     ld [$d5a0], a
     ld a, $60
@@ -2055,7 +2055,7 @@ jr_000_0d58:
 
 
 call_0d6d:
-    trap $b5
+    trap LCDDisable
     ld hl, $c500
     ld a, [hl+]
     or [hl]

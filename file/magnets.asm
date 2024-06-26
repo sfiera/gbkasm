@@ -466,7 +466,7 @@ Call_000_0303::
 
     xor a
     trap DrawInit
-    trap $b5
+    trap LCDDisable
     ld e, $f8
     ld bc, $0400
     ld hl, $9800
@@ -502,7 +502,7 @@ jr_000_0354::
     jr nz, jr_000_034f
 
     ld a, $03
-    trap HideScreen
+    trap LCDEnable
     ld a, $02
     trap PlayMusic
     call $afd6
@@ -2327,7 +2327,7 @@ jr_000_0daf::
     ret
 
 
-    trap $b5
+    trap LCDDisable
     ld hl, $9002
     ld de, $9000
     ld c, $80
@@ -2405,7 +2405,7 @@ jr_000_0ddd::
     jr nz, jr_000_0ddd
 
     ld a, $03
-    trap HideScreen
+    trap LCDEnable
     ret
 
 
@@ -3057,18 +3057,18 @@ jr_000_1059::
     call $a330
     call $b27d
     call $a267
-    trap $b5
+    trap LCDDisable
     call $a2a5
     ld a, $03
-    trap HideScreen
+    trap LCDEnable
     call $a278
-    trap $b5
+    trap LCDDisable
     ld a, $03
-    trap HideScreen
-    trap $b5
+    trap LCDEnable
+    trap LCDDisable
     call $a509
     ld a, $03
-    trap HideScreen
+    trap LCDEnable
     ld a, $09
     trap PlayMusic
     ld a, $01

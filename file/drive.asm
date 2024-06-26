@@ -65,14 +65,14 @@ Main::
     ret
 
 
-    trap $b5
+    trap LCDDisable
     callx @+$00a8
     callx @+$0139
     callx @+$013b
     callx @+$00d3
     callx @+$082f
     ld a, $03
-    trap HideScreen
+    trap LCDEnable
     ret
 
 
@@ -365,7 +365,7 @@ jr_000_0341::
     ret
 
 
-    trap $b5
+    trap LCDDisable
     ld a, $01
     ld [$c90c], a
     xor a
@@ -393,7 +393,7 @@ jr_000_0365::
     xor a
     ld [$c90c], a
     ld a, $03
-    trap HideScreen
+    trap LCDEnable
     ret
 
 
@@ -1496,7 +1496,7 @@ jr_000_0a02::
     ld a, $0c
     trap $b9
     ld a, $03
-    trap HideScreen
+    trap LCDEnable
     callx @+$0072
     callx @+$008c
     callx @+$00e1

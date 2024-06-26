@@ -1032,7 +1032,7 @@ jr_000_05dc::
 
 
     push bc
-    trap HideScreen
+    trap LCDEnable
     jr nz, @+$3c
 
     jr nz, @+$22

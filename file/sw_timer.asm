@@ -768,7 +768,7 @@ jr_0738:
     ld bc, $1409
     trap $58
     ld a, $07
-    trap HideScreen
+    trap LCDEnable
     ld hl, $c600
     ldx de, call_06d4
     ld bc, $0013

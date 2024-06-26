@@ -149,7 +149,7 @@ DrawGrid:
     dec b
     jr nz, .nextCol
 
-    trap $b5
+    trap LCDDisable
     ld e, $00
     ld hl, $8800
     ld bc, $0800
@@ -162,7 +162,7 @@ DrawGrid:
     ld hl, $8800
     trap $1b
     ld a, $03
-    trap HideScreen
+    trap LCDEnable
     ret
 
 DrawDigit:

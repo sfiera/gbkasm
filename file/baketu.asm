@@ -40,11 +40,11 @@ jr_0108:
     ld sp, $e000
     xor a
     trap DrawInit
-    trap $b5
+    trap LCDDisable
     ldx hl, layout_037a
     trap DrawLayout
     ld a, $03
-    trap HideScreen
+    trap LCDEnable
     xor a
     ld [$ccc6], a
     ldx de, data_0131
@@ -109,7 +109,7 @@ jr_000_016c:
     ld a, $18
     ldh [$9f], a
     ld a, $63
-    trap HideScreen
+    trap LCDEnable
     ld a, $14
     ld [$cc96], a
 jr_0194:
@@ -269,7 +269,7 @@ layout_037a:
 call_040c:
     xor a
     trap DrawInit
-    trap $b5
+    trap LCDDisable
     callx call_08d8
     xor a
     ldh [$9b], a
@@ -279,7 +279,7 @@ call_040c:
     ld a, $18
     ldh [$9f], a
     ld a, $63
-    trap HideScreen
+    trap LCDEnable
     xor a
     ld [$cc65], a
     ld a, $50
@@ -829,10 +829,10 @@ jr_000_07c6:
     trap DrawLayout
     ld a, $78
     trap $dc
-    trap $b5
+    trap LCDDisable
     callx call_08d8
     ld a, $63
-    trap HideScreen
+    trap LCDEnable
 
 jr_000_081d:
     scf
