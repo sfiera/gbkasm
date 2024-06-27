@@ -6,6 +6,7 @@ MACRO trap
 ENDM
 
 DEF ExitToMenu       EQU $01
+DEF JumpViaTable     EQU $06
 
 DEF MemCopy          EQU $02  ; [de, de+bc) → [hl, hl+bc)
 
@@ -22,6 +23,7 @@ DEF GetAudioCount    EQU $1a
 DEF LoadTiles        EQU $4c
 
 DEF DrawLayout       EQU $5c
+DEF DoCursorMenu     EQU $5f
 
 DEF InitDecompress   EQU $62
 DEF RunDecompress    EQU $63

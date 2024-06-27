@@ -36,20 +36,20 @@ Main::
     ld hl, $04bc
     trap $cb
 
-jr_0108:
+MainMenu:
     ld sp, $e000
     xor a
     trap DrawInit
     trap LCDDisable
-    ldx hl, layout_037a
+    ldx hl, LayoutMenu
     trap DrawLayout
     ld a, $03
     trap LCDEnable
     xor a
     ld [$ccc6], a
-    ldx de, data_0131
-    trap $5f
-    jr c, jr_0108
+    ldx de, MenuConfig
+    trap DoCursorMenu
+    jr c, MainMenu
 
     cp $00
     jr z, jr_0138
@@ -62,8 +62,11 @@ jr_0108:
 
     trap ExitToMenu
 
-data_0131:
-    db $10, $05, $02, $3e, $20, $00, $00
+MenuConfig:
+    db $10       ; item count
+    db $05, $02  ; initial position
+    db ">", " "  ; cursor characters
+    dw 0         ; update callback
 
 jr_0138:
     ld a, $01
@@ -113,7 +116,7 @@ jr_000_016c:
     ld a, $14
     ld [$cc96], a
 jr_0194:
-    ldx hl, layout_0262
+    ldx hl, LayoutWaitToReceive
     trap DrawLayout
     trap $c3
 jr_019c:
@@ -132,7 +135,7 @@ jr_019c:
     dec [hl]
     jr nz, jr_019c
 
-    jx jr_0108
+    jx MainMenu
 
 
 jr_000_01b9:
@@ -148,7 +151,7 @@ jr_000_01c9:
     cp $01
     jr z, jr_000_01e3
 
-    ldx hl, layout_02da
+    ldx hl, LayoutCommError
     trap DrawLayout
     ld a, $b4
     trap $dc
@@ -161,7 +164,7 @@ jr_000_01e3:
     jr jr_000_01c9
 
 call_01f0:
-    ldx hl, layout_023c
+    ldx hl, LayoutSending
     trap DrawLayout
     trap $c3
     ld a, $78
@@ -212,19 +215,19 @@ jr_000_022c:
     ret
 
 
-layout_023c:
+LayoutSending:
     dk $05, $25, "«　　　　　　　　　\n"
     dh $05, $26, "　そうしんちゅう　\n"
     dh $05, $27, "　　　　　　　　　\n"
     db $ff
 
-layout_0262:
+LayoutWaitToReceive:
     dk $03, $25, "«　　　　　　　　　　　　　　\n"
     dh $03, $26, "　じゅしん　たいきちゅう　　\n"
     dh $03, $27, "　　　　　　　　　　　　　　\n"
     db $ff
 
-layout_0298:
+LayoutFinish:
     dk $05, $22, "          \n"
     dk $05, $23, " FINISH!! \n"
     dk $05, $24, "          \n"
@@ -232,21 +235,21 @@ layout_0298:
     dk $05, $27, "MENU:SEL+B\n"
     db $ff
 
-layout_02da:
+LayoutCommError:
     dk $02, $25, "«　　　　　　　　　　　　　　　　\n"
     dh $02, $26, "　しっぱいしました，あらためて　\n"
     dh $02, $27, "　おくってもらって　ください　　\n"
     dh $02, $28, "　　　　　　　　　　　　　　　　\n"
     db $ff
 
-layout_032a:
+LayoutReceived:
     dk $02, $25, "«　　　　　　　　　　　　　　　　\n"
     dh $02, $26, "　うけとりました　　　　　　　　\n"
     dh $02, $27, "　つぎのひとにわたしてください　\n"
     dh $02, $28, "　　　　　　　　　　　　　　　　\n"
     db $ff
 
-layout_037a:
+LayoutMenu:
     dh $05, $00, "バケちゅリレー\n"
     dk $06, $02, "れんしゅう\n"
     dh $06, $03, "もらう\n"
@@ -346,11 +349,11 @@ jr_000_04b7:
     jr jr_000_0450
 
 jr_000_04c9:
-    jx jr_0108
+    jx MainMenu
 
 
 jr_000_04cd:
-    ldx hl, layout_0298
+    ldx hl, LayoutFinish
     trap DrawLayout
     ld hl, $0724
     trap MoveCursor
@@ -825,7 +828,7 @@ jr_000_07c6:
     or a
     jr nz, jr_000_081d
     callx call_052d
-    ldx hl, layout_032a
+    ldx hl, LayoutReceived
     trap DrawLayout
     ld a, $78
     trap $dc
