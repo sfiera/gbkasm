@@ -35,7 +35,7 @@ Main::
     ld de, $c400
     ld bc, $0100
     trap MemCopy
-    jx @+$0b6e
+    jx jx_0bb8
 
 
     xor a
@@ -69,7 +69,8 @@ Main::
     ret
 
 
-    ldx de, @+$08ac
+call_0091:
+    ldx de, data_093e
     ld hl, $c700
     ld b, h
     trap InitDecompress
@@ -78,8 +79,8 @@ Main::
     trap RunDecompress
     ret
 
-
-    ldx hl, @+$09db
+call_00a4:
+    ldx hl, data_0a80
     ld e, [hl]
     inc hl
     ld d, [hl]
@@ -168,13 +169,13 @@ jr_000_00cb::
     cp $01
     jr nz, jr_000_0137
 
-    ldx hl, @+$0a51
+    ldx hl, data_0b82
     trap DrawString
     ret
 
 
 jr_000_0137:
-    ldx hl, @+$0a53
+    ldx hl, data_0b8b
     trap DrawString
     ret
 
@@ -243,7 +244,7 @@ jr_000_018c::
     ld [$c887], a
     ld hl, $0008
     trap MoveCursor
-    ldx hl, @+$09ab
+    ldx hl, data_0b4c
     trap DrawString
     ret
 
@@ -261,7 +262,7 @@ jr_000_018c::
     ld [$c887], a
     ld hl, $0008
     trap MoveCursor
-    ldx hl, @+$098c
+    ldx hl, data_0b4c
     trap DrawString
     ld a, [$0014]
     cp $01
@@ -348,11 +349,11 @@ jr_000_022d::
 
     ld hl, $0001
     trap MoveCursor
-    ldx hl, @+$0890
+    ldx hl, data_0ac9
     trap DrawString
     ld hl, $000d
     trap MoveCursor
-    ldx hl, @+$0885
+    ldx hl, data_0ac9
     trap DrawString
     ret
 
@@ -377,7 +378,7 @@ jr_000_022d::
     ld hl, $0000
     ld l, c
     trap MoveCursor
-    ldx hl, @+$08d2
+    ldx hl, data_0b4c
     push af
     push bc
     push de
@@ -419,15 +420,15 @@ jr_000_02b1::
     ld hl, $c8c7
     trap IntToString
     trap DrawString
-    ldx hl, @+$07c2
+    ldx hl, data_0a83
     trap DrawString
     ld hl, $0309
     trap MoveCursor
-    ldx hl, @+$07c6
+    ldx hl, data_0a92
     trap DrawString
     ld hl, $030a
     trap MoveCursor
-    ldx hl, @+$07a0
+    ldx hl, data_0a77
     trap DrawString
     ld a, [$c8cf]
     ld e, a
@@ -436,7 +437,7 @@ jr_000_02b1::
     ld hl, $c8c7
     trap IntToString
     trap DrawString
-    ldx hl, @+$0797
+    ldx hl, data_0a83
     trap DrawString
     ld hl, $0507
     trap MoveCursor
@@ -444,7 +445,7 @@ jr_000_02b1::
     cp $00
     jr nz, jr_000_0308
 
-    ldx hl, @+$0785
+    ldx hl, data_0a87
     trap DrawString
     ret
 
@@ -453,7 +454,7 @@ jr_000_0308::
     cp $0f
     ret nz
 
-    ldx hl, @+$0840
+    ldx hl, data_0b4c
     trap DrawString
     ret
 
@@ -618,7 +619,7 @@ jr_000_03f7::
 jr_000_0420::
     ld hl, $0501
     trap MoveCursor
-    ldx hl, @+$0639
+    ldx hl, data_0a5f
     trap DrawString
     xor a
     ld [$c88a], a
@@ -640,7 +641,7 @@ jr_000_0420::
     cp $00
     jr nz, jr_000_045d
 
-    ldx hl, @+$065f
+    ldx hl, data_0ab3
     trap DrawString
     jx @+$000d
 
@@ -649,7 +650,7 @@ jr_000_045d::
     cp $0f
     jr nz, jr_000_0467
 
-    ldx hl, @+$06ea
+    ldx hl, data_0b4c
     trap DrawString
 
 jr_000_0467::
@@ -687,7 +688,7 @@ jr_000_0499:
 jr_000_049f::
     ld hl, $0610
     trap MoveCursor
-    ldx hl, @+$06ef
+    ldx hl, data_0b94
     trap DrawString
 
 jr_000_04aa::
@@ -830,7 +831,7 @@ jr_000_0552::
     ld [$c88b], a
     ld hl, $0507
     trap MoveCursor
-    ldx hl, @+$04e7
+    ldx hl, data_0a87
     trap DrawString
     callx @+$fc8a
     ld a, [$0014]
@@ -845,11 +846,11 @@ jr_000_0552::
 jr_000_05b7::
     ld hl, $0507
     trap MoveCursor
-    ldx hl, @+$04a2
+    ldx hl, data_0a5f
     trap DrawString
     ld hl, $000d
     trap MoveCursor
-    ldx hl, @+$0553
+    ldx hl, data_0b1b
     trap DrawString
     ld hl, $0409
     trap MoveCursor
@@ -857,7 +858,7 @@ jr_000_05b7::
     cp $00
     jr nz, jr_000_05e4
 
-    ldx hl, @+$048c
+    ldx hl, data_0a6a
     trap DrawString
     ret
 
@@ -866,7 +867,7 @@ jr_000_05e4::
     cp $0f
     ret nz
 
-    ldx hl, @+$0564
+    ldx hl, data_0b4c
     trap DrawString
     ret
 
@@ -1007,7 +1008,7 @@ jr_000_0699::
     ld [$c886], a
     ld hl, $0510
     trap MoveCursor
-    ldx hl, @+$03a9
+    ldx hl, data_0a5f
     trap DrawString
     ld a, $01
     ret
@@ -1075,7 +1076,7 @@ jr_000_072e::
     ld [$c88d], a
     ld hl, $0506
     trap MoveCursor
-    ldx hl, @+$0428
+    ldx hl, data_0b61
     trap DrawString
     ld a, [$c88f]
     cp $01
@@ -1112,11 +1113,11 @@ jr_000_0762::
     ld hl, $c8c7
     trap IntToString
     trap DrawString
-    ldx hl, @+$0313
+    ldx hl, data_0a83
     trap DrawString
     ld hl, $0309
     trap MoveCursor
-    ldx hl, @+$0322
+    ldx hl, data_0a9d
     trap DrawString
     pop hl
     ld a, [$c8cf]
@@ -1145,11 +1146,11 @@ jr_000_07a5::
     ld [$c88d], a
     ld hl, $0009
     trap MoveCursor
-    ldx hl, @+$039d
+    ldx hl, data_0b4c
     trap DrawString
     ld hl, $0506
     trap MoveCursor
-    ldx hl, @+$03b2
+    ldx hl, data_0b6c
     trap DrawString
     ld a, [$c8ce]
     ld h, $00
@@ -1197,11 +1198,11 @@ jr_000_0808::
     trap DrawInit
     ld hl, $0409
     trap MoveCursor
-    ldx hl, @+$038c
+    ldx hl, data_0b9d
     trap DrawString
     ld hl, $040b
     trap MoveCursor
-    ldx hl, @+$038e
+    ldx hl, data_0baa
     trap DrawString
     ld hl, $c600
     trap $ef
@@ -1234,11 +1235,11 @@ jr_000_084c::
     ld [$c88d], a
     ld hl, $0009
     trap MoveCursor
-    ldx hl, @+$02f5
+    ldx hl, data_0b4c
     trap DrawString
     ld hl, $0506
     trap MoveCursor
-    ldx hl, @+$0315
+    ldx hl, data_0b77
     trap DrawString
     ret
 
@@ -1247,13 +1248,13 @@ jr_000_084c::
     ld [$0000], a
     ld bc, $0002
     ld de, $c8cf
-    ldx hl, @+$020c
+    ldx hl, data_0a80
     trap MemCopy
     xor a
     ld [$0000], a
     ld hl, $030a
     trap MoveCursor
-    ldx hl, @+$01f4
+    ldx hl, data_0a77
     trap DrawString
     ld a, [$c8cf]
     ld e, a
@@ -1262,7 +1263,7 @@ jr_000_084c::
     ld hl, $c8c7
     trap IntToString
     trap DrawString
-    ldx hl, @+$01eb
+    ldx hl, data_0a83
     trap DrawString
     ret
 
@@ -1284,30 +1285,30 @@ jr_000_084c::
     cp $02
     jr z, jr_000_08cf
 
-    ldx hl, @+$02a1
+    ldx hl, data_0b61
     trap DrawString
     jr jr_000_08df
 
 jr_000_08c7::
-    ldx hl, @+$02a4
+    ldx hl, data_0b6c
     trap DrawString
     jr jr_000_08df
 
 jr_000_08cf::
-    ldx hl, @+$02a7
+    ldx hl, data_0b77
     trap DrawString
 
 jr_000_08d5::
     cp $0f
     jr nz, jr_000_08df
 
-    ldx hl, @+$0272
+    ldx hl, data_0b4c
     trap DrawString
 
 jr_000_08df::
     ld hl, $0507
     trap MoveCursor
-    ldx hl, @+$01d9
+    ldx hl, data_0abe
     trap DrawString
     ld a, $01
     ld [$c885], a
@@ -1337,11 +1338,11 @@ jr_000_0912::
     trap MemSet
     ld hl, $0506
     trap MoveCursor
-    ldx hl, @+$022a
+    ldx hl, data_0b4c
     trap DrawString
     ld hl, $0507
     trap MoveCursor
-    ldx hl, @+$015a
+    ldx hl, data_0a87
     trap DrawString
     callx @+$f8fd
     ret
@@ -1351,698 +1352,59 @@ jr_000_093a::
     jx @+$027d
 
 
-    rst $30
-    nop
-    sub l
-    nop
-    xor d
-    rst $28
-    xor e
-    ld bc, $0155
-    cp a
-    xor c
-    rst $38
-    add c
-    inc bc
-    add e
-    ld b, $86
-    ld c, $e7
-    adc [hl]
-    rrca
-    adc a
-    dec d
-    nop
-    dec d
-    ld e, $9e
-    add c
-    rst $38
-    add c
-    pop bc
-    pop bc
-    ld h, c
-    ld h, c
-    ld [hl], c
-    ld [hl], c
-    pop af
-    sbc [hl]
-    pop af
-    dec h
-    nop
-    dec h
-    ld a, c
-    ld a, c
-    rlca
-    add a
-    add hl, de
-    inc h
-    call z, $8000
-    cpl
-    rla
-    ld [bc], a
-    pop hl
-    pop hl
-    add hl, hl
-    ccf
-    nop
-    ld b, b
-    rra
-    ld sp, $1049
-    daa
-    cpl
-    jr nz, jr_000_09b8
-
-    rrca
-    nop
-    dec [hl]
-    nop
-    dec [hl]
-    nop
-    dec d
-    cpl
-    ld b, $3f
-    add hl, hl
-    ld [hl+], a
-    ld b, e
-    rrca
-    ld h, d
-    dec d
-    nop
-    ld d, a
-    jr nz, jr_000_09d6
-
-    ld a, a
-    ld h, b
-    daa
-    ld a, a
-    inc h
-
-jr_000_099c::
-    rla
-    ld a, c
-    ld [hl+], a
-    add hl, de
-    ld b, b
-    ld e, l
-    ld hl, $a101
-    ld h, l
-    add [hl]
-    scf
-    add hl, de
-    ld h, $5b
-    and e
-    and d
-    nop
-    rla
-    ld d, a
-    ld [hl+], a
-    ld d, e
-    reti
-
-
-    inc h
-    daa
-    ld a, a
-    jr nz, jr_000_09d9
-
-jr_000_09b8::
-    jp hl
-
-
-    inc h
-    nop
-    cpl
-    cpl
-    ld c, a
-    ld e, e
-    xor h
-    ld [hl], d
-    ei
-    ld e, c
-    and b
-    db $e3
-    rst $18
-    ld h, [hl]
-    db $fd
-    inc c
-    adc h
-    dec e
-    sbc l
-    dec c
-    adc l
-    inc sp
-    ld e, $a0
-    sbc [hl]
-    adc c
-    add hl, bc
-    sbc c
-    ld b, c
-
-jr_000_09d6::
-    adc c
-    nop
-    rla
-
-jr_000_09d9::
-    reti
-
-
-    ld b, b
-    db $dd
-    ld b, $33
-    nop
-    adc a
-    db $fd
-    inc h
-    jp hl
-
-
-    jp hl
-
-
-    ld b, [hl]
-    add c
-    add c
-    push af
-    ld sp, $c6f7
-    dec h
-    jp hl
-
-
-    jp hl
-
-
-    ld e, e
-    jr z, @-$6d
-
-    or l
-    ld [bc], a
-    or c
-    add e
-    or c
-    db $e3
-    db $ed
-    nop
-    push hl
-    rst $18
-    jr nz, jr_000_099c
-
-    nop
-    ccf
-    rst $38
-    nop
-    ld c, b
-    nop
-    sbc h
-    nop
-    cp [hl]
-    nop
-    rst $38
-    cpl
-    or l
-    db $10
-    or h
-    adc b
-    xor a
-    nop
-    inc e
-    ld e, h
-    ld a, $be
-    rst $18
-    ld a, a
-    rst $38
-    push bc
-    ld l, e
-    db $eb
-    ld [$1c88], sp
-    inc hl
-    or h
-    nop
-    or b
-    ld d, h
-    or l
-    inc d
-    call nc, $30bc
-    ld [$6348], sp
-    call $aa2a
-    push bc
-    nop
-    push hl
-    bit 2, a
-    ld b, b
-    nop
-    rst $28
-    sub l
-    nop
-    xor d
-    di
-    db $fc
-    nop
-    ld [bc], a
-    ld bc, $51f9
-    ld bc, $01a9
-    ld d, l
-    dec b
-    ld c, c
-    di
-    adc d
-    ld h, a
-    pop af
-    ld b, $3f
-    ccf
-    rlca
-    rlca
-    jr nz, jr_000_0a51
-
-    ld [bc], a
-    db $fc
-
-jr_000_0a51::
-    jr jr_000_0a53
-
-jr_000_0a53::
-    nop
-    add hl, hl
-    inc sp
-    nop
-    add b
-    ccf
-    sub d
-    inc e
-    inc sp
-    sub d
-    nop
-    dec hl
-    ld b, d
-    ld c, h
-    ld b, c
-    ld b, e
-    ld c, e
-    jr nz, @+$4c
-
-    ld b, c
-    ld b, e
-    ld c, e
-    nop
-    ld d, b
-    ld d, l
-    ld d, e
-    ld c, b
-    jr nz, jr_000_0ab1
-
-    jr nz, jr_000_0ac5
-
-    ld d, h
-    ld b, c
-    ld d, d
-    ld d, h
-    nop
-    ld d, b
-    ld c, h
-    ld b, c
-    ld e, c
-    ld b, l
-    ld d, d
-    jr nz, jr_000_0a9f
-
-    nop
-    cp b
-    dec bc
-    nop
-    ld d, b
-    jr nz, jr_000_0aa6
-
-    nop
-    ld d, b
-    ld c, h
-    ld b, l
-    ld b, c
-    ld d, e
-    ld b, l
-    jr nz, jr_000_0ad1
-
-    ld b, l
-    ld d, h
-    nop
-    ld b, d
-    ld b, l
-    ld d, h
-    jr nz, jr_000_0ae7
-
-    ld c, a
-    ld c, c
-    ld c, [hl]
-    ld d, h
-    jr nz, jr_000_0a9d
-
-jr_000_0a9d::
-    ld b, a
-    ld b, l
-
-jr_000_0a9f::
-    ld d, h
-    jr nz, @+$52
-
-    ld c, a
-    ld c, c
-    ld c, [hl]
-    ld d, h
-
-jr_000_0aa6::
-    jr nz, jr_000_0aa8
-
-jr_000_0aa8::
-    jr nz, @+$22
-
-    jr nz, jr_000_0afb
-
-    ld c, e
-    jr nz, @+$41
-
-    jr nz, jr_000_0ad1
-
-jr_000_0ab1::
-    jr nz, jr_000_0ab3
-
-jr_000_0ab3::
-    ld c, b
-    ld c, c
-    ld d, h
-    jr nz, jr_000_0afb
-
-    ld b, c
-    ld d, d
-    ld b, h
-    jr nz, @+$41
-
-    nop
-    jr nz, @+$22
-
-    ld d, d
-    ld b, l
-    ld d, h
-    ld d, d
-    ld e, c
-
-jr_000_0ac5::
-    ccf
-    jr nz, @+$22
-
-    nop
-    jr nz, jr_000_0aeb
-
-    jr nz, jr_000_0aed
-
-    jr nz, jr_000_0aef
-
-    jr nz, jr_000_0af1
-
-jr_000_0ad1::
-    jr nz, jr_000_0af3
-
-    jr nz, jr_000_0af5
-
-    jr nz, jr_000_0af7
-
-    jr nz, jr_000_0af9
-
-    jr nz, jr_000_0afb
-
-    jr nz, jr_000_0afd
-
-    jr nz, jr_000_0aff
-
-    jr nz, jr_000_0b01
-
-    jr nz, jr_000_0b03
-
-    jr nz, jr_000_0b05
-
-    jr nz, jr_000_0b07
-
-jr_000_0ae7::
-    jr nz, jr_000_0b09
-
-    jr nz, jr_000_0b0b
-
-jr_000_0aeb::
-    jr nz, jr_000_0b0d
-
-jr_000_0aed::
-    jr nz, jr_000_0b0f
-
-jr_000_0aef::
-    jr nz, jr_000_0b11
-
-jr_000_0af1::
-    jr nz, jr_000_0b13
-
-jr_000_0af3::
-    jr nz, jr_000_0b15
-
-jr_000_0af5::
-    jr nz, jr_000_0b17
-
-jr_000_0af7::
-    jr nz, jr_000_0b19
-
-jr_000_0af9::
-    jr nz, jr_000_0b1b
-
-jr_000_0afb::
-    jr nz, jr_000_0b1d
-
-jr_000_0afd::
-    jr nz, jr_000_0b1f
-
-jr_000_0aff::
-    jr nz, @+$22
-
-jr_000_0b01::
-    jr nz, @+$22
-
-jr_000_0b03::
-    jr nz, jr_000_0b25
-
-jr_000_0b05::
-    jr nz, @+$22
-
-jr_000_0b07::
-    jr nz, jr_000_0b29
-
-jr_000_0b09::
-    jr nz, jr_000_0b2b
-
-jr_000_0b0b::
-    jr nz, @+$22
-
-jr_000_0b0d::
-    jr nz, @+$22
-
-jr_000_0b0f::
-    jr nz, jr_000_0b31
-
-jr_000_0b11::
-    jr nz, jr_000_0b33
-
-jr_000_0b13::
-    jr nz, jr_000_0b35
-
-jr_000_0b15::
-    jr nz, jr_000_0b37
-
-jr_000_0b17::
-    jr nz, jr_000_0b39
-
-jr_000_0b19::
-    jr nz, jr_000_0b1b
-
-jr_000_0b1b::
-    jr nz, @+$22
-
-jr_000_0b1d::
-    jr nz, @+$22
-
-jr_000_0b1f::
-    dec hl
-    jr nz, @+$2f
-
-    ld a, $20
-    ld d, l
-
-jr_000_0b25::
-    ld d, b
-    jr nz, jr_000_0b6c
-
-    ld c, a
-
-jr_000_0b29::
-    ld d, a
-    ld c, [hl]
-
-jr_000_0b2b::
-    dec c
-    jr nz, jr_000_0b4e
-
-    jr nz, jr_000_0b50
-
-    ld b, c
-
-jr_000_0b31::
-    jr nz, jr_000_0b60
-
-jr_000_0b33::
-    ld a, $20
-
-jr_000_0b35::
-    ld c, a
-    ld c, e
-
-jr_000_0b37::
-    jr nz, @+$4a
-
-jr_000_0b39::
-    ld c, c
-    ld d, h
-    dec c
-    jr nz, jr_000_0b5e
-
-    jr nz, jr_000_0b60
-
-    ld b, d
-    jr nz, jr_000_0b70
-
-    ld a, $20
-    ld b, e
-    ld b, c
-    ld c, [hl]
-    ld b, e
-    ld b, l
-    ld c, h
-    nop
-    jr nz, jr_000_0b6e
-
-jr_000_0b4e::
-    jr nz, jr_000_0b70
-
-jr_000_0b50::
-    jr nz, jr_000_0b72
-
-    jr nz, jr_000_0b74
-
-    jr nz, @+$22
-
-    jr nz, jr_000_0b78
-
-    jr nz, jr_000_0b7a
-
-    jr nz, @+$22
-
-    jr nz, jr_000_0b7e
-
-jr_000_0b5e::
-    jr nz, jr_000_0b80
-
-jr_000_0b60::
-    nop
-    jr nz, @+$5b
-
-    ld c, a
-    ld d, l
-    jr nz, jr_000_0bbe
-
-    ld c, c
-    ld c, [hl]
-    ld hl, $0020
-
-jr_000_0b6c::
-    jr nz, jr_000_0bc7
-
-jr_000_0b6e::
-    ld c, a
-    ld d, l
-
-jr_000_0b70::
-    jr nz, jr_000_0bbe
-
-jr_000_0b72::
-    ld c, a
-    ld d, e
-
-jr_000_0b74::
-    ld d, h
-    jr nz, jr_000_0b77
-
-jr_000_0b77::
-    ld b, h
-
-jr_000_0b78::
-    ld d, d
-    ld b, c
-
-jr_000_0b7a::
-    ld d, a
-    jr nz, @+$49
-
-    ld b, c
-
-jr_000_0b7e::
-    ld c, l
-    ld b, l
-
-jr_000_0b80::
-    ld hl, $3e00
-    ld e, c
-    ld b, l
-    ld d, e
-    jr nz, @+$22
-
-    ld c, [hl]
-    ld c, a
-    nop
-    jr nz, jr_000_0be6
-
-    ld b, l
-    ld d, e
-    jr nz, jr_000_0bcf
-
-    ld c, [hl]
-    ld c, a
-    nop
-    jr nz, jr_000_0bd8
-
-    ld d, l
-    ld d, d
-    ld d, e
-    ld d, h
-    ld hl, $0020
-    jr nz, jr_000_0b50
-
-    push bc
-    ret nz
-
-    jr nz, jr_000_0b6c
-
-    jr nz, jr_000_0b74
-
-    cp c
-    jp $bdde
-
-
-    nop
-    cp d
-    ret
-
-
-    cp c
-    sbc $b0
-    pop de
-    jr nz, @-$34
-
-    jr nz, @-$47
-
-    or h
-    trap $bd
-    nop
+data_093e:
+    INCBIN "gfx/bj/tiles.2bpp.hz"
+
+data_0a5f:
+    dh "BLACK JACK\n"
+data_0a6a:
+    dh "PUSH A START\n"
+data_0a77:
+    dh "PLAYER  \n"
+data_0a80:
+    db $b8, $0b, $00
+data_0a83:
+    dh "P  \n"
+data_0a87:
+    dh "PLEASE BET\n"
+data_0a92:
+    dh "BET POINT \n"
+data_0a9d:
+    dh "GET POINT \n"
+data_0aa8:
+    dh "   OK ?   \n"
+data_0ab3:
+    dh "HIT CARD ?\n"
+data_0abe:
+    dh "  RETRY?  \n"
+data_0ac9:
+    ds 81, " "
+    dh "\n"
+data_0b1b:
+    dh "    + -> UP DOWN", $0d
+    dh "    A -> OK HIT", $0d
+    dh "    B -> CANCEL\n"
+data_0b4c:
+    dh "                    \n"
+data_0b61:
+    dh " YOU WIN! \n"
+data_0b6c:
+    dh " YOU LOST \n"
+data_0b77:
+    dh "DRAW GAME!\n"
+data_0b82:
+    dh ">YES  NO\n"
+data_0b8b:
+    dh " YES >NO\n"
+data_0b94:
+    dh " BURST! \n"
+data_0b9d:
+    dh "　あなた　の　まけです\n"
+data_0baa:
+    dh "このげーむ　は　きえます\n"
+
+
+jx_0bb8:
     ld sp, $e000
     pushx @+$0006
 
@@ -2054,7 +1416,7 @@ jr_000_0bbe::
     trap MoveCursor
 
 jr_000_0bc7::
-    ldx hl, @+$fea2
+    ldx hl, data_0a6a
     trap DrawString
 
 jr_000_0bcd::
