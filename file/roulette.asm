@@ -32,31 +32,38 @@ History:
 .end
 
 Main::
-    ldx de, @+$000f
-    ld hl, $c600
-    ld bc, $0036
+    ldx de, code_0109
+    ld hl, code_c600
+    ld bc, data_013d.end - code_0109
     trap MemCopy
     jx @+$06a1
 
 
-    ld [$c612], a
+code_0109:
+LOAD "WRAM Code", WRAM0[$c600]
+code_c600:
+    ld [code_c611 + 1], a
+code_c603:
     ld hl, $0000
     push hl
     pop af
+code_c608:
     ld hl, $0000
     ld de, $0000
     ld bc, $0000
+code_c611:
     trap $00
+
     push hl
     push de
     push hl
     push af
-    ld hl, $c604
+    ld hl, code_c603 + 1
     pop de
     ld [hl], e
     inc hl
     ld [hl], d
-    ld hl, $c609
+    ld hl, code_c608 + 1
     pop de
     ld [hl], e
     inc hl
@@ -74,20 +81,18 @@ Main::
     ld [hl], b
     pop hl
     ret
+ENDL
 
+data_013b:
+    dw 100
+data_013d:
+    db $ff, $3c
+.end
 
-    ld h, h
-    nop
-    rst $38
-    inc a
-
-HeaderManufacturerCode::
     inc a
     ld e, d
     ld h, [hl]
     cp l
-
-HeaderCGBFlag::
     jp $83fd
 
 
@@ -1300,6 +1305,8 @@ jr_000_062f::
     ld a, a
     ld e, h
     ld d, b
+
+data_06ae:
     nop
     ld b, $08
     inc b
@@ -1311,7 +1318,9 @@ jr_000_062f::
     add hl, bc
     inc bc
     dec bc
-    ld bc, $5d4e
+    db $01
+data_06bb:
+    db $4e, $5d
     ld l, [hl]
     ld a, a
     add c
@@ -1325,6 +1334,8 @@ jr_000_06c1::
 
     add hl, hl
     inc a
+
+data_06c8:
     rla
     rla
     add hl, de
@@ -1335,6 +1346,7 @@ jr_000_06c1::
     jr nc, jr_000_06fa
 
     ld e, $19
+data_06d5:
     inc c
     dec c
     dec c
@@ -1540,6 +1552,7 @@ jr_000_077f::
     ld e, c
     ld a, [hl-]
     dec c
+data_0789:
     jr nz, @+$22
 
     jr nz, @+$44
@@ -1564,11 +1577,15 @@ jr_000_0794::
     jr nz, jr_000_07bc
 
     nop
+
+data_079d:
     ld bc, $0000
     nop
 
 jr_000_07a1::
     nop
+
+code_07a2:
     ld bc, $0000
     ld bc, $d700
     ld b, $00
@@ -1711,14 +1728,14 @@ jr_000_0838:
 
 
 jr_000_0864::
-    ldx hl, @+$ff38
+    ldx hl, data_079d
     push hl
     ld hl, $c609
     pop de
     ld [hl], e
     inc hl
     ld [hl], d
-    ldx hl, @+$fe57
+    ldx hl, data_06c8
     push hl
     ld hl, $c64a
     ld a, [hl+]
@@ -1732,7 +1749,7 @@ jr_000_0864::
     ld hl, $c60c
     pop de
     ld [hl], e
-    ldx hl, @+$fe34
+    ldx hl, data_06bb
     push hl
     ld hl, $c64a
     ld a, [hl+]
@@ -1941,7 +1958,7 @@ jr_000_09ae::
     ld h, [hl]
     ld l, a
     push hl
-    ldx hl, @+$f785
+    ldx hl, data_013b
     ld a, [hl+]
     ld h, [hl]
     ld l, a
@@ -2077,7 +2094,7 @@ jr_000_0a6e::
     ld hl, $0000
     pop de
     ld [hl], e
-    ldx hl, @+$f6c3
+    ldx hl, data_013b
     push hl
     ld a, [hl+]
     ld h, [hl]
@@ -2301,7 +2318,7 @@ jr_000_0b80::
     ld [hl], e
     inc hl
     ld [hl], d
-    ldx hl, @+$f574
+    ldx hl, data_013d
     push hl
     ld hl, $c60c
     pop de
@@ -2392,7 +2409,7 @@ jr_000_0b80::
     ld hl, $c644
     pop de
     ld [hl], e
-    ldx hl, @+$fa6f
+    ldx hl, data_06d5
     push hl
     ld hl, $c609
     pop de
@@ -2493,14 +2510,15 @@ jr_000_0c96::
     jx @+$ff7e
 
 
-    ldx hl, @+$fa98
+call_0d04:
+    ldx hl, data_079d
     push hl
     ld hl, $c609
     pop de
     ld [hl], e
     inc hl
     ld [hl], d
-    ldx hl, @+$f9b7
+    ldx hl, data_06c8
     push hl
     ld hl, $0000
     pop de
@@ -2511,7 +2529,7 @@ jr_000_0c96::
     ld hl, $c60c
     pop de
     ld [hl], e
-    ldx hl, @+$f997
+    ldx hl, data_06bb
     push hl
     ld hl, $0000
     pop de
@@ -2553,7 +2571,7 @@ jr_000_0c96::
     ld [hl], e
     inc hl
     ld [hl], d
-    ldx hl, @+$f3c5
+    ldx hl, data_013b
     ld a, [hl+]
     ld h, [hl]
     ld l, a
@@ -2702,7 +2720,7 @@ jr_000_0e4c::
     ld [hl], e
     ld a, $b8
     call $c600
-    ldx hl, @+$f925
+    ldx hl, data_0789
     push hl
     ld hl, $c609
     pop de
@@ -2759,7 +2777,8 @@ jr_000_0e4c::
     ret
 
 
-    ldx hl, @+$f8de
+call_0ec3:
+    ldx hl, code_07a2
     push hl
     ld hl, $c609
     pop de
@@ -2990,7 +3009,8 @@ jr_000_0ff2::
     jx @+$0062
 
 
-    ldx hl, @+$f103
+call_1037:
+    ldx hl, data_013b
     ld a, [hl+]
     ld h, [hl]
     ld l, a
@@ -3023,7 +3043,7 @@ jr_000_104f::
     ld [hl], e
     inc hl
     ld [hl], d
-    ldx hl, @+$f0d5
+    ldx hl, data_013b
     ld e, [hl]
     inc hl
     ld d, [hl]
@@ -3066,7 +3086,8 @@ jr_000_10a4::
     jx @+$010b
 
 
-    ldx hl, @+$f089
+call_10b1:
+    ldx hl, data_013b
     ld a, [hl+]
     ld h, [hl]
     ld l, a
@@ -3128,7 +3149,7 @@ jr_000_10c8::
     ld [hl], e
     ld a, $b8
     call $c600
-    ldx hl, @+$0330
+    ldx hl, data_1450
     push hl
     ld hl, $c609
     pop de
@@ -3149,7 +3170,7 @@ jr_000_10c8::
     ld [hl], e
     ld a, $b8
     call $c600
-    ldx hl, @+$02f0
+    ldx hl, data_1438
     push hl
     ld hl, $c609
     pop de
@@ -3213,7 +3234,7 @@ jr_000_1177::
     ret
 
 
-    ldx hl, @+$f4f3
+    ldx hl, data_06ae
     push hl
     ld hl, $c646
     ld l, [hl]
@@ -3663,6 +3684,7 @@ jr_000_1430::
     ret
 
 
+data_1438:
     rrca
     cp d
     ret
@@ -3685,6 +3707,9 @@ jr_000_1430::
     ret nz
 
     nop
+
+
+data_1450:
     rrca
     or l
     or [hl]
