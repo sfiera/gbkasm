@@ -68,13 +68,16 @@ jr_000_0128::
     xor a
 
 jr_000_0139::
-    ldx de, @+$0017
+    ldx de, data_0151
     trap $5f
     jr c, jr_000_0139
 
     ld l, a
     ld h, $00
     trap $06
+
+
+data_0146:
     ld b, $99
     nop
     inc e
@@ -87,13 +90,15 @@ jr_000_0139::
 
 
     rst $38
-    inc b
-    inc b
-    ld b, $04
-    ld a, a
-    rst $00
-    dec b
+
+data_0151:
+    db $04, $04, $06, $04, $7f, $c7, $05
+
+
+jx_0158:
     trap ExitToMenu
+
+
     callx @+$0447
     jx @+$007e
 
@@ -208,11 +213,11 @@ jr_000_0211::
     ld hl, $c7b9
     inc [hl]
     ld a, [$c7b9]
-    ldx de, @+$045d
+    ldx de, data_068e
     and $01
     jr z, jr_000_023c
 
-    ldx de, @+$0495
+    ldx de, data_06ce
 
 jr_000_023c::
     ld hl, $9000
@@ -513,6 +518,7 @@ jr_000_03c1::
     ret
 
 
+data_03f2:
     add b
     ld b, b
     jr nz, jr_000_0406
@@ -523,7 +529,7 @@ jr_000_03c1::
     and $07
     ld e, a
     ld d, $00
-    ldx hl, @+$ffef
+    ldx hl, data_03f2
 
 jr_000_0406::
     add hl, de
@@ -735,15 +741,15 @@ jr_000_0501::
     ldh [$9a], a
     callx @+$0030
     callx @+$fcbd
-    ldx de, @+$012a
+    ldx de, data_068e + $10
     ld hl, $9010
     ld bc, $0030
     trap MemCopy
-    ldx de, @+$015e
+    ldx de, data_06de
     ld hl, $8000
     ld bc, $0010
     trap MemCopy
-    ldx hl, @+$0089
+    ldx hl, layout_0615
     trap DrawLayout
     callx @+$fdce
     ret
@@ -774,7 +780,7 @@ jr_000_0501::
     callx @+$003d
     ld h, $04
     trap $ca
-    ldx de, @+$0025
+    ldx de, data_05f5
     ld hl, $9040
     ld bc, $0010
     trap MemCopy
@@ -784,12 +790,13 @@ jr_000_0501::
     ld de, $0200
     ld bc, $1003
     trap $58
-    ldx hl, @+$006a
+    ldx hl, layout_0656
     ld de, $8001
     trap $5a
     ret
 
 
+data_05f5:
     add b
     add b
     ldh [$e0], a
@@ -809,221 +816,34 @@ jr_000_0501::
     ret
 
 
-    nop
-    jr nz, jr_000_0645
+layout_0615:
+    dk $00, $20, "--------------------\n"
+    db $00, $21, " psvy ICON EDIT\n"
+    db $00, $22, " qtwz X =\n"
+    db $00, $23, " rux", $a2, " ", "Y =\n"
 
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    dec l
-    nop
-    nop
-    ld hl, $7020
-    ld [hl], e
-    db $76
-    ld a, c
-    jr nz, @+$4b
+layout_0656:
+    dk $06, $01, "ICON EDIT\n"
+    dk $05, $06, "へんしゅうする\n"
+    dh $05, $07, "アイコンのセーブ\n"
+    dk $05, $08, "しんきさくせい\n"
+    dh $05, $09, "おわる\n"
+    db $ff
 
-    ld b, e
-    ld c, a
-    ld c, [hl]
-    jr nz, @+$47
+data_068e:
+    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+    db $ff, $00, $ff, $00, $ff, $00, $ff, $00, $ff, $00, $ff, $00, $ff, $00, $ff, $00
+    db $00, $ff, $00, $ff, $00, $ff, $00, $ff, $00, $ff, $00, $ff, $00, $ff, $00, $ff
+    db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
 
-    ld b, h
-    ld c, c
-    ld d, h
-    nop
-    nop
-    ld [hl+], a
-    jr nz, jr_000_06b3
+data_06ce:
+    db $00, $01, $00, $01, $00, $01, $00, $01, $00, $01, $00, $01, $00, $01, $00, $ff
 
-    ld [hl], h
-    ld [hl], a
-    ld a, d
-
-jr_000_0645::
-    jr nz, jr_000_069f
-
-    jr nz, jr_000_0686
-
-    nop
-    nop
-    inc hl
-    jr nz, jr_000_06c0
-
-    ld [hl], l
-    ld a, b
-    and d
-    jr nz, jr_000_06ac
-
-    jr nz, jr_000_0692
-
-    nop
-    ld b, $01
-    ld c, c
-    ld b, e
-    ld c, a
-    ld c, [hl]
-    jr nz, jr_000_06a3
-
-    ld b, h
-    ld c, c
-    ld d, h
-    nop
-    dec b
-    ld b, $0f
-    call $bcdd
-    xor l
-    or e
-    cp l
-    reti
+data_06de:
+    db $ff, $ff, $ff, $81, $c3, $81, $c3, $81, $c3, $81, $c3, $81, $ff, $81, $ff, $ff
 
 
-    nop
-    dec b
-    rlca
-    ld c, $b1
-    or d
-    cp d
-    db $dd
-    rrca
-    ret
-
-
-    ld c, $be
-    or b
-    call z, $00de
-    dec b
-    ld [$bc0f], sp
-    db $dd
-    or a
-    cp e
-    cp b
-    cp [hl]
-    or d
-
-jr_000_0686::
-    nop
-    dec b
-    add hl, bc
-    or l
-    call c, $00d9
-    rst $38
-    nop
-    nop
-    nop
-    nop
-
-jr_000_0692::
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    rst $38
-
-jr_000_069f::
-    nop
-    rst $38
-    nop
-    rst $38
-
-jr_000_06a3::
-    nop
-    rst $38
-    nop
-    rst $38
-    nop
-    rst $38
-    nop
-    rst $38
-    nop
-
-jr_000_06ac::
-    rst $38
-    nop
-    nop
-    rst $38
-    nop
-    rst $38
-    nop
-
-jr_000_06b3::
-    rst $38
-    nop
-    rst $38
-    nop
-    rst $38
-    nop
-    rst $38
-    nop
-    rst $38
-    nop
-    rst $38
-    rst $38
-    rst $38
-
-jr_000_06c0::
-    rst $38
-    rst $38
-    rst $38
-    rst $38
-    rst $38
-    rst $38
-    rst $38
-    rst $38
-    rst $38
-    rst $38
-    rst $38
-    rst $38
-    rst $38
-    rst $38
-    nop
-    ld bc, $0100
-    nop
-    ld bc, $0100
-    nop
-    ld bc, $0100
-    nop
-    ld bc, $ff00
-    rst $38
-    rst $38
-    rst $38
-    add c
-    jp $c381
-
-
-    add c
-    jp $c381
-
-
-    add c
-    rst $38
-    add c
-    rst $38
-    rst $38
+call_06ee:
     push af
     ld de, $0001
     ld bc, $1405
@@ -1066,7 +886,7 @@ jr_000_072a::
     add a
     ld c, a
     ld b, $00
-    ldx hl, @+$000d
+    ldx hl, data_073c
     add hl, bc
     ld c, [hl]
     inc hl
@@ -1078,291 +898,58 @@ jr_000_072a::
     ret
 
 
-    inc d
-    nop
-    ld d, l
-    nop
-    jr z, jr_000_0742
 
-jr_000_0742::
-    ld a, d
-    nop
-    nop
-    nop
-    nop
-    nop
-    sub c
-    nop
-    xor [hl]
-    nop
-    jp nc, $fd00
+data_073c:
+    dw data_0750 - @
+    dw data_0793 - @
+    dw data_0768 - @
+    dw data_07bc - @
+    dw 0
+    dw 0
+    dw data_07d9 - @
+    dw data_07f8 - @
+    dw data_081e - @
+    dw data_084b - @
 
-    nop
-    ld bc, $0e0e
-    or c
-    or d
-    cp d
-    db $dd
-    jp z, $c0df
+data_0750:
+    dh $01, $0e, "アイコンパターンをへんしゅうします\n"
+    db $ff
 
-    or b
-    db $dd
-    rrca
-    and [hl]
-    call $bcdd
-    xor l
-    or e
-    cp h
-    trap $bd
-    nop
-    rst $38
-    ld bc, $0f0e
-    cp c
-    sbc $dd
-    cp e
-    sbc $b2
-    ret
+data_0768:
+    dk $01, $0e, "げんざいのアイコンパターンをけして\n"
+    dh $01, $0f, "あたらしくへんしゅうします\n"
+    db $ff
 
+data_0793:
+    dk $01, $0e, "げんざいのアイコンパターンを\n"
+    dh $01, $0f, "ファイルにほぞんします\n"
+    db $ff
 
-    ld c, $b1
-    or d
-    cp d
-    db $dd
-    jp z, $c0df
+data_07bc:
+    dk $01, $0e, "「ＩＣＯＮ　ＥＤＩＴ」を\n"
+    dh $01, $0f, "しゅうりょうします\n"
+    db $ff
 
-    or b
-    db $dd
-    rrca
-    and [hl]
-    cp c
-    cp h
-    jp Jump_000_0100
+data_07d9:
+    dk $01, $02, "ほぞんするなまえをにゅうりょくして\n"
+    dh $01, $03, "ください\n"
+    db $ff
 
+data_07f8:
+    dk $01, $02, "このなまえでほぞんしていいですか？\n"
+    dh $01, $03, "はい：Ａ　いいえ：Ｂ\n"
+    db $ff
 
-    rrca
-    or c
-    ret nz
+data_081e:
+    dk $01, $02, "あきようりょうがたりなくてセーブ\n"
+    dk $01, $03, "できませんでした\n"
+    dh $01, $04, "ＯＫ：Ａ\n"
+    db $ff
 
-    pushx @+$b8bc
-    call $bcdd
-    xor l
-    or e
-    cp h
-    trap $bd
-    nop
-    rst $38
-    ld bc, $0f0e
-    cp c
-    sbc $dd
-    cp e
-    sbc $b2
-    ret
+data_084b:
+    dk $01, $02, "おなじなまえのファイルがあります\n"
+    dh $01, $03, "うわがきしてほぞんしてもいいですか？\n"
+    dh $01, $04, "はい：Ａ　いいえ：Ｂ\n"
+    db $ff
 
-
-    ld c, $b1
-    or d
-    cp d
-    db $dd
-    jp z, $c0df
-
-    or b
-    db $dd
-    rrca
-    and [hl]
-    nop
-    ld bc, $0e0f
-    call z, $b2a7
-    reti
-
-
-    rrca
-    add $ce
-    cp a
-    sbc $dd
-    cp h
-    trap $bd
-    nop
-    rst $38
-    ld bc, $a20e
-    ld c, c
-    ld b, e
-    ld c, a
-    ld c, [hl]
-    jr nz, jr_000_080a
-
-    ld b, h
-    ld c, c
-    ld d, h
-    and e
-    rrca
-
-jr_000_07ca::
-    and [hl]
-    nop
-    ld bc, $bc0f
-    xor l
-    or e
-    ret c
-
-    xor [hl]
-    or e
-    cp h
-    trap $bd
-    nop
-    rst $38
-    ld bc, $0f02
-    adc $bf
-    sbc $dd
-    cp l
-    reti
-
-
-    push bc
-    trap LCDEnable
-    and [hl]
-    add $ad
-    or e
-    ret c
-
-    xor [hl]
-    cp b
-    cp h
-    jp Jump_000_0100
-
-
-    inc bc
-    cp b
-    ret nz
-
-    sbc $bb
-    or d
-    nop
-    rst $38
-    ld bc, $0f02
-    cp d
-    ret
-
-
-    push bc
-    trap LCDEnable
-    jp $cede
-
-
-    cp a
-    sbc $dd
-    cp h
-    jp $b2b2
-
-
-jr_000_080a::
-    jp $bdde
-
-
-    or [hl]
-    ccf
-    nop
-    ld bc, $ca03
-    or d
-    ld a, [hl-]
-    ld b, c
-    jr nz, jr_000_07ca
-
-    or d
-    or h
-    ld a, [hl-]
-    ld b, d
-    nop
-    rst $38
-    ld bc, $0f02
-    or c
-    or a
-    sub $b3
-    ret c
-
-    xor [hl]
-    or e
-    or [hl]
-    sbc $c0
-    ret c
-
-    push bc
-    cp b
-    jp $be0e
-
-
-    or b
-    call z, $00de
-
-jr_000_0835::
-    ld bc, $0f03
-    jp $b7de
-
-
-    trap $be
-    db $dd
-    jp $bcde
-
-
-    ret nz
-
-    nop
-    ld bc, $4f04
-    ld c, e
-    ld a, [hl-]
-    ld b, c
-    nop
-    rst $38
-    ld bc, $0f02
-    or l
-    push bc
-    cp h
-    sbc $c5
-    trap LCDEnable
-    ret
-
-
-    ld c, $cc
-    and a
-    or d
-    reti
-
-
-    rrca
-    or [hl]
-    sbc $b1
-    ret c
-
-    trap $bd
-    nop
-    ld bc, $b303
-    call c, $deb6
-    or a
-    cp h
-    jp $bfce
-
-
-    sbc $dd
-    cp h
-    jp $b2d3
-
-
-    or d
-    jp $bdde
-
-
-    or [hl]
-    ccf
-    nop
-    ld bc, $ca04
-    or d
-    ld a, [hl-]
-    ld b, c
-    jr nz, jr_000_0835
-
-    or d
-    or h
-    ld a, [hl-]
-    ld b, d
-    nop
-    rst $38
-    rst $38
+    db $ff
