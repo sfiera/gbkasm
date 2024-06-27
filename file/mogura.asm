@@ -7,6 +7,7 @@ INCLUDE "trap.inc"
 INCLUDE "file/common.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
+LOAD "CRAM Code", SRAM[$a008]
 
 Header::
     dw SIZEOF(SECTION(Header))
@@ -62,8 +63,6 @@ jr_000_0103::
     trap MoveCursor
     ld hl, $b876
     trap DrawString
-
-HeaderManufacturerCode::
     ld hl, $0301
     trap MoveCursor
     ld hl, $b735
@@ -2373,7 +2372,6 @@ jr_000_0daa::
     ld hl, $b729
     add hl, de
 
-Call_000_0e00::
     ld d, h
     ld e, l
     ld a, [de]
@@ -2894,7 +2892,7 @@ jr_000_1118::
     xor a
 
 jr_000_112c::
-    call z, Call_000_0e00
+    call z, $0e00
     jr nz, @-$45
 
     sbc $b0
@@ -5582,7 +5580,6 @@ jr_000_1cea::
     call nc, $94ff
     rst $38
 
-Call_000_1cf4::
     ld d, b
     sbc c
     nop
@@ -6001,9 +5998,11 @@ jr_000_1ea1::
     inc a
     db $f4
     db $fd
-    call c, Call_000_1cf4
+    call c, $1cf4
     db $fc
     db $10
     ldh a, [$6f]
-    call Header
+    call $0000
     ld a, a
+
+ENDL
