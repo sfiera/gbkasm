@@ -27,16 +27,13 @@ try:
     while True:
         if read(flags, 1):
             buffer[dst] = read(lits, 8)
-            print(f"1 ${buffer[dst]:02x} → {dst}")
-            # write(buffer[dst])
+            write(buffer[dst])
             dst = (dst + 1) & 0xFF
         else:
             src = read(srcs, 8)
-            size = 2 + read(runs, 4)
-            print(f"{size} [{src}] → {dst}")
-            for i in range(size):
+            for i in range(2 + read(runs, 4)):
                 buffer[dst] = buffer[src]
-                # write(buffer[dst])
+                write(buffer[dst])
                 src = (src + 1) & 0xFF
                 dst = (dst + 1) & 0xFF
 except EOFError:
