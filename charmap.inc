@@ -141,9 +141,9 @@ ENDM
     FULLCHARMAP "y", "ｙ", $19, $79
     FULLCHARMAP "z", "ｚ", $1a, $7a
 
-    FULLCHARMAP "｢", "「", $1b, $7b
+    FULLCHARMAP "｢", "「", $1b, $a2
     FULLCHARMAP "|", "｜", $1c, $7c
-    FULLCHARMAP "｣", "」", $1d, $7d
+    FULLCHARMAP "｣", "」", $1d, $a3
     FULLCHARMAP "¯", "￣", $1e, $7e
     FULLCHARMAP "\\", "＼", $1f, $7f
 
