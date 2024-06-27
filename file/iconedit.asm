@@ -69,40 +69,37 @@ jr_000_0128::
 
 jr_000_0139::
     ldx de, data_0151
-    trap $5f
+    trap DoCursorMenu
     jr c, jr_000_0139
 
     ld l, a
     ld h, $00
-    trap $06
 
-
-data_0146:
-    ld b, $99
-    nop
-    inc e
-    nop
-    rrca
-    nop
-    dec bc
-    nop
-    reti
-
-
-    rst $38
+    trap JumpViaTable
+    db $06
+    dw jx_01e0 - @  ; continue edit
+    dw jx_0165 - @  ; save icon
+    dw jx_015a - @  ; create new
+    dw jx_0158 - @  ; quit
+    dw jr_000_0128 - @
 
 data_0151:
-    db $04, $04, $06, $04, $7f, $c7, $05
+    db $04            ; item count
+    db $04, $06       ; initial position
+    db $04, $7f       ; cursor characters
+    dw call_071d - @  ; update callback
 
 
 jx_0158:
     trap ExitToMenu
 
 
+jx_015a:
     callx @+$0447
     jx @+$007e
 
 
+jx_0165:
     callx @+$02fc
     jr c, jr_000_0128
 
@@ -177,6 +174,7 @@ jr_000_01d7::
     jx @+$ff4b
 
 
+jx_01e0:
     xor a
     trap DrawInit
     trap LCDDisable
@@ -853,28 +851,29 @@ call_06ee:
     jr jr_000_072a
 
     bit 6, c
-    jr z, jr_000_071d
+    jr z, call_071d
 
     xor a
-    callx @+$0017
+    callx call_071d
     xor a
     scf
     ret
 
 
+call_070c:
     bit 7, c
-    jr z, jr_000_071d
+    jr z, call_071d
 
     ld a, b
     push bc
-    callx @+$0007
+    callx call_071d
     pop bc
     ld a, b
     scf
     ret
 
 
-jr_000_071d::
+call_071d::
     push af
     ld de, $000d
     ld bc, $1405
