@@ -51,13 +51,18 @@ check: $(GB) $(GBF)
 gbkiss.o: $(GBF) $(GFX) gfx/logo.2bpp.hz
 file/baketu.o: gfx/baketu/icon.2bpp
 file/baketu.o: gfx/baketu/tiles.2bpp.hz
+file/bj.o: gfx/bj/tiles.2bpp.hz
 file/bland.o: gfx/bland/icon.2bpp
 file/bland.o: gfx/bland/sprites.2bpp.hz
 file/cannon.o: gfx/cannon/icon.2bpp
 file/cannon.o: gfx/cannon/tiles.2bpp.hz
 file/dentaku.o: gfx/dentaku/icon.2bpp
 file/drive.o: gfx/drive/icon.2bpp
+file/drive.o: gfx/drive/tiles.2bpp.hz
 file/iconedit.o: gfx/iconedit/icon.2bpp
+file/iconedit.o: gfx/iconedit/shades.2bpp
+file/iconedit.o: gfx/iconedit/grid.2bpp
+file/iconedit.o: gfx/iconedit/cursor.2bpp
 file/iconsend.o: gfx/iconsend/icons.2bpp.hz
 file/kissmon.o: gfx/kissmon/icon.2bpp
 file/kissmon.o: gfx/kissmon/moncroc.2bpp
@@ -77,9 +82,9 @@ file/kissmon.o: gfx/kissmon/mondora.2bpp
 file/kissmon.o: gfx/kissmon/monrobo2.2bpp
 file/kissmon.o: gfx/kissmon/monfish1.2bpp
 file/kissmon2.o: gfx/kissmon/icon2.2bpp
-file/kissmon2.o: gfx/kissmon/shades.2bpp
-file/kissmon2.o: gfx/kissmon/grid.2bpp
-file/kissmon2.o: gfx/kissmon/cursor.2bpp
+file/kissmon2.o: gfx/iconedit/shades.2bpp
+file/kissmon2.o: gfx/iconedit/grid.2bpp
+file/kissmon2.o: gfx/iconedit/cursor.2bpp
 file/kissmon2.o: gfx/kissmon/moncroc.2bpp
 file/kissmon2.o: gfx/kissmon/monocto.2bpp
 file/kissmon2.o: gfx/kissmon/monmouse.2bpp
@@ -102,6 +107,8 @@ file/koura3.o: gfx/puzzle/koura-3.2bpp.hz
 file/magnets.o: gfx/magnets/icon.2bpp
 file/mogura.o: gfx/mogura/icon.2bpp
 file/mogura.o: gfx/mogura/sprites.2bpp
+file/mogura.o: gfx/mogura/island.2bpp.hz
+file/poker.o: gfx/poker/tiles.2bpp.hz
 file/puzzle.o: gfx/puzzle/icon.2bpp
 file/puzzle.o: gfx/puzzle/arrow.2bpp
 file/puzzle.o: gfx/puzzle/hand.2bpp
@@ -115,6 +122,7 @@ file/sezaki.o: gfx/mogura/sezaki.2bpp.hz
 file/shot.o: gfx/shot/icon.2bpp
 file/simula1.o: gfx/icon/simula1.2bpp
 file/slot.o: gfx/slot/icon.2bpp
+file/slot.o: gfx/slot/tiles.2bpp.hz
 file/soundtst.o: gfx/soundtst/icon.2bpp
 file/sw_data.o: gfx/sw_timer/digits.2bpp.hz
 file/sw_timer.o: gfx/sw_timer/icon.2bpp

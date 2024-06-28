@@ -2578,13 +2578,13 @@ data_b1ef:
     dk $00, $23, " rux  Y=   SEL:EXIT\n"
 
 data_b246:
-    INCBIN "gfx/kissmon/shades.2bpp"
+    INCBIN "gfx/iconedit/shades.2bpp"
 
 data_b286:
-    INCBIN "gfx/kissmon/grid.2bpp"
+    INCBIN "gfx/iconedit/grid.2bpp"
 
 data_b296:
-    INCBIN "gfx/kissmon/cursor.2bpp"
+    INCBIN "gfx/iconedit/cursor.2bpp"
 
 
 call_b2a6:
