@@ -227,7 +227,7 @@ call_02f5:
     callx call_0c29
     ld de, $000d
     ld bc, $1405
-    trap $58
+    trap DrawBox
     callx call_07a9
     ld hl, $8800
     ld e, $00
@@ -1014,7 +1014,7 @@ call_08e9:
     trap $5a
     ld de, $0706
     ld bc, $0703
-    trap $58
+    trap DrawBox
     ld a, $3d
     ld de, $0807
     ld bc, $0501

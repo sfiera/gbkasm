@@ -755,7 +755,7 @@ jr_000_051b::
     trap DrawString
     ld de, $0302
     ld bc, $0e0b
-    trap $58
+    trap DrawBox
     ld de, $0000
     ld c, $00
     callx @+$fec8

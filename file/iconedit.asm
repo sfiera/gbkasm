@@ -37,16 +37,11 @@ Main::
 Jump_000_0100::
     ld hl, $0301
     trap $b6
-    callx @+$0418
-    pushx @+$0006
-
-jr_000_010f::
-    jx @+$0402
-
-
+    callx call_0521
+    callx call_0512
     jr nc, jr_000_0119
 
-    jx @+$00ca
+    jx jx_01e0
 
 
 jr_000_0119::
@@ -62,7 +57,7 @@ jr_000_0128::
     xor a
     trap DrawInit
     trap LCDDisable
-    callx @+$0493
+    callx call_05c4
     ld a, $03
     trap LCDEnable
     xor a
@@ -617,7 +612,7 @@ jr_000_043d::
     callx @+$026b
     ld de, $0107
     ld bc, $0605
-    trap $58
+    trap DrawBox
     ld a, $10
     ld de, $0208
     ld bc, $0403
@@ -625,7 +620,7 @@ jr_000_043d::
     trap $59
     ld de, $0808
     ld bc, $0c03
-    trap $58
+    trap DrawBox
     ld a, $38
     ld de, $0909
     ld bc, $0a01
@@ -697,6 +692,7 @@ jr_000_0501::
     ret
 
 
+call_0512:
     ld hl, $c500
     ld a, [hl+]
     or [hl]
@@ -707,6 +703,7 @@ jr_000_0501::
     ret
 
 
+call_0521:
     callx @+$0080
     xor a
     ld [$c7b9], a
@@ -775,6 +772,7 @@ jr_000_0501::
     ret
 
 
+call_05c4:
     callx @+$003d
     ld h, $04
     trap $ca
@@ -784,10 +782,10 @@ jr_000_0501::
     trap MemCopy
     ld de, $0205
     ld bc, $1006
-    trap $58
+    trap DrawBox
     ld de, $0200
     ld bc, $1003
-    trap $58
+    trap DrawBox
     ldx hl, layout_0656
     ld de, $8001
     trap $5a
@@ -845,7 +843,7 @@ call_06ee:
     push af
     ld de, $0001
     ld bc, $1405
-    trap $58
+    trap DrawBox
     pop af
     ld de, $8001
     jr jr_000_072a
@@ -877,7 +875,7 @@ call_071d::
     push af
     ld de, $000d
     ld bc, $1405
-    trap $58
+    trap DrawBox
     pop af
     ld de, $2001
 

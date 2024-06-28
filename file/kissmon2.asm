@@ -366,7 +366,7 @@ call_a464:
     call call_ae89
     ld de, $000d
     ld bc, $1405
-    trap $58
+    trap DrawBox
     call call_a898
     ld hl, $8800
     ld e, $00
@@ -1372,7 +1372,7 @@ call_aa58:
     trap $5a
     ld de, $0705
     ld bc, $0703
-    trap $58
+    trap DrawBox
     ld a, $3d
     ld de, $0806
     ld bc, $0501

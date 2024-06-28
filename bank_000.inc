@@ -1512,7 +1512,7 @@ Call_000_07e6:
     trap MemSet
     ld de, $0003
     ld bc, $1409
-    trap $58
+    trap DrawBox
     ld a, $80
     ld de, $0204
     ld bc, $1007
@@ -1520,7 +1520,7 @@ Call_000_07e6:
     trap $59
     ld de, $000d
     ld bc, $1405
-    trap $58
+    trap DrawBox
     ld a, $f0
     ld de, $020e
     ld bc, $1003

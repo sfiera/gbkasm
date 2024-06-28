@@ -22,6 +22,7 @@ DEF GetAudioCount    EQU $1a
 
 DEF LoadTiles        EQU $4c
 
+DEF DrawBox          EQU $58  ; origin = (d, e), size = (b, c)
 DEF DrawLayout       EQU $5c
 DEF DoCursorMenu     EQU $5f
 

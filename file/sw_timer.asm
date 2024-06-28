@@ -766,7 +766,7 @@ jr_0738:
     trap MemCopy
     ld de, $0005
     ld bc, $1409
-    trap $58
+    trap DrawBox
     ld a, $07
     trap LCDEnable
     ld hl, $c600
