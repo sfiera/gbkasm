@@ -31,11 +31,11 @@ all: $(GB)
 %.gbf: %.o
 	$(RGBLINK) -n $*.sym -x -o $@ $<
 
-%.2bpp: %.2bpp.png
-	$(RGBGFX) -Z -d2 -o $@ $<
+%.2bpp: %.2bpp.png %.2bpp.flags
+	$(RGBGFX) -d2 -o $@ $< @$*.2bpp.flags
 
-%.1bpp: %.1bpp.png
-	$(RGBGFX) -d1 -o $@ $<
+%.1bpp: %.1bpp.png %.1bpp.flags
+	$(RGBGFX) -d1 -o $@ $< @$*.1bpp.flags
 
 .PHONY: clean
 clean:
