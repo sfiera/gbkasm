@@ -1538,7 +1538,7 @@ Call_001_4997:
     ldh [$9e], a
     ld de, $0000
     ld bc, $1005
-    trap $58
+    trap DrawBox
     ld a, $80
     ld hl, $0e01
     ld de, $0101
@@ -1551,7 +1551,7 @@ Call_001_4997:
     trap $59
     ld de, $000e
     ld bc, $1004
-    trap $58
+    trap DrawBox
     ld a, $8c
     ld hl, $0e01
     ld de, $010f
@@ -3168,7 +3168,7 @@ Call_001_6501:
     call Call_001_65db
     ld de, $0204
     ld bc, $1109
-    trap $58
+    trap DrawBox
     ld hl, data_01_6535
     ld de, $9101
     trap $5a
@@ -3181,7 +3181,7 @@ Call_001_6501:
 Call_001_652c:
     ld de, $000d
     ld bc, $1405
-    trap $58
+    trap DrawBox
     ret
 
 
@@ -3203,7 +3203,7 @@ Call_001_657f:
     call Call_001_65db
     ld de, $0103
     ld bc, $130a
-    trap $58
+    trap DrawBox
     ld a, $73
     ld de, $0103
     trap $cd
@@ -3260,7 +3260,7 @@ jr_001_65e1:
 
     ld de, $0101
     ld bc, $1303
-    trap $58
+    trap DrawBox
     ld a, $80
     ld hl, $0111
     ld de, $0702
@@ -3422,7 +3422,7 @@ Jump_001_66ee:
     call Call_001_66dc
     ld de, $0000
     ld bc, $140d
-    trap $58
+    trap DrawBox
     ld hl, data_01_67c2
     ld de, $8001
     trap $5a
@@ -6342,7 +6342,7 @@ jr_001_787d:
     push de
     ld d, $01
     ld bc, $1305
-    trap $58
+    trap DrawBox
     pop de
     push de
     ld a, d
