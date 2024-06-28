@@ -99,6 +99,7 @@ file/koura2.o: gfx/puzzle/koura-2.2bpp.hz
 file/koura3.o: gfx/puzzle/koura-3.2bpp.hz
 file/magnets.o: gfx/magnets/icon.2bpp
 file/mogura.o: gfx/mogura/icon.2bpp
+file/mogura.o: gfx/mogura/sprites.2bpp
 file/puzzle.o: gfx/puzzle/icon.2bpp
 file/puzzle.o: gfx/puzzle/arrow.2bpp
 file/puzzle.o: gfx/puzzle/hand.2bpp
