@@ -39,7 +39,9 @@ all: $(GB)
 
 .PHONY: clean
 clean:
-	rm -f $(GB) $(GBF) $(OBJ) $(SYM) $(MAP) $(GFX) $(DEP)
+	rm -f *.gb file/*.gbf
+	rm -f gfx/*.?bpp gfx/*/*.?bpp
+	rm -f {.,file}/*.o {.,file}/*.d {.,file}/*.sym {.,file}/*.map
 
 .PHONY: check
 check: $(GB) $(GBF)
