@@ -827,16 +827,13 @@ layout_0656:
     db $ff
 
 data_068e:
-    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
-    db $ff, $00, $ff, $00, $ff, $00, $ff, $00, $ff, $00, $ff, $00, $ff, $00, $ff, $00
-    db $00, $ff, $00, $ff, $00, $ff, $00, $ff, $00, $ff, $00, $ff, $00, $ff, $00, $ff
-    db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
+    INCBIN "gfx/iconedit/shades.2bpp"
 
 data_06ce:
-    db $00, $01, $00, $01, $00, $01, $00, $01, $00, $01, $00, $01, $00, $01, $00, $ff
+    INCBIN "gfx/iconedit/grid.2bpp"
 
 data_06de:
-    db $ff, $ff, $ff, $81, $c3, $81, $c3, $81, $c3, $81, $c3, $81, $ff, $81, $ff, $ff
+    INCBIN "gfx/iconedit/cursor.2bpp"
 
 
 call_06ee:
