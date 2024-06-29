@@ -6,6 +6,9 @@ INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 INCLUDE "file/common.inc"
 
+DEF id0 EQU "B"
+DEF id1 EQU "K"
+
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
@@ -121,10 +124,10 @@ MainMenu:
     trap $c3
 .jr_019c
     ld hl, var_ccc1
-    ld [hl], $42
+    ld [hl], id0
     inc hl
-    ld [hl], $4b
-    trap $72
+    ld [hl], id1
+    trap IRListen
     ld a, $00
     ld hl, var_ccc1
     ld [hl+], a
@@ -176,25 +179,25 @@ call_01f0:
     ld hl, var_ccc1
     ld de, $c600
     ld c, $02
-    trap $7c
+    trap IROpen
     jr c, .jr_000_022c
 
     ld hl, $c600
     ld a, [hl+]
-    cp $42
+    cp id0
     jr nz, .jr_000_022c
 
     ld a, [hl+]
-    cp $4b
+    cp id1
     jr nz, .jr_000_022c
 
-    ld hl, var_target
-    ld de, var_target
-    ld c, $05
-    trap $7f
+    ld hl, transmit_start
+    ld de, transmit_start
+    ld c, transmit_end - transmit_start
+    trap IRSend
     jr c, .jr_000_022c
 
-    trap $73
+    trap IRClose
     jr c, .jr_000_022c
 
     or a
@@ -1049,6 +1052,8 @@ var_ccd0:
     db
 var_ccd1:
     db
+
+transmit_start:
 var_target:
     db  ; 3-15; set from menu
 var_current:
@@ -1057,6 +1062,7 @@ var_time:
 .sub  db
 .sec  db
 .min  db
+transmit_end:
 
 SECTION "Variables 2", WRAM0[$cc65]
 
