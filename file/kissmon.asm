@@ -6,6 +6,9 @@ INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 INCLUDE "file/common.inc"
 
+DEF id0 EQU "M"
+DEF id1 EQU "T"
+
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
@@ -819,9 +822,9 @@ call_07cc:
     xor a
     ld [$ccbd], a
     ld hl, $cc9c
-    ld [hl], $4d
+    ld [hl], id0
     inc hl
-    ld [hl], $54
+    ld [hl], id1
     xor a
     ld [$cc96], a
 
@@ -832,7 +835,7 @@ call_07cc:
     cp $03
     jr nc, .jr_0844
 
-    trap $72
+    trap IRListen
     jr nc, .jr_0831
 
 .jr_07f4
@@ -845,16 +848,16 @@ call_07cc:
     ld de, $c600
     push de
     ld c, $02
-    trap $7c
+    trap IROpen
     pop hl
     jr c, .jr_07e7
 
     ld a, [hl+]
-    cp $4d
+    cp id0
     jr nz, .jr_0844
 
     ld a, [hl]
-    cp $54
+    cp id1
     jr nz, .jr_0844
 
     ld hl, $cc9e
@@ -862,16 +865,16 @@ call_07cc:
     ld c, $0e
     push hl
     push de
-    trap $7c
+    trap IROpen
     pop de
     pop hl
     jr c, .jr_07e7
 
     ld c, $0e
-    trap $7f
+    trap IRSend
     jr c, .jr_07e7
 
-    trap $73
+    trap IRClose
     jr c, .jr_07e7
 
     or a

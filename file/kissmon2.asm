@@ -6,6 +6,9 @@ INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 INCLUDE "file/common.inc"
 
+DEF id0 EQU "k"
+DEF id1 EQU "2"
+
 SECTION "ROM Bank $000", ROM0[$0]
 LOAD "CRAM Code", SRAM[$a008]
 
@@ -1058,9 +1061,9 @@ call_a8bb:
     xor a
     ld [$c9aa], a
     ld hl, $c860
-    ld [hl], $6b
+    ld [hl], id0
     inc hl
-    ld [hl], $32
+    ld [hl], id1
     xor a
     ld [$c85f], a
 
@@ -1071,7 +1074,7 @@ call_a8bb:
     cp $03
     jr nc, .jr_a933
 
-    trap $72
+    trap IRListen
     jr nc, .jr_a920
 
 .jr_a8e3
@@ -1084,16 +1087,16 @@ call_a8bb:
     ld de, $c600
     push de
     ld c, $02
-    trap $7c
+    trap IROpen
     pop hl
     jr c, .jr_a8d6
 
     ld a, [hl+]
-    cp $6b
+    cp id0
     jr nz, .jr_a933
 
     ld a, [hl]
-    cp $32
+    cp id1
     jr nz, .jr_a933
 
     ld hl, $c862
@@ -1101,16 +1104,16 @@ call_a8bb:
     ld c, $a0
     push hl
     push de
-    trap $7c
+    trap IROpen
     pop de
     pop hl
     jr c, .jr_a8d6
 
     ld c, $a0
-    trap $7f
+    trap IRSend
     jr c, .jr_a8d6
 
-    trap $73
+    trap IRClose
     jr c, .jr_a8d6
 
     or a

@@ -32,6 +32,11 @@ DEF RunDecompress    EQU $63
 DEF DrawString       EQU $69
 DEF DrawStringList   EQU $6a
 
+DEF IRListen         EQU $72
+DEF IRClose          EQU $73
+DEF IROpen           EQU $7c
+DEF IRSend           EQU $7f
+
 DEF RandInit         EQU $8d
 DEF RandNext         EQU $8e
 
