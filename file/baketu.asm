@@ -46,7 +46,7 @@ MainMenu:
     trap LCDDisable
     ldx hl, LayoutMenu
     trap DrawLayout
-    ld a, $03
+    ld a, LCDCF_OBJON + LCDCF_BGON
     trap LCDEnable
     xor a
     ld [var_practice], a
@@ -114,7 +114,7 @@ MainMenu:
     ldh [$a0], a
     ld a, $18
     ldh [$9f], a
-    ld a, $63
+    ld a, LCDCF_OBJON + LCDCF_BGON + LCDCF_WINON + LCDCF_WIN9C00
     trap LCDEnable
     ld a, $14
     ld [var_cc96], a
@@ -284,7 +284,7 @@ call_040c:
     ldh [$a0], a
     ld a, $18
     ldh [$9f], a
-    ld a, $63
+    ld a, LCDCF_OBJON + LCDCF_BGON + LCDCF_WINON + LCDCF_WIN9C00
     trap LCDEnable
     xor a
     ld [var_cc65], a
@@ -833,7 +833,7 @@ call_076b:
     trap $dc
     trap LCDDisable
     callx call_08d8
-    ld a, $63
+    ld a, LCDCF_OBJON + LCDCF_BGON + LCDCF_WINON + LCDCF_WIN9C00
     trap LCDEnable
 
 .jr_000_081d
