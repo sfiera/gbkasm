@@ -275,7 +275,7 @@ ApplyTimer:
     add a
     ld h, a
     ld l, $bc
-    trap $cb
+    trap TimerSet
     ret
 
 DrawTimerMaxCur:

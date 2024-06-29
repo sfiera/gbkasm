@@ -274,10 +274,10 @@ jr_002_4184:
     ldh [rTMA], a
     ld a, h
     ldh [rTAC], a
-    and $04
+    and IEF_TIMER
     ld h, a
     ldh a, [rIE]
-    and $fb
+    and ~IEF_TIMER
     or h
     ldh [rIE], a
     ret
