@@ -35,7 +35,7 @@ History:
 Main::
     trap StopAudio
     ld hl, $04bc
-    trap $cb
+    trap TimerSet
     trap LCDDisable
     call call_b187
 

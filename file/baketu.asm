@@ -34,7 +34,7 @@ History:
 Main::
     trap StopAudio
     ld hl, $04bc
-    trap $cb
+    trap TimerSet
 
 MainMenu:
     ld sp, $e000
@@ -46,66 +46,66 @@ MainMenu:
     ld a, $03
     trap LCDEnable
     xor a
-    ld [$ccc6], a
-    ldx de, MenuConfig
+    ld [var_practice], a
+    ldx de, .menuConfig
     trap DoCursorMenu
     jr c, MainMenu
 
     cp $00
-    jr z, jr_0138
+    jr z, .practice
 
     cp $01
-    jr z, jr_000_016c
+    jr z, .receive
 
     cp $0f
-    jr c, jr_013f
+    jr c, .play
 
     trap ExitToMenu
 
-MenuConfig:
+.menuConfig
     db $10       ; item count
     db $05, $02  ; initial position
     db ">", " "  ; cursor characters
     dw 0         ; update callback
 
-jr_0138:
+.practice
     ld a, $01
-    ld [$ccc6], a
+    ld [var_practice], a
     ld a, $02
 
-jr_013f:
+.play
     inc a
-    ld [$ccd2], a
+    ld [var_target], a
     xor a
-    ld hl, $ccd5
+    ld hl, var_time.sec
     ld [hl+], a
     ld [hl+], a
     ld [hl+], a
     ld a, $01
-    ld [$ccd3], a
+    ld [var_current], a
 
-jr_000_014f:
+.jr_000_014f
     xor a
-    ld [$ccc5], a
+    ld [var_receiving], a
     callx call_040c
     callx call_01f0
-    jr nc, jr_000_014f
+    jr nc, .jr_000_014f
 
-jr_000_0163:
+.jr_000_0163
     trap AwaitFrame
     trap $d8
 
     or a
-    jr z, jr_000_0163
+    jr z, .jr_000_0163
 
-    jr jr_000_014f
+    jr .jr_000_014f
 
-jr_000_016c:
+.receive
     ld a, $20
     trap DrawInit
     callx call_08d8
     ld a, $50
-    ld [$ccc8], a
+    ld [var_mouse_pos], a
     callx call_052d
     ld a, $08
     ldh [$a0], a
@@ -114,54 +114,54 @@ jr_000_016c:
     ld a, $63
     trap LCDEnable
     ld a, $14
-    ld [$cc96], a
-jr_0194:
+    ld [var_cc96], a
+.jr_0194
     ldx hl, LayoutWaitToReceive
     trap DrawLayout
     trap $c3
-jr_019c:
-    ld hl, $ccc1
+.jr_019c
+    ld hl, var_ccc1
     ld [hl], $42
     inc hl
     ld [hl], $4b
     trap $72
     ld a, $00
-    ld hl, $ccc1
+    ld hl, var_ccc1
     ld [hl+], a
     ld [hl+], a
-    jr nc, jr_000_01b9
+    jr nc, .jr_000_01b9
 
-    ld hl, $cc96
+    ld hl, var_cc96
     dec [hl]
-    jr nz, jr_019c
+    jr nz, .jr_019c
 
     jx MainMenu
 
 
-jr_000_01b9:
-    ld hl, $ccd3
+.jr_000_01b9
+    ld hl, var_current
     inc [hl]
     ld a, $01
-    ld [$ccc5], a
+    ld [var_receiving], a
     callx call_0702
 
-jr_000_01c9:
+.jr_000_01c9
     callx call_040c
-    ld a, [$ccc4]
+    ld a, [var_sent]
     cp $01
-    jr z, jr_000_01e3
+    jr z, .jr_000_01e3
 
     ldx hl, LayoutCommError
     trap DrawLayout
     ld a, $b4
     trap $dc
-    jr jr_0194
+    jr .jr_0194
 
-jr_000_01e3:
+.jr_000_01e3
     callx call_01f0
     xor a
-    ld [$ccc5], a
-    jr jr_000_01c9
+    ld [var_receiving], a
+    jr .jr_000_01c9
 
 call_01f0:
     ldx hl, LayoutSending
@@ -170,46 +170,46 @@ call_01f0:
     ld a, $78
     trap $dc
     ld a, $03
-    ld [$cc96], a
+    ld [var_cc96], a
 
-jr_000_0201:
-    ld hl, $ccc1
+.jr_000_0201
+    ld hl, var_ccc1
     ld de, $c600
     ld c, $02
     trap $7c
-    jr c, jr_000_022c
+    jr c, .jr_000_022c
 
     ld hl, $c600
     ld a, [hl+]
     cp $42
-    jr nz, jr_000_022c
+    jr nz, .jr_000_022c
 
     ld a, [hl+]
     cp $4b
-    jr nz, jr_000_022c
+    jr nz, .jr_000_022c
 
-    ld hl, $ccd2
-    ld de, $ccd2
+    ld hl, var_target
+    ld de, var_target
     ld c, $05
     trap $7f
-    jr c, jr_000_022c
+    jr c, .jr_000_022c
 
     trap $73
-    jr c, jr_000_022c
+    jr c, .jr_000_022c
 
     or a
     ret
 
 
-jr_000_022c:
+.jr_000_022c
     trap AwaitFrame
     ldh a, [$8a]
     and $02
-    jr nz, jr_000_022c
+    jr nz, .jr_000_022c
 
-    ld hl, $cc96
+    ld hl, var_cc96
     dec [hl]
-    jr nz, jr_000_0201
+    jr nz, .jr_000_0201
 
     scf
     ret
@@ -284,15 +284,15 @@ call_040c:
     ld a, $63
     trap LCDEnable
     xor a
-    ld [$cc65], a
+    ld [var_cc65], a
     ld a, $50
-    ld [$ccc8], a
+    ld [var_mouse_pos], a
     xor a
-    ld [$ccc7], a
-    ld [$ccc9], a
+    ld [var_motion], a
+    ld [var_ccc9], a
     ld a, $ff
-    ld [$ccca], a
-    ld hl, $cccd
+    ld [var_ball_pos.x], a
+    ld hl, var_hole_pos
     ld [hl], $08
     inc hl
     ld [hl], $00
@@ -300,17 +300,17 @@ call_040c:
     xor a
     ldh [$83], a
 
-jr_000_0450:
+.jr_000_0450
     xor a
-    ld [$ccc4], a
-    ld [$cccc], a
+    ld [var_sent], a
+    ld [var_cccc], a
 
-jr_000_0457:
+.jr_000_0457
     trap AwaitFrame
     callx call_0845
     trap $d8
     and $04
-    jr nz, jr_000_04c9
+    jr nz, .jr_000_04c9
 
     ld bc, $2800
     trap $c4
@@ -322,95 +322,96 @@ jr_000_0457:
     callx call_04f4
     callx call_052d
     callx call_0861
-    ld a, [$ccc4]
+    ld a, [var_sent]
     or a
-    jr z, jr_000_0457
+    jr z, .jr_000_0457
 
     cp $02
-    jr z, jr_000_04b7
+    jr z, .jr_000_04b7
 
-    ld a, [$ccd2]
+    ld a, [var_target]
     ld b, a
-    ld a, [$ccd3]
+    ld a, [var_current]
     cp b
-    jr nc, jr_000_04cd
+    jr nc, .jr_000_04cd
 
-jr_000_04b7:
-    ld a, [$ccc6]
+.jr_000_04b7
+    ld a, [var_practice]
     or a
     ret z
 
-    ld a, [$ccc4]
+    ld a, [var_sent]
     cp $02
-    jr z, jr_000_0450
+    jr z, .jr_000_0450
 
-    ld hl, $ccd3
+    ld hl, var_current
     inc [hl]
-    jr jr_000_0450
+    jr .jr_000_0450
 
-jr_000_04c9:
+.jr_000_04c9
     jx MainMenu
 
 
-jr_000_04cd:
+.jr_000_04cd
     ldx hl, LayoutFinish
     trap DrawLayout
     ld hl, $0724
     trap MoveCursor
-    ld hl, $cc4c
+    ld hl, var_status + 12
     trap DrawString
     ld a, $1e
     callx call_0916
 
-jr_000_04e6:
+.jr_000_04e6
     trap AwaitFrame
     trap $d8
     ldh a, [$8a]
     and $06
     cp $06
-    jr nz, jr_000_04e6
+    jr nz, .jr_000_04e6
 
-    jr jr_000_04c9
+    jr .jr_000_04c9
+
 
 call_04f4:
-    ld hl, $ccc7
+    ld hl, var_motion
     ldh a, [$8a]
     ld b, a
-    ld hl, $ccc8
+    ld hl, var_mouse_pos
     ld a, [hl]
-    bit 0, b
-    jr z, jr_000_0506
+    bit BtnA, b
+    jr z, .jr_000_0506
 
     ld c, $00
-    jr jr_000_0521
+    jr .jr_000_0521
 
-jr_000_0506:
-    bit 5, b
-    jr z, jr_000_0514
+.jr_000_0506
+    bit BtnLt, b
+    jr z, .jr_000_0514
 
     ld c, $20
     dec a
     cp $08
-    jr nc, jr_000_0520
+    jr nc, .jr_000_0520
 
     inc a
-    jr jr_000_0520
+    jr .jr_000_0520
 
-jr_000_0514:
-    bit 4, b
-    jr z, jr_000_0529
+.jr_000_0514
+    bit BtnRt, b
+    jr z, .jr_000_0529
 
     ld c, $10
     inc a
     cp $90
-    jr c, jr_000_0520
+    jr c, .jr_000_0520
 
     dec a
 
-jr_000_0520:
+.jr_000_0520
     ld [hl], a
 
-jr_000_0521:
+.jr_000_0521
     dec hl
     ld a, [hl]
     inc a
@@ -420,34 +421,34 @@ jr_000_0521:
     ret
 
 
-jr_000_0529:
+.jr_000_0529
     dec hl
     ld [hl], $00
     ret
 
 
 call_052d:
-    ld hl, $ccc7
+    ld hl, var_motion
     ld a, [hl+]
     srl a
     srl a
     add $04
     ld d, [hl]
     ld e, $78
-    jr jr_000_054b
+    jr call_053c.jr_000_054b
 
 
 call_053c:
-    ld a, [$ccc9]
+    ld a, [var_ccc9]
     srl a
     srl a
     srl a
-    ld hl, $ccca
+    ld hl, var_ball_pos.x
     ld d, [hl]
     inc hl
     ld e, [hl]
 
-jr_000_054b:
+.jr_000_054b
     ld l, a
     ld h, $00
     add hl, hl
@@ -579,10 +580,10 @@ Sprites:
     db $10, $10, $19, OAMF_XFLIP
 
 call_0689:
-    ld hl, $ccc9
+    ld hl, var_ccc9
     ld a, [hl]
     or a
-    jr z, jr_000_06a9
+    jr z, .jr_000_06a9
 
     inc [hl]
     ld a, [hl]
@@ -592,54 +593,49 @@ call_0689:
     ld [hl], $00
     inc hl
     ld [hl], $ff
-    ld a, [$ccc5]
+    ld a, [var_receiving]
     or a
     ret z
 
-Call_000_069f:
-    ld a, [$ccc3]
-    ld [$ccc4], a
-
-jr_000_06a5:
+    ld a, [var_ccc3]
+    ld [var_sent], a
     jx call_0702
 
 
-jr_000_06a9:
-    ld a, [$ccc5]
+.jr_000_06a9
+    ld a, [var_receiving]
     or a
-    jr nz, jr_000_06d3
+    jr nz, .jr_000_06d3
 
-    ld hl, $ccca
+    ld hl, var_ball_pos.x
     ld a, [hl+]
     cp $ff
-    jr z, jr_000_06b9
+    jr z, .jr_000_06b9
 
     dec [hl]
     ret
 
 
-jr_000_06b9:
+.jr_000_06b9
     ldh a, [$8b]
     and $01
     ret z
 
     ld a, $25
     callx call_0916
-    ld a, [$ccc8]
+    ld a, [var_mouse_pos]
     add $08
-    ld hl, $ccca
+    ld hl, var_ball_pos.x
     ld [hl+], a
     ld [hl], $74
     ret
 
 
-jr_000_06d3:
-    ld hl, $ccca
+.jr_000_06d3
+    ld hl, var_ball_pos.x
     ld a, [hl+]
-
-Call_000_06d7:
     cp $ff
-    jr z, jr_000_06eb
+    jr z, .jr_000_06eb
 
     inc [hl]
     ld a, [hl]
@@ -647,20 +643,20 @@ Call_000_06d7:
     ret c
 
     ld a, $01
-    ld [$ccc9], a
+    ld [var_ccc9], a
     ld a, $0f
     jx call_0916
 
 
-jr_000_06eb:
-    ld a, [$cccd]
+.jr_000_06eb
+    ld a, [var_hole_pos]
     add $08
     ld b, a
-    ld a, [$ccd1]
+    ld a, [var_ccd1]
     cp b
     ret nz
 
-    ld hl, $ccca
+    ld hl, var_ball_pos.x
     ld [hl+], a
     ld [hl], $18
     ld a, $07
@@ -671,45 +667,45 @@ call_0702:
     trap RandNext
     and $7f
     add $10
-    ld [$ccd1], a
+    ld [var_ccd1], a
     ret
 
 
 call_070c:
     trap RandNext
     and $3f
-    ld [$ccd0], a
+    ld [var_ccd0], a
     trap RandNext
     and $07
     add $0a
-    ld [$cccf], a
+    ld [var_hole_speed], a
     ret
 
 
 call_071d:
-    ld hl, $cccc
+    ld hl, var_cccc
     ld a, [hl]
     or a
-    jr z, jr_000_072b
+    jr z, .jr_000_072b
 
-    ld a, [$ccc3]
-    ld [$ccc4], a
+    ld a, [var_ccc3]
+    ld [var_sent], a
     ret
 
 
-jr_000_072b:
-    ld hl, $ccd0
-    ld a, [$cccf]
+.jr_000_072b
+    ld hl, var_ccd0
+    ld a, [var_hole_speed]
     add [hl]
     ld [hl], a
-    jr nc, jr_000_0735
+    jr nc, .jr_000_0735
 
-jr_000_0735:
-    ld hl, $cccd
+.jr_000_0735
+    ld hl, var_hole_pos
     ld d, [hl]
     inc hl
     ld e, [hl]
-    ld a, [$cccf]
+    ld a, [var_hole_speed]
     ld l, a
     ld h, $00
     add hl, hl
@@ -721,16 +717,16 @@ jr_000_0735:
     ld d, h
     ld a, d
     cp $f0
-    jr nc, jr_000_075b
+    jr nc, .jr_000_075b
 
     cp $a8
-    jr c, jr_000_075b
+    jr c, .jr_000_075b
 
     callx call_070c
     ld de, $f000
 
-jr_000_075b:
-    ld hl, $cccd
+.jr_000_075b
+    ld hl, var_hole_pos
     ld [hl], d
     inc hl
     ld [hl], e
@@ -738,7 +734,7 @@ jr_000_075b:
 
 
 call_0762:
-    ld hl, $cccd
+    ld hl, var_hole_pos
     ld a, $b0
     sub [hl]
     ldh [$9b], a
@@ -746,51 +742,51 @@ call_0762:
 
 
 call_076b:
-    ld a, [$ccc9]
+    ld a, [var_ccc9]
     or a
     ret nz
 
-    ld a, [$ccc5]
+    ld a, [var_receiving]
     or a
-    jr nz, jr_000_07c6
+    jr nz, .jr_000_07c6
 
-    ld hl, $ccca
+    ld hl, var_ball_pos.x
     ld a, [hl+]
     cp $ff
-    jr z, jr_079e
+    jr z, .jr_079e
 
     ld d, a
     ld a, [hl]
     cp $21
-    jr nc, jr_079e
+    jr nc, .jr_079e
 
-    ld a, [$cccd]
+    ld a, [var_hole_pos]
     sub $02
     ld e, a
     ld a, d
     sub e
     cp $15
-    jr c, jr_000_07a0
+    jr c, .jr_000_07a0
 
     ld a, $01
-    ld [$ccc9], a
+    ld [var_ccc9], a
     ld a, $0f
     callx call_0916
 
-jr_079e:
+.jr_079e
     or a
     ret
 
 
-jr_000_07a0:
+.jr_000_07a0
     ld a, $ff
-    ld [$ccca], a
-    ld hl, $cc65
+    ld [var_ball_pos.x], a
+    ld hl, var_cc65
     inc [hl]
     ld a, $01
-    ld [$ccc5], a
-    ld [$ccc3], a
-    ld [$cccc], a
+    ld [var_receiving], a
+    ld [var_ccc3], a
+    ld [var_cccc], a
     callx call_0702
     ld a, $04
     callx call_0916
@@ -798,35 +794,35 @@ jr_000_07a0:
     ret
 
 
-jr_000_07c6:
-    ld hl, $ccca
+.jr_000_07c6
+    ld hl, var_ball_pos.x
     ld a, [hl+]
     cp $ff
-    jr z, jr_000_0824
+    jr z, .jr_000_0824
 
     ld a, [hl-]
     cp $74
-    jr nz, jr_000_0824
+    jr nz, .jr_000_0824
 
-    ld a, [$ccc8]
+    ld a, [var_mouse_pos]
     sub $02
     ld b, a
     ld a, [hl]
     sub b
     cp $15
-    jr nc, jr_000_081f
+    jr nc, .jr_000_081f
 
     ld [hl], $ff
-    ld hl, $cc65
+    ld hl, var_cc65
     inc [hl]
     callx call_0702
     xor a
-    ld [$ccc5], a
+    ld [var_receiving], a
     ld a, $20
     callx call_0916
-    ld a, [$ccc6]
+    ld a, [var_practice]
     or a
-    jr nz, jr_000_081d
+    jr nz, .jr_000_081d
     callx call_052d
     ldx hl, LayoutReceived
     trap DrawLayout
@@ -837,16 +833,16 @@ jr_000_07c6:
     ld a, $63
     trap LCDEnable
 
-jr_000_081d:
+.jr_000_081d
     scf
     ret
 
 
-jr_000_081f:
+.jr_000_081f
     ld a, $02
-    ld [$ccc3], a
+    ld [var_ccc3], a
 
-jr_000_0824:
+.jr_000_0824
     or a
     ret
 
@@ -854,12 +850,12 @@ jr_000_0824:
 call_0826:
     ldx hl, layout_083d
     trap DrawLayout
-    ld a, [$cc65]
+    ld a, [var_cc65]
     ld e, a
     ld d, $00
-    ld hl, $cc40
+    ld hl, var_status
     trap IntToString
-    ld hl, $cc43
+    ld hl, var_status + 3
     trap DrawString
     ret
 
@@ -875,7 +871,7 @@ call_0845:
     ret c
 
     ldh [$83], a
-    ld hl, $ccd4
+    ld hl, var_time.sub
     inc [hl]
     ld a, [hl]
     cp $0a
@@ -895,48 +891,46 @@ call_0845:
 
 
 call_0861:
-    ld hl, $cc40
+    ld hl, var_status
     ldx de, data_08b4
     callx call_08d1
-    ld a, [$ccd3]
+    ld a, [var_current]
     callx call_08c0
     ldx de, data_08b9
     callx call_08d1
-    ld a, [$ccd6]
+    ld a, [var_time.min]
     callx call_08c0
     ld [hl], ":"
     inc hl
-    ld a, [$ccd5]
+    ld a, [var_time.sec]
     callx call_08c0
     ld [hl], "."
     inc hl
-    ld a, [$ccd4]
+    ld a, [var_time.sub]
     add "0"
     ld [hl+], a
     ld [hl], "\n"
     ld de, $012e
     trap $57
-    ld de, $cc40
-
-jr_000_08ae:
-    ld bc, $0013
+    ld de, var_status
+    ld bc, var_status.end - var_status
     trap MemCopy
     ret
 
 
 data_08b4:
     dk "MAN:\n"
-
 data_08b9:
     dk " TIME \n"
+
 
 call_08c0:
     ld c, "0" - 1
 
-jr_000_08c2:
+.jr_000_08c2
     inc c
     sub 10
-    jr nc, jr_000_08c2
+    jr nc, .jr_000_08c2
 
     add 10
     ld b, a
@@ -980,15 +974,13 @@ call_0901:
     trap RunDecompress
     ld b, $20
 
-jr_000_0909:
+.jr_000_0909
     ld a, [de]
     add $b0
     ld [de], a
     inc de
     dec b
-
-jr_000_090f:
-    jr nz, jr_000_0909
+    jr nz, .jr_000_0909
 
     pop bc
     dec c
@@ -1001,16 +993,16 @@ call_0916:
     push af
     ld a, [CartridgeCodeAddress]
     cp CartridgeCodeSuperBDaman
-    jr z, jr_000_0924
+    jr z, .jr_000_0924
 
     cp CartridgeCodeGBKissMiniGames
-    jr z, jr_000_0924
+    jr z, .jr_000_0924
 
     pop af
     ret
 
 
-jr_000_0924:
+.jr_000_0924
     pop af
     trap PlaySound
     ret
@@ -1018,3 +1010,60 @@ jr_000_0924:
 
 data_0928:
     INCBIN "gfx/baketu/tiles.2bpp.hz"
+
+SECTION "Status Bar", WRAM0[$cc40]
+
+var_status:
+    ds 19
+.end
+
+SECTION "Variables", WRAM0[$ccc1]
+
+var_ccc1:
+    dw
+var_ccc3:
+    db
+var_sent:
+    db  ; 0 → playing; 1 → ready to send, or finished
+var_receiving:
+    db  ; 0 → passing; 1 → receiving
+var_practice:
+    db  ; 0 → real play; 1 → practice mode
+var_motion:
+    db
+var_mouse_pos:
+    db
+var_ccc9:
+    db
+var_ball_pos:
+.x  db  ; $ff → no current ball
+.y  db
+var_cccc:
+    db
+var_hole_pos:
+    db
+    db
+var_hole_speed:
+    db
+var_ccd0:
+    db
+var_ccd1:
+    db
+var_target:
+    db  ; 3-15; set from menu
+var_current:
+    db  ; initially 1; victory when = var_target
+var_time:
+.sub  db
+.sec  db
+.min  db
+
+SECTION "Variables 2", WRAM0[$cc65]
+
+var_cc65:
+    db
+
+SECTION "Variables 3", WRAM0[$cc96]
+
+var_cc96:
+    db

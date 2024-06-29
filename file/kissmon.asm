@@ -34,7 +34,7 @@ History:
 Main::
     trap StopAudio
     ld hl, $04bc
-    trap $cb
+    trap TimerSet
 
 .jr_0103
     callx call_0b27

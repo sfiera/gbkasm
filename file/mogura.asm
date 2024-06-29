@@ -367,7 +367,7 @@ call_a2f5:
     call call_a419
     trap StopAudio
     ld hl, $04bc
-    trap $cb
+    trap TimerSet
     xor a
     ld [$c65c], a
     ret
