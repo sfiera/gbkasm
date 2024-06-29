@@ -3,6 +3,9 @@
 ; mgbdis v2.0 - Game Boy ROM disassembler by Matt Currie and contributors.
 ; https://github.com/mattcurrie/mgbdis
 
+DEF id0 EQU "H"
+DEF id1 EQU "u"
+
 SECTION "ROM Bank $001", ROMX[$4000], BANK[$1]
 
     dw $a55a, $0000, $a000
@@ -473,7 +476,7 @@ jr_001_4358:
 
 Call_001_435f:
     trap $c3
-    trap $72
+    trap IRListen
     ld a, [$ce00]
     push af
     cp $05
@@ -485,7 +488,7 @@ Call_001_435f:
 
 Call_001_4370:
     trap $c3
-    trap $7c
+    trap IROpen
     jr jr_001_43ac
 
 Call_001_4376:
@@ -495,12 +498,12 @@ Call_001_4376:
     ld e, l
     ld c, $01
     trap $c3
-    trap $7f
+    trap IRSend
     jr jr_001_43ac
 
 Call_001_4384:
     trap $c3
-    trap $73
+    trap IRClose
     jr jr_001_43ac
 
 Call_001_438a:
@@ -2870,10 +2873,10 @@ jr_001_606b:
     ld e, l
     ld d, h
     ld c, $99
-    trap $7f
+    trap IRSend
     jr c, jr_001_60b5
 
-    trap $73
+    trap IRClose
     jr c, jr_001_60b5
 
     ld a, $0e
@@ -2913,7 +2916,7 @@ jr_001_60c9:
     trap MemCopy
     ld a, $01
     trap $cc
-    trap $72
+    trap IRListen
     push af
     xor a
     trap $cc
@@ -2966,7 +2969,7 @@ Call_001_611d:
     ld hl, $c6d5
     ld de, $c400
     ld bc, $000a
-    trap $7c
+    trap IROpen
     jr c, jr_001_6146
 
     ld hl, $c400
@@ -2981,7 +2984,7 @@ Call_001_611d:
     ld [hl], a
     ld de, $c6d5
     ld bc, $000a
-    trap $7f
+    trap IRSend
     ret nc
 
 jr_001_6146:
@@ -2990,7 +2993,7 @@ jr_001_6146:
 
 
 jr_001_6149:
-    trap $73
+    trap IRClose
     ld a, $0f
     scf
     ret
@@ -3972,9 +3975,9 @@ Call_001_6a11:
     call Call_001_69bc
     jr c, jr_001_6a0e
 
-    ld a, $48
+    ld a, id0
     call Call_001_68fc
-    ld a, $75
+    ld a, id1
     call Call_001_68fc
     ld hl, $c0f8
     ld c, $08
@@ -3987,11 +3990,11 @@ jr_001_6a28:
     jr c, jr_001_6a0e
 
     call Call_001_693c
-    cp $48
+    cp id0
     jr nz, jr_001_6a28
 
     call Call_001_693c
-    cp $75
+    cp id1
     jr nz, jr_001_6a28
 
     ld hl, $c0f8
