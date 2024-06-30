@@ -360,7 +360,7 @@ PlayGame:
     ldx hl, LayoutFinish
     trap DrawLayout
     ld hl, $0724
-    trap MoveCursor
+    trap MovePen
     ld hl, var_status + 12
     trap DrawString
     ld a, $1e

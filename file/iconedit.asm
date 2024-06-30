@@ -426,7 +426,7 @@ jr_000_0362::
     ld hl, $c758
     trap IntToString
     ld hl, $0a22
-    trap MoveCursor
+    trap MovePen
     ld hl, $c75c
     trap DrawString
     ld a, [$c762]
@@ -435,7 +435,7 @@ jr_000_0362::
     ld hl, $c758
     trap IntToString
     ld hl, $0a23
-    trap MoveCursor
+    trap MovePen
     ld hl, $c75c
     trap DrawString
     ret

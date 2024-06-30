@@ -88,13 +88,13 @@ jump_0122:
     or a
     jr nz, .jr_0195
     ld hl, $0505
-    trap MoveCursor
+    trap MovePen
     ldx hl, strPerfect
     trap DrawString
 
 .jr_0195
     ld hl, $0507
-    trap MoveCursor
+    trap MovePen
     ldx hl, strGameOver
     trap DrawString
     callx ShowNewGame
@@ -220,7 +220,7 @@ ShowHiScore:
     xor a
     ld [hl], a
     ld hl, $0c0c
-    trap MoveCursor
+    trap MovePen
     ldx hl, intHiScore
     ld e, [hl]
     inc hl
@@ -715,7 +715,7 @@ call_057d:
     dec c
     jr nz, .jr_0585
     ld hl, $0611
-    trap MoveCursor
+    trap MovePen
     ld hl, varAward
     ld e, [hl]
     inc hl
@@ -729,7 +729,7 @@ call_057d:
 
 call_05d5:
     ld hl, $0d11
-    trap MoveCursor
+    trap MovePen
     ld hl, varScore
     ld e, [hl]
     inc hl

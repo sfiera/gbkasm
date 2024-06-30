@@ -196,11 +196,11 @@ DrawInterface:
     ldx hl, StrInterface
     trap DrawStringList
     ld hl, $0101
-    trap MoveCursor
+    trap MovePen
     ldx hl, StrTitle
     trap DrawString
     ld hl, $000a
-    trap MoveCursor
+    trap MovePen
     ldx hl, StrStatus
     trap DrawString
     callx DrawMusicMaxCur
@@ -289,7 +289,7 @@ DrawTimerCur:
 
 DrawInt:
     push af
-    trap MoveCursor
+    trap MovePen
     pop af
     ld e, a
     ld d, $00
@@ -301,12 +301,12 @@ DrawInt:
 
 DrawState:
     ld hl, $040a
-    trap MoveCursor
+    trap MovePen
     trap GetMusicState
     callx DrawStopPlay
 
     ld hl, $0e0a
-    trap MoveCursor
+    trap MovePen
     trap GetSoundState
 
 DrawStopPlay:

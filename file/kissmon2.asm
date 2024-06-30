@@ -251,7 +251,7 @@ call_a320:
     push af
     ld l, c
     ld h, b
-    trap MoveCursor
+    trap MovePen
     pop af
     ld e, a
     ld d, $00
@@ -1730,7 +1730,7 @@ call_acbe:
     add $04
     ld l, a
     ld h, $01
-    trap MoveCursor
+    trap MovePen
     pop af
     trap DrawChar
     ret
@@ -2353,7 +2353,7 @@ call_b0a5:
     trap IntToString
     pop hl
     ld h, $08
-    trap MoveCursor
+    trap MovePen
     ld hl, $c9b2
     trap DrawString
     ret

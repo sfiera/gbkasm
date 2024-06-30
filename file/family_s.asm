@@ -37,7 +37,7 @@ Main::
     ldx hl, data_00e9
     trap DrawString
     ld hl, $0106
-    trap MoveCursor
+    trap MovePen
     callx call_0188
     ld hl, $c6a6
     trap DrawString

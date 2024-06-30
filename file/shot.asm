@@ -99,7 +99,7 @@ code_0167:
 
 jr_0170:
     push de
-    trap MoveCursor
+    trap MovePen
     pop de
     ld hl, wramAtoiScratch
     trap IntToString

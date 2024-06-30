@@ -210,7 +210,7 @@ call_02db:
     push af
     ld l, c
     ld h, b
-    trap MoveCursor
+    trap MovePen
     pop af
     ld e, a
     ld d, $00
@@ -1229,7 +1229,7 @@ call_0a6a::
     add $04
     ld l, a
     ld h, $04
-    trap MoveCursor
+    trap MovePen
     pop af
     trap DrawChar
     ret
