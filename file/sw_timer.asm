@@ -249,7 +249,7 @@ jr_02d6:
     inc h
     inc h
 jr_0305:
-    trap MoveCursor
+    trap MovePen
     pop af
     trap DrawChar
     xor a
@@ -534,7 +534,7 @@ POPC
 
 call_059d:
     ld hl, $120c
-    trap MoveCursor
+    trap MovePen
     ldh a, [$cc]
     add "0"
     cp $3a
@@ -640,21 +640,21 @@ data_060d:
 call_0671:
     push hl
     ld hl, $0500
-    trap MoveCursor
+    trap MovePen
     pop hl
     trap DrawString
     push hl
     ld hl, $000f
-    trap MoveCursor
+    trap MovePen
     pop hl
     trap DrawString
     push hl
     ld hl, $0010
-    trap MoveCursor
+    trap MovePen
     pop hl
     trap DrawString
     ld hl, $0002
-    trap MoveCursor
+    trap MovePen
     ldx hl, data_060d
     trap DrawString
     ret
@@ -680,7 +680,7 @@ call_0698:
 call_06ac:
     push hl
     callx call_0698
-    trap MoveCursor
+    trap MovePen
     pop hl
     ld a, [hli]
     add "0"

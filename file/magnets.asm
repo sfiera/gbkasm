@@ -980,7 +980,7 @@ jr_000_0630::
     ld a, [de]
     inc de
     ld l, a
-    trap MoveCursor
+    trap MovePen
     ld a, $11
     trap DrawChar
     ld a, $12
@@ -1024,7 +1024,7 @@ jr_000_0630::
     ld a, [de]
     inc de
     ld l, a
-    trap MoveCursor
+    trap MovePen
 
 jr_000_067b::
     ld a, [de]

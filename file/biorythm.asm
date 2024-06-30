@@ -365,7 +365,7 @@ call_0246:
     ld a, d
     add b
     ld h, a
-    trap MoveCursor
+    trap MovePen
     pop hl
     push bc
     ld c, b
@@ -463,7 +463,7 @@ jr_000_02e5::
     push hl
     ld h, d
     ld l, e
-    trap MoveCursor
+    trap MovePen
     pop hl
     trap DrawString
     ret
@@ -565,7 +565,7 @@ jr_000_0384::
     jr nz, jr_000_03b4
 
     nop
-    trap MoveCursor
+    trap MovePen
     ld hl, $c600
     push bc
     trap IntToString
@@ -605,7 +605,7 @@ jr_000_03b4::
     ret
 
 
-    trap MoveCursor
+    trap MovePen
     ldh a, [$b6]
     bit 6, a
     jr z, jr_000_0406
@@ -672,7 +672,7 @@ jr_000_0422::
     ret
 
 
-    trap MoveCursor
+    trap MovePen
     ldh a, [$b6]
     bit 6, a
     jr z, jr_000_046d
@@ -727,7 +727,7 @@ jr_000_047b::
     ret
 
 
-    trap MoveCursor
+    trap MovePen
     push bc
     callx @+$fd2d
     ld a, c
@@ -1188,7 +1188,7 @@ call_08a7:
     ld de, $0003
     trap DrawStringList
     ld hl, $0001
-    trap MoveCursor
+    trap MovePen
     callx @+$f9a5
     ldx hl, data_097e
     trap DrawString
@@ -1196,7 +1196,7 @@ call_08a7:
     ldx hl, data_098c
     trap DrawString
     ld hl, $0201
-    trap MoveCursor
+    trap MovePen
     ld a, [$c61c]
     ld e, a
     ld a, [$c61d]
@@ -1206,7 +1206,7 @@ call_08a7:
     ld hl, $c602
     trap DrawString
     ld hl, $0801
-    trap MoveCursor
+    trap MovePen
     ld a, [$c61e]
     ld e, a
     ld d, $00
@@ -1215,7 +1215,7 @@ call_08a7:
     ld hl, $c604
     trap DrawString
     ld hl, $0110
-    trap MoveCursor
+    trap MovePen
     ld a, [$c61f]
     cp $0f
     jr z, jr_000_090f
@@ -1237,7 +1237,7 @@ jr_000_091e::
 
 jr_000_0920::
     ld hl, $0111
-    trap MoveCursor
+    trap MovePen
     ld a, [$c61c]
     ld e, a
     ld a, [$c61d]
@@ -1331,11 +1331,11 @@ call_09ef:
     ld h, l
     inc h
     ld l, $03
-    trap MoveCursor
+    trap MovePen
     ld a, $3a
     trap DrawChar
     ld l, $0f
-    trap MoveCursor
+    trap MovePen
     ld a, $3a
     trap DrawChar
     ret
@@ -1364,7 +1364,7 @@ jr_000_0a4c::
     pop hl
     add $09
     ld l, a
-    trap MoveCursor
+    trap MovePen
     ld a, $50
     trap DrawChar
     ld a, l
@@ -1444,7 +1444,7 @@ jr_000_0ac9::
     pop hl
     add $09
     ld l, a
-    trap MoveCursor
+    trap MovePen
     ld a, $53
     trap DrawChar
     ld a, l
@@ -1523,7 +1523,7 @@ jr_000_0b4b::
     pop hl
     add $09
     ld l, a
-    trap MoveCursor
+    trap MovePen
     ld a, $49
     trap DrawChar
     ld a, l
@@ -1657,11 +1657,11 @@ jr_000_0d4a:
     ld de, $0105
     trap DrawStringList
     ld hl, jr_000_0306
-    trap MoveCursor
+    trap MovePen
     ld hl, $c610
     trap DrawString
     ld hl, $0d06
-    trap MoveCursor
+    trap MovePen
     ld a, [$b2bb]
     ld e, a
     ld a, [$b2bc]
@@ -1699,7 +1699,7 @@ jr_000_0d93::
     ld hl, $c604
     trap DrawString
     ldx hl, $6304
-    trap MoveCursor
+    trap MovePen
     ld a, [$b2bb]
     ld e, a
     ld a, [$b2bc]
@@ -1744,7 +1744,7 @@ jr_000_0dc2::
     ld hl, $0308
     callx @+$f5ab
     ld hl, $0309
-    trap MoveCursor
+    trap MovePen
     ld a, [$c618]
     ld e, a
     ld a, [$c619]
@@ -1762,7 +1762,7 @@ jr_000_0dc2::
     add hl, bc
     trap DrawString
     ld hl, $0a09
-    trap MoveCursor
+    trap MovePen
     ld a, [$c61a]
     ld b, a
     ld a, [$c61b]
@@ -1778,7 +1778,7 @@ jr_000_0dc2::
     add hl, bc
     trap DrawString
     ld hl, $090b
-    trap MoveCursor
+    trap MovePen
     ld a, [$c623]
     ld e, a
     ld a, [$c624]
@@ -2044,7 +2044,7 @@ call_1191:
     ld de, $0106
     trap DrawStringList
     ld hl, $0709
-    trap MoveCursor
+    trap MovePen
     ld a, [$c62b]
     ld c, a
     ld b, $00
@@ -2069,7 +2069,7 @@ jr_000_11af::
     jr nz, jr_000_11af
 
     ld hl, $070a
-    trap MoveCursor
+    trap MovePen
     ld a, [$c630]
     ld c, a
     ld b, $00
@@ -2094,7 +2094,7 @@ jr_000_11db::
     jr nz, jr_000_11db
 
     ld hl, $070b
-    trap MoveCursor
+    trap MovePen
     ld a, [$c635]
     ld c, a
     ld b, $00

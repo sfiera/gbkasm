@@ -2012,7 +2012,7 @@ call_0d1b:
     ld a, $06
     trap $b9
     pop hl
-    trap MoveCursor
+    trap MovePen
     pop hl
     trap DrawString
     ld a, $07

@@ -88,7 +88,7 @@ Main::
 
 DrawAddress:
     ld hl, $0402
-    trap MoveCursor
+    trap MovePen
     ld hl, varAddr
     ld e, [hl]
     inc hl
@@ -170,7 +170,7 @@ DrawDigit:
     push bc
     ld l, e
     ld h, d
-    trap MoveCursor
+    trap MovePen
     ld a, c
     and $F
     cp $A

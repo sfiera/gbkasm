@@ -1021,7 +1021,7 @@ jr_000_075f::
 
 
     ld hl, $0311
-    trap MoveCursor
+    trap MovePen
     ld hl, $c650
     ld e, [hl]
     inc hl
@@ -1029,7 +1029,7 @@ jr_000_075f::
     push de
     callx @+$003d
     ld hl, $0d11
-    trap MoveCursor
+    trap MovePen
     pop bc
     ldx hl, data_high_score
     ld a, [hl+]
@@ -1117,7 +1117,7 @@ jr_000_07cf::
     ldx hl, layout_0a72
     trap DrawLayout
     ld hl, $0b0c
-    trap MoveCursor
+    trap MovePen
     ld a, [$c656]
     inc a
     ld e, a

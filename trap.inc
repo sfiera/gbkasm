@@ -48,7 +48,7 @@ DEF AwaitFrame       EQU $b1
 DEF DrawInit         EQU $b3
 DEF LCDEnable        EQU $b4  ; a|$80 → LCDC; $00 → BGP/OBP1/OBP2
 DEF LCDDisable       EQU $b5  ; safe LCDC &= $7f
-DEF MoveCursor       EQU $b8
+DEF MovePen          EQU $b8
 DEF DrawChar         EQU $bb
 DEF DoMenu           EQU $bf
 
