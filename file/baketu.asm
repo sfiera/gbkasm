@@ -55,13 +55,13 @@ MainMenu:
     jr c, MainMenu
 
     cp $00
-    jr z, .practice
+    jr z, Practice
 
     cp $01
-    jr z, .receive
+    jr z, Receive
 
     cp $0f
-    jr c, .play
+    jr c, StartGame
 
     trap ExitToMenu
 
@@ -71,12 +71,12 @@ MainMenu:
     db ">", " "  ; cursor characters
     dw 0         ; update callback
 
-.practice
+Practice:
     ld a, $01
     ld [var_practice], a
     ld a, $02
 
-.play
+StartGame:
     inc a
     ld [var_target], a
     xor a
@@ -87,12 +87,12 @@ MainMenu:
     ld a, $01
     ld [var_current], a
 
-.jr_000_014f
+.replay
     xor a
     ld [var_receiving], a
-    callx call_040c
-    callx call_01f0
-    jr nc, .jr_000_014f
+    callx PlayGame
+    callx Transmit
+    jr nc, .replay
 
 .jr_000_0163
     trap AwaitFrame
@@ -101,9 +101,9 @@ MainMenu:
     or a
     jr z, .jr_000_0163
 
-    jr .jr_000_014f
+    jr .replay
 
-.receive
+Receive:
     ld a, $20
     trap DrawInit
     callx call_08d8
@@ -117,12 +117,12 @@ MainMenu:
     ld a, LCDCF_OBJON + LCDCF_BGON + LCDCF_WINON + LCDCF_WIN9C00
     trap LCDEnable
     ld a, $14
-    ld [var_cc96], a
+    ld [var_retries], a
 .jr_0194
     ldx hl, LayoutWaitToReceive
     trap DrawLayout
     trap $c3
-.jr_019c
+.retry
     ld hl, var_ccc1
     ld [hl], id0
     inc hl
@@ -132,24 +132,24 @@ MainMenu:
     ld hl, var_ccc1
     ld [hl+], a
     ld [hl+], a
-    jr nc, .jr_000_01b9
+    jr nc, .accept
 
-    ld hl, var_cc96
+    ld hl, var_retries
     dec [hl]
-    jr nz, .jr_019c
+    jr nz, .retry
 
     jx MainMenu
 
 
-.jr_000_01b9
+.accept
     ld hl, var_current
     inc [hl]
     ld a, $01
     ld [var_receiving], a
-    callx call_0702
+    callx SetExitPoint
 
 .jr_000_01c9
-    callx call_040c
+    callx PlayGame
     ld a, [var_sent]
     cp $01
     jr z, .jr_000_01e3
@@ -161,58 +161,59 @@ MainMenu:
     jr .jr_0194
 
 .jr_000_01e3
-    callx call_01f0
+    callx Transmit
     xor a
     ld [var_receiving], a
     jr .jr_000_01c9
 
-call_01f0:
+
+Transmit:
     ldx hl, LayoutSending
     trap DrawLayout
     trap $c3
     ld a, $78
     trap $dc
     ld a, $03
-    ld [var_cc96], a
+    ld [var_retries], a
 
-.jr_000_0201
+.retry
     ld hl, var_ccc1
     ld de, $c600
     ld c, $02
     trap IROpen
-    jr c, .jr_000_022c
+    jr c, .cancel
 
     ld hl, $c600
     ld a, [hl+]
     cp id0
-    jr nz, .jr_000_022c
+    jr nz, .cancel
 
     ld a, [hl+]
     cp id1
-    jr nz, .jr_000_022c
+    jr nz, .cancel
 
     ld hl, transmit_start
     ld de, transmit_start
     ld c, transmit_end - transmit_start
     trap IRSend
-    jr c, .jr_000_022c
+    jr c, .cancel
 
     trap IRClose
-    jr c, .jr_000_022c
+    jr c, .cancel
 
     or a
     ret
 
 
-.jr_000_022c
+.cancel
     trap AwaitFrame
     ldh a, [$8a]
-    and $02
-    jr nz, .jr_000_022c
+    and 1 << BtnB
+    jr nz, .cancel
 
-    ld hl, var_cc96
+    ld hl, var_retries
     dec [hl]
-    jr nz, .jr_000_0201
+    jr nz, .retry
 
     scf
     ret
@@ -272,7 +273,7 @@ LayoutMenu:
     dh $06, $11, "END\n"
     db $ff
 
-call_040c:
+PlayGame:
     xor a
     trap DrawInit
     trap LCDDisable
@@ -303,59 +304,59 @@ call_040c:
     xor a
     ldh [$83], a
 
-.jr_000_0450
+.start
     xor a
     ld [var_sent], a
     ld [var_cccc], a
 
-.jr_000_0457
+.nextFrame
     trap AwaitFrame
-    callx call_0845
+    callx UpdateTimer
     trap $d8
-    and $04
-    jr nz, .jr_000_04c9
+    and (1 << BtnSel)
+    jr nz, .exit
 
     ld bc, $2800
     trap $c4
-    callx call_076b
+    callx UpdateBall
     callx call_071d
     callx call_0762
     callx call_0689
     callx call_053c
-    callx call_04f4
+    callx UpdateMouse
     callx call_052d
-    callx call_0861
+    callx UpdateStatusBar
     ld a, [var_sent]
     or a
-    jr z, .jr_000_0457
+    jr z, .nextFrame
 
     cp $02
-    jr z, .jr_000_04b7
+    jr z, .throwSucceeded
 
     ld a, [var_target]
     ld b, a
     ld a, [var_current]
     cp b
-    jr nc, .jr_000_04cd
+    jr nc, .finished
 
-.jr_000_04b7
+.throwSucceeded
     ld a, [var_practice]
     or a
     ret z
 
     ld a, [var_sent]
     cp $02
-    jr z, .jr_000_0450
+    jr z, .start
 
     ld hl, var_current
     inc [hl]
-    jr .jr_000_0450
+    jr .start
 
-.jr_000_04c9
+.exit
     jx MainMenu
 
 
-.jr_000_04cd
+.finished
     ldx hl, LayoutFinish
     trap DrawLayout
     ld hl, $0724
@@ -365,53 +366,53 @@ call_040c:
     ld a, $1e
     callx call_0916
 
-.jr_000_04e6
+.awaitExit
     trap AwaitFrame
     trap $d8
     ldh a, [$8a]
-    and $06
-    cp $06
-    jr nz, .jr_000_04e6
+    and (1 << BtnSel) + (1 << BtnB)
+    cp (1 << BtnSel) + (1 << BtnB)
+    jr nz, .awaitExit
 
-    jr .jr_000_04c9
+    jr .exit
 
 
-call_04f4:
+UpdateMouse:
     ld hl, var_motion
     ldh a, [$8a]
     ld b, a
     ld hl, var_mouse_pos
     ld a, [hl]
     bit BtnA, b
-    jr z, .jr_000_0506
+    jr z, .noA
 
     ld c, $00
     jr .jr_000_0521
 
-.jr_000_0506
+.noA
     bit BtnLt, b
-    jr z, .jr_000_0514
+    jr z, .noLeft
 
     ld c, $20
     dec a
     cp $08
-    jr nc, .jr_000_0520
+    jr nc, .noRight
 
     inc a
-    jr .jr_000_0520
+    jr .noRight
 
-.jr_000_0514
+.noLeft
     bit BtnRt, b
     jr z, .jr_000_0529
 
     ld c, $10
     inc a
     cp $90
-    jr c, .jr_000_0520
+    jr c, .noRight
 
     dec a
 
-.jr_000_0520
+.noRight
     ld [hl], a
 
 .jr_000_0521
@@ -602,7 +603,7 @@ call_0689:
 
     ld a, [var_ccc3]
     ld [var_sent], a
-    jx call_0702
+    jx SetExitPoint
 
 
 .jr_000_06a9
@@ -655,7 +656,7 @@ call_0689:
     ld a, [var_hole_pos]
     add $08
     ld b, a
-    ld a, [var_ccd1]
+    ld a, [var_exit_point]
     cp b
     ret nz
 
@@ -666,11 +667,11 @@ call_0689:
     jx call_0916
 
 
-call_0702:
+SetExitPoint:
     trap RandNext
     and $7f
     add $10
-    ld [var_ccd1], a
+    ld [var_exit_point], a
     ret
 
 
@@ -744,7 +745,7 @@ call_0762:
     ret
 
 
-call_076b:
+UpdateBall:
     ld a, [var_ccc9]
     or a
     ret nz
@@ -756,12 +757,12 @@ call_076b:
     ld hl, var_ball_pos.x
     ld a, [hl+]
     cp $ff
-    jr z, .jr_079e
+    jr z, .noBall
 
     ld d, a
     ld a, [hl]
     cp $21
-    jr nc, .jr_079e
+    jr nc, .noBall
 
     ld a, [var_hole_pos]
     sub $02
@@ -776,7 +777,7 @@ call_076b:
     ld a, $0f
     callx call_0916
 
-.jr_079e
+.noBall
     or a
     ret
 
@@ -790,7 +791,7 @@ call_076b:
     ld [var_receiving], a
     ld [var_ccc3], a
     ld [var_cccc], a
-    callx call_0702
+    callx SetExitPoint
     ld a, $04
     callx call_0916
     scf
@@ -818,7 +819,7 @@ call_076b:
     ld [hl], $ff
     ld hl, var_cc65
     inc [hl]
-    callx call_0702
+    callx SetExitPoint
     xor a
     ld [var_receiving], a
     ld a, $20
@@ -850,7 +851,7 @@ call_076b:
     ret
 
 
-call_0826:
+PrintDebugInfo:
     ldx hl, layout_083d
     trap DrawLayout
     ld a, [var_cc65]
@@ -868,7 +869,7 @@ layout_083d:
     db $ff
 
 
-call_0845:
+UpdateTimer:
     ldh a, [$83]
     sub $06
     ret c
@@ -893,7 +894,7 @@ call_0845:
     ret
 
 
-call_0861:
+UpdateStatusBar:
     ld hl, var_status
     ldx de, data_08b4
     callx call_08d1
@@ -1050,7 +1051,7 @@ var_hole_speed:
     db
 var_ccd0:
     db
-var_ccd1:
+var_exit_point:
     db
 
 transmit_start:
@@ -1071,5 +1072,5 @@ var_cc65:
 
 SECTION "Variables 3", WRAM0[$cc96]
 
-var_cc96:
+var_retries:
     db
