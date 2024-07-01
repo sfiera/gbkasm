@@ -103,7 +103,7 @@ call_a16d:
     ld hl, $c862
     ld de, $0001
     ld c, $05
-    trap $5d
+    trap DrawPlainText
     ld bc, $0b04
     ld hl, $c868
 
@@ -160,7 +160,7 @@ call_a21f:
     ld hl, $c862
     ld de, $0001
     ld c, $05
-    trap $5d
+    trap DrawPlainText
     ld hl, layout_a2a4
     trap DrawLayout
     ld bc, $0b04
@@ -966,7 +966,7 @@ call_a828:
     pop hl
     ld e, $01
     ld c, $05
-    trap $5d
+    trap DrawPlainText
     ret
 
 
@@ -986,7 +986,7 @@ call_a83f:
     ld d, a
     ld e, $01
     ld c, $05
-    trap $5d
+    trap DrawPlainText
     ld a, d
     add $05
     ld [$c9a7], a
@@ -1513,7 +1513,7 @@ call_ab98:
     ld hl, $c862
     ld de, $0001
     ld c, $05
-    trap $5d
+    trap DrawPlainText
     ld hl, layout_accf
     trap DrawLayout
     call call_abef
