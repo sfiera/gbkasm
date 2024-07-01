@@ -28,22 +28,22 @@ traps2::
     dw trap_8d_53b4  ; $8d
     dw trap_8e_5389  ; $8e
     dw trap_8f_496e  ; $8f
-    dw trap_90_417e  ; $90
-    dw trap_90_417e  ; $91
-    dw trap_90_417e  ; $92
-    dw trap_90_417e  ; $93
-    dw trap_90_417e  ; $94
-    dw trap_90_417e  ; $95
-    dw trap_90_417e  ; $96
-    dw trap_90_417e  ; $97
-    dw trap_90_417e  ; $98
-    dw trap_90_417e  ; $99
-    dw trap_90_417e  ; $9a
-    dw trap_90_417e  ; $9b
-    dw trap_90_417e  ; $9c
-    dw trap_90_417e  ; $9d
-    dw trap_90_417e  ; $9e
-    dw trap_90_417e  ; $9f
+    dw trap_none     ; $90
+    dw trap_none     ; $91
+    dw trap_none     ; $92
+    dw trap_none     ; $93
+    dw trap_none     ; $94
+    dw trap_none     ; $95
+    dw trap_none     ; $96
+    dw trap_none     ; $97
+    dw trap_none     ; $98
+    dw trap_none     ; $99
+    dw trap_none     ; $9a
+    dw trap_none     ; $9b
+    dw trap_none     ; $9c
+    dw trap_none     ; $9d
+    dw trap_none     ; $9e
+    dw trap_none     ; $9f
     dw trap_a0_54d8  ; $a0
     dw trap_a1_53c1  ; $a1
     dw trap_a2_53f1  ; $a2
@@ -52,14 +52,14 @@ traps2::
     dw trap_a5_55d2  ; $a5
     dw trap_a6_55df  ; $a6
     dw trap_a7_5b8d  ; $a7
-    dw trap_90_417e  ; $a8
-    dw trap_90_417e  ; $a9
-    dw trap_90_417e  ; $aa
-    dw trap_90_417e  ; $ab
-    dw trap_90_417e  ; $ac
-    dw trap_90_417e  ; $ad
-    dw trap_90_417e  ; $ae
-    dw trap_90_417e  ; $af
+    dw trap_none     ; $a8
+    dw trap_none     ; $a9
+    dw trap_none     ; $aa
+    dw trap_none     ; $ab
+    dw trap_none     ; $ac
+    dw trap_none     ; $ad
+    dw trap_none     ; $ae
+    dw trap_none     ; $af
     dw trap_b0_5ff2  ; $b0
     dw trap_b1_60c5  ; $b1
     dw trap_b2_61c0  ; $b2
@@ -90,24 +90,24 @@ traps2::
     dw trap_cb_417f  ; $cb
     dw trap_cc_419f  ; $cc
     dw trap_cd_59c1  ; $cd
-    dw trap_90_417e  ; $ce
-    dw trap_90_417e  ; $cf
-    dw trap_90_417e  ; $d0
-    dw trap_90_417e  ; $d1
-    dw trap_90_417e  ; $d2
-    dw trap_90_417e  ; $d3
-    dw trap_90_417e  ; $d4
-    dw trap_90_417e  ; $d5
-    dw trap_90_417e  ; $d6
-    dw trap_90_417e  ; $d7
+    dw trap_none     ; $ce
+    dw trap_none     ; $cf
+    dw trap_none     ; $d0
+    dw trap_none     ; $d1
+    dw trap_none     ; $d2
+    dw trap_none     ; $d3
+    dw trap_none     ; $d4
+    dw trap_none     ; $d5
+    dw trap_none     ; $d6
+    dw trap_none     ; $d7
     dw trap_d8_618c  ; $d8
     dw trap_d9_6209  ; $d9
     dw trap_da_6178  ; $da
     dw trap_db_60e2  ; $db
     dw trap_dc_60d2  ; $dc
-    dw trap_90_417e  ; $dd
-    dw trap_90_417e  ; $de
-    dw trap_90_417e  ; $df
+    dw trap_none     ; $dd
+    dw trap_none     ; $de
+    dw trap_none     ; $df
     dw trap_e0_4437  ; $e0
     dw trap_e1_4456  ; $e1
     dw trap_e2_454a  ; $e2
@@ -122,19 +122,19 @@ traps2::
     dw trap_eb_4c9a  ; $eb
     dw trap_ec_4ca9  ; $ec
     dw trap_ed_4cf1  ; $ed
-    dw trap_90_417e  ; $ee
+    dw trap_none     ; $ee
     dw trap_ef_48ec  ; $ef
     dw trap_f0_4bed  ; $f0
     dw trap_f1_4926  ; $f1
     dw trap_f2_4881  ; $f2
-    dw trap_90_417e  ; $f3
-    dw trap_90_417e  ; $f4
-    dw trap_90_417e  ; $f5
-    dw trap_90_417e  ; $f6
-    dw trap_90_417e  ; $f7
+    dw trap_none     ; $f3
+    dw trap_none     ; $f4
+    dw trap_none     ; $f5
+    dw trap_none     ; $f6
+    dw trap_none     ; $f7
     dw trap_f8_41b0  ; $f8
     dw trap_f9_4259  ; $f9
-    dw trap_90_417e  ; $fa
+    dw trap_none     ; $fa
     dw trap_fb_4586  ; $fb
     dw trap_fc_4a3c  ; $fc
     dw trap_fd_4df6  ; $fd
@@ -254,7 +254,7 @@ jr_002_4167:
 data_02_4171::
     db $08, $00, $8e, $6f, $10, $0c, $8e, $77, $10, $78, $58, $78, $ff
 
-trap_90_417e::
+trap_none::
     ret
 
 
