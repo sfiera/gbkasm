@@ -420,7 +420,7 @@ jr_000_01a8:
     ldh [$89], a
     ei
 
-trap_09_01b9::
+trap_none_0::
     ret
 
 
@@ -474,10 +474,10 @@ traps0::
     dw trap_07_76f1  ; $07 (bank 1)
     dw trap_08_7712  ; $08 (bank 1)
     dw trap_08_02fd  ; $09
-    dw trap_09_01b9  ; $0a
-    dw trap_09_01b9  ; $0b
-    dw trap_09_01b9  ; $0c
-    dw trap_09_01b9  ; $0d
+    dw trap_none_0   ; $0a
+    dw trap_none_0   ; $0b
+    dw trap_none_0   ; $0c
+    dw trap_none_0   ; $0d
     dw trap_0e_00b9  ; $0e
     dw 0            ; $0f
     dw trap_10_02ed  ; $10
