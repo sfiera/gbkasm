@@ -233,7 +233,7 @@ ShowHiScore:
     ldx hl, strHiScoreName
     ld de, $0001
     ld c, $0a
-    trap $5d
+    trap DrawPlainText
     xor a
     ld de, $080d
     ld hl, $0100

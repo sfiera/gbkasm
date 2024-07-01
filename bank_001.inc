@@ -2574,7 +2574,7 @@ Call_001_5ee7:
     ldh [$c1], a
     call Call_001_6181
     ld c, $11
-    trap $5d
+    trap DrawPlainText
     ret
 
 
@@ -2640,7 +2640,7 @@ Call_001_5f2d:
     pop af
     jr z, jr_001_5f44
 
-    trap $5d
+    trap DrawPlainText
     jr jr_001_5f60
 
 jr_001_5f44:
@@ -3459,7 +3459,7 @@ jr_001_6731:
     ld hl, $c600
     call Call_001_66e1
     ld de, $0001
-    trap $5d
+    trap DrawPlainText
     ld a, $03
     trap LCDEnable
     ldh a, [$c3]
