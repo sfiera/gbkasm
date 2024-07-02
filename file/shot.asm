@@ -40,107 +40,107 @@ Main::
     ld a, $01
     trap LCDEnable
 
-jr_0106:
-    callx code_019d
+.reset
+    callx DrawScreen
     ld a, $0a
-    ld [wramTime], a
+    ld [VarTime], a
     xor a
-    ld hl, wramShot
+    ld hl, VarCount
     ld [hli], a
     ld [hl], a
     trap $db
-    callx code_0167
-    callx code_0192
+    callx DrawTime
+    callx DrawCount
 
-code_0128:
+.waitStart
     trap $da
-    bit 2, l
-    jr nz, jr_0159
+    bit BTN_SEL_F, l
+    jr nz, .exit
 
     ld a, l
-    and $03
-    jr z, code_0128
+    and BTN_A | BTN_B
+    jr z, .waitStart
 
     xor a
     ldh [$83], a
 
-jr_0136:
-    callx code_0183
-    callx code_015b
-    jr nz, jr_0136
-    callx code_019d
+.play
+    callx CheckCount
+    callx CheckTime
+    jr nz, .play
+    callx DrawScreen
     trap $db
 
-jr_014f:
+.waitDone
     trap $da
-    bit 3, l
-    jr nz, jr_0106
+    bit BTN_STA_F, l
+    jr nz, .reset
 
-    bit 2, l
-    jr z, jr_014f
+    bit BTN_SEL_F, l
+    jr z, .waitDone
 
-jr_0159:
+.exit
     trap ExitToMenu
 
-code_015b:
+CheckTime:
     ldh a, [$83]
-    sub $3c
-    jr c, code_0167
+    sub 60
+    jr c, DrawTime
 
     ldh [$83], a
-    ld hl, wramTime
+    ld hl, VarTime
     dec [hl]
 
-code_0167:
+DrawTime:
     ld hl, $0b06
-    ld a, [wramTime]
+    ld a, [VarTime]
     ld e, a
     ld d, $00
 
-jr_0170:
+DrawInt:
     push de
     trap MovePen
     pop de
-    ld hl, wramAtoiScratch
+    ld hl, VarAtoiScratch
     trap IntToString
-    ld hl, wramAtoiScratch + 3
+    ld hl, VarAtoiScratch + 3
     trap DrawString
-    ld a, [wramTime]
+    ld a, [VarTime]
     or a
 
-jr_0182:
+.ret
     ret
 
 
-code_0183:
+CheckCount:
     trap $da
     ld a, l
-    and $03
-    jr z, jr_0182
+    and BTN_A | BTN_B
+    jr z, DrawInt.ret
 
-    ld hl, wramShot
+    ld hl, VarCount
     inc [hl]
-    jr nz, code_0192
+    jr nz, DrawCount
     inc hl
     inc [hl]
 
-code_0192:
-    ld hl, wramShot
+DrawCount:
+    ld hl, VarCount
     ld e, [hl]
     inc hl
     ld d, [hl]
     ld hl, $0b08
-    jr jr_0170
+    jr DrawInt
 
 
-code_019d:
-    ldx hl, gfx
+DrawScreen:
+    ldx hl, Layout
     trap DrawLayout
-    ld hl, wramShot
+    ld hl, VarCount
     ld e, [hl]
     inc hl
     ld d, [hl]
-    ld hl, wramHighScore
+    ld hl, VarHighScore
     ld a, e
     sub [hl]
     inc hl
@@ -154,15 +154,15 @@ code_019d:
     ld [hl], d
 
 .highScoreUnchanged
-    ld hl, wramHighScore
+    ld hl, VarHighScore
     ld e, [hl]
     inc hl
     ld d, [hl]
     ld hl, $0b0e
-    jr jr_0170
+    jr DrawInt
 
 
-gfx:
+Layout:
     dk $03, $01, "SHOOTING MASTER\n"
     dk $06, $06, "TIME:\n"
     dk $06, $08, "SHOT:\n"
@@ -173,15 +173,15 @@ gfx:
 
 SECTION "WRAM 0", WRAM0[$cc40]
 
-wramAtoiScratch:
+VarAtoiScratch:
     ds 6
 
 
 SECTION "WRAM 1", WRAM0[$cc95]
 
-wramTime:
+VarTime:
     ds 1
-wramShot:
+VarCount:
     ds 2
-wramHighScore:
+VarHighScore:
     ds 2
