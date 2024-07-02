@@ -19,7 +19,7 @@ RGBGFX=rgbgfx
 .SECONDARY:
 
 .PHONY: all
-all: $(GB)
+all: $(GB) $(GBF)
 
 %.o: %.asm | $(GFX)
 	$(RGBASM) -M $*.d -o $@ $<
