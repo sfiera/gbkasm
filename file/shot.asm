@@ -58,7 +58,7 @@ Main::
     jr nz, .exit
 
     ld a, l
-    and BTN_A | BTN_B
+    and BTN_AB
     jr z, .waitStart
 
     xor a
@@ -115,7 +115,7 @@ DrawInt:
 CheckCount:
     trap $da
     ld a, l
-    and BTN_A | BTN_B
+    and BTN_AB
     jr z, DrawInt.ret
 
     ld hl, VarCount

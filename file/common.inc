@@ -17,14 +17,16 @@ DEF BTN_LT_F   EQU 5
 DEF BTN_UP_F   EQU 6
 DEF BTN_DN_F   EQU 7
 
-DEF BTN_A    EQU 1 << BTN_A_F    ; $01
-DEF BTN_B    EQU 1 << BTN_B_F    ; $02
-DEF BTN_SEL  EQU 1 << BTN_SEL_F  ; $04
-DEF BTN_STA  EQU 1 << BTN_STA_F  ; $08
-DEF BTN_RT   EQU 1 << BTN_RT_F   ; $10
-DEF BTN_LT   EQU 1 << BTN_LT_F   ; $20
-DEF BTN_UP   EQU 1 << BTN_UP_F   ; $40
-DEF BTN_DN   EQU 1 << BTN_DN_F   ; $80
+DEF BTN_A    EQU 1 << BTN_A_F                       ; $01
+DEF BTN_B    EQU 1 << BTN_B_F                       ; $02
+DEF BTN_SEL  EQU 1 << BTN_SEL_F                     ; $04
+DEF BTN_STA  EQU 1 << BTN_STA_F                     ; $08
+DEF BTN_RT   EQU 1 << BTN_RT_F                      ; $10
+DEF BTN_LT   EQU 1 << BTN_LT_F                      ; $20
+DEF BTN_UP   EQU 1 << BTN_UP_F                      ; $40
+DEF BTN_DN   EQU 1 << BTN_DN_F                      ; $80
+DEF BTN_AB   EQU BTN_A | BTN_B                      ; $03
+DEF BTN_DIR  EQU BTN_RT | BTN_LT | BTN_UP | BTN_DN  ; $f0
 
 DEF CartridgeCodeAddr  EQU $0014
 DEF CART_BDAMAN        EQU $01
@@ -34,5 +36,5 @@ DEF CART_DAIKAIJU      EQU $04
 DEF CART_POKEFAM       EQU $06
 DEF CART_ROBOPON       EQU $08
 DEF CART_MINIGAME      EQU $fe
-DEF CART_BUILTIN       EQU $ff  ; file can run without installation
+DEF CART_NOTINST       EQU $ff  ; file not installed; install failed or unnecessary
 DEF CART_ANY           EQU $00  ; file can run anywhere after installation
