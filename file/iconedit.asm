@@ -39,12 +39,12 @@ Jump_000_0100::
     trap $b6
     callx call_0521
     callx call_0512
-    jr nc, jr_000_0119
+    jr nc, jx_0119
 
     jx jx_01e0
 
 
-jr_000_0119::
+jx_0119::
     ldh a, [$9b]
     ld [$c766], a
     ldh a, [$9a]
@@ -53,7 +53,7 @@ jr_000_0119::
     ldh [$9b], a
     ldh [$9a], a
 
-jr_000_0128::
+jx_0128::
     xor a
     trap DrawInit
     trap LCDDisable
@@ -76,7 +76,7 @@ jr_000_0139::
     dw jx_0165 - @  ; save icon
     dw jx_015a - @  ; create new
     dw jx_0158 - @  ; quit
-    dw jr_000_0128 - @
+    dw jx_0128 - @
 
 data_0151:
     db $04            ; item count
@@ -90,13 +90,13 @@ jx_0158:
 
 
 jx_015a:
-    callx @+$0447
-    jx @+$007e
+    callx call_05a5
+    jx jx_01e0
 
 
 jx_0165:
-    callx @+$02fc
-    jr c, jr_000_0128
+    callx call_0465
+    jr c, jx_0128
 
 jr_000_016e::
     ld de, $c791
@@ -120,9 +120,9 @@ jr_000_0176::
     jr c, jr_000_01a5
 
     ld a, $09
-    callx @+$055c
-    callx @+$0343
-    jr c, jr_000_0128
+    callx call_06ee
+    callx call_04dc
+    jr c, jx_0128
 
     ld hl, $c500
     trap $ef
@@ -154,27 +154,27 @@ jr_000_01b7::
     trap $e9
     jr c, jr_000_01ce
 
-    jx @+$ff5d
+    jx jx_0128
 
 
 jr_000_01ce::
     ld a, $08
-    callx @+$051a
+    callx call_06ee
 
 jr_000_01d7::
     trap $d8
     or a
     jr z, jr_000_01d7
 
-    jx @+$ff4b
+    jx jx_0128
 
 
 jx_01e0:
     xor a
     trap DrawInit
     trap LCDDisable
-    callx @+$0366
-    callx @+$023e
+    callx call_054f
+    callx call_042e
     ld a, $63
     trap LCDEnable
 
@@ -183,28 +183,30 @@ jr_000_01f7::
     ld bc, $2800
     trap $c4
     trap $d8
-    callx @+$0041
+    callx call_0245
     ldh a, [$8b]
     bit 3, a
     jr z, jr_000_0211
 
-    jx @+$ff0b
+    jx jx_0119
 
 
 jr_000_0211::
     or a
     jr z, jr_000_01f7
 
-    callx @+$000c
-    callx @+$016f
+    callx call_0224
+    callx call_038e
     jr jr_000_01f7
 
+call_0224:
     ldh a, [$8b]
     bit 2, a
     ret z
 
     ld hl, $c7b9
     inc [hl]
+call_022d:
     ld a, [$c7b9]
     ldx de, data_068e
     and $01
@@ -219,6 +221,7 @@ jr_000_023c::
     ret
 
 
+call_0245:
     ldh a, [$b6]
     ld b, a
     and $f0
@@ -227,38 +230,38 @@ jr_000_023c::
     bit 6, b
     jr z, jr_000_0259
 
-    callx @+$007b
+    callx call_02cf
     jr jr_000_027e
 
 jr_000_0259::
     bit 7, b
     jr z, jr_000_0266
 
-    callx @+$0092
+    callx call_02f3
     jr jr_000_027e
 
 jr_000_0266::
     bit 5, b
     jr z, jr_000_0273
 
-    callx @+$00ab
+    callx call_0319
     jr jr_000_027e
 
 jr_000_0273::
     bit 4, b
     jr z, jr_000_027e
 
-    callx @+$00c2
+    callx call_033d
 
 jr_000_027e::
-    callx @+$00e1
+    callx call_0363
     ldh a, [$8a]
     and $03
     jr z, jr_000_029c
 
-    callx @+$016b
+    callx call_03fa
     ld a, [$c764]
-    callx @+$0115
+    callx call_03ae
 
 jr_000_029c:
     ld hl, $c763
@@ -294,6 +297,7 @@ jr_000_029c:
     ret
 
 
+call_02c5:
     ld [hl], a
     add a
     add a
@@ -304,6 +308,7 @@ jr_000_029c:
     ret
 
 
+call_02cf:
     ld hl, $c762
     ld a, [hl]
     dec a
@@ -313,7 +318,7 @@ jr_000_029c:
     xor a
 
 jr_000_02d9::
-    callx @+$ffe8
+    callx call_02c5
     ldh a, [$9a]
     or a
     jr z, jr_000_02f2
@@ -333,6 +338,7 @@ jr_000_02f2::
     ret
 
 
+call_02f3:
     ld hl, $c762
     ld a, [hl]
     inc a
@@ -342,7 +348,7 @@ jr_000_02f2::
     ld a, $17
 
 jr_000_02fe::
-    callx @+$ffc3
+    callx call_02c5
     ldh a, [$9a]
     cp $50
     jr nc, jr_000_0318
@@ -362,6 +368,7 @@ jr_000_0318::
     ret
 
 
+call_0319:
     ld hl, $c761
     ld a, [hl]
     dec a
@@ -371,7 +378,7 @@ jr_000_0318::
     xor a
 
 jr_000_0323::
-    callx @+$ff9e
+    callx call_02c5
     ldh a, [$9b]
     or a
     jr z, jr_000_033c
@@ -391,6 +398,7 @@ jr_000_033c::
     ret
 
 
+call_033d:
     ld hl, $c761
     ld a, [hl]
     inc a
@@ -400,7 +408,7 @@ jr_000_033c::
     ld a, $1f
 
 jr_000_0348::
-    callx @+$ff79
+    callx call_02c5
     ldh a, [$9b]
     cp $60
     jr nc, jr_000_0362
@@ -420,6 +428,7 @@ jr_000_0362::
     ret
 
 
+call_0363:
     ld a, [$c761]
     ld e, a
     ld d, $00
@@ -441,13 +450,14 @@ jr_000_0362::
     ret
 
 
+call_038e:
     ldh a, [$8b]
     ld e, a
     and $03
     ret z
 
     push de
-    callx @+$0061
+    callx call_03fa
     pop de
     bit 0, e
     jr z, jr_000_03a2
@@ -463,6 +473,8 @@ jr_000_03a2::
 jr_000_03a9::
     and $03
     ld [$c764], a
+
+call_03ae:
     ld d, a
     ld e, c
     bit 0, d
@@ -512,19 +524,15 @@ jr_000_03c1::
 
 
 data_03f2:
-    add b
-    ld b, b
-    jr nz, jr_000_0406
+    db $80, $40, $20, $10, $08, $04, $02, $01
 
-    ld [$0204], sp
-    ld bc, $61fa
-    rst $00
+
+call_03fa:
+    ld a, [$c761]
     and $07
     ld e, a
     ld d, $00
     ldx hl, data_03f2
-
-jr_000_0406::
     add hl, de
     ld a, [hl]
     ld c, a
@@ -563,6 +571,7 @@ jr_000_042c::
     ret
 
 
+call_042e:
     xor a
     ld hl, $c761
     ld d, [hl]
@@ -575,7 +584,7 @@ jr_000_042c::
 
 jr_000_043d::
     push hl
-    callx @+$ffb8
+    callx call_03fa
     pop hl
     ld [hl+], a
     ld de, $c761
@@ -602,16 +611,17 @@ jr_000_043d::
     ret
 
 
+call_0465:
     trap LCDDisable
-    callx @+$019a
-    callx @+$0127
+    callx call_0605
+    callx call_0599
     ld de, $420d
     ld hl, $c700
     trap $54
     ld a, $06
-    callx @+$026b
+    callx call_06ee
     ld de, $0107
-    ld bc, $0605
+    ld bc, call_0605
     trap DrawBox
     ld a, $10
     ld de, $0208
@@ -637,19 +647,19 @@ jr_000_043d::
     ld b, $0a
     trap $56
     ld a, $07
-    callx @+$021f
-    callx @+$0006
+    callx call_06ee
+    callx call_04dc
     ret c
 
     or a
     ret
 
 
-jr_000_04dc::
+call_04dc::
     trap AwaitFrame
     trap $d8
     and $03
-    jr z, jr_000_04dc
+    jr z, call_04dc
 
     or a
     bit 0, a
@@ -659,6 +669,7 @@ jr_000_04dc::
     ret
 
 
+call_04ea:
     ld hl, $c509
     ld b, [hl]
     inc hl
@@ -698,13 +709,13 @@ call_0512:
     or [hl]
     ret z
 
-    callx @+$ffce
+    callx call_04ea
     scf
     ret
 
 
 call_0521:
-    callx @+$0080
+    callx call_05a5
     xor a
     ld [$c7b9], a
     ld a, $03
@@ -724,6 +735,7 @@ call_0521:
     ret
 
 
+call_054f:
     ld a, $e4
     ldh [$9d], a
     ld a, $07
@@ -734,8 +746,8 @@ call_0521:
     ldh [$9b], a
     ld a, [$c767]
     ldh [$9a], a
-    callx @+$0030
-    callx @+$fcbd
+    callx call_0599
+    callx call_022d
     ldx de, data_068e + $10
     ld hl, $9010
     ld bc, $0030
@@ -746,10 +758,11 @@ call_0521:
     trap MemCopy
     ldx hl, layout_0615
     trap DrawLayout
-    callx @+$fdce
+    callx call_0363
     ret
 
 
+call_0599:
     ld hl, $9100
     ld de, $c600
     ld bc, $0100
@@ -757,6 +770,7 @@ call_0521:
     ret
 
 
+call_05a5:
     xor a
     ld [$c766], a
     ld [$c767], a
@@ -773,7 +787,7 @@ call_0521:
 
 
 call_05c4:
-    callx @+$003d
+    callx call_0605
     ld h, $04
     trap $ca
     ldx de, data_05f5
@@ -793,16 +807,17 @@ call_05c4:
 
 
 data_05f5:
-    add b
-    add b
-    ldh [$e0], a
-    ld hl, sp-$08
-    cp $fe
-    ld hl, sp-$02
-    ldh [$f8], a
-    add b
-    ldh [rP1], a
-    add b
+    db $80, $80
+    db $e0, $e0
+    db $f8, $f8
+    db $fe, $fe
+    db $f8, $fe
+    db $e0, $f8
+    db $80, $e0
+    db $00, $80
+
+
+call_0605:
     ld bc, $2800
     trap $c4
     ld hl, $9800
@@ -890,7 +905,6 @@ jr_000_072a::
     trap $5a
     or a
     ret
-
 
 
 data_073c:
