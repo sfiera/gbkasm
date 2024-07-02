@@ -208,7 +208,7 @@ Transmit:
 .cancel
     trap AwaitFrame
     ldh a, [$8a]
-    and 1 << BTN_B
+    and BTN_B
     jr nz, .cancel
 
     ld hl, var_retries
@@ -313,7 +313,7 @@ PlayGame:
     trap AwaitFrame
     callx UpdateTimer
     trap $d8
-    and (1 << BTN_SEL)
+    and BTN_SEL
     jr nz, .exit
 
     ld bc, $2800
@@ -370,8 +370,8 @@ PlayGame:
     trap AwaitFrame
     trap $d8
     ldh a, [$8a]
-    and (1 << BTN_SEL) | (1 << BTN_B)
-    cp (1 << BTN_SEL) | (1 << BTN_B)
+    and BTN_SEL | BTN_B
+    cp BTN_SEL | BTN_B
     jr nz, .awaitExit
 
     jr .exit
@@ -383,14 +383,14 @@ UpdateMouse:
     ld b, a
     ld hl, var_mouse_pos
     ld a, [hl]
-    bit BTN_A, b
+    bit BTN_A_F, b
     jr z, .noA
 
     ld c, $00
     jr .jr_000_0521
 
 .noA
-    bit BTN_LT, b
+    bit BTN_LT_F, b
     jr z, .noLeft
 
     ld c, $20
@@ -402,7 +402,7 @@ UpdateMouse:
     jr .noRight
 
 .noLeft
-    bit BTN_RT, b
+    bit BTN_RT_F, b
     jr z, .jr_000_0529
 
     ld c, $10

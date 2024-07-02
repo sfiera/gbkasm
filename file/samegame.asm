@@ -162,9 +162,9 @@ ShowTitleScreen:
     trap AwaitFrame
     callx call_0684
     trap $d8
-    bit BTN_SEL, a
+    bit BTN_SEL_F, a
     jr nz, .exit
-    and (1 << BTN_STA)
+    and BTN_STA
     jr z, .loop
     ret
 
@@ -524,14 +524,14 @@ call_04ae:
     ld e, [hl]
     dec hl
 .left
-    bit BTN_LT, b
+    bit BTN_LT_F, b
     jr z, .right
     dec d
     bit 7, d
     jr z, .right
     ld d, FIELD_WIDTH - 1
 .right
-    bit BTN_RT, b
+    bit BTN_RT_F, b
     jr z, .up
     inc d
     ld a, d
@@ -539,14 +539,14 @@ call_04ae:
     jr c, .up
     ld d, $00
 .up
-    bit BTN_UP, b
+    bit BTN_UP_F, b
     jr z, .down
     dec e
     bit 7, e
     jr z, .down
     ld e, FIELD_HEIGHT - 1
 .down
-    bit BTN_DN, b
+    bit BTN_DN_F, b
     jr z, .done
     inc e
     ld a, e

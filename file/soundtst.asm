@@ -73,9 +73,9 @@ jr_0134:
     trap DoMenu
 
 .loop
-    bit BTN_B, h
+    bit BTN_B_F, h
     jr nz, .exit
-    bit BTN_SEL, h
+    bit BTN_SEL_F, h
     jr nz, .exit
 
     push bc
@@ -108,7 +108,7 @@ LoadAudioCount:
 HandleSetting:
     cp $04
     jr nz, .notPause
-    bit BTN_A, h
+    bit BTN_A_F, h
     ret z
 
     trap PauseMusic
@@ -116,7 +116,7 @@ HandleSetting:
     ret
 
 .notPause
-    bit BTN_A, h
+    bit BTN_A_F, h
     jr z, ChangeSetting
     callx GetApplyProcedure
     pushx DrawState
@@ -171,7 +171,7 @@ ChangeSetting:
     ld a, [de]
     inc de
     ld b, a
-    bit BTN_RT, c
+    bit BTN_RT_F, c
     jr nz, .inc
 
     ld a, [de]

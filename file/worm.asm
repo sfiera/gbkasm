@@ -152,7 +152,7 @@ HandleMenu:
     ld e, " "
     callx DrawSelection
     ldh a, [$8b]
-    bit BTN_UP, a
+    bit BTN_UP_F, a
     jr z, :+
     ld a, c
     and a
@@ -160,7 +160,7 @@ HandleMenu:
     dec c
 
 :   ldh a, [$8b]
-    bit BTN_DN, a
+    bit BTN_DN_F, a
     jr z, :+
     ld a, c
     cp $01
@@ -174,7 +174,7 @@ HandleMenu:
     ld [varTicker], a
     ldh a, [$8b]
 
-    bit BTN_A, a
+    bit BTN_A_F, a
     jr z, .next
     ld a, [SavedHiScore + 1]
     ld h, a
@@ -430,7 +430,7 @@ DrawGameOver:
 
 .awaitA
     ldh a, [$8a]
-    bit BTN_A, a
+    bit BTN_A_F, a
     jr z, .awaitA
 
     ret
@@ -476,7 +476,7 @@ DrawPerfect:
 
 .awaitA
     ldh a, [$8a]
-    bit BTN_A, a
+    bit BTN_A_F, a
     jr z, .awaitA
 
     ret
@@ -655,7 +655,7 @@ HandleInput:
 
     ; Check if left button pressed
     ldh a, [$8a]
-    bit BTN_LT, a
+    bit BTN_LT_F, a
     jr z, :+
 
     ; Do nothing if facing right
@@ -670,7 +670,7 @@ HandleInput:
 
     ; Check if right button pressed
 :   ldh a, [$8a]
-    bit BTN_RT, a
+    bit BTN_RT_F, a
     jr z, :+
 
     ; Do nothing if facing left
@@ -685,7 +685,7 @@ HandleInput:
 
     ; Check if up button pressed
 :   ldh a, [$8a]
-    bit BTN_UP, a
+    bit BTN_UP_F, a
     jr z, :+
 
     ; Do nothing if facing down
@@ -700,7 +700,7 @@ HandleInput:
 
     ; Check if down button pressed
 :   ldh a, [$8a]
-    bit BTN_DN, a
+    bit BTN_DN_F, a
     jr z, .inputDone
 
     ; Do nothing if facing up

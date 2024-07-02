@@ -171,13 +171,13 @@ call_0245:
 .jr_0292
     trap AwaitFrame
     trap $d8
-    bit BTN_SEL, a
+    bit BTN_SEL_F, a
     jr nz, .jr_02a4
 
-    bit BTN_A, a
+    bit BTN_A_F, a
     jr nz, .jr_02a6
 
-    bit BTN_B, a
+    bit BTN_B_F, a
     jr z, .jr_0292
 
     or a

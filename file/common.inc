@@ -8,14 +8,23 @@ def FILE_DATA  equ %00000000  ; non-executable
 def FILE_A008  equ %00000010  ; must be installed to base addr $A008
 def FILE_HIST  equ %00000001  ; extra $2E bytes after title/icon
 
-DEF BTN_A EQU 0
-DEF BTN_B EQU 1
-DEF BTN_SEL EQU 2
-DEF BTN_STA EQU 3
-DEF BTN_RT EQU 4
-DEF BTN_LT EQU 5
-DEF BTN_UP EQU 6
-DEF BTN_DN EQU 7
+DEF BTN_A_F    EQU 0
+DEF BTN_B_F    EQU 1
+DEF BTN_SEL_F  EQU 2
+DEF BTN_STA_F  EQU 3
+DEF BTN_RT_F   EQU 4
+DEF BTN_LT_F   EQU 5
+DEF BTN_UP_F   EQU 6
+DEF BTN_DN_F   EQU 7
+
+DEF BTN_A    EQU 1 << BTN_A_F    ; $01
+DEF BTN_B    EQU 1 << BTN_B_F    ; $02
+DEF BTN_SEL  EQU 1 << BTN_SEL_F  ; $04
+DEF BTN_STA  EQU 1 << BTN_STA_F  ; $08
+DEF BTN_RT   EQU 1 << BTN_RT_F   ; $10
+DEF BTN_LT   EQU 1 << BTN_LT_F   ; $20
+DEF BTN_UP   EQU 1 << BTN_UP_F   ; $40
+DEF BTN_DN   EQU 1 << BTN_DN_F   ; $80
 
 DEF CartridgeCodeAddr  EQU $0014
 DEF CART_BDAMAN        EQU $01

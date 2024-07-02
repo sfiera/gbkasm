@@ -44,21 +44,21 @@ Main::
     trap $d8
     ld hl, varAddr
     ld c, a
-    bit BTN_STA, c
+    bit BTN_STA_F, c
     jr nz, Main2.start
-    bit BTN_UP, c
+    bit BTN_UP_F, c
     jr nz, .up
-    bit BTN_DN, c
+    bit BTN_DN_F, c
     jr nz, .dn
-    bit BTN_LT, c
+    bit BTN_LT_F, c
     jr nz, .lt
-    bit BTN_RT, c
+    bit BTN_RT_F, c
     jr nz, .rt
-    bit BTN_A, c
+    bit BTN_A_F, c
     jr nz, Main2.a
-    bit BTN_B, c
+    bit BTN_B_F, c
     jr nz, Main2.b
-    bit BTN_SEL, c
+    bit BTN_SEL_F, c
     jr z, .loop
     trap ExitToMenu
 
