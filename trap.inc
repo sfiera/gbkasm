@@ -24,7 +24,7 @@ DEF LoadTiles        EQU $4c
 
 DEF DrawBox          EQU $58  ; origin = (d, e), size = (b, c)
 DEF DrawLayout       EQU $5c
-DEF DrawPlainText    EQU $5d
+DEF LoadTextTiles    EQU $5d
 DEF DoCursorMenu     EQU $5f
 
 DEF InitDecompress   EQU $62

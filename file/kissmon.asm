@@ -96,7 +96,7 @@ call_0177:
     ld hl, $cc9e
     ld de, $0001
     ld c, $05
-    trap DrawPlainText
+    trap LoadTextTiles
     ld bc, $0b05
     ld hl, $cca4
 
@@ -727,7 +727,7 @@ call_0739:
     pop hl
     ld e, $01
     ld c, $05
-    trap DrawPlainText
+    trap LoadTextTiles
     ret
 
 
@@ -747,7 +747,7 @@ call_0750:
     ld d, a
     ld e, $01
     ld c, $05
-    trap DrawPlainText
+    trap LoadTextTiles
     ld a, d
     add $05
     ld [$ccba], a
@@ -1053,7 +1053,7 @@ call_095d:
     ld hl, $cc9e
     ld de, $0001
     ld c, $05
-    trap DrawPlainText
+    trap LoadTextTiles
     ldx hl, layout_0a7b
     trap DrawLayout
     ld a, $03
