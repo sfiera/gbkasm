@@ -52,7 +52,7 @@ Main::
 
 jr_0070:
     trap AwaitFrame
-    trap $d8
+    trap GetButtons
     bit 2, a
     jr nz, jr_00e7
     and $03

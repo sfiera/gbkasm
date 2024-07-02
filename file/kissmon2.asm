@@ -72,7 +72,7 @@ Main::
 
 .jr_a14e
     trap AwaitFrame
-    trap $d8
+    trap GetButtons
     and $0f
     jr z, .jr_a14e
 
@@ -194,7 +194,7 @@ call_a21f:
 
 .jr_a285
     trap AwaitFrame
-    trap $d8
+    trap GetButtons
     bit 2, a
     jr nz, .jr_a29b
 
@@ -291,7 +291,7 @@ call_a33a:
 
 .jr_a372
     trap AwaitFrame
-    trap $d8
+    trap GetButtons
     or a
     jr z, .jr_a372
 
@@ -764,7 +764,7 @@ call_a6fa:
 
 .jr_a736
     trap AwaitFrame
-    trap $d8
+    trap GetButtons
     and $0f
     jr z, .jr_a736
 
@@ -819,7 +819,7 @@ call_a76e:
 .jr_a78d
     push bc
     trap AwaitFrame
-    trap $d8
+    trap GetButtons
     call call_a79a
     pop bc
     dec c
@@ -1526,7 +1526,7 @@ call_ab98:
 
 .jr_abc8
     trap AwaitFrame
-    trap $d8
+    trap GetButtons
     call call_ac27
     ldh a, [$8b]
     bit 2, a
@@ -2090,7 +2090,7 @@ call_af4f:
     trap AwaitFrame
     ld bc, $2800
     trap $c4
-    trap $d8
+    trap GetButtons
     call call_afa6
     ldh a, [$8b]
     bit 2, a

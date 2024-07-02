@@ -96,7 +96,7 @@ StartGame:
 
 .jr_000_0163
     trap AwaitFrame
-    trap $d8
+    trap GetButtons
 
     or a
     jr z, .jr_000_0163
@@ -312,7 +312,7 @@ PlayGame:
 .nextFrame
     trap AwaitFrame
     callx UpdateTimer
-    trap $d8
+    trap GetButtons
     and BTN_SEL
     jr nz, .exit
 
@@ -368,7 +368,7 @@ PlayGame:
 
 .awaitExit
     trap AwaitFrame
-    trap $d8
+    trap GetButtons
     ldh a, [$8a]
     and BTN_SEL | BTN_B
     cp BTN_SEL | BTN_B

@@ -64,7 +64,7 @@ jump_0122:
 .jr_0140
     trap AwaitFrame
     callx call_0684
-    trap $d8
+    trap GetButtons
     callx call_04ae
     push af
     callx call_04f1
@@ -161,7 +161,7 @@ ShowTitleScreen:
 .loop
     trap AwaitFrame
     callx call_0684
-    trap $d8
+    trap GetButtons
     bit BTN_SEL_F, a
     jr nz, .exit
     and BTN_STA

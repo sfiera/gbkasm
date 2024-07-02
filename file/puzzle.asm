@@ -97,7 +97,7 @@ call_0180:
 
 call_01d1:
     push hl
-    trap $d8
+    trap GetButtons
     pop hl
     inc de
     cp $01
@@ -1099,7 +1099,7 @@ call_07a9:
     ld hl, $0000
 
 jr_000_07da:
-    trap $d8
+    trap GetButtons
 
     inc hl
     bit 0, a

@@ -155,7 +155,7 @@ jp_01ed::
     or a
     jr nz, jr_000_01f7
 
-    trap $d8
+    trap GetButtons
     ld c, a
 
 jr_000_01f7::
@@ -1021,7 +1021,7 @@ jr_000_0713::
 
 jr_000_07b4::
     trap AwaitFrame
-    trap $d8
+    trap GetButtons
     bit 0, a
     ret nz
 

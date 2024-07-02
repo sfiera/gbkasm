@@ -162,7 +162,7 @@ jr_000_01ce::
     callx call_06ee
 
 jr_000_01d7::
-    trap $d8
+    trap GetButtons
     or a
     jr z, jr_000_01d7
 
@@ -182,7 +182,7 @@ jr_000_01f7::
     trap AwaitFrame
     ld bc, $2800
     trap $c4
-    trap $d8
+    trap GetButtons
     callx call_0245
     ldh a, [$8b]
     bit 3, a
@@ -657,7 +657,7 @@ call_0465:
 
 call_04dc::
     trap AwaitFrame
-    trap $d8
+    trap GetButtons
     and $03
     jr z, call_04dc
 

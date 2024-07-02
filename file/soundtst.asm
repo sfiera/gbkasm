@@ -83,7 +83,7 @@ jr_0134:
     push hl
     push af
     callx HandleSetting
-    trap $d8
+    trap GetButtons
     pop bc
     and $37
     pop hl

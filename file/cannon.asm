@@ -65,7 +65,7 @@ Main::
 
 jr_000_015b::
     trap AwaitFrame
-    trap $d8
+    trap GetButtons
     callx @+$0575
     callx @+$04dc
     callx @+$02a7
@@ -143,7 +143,7 @@ jr_000_0204:
     ld a, $07
     trap LCDEnable
     trap AwaitFrame
-    trap $d8
+    trap GetButtons
     ld a, [$c656]
     sla a
     sla a

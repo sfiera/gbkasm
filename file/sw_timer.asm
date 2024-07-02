@@ -49,7 +49,7 @@ jr_0126:
     ld de, $060a
     ld bc, $0000
     callx call_0778
-    trap $d8
+    trap GetButtons
     ldh [$c4], a
     bit 1, a
     jr z, jr_0166
@@ -134,7 +134,7 @@ jr_0210:
     xor a
     ldh [$c3], a
 jr_022b:
-    trap $d8
+    trap GetButtons
     ldh [$c4], a
     bit 1, a
     jr z, jr_024e

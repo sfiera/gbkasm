@@ -2268,7 +2268,7 @@ Call_000_0c95:
     call Call_000_087f
 
 jr_000_0c9b:
-    trap $d8
+    trap GetButtons
     bit 1, a
     jr nz, jr_000_0ce8
 

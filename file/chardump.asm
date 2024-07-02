@@ -41,7 +41,7 @@ Main::
 
 .loop
     trap AwaitFrame
-    trap $d8
+    trap GetButtons
     ld hl, varAddr
     ld c, a
     bit BTN_STA_F, c

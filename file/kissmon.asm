@@ -69,7 +69,7 @@ Main::
 
 .jr_0159
     trap AwaitFrame
-    trap $d8
+    trap GetButtons
     and $0f
     jr z, .jr_0159
 
@@ -170,7 +170,7 @@ call_0245:
 
 .jr_0292
     trap AwaitFrame
-    trap $d8
+    trap GetButtons
     bit BTN_SEL_F, a
     jr nz, .jr_02a4
 
@@ -579,7 +579,7 @@ call_066c:
 .jr_068f
     push bc
     trap AwaitFrame
-    trap $d8
+    trap GetButtons
     callx call_06a0
     pop bc
     dec c
@@ -1065,7 +1065,7 @@ call_095d:
 
 .jr_0993
     trap AwaitFrame
-    trap $d8
+    trap GetButtons
     callx call_09eb
     ldh a, [$8b]
     and $08
@@ -1084,7 +1084,7 @@ call_095d:
 
 .jr_09b6
     trap AwaitFrame
-    trap $d8
+    trap GetButtons
     bit 0, a
     jr nz, .jr_09c4
 

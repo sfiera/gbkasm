@@ -1423,7 +1423,7 @@ jr_000_0bcd::
     trap AwaitFrame
 
 jr_000_0bcf::
-    trap $d8
+    trap GetButtons
     ld [$c881], a
     cp $04
     jr z, jr_000_0c28

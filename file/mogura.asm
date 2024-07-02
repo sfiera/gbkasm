@@ -577,7 +577,7 @@ call_a438:
     ld [hl+], a
     ld a, $00
     trap RandNext
-    trap $d8
+    trap GetButtons
     bit 2, a
     jp nz, call_a571
 
@@ -2419,7 +2419,7 @@ jr_000_102e::
     cp $12
     jr z, jr_000_1096
 
-    trap $d8
+    trap GetButtons
     bit 3, a
     ret nz
 

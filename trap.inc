@@ -54,3 +54,5 @@ DEF DrawChar         EQU $bb
 DEF DoMenu           EQU $bf
 
 DEF TimerSet         EQU $cb  ; h → TAC; l → TMA; TACF_START? → IEF_TIMER?
+
+DEF GetButtons       EQU $d8
