@@ -12,10 +12,10 @@ SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
     dw SIZEOF(SECTION(Header))
-    db kFileHasIcon2bpp | kFileMarkerCircle
-    db CartridgeCodeUniversal  ; where file can run
-    db .end - @ - 1            ; length of variable parts of header
-    db $05                     ; owner code
+    db FILE_EXEC | FILE_ICON | FILE_2BPP
+    db CART_ANY      ; where file can run
+    db .end - @ - 1  ; length of variable parts of header
+    db $05           ; owner code
 .title
     dk "サウンド　テスト"
 .icon
@@ -73,9 +73,9 @@ jr_0134:
     trap DoMenu
 
 .loop
-    bit BtnB, h
+    bit BTN_B, h
     jr nz, .exit
-    bit BtnSel, h
+    bit BTN_SEL, h
     jr nz, .exit
 
     push bc
@@ -98,9 +98,9 @@ jr_0134:
     trap ExitToMenu
 
 LoadAudioCount:
-    ld a, [CartridgeCodeAddress]
+    ld a, [CartridgeCodeAddr]
     ld de, SuperBDamanAudioCount
-    cp CartridgeCodeSuperBDaman
+    cp CART_BDAMAN
     ret z
     trap GetAudioCount
     ret
@@ -108,7 +108,7 @@ LoadAudioCount:
 HandleSetting:
     cp $04
     jr nz, .notPause
-    bit BtnA, h
+    bit BTN_A, h
     ret z
 
     trap PauseMusic
@@ -116,7 +116,7 @@ HandleSetting:
     ret
 
 .notPause
-    bit BtnA, h
+    bit BTN_A, h
     jr z, ChangeSetting
     callx GetApplyProcedure
     pushx DrawState
@@ -171,7 +171,7 @@ ChangeSetting:
     ld a, [de]
     inc de
     ld b, a
-    bit BtnRt, c
+    bit BTN_RT, c
     jr nz, .inc
 
     ld a, [de]

@@ -3,8 +3,8 @@
 ; mgbdis v2.0 - Game Boy ROM disassembler by Matt Currie and contributors.
 ; https://github.com/mattcurrie/mgbdis
 
-DEF id0 EQU "H"
-DEF id1 EQU "u"
+DEF IR_ID0 EQU "H"
+DEF IR_ID1 EQU "u"
 
 SECTION "ROM Bank $001", ROMX[$4000], BANK[$1]
 
@@ -3975,9 +3975,9 @@ Call_001_6a11:
     call Call_001_69bc
     jr c, jr_001_6a0e
 
-    ld a, id0
+    ld a, IR_ID0
     call Call_001_68fc
-    ld a, id1
+    ld a, IR_ID1
     call Call_001_68fc
     ld hl, $c0f8
     ld c, $08
@@ -3990,11 +3990,11 @@ jr_001_6a28:
     jr c, jr_001_6a0e
 
     call Call_001_693c
-    cp id0
+    cp IR_ID0
     jr nz, jr_001_6a28
 
     call Call_001_693c
-    cp id1
+    cp IR_ID1
     jr nz, jr_001_6a28
 
     ld hl, $c0f8

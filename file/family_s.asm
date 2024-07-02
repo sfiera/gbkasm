@@ -10,10 +10,10 @@ SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
     dw SIZEOF(SECTION(Header))
-    db kFileMarkerCircle | kFileHasTransfers
-    db CartridgeCodePocketFamily  ; where file can run
-    db .end - @ - 1               ; length of variable parts of header
-    db $00                        ; owner code
+    db FILE_EXEC | FILE_HIST
+    db CART_POKEFAM  ; where file can run
+    db .end - @ - 1  ; length of variable parts of header
+    db $00           ; owner code
 .title
     dk "ファミリショット"
 .icon

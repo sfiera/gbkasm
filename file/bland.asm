@@ -11,10 +11,10 @@ LOAD "CRAM Code", SRAM[$a008]
 
 Header::
     dw SIZEOF(SECTION(Header))
-    db kFileHasIcon2bpp | kFileMarkerDiamond | kFileHasTransfers
-    db CartridgeCodeUniversal  ; where file can run
-    db .end - @ - 1            ; length of variable parts of header
-    db $71                     ; owner code
+    db FILE_EXEC | FILE_A008 | FILE_ICON | FILE_2BPP | FILE_HIST
+    db CART_ANY      ; where file can run
+    db .end - @ - 1  ; length of variable parts of header
+    db $71           ; owner code
 .title
     dk "BINARY"
 .icon

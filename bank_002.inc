@@ -5,11 +5,11 @@
 
 SECTION "ROM Bank $002", ROMX[$4000], BANK[$2]
 
-DEF ChunkTypeEmpty    EQU $46 ; Available to use
-DEF ChunkTypeFixed    EQU $5a ; Must be located at $a002 (diamond)
-DEF ChunkTypeGeneric  EQU $52 ; May be located anywhere (circle, triangle)
-DEF ChunkTypeUnknown  EQU $44 ; Unknown use
-DEF ChunkTypeIndex    EQU $53 ; Must be located at end of Kiss space
+DEF REGION_FREE      EQU "F" ; Available to use
+DEF REGION_ZEROFILE  EQU "Z" ; Must be located at $a002 (diamond)
+DEF REGION_REGFILE   EQU "R" ; Regular file; may be located anywhere (circle, triangle)
+DEF REGION_UNKNOWN   EQU "D" ; Unknown use
+DEF REGION_SPECIAL   EQU "S" ; Must be located at end of Kiss space
 
 traps2::
     dw trap_80_5267  ; $80
@@ -631,19 +631,19 @@ jr_002_44c4:
 
 jr_002_44d0:
     ld a, [hl]
-    cp ChunkTypeEmpty
+    cp REGION_FREE
     jr z, jr_002_449b
 
-    cp ChunkTypeFixed
+    cp REGION_ZEROFILE
     jr z, jr_002_449b
 
-    cp ChunkTypeGeneric
+    cp REGION_REGFILE
     jr z, jr_002_449b
 
-    cp ChunkTypeUnknown
+    cp REGION_UNKNOWN
     jr z, jr_002_449b
 
-    cp ChunkTypeIndex
+    cp REGION_SPECIAL
     jr z, jr_002_449b
 
 jr_002_44e5:
@@ -874,14 +874,14 @@ jr_002_45e1:
     ld b, a
     ld a, e
     and $e0
-    ld e, ChunkTypeUnknown
+    ld e, REGION_UNKNOWN
     jr z, jr_002_4606
 
-    ld e, ChunkTypeGeneric
+    ld e, REGION_REGFILE
     cp $20
     jr z, jr_002_4606
 
-    ld e, ChunkTypeFixed
+    ld e, REGION_ZEROFILE
     cp $40
     jp nz, Jump_002_4464
 
@@ -893,7 +893,7 @@ jr_002_4606:
     jp c, Jump_002_46ee
 
     ld a, e
-    cp ChunkTypeFixed
+    cp REGION_ZEROFILE
     jr nz, .checkBlockSize
 
     ld a, h
@@ -960,7 +960,7 @@ jr_002_4606:
     push hl
     call Call_002_4450
     ld a, e
-    cp ChunkTypeFixed
+    cp REGION_ZEROFILE
     jr z, jr_002_467f
 
     push de
@@ -1185,19 +1185,19 @@ jr_002_4742:
     cp d
     ret z
 
-    cp ChunkTypeEmpty
+    cp REGION_FREE
     jr z, jr_002_471e
 
-    cp ChunkTypeFixed
+    cp REGION_ZEROFILE
     jr z, jr_002_471e
 
-    cp ChunkTypeGeneric
+    cp REGION_REGFILE
     jr z, jr_002_471e
 
-    cp ChunkTypeUnknown
+    cp REGION_UNKNOWN
     jr z, jr_002_471e
 
-    cp ChunkTypeIndex
+    cp REGION_SPECIAL
     jr z, jr_002_471e
 
 jr_002_475b:
@@ -1850,10 +1850,10 @@ jr_002_4a24:
 
 jr_002_4a2d:
     ld a, [hl]
-    cp ChunkTypeGeneric
+    cp REGION_REGFILE
     jr z, jr_002_4a36
 
-    cp ChunkTypeFixed
+    cp REGION_ZEROFILE
     jr nz, jr_002_4a0b
 
 jr_002_4a36:

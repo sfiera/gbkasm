@@ -6,18 +6,18 @@ INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 INCLUDE "file/common.inc"
 
-DEF id0 EQU "k"
-DEF id1 EQU "2"
+DEF IR_ID0 EQU "k"
+DEF IR_ID1 EQU "2"
 
 SECTION "ROM Bank $000", ROM0[$0]
 LOAD "CRAM Code", SRAM[$a008]
 
 Header:
     dw SIZEOF(SECTION(Header))
-    db kFileHasIcon2bpp | kFileMarkerDiamond | kFileHasTransfers
-    db CartridgeCodeUniversal  ; where file can run
-    db .end - @ - 1            ; length of variable parts of header
-    db $6e                     ; owner code
+    db FILE_EXEC | FILE_A008 | FILE_ICON | FILE_2BPP | FILE_HIST
+    db CART_ANY      ; where file can run
+    db .end - @ - 1  ; length of variable parts of header
+    db $6e           ; owner code
 .title
     dk "KISS-MON2"
 .icon
@@ -1061,9 +1061,9 @@ call_a8bb:
     xor a
     ld [$c9aa], a
     ld hl, $c860
-    ld [hl], id0
+    ld [hl], IR_ID0
     inc hl
-    ld [hl], id1
+    ld [hl], IR_ID1
     xor a
     ld [$c85f], a
 
@@ -1092,11 +1092,11 @@ call_a8bb:
     jr c, .jr_a8d6
 
     ld a, [hl+]
-    cp id0
+    cp IR_ID0
     jr nz, .jr_a933
 
     ld a, [hl]
-    cp id1
+    cp IR_ID1
     jr nz, .jr_a933
 
     ld hl, $c862
@@ -2043,16 +2043,16 @@ call_af25:
     push bc
     ld e, a
     ld d, $00
-    ld a, [CartridgeCodeAddress]
+    ld a, [CartridgeCodeAddr]
     ld hl, data_af1b
-    cp CartridgeCodeSuperBDaman
+    cp CART_BDAMAN
     jr z, .jr_af44
 
-    cp CartridgeCodeGBKissMiniGames
+    cp CART_MINIGAME
     jr z, .jr_af44
 
     ld hl, data_af20
-    cp CartridgeCodePocketBomberman
+    cp CART_POKEBOM
     jr z, .jr_af44
 
     pop bc

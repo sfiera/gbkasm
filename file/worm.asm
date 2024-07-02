@@ -5,33 +5,31 @@ INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 INCLUDE "file/common.inc"
 
-DEF SavedHiScoreLo EQU $a042
-DEF SavedHiScoreHi EQU $a043
+DEF SND_WALL_HIT  EQU 3
+DEF SND_SELF_HIT  EQU 4
+DEF SND_EAT_FOOD  EQU 5
+DEF SND_PERFECT  EQU 6
+DEF MUSIC_TRACK  EQU 5
 
-DEF SndWallHit EQU 3
-DEF SndSelfHit EQU 4
-DEF SndEatFood EQU 5
-DEF SndPerfect EQU 6
-DEF MusicTrack EQU 5
+DEF FACE_LT    EQU 1
+DEF FACE_RT    EQU 2
+DEF FACE_UP    EQU 3
+DEF FACE_DN    EQU 4
+DEF FACE_NONE  EQU 0
 
-DEF FaceLt EQU 1
-DEF FaceRt EQU 2
-DEF FaceUp EQU 3
-DEF FaceDn EQU 4
-DEF FaceNone EQU 0
-
-DEF MaxSnakeLen EQU $50
-DEF MaxPoint EQU $05
-DEF EatDeadline EQU $28
+DEF MAX_SNAKE_LEN  EQU $50
+DEF MAX_POINT      EQU $05
+DEF EAT_DEADLINE   EQU $28
 
 SECTION "ROM Bank $000", ROM0[$0]
+LOAD "CRAM Code", SRAM[$a008]
 
 Header::
     dw SIZEOF(SECTION(Header))
-    db kFileBit4 | kFileMarkerDiamond | kFileHasTransfers
-    db CartridgeCodeUniversal  ; where file can run
-    db .end - @ - 1            ; length of variable parts of header
-    db $00                     ; owner code
+    db FILE_EXEC | FILE_A008 | FILE_2BPP | FILE_HIST
+    db CART_ANY      ; where file can run
+    db .end - @ - 1  ; length of variable parts of header
+    db $00           ; owner code
 .title
     dk "WORM"
 .icon
@@ -49,12 +47,14 @@ History:
 .end
 
 Main::
-    jr :+
+    jr Run
 
+SavedHiScore:
     nop
     nop
 
-:   ld sp, $e000
+Run:
+    ld sp, $e000
     trap $db
     trap StopAudio
     callx call_006c
@@ -152,7 +152,7 @@ HandleMenu:
     ld e, " "
     callx DrawSelection
     ldh a, [$8b]
-    bit BtnUp, a
+    bit BTN_UP, a
     jr z, :+
     ld a, c
     and a
@@ -160,7 +160,7 @@ HandleMenu:
     dec c
 
 :   ldh a, [$8b]
-    bit BtnDn, a
+    bit BTN_DN, a
     jr z, :+
     ld a, c
     cp $01
@@ -174,9 +174,9 @@ HandleMenu:
     ld [varTicker], a
     ldh a, [$8b]
 
-    bit BtnA, a
+    bit BTN_A, a
     jr z, .next
-    ld a, [SavedHiScoreHi]
+    ld a, [SavedHiScore + 1]
     ld h, a
     ld a, [varTicker]
     ld l, a
@@ -213,7 +213,7 @@ GameMain:
     callx DrawHighScore
     callx DrawPoints
 
-    ld a, MusicTrack
+    ld a, MUSIC_TRACK
     trap PlayMusic
 
 .next
@@ -338,9 +338,9 @@ DrawHighScore:
     trap DrawString
 
     ; Convert high score to string and draw
-    ld a, [SavedHiScoreLo]
+    ld a, [SavedHiScore]
     ld e, a
-    ld a, [SavedHiScoreHi]
+    ld a, [SavedHiScore + 1]
     ld d, a
     ld hl, varNumBuffer
     trap IntToString
@@ -356,9 +356,9 @@ UpdateHighScore:
     ld e, a
     ld a, [varScore+1]
     ld d, a
-    ld a, [SavedHiScoreLo]
+    ld a, [SavedHiScore]
     ld l, a
-    ld a, [SavedHiScoreHi]
+    ld a, [SavedHiScore + 1]
     ld h, a
     ld c, $06
     trap $84
@@ -369,9 +369,9 @@ UpdateHighScore:
     ld a, $0a
     ld [$0000], a
     ld a, [varScore]
-    ld [SavedHiScoreLo], a
+    ld [SavedHiScore], a
     ld a, [varScore+1]
-    ld [SavedHiScoreHi], a
+    ld [SavedHiScore + 1], a
     xor a
     ld [$0000], a
     ret
@@ -430,7 +430,7 @@ DrawGameOver:
 
 .awaitA
     ldh a, [$8a]
-    bit BtnA, a
+    bit BTN_A, a
     jr z, .awaitA
 
     ret
@@ -476,7 +476,7 @@ DrawPerfect:
 
 .awaitA
     ldh a, [$8a]
-    bit BtnA, a
+    bit BTN_A, a
     jr z, .awaitA
 
     ret
@@ -530,7 +530,7 @@ InitField:
     ld [hl], e
     inc c
     ld a, c
-    cp MaxSnakeLen
+    cp MAX_SNAKE_LEN
     jr nz, .next
 
     ld a, $04
@@ -650,66 +650,66 @@ HandleInput:
     ld [hl], a
     inc c
     ld a, c
-    cp MaxSnakeLen
+    cp MAX_SNAKE_LEN
     jr nz, .copyNext
 
     ; Check if left button pressed
     ldh a, [$8a]
-    bit BtnLt, a
+    bit BTN_LT, a
     jr z, :+
 
     ; Do nothing if facing right
     ld a, [varHeadDir]
-    cp FaceRt
+    cp FACE_RT
     jr z, .inputDone
 
     ; Set facing to left
-    ld a, FaceLt
+    ld a, FACE_LT
     ld [varHeadDir], a
     jr .inputDone
 
     ; Check if right button pressed
 :   ldh a, [$8a]
-    bit BtnRt, a
+    bit BTN_RT, a
     jr z, :+
 
     ; Do nothing if facing left
     ld a, [varHeadDir]
-    cp FaceLt
+    cp FACE_LT
     jr z, .inputDone
 
     ; Set facing to right
-    ld a, FaceRt
+    ld a, FACE_RT
     ld [varHeadDir], a
     jr .inputDone
 
     ; Check if up button pressed
 :   ldh a, [$8a]
-    bit BtnUp, a
+    bit BTN_UP, a
     jr z, :+
 
     ; Do nothing if facing down
     ld a, [varHeadDir]
-    cp FaceDn
+    cp FACE_DN
     jr z, .inputDone
 
     ; Set facing to up
-    ld a, FaceUp
+    ld a, FACE_UP
     ld [varHeadDir], a
     jr .inputDone
 
     ; Check if down button pressed
 :   ldh a, [$8a]
-    bit BtnDn, a
+    bit BTN_DN, a
     jr z, .inputDone
 
     ; Do nothing if facing up
     ld a, [varHeadDir]
-    cp FaceUp
+    cp FACE_UP
     jr z, .inputDone
 
     ; Set facing to down
-    ld a, FaceDn
+    ld a, FACE_DN
     ld [varHeadDir], a
 
 .inputDone
@@ -727,7 +727,7 @@ HandleInput:
 
     ; Check if facing left
     ld a, [varHeadDir]
-    cp FaceLt
+    cp FACE_LT
     jr nz, :+
 
     ; Move snake left
@@ -740,7 +740,7 @@ HandleInput:
 
     ; Check if facing right
 :   ld a, [varHeadDir]
-    cp FaceRt
+    cp FACE_RT
     jr nz, :+
 
     ; Move snake right
@@ -753,7 +753,7 @@ HandleInput:
 
     ; Check if facing up
 :   ld a, [varHeadDir]
-    cp FaceUp
+    cp FACE_UP
     jr nz, :+
 
     ; Move snake up
@@ -766,7 +766,7 @@ HandleInput:
 
     ; Check if facing down
 :   ld a, [varHeadDir]
-    cp FaceDn
+    cp FACE_DN
     jr nz, :+
 
     ; Move snake down
@@ -779,7 +779,7 @@ HandleInput:
 
     ; If not moving, return
 :   ld a, [varHeadDir]
-    cp FaceNone
+    cp FACE_NONE
     ret z
 
     ld hl, varSnakeX
@@ -962,7 +962,7 @@ HandleWallHit:
     cp $00
     ret z
 
-    ld a, SndWallHit
+    ld a, SND_WALL_HIT
     trap PlaySound
 
     ld a, $01
@@ -976,7 +976,7 @@ HandleSelfHit:
     cp $00
     ret z
 
-    ld a, SndSelfHit
+    ld a, SND_SELF_HIT
     trap PlaySound
 
     ld a, $01
@@ -990,7 +990,7 @@ HandleFoodHit:
     cp $00
     ret z
 
-    ld a, SndEatFood
+    ld a, SND_EAT_FOOD
     trap PlaySound
 
     ld a, $00
@@ -998,7 +998,7 @@ HandleFoodHit:
 
     ; Grow snake if less than maximum length
     ld a, [varSnakeLen]
-    cp MaxSnakeLen
+    cp MAX_SNAKE_LEN
     jr z, :+
     inc a
     ld [varSnakeLen], a
@@ -1027,10 +1027,10 @@ HandleFoodHit:
 HandlePerfect:
     ; Do nothing if snake hasn’t reached max length
     ld a, [varSnakeLen]
-    cp MaxSnakeLen
+    cp MAX_SNAKE_LEN
     ret nz
 
-    ld a, SndPerfect
+    ld a, SND_PERFECT
     trap PlaySound
 
     ld a, $01
@@ -1108,13 +1108,13 @@ AddFood:
 
     ; Increase food value if less than maximum points
     ld a, [varPoint]
-    cp MaxPoint
+    cp MAX_POINT
     jr z, :+
     inc a
     ld [varPoint], a
 
     ; Reset eat deadline to initial value
-:   ld a, EatDeadline
+:   ld a, EAT_DEADLINE
     ld [varDeadline], a
     ret
 
@@ -1151,14 +1151,15 @@ DrawFood:
     ld a, $00
     ld [varPoint], a
     ret
+ENDL
 
 
 SECTION "Variables", WRAM0[$c600]
 
-varSnakeX: ds MaxSnakeLen  ; X positions of snake segments
-varSnakeY: ds MaxSnakeLen  ; Y positions of snake segments
-varLastX: ds MaxSnakeLen   ; Previous X positions of snake segments
-varLastY: ds MaxSnakeLen   ; Previous Y positions of snake segments
+varSnakeX: ds MAX_SNAKE_LEN  ; X positions of snake segments
+varSnakeY: ds MAX_SNAKE_LEN  ; Y positions of snake segments
+varLastX: ds MAX_SNAKE_LEN   ; Previous X positions of snake segments
+varLastY: ds MAX_SNAKE_LEN   ; Previous Y positions of snake segments
 
 varSnakeLen: ds 1   ; Current snake length
 varCountdown: ds 1  ; Countdown until next movement (10 → 0)

@@ -6,17 +6,17 @@ INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 INCLUDE "file/common.inc"
 
-DEF id0 EQU "M"
-DEF id1 EQU "T"
+DEF IR_ID0 EQU "M"
+DEF IR_ID1 EQU "T"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
     dw SIZEOF(SECTION(Header))
-    db kFileHasIcon2bpp | kFileMarkerCircle | kFileHasTransfers
-    db CartridgeCodeUniversal  ; where file can run
-    db .end - @ - 1            ; length of variable parts of header
-    db $6e                     ; owner code
+    db FILE_EXEC | FILE_ICON | FILE_2BPP | FILE_HIST
+    db CART_ANY      ; where file can run
+    db .end - @ - 1  ; length of variable parts of header
+    db $6e           ; owner code
 .title
     dk "KISS-MON"
 .icon
@@ -171,13 +171,13 @@ call_0245:
 .jr_0292
     trap AwaitFrame
     trap $d8
-    bit BtnSel, a
+    bit BTN_SEL, a
     jr nz, .jr_02a4
 
-    bit BtnA, a
+    bit BTN_A, a
     jr nz, .jr_02a6
 
-    bit BtnB, a
+    bit BTN_B, a
     jr z, .jr_0292
 
     or a
@@ -822,9 +822,9 @@ call_07cc:
     xor a
     ld [$ccbd], a
     ld hl, $cc9c
-    ld [hl], id0
+    ld [hl], IR_ID0
     inc hl
-    ld [hl], id1
+    ld [hl], IR_ID1
     xor a
     ld [$cc96], a
 
@@ -853,11 +853,11 @@ call_07cc:
     jr c, .jr_07e7
 
     ld a, [hl+]
-    cp id0
+    cp IR_ID0
     jr nz, .jr_0844
 
     ld a, [hl]
-    cp id1
+    cp IR_ID1
     jr nz, .jr_0844
 
     ld hl, $cc9e

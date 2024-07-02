@@ -10,10 +10,10 @@ SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
     dw SIZEOF(SECTION(Header))
-    db kFileMarkerCircle
-    db CartridgeCodeUniversal  ; where file can run
-    db .end - @ - 1            ; length of variable parts of header
-    db $43                     ; owner code
+    db FILE_EXEC
+    db CART_ANY      ; where file can run
+    db .end - @ - 1  ; length of variable parts of header
+    db $43           ; owner code
 .title
     dk "CHAR-DUMP"
 .icon
@@ -44,21 +44,21 @@ Main::
     trap $d8
     ld hl, varAddr
     ld c, a
-    bit BtnSta, c
+    bit BTN_STA, c
     jr nz, Main2.start
-    bit BtnUp, c
+    bit BTN_UP, c
     jr nz, .up
-    bit BtnDn, c
+    bit BTN_DN, c
     jr nz, .dn
-    bit BtnLt, c
+    bit BTN_LT, c
     jr nz, .lt
-    bit BtnRt, c
+    bit BTN_RT, c
     jr nz, .rt
-    bit BtnA, c
+    bit BTN_A, c
     jr nz, Main2.a
-    bit BtnB, c
+    bit BTN_B, c
     jr nz, Main2.b
-    bit BtnSel, c
+    bit BTN_SEL, c
     jr z, .loop
     trap ExitToMenu
 

@@ -6,17 +6,17 @@ INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 INCLUDE "file/common.inc"
 
-DEF FieldWidth   EQU $14
-DEF FieldHeight  EQU $10
+DEF FIELD_WIDTH   EQU $14
+DEF FIELD_HEIGHT  EQU $10
 
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
     dw SIZEOF(SECTION(Header))
-    db kFileHasIcon2bpp | kFileMarkerCircle | kFileHasTransfers
-    db CartridgeCodeUniversal  ; where file can run
-    db .end - @ - 1          ; length of variable parts of header
-    db $67                     ; owner code
+    db FILE_EXEC | FILE_ICON | FILE_2BPP | FILE_HIST
+    db CART_ANY      ; where file can run
+    db .end - @ - 1  ; length of variable parts of header
+    db $67           ; owner code
 .title
     dk "SAMEGAME"
 .icon
@@ -162,9 +162,9 @@ ShowTitleScreen:
     trap AwaitFrame
     callx call_0684
     trap $d8
-    bit BtnSel, a
+    bit BTN_SEL, a
     jr nz, .exit
-    and (1 << BtnSta)
+    and (1 << BTN_STA)
     jr z, .loop
     ret
 
@@ -255,9 +255,9 @@ strCredits:
 
 call_0322:
     ld hl, varField
-    ld c, FieldWidth
+    ld c, FIELD_WIDTH
 .jr_0327
-    ld b, FieldHeight
+    ld b, FIELD_HEIGHT
 .jr_0329
     res 7, [hl]
     inc hl
@@ -390,9 +390,9 @@ call_03b7:
 
 call_041f:
     ld hl, varField
-    ld c, FieldWidth
+    ld c, FIELD_WIDTH
 .nextColumn
-    ld b, FieldHeight
+    ld b, FIELD_HEIGHT
 .nextTile
     bit 7, [hl]
     jr z, .jr_042c
@@ -420,7 +420,7 @@ call_041f:
 
 call_0445:
     ld hl, varField
-    ld b, FieldWidth
+    ld b, FIELD_WIDTH
 .jr_044a
     ld a, [hl]
     or a
@@ -460,7 +460,7 @@ call_0445:
     push de
     push bc
     push hl
-    ld b, FieldHeight
+    ld b, FIELD_HEIGHT
 .jr_0474
     ld a, [de]
     inc de
@@ -479,11 +479,11 @@ call_0445:
 
 call_0486:
     ld hl, varField
-    ld c, FieldWidth
+    ld c, FIELD_WIDTH
 .jr_048b
     push bc
     push hl
-    ld b, FieldHeight
+    ld b, FIELD_HEIGHT
     ld c, b
     inc c
     ld e, l
@@ -524,33 +524,33 @@ call_04ae:
     ld e, [hl]
     dec hl
 .left
-    bit BtnLt, b
+    bit BTN_LT, b
     jr z, .right
     dec d
     bit 7, d
     jr z, .right
-    ld d, FieldWidth - 1
+    ld d, FIELD_WIDTH - 1
 .right
-    bit BtnRt, b
+    bit BTN_RT, b
     jr z, .up
     inc d
     ld a, d
-    cp FieldWidth
+    cp FIELD_WIDTH
     jr c, .up
     ld d, $00
 .up
-    bit BtnUp, b
+    bit BTN_UP, b
     jr z, .down
     dec e
     bit 7, e
     jr z, .down
-    ld e, FieldHeight - 1
+    ld e, FIELD_HEIGHT - 1
 .down
-    bit BtnDn, b
+    bit BTN_DN, b
     jr z, .done
     inc e
     ld a, e
-    cp FieldHeight
+    cp FIELD_HEIGHT
     jr c, .done
     ld e, $00
 .done
@@ -578,7 +578,7 @@ call_04f1:
     add a
     add a
     add a
-    add FieldWidth
+    add FIELD_WIDTH
     ld [hli], a
     ld a, [varCursor]
     add a
@@ -592,11 +592,11 @@ call_0514:
     xor a
     ldh [$c0], a
     ld hl, varField
-    ld c, FieldWidth
+    ld c, FIELD_WIDTH
 .jr_051c
     push hl
     push bc
-    ld b, FieldHeight
+    ld b, FIELD_HEIGHT
 .jr_0520
     push bc
     push hl
@@ -672,14 +672,14 @@ call_0514:
 call_057d:
     ld hl, $9800
     ld de, $c9af
-    ld c, FieldHeight
+    ld c, FIELD_HEIGHT
 .jr_0585
     push de
     push hl
     ld l, e
     ld h, d
     ld de, $cc40
-    ld b, FieldWidth
+    ld b, FIELD_WIDTH
 .jr_058e
     push bc
     ld a, [hl]
@@ -778,11 +778,11 @@ jump_062d:
     dec b
     jr nz, .jr_0638
     ld de, varField
-    ld c, FieldWidth
+    ld c, FIELD_WIDTH
 .jr_0641
     push de
     push bc
-    ld b, FieldHeight
+    ld b, FIELD_HEIGHT
 .jr_0645
     callx call_0684
     add hl, hl

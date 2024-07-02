@@ -6,17 +6,17 @@ INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 INCLUDE "file/common.inc"
 
-DEF id0 EQU "B"
-DEF id1 EQU "K"
+DEF IR_ID0 EQU "B"
+DEF IR_ID1 EQU "K"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
     dw SIZEOF(SECTION(Header))
-    db kFileHasIcon2bpp | kFileMarkerCircle | kFileHasTransfers
-    db CartridgeCodeUniversal  ; where file can run
-    db .end - @ - 1            ; length of variable parts of header
-    db $70                     ; owner code
+    db FILE_ICON | FILE_2BPP | FILE_EXEC | FILE_HIST
+    db CART_ANY      ; where file can run
+    db .end - @ - 1  ; length of variable parts of header
+    db $70           ; owner code
 .title
     dk "バケちゅリレー"
 .icon
@@ -124,9 +124,9 @@ Receive:
     trap $c3
 .retry
     ld hl, var_ccc1
-    ld [hl], id0
+    ld [hl], IR_ID0
     inc hl
-    ld [hl], id1
+    ld [hl], IR_ID1
     trap IRListen
     ld a, $00
     ld hl, var_ccc1
@@ -185,11 +185,11 @@ Transmit:
 
     ld hl, $c600
     ld a, [hl+]
-    cp id0
+    cp IR_ID0
     jr nz, .cancel
 
     ld a, [hl+]
-    cp id1
+    cp IR_ID1
     jr nz, .cancel
 
     ld hl, transmit_start
@@ -208,7 +208,7 @@ Transmit:
 .cancel
     trap AwaitFrame
     ldh a, [$8a]
-    and 1 << BtnB
+    and 1 << BTN_B
     jr nz, .cancel
 
     ld hl, var_retries
@@ -313,7 +313,7 @@ PlayGame:
     trap AwaitFrame
     callx UpdateTimer
     trap $d8
-    and (1 << BtnSel)
+    and (1 << BTN_SEL)
     jr nz, .exit
 
     ld bc, $2800
@@ -370,8 +370,8 @@ PlayGame:
     trap AwaitFrame
     trap $d8
     ldh a, [$8a]
-    and (1 << BtnSel) | (1 << BtnB)
-    cp (1 << BtnSel) | (1 << BtnB)
+    and (1 << BTN_SEL) | (1 << BTN_B)
+    cp (1 << BTN_SEL) | (1 << BTN_B)
     jr nz, .awaitExit
 
     jr .exit
@@ -383,14 +383,14 @@ UpdateMouse:
     ld b, a
     ld hl, var_mouse_pos
     ld a, [hl]
-    bit BtnA, b
+    bit BTN_A, b
     jr z, .noA
 
     ld c, $00
     jr .jr_000_0521
 
 .noA
-    bit BtnLt, b
+    bit BTN_LT, b
     jr z, .noLeft
 
     ld c, $20
@@ -402,7 +402,7 @@ UpdateMouse:
     jr .noRight
 
 .noLeft
-    bit BtnRt, b
+    bit BTN_RT, b
     jr z, .jr_000_0529
 
     ld c, $10
@@ -995,11 +995,11 @@ call_0901:
 
 call_0916:
     push af
-    ld a, [CartridgeCodeAddress]
-    cp CartridgeCodeSuperBDaman
+    ld a, [CartridgeCodeAddr]
+    cp CART_BDAMAN
     jr z, .jr_000_0924
 
-    cp CartridgeCodeGBKissMiniGames
+    cp CART_MINIGAME
     jr z, .jr_000_0924
 
     pop af

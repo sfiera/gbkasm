@@ -10,10 +10,10 @@ SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
     dw SIZEOF(SECTION(Header))
-    db kFileBit4 | kFileMarkerDiamond | kFileHasTransfers
-    db CartridgeCodeUniversal  ; where file can run
-    db .end - @ - 1            ; length of variable parts of header
-    db $00                     ; owner code
+    db FILE_EXEC | FILE_A008 | FILE_2BPP | FILE_HIST
+    db CART_ANY      ; where file can run
+    db .end - @ - 1  ; length of variable parts of header
+    db $00           ; owner code
 .title
     dk "BIORYTHM"
 .icon
