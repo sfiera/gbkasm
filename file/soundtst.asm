@@ -12,7 +12,7 @@ SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
     dw SIZEOF(SECTION(Header))
-    db kFileHasIcon2bpp + kFileMarkerCircle
+    db kFileHasIcon2bpp | kFileMarkerCircle
     db CartridgeCodeUniversal  ; where file can run
     db .end - @ - 1            ; length of variable parts of header
     db $05                     ; owner code

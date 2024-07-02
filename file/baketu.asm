@@ -13,7 +13,7 @@ SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
     dw SIZEOF(SECTION(Header))
-    db kFileHasIcon2bpp + kFileMarkerCircle + kFileHasTransfers
+    db kFileHasIcon2bpp | kFileMarkerCircle | kFileHasTransfers
     db CartridgeCodeUniversal  ; where file can run
     db .end - @ - 1            ; length of variable parts of header
     db $70                     ; owner code
@@ -46,7 +46,7 @@ MainMenu:
     trap LCDDisable
     ldx hl, LayoutMenu
     trap DrawLayout
-    ld a, LCDCF_OBJON + LCDCF_BGON
+    ld a, LCDCF_OBJON | LCDCF_BGON
     trap LCDEnable
     xor a
     ld [var_practice], a
@@ -114,7 +114,7 @@ Receive:
     ldh [$a0], a
     ld a, $18
     ldh [$9f], a
-    ld a, LCDCF_OBJON + LCDCF_BGON + LCDCF_WINON + LCDCF_WIN9C00
+    ld a, LCDCF_OBJON | LCDCF_BGON | LCDCF_WINON | LCDCF_WIN9C00
     trap LCDEnable
     ld a, $14
     ld [var_retries], a
@@ -285,7 +285,7 @@ PlayGame:
     ldh [$a0], a
     ld a, $18
     ldh [$9f], a
-    ld a, LCDCF_OBJON + LCDCF_BGON + LCDCF_WINON + LCDCF_WIN9C00
+    ld a, LCDCF_OBJON | LCDCF_BGON | LCDCF_WINON | LCDCF_WIN9C00
     trap LCDEnable
     xor a
     ld [var_cc65], a
@@ -361,7 +361,7 @@ PlayGame:
     trap DrawLayout
     ld hl, $0724
     trap MovePen
-    ld hl, var_status + 12
+    ld hl, var_status | 12
     trap DrawString
     ld a, $1e
     callx call_0916
@@ -370,8 +370,8 @@ PlayGame:
     trap AwaitFrame
     trap $d8
     ldh a, [$8a]
-    and (1 << BtnSel) + (1 << BtnB)
-    cp (1 << BtnSel) + (1 << BtnB)
+    and (1 << BtnSel) | (1 << BtnB)
+    cp (1 << BtnSel) | (1 << BtnB)
     jr nz, .awaitExit
 
     jr .exit
@@ -834,7 +834,7 @@ UpdateBall:
     trap $dc
     trap LCDDisable
     callx call_08d8
-    ld a, LCDCF_OBJON + LCDCF_BGON + LCDCF_WINON + LCDCF_WIN9C00
+    ld a, LCDCF_OBJON | LCDCF_BGON | LCDCF_WINON | LCDCF_WIN9C00
     trap LCDEnable
 
 .jr_000_081d
@@ -859,7 +859,7 @@ PrintDebugInfo:
     ld d, $00
     ld hl, var_status
     trap IntToString
-    ld hl, var_status + 3
+    ld hl, var_status | 3
     trap DrawString
     ret
 
