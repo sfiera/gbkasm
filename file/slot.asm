@@ -39,55 +39,52 @@ Main::
     ldh a, [$c6]
     ld l, a
     ld h, $00
-    trap $06
-    inc b
-    ld a, [bc]
-    nop
-    dec [hl]
-    nop
-    ld h, [hl]
-    nop
-    xor [hl]
-    nop
-    adc $00
+    trap JumpViaTable
+    db $04
+    dw jp_0121 - @
+    dw jp_014e - @
+    dw jp_0181 - @
+    dw jp_01cb - @
+    dw jp_01ed - @
+
+jp_0121:
     ld de, $0000
     ld c, $00
     callx @+$02fa
     ldh a, [$c9]
     or a
-    jr z, jr_000_014e
+    jr z, jp_014e
 
     dec a
     ldh [$c9], a
-    jr nz, jr_000_014e
+    jr nz, jp_014e
 
     xor a
     ldh [$c3], a
     ld de, $0000
     ld c, $00
 
-HeaderManufacturerCode::
     callx @+$02f9
     ld hl, $ffc6
     inc [hl]
     ld a, $5a
     ldh [$cb], a
 
-jr_000_014e::
+jp_014e::
     ld de, $0001
     ld c, $10
     callx @+$02cd
     ldh a, [$c6]
     cp $01
-    jr nz, jr_000_0181
+    jr nz, jp_0181
 
     ldh a, [$c9]
     or a
-    jr z, jr_000_0181
+    jr z, jp_0181
 
     dec a
     ldh [$c9], a
-    jr nz, jr_000_0181
+    jr nz, jp_0181
 
     xor a
     ldh [$c4], a
@@ -99,7 +96,7 @@ jr_000_014e::
     ld a, $b4
     ldh [$cb], a
 
-jr_000_0181::
+jp_0181::
     ldh a, [$c6]
     cp $02
     jr nz, jr_000_01bb
@@ -119,7 +116,7 @@ jr_000_0181::
     inc a
     ldh [$ca], a
     trap $dc
-    jr jr_000_01ed
+    jr jp_01ed
 
 jr_000_01a6::
     xor a
@@ -129,15 +126,17 @@ jr_000_01a6::
     callx @+$028a
     ld hl, $ffc6
     inc [hl]
-    jr jr_000_01ed
+    jr jp_01ed
 
 jr_000_01bb::
     ld de, $0002
     ld c, $20
     callx @+$0260
     trap RandNext
-    jr jr_000_01ed
+    jr jp_01ed
 
+
+jp_01cb:
     callx @+$03d5
     ld hl, $c760
     xor a
@@ -150,7 +149,7 @@ jr_000_01bb::
     ldh [$cb], a
     callx @+$0121
 
-jr_000_01ed::
+jp_01ed::
     ld c, $00
     ldh a, [$c9]
     or a
@@ -778,18 +777,15 @@ jr_000_051b::
     ld a, [$c760]
     ld l, a
     ld h, $00
-    trap $06
-    inc b
-    ld d, l
-    nop
-    ld b, h
-    nop
-    inc h
-    nop
-    inc b
-    nop
-    ld c, l
-    nop
+    trap JumpViaTable
+    db $04
+    dw jp_0608 - @
+    dw jp_05f9 - @
+    dw jp_05db - @
+    dw jp_05bd - @
+    dw jp_0608 - @
+
+jp_05bd:
     ld a, $02
     ld bc, $0100
     ld de, $0d01
@@ -798,6 +794,7 @@ jr_000_051b::
     ld bc, $0102
     ld de, $010d
     callx @+$00f9
+jp_05db:
     ld a, $00
     ld bc, $0000
     ld de, $0404
@@ -806,10 +803,12 @@ jr_000_051b::
     ld bc, $0202
     ld de, $0a0a
     callx @+$00db
+jp_05f9:
     ld a, $01
     ld bc, $0101
     ld de, $0707
     callx @+$00cc
+jp_0608:
     ld hl, $c762
     ld a, [hl+]
     or [hl]

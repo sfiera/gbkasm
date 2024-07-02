@@ -117,34 +117,32 @@ jr_001_4125:
 Jump_001_413a:
     call Call_001_4acb
     and $02
-    jr nz, jr_001_4154
+    jr nz, Jump_001_4154
 
     ld h, a
     ld l, c
-    trap $06
-    ld b, $13
-    nop
-    push de
-    ld [bc], a
-    ld a, [de]
-    nop
-    ld b, h
-    ld bc, $0168
-    ld l, [hl]
-    ld [bc], a
-    ld [bc], a
-    nop
+    trap JumpViaTable
+    db $06
+    dw Jump_001_4159 - @
+    dw Jump_001_441d - @
+    dw Jump_001_4164 - @
+    dw Jump_001_4290 - @
+    dw Jump_001_42b6 - @
+    dw Jump_001_43be - @
+    dw Jump_001_4154 - @
 
-jr_001_4154:
+Jump_001_4154:
     call Call_001_4b36
     jr jr_001_4125
 
+Jump_001_4159:
     ld hl, $c500
     trap $6d
     ld hl, data_01_4fb1
     jp Jump_001_43b4
 
 
+Jump_001_4164:
     ldh a, [$c0]
     ldh [$c2], a
     ldh a, [$c1]
@@ -380,6 +378,7 @@ Jump_001_42a6:
     jp Jump_001_410e
 
 
+Jump_001_42b6:
     ld hl, $c500
     ld a, [hl+]
     or [hl]
@@ -552,6 +551,7 @@ Jump_001_43b4:
     jp Jump_001_413a
 
 
+Jump_001_43be:
     call Call_001_4278
     jr z, jr_001_43b1
 
@@ -610,6 +610,8 @@ Call_001_43f1:
 data_01_440d::
     dk "エリアのあきができます»\n"
 
+
+Jump_001_441d:
     ld a, $c4
     ld h, $04
     ld bc, $0301
@@ -2686,10 +2688,14 @@ jr_001_5f67:
 
     ld l, a
     ld h, $00
-    trap $06
-
-data_01_5f75::
-    db $06, $31, $ff, $a7, $00, $f7, $00, $3e, $01, $39, $00, $24, $00
+    trap JumpViaTable
+    db $06
+    dw Jump_001_5ea7 - @
+    dw Jump_001_601f - @
+    dw Jump_001_6071 - @
+    dw Jump_001_60ba - @
+    dw Jump_001_5fb7 - @
+    dw Jump_001_5fa4 - @
 
 data_01_5f82::
     db $06, $04, $05, $70, $7f, $02, $00
@@ -2715,6 +2721,7 @@ Call_001_5f89:
     ret
 
 
+Jump_001_5fa4:
     ldh a, [$c2]
     or a
     jr z, jr_001_5fb5
@@ -2729,6 +2736,8 @@ Call_001_5f89:
 Jump_001_5fb5:
 jr_001_5fb5:
     trap $01
+
+Jump_001_5fb7:
     call Call_001_657f
     ldh a, [$c0]
     push af
@@ -2797,6 +2806,8 @@ jr_001_6002:
     trap $db
     jr jr_001_5fca
 
+
+Jump_001_601f:
     ldh a, [$c0]
     push af
     xor a
@@ -2853,6 +2864,7 @@ jr_001_606b:
     jp Jump_001_5f67
 
 
+Jump_001_6071:
     call Call_001_657f
     ld a, $0c
     call Call_001_5f89
@@ -2897,6 +2909,8 @@ jr_001_60b5:
     call Call_001_6112
     jr jr_001_60a7
 
+
+Jump_001_60ba:
     ldh a, [$c2]
     or a
     jr z, jr_001_60c9

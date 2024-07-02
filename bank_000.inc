@@ -1271,7 +1271,7 @@ jr_000_0581:
     ld d, $20
     ld e, $3e
     trap $5e
-    jr c, jr_000_05b2
+    jr c, Jump_000_05b2
 
     ld c, a
     inc a
@@ -1283,24 +1283,19 @@ jr_000_0581:
 
     ld l, c
     ld h, $00
-    trap $06
-    ld [$0117], sp
-    nop
-    ld [bc], a
-    add hl, bc
-    ld [bc], a
-    ld [de], a
-    ld [bc], a
-    dec de
-    ld [bc], a
-    inc h
-    ld [bc], a
-    dec l
-    ld [bc], a
-    ld [bc], a
-    nop
+    trap JumpViaTable
+    db $08
+    dw Jump_000_06b9 - @
+    dw Jump_000_07a4 - @
+    dw Jump_000_07af - @
+    dw Jump_000_07ba - @
+    dw Jump_000_07c5 - @
+    dw Jump_000_07d0 - @
+    dw Jump_000_07db - @
+    dw Jump_000_05b2 - @
 
-jr_000_05b2:
+
+Jump_000_05b2:
     trap $01
 
 Call_000_05b4:
@@ -1347,7 +1342,8 @@ strPasswordMenuMessage::
 strPasswordDashes::
     dp "--------\n"
 
-code_00_06b9::
+
+Jump_000_06b9::
     call Call_000_07e6
     ld a, $20
     ld de, $0204
@@ -1460,42 +1456,43 @@ strEnterPassword::
     dk "«STARTを　おしてください　　»\n"
     dk "\n"
 
-code_00_07a4::
+
+Jump_000_07a4::
     ld de, $4000
     ld a, $07
     call Call_000_089a
     jp Jump_000_0543
 
 
-code_00_07af::
+Jump_000_07af::
     ld de, $4000
     ld a, $09
     call Call_000_089a
     jp Jump_000_0543
 
 
-code_00_07ba::
+Jump_000_07ba::
     ld de, $4000
     ld a, $0b
     call Call_000_089a
     jp Jump_000_0543
 
 
-code_00_07c5::
+Jump_000_07c5::
     ld de, $4000
     ld a, $0d
     call Call_000_089a
     jp Jump_000_0543
 
 
-code_00_07d0::
+Jump_000_07d0::
     ld de, $4000
     ld a, $0e
     call Call_000_089a
     jp Jump_000_0543
 
 
-code_00_07db::
+Jump_000_07db::
     ld de, $4000
     ld a, $0f
     call Call_000_089a
