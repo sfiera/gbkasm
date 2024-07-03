@@ -831,7 +831,7 @@ layout_0615:
     dk $00, $20, "--------------------\n"
     db $00, $21, " psvy ICON EDIT\n"
     db $00, $22, " qtwz X =\n"
-    db $00, $23, " rux", $a2, " ", "Y =\n"
+    db $00, $23, " rux｢ Y =\n"
 
 layout_0656:
     dk $06, $01, "ICON EDIT\n"
