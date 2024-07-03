@@ -50,48 +50,50 @@ Main::
     ld a, $a0
     ldh [$a0], a
     ldh [$9f], a
-    callx @+$0a1b
-    callx @+$009c
+    callx call_0b47
+    callx call_01cf
     ld a, $07
     trap LCDEnable
     ld a, $01
     ld [$c665], a
     xor a
     ld [$c656], a
-    ld sp, $e000
-    callx @+$0584
-    callx @+$022e
-    callx @+$04ba
 
-jr_000_015b::
+jp_0143:
+    ld sp, $e000
+    callx call_06ce
+    callx call_037f
+    callx call_0612
+
+jr_015b::
     trap AwaitFrame
     trap InputButtons
-    callx @+$0575
-    callx @+$04dc
-    callx @+$02a7
+    callx call_06d8
+    callx call_0646
+    callx call_0418
     ld bc, $2800
     trap $c4
-    callx @+$0594
-    callx @+$03ad
-    callx @+$064d
-    callx @+$06e1
+    callx call_0711
+    callx call_0531
+    callx call_07d8
+    callx call_0873
     ld a, [$c665]
     cp $02
-    jr nz, jr_000_015b
+    jr nz, jr_015b
 
     ldh a, [$8b]
     and $02
-    jr nz, jr_000_0202
+    jr nz, jr_0202
 
     ldh a, [$8b]
 
-jr_000_01a4::
+jr_01a4::
     and $04
-    jr nz, jr_000_0204
+    jr nz, jr_0204
 
     ldh a, [$8b]
     and $01
-    jr z, jr_000_015b
+    jr z, jr_015b
 
     ld a, $03
     ld [$c665], a
@@ -104,9 +106,11 @@ jr_000_01a4::
     ldx hl, data_sounds.bgm
     ld a, [hl]
     trap AudioPlayMusic
-    callx @+$059b
-    jr jr_000_015b
+    callx call_0765
+    jr jr_015b
 
+
+call_01cf:
     ld hl, $9800
     ld bc, $0200
     ld e, $20
@@ -121,27 +125,29 @@ jr_000_01a4::
     trap MemSet
     ldx hl, layout_0aff
     trap DrawLayout
-    callx @+$056e
-    callx @+$05ad
+    callx call_0765
+    callx call_07ab
     ret
 
 
-jr_000_0202::
+jr_0202::
     trap ExitToMenu
 
-jr_000_0204:
+jr_0204:
     trap LCDDisable
     ld bc, $2800
     trap $c4
-    callx @+$ffc0
+    callx call_01cf
     ldx hl, layout_033c
     trap DrawLayout
     xor a
     ld [$c656], a
     ld [$c66d], a
-    callx @+$00e9
+    callx call_030c
     ld a, $07
     trap LCDEnable
+
+jp_022a:
     trap AwaitFrame
     trap InputButtons
     ld a, [$c656]
@@ -158,31 +164,31 @@ jr_000_0204:
     trap $c5
     ldh a, [$8b]
     and $40
-    jr z, jr_000_0257
+    jr z, jr_0257
 
     ld a, [$c656]
     or a
-    jr z, jr_000_0257
+    jr z, jr_0257
 
     dec a
     ld [$c656], a
 
-jr_000_0257::
+jr_0257::
     ldh a, [$8b]
     and $80
-    jr z, jr_000_0268
+    jr z, jr_0268
 
     ld a, [$c656]
     cp $04
-    jr nc, jr_000_0268
+    jr nc, jr_0268
 
     inc a
     ld [$c656], a
 
-jr_000_0268::
+jr_0268::
     ldh a, [$8b]
     and $10
-    jr z, jr_000_029b
+    jr z, jr_029b
 
     ldx hl, data_sounds.bgm
     ld d, $00
@@ -190,17 +196,17 @@ jr_000_0268::
     ld e, a
     add hl, de
     or a
-    jr nz, jr_000_0281
+    jr nz, jr_0281
 
     ld a, [$c653]
-    jr jr_000_0284
+    jr jr_0284
 
-jr_000_0281::
+jr_0281::
     ld a, [$c652]
 
-jr_000_0284::
+jr_0284::
     cp [hl]
-    jr z, jr_000_029b
+    jr z, jr_029b
 
     ld a, $0a
     ld [$0000], a
@@ -208,12 +214,12 @@ jr_000_0284::
     xor a
     ld [$0000], a
     ld a, [$c656]
-    callx @+$0082
+    callx call_031a
 
-jr_000_029b::
+jr_029b::
     ldh a, [$8b]
     and $20
-    jr z, jr_000_02c4
+    jr z, jr_02c4
 
     ldx hl, data_sounds.bgm
     ld d, $00
@@ -222,7 +228,7 @@ jr_000_029b::
     add hl, de
     ld a, [hl]
     or a
-    jr z, jr_000_02c4
+    jr z, jr_02c4
 
     ld a, $0a
     ld [$0000], a
@@ -230,12 +236,12 @@ jr_000_029b::
     xor a
     ld [$0000], a
     ld a, [$c656]
-    callx @+$0059
+    callx call_031a
 
-jr_000_02c4::
+jr_02c4::
     ldh a, [$8b]
     and $01
-    jr z, jr_000_02e2
+    jr z, jr_02e2
 
     ldx hl, data_sounds.bgm
     ld d, $00
@@ -245,25 +251,25 @@ jr_000_02c4::
     ld d, [hl]
     ld a, e
     or a
-    jr z, jr_000_02df
+    jr z, jr_02df
 
     ld a, d
     trap AudioPlaySound
-    jr jr_000_02e2
+    jr jr_02e2
 
-jr_000_02df::
+jr_02df::
     ld a, d
     trap AudioPlayMusic
 
-jr_000_02e2::
+jr_02e2::
     ldh a, [$8b]
     and $02
-    jr z, jr_000_0308
+    jr z, jr_0308
 
     trap LCDDisable
     ld a, $01
     ld [$c665], a
-    callx @+$fedc
+    callx call_01cf
     xor a
     ld [$c656], a
     ld a, $07
@@ -272,20 +278,21 @@ jr_000_02e2::
     trap AudioPlayMusic
     xor a
     trap AudioPlaySound
-    jx @+$fe3e
+    jx jp_0143
 
 
-jr_000_0308::
-    jx @+$ff21
+jr_0308::
+    jx jp_022a
 
 
+call_030c:
     xor a
 
-jr_000_030d::
+jr_030d::
     callx call_031a
     inc a
     cp $05
-    jr c, jr_000_030d
+    jr c, jr_030d
 
     ret
 
@@ -330,10 +337,10 @@ call_037f:
     xor a
     ld b, $50
 
-jr_000_0385::
+jr_0385::
     ld [hl+], a
     dec b
-    jr nz, jr_000_0385
+    jr nz, jr_0385
 
     ldx hl, data_0b17
     ld a, [$c656]
@@ -359,7 +366,7 @@ jr_000_0385::
     ld d, [hl]
     inc hl
     push hl
-    callx @+$003f
+    callx call_03f5
     pop hl
     ld a, [hl+]
     ld b, [hl]
@@ -367,7 +374,7 @@ jr_000_0385::
     ld c, [hl]
     inc hl
     ld d, [hl]
-    callx @+$0031
+    callx call_03f5
     ldx hl, data_0b37
     ld a, [$c657]
     dec a
@@ -386,31 +393,32 @@ jr_000_0385::
     ld [$c65b], a
     ld a, [$c656]
     and $03
-    jr z, jr_000_03f0
+    jr z, jr_03f0
 
     ld a, $01
 
-jr_000_03f0::
+jr_03f0::
     inc a
     ld [$c65d], a
     ret
 
 
+call_03f5:
     ld hl, $c600
     push af
     push bc
     push de
     ld b, $10
 
-jr_000_03fd::
+jr_03fd::
     ld a, [hl]
     or a
-    jr z, jr_000_040c
+    jr z, jr_040c
 
     ld de, $0005
     add hl, de
     dec b
-    jr nz, jr_000_03fd
+    jr nz, jr_03fd
 
     pop de
     pop bc
@@ -418,7 +426,7 @@ jr_000_03fd::
     ret
 
 
-jr_000_040c::
+jr_040c::
     pop de
     pop bc
     pop af
@@ -433,6 +441,7 @@ jr_000_040c::
     ret
 
 
+call_0418:
     ld hl, $c65c
     inc [hl]
     ld a, [hl]
@@ -441,94 +450,98 @@ jr_000_040c::
 
     ld a, [$c665]
     cp $03
-    jr c, jr_000_042a
+    jr c, jr_042a
 
     and $80
     ret z
 
-jr_000_042a::
+jr_042a::
     ld hl, $c600
     ld c, $10
 
-jr_000_042f::
+jr_042f::
     ld a, [hl]
     cp $01
-    jr c, jr_000_0440
+    jr c, jr_0440
 
-    jr z, jr_000_0448
+    jr z, jr_0448
 
     cp $03
-    jr c, jr_000_046f
+    jr c, jr_046f
 
-    jr z, jr_000_049b
+    jr z, jr_049b
 
-    jx @+$0085
+    jx call_04c2
 
 
-jr_000_0440::
+jr_0440::
     ld de, $0005
     add hl, de
+
+jp_0444:
     dec c
-    jr nz, jr_000_042f
+    jr nz, jr_042f
 
     ret
 
 
-jr_000_0448::
+jr_0448::
     push bc
     push hl
-    callx @+$00d0
+    callx call_051e
     ld h, $04
-    callx @+$00ad
+    callx call_0504
     ld a, [$c658]
     ld l, a
-    callx @+$0087
+    callx call_04e9
     pop hl
-    callx @+$00bd
-    jr jr_000_0496
+    callx call_0527
+    jr jr_0496
 
-jr_000_046f::
+jr_046f::
     push bc
     push hl
-    callx @+$00a9
+    callx call_051e
     ld h, $08
-    callx @+$0086
+    callx call_0504
     ld a, [$c659]
     ld l, a
-    callx @+$0060
+    callx call_04e9
     pop hl
-    callx @+$0096
-    jr jr_000_0496
+    callx call_0527
+    jr jr_0496
 
-jr_000_0496::
+jr_0496::
     pop bc
-    jx @+$ffac
+    jx jp_0444
 
 
-jr_000_049b::
+jr_049b::
     push bc
     push hl
-    callx @+$007d
+    callx call_051e
     ld h, $10
-    callx @+$005a
+    callx call_0504
     ld a, [$c65a]
     ld l, a
-    callx @+$0034
+    callx call_04e9
     pop hl
-    callx @+$006a
-    jr jr_000_0496
+    callx call_0527
+    jr jr_0496
 
+
+call_04c2:
     push bc
     push hl
-    callx @+$0056
+    callx call_051e
     ld h, $17
-    callx @+$0033
+    callx call_0504
     ld a, [$c65b]
     ld l, a
     callx call_04e9
     pop hl
-    callx @+$0043
-    jr jr_000_0496
+    callx call_0527
+    jr jr_0496
 
 
 call_04e9:
@@ -542,14 +555,14 @@ call_04e9:
     add b
     ld b, a
     and $80
-    jr z, jr_000_0500
+    jr z, jr_0500
 
     ld b, $80
     ld c, l
     ret
 
 
-jr_000_0500::
+jr_0500::
     ld a, c
     add h
     ld c, a
@@ -563,21 +576,21 @@ call_0504:
     ld a, e
     sla a
     ld a, d
-    jr nc, jr_000_0514
+    jr nc, jr_0514
 
     sub h
     ret nc
 
     ld d, h
 
-jr_000_0510::
+jr_0510::
     xor a
     sub e
     ld e, a
     ret
 
 
-jr_000_0514::
+jr_0514::
     add h
     cp $a0
     ret c
@@ -585,8 +598,10 @@ jr_000_0514::
     ld a, $9f
     sub h
     ld a, d
-    jr jr_000_0510
+    jr jr_0510
 
+
+call_051e:
     inc hl
     ld b, [hl]
     inc hl
@@ -598,6 +613,7 @@ jr_000_0514::
     ret
 
 
+call_0527:
     inc hl
     ld [hl], b
     inc hl
@@ -610,45 +626,40 @@ jr_000_0514::
     ret
 
 
+call_0531:
     ld a, [$c65d]
     and $03
-    jr z, jr_000_057a
+    jr z, jr_057a
 
     cp $02
-    jr z, jr_000_0566
+    jr z, jr_0566
 
-    jr c, jr_000_0552
+    jr c, jr_0552
 
     ld a, $0a
     ld [$c666], a
     ld hl, $c600
-    callx @+$0044
+    callx call_058e
     ld hl, $c605
     jr call_058e
 
-jr_000_0552::
+jr_0552::
     ld a, $0a
     ld [$c666], a
     ld hl, $c605
-    pushx @+$0006
-    pushx @+$0030
-
-jr_000_0560::
-    ret
-
-
+    callx call_058e
     ld hl, $c600
     jr call_058e
 
-jr_000_0566::
+jr_0566::
     ld a, $f6
     ld [$c666], a
     ld hl, $c64b
-    callx @+$001c
+    callx call_058e
     ld hl, $c646
     jr call_058e
 
-jr_000_057a::
+jr_057a::
     ld a, $f6
     ld [$c666], a
     ld hl, $c646
@@ -662,33 +673,33 @@ call_058e:
     ld e, a
     ld c, $08
 
-jr_000_0597::
+jr_0597::
     ld a, [hl]
     cp $01
-    jr c, jr_000_05a6
+    jr c, jr_05a6
 
-    jr z, jr_000_05b1
+    jr z, jr_05b1
 
     cp $03
-    jr c, jr_000_05c0
+    jr c, jr_05c0
 
-    jr z, jr_000_05d3
+    jr z, jr_05d3
 
-    jr jr_000_05e2
+    jr jr_05e2
 
-jr_000_05a6::
+jr_05a6::
     push de
     ld a, [$c666]
     add l
     ld l, a
     pop de
     dec c
-    jr nz, jr_000_0597
+    jr nz, jr_0597
 
     ret
 
 
-jr_000_05b1::
+jr_05b1::
     push hl
     push bc
     inc hl
@@ -699,9 +710,9 @@ jr_000_05b1::
     ld h, d
     ld l, e
     ldx de, sprite_bubble_s
-    jr jr_000_05ef
+    jr jr_05ef
 
-jr_000_05c0::
+jr_05c0::
     push hl
     push bc
     inc hl
@@ -712,14 +723,14 @@ jr_000_05c0::
     ld h, d
     ld l, e
     ldx de, sprite_bubble_m
-    jr jr_000_05ef
+    jr jr_05ef
 
-jr_000_05cf::
+jr_05cf::
     pop bc
     pop hl
-    jr jr_000_05a6
+    jr jr_05a6
 
-jr_000_05d3::
+jr_05d3::
     push hl
     push bc
     inc hl
@@ -730,9 +741,9 @@ jr_000_05d3::
     ld h, d
     ld l, e
     ldx de, sprite_bubble_l
-    jr jr_000_05ef
+    jr jr_05ef
 
-jr_000_05e2::
+jr_05e2::
     push hl
     push bc
     inc hl
@@ -744,10 +755,10 @@ jr_000_05e2::
     ld l, e
     ldx de, sprite_bubble_xl
 
-jr_000_05ef::
+jr_05ef::
     ld a, [de]
     cp $80
-    jr z, jr_000_060a
+    jr z, jr_060a
 
     add b
     ld [hl+], a
@@ -764,18 +775,20 @@ jr_000_05ef::
     ld [hl+], a
     ld a, l
     cp $a0
-    jr c, jr_000_05ef
+    jr c, jr_05ef
 
     ld l, $10
-    jr jr_000_05ef
+    jr jr_05ef
 
-jr_000_060a::
+jr_060a::
     ld a, l
     ld [$c667], a
     ld d, h
     ld e, l
-    jr jr_000_05cf
+    jr jr_05cf
 
+
+call_0612:
     xor a
     ld [$c65e], a
     ld [$c65f], a
@@ -784,6 +797,7 @@ jr_000_060a::
     ret
 
 
+call_0620:
     ld a, [$c660]
     or a
     ret nz
@@ -804,17 +818,18 @@ jr_000_060a::
     ret
 
 
+call_0646:
     ld a, [$c660]
     dec a
-    jr z, jr_000_0650
+    jr z, jr_0650
 
     dec a
-    jr z, jr_000_069e
+    jr z, jr_069e
 
     ret
 
 
-jr_000_0650::
+jr_0650::
     ld a, [$c661]
     dec a
     ld [$c661], a
@@ -824,7 +839,7 @@ jr_000_0650::
     ld [$c661], a
     ld a, [$c65f]
     dec a
-    jr z, jr_000_0693
+    jr z, jr_0693
 
     ld h, $98
     ld [$c65f], a
@@ -834,11 +849,11 @@ jr_000_0650::
     sla a
     sla a
     sla a
-    jr nc, jr_000_0676
+    jr nc, jr_0676
 
     inc h
 
-jr_000_0676::
+jr_0676::
     ld b, a
     ld a, [$c65e]
     or b
@@ -852,18 +867,18 @@ jr_000_0676::
     pop hl
     ld a, l
     add $20
-    jr nc, jr_000_068d
+    jr nc, jr_068d
 
     inc h
 
-jr_000_068d::
+jr_068d::
     ld l, a
     ld e, $af
     trap MemSet
     ret
 
 
-jr_000_0693::
+jr_0693::
     ld a, $02
     ld [$c660], a
     ld a, $0e
@@ -871,7 +886,7 @@ jr_000_0693::
     ret
 
 
-jr_000_069e::
+jr_069e::
     ld h, $98
     ld a, [$c65f]
     dec a
@@ -881,11 +896,11 @@ jr_000_069e::
     sla a
     sla a
     sla a
-    jr nc, jr_000_06b4
+    jr nc, jr_06b4
 
     inc h
 
-jr_000_06b4::
+jr_06b4::
     ld b, a
     ld a, [$c65e]
     or b
@@ -903,6 +918,7 @@ jr_000_06b4::
     ret
 
 
+call_06ce:
     ld a, $50
     ld [$c662], a
     xor a
@@ -912,6 +928,7 @@ Call_000_06d7::
     ret
 
 
+call_06d8:
     ld a, [$c665]
     or a
     ret nz
@@ -925,52 +942,53 @@ Call_000_06d7::
     ldh a, [$8a]
     ld c, a
     and $20
-    jr z, jr_000_06f4
+    jr z, jr_06f4
 
     ld a, b
     cp $06
-    jr c, jr_000_06f4
+    jr c, jr_06f4
 
     dec b
     dec b
 
-jr_000_06f4::
+jr_06f4::
     ld a, c
     and $10
-    jr z, jr_000_0700
+    jr z, jr_0700
 
     ld a, b
     cp $9b
-    jr nc, jr_000_0700
+    jr nc, jr_0700
 
     inc b
     inc b
 
-jr_000_0700::
+jr_0700::
     ld a, b
     ld [$c662], a
     ld a, c
     and $01
-    jr z, jr_000_0710
+    jr z, jr_0710
 
-    callx @+$ff13
+    callx call_0620
 
-jr_000_0710::
+jr_0710::
     ret
 
 
+call_0711:
     ld a, [$c665]
     or a
-    jr z, jr_000_071a
+    jr z, jr_071a
 
     cp $03
     ret c
 
-jr_000_071a::
+jr_071a::
     ld hl, $c664
     ld a, [hl]
     or a
-    jr nz, jr_000_0740
+    jr nz, jr_0740
 
     ld a, [$c65c]
     ld l, $b0
@@ -979,7 +997,7 @@ jr_000_071a::
     srl a
     and $04
 
-jr_000_072e::
+jr_072e::
     add l
     ld l, a
     ld h, $00
@@ -992,34 +1010,35 @@ jr_000_072e::
     ret
 
 
-jr_000_0740::
+jr_0740::
     cp $04
     ret z
 
     ld hl, $c663
     dec [hl]
-    jr nz, jr_000_0754
+    jr nz, jr_0754
 
     ld [hl], $28
     ld hl, $c664
     inc [hl]
     ld a, [hl]
     cp $04
-    jr z, jr_000_075f
+    jr z, jr_075f
 
-jr_000_0754::
+jr_0754::
     ld a, [$c664]
     sla a
     sla a
     ld l, $b4
-    jr jr_000_072e
+    jr jr_072e
 
-jr_000_075f::
+jr_075f::
     ld a, $80
     ld [$c665], a
     ret
 
 
+call_0765:
     ld hl, $0311
     trap DrawAt
     ld hl, $c650
@@ -1027,7 +1046,7 @@ jr_000_075f::
     inc hl
     ld d, [hl]
     push de
-    callx @+$003d
+    callx call_07b2
     ld hl, $0d11
     trap DrawAt
     pop bc
@@ -1039,7 +1058,7 @@ jr_000_075f::
     cp d
     ret c
 
-    jr nz, jr_000_078e
+    jr nz, jr_078e
 
     ld a, c
     cp e
@@ -1047,7 +1066,7 @@ jr_000_075f::
 
     ret z
 
-jr_000_078e::
+jr_078e::
     ld d, b
     ld e, c
     ld a, $0a
@@ -1060,18 +1079,21 @@ jr_000_078e::
     ld hl, $c654
     ld a, [hl]
     or a
-    jr nz, jr_000_07ab
+    jr nz, call_07ab
 
     inc [hl]
     ldx hl, data_sounds.high_score
     ld a, [hl]
     trap AudioPlaySound
 
-jr_000_07ab::
+
+call_07ab::
     ldx hl, data_high_score
     ld a, [hl+]
     ld e, a
     ld d, [hl]
+
+call_07b2:
     ld hl, $c66e
     trap StrConvInt
     ld hl, $c66e
@@ -1079,6 +1101,7 @@ jr_000_07ab::
     ret
 
 
+call_07bd:
     push hl
     ld a, [$c65d]
     add a
@@ -1089,17 +1112,18 @@ jr_000_07ab::
     ld hl, $c650
     add [hl]
     ld [hl], a
-    jr nc, jr_000_07cf
+    jr nc, jr_07cf
 
     inc hl
     inc [hl]
 
-jr_000_07cf::
-    callx @+$ff92
+jr_07cf::
+    callx call_0765
     pop hl
     ret
 
 
+call_07d8:
     ld hl, $c665
     ld a, [hl]
     or a
@@ -1108,10 +1132,10 @@ jr_000_07cf::
     cp $02
     ret z
 
-    jr c, jr_000_0816
+    jr c, jr_0816
 
     cp $03
-    jr nz, jr_000_0805
+    jr nz, jr_0805
 
     inc [hl]
     ldx hl, layout_0a72
@@ -1125,12 +1149,12 @@ jr_000_07cf::
     ld hl, $c66e
     trap StrConvInt
     trap DrawString
-    jx @+$f941
+    jx jp_0143
 
 
-jr_000_0805::
+jr_0805::
     cp $80
-    jr nc, jr_000_081e
+    jr nc, jr_081e
 
     inc [hl]
     cp $5a
@@ -1143,15 +1167,15 @@ jr_000_0805::
     ret
 
 
-jr_000_0816::
+jr_0816::
     inc [hl]
     ldx hl, layout_0a30
     trap DrawLayout
     ret
 
 
-jr_000_081e::
-    jr nz, jr_000_0833
+jr_081e::
+    jr nz, jr_0833
 
     ld a, [$c660]
     or a
@@ -1167,11 +1191,11 @@ jr_000_081e::
     ret
 
 
-jr_000_0833::
+jr_0833::
     cp $c0
-    jr c, jr_000_0846
+    jr c, jr_0846
 
-    jr nz, jr_000_0861
+    jr nz, jr_0861
 
     ld a, [$c660]
     or a
@@ -1183,29 +1207,29 @@ jr_000_0833::
     ret
 
 
-jr_000_0846::
+jr_0846::
     ld a, [$c65c]
     and $0f
-    jr nz, jr_000_0853
+    jr nz, jr_0853
 
     inc [hl]
     ld a, [hl]
     cp $c0
-    jr z, jr_000_0858
+    jr z, jr_0858
 
-jr_000_0853::
+jr_0853::
     ldh a, [$8a]
     and $03
     ret z
 
-jr_000_0858::
+jr_0858::
     ld [hl], $01
     ldx hl, layout_0ad1
     trap DrawLayout
     ret
 
 
-jr_000_0861::
+jr_0861::
     inc a
     ld [hl], a
     cp $ff
@@ -1219,9 +1243,10 @@ jr_000_0861::
     ret
 
 
+call_0873:
     ld a, [$c660]
     dec a
-    jr nz, jr_000_08a1
+    jr nz, jr_08a1
 
     ld a, [$c65e]
     sla a
@@ -1241,9 +1266,9 @@ jr_000_0861::
     sla a
     sla a
     ld e, a
-    callx @+$001b
+    callx call_08b9
 
-jr_000_08a1::
+jr_08a1::
     ld a, [$c664]
     or a
     ret nz
@@ -1253,17 +1278,18 @@ jr_000_08a1::
     ld b, a
     ld c, $08
     ld de, $7410
-    callx @+$0065
+    callx call_091a
     ret
 
 
+call_08b9:
     ld hl, $c600
     ld a, $10
 
-jr_000_08be::
+jr_08be::
     push af
-    callx @+$0087
-    jr c, jr_000_0911
+    callx call_094a
+    jr c, jr_0911
 
     pop af
     push hl
@@ -1271,14 +1297,14 @@ jr_000_08be::
     ld a, [hl]
     trap AudioPlaySound
     pop hl
-    callx @+$fee7
+    callx call_07bd
     ld a, $02
     ld [$c660], a
     ld a, $0e
     ld [$c65f], a
     ld a, [hl]
     dec a
-    jr z, jr_000_0902
+    jr z, jr_0902
 
     ld [hl+], a
     ld c, a
@@ -1293,13 +1319,13 @@ jr_000_08be::
     ld e, a
     ld a, c
     ld c, $00
-    callx @+$fafb
+    callx call_03f5
     ld hl, $c65d
     inc [hl]
     ret
 
 
-jr_000_0902::
+jr_0902::
     ld [hl], $00
     ld hl, $c65d
     dec [hl]
@@ -1312,17 +1338,18 @@ jr_000_0902::
     ret
 
 
-jr_000_0911::
+jr_0911::
     ld a, $05
     add l
     ld l, a
     pop af
     dec a
-    jr nz, jr_000_08be
+    jr nz, jr_08be
 
     ret
 
 
+call_091a:
     ld a, [$c665]
     or a
     ret nz
@@ -1330,10 +1357,10 @@ jr_000_0911::
     ld hl, $c600
     ld a, $10
 
-jr_000_0924::
+jr_0924::
     push af
-    callx @+$0021
-    jr c, jr_000_0941
+    callx call_094a
+    jr c, jr_0941
 
     pop af
     ldx hl, data_sounds.dead
@@ -1346,156 +1373,157 @@ jr_000_0924::
     ret
 
 
-jr_000_0941::
+jr_0941::
     ld a, $05
     add l
     ld l, a
     pop af
     dec a
-    jr nz, jr_000_0924
+    jr nz, jr_0924
 
     ret
 
 
+call_094a:
     push hl
     ld a, [hl+]
     cp $01
-    jr c, jr_000_095a
+    jr c, jr_095a
 
-    jr z, jr_000_095c
+    jr z, jr_095c
 
     cp $03
-    jr c, jr_000_097c
+    jr c, jr_097c
 
-    jr z, jr_000_0998
+    jr z, jr_0998
 
-    jr jr_000_09b4
+    jr jr_09b4
 
-jr_000_095a::
+jr_095a::
     pop hl
     ret
 
 
-jr_000_095c::
+jr_095c::
     ld a, [hl]
     sub d
-    jr c, jr_000_0979
+    jr c, jr_0979
 
     sub e
-    jr c, jr_000_0967
+    jr c, jr_0967
 
     sub $08
-    jr nc, jr_000_0979
+    jr nc, jr_0979
 
-jr_000_0967::
+jr_0967::
     inc hl
     inc hl
     ld a, [hl]
     add $03
     sub b
-    jr c, jr_000_0979
+    jr c, jr_0979
 
     sub c
-    jr c, jr_000_0976
+    jr c, jr_0976
 
     sub $06
-    jr nc, jr_000_0979
+    jr nc, jr_0979
 
-jr_000_0976::
+jr_0976::
     xor a
-    jr jr_000_095a
+    jr jr_095a
 
-jr_000_0979::
+jr_0979::
     scf
-    jr jr_000_095a
+    jr jr_095a
 
-jr_000_097c::
+jr_097c::
     ld a, [hl]
     sub d
-    jr c, jr_000_0979
+    jr c, jr_0979
 
 
 call_0980:
     sub e
-    jr c, jr_000_0987
+    jr c, jr_0987
 
     sub $10
-    jr nc, jr_000_0979
+    jr nc, jr_0979
 
-jr_000_0987::
+jr_0987::
     inc hl
     inc hl
     ld a, [hl]
     add $06
     sub b
-    jr c, jr_000_0979
+    jr c, jr_0979
 
     sub c
-    jr c, jr_000_0976
+    jr c, jr_0976
 
     sub $0c
-    jr nc, jr_000_0979
+    jr nc, jr_0979
 
-    jr jr_000_0976
+    jr jr_0976
 
-jr_000_0998::
+jr_0998::
     ld a, [hl]
     sub d
-    jr c, jr_000_0979
+    jr c, jr_0979
 
     sub e
-    jr c, jr_000_09a3
+    jr c, jr_09a3
 
     sub $20
-    jr nc, jr_000_0979
+    jr nc, jr_0979
 
-jr_000_09a3::
+jr_09a3::
     inc hl
     inc hl
     ld a, [hl]
     add $0e
     sub b
-    jr c, jr_000_0979
+    jr c, jr_0979
 
 
 call_09ab:
     sub c
-    jr c, jr_000_0976
+    jr c, jr_0976
 
     sub $1c
-    jr nc, jr_000_0979
+    jr nc, jr_0979
 
-jr_000_09b2::
-    jr jr_000_0976
+jr_09b2::
+    jr jr_0976
 
-jr_000_09b4::
+jr_09b4::
     ld a, [hl]
     sub d
-    jr c, jr_000_0979
+    jr c, jr_0979
 
     sub e
-    jr c, jr_000_09bf
+    jr c, jr_09bf
 
     sub $2c
-    jr nc, jr_000_0979
+    jr nc, jr_0979
 
-jr_000_09bf::
+jr_09bf::
     inc hl
     inc hl
     ld a, [hl]
     add $14
     sub b
-    jr c, jr_000_0979
+    jr c, jr_0979
 
 
 call_09c7:
     sub c
-    jr c, jr_000_0976
+    jr c, jr_0976
 
     sub $28
-    jr nc, jr_000_0979
+    jr nc, jr_0979
 
-    jr jr_000_0976
+    jr jr_0976
 
 
 sprite_bubble_s:
@@ -1583,34 +1611,32 @@ data_0b17:
 
 
 data_0b37:
-    xor $e8
-    ld [c], a
-    call c, $dfe8
-    push de
-    adc $e3
-    pushx @+$c3cc
-    rst $18
-    pop de
-    add $bb
+    db $ee, $e8, $e2, $dc
+    db $e8, $df, $d5, $ce
+    db $e3, $d7, $cc, $c3
+    db $df, $d1, $c6, $bb
+
+
+call_0b47:
     ld a, [CartridgeCodeAddr]
     ld de, $1b38
     cp CART_BDAMAN
-    jr z, jr_000_0b53
+    jr z, jr_0b53
 
     trap AudioGetCount
 
-jr_000_0b53::
+jr_0b53::
     ld hl, $c652
     ld [hl], e
     inc hl
     ld [hl], d
     ldx hl, data_sounds.bgm
-    ld b, $04
+    ld b, data_sounds.end - data_sounds.shot
     ld a, [hl]
     cp d
-    jr c, jr_000_0b70
+    jr c, jr_0b70
 
-    jr z, jr_000_0b70
+    jr z, jr_0b70
 
     ld a, $0a
     ld [$0000], a
@@ -1618,13 +1644,13 @@ jr_000_0b53::
     xor a
     ld [$0000], a
 
-jr_000_0b70::
+jr_0b70::
     inc hl
     ld a, [hl]
     cp e
-    jr c, jr_000_0b82
+    jr c, jr_0b82
 
-    jr z, jr_000_0b82
+    jr z, jr_0b82
 
     ld a, $0a
     ld [$0000], a
@@ -1632,9 +1658,9 @@ jr_000_0b70::
     xor a
     ld [$0000], a
 
-jr_000_0b82::
+jr_0b82::
     dec b
-    jr nz, jr_000_0b70
+    jr nz, jr_0b70
 
     ret
 
@@ -1658,3 +1684,4 @@ data_sounds:
     db $1b
 .dead
     db $15
+.end
