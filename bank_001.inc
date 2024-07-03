@@ -658,7 +658,7 @@ Jump_001_441d:
 
 jr_001_4489:
     trap $b1
-    trap GetButtons
+    trap InputButtons
     and $03
     jr z, jr_001_4489
 
@@ -2196,7 +2196,7 @@ Call_001_5019:
 Call_001_501f:
 jr_001_501f:
     trap $b1
-    trap GetButtons
+    trap InputButtons
     and $03
     jr z, jr_001_501f
 
@@ -2543,7 +2543,7 @@ Jump_001_5ea7:
 
 jr_001_5ebb:
     trap $b1
-    trap GetButtons
+    trap InputButtons
     ld c, a
     and $06
     jp nz, Jump_001_5f61
@@ -2576,7 +2576,7 @@ Call_001_5ee7:
     ldh [$c1], a
     call Call_001_6181
     ld c, $11
-    trap LoadTextTiles
+    trap TileLoadText
     ret
 
 
@@ -2642,7 +2642,7 @@ Call_001_5f2d:
     pop af
     jr z, jr_001_5f44
 
-    trap LoadTextTiles
+    trap TileLoadText
     jr jr_001_5f60
 
 jr_001_5f44:
@@ -2750,7 +2750,7 @@ Jump_001_5fb7:
 
 jr_001_5fca:
     trap $b1
-    trap GetButtons
+    trap InputButtons
     bit 6, a
     jr nz, jr_001_5fed
 
@@ -2972,7 +2972,7 @@ Call_001_6114:
     call Call_001_5f89
 
 jr_001_6117:
-    trap GetButtons
+    trap InputButtons
     or a
     jr nz, jr_001_6117
 
@@ -3047,7 +3047,7 @@ Call_001_6169:
 Call_001_6173:
 jr_001_6173:
     trap $b1
-    trap GetButtons
+    trap InputButtons
     and $03
     jr z, jr_001_6173
 
@@ -3473,7 +3473,7 @@ jr_001_6731:
     ld hl, $c600
     call Call_001_66e1
     ld de, $0001
-    trap LoadTextTiles
+    trap TileLoadText
     ld a, $03
     trap LCDEnable
     ldh a, [$c3]
@@ -3626,7 +3626,7 @@ jr_001_6861:
 
 jr_001_688b:
     trap $b1
-    trap GetButtons
+    trap InputButtons
     ld b, a
     ld a, $03
     bit 4, b
@@ -6187,7 +6187,7 @@ trap_5e_77ae::
 
 jr_001_77c0:
     trap $b1
-    trap GetButtons
+    trap InputButtons
     ld hl, sp+$03
     ld [hl], a
     ld c, a
@@ -6523,7 +6523,7 @@ jr_001_795e:
 
 jr_001_7969:
     trap $b1
-    trap GetButtons
+    trap InputButtons
     ld b, a
     and $0c
     jr nz, jr_001_7988

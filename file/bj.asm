@@ -39,11 +39,11 @@ Main::
 
 
     xor a
-    trap PlayMusic
+    trap AudioPlayMusic
     trap ExitToMenu
     ld a, $20
     trap DrawInit
-    trap StopAudio
+    trap AudioStop
     callx @+$0035
     callx @+$0023
     callx @+$003a
@@ -58,7 +58,7 @@ Main::
     ret nz
 
     ld a, $05
-    trap PlayMusic
+    trap AudioPlayMusic
     ret
 
 
@@ -73,10 +73,10 @@ call_0091:
     ldx de, data_093e
     ld hl, $c700
     ld b, h
-    trap InitDecompress
+    trap ExtractInit
     ld bc, $0270
     ld de, $8b10
-    trap RunDecompress
+    trap ExtractData
     ret
 
 call_00a4:
@@ -164,7 +164,7 @@ jr_000_00cb::
     ret z
 
     ld hl, $0508
-    trap MovePen
+    trap DrawAt
     ld a, [$c886]
     cp $01
     jr nz, jr_000_0137
@@ -243,7 +243,7 @@ jr_000_018c::
     ld a, $01
     ld [$c887], a
     ld hl, $0008
-    trap MovePen
+    trap DrawAt
     ldx hl, data_0b4c
     trap DrawString
     ret
@@ -261,7 +261,7 @@ jr_000_018c::
     ld a, $01
     ld [$c887], a
     ld hl, $0008
-    trap MovePen
+    trap DrawAt
     ldx hl, data_0b4c
     trap DrawString
     ld a, [$0014]
@@ -269,13 +269,13 @@ jr_000_018c::
     ret nz
 
     ld a, $01
-    trap PlaySound
+    trap AudioPlaySound
     ret
 
 
     ld l, c
     ld h, b
-    trap MovePen
+    trap DrawAt
     ld hl, $c8ba
     ld a, e
     bit 7, a
@@ -348,11 +348,11 @@ jr_000_022d::
 
 
     ld hl, $0001
-    trap MovePen
+    trap DrawAt
     ldx hl, data_0ac9
     trap DrawString
     ld hl, $000d
-    trap MovePen
+    trap DrawAt
     ldx hl, data_0ac9
     trap DrawString
     ret
@@ -377,7 +377,7 @@ jr_000_022d::
     pop af
     ld hl, $0000
     ld l, c
-    trap MovePen
+    trap DrawAt
     ldx hl, data_0b4c
     push af
     push bc
@@ -413,21 +413,21 @@ jr_000_02ae::
     ld hl, $0d09
 
 jr_000_02b1::
-    trap MovePen
+    trap DrawAt
     ld a, [$c8ce]
     ld e, a
     ld d, $00
     ld hl, $c8c7
-    trap IntToString
+    trap StrConvInt
     trap DrawString
     ldx hl, data_0a83
     trap DrawString
     ld hl, $0309
-    trap MovePen
+    trap DrawAt
     ldx hl, data_0a92
     trap DrawString
     ld hl, $030a
-    trap MovePen
+    trap DrawAt
     ldx hl, data_0a77
     trap DrawString
     ld a, [$c8cf]
@@ -435,12 +435,12 @@ jr_000_02b1::
     ld a, [$c8d0]
     ld d, a
     ld hl, $c8c7
-    trap IntToString
+    trap StrConvInt
     trap DrawString
     ldx hl, data_0a83
     trap DrawString
     ld hl, $0507
-    trap MovePen
+    trap DrawAt
     callx @+$02f4
     cp $00
     jr nz, jr_000_0308
@@ -520,7 +520,7 @@ jr_000_0354::
     jr nz, jr_000_0376
 
     ld a, $01
-    trap PlaySound
+    trap AudioPlaySound
 
 jr_000_0376::
     ld a, [$c8cf]
@@ -552,7 +552,7 @@ jr_000_0376::
     jr nz, jr_000_03bb
 
     ld a, $02
-    trap PlaySound
+    trap AudioPlaySound
     jr jr_000_03bb
 
     ld a, [$c8ce]
@@ -566,7 +566,7 @@ jr_000_0376::
     jr nz, jr_000_03bb
 
     ld a, $02
-    trap PlaySound
+    trap AudioPlaySound
 
 jr_000_03bb::
     ld a, [$c8cf]
@@ -618,7 +618,7 @@ jr_000_03f7::
 
 jr_000_0420::
     ld hl, $0501
-    trap MovePen
+    trap DrawAt
     ldx hl, data_0a5f
     trap DrawString
     xor a
@@ -636,7 +636,7 @@ jr_000_0420::
     ld a, $01
     ld [$c885], a
     ld hl, $0507
-    trap MovePen
+    trap DrawAt
     callx @+$01a2
     cp $00
     jr nz, jr_000_045d
@@ -687,7 +687,7 @@ jr_000_0499:
 
 jr_000_049f::
     ld hl, $0610
-    trap MovePen
+    trap DrawAt
     ldx hl, data_0b94
     trap DrawString
 
@@ -810,7 +810,7 @@ jr_000_0552::
     ld e, a
     ld d, $00
     ld hl, $c8c7
-    trap IntToString
+    trap StrConvInt
     trap DrawString
     ret
 
@@ -830,7 +830,7 @@ jr_000_0552::
     ld [$c884], a
     ld [$c88b], a
     ld hl, $0507
-    trap MovePen
+    trap DrawAt
     ldx hl, data_0a87
     trap DrawString
     callx @+$fc8a
@@ -839,21 +839,21 @@ jr_000_0552::
     ret nz
 
     ld a, $01
-    trap PlaySound
+    trap AudioPlaySound
     ret
 
 
 jr_000_05b7::
     ld hl, $0507
-    trap MovePen
+    trap DrawAt
     ldx hl, data_0a5f
     trap DrawString
     ld hl, $000d
-    trap MovePen
+    trap DrawAt
     ldx hl, data_0b1b
     trap DrawString
     ld hl, $0409
-    trap MovePen
+    trap DrawAt
     callx @+$0018
     cp $00
     jr nz, jr_000_05e4
@@ -909,7 +909,7 @@ jr_000_0613::
     ld e, a
     ld d, $00
     ld hl, $c8c7
-    trap IntToString
+    trap StrConvInt
     trap DrawString
     jr jr_000_0613
 
@@ -1007,7 +1007,7 @@ jr_000_0699::
     xor a
     ld [$c886], a
     ld hl, $0510
-    trap MovePen
+    trap DrawAt
     ldx hl, data_0a5f
     trap DrawString
     ld a, $01
@@ -1034,12 +1034,12 @@ jr_000_06be::
     ld bc, $0502
     callx @+$faed
     ld hl, $0904
-    trap MovePen
+    trap DrawAt
     callx @+$ff48
     ld e, a
     ld d, $00
     ld hl, $c8c7
-    trap IntToString
+    trap StrConvInt
     trap DrawString
     callx @+$ff13
     callx @+$ff41
@@ -1069,13 +1069,13 @@ jr_000_0723::
     jr nz, jr_000_072e
 
     ld a, $37
-    trap PlaySound
+    trap AudioPlaySound
 
 jr_000_072e::
     ld a, $01
     ld [$c88d], a
     ld hl, $0506
-    trap MovePen
+    trap DrawAt
     ldx hl, data_0b61
     trap DrawString
     ld a, [$c88f]
@@ -1106,17 +1106,17 @@ jr_000_075f::
     ld hl, $0d09
 
 jr_000_0762::
-    trap MovePen
+    trap DrawAt
     pop af
     ld e, a
     ld d, $00
     ld hl, $c8c7
-    trap IntToString
+    trap StrConvInt
     trap DrawString
     ldx hl, data_0a83
     trap DrawString
     ld hl, $0309
-    trap MovePen
+    trap DrawAt
     ldx hl, data_0a9d
     trap DrawString
     pop hl
@@ -1139,17 +1139,17 @@ jr_000_079a::
     jr nz, jr_000_07a5
 
     ld a, $2f
-    trap PlaySound
+    trap AudioPlaySound
 
 jr_000_07a5::
     xor a
     ld [$c88d], a
     ld hl, $0009
-    trap MovePen
+    trap DrawAt
     ldx hl, data_0b4c
     trap DrawString
     ld hl, $0506
-    trap MovePen
+    trap DrawAt
     ldx hl, data_0b6c
     trap DrawString
     ld a, [$c8ce]
@@ -1191,17 +1191,17 @@ jr_000_07ee::
     jr nz, jr_000_0808
 
     ld a, $19
-    trap PlayMusic
+    trap AudioPlayMusic
 
 jr_000_0808::
     xor a
     trap DrawInit
     ld hl, $0409
-    trap MovePen
+    trap DrawAt
     ldx hl, data_0b9d
     trap DrawString
     ld hl, $040b
-    trap MovePen
+    trap DrawAt
     ldx hl, data_0baa
     trap DrawString
     ld hl, $c600
@@ -1228,17 +1228,17 @@ jr_000_0841::
     jr nz, jr_000_084c
 
     ld a, $2f
-    trap PlaySound
+    trap AudioPlaySound
 
 jr_000_084c::
     ld a, $02
     ld [$c88d], a
     ld hl, $0009
-    trap MovePen
+    trap DrawAt
     ldx hl, data_0b4c
     trap DrawString
     ld hl, $0506
-    trap MovePen
+    trap DrawAt
     ldx hl, data_0b77
     trap DrawString
     ret
@@ -1253,7 +1253,7 @@ jr_000_084c::
     xor a
     ld [$0000], a
     ld hl, $030a
-    trap MovePen
+    trap DrawAt
     ldx hl, data_0a77
     trap DrawString
     ld a, [$c8cf]
@@ -1261,7 +1261,7 @@ jr_000_084c::
     ld a, [$c8d0]
     ld d, a
     ld hl, $c8c7
-    trap IntToString
+    trap StrConvInt
     trap DrawString
     ldx hl, data_0a83
     trap DrawString
@@ -1273,7 +1273,7 @@ jr_000_084c::
     ret z
 
     ld hl, $0506
-    trap MovePen
+    trap DrawAt
     callx @+$fd41
     cp $00
     jr nz, jr_000_08d5
@@ -1307,7 +1307,7 @@ jr_000_08d5::
 
 jr_000_08df::
     ld hl, $0507
-    trap MovePen
+    trap DrawAt
     ldx hl, data_0abe
     trap DrawString
     ld a, $01
@@ -1337,11 +1337,11 @@ jr_000_0912::
     ld hl, $c869
     trap MemSet
     ld hl, $0506
-    trap MovePen
+    trap DrawAt
     ldx hl, data_0b4c
     trap DrawString
     ld hl, $0507
-    trap MovePen
+    trap DrawAt
     ldx hl, data_0a87
     trap DrawString
     callx @+$f8fd
@@ -1413,7 +1413,7 @@ jr_000_0bbe::
 
 
     ld hl, $0409
-    trap MovePen
+    trap DrawAt
 
 jr_000_0bc7::
     ldx hl, data_0a6a
@@ -1423,7 +1423,7 @@ jr_000_0bcd::
     trap AwaitFrame
 
 jr_000_0bcf::
-    trap GetButtons
+    trap InputButtons
     ld [$c881], a
     cp $04
     jr z, jr_000_0c28

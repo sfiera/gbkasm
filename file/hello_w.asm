@@ -40,13 +40,13 @@ Main::
     trap DrawInit  ; initialize drawing with flags off
 
     ld hl, $0408            ;
-    trap MovePen            ; move pen to (4, 8)
+    trap DrawAt            ; move pen to (4, 8)
     ldx hl, HelloWorldText  ; load with relative (ldx) addressing
     trap DrawString         ; draw "Hello, World!" at pen location
 
 .loop
     trap AwaitFrame   ; wait one frame
-    trap GetButtons   ; get buttons in register a
+    trap InputButtons   ; get buttons in register a
     bit BTN_SEL_F, a  ; check if Select pressed
     jr z, .loop       ; if not, loop
     trap ExitToMenu   ; else exit to menu

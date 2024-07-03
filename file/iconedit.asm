@@ -64,7 +64,7 @@ jx_0128::
 
 jr_000_0139::
     ldx de, data_0151
-    trap DoCursorMenu
+    trap InputCursorMenu
     jr c, jr_000_0139
 
     ld l, a
@@ -162,7 +162,7 @@ jr_000_01ce::
     callx call_06ee
 
 jr_000_01d7::
-    trap GetButtons
+    trap InputButtons
     or a
     jr z, jr_000_01d7
 
@@ -182,7 +182,7 @@ jr_000_01f7::
     trap AwaitFrame
     ld bc, $2800
     trap $c4
-    trap GetButtons
+    trap InputButtons
     callx call_0245
     ldh a, [$8b]
     bit 3, a
@@ -433,18 +433,18 @@ call_0363:
     ld e, a
     ld d, $00
     ld hl, $c758
-    trap IntToString
+    trap StrConvInt
     ld hl, $0a22
-    trap MovePen
+    trap DrawAt
     ld hl, $c75c
     trap DrawString
     ld a, [$c762]
     ld e, a
     ld d, $00
     ld hl, $c758
-    trap IntToString
+    trap StrConvInt
     ld hl, $0a23
-    trap MovePen
+    trap DrawAt
     ld hl, $c75c
     trap DrawString
     ret
@@ -657,7 +657,7 @@ call_0465:
 
 call_04dc::
     trap AwaitFrame
-    trap GetButtons
+    trap InputButtons
     and $03
     jr z, call_04dc
 

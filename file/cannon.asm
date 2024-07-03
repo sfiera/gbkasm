@@ -32,15 +32,15 @@ History:
 .end
 
 Main::
-    trap StopAudio
+    trap AudioStop
     ld a, $20
     trap DrawInit
     ldx de, data_tileset
     ld bc, $c600
-    trap InitDecompress
+    trap ExtractInit
     ld de, $8800
     ld bc, $0450
-    trap RunDecompress
+    trap ExtractData
     xor a
     ld [$c650], a
     ld [$c651], a
@@ -65,7 +65,7 @@ Main::
 
 jr_000_015b::
     trap AwaitFrame
-    trap GetButtons
+    trap InputButtons
     callx @+$0575
     callx @+$04dc
     callx @+$02a7
@@ -103,7 +103,7 @@ jr_000_01a4::
     ld [$c654], a
     ldx hl, data_sounds.bgm
     ld a, [hl]
-    trap PlayMusic
+    trap AudioPlayMusic
     callx @+$059b
     jr jr_000_015b
 
@@ -143,7 +143,7 @@ jr_000_0204:
     ld a, $07
     trap LCDEnable
     trap AwaitFrame
-    trap GetButtons
+    trap InputButtons
     ld a, [$c656]
     sla a
     sla a
@@ -248,12 +248,12 @@ jr_000_02c4::
     jr z, jr_000_02df
 
     ld a, d
-    trap PlaySound
+    trap AudioPlaySound
     jr jr_000_02e2
 
 jr_000_02df::
     ld a, d
-    trap PlayMusic
+    trap AudioPlayMusic
 
 jr_000_02e2::
     ldh a, [$8b]
@@ -269,9 +269,9 @@ jr_000_02e2::
     ld a, $07
     trap LCDEnable
     xor a
-    trap PlayMusic
+    trap AudioPlayMusic
     xor a
-    trap PlaySound
+    trap AudioPlaySound
     jx @+$fe3e
 
 
@@ -305,7 +305,7 @@ call_031a:
     ld e, [hl]
     ld d, $00
     ld hl, $c668
-    trap IntToStringHex
+    trap StrConvHex
     xor a
     ld [$c66d], a
     pop de
@@ -790,7 +790,7 @@ jr_000_060a::
 
     ldx hl, data_sounds.shot
     ld a, [hl]
-    trap PlaySound
+    trap AudioPlaySound
     ld a, [$c662]
     srl a
     srl a
@@ -1021,7 +1021,7 @@ jr_000_075f::
 
 
     ld hl, $0311
-    trap MovePen
+    trap DrawAt
     ld hl, $c650
     ld e, [hl]
     inc hl
@@ -1029,7 +1029,7 @@ jr_000_075f::
     push de
     callx @+$003d
     ld hl, $0d11
-    trap MovePen
+    trap DrawAt
     pop bc
     ldx hl, data_high_score
     ld a, [hl+]
@@ -1065,7 +1065,7 @@ jr_000_078e::
     inc [hl]
     ldx hl, data_sounds.high_score
     ld a, [hl]
-    trap PlaySound
+    trap AudioPlaySound
 
 jr_000_07ab::
     ldx hl, data_high_score
@@ -1073,7 +1073,7 @@ jr_000_07ab::
     ld e, a
     ld d, [hl]
     ld hl, $c66e
-    trap IntToString
+    trap StrConvInt
     ld hl, $c66e
     trap DrawString
     ret
@@ -1117,13 +1117,13 @@ jr_000_07cf::
     ldx hl, layout_0a72
     trap DrawLayout
     ld hl, $0b0c
-    trap MovePen
+    trap DrawAt
     ld a, [$c656]
     inc a
     ld e, a
     ld d, $00
     ld hl, $c66e
-    trap IntToString
+    trap StrConvInt
     trap DrawString
     jx @+$f941
 
@@ -1161,9 +1161,9 @@ jr_000_081e::
     ldx hl, layout_0ac3
     trap DrawLayout
     xor a
-    trap PlayMusic
+    trap AudioPlayMusic
     xor a
-    trap PlaySound
+    trap AudioPlaySound
     ret
 
 
@@ -1269,7 +1269,7 @@ jr_000_08be::
     push hl
     ldx hl, data_sounds.hit
     ld a, [hl]
-    trap PlaySound
+    trap AudioPlaySound
     pop hl
     callx @+$fee7
     ld a, $02
@@ -1338,7 +1338,7 @@ jr_000_0924::
     pop af
     ldx hl, data_sounds.dead
     ld a, [hl]
-    trap PlaySound
+    trap AudioPlaySound
     ld a, $01
     ld [$c664], a
     ld a, $3c
@@ -1597,7 +1597,7 @@ data_0b37:
     cp CART_BDAMAN
     jr z, jr_000_0b53
 
-    trap GetAudioCount
+    trap AudioGetCount
 
 jr_000_0b53::
     ld hl, $c652

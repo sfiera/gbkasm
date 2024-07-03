@@ -97,7 +97,7 @@ call_0180:
 
 call_01d1:
     push hl
-    trap GetButtons
+    trap InputButtons
     pop hl
     inc de
     cp $01
@@ -1099,7 +1099,7 @@ call_07a9:
     ld hl, $0000
 
 jr_000_07da:
-    trap GetButtons
+    trap InputButtons
 
     inc hl
     bit 0, a
@@ -2012,7 +2012,7 @@ call_0d1b:
     ld a, $06
     trap $b9
     pop hl
-    trap MovePen
+    trap DrawAt
     pop hl
     trap DrawString
     ld a, $07
@@ -2027,7 +2027,7 @@ call_0d1b:
 call_0d34:
     ld de, $cca0
     ld bc, $0900
-    trap RunDecompress
+    trap ExtractData
     ret
 
 
@@ -2040,7 +2040,7 @@ call_0d3d:
     pop de
     ld hl, $c600
     ld b, h
-    trap InitDecompress
+    trap ExtractInit
     callx call_0d34
     ret
 
@@ -2049,7 +2049,7 @@ jr_000_0d58:
     ldx de, data_10ea
     ld hl, $c600
     ld b, h
-    trap InitDecompress
+    trap ExtractInit
     callx call_0d34
     jx jx_0d81
 
@@ -2068,10 +2068,10 @@ jx_0d81:
     ldx de, data_0fa8
     ld hl, $c600
     ld b, h
-    trap InitDecompress
+    trap ExtractInit
     ld de, $c700
     ld bc, $0510
-    trap RunDecompress
+    trap ExtractData
     callx call_0239
 
 

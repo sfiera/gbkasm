@@ -35,7 +35,7 @@ History:
 .end
 
 Main::
-    trap StopAudio
+    trap AudioStop
     ld hl, $04bc
     trap TimerSet
 
@@ -51,7 +51,7 @@ MainMenu:
     xor a
     ld [var_practice], a
     ldx de, .menuConfig
-    trap DoCursorMenu
+    trap InputCursorMenu
     jr c, MainMenu
 
     cp $00
@@ -96,7 +96,7 @@ StartGame:
 
 .jr_000_0163
     trap AwaitFrame
-    trap GetButtons
+    trap InputButtons
 
     or a
     jr z, .jr_000_0163
@@ -312,7 +312,7 @@ PlayGame:
 .nextFrame
     trap AwaitFrame
     callx UpdateTimer
-    trap GetButtons
+    trap InputButtons
     and BTN_SEL
     jr nz, .exit
 
@@ -360,7 +360,7 @@ PlayGame:
     ldx hl, LayoutFinish
     trap DrawLayout
     ld hl, $0724
-    trap MovePen
+    trap DrawAt
     ld hl, var_status | 12
     trap DrawString
     ld a, $1e
@@ -368,7 +368,7 @@ PlayGame:
 
 .awaitExit
     trap AwaitFrame
-    trap GetButtons
+    trap InputButtons
     ldh a, [$8a]
     and BTN_SEL | BTN_B
     cp BTN_SEL | BTN_B
@@ -858,7 +858,7 @@ PrintDebugInfo:
     ld e, a
     ld d, $00
     ld hl, var_status
-    trap IntToString
+    trap StrConvInt
     ld hl, var_status | 3
     trap DrawString
     ret
@@ -959,13 +959,13 @@ call_08d1:
 call_08d8:
     ld b, $c6
     ldx de, data_0928
-    trap InitDecompress
+    trap ExtractInit
     ld de, $8b00
     ld bc, $0190
-    trap RunDecompress
+    trap ExtractData
     ld de, $8000
     ld bc, $02b0
-    trap RunDecompress
+    trap ExtractData
     ld de, $9800
     ld c, $03
     callx call_0901
@@ -975,7 +975,7 @@ call_08d8:
 call_0901:
     push bc
     ld bc, $0020
-    trap RunDecompress
+    trap ExtractData
     ld b, $20
 
 .jr_000_0909
@@ -1008,7 +1008,7 @@ call_0916:
 
 .jr_000_0924
     pop af
-    trap PlaySound
+    trap AudioPlaySound
     ret
 
 

@@ -49,7 +49,7 @@ jr_0126:
     ld de, $060a
     ld bc, $0000
     callx call_0778
-    trap GetButtons
+    trap InputButtons
     ldh [$c4], a
     bit 1, a
     jr z, jr_0166
@@ -134,7 +134,7 @@ jr_0210:
     xor a
     ldh [$c3], a
 jr_022b:
-    trap GetButtons
+    trap InputButtons
     ldh [$c4], a
     bit 1, a
     jr z, jr_024e
@@ -249,7 +249,7 @@ jr_02d6:
     inc h
     inc h
 jr_0305:
-    trap MovePen
+    trap DrawAt
     pop af
     trap DrawChar
     xor a
@@ -291,10 +291,10 @@ jr_0339:
 jr_033d:
     ld a, $36
 jr_033f:
-    trap PlaySound
+    trap AudioPlaySound
 jr_0341:
     trap AwaitFrame
-    trap GetSoundState
+    trap AudioGetSound
     or a
     jr nz, jr_0341
     ret
@@ -305,7 +305,7 @@ jr_034b:
     ld b, $04
 jr_034d:
     ld a, $2b
-    trap PlaySound
+    trap AudioPlaySound
     ld a, $05
     trap $dc
     dec b
@@ -320,7 +320,7 @@ jr_0360:
     ld b, $04
 jr_0362:
     ld a, $2e
-    trap PlaySound
+    trap AudioPlaySound
     callx jr_0341
     ld a, $0a
     trap $dc
@@ -534,7 +534,7 @@ POPC
 
 call_059d:
     ld hl, $120c
-    trap MovePen
+    trap DrawAt
     ldh a, [$cc]
     add "0"
     cp $3a
@@ -640,21 +640,21 @@ data_060d:
 call_0671:
     push hl
     ld hl, $0500
-    trap MovePen
+    trap DrawAt
     pop hl
     trap DrawString
     push hl
     ld hl, $000f
-    trap MovePen
+    trap DrawAt
     pop hl
     trap DrawString
     push hl
     ld hl, $0010
-    trap MovePen
+    trap DrawAt
     pop hl
     trap DrawString
     ld hl, $0002
-    trap MovePen
+    trap DrawAt
     ldx hl, data_060d
     trap DrawString
     ret
@@ -680,7 +680,7 @@ call_0698:
 call_06ac:
     push hl
     callx call_0698
-    trap MovePen
+    trap DrawAt
     pop hl
     ld a, [hli]
     add "0"
@@ -745,10 +745,10 @@ call_06e7:
     jr z, jr_0738
     ld de, $c6ec
     ld bc, $c400
-    trap InitDecompress
+    trap ExtractInit
     ld de, $8800
     ld bc, $0800
-    trap RunDecompress
+    trap ExtractData
     jr jr_0738
 
 jr_072c:

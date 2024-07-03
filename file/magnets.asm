@@ -52,7 +52,7 @@ Main::
     ld d, $00
     ld e, a
     ld hl, $a106
-    trap IntToStringHex
+    trap StrConvHex
     trap DrawString
     ld a, $01
     trap $b9
@@ -72,7 +72,7 @@ jr_000_0123:
     ld d, $00
     ld e, a
     ld hl, $a106
-    trap IntToString
+    trap StrConvInt
     trap DrawString
     ld a, $01
     trap $b9
@@ -171,7 +171,7 @@ HeaderCGBFlag::
     ld e, c
     ld d, b
     ld hl, $a106
-    trap IntToStringHex
+    trap StrConvHex
     dec hl
     dec hl
     trap DrawString
@@ -189,7 +189,7 @@ HeaderCGBFlag::
     push de
     push hl
     ld hl, $a106
-    trap IntToStringHex
+    trap StrConvHex
     dec hl
     dec hl
     trap DrawString
@@ -209,7 +209,7 @@ HeaderCGBFlag::
     ld e, l
     ld d, h
     ld hl, $a106
-    trap IntToStringHex
+    trap StrConvHex
     dec hl
     dec hl
     trap DrawString
@@ -335,7 +335,7 @@ jr_000_0224::
     push de
     ld de, $c700
     ld b, $c6
-    trap InitDecompress
+    trap ExtractInit
     pop de
     ld b, $01
     ld a, c
@@ -353,7 +353,7 @@ jr_000_024c::
     rl b
     sla c
     rl b
-    trap RunDecompress
+    trap ExtractData
     ret
 
 
@@ -504,12 +504,12 @@ jr_000_0354::
     ld a, $03
     trap LCDEnable
     ld a, $02
-    trap PlayMusic
+    trap AudioPlayMusic
     call $afd6
     ld a, $01
     call $a382
     xor a
-    trap PlayMusic
+    trap AudioPlayMusic
     ret
 
 
@@ -980,7 +980,7 @@ jr_000_0630::
     ld a, [de]
     inc de
     ld l, a
-    trap MovePen
+    trap DrawAt
     ld a, $11
     trap DrawChar
     ld a, $12
@@ -1024,7 +1024,7 @@ jr_000_0630::
     ld a, [de]
     inc de
     ld l, a
-    trap MovePen
+    trap DrawAt
 
 jr_000_067b::
     ld a, [de]
@@ -1244,7 +1244,7 @@ jr_000_079c::
     jr nz, jr_000_07ac
 
     ld a, $0c
-    trap PlaySound
+    trap AudioPlaySound
 
 jr_000_07ac::
     ld a, [$cf30]
@@ -2261,9 +2261,9 @@ jr_000_0d19::
     jr nc, jr_000_0d7a
 
     xor a
-    trap PlaySound
+    trap AudioPlaySound
     ld a, $25
-    trap PlaySound
+    trap AudioPlaySound
     ld a, $01
     ld [$d061], a
     ld a, [$cf1b]
@@ -2300,7 +2300,7 @@ jr_000_0d7a::
     ld a, $12
     ld [$d0a7], a
     ld a, $0b
-    trap PlayMusic
+    trap AudioPlayMusic
     ld hl, $ae92
 
 jr_000_0d96::
@@ -2323,7 +2323,7 @@ jr_000_0d96::
 jr_000_0daf::
     call $afd6
     xor a
-    trap PlayMusic
+    trap AudioPlayMusic
     ret
 
 
@@ -3021,7 +3021,7 @@ jr_000_1059::
     and a
     ret z
 
-    trap GetSoundState
+    trap AudioGetSound
     and a
     ret nz
 
@@ -3070,7 +3070,7 @@ jr_000_1059::
     ld a, $03
     trap LCDEnable
     ld a, $09
-    trap PlayMusic
+    trap AudioPlayMusic
     ld a, $01
     ld [$d0a6], a
     call $b8c3
@@ -3107,7 +3107,7 @@ jr_000_10fb::
     call $afd6
     call $a586
     ld a, $1d
-    trap PlaySound
+    trap AudioPlaySound
 
 jr_000_1105::
     ldh a, [$8a]
@@ -3154,7 +3154,7 @@ jr_000_110b::
 
 jr_000_1161::
     ld a, $19
-    trap PlayMusic
+    trap AudioPlayMusic
     ld a, [$cf2b]
     cp $4e
     jr nz, jr_000_1179
@@ -3195,7 +3195,7 @@ jr_000_1190::
 
 jr_000_11a3::
     ld a, $18
-    trap PlayMusic
+    trap AudioPlayMusic
     ld a, $0f
     call $a66c
     call $afd6
@@ -3286,9 +3286,9 @@ jr_000_1252::
     ret z
 
     xor a
-    trap PlaySound
+    trap AudioPlaySound
     ld a, $02
-    trap PlaySound
+    trap AudioPlaySound
     call $b963
     call $a660
     ldh a, [$8a]
@@ -3309,7 +3309,7 @@ jr_000_1277::
 
 
     xor a
-    trap PlayMusic
+    trap AudioPlayMusic
     trap ExitToMenu
     call nz, $d2b2
     or d

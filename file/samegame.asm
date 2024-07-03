@@ -64,7 +64,7 @@ jump_0122:
 .jr_0140
     trap AwaitFrame
     callx call_0684
-    trap GetButtons
+    trap InputButtons
     callx call_04ae
     push af
     callx call_04f1
@@ -88,13 +88,13 @@ jump_0122:
     or a
     jr nz, .jr_0195
     ld hl, $0505
-    trap MovePen
+    trap DrawAt
     ldx hl, strPerfect
     trap DrawString
 
 .jr_0195
     ld hl, $0507
-    trap MovePen
+    trap DrawAt
     ldx hl, strGameOver
     trap DrawString
     callx ShowNewGame
@@ -161,7 +161,7 @@ ShowTitleScreen:
 .loop
     trap AwaitFrame
     callx call_0684
-    trap GetButtons
+    trap InputButtons
     bit BTN_SEL_F, a
     jr nz, .exit
     and BTN_STA
@@ -220,20 +220,20 @@ ShowHiScore:
     xor a
     ld [hl], a
     ld hl, $0c0c
-    trap MovePen
+    trap DrawAt
     ldx hl, intHiScore
     ld e, [hl]
     inc hl
     ld d, [hl]
     ld hl, $cc40
     push hl
-    trap IntToString
+    trap StrConvInt
     pop hl
     trap DrawString
     ldx hl, strHiScoreName
     ld de, $0001
     ld c, $0a
-    trap LoadTextTiles
+    trap TileLoadText
     xor a
     ld de, $080d
     ld hl, $0100
@@ -715,28 +715,28 @@ call_057d:
     dec c
     jr nz, .jr_0585
     ld hl, $0611
-    trap MovePen
+    trap DrawAt
     ld hl, varAward
     ld e, [hl]
     inc hl
     ld d, [hl]
     ld hl, $cc40
     push hl
-    trap IntToString
+    trap StrConvInt
     pop hl
     trap DrawString
     ret
 
 call_05d5:
     ld hl, $0d11
-    trap MovePen
+    trap DrawAt
     ld hl, varScore
     ld e, [hl]
     inc hl
     ld d, [hl]
     ld hl, $cc40
     push hl
-    trap IntToString
+    trap StrConvInt
     pop hl
     trap DrawString
     ld de, $0010
@@ -880,10 +880,10 @@ SetupGfx:
     ld [de], a
     ldx de, gfxTileset
     ld b, $c6
-    trap InitDecompress
+    trap ExtractInit
     ld de, $8000
     ld bc, $0010
-    trap RunDecompress
+    trap ExtractData
     ld b, $60
     ld c, $05
 .jr_06d4
@@ -891,7 +891,7 @@ SetupGfx:
     ld de, varC980
     push de
     ld bc, $0100
-    trap RunDecompress
+    trap ExtractData
     pop hl
     pop bc
     ld a, b
@@ -901,14 +901,14 @@ SetupGfx:
     ld d, a
     ld e, $00
     ld c, $10
-    trap LoadTiles
+    trap TileLoad
     pop hl
     pop af
     add $50
     ld d, a
     ld e, $01
     ld c, $10
-    trap LoadTiles
+    trap TileLoad
     pop bc
     swap b
     inc b

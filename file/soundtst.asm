@@ -31,7 +31,7 @@ Main::
     ld de, $0d12
     ld h, $04
     trap DrawInit
-    trap StopAudio
+    trap AudioStop
 
     ld hl, varMusicMax
     callx LoadAudioCount
@@ -70,7 +70,7 @@ Main::
 
 jr_0134:
     ld h, $37
-    trap DoMenu
+    trap InputHiliteMenu
 
 .loop
     bit BTN_B_F, h
@@ -83,7 +83,7 @@ jr_0134:
     push hl
     push af
     callx HandleSetting
-    trap GetButtons
+    trap InputButtons
     pop bc
     and $37
     pop hl
@@ -102,7 +102,7 @@ LoadAudioCount:
     ld de, SuperBDamanAudioCount
     cp CART_BDAMAN
     ret z
-    trap GetAudioCount
+    trap AudioGetCount
     ret
 
 HandleSetting:
@@ -111,7 +111,7 @@ HandleSetting:
     bit BTN_A_F, h
     ret z
 
-    trap PauseMusic
+    trap AudioPause
     callx DrawState
     ret
 
@@ -196,11 +196,11 @@ DrawInterface:
     ldx hl, StrInterface
     trap DrawStringList
     ld hl, $0101
-    trap MovePen
+    trap DrawAt
     ldx hl, StrTitle
     trap DrawString
     ld hl, $000a
-    trap MovePen
+    trap DrawAt
     ldx hl, StrStatus
     trap DrawString
     callx DrawMusicMaxCur
@@ -211,7 +211,7 @@ DrawInterface:
 
 ApplyMusic:
     ld a, [varMusicCur]
-    trap PlayMusic
+    trap AudioPlayMusic
     ret
 
 DrawMusicMaxCur:
@@ -226,7 +226,7 @@ DrawMusicCur:
 
 ApplySound:
     ld a, [varSoundCur]
-    trap PlaySound
+    trap AudioPlaySound
     ret
 
 DrawSoundMaxCur:
@@ -241,7 +241,7 @@ DrawSoundCur:
 
 ApplyOffCh:
     ld a, [varOffChCur]
-    trap SilenceChannels
+    trap AudioSilence
     ret
 
 DrawOffChMaxCur:
@@ -256,7 +256,7 @@ DrawOffChCur:
 
 ApplyVol:
     ld a, [varVolCur]
-    trap SetVolume
+    trap AudioSetVolume
     ret
 
 DrawVolMaxCur:
@@ -289,25 +289,25 @@ DrawTimerCur:
 
 DrawInt:
     push af
-    trap MovePen
+    trap DrawAt
     pop af
     ld e, a
     ld d, $00
     ld hl, $c400
-    trap IntToString
+    trap StrConvInt
     ld hl, $c403
     trap DrawString
     ret
 
 DrawState:
     ld hl, $040a
-    trap MovePen
-    trap GetMusicState
+    trap DrawAt
+    trap AudioGetMusic
     callx DrawStopPlay
 
     ld hl, $0e0a
-    trap MovePen
-    trap GetSoundState
+    trap DrawAt
+    trap AudioGetSound
 
 DrawStopPlay:
     ldx hl, StrStop

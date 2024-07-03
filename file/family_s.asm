@@ -37,7 +37,7 @@ Main::
     ldx hl, data_00e9
     trap DrawString
     ld hl, $0106
-    trap MovePen
+    trap DrawAt
     callx call_0188
     ld hl, $c6a6
     trap DrawString
@@ -45,14 +45,14 @@ Main::
     trap DrawString
     ldx de, data_0491
     ld bc, $c400
-    trap InitDecompress
+    trap ExtractInit
     ld de, $dc40
     ld bc, $02c0
-    trap RunDecompress
+    trap ExtractData
 
 jr_0070:
     trap AwaitFrame
-    trap GetButtons
+    trap InputButtons
     bit 2, a
     jr nz, jr_00e7
     and $03
@@ -155,7 +155,7 @@ call_0188:
     ld d, [hl]
     ld e, a
     ld hl, $c6a4
-    trap IntToString
+    trap StrConvInt
     ld hl, $c6aa
     ld a, $2f
     ld [hli], a

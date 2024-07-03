@@ -34,10 +34,10 @@ History:
 Main::
     ldx de, Compressed
     ld bc, $c400
-    trap InitDecompress
+    trap ExtractInit
     ld de, $c800
     ld bc, $1000
-    trap RunDecompress
+    trap ExtractData
     jp $c800
 
 Compressed:

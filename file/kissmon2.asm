@@ -36,7 +36,7 @@ History:
 .end
 
 Main::
-    trap StopAudio
+    trap AudioStop
     ld hl, $04bc
     trap TimerSet
     trap LCDDisable
@@ -64,7 +64,7 @@ Main::
     trap $c5
     trap AwaitFrame
     trap $c3
-    trap StopAudio
+    trap AudioStop
     call call_a8bb
     jr c, .jr_a15b
 
@@ -72,7 +72,7 @@ Main::
 
 .jr_a14e
     trap AwaitFrame
-    trap GetButtons
+    trap InputButtons
     and $0f
     jr z, .jr_a14e
 
@@ -90,7 +90,7 @@ Main::
     jr .jr_a111
 
 .jp_a169
-    trap StopAudio
+    trap AudioStop
     trap ExitToMenu
 
 
@@ -103,7 +103,7 @@ call_a16d:
     ld hl, $c862
     ld de, $0001
     ld c, $05
-    trap LoadTextTiles
+    trap TileLoadText
     ld bc, $0b04
     ld hl, $c868
 
@@ -160,7 +160,7 @@ call_a21f:
     ld hl, $c862
     ld de, $0001
     ld c, $05
-    trap LoadTextTiles
+    trap TileLoadText
     ld hl, layout_a2a4
     trap DrawLayout
     ld bc, $0b04
@@ -194,7 +194,7 @@ call_a21f:
 
 .jr_a285
     trap AwaitFrame
-    trap GetButtons
+    trap InputButtons
     bit 2, a
     jr nz, .jr_a29b
 
@@ -251,12 +251,12 @@ call_a320:
     push af
     ld l, c
     ld h, b
-    trap MovePen
+    trap DrawAt
     pop af
     ld e, a
     ld d, $00
     ld hl, $c83c
-    trap IntToString
+    trap StrConvInt
     ld hl, $c83f
     trap DrawString
     pop bc
@@ -291,7 +291,7 @@ call_a33a:
 
 .jr_a372
     trap AwaitFrame
-    trap GetButtons
+    trap InputButtons
     or a
     jr z, .jr_a372
 
@@ -764,7 +764,7 @@ call_a6fa:
 
 .jr_a736
     trap AwaitFrame
-    trap GetButtons
+    trap InputButtons
     and $0f
     jr z, .jr_a736
 
@@ -819,7 +819,7 @@ call_a76e:
 .jr_a78d
     push bc
     trap AwaitFrame
-    trap GetButtons
+    trap InputButtons
     call call_a79a
     pop bc
     dec c
@@ -966,7 +966,7 @@ call_a828:
     pop hl
     ld e, $01
     ld c, $05
-    trap LoadTextTiles
+    trap TileLoadText
     ret
 
 
@@ -986,7 +986,7 @@ call_a83f:
     ld d, a
     ld e, $01
     ld c, $05
-    trap LoadTextTiles
+    trap TileLoadText
     ld a, d
     add $05
     ld [$c9a7], a
@@ -1001,7 +1001,7 @@ call_a869:
     ld e, a
     ld d, $00
     ld hl, $c83c
-    trap IntToString
+    trap StrConvInt
     ld hl, $c83f
 
 call_a874:
@@ -1513,7 +1513,7 @@ call_ab98:
     ld hl, $c862
     ld de, $0001
     ld c, $05
-    trap LoadTextTiles
+    trap TileLoadText
     ld hl, layout_accf
     trap DrawLayout
     call call_abef
@@ -1526,7 +1526,7 @@ call_ab98:
 
 .jr_abc8
     trap AwaitFrame
-    trap GetButtons
+    trap InputButtons
     call call_ac27
     ldh a, [$8b]
     bit 2, a
@@ -1730,7 +1730,7 @@ call_acbe:
     add $04
     ld l, a
     ld h, $01
-    trap MovePen
+    trap DrawAt
     pop af
     trap DrawChar
     ret
@@ -2064,7 +2064,7 @@ call_af25:
 .jr_af44
     add hl, de
     ld a, [hl]
-    trap PlayMusic
+    trap AudioPlayMusic
     pop bc
     pop de
     pop hl
@@ -2072,7 +2072,7 @@ call_af25:
 
 
 call_af4c:
-    trap PlaySound
+    trap AudioPlaySound
     ret
 
 
@@ -2090,7 +2090,7 @@ call_af4f:
     trap AwaitFrame
     ld bc, $2800
     trap $c4
-    trap GetButtons
+    trap InputButtons
     call call_afa6
     ldh a, [$8b]
     bit 2, a
@@ -2350,10 +2350,10 @@ call_b0a5:
     ld e, a
     ld d, $00
     ld hl, $c9ae
-    trap IntToString
+    trap StrConvInt
     pop hl
     ld h, $08
-    trap MovePen
+    trap DrawAt
     ld hl, $c9b2
     trap DrawString
     ret

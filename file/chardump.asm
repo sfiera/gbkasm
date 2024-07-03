@@ -41,7 +41,7 @@ Main::
 
 .loop
     trap AwaitFrame
-    trap GetButtons
+    trap InputButtons
     ld hl, varAddr
     ld c, a
     bit BTN_STA_F, c
@@ -88,13 +88,13 @@ Main::
 
 DrawAddress:
     ld hl, $0402
-    trap MovePen
+    trap DrawAt
     ld hl, varAddr
     ld e, [hl]
     inc hl
     ld d, [hl]
     ld hl, varAddrStr
-    trap IntToStringHex
+    trap StrConvHex
     dec hl
     dec hl
     trap DrawString
@@ -170,7 +170,7 @@ DrawDigit:
     push bc
     ld l, e
     ld h, d
-    trap MovePen
+    trap DrawAt
     ld a, c
     and $F
     cp $A

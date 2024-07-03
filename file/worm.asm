@@ -56,7 +56,7 @@ SavedHiScore:
 Run:
     ld sp, $e000
     trap $db
-    trap StopAudio
+    trap AudioStop
     callx call_006c
 
 .next
@@ -70,7 +70,7 @@ Run:
 :   cp $01
     jr nz, .next
 
-    trap StopAudio
+    trap AudioStop
     trap ExitToMenu
 
 
@@ -97,19 +97,19 @@ MenuMain:
 DrawTitle:
     ; Draw line above title at (x=3, y=3)
     ld hl, $0303
-    trap MovePen
+    trap DrawAt
     ldx hl, strTitleTop
     trap DrawString
 
     ; Draw title at (x=3, y=5)
     ld hl, $0305
-    trap MovePen
+    trap DrawAt
     ldx hl, strTitleMid
     trap DrawString
 
     ; Draw line below title at (x=3, y=7)
     ld hl, $0307
-    trap MovePen
+    trap DrawAt
     ldx hl, strTitleBot
     trap DrawString
 
@@ -125,13 +125,13 @@ strTitleBot:
 DrawMenu:
     ; Draw “GAME START” at (x=5, y=12)
     ld hl, $050c
-    trap MovePen
+    trap DrawAt
     ldx hl, strGameStart
     trap DrawString
 
     ; Draw “EXIT” at (x=5, y=14)
     ld hl, $050e
-    trap MovePen
+    trap DrawAt
     ldx hl, strExit
     trap DrawString
 
@@ -190,7 +190,7 @@ DrawSelection:
     sla a
     add $0c
     ld l, a
-    trap MovePen
+    trap DrawAt
     ld a, e
     trap DrawChar
     ret
@@ -214,7 +214,7 @@ GameMain:
     callx DrawPoints
 
     ld a, MUSIC_TRACK
-    trap PlayMusic
+    trap AudioPlayMusic
 
 .next
     trap AwaitFrame
@@ -233,7 +233,7 @@ GameMain:
     jr nz, .next
 
     xor a
-    trap PlayMusic
+    trap AudioPlayMusic
     ld a, [varPerfect]
     cp $00
     jr z, :+
@@ -256,11 +256,11 @@ InitBorder:
     ; Draw “-” across rows 0 and 16
     ld h, c
     ld l, $00
-    trap MovePen
+    trap DrawAt
     ld a, "-"
     trap DrawChar
     ld l, $10
-    trap MovePen
+    trap DrawAt
     ld a, "-"
     trap DrawChar
     inc c
@@ -274,11 +274,11 @@ InitBorder:
     ; Draw “|” down columns 0 and 19
     ld l, c
     ld h, $00
-    trap MovePen
+    trap DrawAt
     ld a, "|"
     trap DrawChar
     ld h, $13
-    trap MovePen
+    trap DrawAt
     ld a, "|"
     trap DrawChar
     inc c
@@ -288,19 +288,19 @@ InitBorder:
 
     ; Draw “+” at (x={0,19}, y={0,16})
     ld hl, $0000
-    trap MovePen
+    trap DrawAt
     ld a, "+"
     trap DrawChar
     ld hl, $1300
-    trap MovePen
+    trap DrawAt
     ld a, "+"
     trap DrawChar
     ld hl, $0010
-    trap MovePen
+    trap DrawAt
     ld a, "+"
     trap DrawChar
     ld hl, $1310
-    trap MovePen
+    trap DrawAt
     ld a, "+"
     trap DrawChar
     ret
@@ -311,7 +311,7 @@ POPC
 DrawScore:
     ; Draw “SC:” at (x=8, y=17)
     ld hl, $0811
-    trap MovePen
+    trap DrawAt
     ldx hl, strScorePrefix
     trap DrawString
 
@@ -321,7 +321,7 @@ DrawScore:
     ld a, [varScore+1]
     ld d, a
     ld hl, varNumBuffer
-    trap IntToString
+    trap StrConvInt
     ld hl, varNumBuffer+2
     trap DrawString
     ret
@@ -333,7 +333,7 @@ strScorePrefix:
 DrawHighScore:
     ; Draw “HI:” at (x=0, y=17)
     ld hl, $0011
-    trap MovePen
+    trap DrawAt
     ldx hl, strHiScorePrefix
     trap DrawString
 
@@ -343,7 +343,7 @@ DrawHighScore:
     ld a, [SavedHiScore + 1]
     ld d, a
     ld hl, varNumBuffer
-    trap IntToString
+    trap StrConvInt
     ld hl, varNumBuffer+2
     trap DrawString
     ret
@@ -380,7 +380,7 @@ UpdateHighScore:
 DrawPoints:
     ; Draw “P:” at (x=16, y=17)
     ld hl, $1011
-    trap MovePen
+    trap DrawAt
     ldx hl, strPointPrefix
     trap DrawString
 
@@ -388,7 +388,7 @@ DrawPoints:
     ld e, a
     ld d, $00
     ld hl, varNumBuffer
-    trap IntToString
+    trap StrConvInt
     ld hl, varNumBuffer+4
     trap DrawString
     ret
@@ -400,31 +400,31 @@ strPointPrefix:
 DrawGameOver:
     ; Draw outer top of GAMEOVER box at (x=4, y=6)
     ld hl, $0406
-    trap MovePen
+    trap DrawAt
     ldx hl, strGameOverOuter
     trap DrawString
 
     ; Draw inner top of GAMEOVER box at (x=4, y=7)
     ld hl, $0407
-    trap MovePen
+    trap DrawAt
     ldx hl, strGameOverInner
     trap DrawString
 
     ; Draw GAMEOVER at (x=4, y=8)
     ld hl, $0408
-    trap MovePen
+    trap DrawAt
     ldx hl, strGameOver
     trap DrawString
 
     ; Draw inner bottom of GAMEOVER box at (x=4, y=9)
     ld hl, $0409
-    trap MovePen
+    trap DrawAt
     ldx hl, strGameOverInner
     trap DrawString
 
     ; Draw outer bottom of GAMEOVER box at (x=4, y=10)
     ld hl, $040a
-    trap MovePen
+    trap DrawAt
     ldx hl, strGameOverOuter
     trap DrawString
 
@@ -446,31 +446,31 @@ strGameOver:
 DrawPerfect:
     ; Draw outer top of PERFECT box at (x=4, y=6)
     ld hl, $0406
-    trap MovePen
+    trap DrawAt
     ldx hl, strPerfectOuter
     trap DrawString
 
     ; Draw inner top of PERFECT box at (x=4, y=7)
     ld hl, $0407
-    trap MovePen
+    trap DrawAt
     ldx hl, strPerfectInner
     trap DrawString
 
     ; Draw PERFECT at (x=4, y=8)
     ld hl, $0408
-    trap MovePen
+    trap DrawAt
     ldx hl, strPerfect
     trap DrawString
 
     ; Draw inner bottom of PERFECT box at (x=4, y=9)
     ld hl, $0409
-    trap MovePen
+    trap DrawAt
     ldx hl, strPerfectInner
     trap DrawString
 
     ; Draw outer bottom of PERFECT box at (x=4, y=9)
     ld hl, $040a
-    trap MovePen
+    trap DrawAt
     ldx hl, strPerfectOuter
     trap DrawString
 
@@ -557,7 +557,7 @@ DrawSnake:
     ld l, a
     pop af
     ld h, a
-    trap MovePen
+    trap DrawAt
     ld a, "+"
     trap DrawChar
 
@@ -574,7 +574,7 @@ DrawSnake:
     ld l, a
     pop af
     ld h, a
-    trap MovePen
+    trap DrawAt
     ld a, "O"
     trap DrawChar
 
@@ -587,7 +587,7 @@ DrawSnake:
     ld l, a
     pop af
     ld h, a
-    trap MovePen
+    trap DrawAt
     ld a, "Q"
     trap DrawChar
 
@@ -624,7 +624,7 @@ DrawSnake:
     ld l, a
     pop af
     ld h, a
-    trap MovePen
+    trap DrawAt
     ld a, " "
     trap DrawChar
     ret
@@ -963,7 +963,7 @@ HandleWallHit:
     ret z
 
     ld a, SND_WALL_HIT
-    trap PlaySound
+    trap AudioPlaySound
 
     ld a, $01
     ld [varGameOver], a
@@ -977,7 +977,7 @@ HandleSelfHit:
     ret z
 
     ld a, SND_SELF_HIT
-    trap PlaySound
+    trap AudioPlaySound
 
     ld a, $01
     ld [varGameOver], a
@@ -991,7 +991,7 @@ HandleFoodHit:
     ret z
 
     ld a, SND_EAT_FOOD
-    trap PlaySound
+    trap AudioPlaySound
 
     ld a, $00
     ld [varHaveFood], a
@@ -1031,7 +1031,7 @@ HandlePerfect:
     ret nz
 
     ld a, SND_PERFECT
-    trap PlaySound
+    trap AudioPlaySound
 
     ld a, $01
     ld [varGameOver], a
@@ -1130,7 +1130,7 @@ DrawFood:
     ld h, a
     ld a, [varFoodRow]
     ld l, a
-    trap MovePen
+    trap DrawAt
     ld a, "*"
     trap DrawChar
 

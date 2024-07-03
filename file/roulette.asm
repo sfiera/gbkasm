@@ -271,7 +271,7 @@ jp_07ef:
     ld [hl], e
     inc hl
     ld [hl], d
-    wtrap GetButtons
+    wtrap InputButtons
     ld hl, $c605
     ld l, [hl]
     ld h, $00
@@ -390,7 +390,7 @@ jr_000_0864::
     ld hl, $c605
     pop de
     ld [hl], e
-    wtrap PlaySound
+    wtrap AudioPlaySound
     ld hl, $0000
     push hl
     ld hl, $c64c
@@ -633,7 +633,7 @@ jp_09e6:
     ld hl, $c605
     pop de
     ld [hl], e
-    wtrap PlaySound
+    wtrap AudioPlaySound
 
 jp_0a06:
     jx jp_0afa
@@ -959,7 +959,7 @@ jp_0baf:
     ld [hl], e
     inc hl
     ld [hl], d
-    wtrap InitDecompress
+    wtrap ExtractInit
     ld hl, $0020
     push hl
     ld hl, $c60f
@@ -974,7 +974,7 @@ jp_0baf:
     ld [hl], e
     inc hl
     ld [hl], d
-    wtrap RunDecompress
+    wtrap ExtractData
     ld hl, $07f0
     push hl
     ld hl, $c60f
@@ -989,7 +989,7 @@ jp_0baf:
     ld [hl], e
     inc hl
     ld [hl], d
-    wtrap RunDecompress
+    wtrap ExtractData
     ld hl, $008c
     push hl
     ld hl, $c60f
@@ -1004,7 +1004,7 @@ jp_0baf:
     ld [hl], e
     inc hl
     ld [hl], d
-    wtrap RunDecompress
+    wtrap ExtractData
     ld hl, $010e
     push hl
     ld hl, $c60f
@@ -1019,7 +1019,7 @@ jp_0baf:
     ld [hl], e
     inc hl
     ld [hl], d
-    wtrap RunDecompress
+    wtrap ExtractData
     ld hl, $0003
     push hl
     ld hl, $c605
@@ -1190,7 +1190,7 @@ call_0d53:
     ld hl, $c60a
     pop de
     ld [hl], e
-    wtrap MovePen
+    wtrap DrawAt
     ld hl, $c400
     push hl
     ld hl, $c609
@@ -1208,7 +1208,7 @@ call_0d53:
     ld [hl], e
     inc hl
     ld [hl], d
-    wtrap IntToString
+    wtrap StrConvInt
     ld hl, $c400
     push hl
     ld hl, $c609
@@ -1265,7 +1265,7 @@ jr_000_0dc7::
     ld hl, $c60a
     pop de
     ld [hl], e
-    wtrap MovePen
+    wtrap DrawAt
     ld hl, $c400
     push hl
     ld hl, $c609
@@ -1282,7 +1282,7 @@ jr_000_0dc7::
     ld [hl], e
     inc hl
     ld [hl], d
-    wtrap IntToString
+    wtrap StrConvInt
     ld hl, $c400
     push hl
     ld hl, $c609
@@ -1301,7 +1301,7 @@ jr_000_0dc7::
     ld hl, $c60a
     pop de
     ld [hl], e
-    wtrap MovePen
+    wtrap DrawAt
     ld hl, $0058
     push hl
     ld hl, $c605
@@ -1338,7 +1338,7 @@ jr_000_0e4c::
     ld hl, $c60a
     pop de
     ld [hl], e
-    wtrap MovePen
+    wtrap DrawAt
     ldx hl, data_0789
     push hl
     ld hl, $c609
@@ -1364,7 +1364,7 @@ jp_0e7d:
     ld hl, $c60a
     pop de
     ld [hl], e
-    wtrap MovePen
+    wtrap DrawAt
     ld hl, $c400
     push hl
     ld hl, $c609
@@ -1382,7 +1382,7 @@ jp_0e7d:
     ld [hl], e
     inc hl
     ld [hl], d
-    wtrap IntToString
+    wtrap StrConvInt
     ld hl, $c400
     push hl
     ld hl, $c609
@@ -1686,7 +1686,7 @@ jp_105a:
     ld hl, $c605
     pop de
     ld [hl], e
-    wtrap PlaySound
+    wtrap AudioPlaySound
     ld hl, $0005
     push hl
     ld hl, $c648
@@ -1774,7 +1774,7 @@ jr_000_10c8::
     ld hl, $c60a
     pop de
     ld [hl], e
-    wtrap MovePen
+    wtrap DrawAt
     ldx hl, data_1450
     push hl
     ld hl, $c609
@@ -1793,7 +1793,7 @@ jr_000_10c8::
     ld hl, $c60a
     pop de
     ld [hl], e
-    wtrap MovePen
+    wtrap DrawAt
     ldx hl, data_1438
     push hl
     ld hl, $c609

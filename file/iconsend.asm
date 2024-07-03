@@ -33,7 +33,7 @@ Main::
     ld e, l
     ld d, h
     ld b, $c6
-    trap InitDecompress
+    trap ExtractInit
     pop hl
     inc hl
     inc hl
@@ -78,7 +78,7 @@ jr3:
     ld e, l
     ld d, h
     ld bc, $00c0
-    trap RunDecompress
+    trap ExtractData
     ld hl, $c500
     ld de, $0000
     ld bc, $1900

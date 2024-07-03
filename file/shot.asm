@@ -99,10 +99,10 @@ DrawTime:
 
 DrawInt:
     push de
-    trap MovePen
+    trap DrawAt
     pop de
     ld hl, VarAtoiScratch
-    trap IntToString
+    trap StrConvInt
     ld hl, VarAtoiScratch + 3
     trap DrawString
     ld a, [VarTime]
