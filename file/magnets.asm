@@ -7,6 +7,7 @@ INCLUDE "trap.inc"
 INCLUDE "file/common.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
+LOAD "CRAM Code", SRAM[$a008]
 
 Header::
     dw SIZEOF(SECTION(Header))
@@ -90,15 +91,12 @@ jr_000_0123:
     ld a, b
     call $a110
     pop hl
-
-HeaderManufacturerCode::
     pop de
     pop bc
     pop af
     ret
 
 
-HeaderCGBFlag::
     push af
     push bc
     push de
@@ -284,7 +282,6 @@ jr_000_01fb::
     ret
 
 
-Jump_000_0202::
     push af
 
 jr_000_0203::
@@ -405,7 +402,7 @@ jr_000_024c::
     ld c, $80
     call $a244
     ld de, $0676
-    ld bc, jr_000_04f0
+    ld bc, $04f0
     call $a22e
     ld de, $8800
     ld c, $80
@@ -440,8 +437,6 @@ jr_000_02db::
     ld hl, $cf00
     sla c
     rl b
-
-Call_000_0303::
     sla c
     rl b
     sla c
@@ -3838,7 +3833,7 @@ jr_000_141d::
     nop
     ld bc, $0301
     rlca
-    ld bc, jr_000_1105
+    ld bc, $1105
     rrca
     rlca
     ld bc, $0705
@@ -3911,7 +3906,7 @@ jr_000_141d::
     ld bc, $b578
     ld [bc], a
     nop
-    ld bc, Jump_000_0202
+    ld bc, $0202
     rrca
     cpl
     rra
@@ -4002,7 +3997,7 @@ jr_000_141d::
     ld bc, $b5ef
     ld [bc], a
     nop
-    ld bc, Jump_000_0202
+    ld bc, $0202
     inc l
     dec l
     inc a
@@ -4024,7 +4019,7 @@ jr_000_141d::
     ld bc, $b60f
     ld [bc], a
     nop
-    ld bc, Jump_000_0202
+    ld bc, $0202
     ld e, l
     ld a, h
     ld a, l
@@ -4048,7 +4043,7 @@ jr_000_141d::
     ld bc, $b653
     ld [bc], a
     nop
-    ld bc, Jump_000_0202
+    ld bc, $0202
     add h
     add l
     sub h
@@ -4108,7 +4103,7 @@ jr_000_141d::
     ld bc, $b697
     ld [bc], a
     nop
-    ld bc, Jump_000_0202
+    ld bc, $0202
     and h
     and l
     or h
@@ -4168,7 +4163,7 @@ jr_000_141d::
     ld bc, $b6db
     ld [bc], a
     nop
-    ld bc, Jump_000_0202
+    ld bc, $0202
     call nz, $d4c5
     push de
     ld [bc], a
@@ -4191,7 +4186,7 @@ jr_000_141d::
     ld [bc], a
     set 1, d
     db $db
-    jp c, Jump_000_0202
+    jp c, $0202
 
     ret nz
 
@@ -4239,7 +4234,7 @@ jr_000_141d::
     ld bc, $01e7
     ld bc, $01e4
     ld bc, $01e5
-    ld bc, jr_000_01e3
+    ld bc, $01e3
     ld bc, $25e8
     or a
     inc bc
@@ -4275,7 +4270,7 @@ jr_000_141d::
     xor [hl]
     xor a
     call z, $bfbe
-    call c, Call_000_0303
+    call c, $0303
     call $cfce
     db $dd
     sbc $df
@@ -5331,3 +5326,5 @@ jr_000_1d87::
     pop bc
     dec c
     jr jr_000_1d21
+
+ENDL
