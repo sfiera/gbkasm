@@ -379,7 +379,7 @@ call_a278:
     ld hl, $cf00
     trap MemSet
     ld bc, $0014
-    ld de, $b85f
+    ld de, data_b85f
     ld hl, $cf07
     trap MemCopy
     ld a, $05
@@ -422,7 +422,7 @@ call_a2a5:
 
 call_a2df:
     xor a
-    ld hl, $b7be
+    ld hl, data_b7be
 
 jr_a2e3::
     push af
@@ -2361,7 +2361,7 @@ call_ad8c:
     ld [$d0a7], a
     ld a, $0b
     trap AudioPlayMusic
-    ld hl, $ae92
+    ld hl, data_ae92
 
 jr_ad9e::
     ld a, [hl]
@@ -2557,400 +2557,30 @@ jr_ae89::
     ret
 
 
-jp_ae92:
-    jr nz, jr_aebe
-
-    ld a, [hl+]
-    jr nz, @+$4f
-
-    ld b, c
-    ld b, a
-    ld c, [hl]
-    ld b, l
-    ld d, h
-    ld d, e
-    jr nz, @+$33
-
-    add hl, sp
-    add hl, sp
-    scf
-    jr nz, @+$2c
-
-    ld a, [hl+]
-    jr nz, jr_aec7
-
-    jr nz, jr_aec9
-
-    jr nz, jr_aecb
-
-    dec l
-    jr nz, jr_af01
-
-    ld d, h
-    ld b, c
-    ld b, [hl]
-    ld b, [hl]
-    jr nz, jr_aee1
-
-    jr nz, jr_aed6
-
-    jr nz, jr_aed8
-
-    jr nz, jr_aeda
-
-    cp $fe
-    jr nz, jr_af02
-
-jr_aebe::
-    ld l, c
-    ld [hl], d
-    ld h, l
-    ld h, e
-    ld [hl], h
-    ld h, l
-    ld [hl], d
-    jr nz, jr_aee7
-
-jr_aec7::
-    jr nz, jr_aee9
-
-jr_aec9::
-    jr nz, jr_aeeb
-
-jr_aecb::
-    jr nz, jr_aeed
-
-    jr nz, jr_aeef
-
-    jr nz, @+$22
-
-    jr nz, @+$48
-
-    ld [hl], l
-    ld l, l
-    ld l, c
-
-jr_aed6::
-    ld l, b
-    ld l, c
-
-jr_aed8::
-    ld [hl], e
-    ld h, c
-
-jr_aeda::
-    jr nz, jr_af2f
-
-    ld h, c
-    ld [hl], h
-    ld l, a
-    jr nz, jr_af01
-
-jr_aee1::
-    jr nz, jr_af03
-
-jr_aee3::
-    jr nz, jr_aee3
-
-    jr nz, jr_af37
-
-jr_aee7::
-    ld [hl], d
-    ld l, a
-
-jr_aee9::
-    ld h, a
-    ld [hl], d
-
-jr_aeeb::
-    ld h, c
-    ld l, l
-
-jr_aeed::
-    ld l, l
-    ld h, l
-
-jr_aeef::
-    ld [hl], d
-    jr nz, jr_af12
-
-    jr nz, jr_af14
-
-    jr nz, jr_af16
-
-    jr nz, jr_af18
-
-    jr nz, jr_af1a
-
-    jr nz, jr_af50
-
-    ld h, c
-    ld l, e
-    ld h, c
-    ld l, b
-    ld l, c
-
-jr_af01::
-    ld [hl], d
-
-jr_af02::
-    ld l, a
-
-jr_af03::
-    jr nz, @+$51
-
-    ld l, b
-    ld l, [hl]
-    ld l, c
-    ld [hl], e
-    ld l, b
-    ld l, c
-    jr nz, jr_af2d
-
-    jr nz, jr_af2f
-
-    ld c, e
-    ld h, l
-    ld l, c
-
-jr_af12::
-    jr nz, @+$4d
-
-jr_af14::
-    ld l, a
-    ld l, [hl]
-
-jr_af16::
-    ld h, h
-    ld l, a
-
-jr_af18::
-    jr nz, jr_af3a
-
-jr_af1a::
-    jr nz, jr_af3c
-
-    jr nz, jr_af3e
-
-    jr nz, jr_af40
-
-    jr nz, jr_af42
-
-    jr nz, jr_af7d
-
-    ld l, a
-    ld l, e
-    ld l, a
-    jr nz, jr_af76
-
-    ld l, c
-    ld a, c
-    ld h, c
-    ld h, d
-
-jr_af2d::
-    ld h, c
-    ld a, c
-
-jr_af2f::
-    ld h, c
-    ld [hl], e
-    ld l, b
-    ld l, c
-    jr nz, jr_af55
-
-    cp $20
-
-jr_af37::
-    ld b, a
-    ld [hl], d
-    ld h, c
-
-jr_af3a::
-    ld [hl], b
-    ld l, b
-
-jr_af3c::
-    ld l, c
-    ld h, e
-
-jr_af3e::
-    jr nz, @+$46
-
-jr_af40::
-    ld h, l
-    ld [hl], e
-
-jr_af42::
-    ld l, c
-    ld h, a
-    ld l, [hl]
-    ld h, l
-    ld [hl], d
-    jr nz, jr_af69
-
-    jr nz, jr_af6b
-
-    jr nz, jr_afa0
-
-    ld h, c
-    ld [hl], h
-    ld l, a
-
-jr_af50::
-    ld [hl], e
-    ld l, b
-    ld l, c
-    jr nz, @+$48
-
-jr_af55::
-    ld [hl], l
-    ld l, e
-    ld [hl], l
-    ld h, h
-    ld h, c
-    jr nz, @+$22
-
-    jr nz, @+$22
-
-    jr nz, @+$22
-
-    ld c, l
-    ld h, l
-    ld h, a
-    ld [hl], l
-    ld l, l
-    ld l, c
-    jr nz, jr_afb7
-
-    ld l, e
-
-jr_af69::
-    ld h, c
-    ld a, d
-
-jr_af6b::
-    ld h, c
-    ld l, e
-    ld l, c
-    jr nz, jr_af90
-
-    jr nz, jr_af92
-
-    cp $20
-    ld d, b
-    ld l, h
-
-jr_af76::
-    ld h, c
-    ld l, [hl]
-    ld l, [hl]
-    ld h, l
-    ld [hl], d
-    jr nz, @+$22
-
-jr_af7d::
-    jr nz, jr_af9f
-
-    jr nz, @+$22
-
-    jr nz, jr_afa3
-
-    jr nz, jr_afa5
-
-    jr nz, jr_afa7
-
-    jr nz, jr_afa9
-
-    ld d, h
-    ld h, c
-    ld l, e
-    ld h, l
-    ld l, a
-    jr nz, jr_afdd
-
-jr_af90::
-    ld l, a
-    ld l, [hl]
-
-jr_af92::
-    ld l, l
-    ld h, c
-    jr nz, @+$22
-
-    jr nz, @+$22
-
-    jr nz, @+$22
-
-    jr nz, @+$22
-
-    jr nz, jr_aff0
-
-    ld l, c
-
-jr_af9f::
-    ld h, l
-
-jr_afa0::
-    jr nz, @+$48
-
-    ld [hl], l
-
-jr_afa3::
-    ld l, d
-    ld l, c
-
-jr_afa5::
-    ld [hl], h
-    ld h, c
-
-jr_afa7::
-    jr nz, jr_afc9
-
-jr_afa9::
-    jr nz, jr_afcb
-
-    jr nz, @+$22
-
-    jr nz, jr_afcf
-
-    cp $fe
-    cp $fe
-    cp $fe
-    cp $fe
-
-jr_afb7::
-    cp $fe
-    cp $fe
-    cp $fe
-    cp $fe
-    cp $fe
-    jr nz, @+$33
-
-    add hl, sp
-    add hl, sp
-    scf
-    jr nz, @+$22
-
-    ld d, e
-
-jr_afc9::
-    ld b, c
-    ld d, h
-
-jr_afcb::
-    ld c, a
-    jr nz, @+$52
-
-    ld d, d
-
-jr_afcf::
-    ld c, a
-    ld c, d
-    ld b, l
-    ld b, e
-    ld d, h
-    jr nz, @+$01
+data_ae92:
+    db " ** MAGNETS 1997 ** "
+    db "     - STAFF -      "
+    db $fe
+    db $fe
+    db " Directer           "
+    db "  Fumihisa Sato     "
+    db $fe
+    db " Programmer         "
+    db "  Takahiro Ohnishi  "
+    db "  Kei Kondo         "
+    db "  Yoko Miyabayashi  "
+    db $fe
+    db " Graphic Designer   "
+    db "  Satoshi Fukuda    "
+    db "  Megumi Okazaki    "
+    db $fe
+    db " Planner            "
+    db "  Takeo Monma       "
+    db "  Rie Fujita        "
+    db $fe, $fe, $fe, $fe, $fe, $fe, $fe, $fe, $fe
+    db $fe, $fe, $fe, $fe, $fe, $fe, $fe, $fe, $fe
+    db " 1997  SATO PROJECT "
+    db $ff
 
 call_afd6::
     ldh a, [$8a]
@@ -3519,16 +3149,16 @@ data_b528:
 data_b54c:
     dw data_b564
     dw data_b584
-    dw $b5c0
-    dw $b5db
-    dw $b5fb
-    dw $b61b
-    dw $b65f
-    dw $b6a3
-    dw $b6e7
-    dw $b70d
-    dw $b746
-    dw $b782
+    dw data_b5c0
+    dw data_b5db
+    dw data_b5fb
+    dw data_b61b
+    dw data_b65f
+    dw data_b6a3
+    dw data_b6e7
+    dw data_b70d
+    dw data_b746
+    dw data_b782
 
 data_b564:
     dw data_b578
@@ -3539,80 +3169,257 @@ data_b564:
     db $02, $00, $01
     dw data_b578
     db $02, $00, $01
-
 data_b578:
     db $02, $02, $0f, $2f, $1f, $3f, $02, $02, $4f, $6f, $5f, $7a
 
 data_b584:
-    dw data_b594, $0001
-    dw $b59f, $0001
-    dw $b5aa, $0001
-    dw $b5b5, $0001
-
+    dw data_b594
+    db $01, $00
+    dw data_b59f
+    db $01, $00
+    dw data_b5aa
+    db $01, $00
+    dw data_b5b5
+    db $01, $00
 data_b594:
-    db $03, $03, $33, $34
-    db $35, $43, $44, $45, $53, $54, $55, $03, $03, $3c, $3d, $3e, $3c, $4d, $4e, $5c
-    db $5d, $5e, $03, $03, $03, $04, $05, $13, $14, $15, $23, $24, $25, $03, $03, $0c
-    db $0d, $0e, $1c, $1d, $1e, $2c, $2d, $2e, $d0, $b5, $01, $00, $d0, $b5, $01, $00
-    db $d0, $b5, $01, $00, $d0, $b5, $01, $00, $03, $03, $69, $6a, $6b, $79, $ff, $7b
-    db $6c, $6d, $6e, $ef, $b5, $02, $00, $01, $ef, $b5, $02, $00, $01, $ef, $b5, $02
-    db $00, $01, $ef, $b5, $02, $00, $01, $02, $02, $2c, $2d, $3c, $3d, $02, $02, $2e
-    db $2f, $3e, $3f, $0f, $b6, $02, $00, $01, $0f, $b6, $02, $00, $01, $0f, $b6, $02
-    db $00, $01, $0f, $b6, $02, $00, $01, $02, $02, $5d, $7c, $7d, $7e, $02, $02, $4f
-    db $6f, $5f, $7f, $2f, $b6, $02, $00, $01, $3b, $b6, $02, $00, $01, $47, $b6, $02
-    db $00, $01, $53, $b6, $02, $00, $01, $02, $02, $84, $85, $94, $95, $02, $02, $86
-    db $87, $96, $97, $02, $02, $89, $88, $99, $98, $02, $02, $8b, $8a, $9b, $9a, $02
-    db $02, $80, $81, $90, $91, $02, $02, $82, $83, $92, $93, $02, $02, $88, $89, $98
-    db $99, $02, $02, $8a, $8b, $9a, $9b, $73, $b6, $02, $00, $01, $7f, $b6, $02, $00
-    db $01, $8b, $b6, $02, $00, $01, $97, $b6, $02, $00, $01, $02, $02, $a4, $a5, $b4
-    db $b5, $02, $02, $a6, $a7, $b6, $b7, $02, $02, $a9, $a8, $b9, $b8, $02, $02, $ab
-    db $aa, $bb, $ba, $02, $02, $a0, $a1, $b0, $b1, $02, $02, $a2, $a3, $b2, $b3, $02
-    db $02, $a8, $a9, $b8, $b9, $02, $02, $aa, $ab, $ba, $bb, $b7, $b6, $02, $00, $01
-    db $c3, $b6, $02, $00, $01, $cf, $b6, $02, $00, $01, $db, $b6, $02, $00, $01, $02
-    db $02, $c4, $c5, $d4, $d5, $02, $02, $c6, $c7, $d6, $d7, $02, $02, $c9, $c8, $d9
-    db $d8, $02, $02, $cb, $ca, $db, $da, $02, $02, $c0, $c1, $d0, $d1, $02, $02, $c2
-    db $c3, $d2, $d3, $02, $02, $c8, $c9, $d8, $d9, $02, $02, $ca, $cb, $da, $db, $fb
-    db $b6, $02, $00, $01, $07, $b7, $02, $00, $01, $01, $b7, $02, $00, $01, $07, $b7
-    db $02, $00, $01, $01, $01, $e6, $01, $01, $e7, $01, $01, $e4, $01, $01, $e5, $01
-    db $01, $e3, $01, $01, $e8, $25, $b7, $03, $00, $01, $02, $25, $b7, $03, $00, $01
-    db $02, $25, $b7, $03, $00, $01, $02, $25, $b7, $03, $00, $01, $02, $03, $03, $8c
-    db $8d, $8e, $9c, $9d, $9e, $8f, $ac, $ad, $03, $03, $9f, $bc, $bd, $ae, $af, $cc
-    db $be, $bf, $dc, $03, $03, $cd, $ce, $cf, $dd, $de, $df, $e0, $e1, $e2, $56, $b7
-    db $01, $00, $61, $b7, $01, $00, $6c, $b7, $01, $00, $77, $b7, $01, $00, $03, $03
-    db $30, $31, $32, $40, $41, $42, $50, $51, $52, $03, $03, $39, $3a, $3b, $49, $4a
-    db $4b, $59, $5a, $5b, $03, $03, $00, $01, $02, $10, $11, $12, $20, $21, $22, $03
-    db $03, $09, $0a, $0b, $19, $1a, $1b, $29, $2a, $2b, $92, $b7, $01, $00, $9d, $b7
-    db $01, $00, $a8, $b7, $01, $00, $b3, $b7, $01, $00, $03, $03, $36, $37, $38, $46
-    db $47, $48, $56, $57, $58, $03, $03, $73, $74, $75, $66, $67, $68, $76, $77, $78
-    db $03, $03, $06, $07, $08, $16, $17, $18, $26, $27, $28, $03, $03, $60, $61, $62
-    db $70, $71, $72, $63, $64, $65, $1b, $1d, $21, $2c, $2d, $2e, $3f, $31, $32, $33
-    db $34, $35, $62, $63, $65, $66, $68, $6a, $6c, $6d, $70, $71, $73, $74, $75, $78
-    db $79, $7a, $7e, $80, $83, $84, $86, $87, $88, $8a, $8c, $8d, $8e, $8f, $92, $94
-    db $96, $98, $9b, $9f, $aa, $af, $ae, $b2, $b5, $b6, $bd, $c3, $c4, $c8, $cb, $cd
-    db $cf, $d4, $d7, $da, $e0, $e4, $ed, $ff, $61, $82, $a1, $9c, $6f, $7f, $69, $e8
-    db $d2, $a9, $76, $89, $ca, $36, $37, $7c
+    db $03, $03, $33, $34, $35, $43, $44, $45, $53, $54, $55
+data_b59f:
+    db $03, $03, $3c, $3d, $3e, $3c, $4d, $4e, $5c, $5d, $5e
+data_b5aa:
+    db $03, $03, $03, $04, $05, $13, $14, $15, $23, $24, $25
+data_b5b5:
+    db $03, $03, $0c, $0d, $0e, $1c, $1d, $1e, $2c, $2d, $2e
+
+data_b5c0:
+    dw data_b5d0
+    db $01, $00
+    dw data_b5d0
+    db $01, $00
+    dw data_b5d0
+    db $01, $00
+    dw data_b5d0
+    db $01, $00
+data_b5d0:
+    db $03, $03, $69, $6a, $6b, $79, $ff, $7b, $6c, $6d, $6e
+
+data_b5db:
+    dw data_b5ef
+    db $02, $00, $01
+    dw data_b5ef
+    db $02, $00, $01
+    dw data_b5ef
+    db $02, $00, $01
+    dw data_b5ef
+    db $02, $00, $01
+data_b5ef:
+    db $02, $02, $2c, $2d, $3c, $3d, $02, $02, $2e, $2f, $3e, $3f
+
+data_b5fb:
+    dw data_b60f
+    db $02, $00, $01
+    dw data_b60f
+    db $02, $00, $01
+    dw data_b60f
+    db $02, $00, $01
+    dw data_b60f
+    db $02, $00, $01
+data_b60f:
+    db $02, $02, $5d, $7c, $7d, $7e, $02, $02, $4f, $6f, $5f, $7f
+
+data_b61b:
+    dw data_b62f
+    db $02, $00, $01
+    dw data_b63b
+    db $02, $00, $01
+    dw data_b647
+    db $02, $00, $01
+    dw data_b653
+    db $02, $00, $01
+data_b62f:
+    db $02, $02, $84, $85, $94, $95, $02, $02, $86, $87, $96, $97
+data_b63b:
+    db $02, $02, $89, $88, $99, $98, $02, $02, $8b, $8a, $9b, $9a
+data_b647:
+    db $02, $02, $80, $81, $90, $91, $02, $02, $82, $83, $92, $93
+data_b653:
+    db $02, $02, $88, $89, $98, $99, $02, $02, $8a, $8b, $9a, $9b
+
+data_b65f:
+    dw data_b673
+    db $02, $00, $01
+    dw data_b67f
+    db $02, $00, $01
+    dw data_b68b
+    db $02, $00, $01
+    dw data_b697
+    db $02, $00, $01
+data_b673:
+    db $02, $02, $a4, $a5, $b4, $b5, $02, $02, $a6, $a7, $b6, $b7
+data_b67f:
+    db $02, $02, $a9, $a8, $b9, $b8, $02, $02, $ab, $aa, $bb, $ba
+data_b68b:
+    db $02, $02, $a0, $a1, $b0, $b1, $02, $02, $a2, $a3, $b2, $b3
+data_b697:
+    db $02, $02, $a8, $a9, $b8, $b9, $02, $02, $aa, $ab, $ba, $bb
+
+data_b6a3:
+    dw data_b6b7
+    db $02, $00, $01
+    dw data_b6c3
+    db $02, $00, $01
+    dw data_b6cf
+    db $02, $00, $01
+    dw data_b6db
+    db $02, $00, $01
+data_b6b7:
+    db $02, $02, $c4, $c5, $d4, $d5, $02, $02, $c6, $c7, $d6, $d7
+data_b6c3:
+    db $02, $02, $c9, $c8, $d9, $d8, $02, $02, $cb, $ca, $db, $da
+data_b6cf:
+    db $02, $02, $c0, $c1, $d0, $d1, $02, $02, $c2, $c3, $d2, $d3
+data_b6db:
+    db $02, $02, $c8, $c9, $d8, $d9, $02, $02, $ca, $cb, $da, $db
+
+data_b6e7:
+    dw data_b6fb
+    db $02, $00, $01
+    dw data_b707
+    db $02, $00, $01
+    dw data_b701
+    db $02, $00, $01
+    dw data_b707
+    db $02, $00, $01
+data_b6fb:
+    db $01, $01, $e6, $01, $01, $e7
+data_b701:
+    db $01, $01, $e4, $01, $01, $e5
+data_b707:
+    db $01, $01, $e3, $01, $01, $e8
+
+data_b70d:
+    dw data_b725
+    db $03, $00, $01, $02
+    dw data_b725
+    db $03, $00, $01, $02
+    dw data_b725
+    db $03, $00, $01, $02
+    dw data_b725
+    db $03, $00, $01, $02
+data_b725:
+    db $03, $03, $8c, $8d, $8e, $9c, $9d, $9e, $8f, $ac, $ad
+data_b730:
+    db $03, $03, $9f, $bc, $bd, $ae, $af, $cc, $be, $bf, $dc
+data_b73b:
+    db $03, $03, $cd, $ce, $cf, $dd, $de, $df, $e0, $e1, $e2
+
+data_b746:
+    dw data_b756
+    db $01, $00
+    dw data_b761
+    db $01, $00
+    dw data_b76c
+    db $01, $00
+    dw data_b777
+    db $01, $00
+data_b756:
+    db $03, $03, $30, $31, $32, $40, $41, $42, $50, $51, $52
+data_b761:
+    db $03, $03, $39, $3a, $3b, $49, $4a, $4b, $59, $5a, $5b
+data_b76c:
+    db $03, $03, $00, $01, $02, $10, $11, $12, $20, $21, $22
+data_b777:
+    db $03, $03, $09, $0a, $0b, $19, $1a, $1b, $29, $2a, $2b
+
+data_b782:
+    dw data_b792
+    db $01, $00
+    dw data_b79d
+    db $01, $00
+    dw data_b7a8
+    db $01, $00
+    dw data_b7b3
+    db $01, $00
+data_b792:
+    db $03, $03, $36, $37, $38, $46, $47, $48, $56, $57, $58
+data_b79d:
+    db $03, $03, $73, $74, $75, $66, $67, $68, $76, $77, $78
+data_b7a8:
+    db $03, $03, $06, $07, $08, $16, $17, $18, $26, $27, $28
+data_b7b3:
+    db $03, $03, $60, $61, $62, $70, $71, $72, $63, $64, $65
+
+data_b7be:
+    db $1b, $1d
+    db $21, $2c, $2d, $2e, $3f, $31, $32, $33, $34, $35, $62, $63, $65, $66, $68, $6a
+    db $6c, $6d, $70, $71, $73, $74, $75, $78, $79, $7a, $7e, $80, $83, $84, $86, $87
+    db $88, $8a, $8c, $8d, $8e, $8f, $92, $94, $96, $98, $9b, $9f, $aa, $af, $ae, $b2
+    db $b5, $b6, $bd, $c3, $c4, $c8, $cb, $cd, $cf, $d4, $d7, $da, $e0, $e4, $ed, $ff
+    db $61, $82, $a1, $9c, $6f, $7f, $69, $e8, $d2, $a9, $76, $89, $ca, $36, $37, $7c
 
 data_b810:
     dw data_b81e
-    dw $b821
-    dw $b826
-    dw $b82d
-    dw $b836
-    dw $b84f
-    dw $b856
+    dw data_b821
+    dw data_b826
+    dw data_b82d
+    dw data_b836
+    dw data_b84f
+    dw data_b856
 
 data_b81e:
-    db $01, $09, $08, $02, $09, $04, $09, $0d, $03, $0b
-    db $06, $09, $08, $07, $0a, $04, $05, $05, $0d, $05, $05, $0c, $0d, $0c, $0c, $04
-    db $06, $0e, $06, $04, $08, $0d, $08, $04, $0b, $0d, $0b, $04, $0d, $0d, $0d, $04
-    db $10, $0d, $10, $11, $06, $01, $04, $03, $07, $08, $09, $0a, $0b, $08, $04, $09
-    db $04, $03, $08, $09, $0d, $0f, $09, $10, $05, $06, $06, $06, $10, $00, $01, $02
-    db $06, $06, $06, $06, $06, $10, $10, $03, $04, $06, $10, $00, $00, $00, $00, $00
-    db $40, $00, $04, $00, $00, $00, $00, $00, $10, $00, $00, $03, $03, $04, $45, $19
-    db $19, $20, $21, $51, $6f, $4f, $7a, $42, $7d, $78, $5f, $80, $80, $58, $d8, $24
-    db $64, $74, $d4, $fe, $92, $f5, $1d, $df, $31, $fd, $8b, $66, $65, $4f, $4a, $7a
-    db $57, $df, $a8, $af, $fa, $cf, $71, $7f, $be, $1f, $60, $e7, $85, $5f, $d5, $ff
-    db $15, $7f, $c6, $ff, $18, $fe, $e1, $f8, $06, $80, $78
+    db $01
+    db $09, $08
+data_b821:
+    db $02
+    db $09, $04
+    db $09, $0d
+data_b826:
+    db $03
+    db $0b, $06
+    db $09, $08
+    db $07, $0a
+data_b82d:
+    db $04
+    db $05, $05
+    db $0d, $05
+    db $05, $0c
+    db $0d, $0c
+data_b836:
+    db $0c
+    db $04, $06
+    db $0e, $06
+    db $04, $08
+    db $0d, $08
+    db $04, $0b
+    db $0d, $0b
+    db $04, $0d
+    db $0d, $0d
+    db $04, $10
+    db $0d, $10
+    db $11, $06
+    db $01, $04
+data_b84f:
+    db $03
+    db $07, $08
+    db $09, $0a
+    db $0b, $08
+data_b856:
+    db $04
+    db $09, $04
+    db $03, $08
+    db $09, $0d
+    db $0f, $09
+
+data_b85f:
+    db $10, $05, $06, $06, $06, $10, $00, $01, $02, $06, $06, $06, $06, $06, $10, $10
+    db $03, $04, $06, $10
+
+data_b863:
+    db $00, $00, $00, $00, $00, $40, $00, $04, $00, $00, $00, $00, $00
+    db $10, $00, $00, $03, $03, $04, $45, $19, $19, $20, $21, $51, $6f, $4f, $7a, $42
+    db $7d, $78, $5f, $80, $80, $58, $d8, $24, $64, $74, $d4, $fe, $92, $f5, $1d, $df
+    db $31, $fd, $8b, $66, $65, $4f, $4a, $7a, $57, $df, $a8, $af, $fa, $cf, $71, $7f
+    db $be, $1f, $60, $e7, $85, $5f, $d5, $ff, $15, $7f, $c6, $ff, $18, $fe, $e1, $f8
+    db $06, $80, $78
 
 call_b8c3:
     ld a, [$cf1b]
