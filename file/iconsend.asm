@@ -60,7 +60,7 @@ jr2:
     ld de, $cae4
     ld hl, $c500
     ld c, $00
-    trap $6b
+    trap FileSearch
     jr c, jr3
     trap $ef
     jr jr2

@@ -147,7 +147,7 @@ SaveIcon:
     ld [de], a
     ld hl, VarFileContent
     ld c, $00
-    trap $6b
+    trap FileSearch
     jr c, .uniqueFileName
 
     ld a, MSG_SAME_FILE_EXISTS

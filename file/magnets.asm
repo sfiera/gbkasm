@@ -312,7 +312,7 @@ call_a221:
     ld hl, $c500
     ld de, data_a213
     ld c, $0d
-    trap $6b
+    trap FileSearch
     ret nc
 
 jr_a22c::

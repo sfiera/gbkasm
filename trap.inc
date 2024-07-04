@@ -31,6 +31,7 @@ DEF ExtractData       EQU $63
 
 DEF DrawString        EQU $69
 DEF DrawStringList    EQU $6a
+DEF FileSearch        EQU $6b
 
 DEF IRListen          EQU $72
 DEF IRClose           EQU $73

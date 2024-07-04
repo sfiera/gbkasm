@@ -842,7 +842,7 @@ Call_000_037f:
     ld hl, $c500
     push bc
     push de
-    trap $6b
+    trap FileSearch
     pop de
     pop bc
     jr c, jr_000_03ae
@@ -853,7 +853,7 @@ Call_000_037f:
     pop de
     pop bc
     ld hl, $c500
-    trap $6b
+    trap FileSearch
 
 jr_000_03ae:
     pop hl
@@ -1919,7 +1919,7 @@ Call_000_0a5c:
     ld hl, $c500
     push bc
     push de
-    trap $6b
+    trap FileSearch
     pop de
     pop bc
     jr nc, jr_000_0ac9

@@ -215,7 +215,7 @@ Jump_001_41ab:
 
     push de
     call Call_001_426d
-    trap $6b
+    trap FileSearch
     pop de
     jr c, jr_001_422d
 
@@ -2833,7 +2833,7 @@ jr_001_6037:
     ld [de], a
     ld hl, $c500
     ld c, $00
-    trap $6b
+    trap FileSearch
     jr c, jr_001_6059
 
     ld a, $0a
@@ -4186,7 +4186,7 @@ code_01_6af8::
     call Call_001_6d18
     ld hl, $c500
     ld de, $c400
-    trap $6b
+    trap FileSearch
 
 jr_001_6b10:
     call Call_001_6a8b
