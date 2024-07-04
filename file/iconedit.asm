@@ -63,7 +63,7 @@ jx_0128::
     xor a
 
 jr_000_0139::
-    ldx de, data_0151
+    ldx de, CursorData
     trap InputCursorMenu
     jr c, jr_000_0139
 
@@ -78,7 +78,7 @@ jr_000_0139::
     dw jx_0158 - @  ; quit
     dw jx_0128 - @
 
-data_0151:
+CursorData:
     db $04            ; item count
     db $04, $06       ; initial position
     db $04, $7f       ; cursor characters
@@ -208,11 +208,11 @@ call_0224:
     inc [hl]
 call_022d:
     ld a, [$c7b9]
-    ldx de, data_068e
+    ldx de, TileShades
     and $01
     jr z, jr_000_023c
 
-    ldx de, data_06ce
+    ldx de, TileGrid
 
 jr_000_023c::
     ld hl, $9000
@@ -523,7 +523,7 @@ jr_000_03c1::
     ret
 
 
-data_03f2:
+BitValues:
     db $80, $40, $20, $10, $08, $04, $02, $01
 
 
@@ -532,7 +532,7 @@ call_03fa:
     and $07
     ld e, a
     ld d, $00
-    ldx hl, data_03f2
+    ldx hl, BitValues
     add hl, de
     ld a, [hl]
     ld c, a
@@ -748,15 +748,15 @@ call_054f:
     ldh [$9a], a
     callx call_0599
     callx call_022d
-    ldx de, data_068e + $10
+    ldx de, TileShades + $10
     ld hl, $9010
     ld bc, $0030
     trap MemCopy
-    ldx de, data_06de
+    ldx de, TileCursor
     ld hl, $8000
     ld bc, $0010
     trap MemCopy
-    ldx hl, layout_0615
+    ldx hl, LayoutBottomBar
     trap DrawLayout
     callx call_0363
     ret
@@ -790,7 +790,7 @@ call_05c4:
     callx call_0605
     ld h, $04
     trap $ca
-    ldx de, data_05f5
+    ldx de, TileMenuCursor
     ld hl, $9040
     ld bc, $0010
     trap MemCopy
@@ -800,21 +800,14 @@ call_05c4:
     ld de, $0200
     ld bc, $1003
     trap DrawBox
-    ldx hl, layout_0656
+    ldx hl, LayoutMenu
     ld de, $8001
     trap $5a
     ret
 
 
-data_05f5:
-    db $80, $80
-    db $e0, $e0
-    db $f8, $f8
-    db $fe, $fe
-    db $f8, $fe
-    db $e0, $f8
-    db $80, $e0
-    db $00, $80
+TileMenuCursor:
+    INCBIN "gfx/iconedit/menucursor.2bpp"
 
 
 call_0605:
@@ -827,13 +820,13 @@ call_0605:
     ret
 
 
-layout_0615:
+LayoutBottomBar:
     dk $00, $20, "--------------------\n"
     db $00, $21, " psvy ICON EDIT\n"
     db $00, $22, " qtwz X =\n"
     db $00, $23, " rux｢ Y =\n"
 
-layout_0656:
+LayoutMenu:
     dk $06, $01, "ICON EDIT\n"
     dk $05, $06, "へんしゅうする\n"
     dh $05, $07, "アイコンのセーブ\n"
@@ -841,13 +834,13 @@ layout_0656:
     dh $05, $09, "おわる\n"
     db $ff
 
-data_068e:
+TileShades:
     INCBIN "gfx/iconedit/shades.2bpp"
 
-data_06ce:
+TileGrid:
     INCBIN "gfx/iconedit/grid.2bpp"
 
-data_06de:
+TileCursor:
     INCBIN "gfx/iconedit/cursor.2bpp"
 
 
@@ -895,7 +888,7 @@ jr_000_072a::
     add a
     ld c, a
     ld b, $00
-    ldx hl, data_073c
+    ldx hl, MenuLayouts
     add hl, bc
     ld c, [hl]
     inc hl
@@ -907,54 +900,54 @@ jr_000_072a::
     ret
 
 
-data_073c:
-    dw data_0750 - @
-    dw data_0793 - @
-    dw data_0768 - @
-    dw data_07bc - @
+MenuLayouts:
+    dw LayoutDescContinue - @
+    dw LayoutDescSave - @
+    dw LayoutDescNewIcon - @
+    dw LayoutDescExit - @
     dw 0
     dw 0
-    dw data_07d9 - @
-    dw data_07f8 - @
-    dw data_081e - @
-    dw data_084b - @
+    dw LayoutEnterFileName - @
+    dw LayoutConfirmFileName - @
+    dw LayoutOutOfSpace - @
+    dw LayoutSameFileExists - @
 
-data_0750:
+LayoutDescContinue:
     dh $01, $0e, "アイコンパターンをへんしゅうします\n"
     db $ff
 
-data_0768:
+LayoutDescNewIcon:
     dk $01, $0e, "げんざいのアイコンパターンをけして\n"
     dh $01, $0f, "あたらしくへんしゅうします\n"
     db $ff
 
-data_0793:
+LayoutDescSave:
     dk $01, $0e, "げんざいのアイコンパターンを\n"
     dh $01, $0f, "ファイルにほぞんします\n"
     db $ff
 
-data_07bc:
+LayoutDescExit:
     dk $01, $0e, "「ＩＣＯＮ　ＥＤＩＴ」を\n"
     dh $01, $0f, "しゅうりょうします\n"
     db $ff
 
-data_07d9:
+LayoutEnterFileName:
     dk $01, $02, "ほぞんするなまえをにゅうりょくして\n"
     dh $01, $03, "ください\n"
     db $ff
 
-data_07f8:
+LayoutConfirmFileName:
     dk $01, $02, "このなまえでほぞんしていいですか？\n"
     dh $01, $03, "はい：Ａ　いいえ：Ｂ\n"
     db $ff
 
-data_081e:
+LayoutOutOfSpace:
     dk $01, $02, "あきようりょうがたりなくてセーブ\n"
     dk $01, $03, "できませんでした\n"
     dh $01, $04, "ＯＫ：Ａ\n"
     db $ff
 
-data_084b:
+LayoutSameFileExists:
     dk $01, $02, "おなじなまえのファイルがあります\n"
     dh $01, $03, "うわがきしてほぞんしてもいいですか？\n"
     dh $01, $04, "はい：Ａ　いいえ：Ｂ\n"
