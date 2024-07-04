@@ -82,7 +82,7 @@ jr3:
     ld hl, $c500
     ld de, $0000
     ld bc, $1900
-    trap $e9
+    trap FileWrite
     pop hl
     jr nc, jr0
 

@@ -890,7 +890,7 @@ jr_000_03ba:
     ld [hl], a
     ld hl, $c500
     push de
-    trap $e9
+    trap FileWrite
     pop de
     pop bc
     ret c
@@ -1955,7 +1955,7 @@ jr_000_0a8a:
     ld [hl], a
     ld hl, $c500
     push de
-    trap $e9
+    trap FileWrite
     pop de
     pop bc
     jr c, jr_000_0ad1

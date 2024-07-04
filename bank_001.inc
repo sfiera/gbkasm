@@ -227,7 +227,7 @@ Jump_001_41ab:
     ld a, [$c50a]
     ld [$c70a], a
     ld hl, $c700
-    trap $e9
+    trap FileWrite
     jr c, jr_001_422c
 
     ld a, [$c509]
@@ -3389,7 +3389,7 @@ Call_001_66ab:
     ld [$c50a], a
     ld bc, $01ff
     ld de, $0088
-    trap $e9
+    trap FileWrite
     ret c
 
     ld de, $c611
@@ -4202,7 +4202,7 @@ code_01_6b1f::
     call Call_001_6b88
     ret c
 
-    trap $e9
+    trap FileWrite
     jr jr_001_6b10
 
 code_01_6b27::

@@ -182,7 +182,7 @@ SaveIcon:
     ld hl, VarFileContent
     ld de, $0000
     ld bc, $19ff
-    trap $e9
+    trap FileWrite
     jr c, .outOfSpace
 
     jx DoMenu

@@ -56,3 +56,5 @@ DEF InputHiliteMenu   EQU $bf
 DEF TimerSet          EQU $cb  ; h → TAC; l → TMA; TACF_START? → IEF_TIMER?
 
 DEF InputButtons      EQU $d8
+
+DEF FileWrite         EQU $e9
