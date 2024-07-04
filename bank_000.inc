@@ -726,8 +726,8 @@ Jump_000_0309:
     ld a, [hl+]
     ld h, [hl]
     ld l, a
-    trap $8d
-    trap $8e
+    trap RandInit
+    trap RandNext
     ld d, h
     ld e, l
     ldh a, [hROMBank]
@@ -921,7 +921,7 @@ Jump_000_03f8:
     di
     ld sp, $e000
     trap $00
-    trap $11
+    trap AudioStop
     trap $61
 
 Jump_000_0402:
@@ -1218,7 +1218,7 @@ jr_000_0525:
 
 jr_000_053a:
     ld a, $20
-    trap $b3
+    trap DrawInit
     ld hl, $0400
     trap $ca
 
@@ -1261,7 +1261,7 @@ jr_000_0557:
     ld hl, strPasswordMenuMessage
     call Call_000_087f
     ld a, $01
-    trap $b4
+    trap LCDEnable
     ld c, $00
 
 jr_000_0581:
@@ -1356,13 +1356,13 @@ Jump_000_06b9::
     ld hl, $0301
     trap $59
     ld hl, $0204
-    trap $b8
+    trap DrawAt
     ld hl, strPasswordMenu
-    trap $69
+    trap DrawString
     ld hl, $0607
-    trap $b8
+    trap DrawAt
     ld hl, strPasswordDashes
-    trap $69
+    trap DrawString
     ld hl, strEnterPassword
     ld bc, $9902
     call Call_000_0882
@@ -1377,7 +1377,7 @@ Jump_000_06b9::
     ld hl, $0100
     trap $59
     ld a, $03
-    trap $b4
+    trap LCDEnable
     ld hl, $c656
     ld e, $20
     ld bc, $0008
@@ -1500,7 +1500,7 @@ Jump_000_07db::
 
 
 Call_000_07e6:
-    trap $b5
+    trap LCDDisable
     ld a, $0c
     trap $b9
     ld hl, $8800
@@ -1524,9 +1524,9 @@ Call_000_07e6:
     ld hl, $0301
     trap $59
     ld hl, $0101
-    trap $b8
+    trap DrawAt
     ld hl, strPasswordMenuTitle
-    trap $69
+    trap DrawString
     ret
 
 
@@ -1657,7 +1657,7 @@ jr_000_08f3:
 
 jr_000_091e:
     ld a, $01
-    trap $b4
+    trap LCDEnable
     pop de
     pop hl
     pop bc
@@ -1738,9 +1738,9 @@ jr_000_0973:
     add c
     ld l, a
     ld h, $01
-    trap $b8
-    ld a, $2a
-    trap $bb
+    trap DrawAt
+    ld a, "*"
+    trap DrawChar
     ld a, [$c660]
     and $01
     call nz, Call_000_0c95

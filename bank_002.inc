@@ -288,11 +288,11 @@ trap_cc_419f::
     push de
     push hl
     ld c, a
-    trap $18
+    trap AudioPause
     cp c
     jr z, jr_002_41aa
 
-    trap $18
+    trap AudioPause
 
 jr_002_41aa:
     trap $12

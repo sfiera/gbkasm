@@ -417,7 +417,7 @@ Call_001_42f5:
     ld de, $4018
     ld bc, $000f
     trap MemCopy
-    trap $8e
+    trap RandNext
     ld [$ce01], a
     xor a
     ld [$c500], a
@@ -579,7 +579,7 @@ Call_001_43e2:
     ld a, $01
     ld bc, $2308
     ld hl, $0302
-    trap $bf
+    trap InputHiliteMenu
     or a
     ret nz
 
@@ -603,7 +603,7 @@ Call_001_43f1:
 
     call Call_001_4b45
     ld hl, data_01_440d
-    trap $69
+    trap DrawString
     ret
 
 
@@ -616,10 +616,10 @@ Jump_001_441d:
     ld h, $04
     ld bc, $0301
     ld de, $0d12
-    trap $b3
+    trap DrawInit
     ld de, $0000
     ld hl, data_01_44a6
-    trap $6a
+    trap DrawStringList
     call Call_001_4526
     ld bc, $000a
     ld hl, $c500
@@ -631,7 +631,7 @@ Jump_001_441d:
     ld hl, $0153
     trap $bd
     ld hl, data_01_4510
-    trap $69
+    trap DrawString
     ld hl, $c400
     ld de, $ff46
     ld bc, $000a
@@ -643,7 +643,7 @@ Jump_001_441d:
     ld hl, $015c
     trap $bd
     ld hl, data_01_4518
-    trap $69
+    trap DrawString
     add sp, -$04
     ld hl, sp+$00
     ld de, $ff40
@@ -654,10 +654,10 @@ Jump_001_441d:
     ld hl, $c400
     trap $a0
     ld hl, $c404
-    trap $69
+    trap DrawString
 
 jr_001_4489:
-    trap $b1
+    trap AwaitFrame
     trap InputButtons
     and $03
     jr z, jr_001_4489
@@ -715,11 +715,11 @@ Call_001_4526:
 
 jr_001_453a:
     ld hl, $c400
-    trap $a3
+    trap StrConvInt
     ld hl, $0d01
-    trap $b8
+    trap DrawAt
     ld hl, $c401
-    trap $69
+    trap DrawString
     pop hl
     ld a, [$c502]
     ld bc, $111b
@@ -753,16 +753,16 @@ jr_001_4563:
     add hl, bc
     ld [hl], $00
     ld hl, $0400
-    trap $b8
+    trap DrawAt
     ld hl, $c400
-    trap $69
+    trap DrawString
     pop de
     bit 0, d
     ret z
 
     call Call_001_4934
     ld hl, $0d02
-    trap $b8
+    trap DrawAt
     ld hl, $c400
     ld e, [hl]
     inc hl
@@ -773,14 +773,14 @@ jr_001_4563:
     ld bc, $0000
     trap $a0
     ld hl, $c434
-    trap $69
+    trap DrawString
     pop de
     ld hl, $0505
 
 jr_001_45a3:
     push hl
     push de
-    trap $b8
+    trap DrawAt
     ld hl, $c42e
     ld bc, $000a
     trap MemCopy
@@ -799,11 +799,11 @@ jr_001_45a3:
     ld h, $0f
     ld e, a
     ld d, $00
-    trap $b8
+    trap DrawAt
     ld hl, $c42e
-    trap $a3
+    trap StrConvInt
     ld hl, $c431
-    trap $69
+    trap DrawString
     pop de
     pop hl
     inc l
@@ -819,7 +819,7 @@ Call_001_45dd:
     push af
     or (1 << DrawMode_Bit6)
     ldh [hDrawMode], a
-    trap $69
+    trap DrawString
     pop af
     and ~(1 << DrawMode_Bit2)
     ldh [hDrawMode], a
@@ -1534,7 +1534,7 @@ Call_001_4997:
     ld h, $04
     ld bc, $0101
     ld de, $0e0e
-    trap $b3
+    trap DrawInit
     ld hl, $1200
     trap $b6
     ld a, $e4
@@ -1564,10 +1564,10 @@ Call_001_4997:
     trap $59
     ld de, data_01_5d33
     ld bc, $c400
-    trap $62
+    trap ExtractInit
     ld de, $8000
     ld bc, $0380
-    trap $63
+    trap ExtractData
     ld a, $07
     trap LCDEnable
     ld h, $0a
@@ -1663,7 +1663,7 @@ jr_001_4a72:
 
 jr_001_4a7c:
     ld hl, $c400
-    trap $69
+    trap DrawString
     ld a, $0e
     trap $b9
     ld a, $0e
@@ -1699,7 +1699,7 @@ jr_001_4aa3:
 jr_001_4aad:
     call Call_001_4b45
     ld hl, data_01_4ac2
-    trap $69
+    trap DrawString
     ldh a, [$c0]
     pop de
     add d
@@ -1811,9 +1811,9 @@ Call_001_4b36:
 Call_001_4b45:
     ld d, $00
     ld hl, $c400
-    trap $a3
+    trap StrConvInt
     ld hl, $c403
-    trap $69
+    trap DrawString
     ret
 
 
@@ -1846,18 +1846,18 @@ jr_001_4b6d:
     ld d, $00
     push af
     ld hl, $c400
-    trap $a3
+    trap StrConvInt
     pop af
     ld hl, data_01_4c8a
     or a
     jr z, jr_001_4b85
 
     ld hl, $c404
-    trap $69
+    trap DrawString
     ld hl, data_01_4c77
 
 jr_001_4b85:
-    trap $69
+    trap DrawString
     ret
 
 
@@ -1895,9 +1895,9 @@ jr_001_4ba5:
     call Call_001_4bd2
     ld a, $10
     call Call_001_4b9d
-    ld a, $20
-    trap $bb
-    trap $69
+    ld a, " "
+    trap DrawChar
+    trap DrawString
     pop hl
     jr jr_001_4be1
 
@@ -1906,7 +1906,7 @@ jr_001_4bba:
     push hl
     ld h, [hl]
     ld l, a
-    trap $69
+    trap DrawString
     pop hl
     inc hl
     jr jr_001_4be1
@@ -1952,7 +1952,7 @@ jr_001_4be1:
 
 jr_001_4bf1:
     dec hl
-    trap $69
+    trap DrawString
     jr jr_001_4be1
 
 data_01_4bf6::
@@ -2195,7 +2195,7 @@ Call_001_5019:
 
 Call_001_501f:
 jr_001_501f:
-    trap $b1
+    trap AwaitFrame
     trap InputButtons
     and $03
     jr z, jr_001_501f
@@ -2216,7 +2216,7 @@ Call_001_5033:
     ld h, $00
     ld bc, $0e02
     ld de, $0310
-    trap $b3
+    trap DrawInit
     ld hl, $9800
     ld bc, $0240
     ld e, $04
@@ -2229,13 +2229,13 @@ Call_001_5033:
 
     ld de, data_01_50b2
     ld bc, $c400
-    trap $62
+    trap ExtractInit
     ld de, $9000
     ld bc, $0800
-    trap $63
+    trap ExtractData
     ld de, $8800
     ld bc, $0470
-    trap $63
+    trap ExtractData
     ld hl, $8c70
     ld bc, $0390
     ld e, $00
@@ -2527,7 +2527,7 @@ data_01_5d33::
 
 Jump_001_5e9d::
     ld a, $20
-    trap $b3
+    trap DrawInit
     call Call_001_6627
     call Call_001_64d3
 
@@ -2542,7 +2542,7 @@ Jump_001_5ea7:
     trap LCDEnable
 
 jr_001_5ebb:
-    trap $b1
+    trap AwaitFrame
     trap InputButtons
     ld c, a
     and $06
@@ -2683,7 +2683,7 @@ Jump_001_5f67:
 jr_001_5f67:
     xor a
     ld de, data_01_5f82
-    trap $5f
+    trap InputCursorMenu
     jp c, Jump_001_5ea7
 
     ld l, a
@@ -2698,7 +2698,10 @@ jr_001_5f67:
     dw Jump_001_5fa4 - @
 
 data_01_5f82::
-    db $06, $04, $05, $70, $7f, $02, $00
+    db $06
+    db $04, $05
+    db $70, $7f
+    dw Call_001_5f89 - @
 
 Call_001_5f89:
     push af
@@ -2749,7 +2752,7 @@ Jump_001_5fb7:
     trap LCDEnable
 
 jr_001_5fca:
-    trap $b1
+    trap AwaitFrame
     trap InputButtons
     bit 6, a
     jr nz, jr_001_5fed
@@ -2794,7 +2797,7 @@ jr_001_5ffa:
 
 jr_001_6002:
     call Call_001_5ee7
-    trap $11
+    trap AudioStop
     ld hl, $0400
     trap $b6
     call Call_001_614f
@@ -2802,7 +2805,7 @@ jr_001_6002:
     call Call_001_5f15
     ld hl, $0404
     trap $b6
-    trap $11
+    trap AudioStop
     trap $db
     jr jr_001_5fca
 
@@ -3046,7 +3049,7 @@ Call_001_6169:
 
 Call_001_6173:
 jr_001_6173:
-    trap $b1
+    trap AwaitFrame
     trap InputButtons
     and $03
     jr z, jr_001_6173
@@ -3171,12 +3174,12 @@ jr_001_64ec:
     call Call_001_6169
     jp c, Jump_001_5fb5
 
-    trap $b5
+    trap LCDDisable
     ret
 
 
 Call_001_6501:
-    trap $b5
+    trap LCDDisable
     call Call_001_66dc
     ld de, $4078
     ld hl, $9700
@@ -3212,7 +3215,7 @@ data_01_6535::
     db $ff
 
 Call_001_657f:
-    trap $b5
+    trap LCDDisable
     call Call_001_66dc
     ld a, $e4
     ldh [$9d], a
@@ -3411,7 +3414,7 @@ Call_001_66c2:
     ld d, $30
     ld hl, data_01_7f70
     ld c, $04
-    trap $4c
+    trap TileLoad
     ret
 
 
@@ -3433,7 +3436,7 @@ Call_001_66e1:
 
 Jump_001_66ee:
     ld a, $20
-    trap $b3
+    trap DrawInit
     call Call_001_65c6
     call Call_001_6627
     call Call_001_66dc
@@ -3625,7 +3628,7 @@ jr_001_6861:
     ldh [$b4], a
 
 jr_001_688b:
-    trap $b1
+    trap AwaitFrame
     trap InputButtons
     ld b, a
     ld a, $03
@@ -5233,7 +5236,7 @@ trap_69_6f9b::
     jr z, .jr_001_6fba
 
 .jr_001_6fb3
-    trap $bb
+    trap DrawChar
     jr .next
 
 .jr_001_6fb7
@@ -5272,7 +5275,7 @@ trap_6a_6fda::
     push hl
     ld l, e
     ld h, d
-    trap $b8
+    trap DrawAt
     pop hl
     push de
     call trap_69_6f9b
@@ -5801,23 +5804,23 @@ jr_001_7225:
     trap $01
 
 Call_001_7227:
-    trap $11
+    trap AudioStop
     trap $53
     ld a, $a4
     ld bc, $0102
     ld de, $0f10
     ld h, $00
-    trap $b3
+    trap DrawInit
     ld de, gfxGBKissLogo
     ld bc, $c400
-    trap $62  ; prepare to decompress (trap_62_6d53)
+    trap ExtractInit
     ld de, $c600
     ld bc, $08f0
-    trap $63  ; decompress to $c600 (trap_63_6d72)
+    trap ExtractData
     ld de, $020c
     ld hl, $c600
     ld bc, $0b68
-    trap $c0  ; copy $c600 to VRAM (jt02_5de2)
+    trap $c0
     ld a, $01
     trap LCDEnable
     ld a, $f0
@@ -5919,7 +5922,7 @@ jr_001_72af:
     ld e, l
     ld d, h
     ld bc, $c400
-    trap $62
+    trap ExtractInit
     pop bc
     pop hl
 
@@ -5930,7 +5933,7 @@ jr_001_72ba:
     ld e, l
     ld bc, $0010
     push bc
-    trap $63
+    trap ExtractData
     pop de
     pop bc
     pop hl
@@ -6117,10 +6120,10 @@ trap_5c_776c::
     push hl
     ld l, [hl]
     ld h, a
-    trap $b8
+    trap DrawAt
     pop hl
     inc hl
-    trap $69
+    trap DrawString
     jr trap_5c_776c
 
 trap_5f_777b::
@@ -6186,7 +6189,7 @@ trap_5e_77ae::
     ld [hl], a
 
 jr_001_77c0:
-    trap $b1
+    trap AwaitFrame
     trap InputButtons
     ld hl, sp+$03
     ld [hl], a
@@ -6307,9 +6310,9 @@ jr_001_783d:
     ld h, [hl]
     add b
     ld l, a
-    trap $b8
+    trap DrawAt
     ld a, c
-    trap $bb
+    trap DrawChar
     ret
 
 
@@ -6522,7 +6525,7 @@ jr_001_795e:
     call Call_001_7f24
 
 jr_001_7969:
-    trap $b1
+    trap AwaitFrame
     trap InputButtons
     ld b, a
     and $0c
@@ -7622,10 +7625,7 @@ jr_001_7f52:
 
 
 data_01_7f70::
-    db $ff, $7f, $80, $80, $9f, $8f, $90, $90, $90, $90, $90, $90, $94, $93, $90, $90
-    db $ff, $ff, $01, $01, $f9, $f1, $09, $09, $09, $09, $09, $09, $29, $c9, $09, $09
-    db $94, $93, $90, $90, $90, $90, $94, $93, $90, $90, $9f, $8f, $80, $80, $7f, $ff
-    db $29, $c9, $09, $09, $09, $09, $29, $c9, $09, $09, $f9, $f1, $01, $01, $ff, $fe
+    INCBIN "gfx/texticon.2bpp"
 
 data_01_7fb0::
     db $ff, $7f, $80, $80, $81, $80, $83, $81, $87, $82, $8f, $84, $9f, $89, $9e, $9e
