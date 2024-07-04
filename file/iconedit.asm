@@ -8,6 +8,32 @@ INCLUDE "file/common.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
+DEF ICON_WIDTH   EQU 32  ; 32px
+DEF ICON_HEIGHT  EQU 24  ; 24px
+DEF GFX_DEPTH    EQU 2   ; 2bpp
+DEF TILE_WIDTH   EQU 8   ; 8px
+DEF BYTE_BITS    EQU 8   ; 8 bits per byte
+DEF ICON_BYTES   EQU (ICON_WIDTH * ICON_HEIGHT * GFX_DEPTH / BYTE_BITS)
+DEF TILE_BYTES   EQU (TILE_WIDTH * TILE_WIDTH * GFX_DEPTH / BYTE_BITS)
+
+DEF WINDOW_HEIGHT  EQU 32
+DEF WINDOW_TOP     EQU SCRN_Y - WINDOW_HEIGHT
+DEF EDITOR_WIDTH   EQU SCRN_X
+DEF EDITOR_HEIGHT  EQU WINDOW_TOP
+DEF MAX_SCROLL_X   EQU (ICON_WIDTH * TILE_WIDTH) - EDITOR_WIDTH
+DEF MAX_SCROLL_Y   EQU (ICON_HEIGHT * TILE_WIDTH) - EDITOR_HEIGHT
+
+DEF PALETTE  EQU %11_10_01_00
+
+DEF MSG_DESC_CONTINUE      EQU $00
+DEF MSG_DESC_SAVE          EQU $01
+DEF MSG_DESC_NEWICON       EQU $02
+DEF MSG_DESC_EXIT          EQU $03
+DEF MSG_ENTER_FILE_NAME    EQU $06
+DEF MSG_CONFIRM_FILE_NAME  EQU $07
+DEF MSG_OUT_OF_SPACE       EQU $08
+DEF MSG_SAME_FILE_EXISTS   EQU $09
+
 Header::
     dw SIZEOF(SECTION(Header))
     db FILE_EXEC | FILE_ICON | FILE_2BPP | FILE_HIST
@@ -33,238 +59,239 @@ History:
 
 Main::
     ld sp, $e000
-
-Jump_000_0100::
     ld hl, $0301
     trap $b6
-    callx call_0521
-    callx call_0512
-    jr nc, jx_0119
+    callx InitMemory
+    callx LoadIcon
+    jr nc, PrepMenu
 
-    jx jx_01e0
+    jx EditIcon
 
 
-jx_0119::
+PrepMenu::
+    ; Save X/Y scroll to memory and reset to (0, 0).
+    ; This way, the menu is displayed without scroll,
+    ; and scroll can be restored upon exiting the menu.
     ldh a, [$9b]
-    ld [$c766], a
+    ld [VarSaveScroll.x], a
     ldh a, [$9a]
-    ld [$c767], a
+    ld [VarSaveScroll.y], a
     xor a
     ldh [$9b], a
     ldh [$9a], a
 
-jx_0128::
+    ; fall through
+
+
+DoMenu::
     xor a
     trap DrawInit
     trap LCDDisable
-    callx call_05c4
-    ld a, $03
+    callx ShowMenu
+    ld a, LCDCF_OBJON | LCDCF_BGON
     trap LCDEnable
     xor a
 
-jr_000_0139::
+.loop
     ldx de, CursorData
     trap InputCursorMenu
-    jr c, jr_000_0139
+    jr c, .loop
 
     ld l, a
     ld h, $00
 
     trap JumpViaTable
     db $06
-    dw jx_01e0 - @  ; continue edit
-    dw jx_0165 - @  ; save icon
-    dw jx_015a - @  ; create new
-    dw jx_0158 - @  ; quit
-    dw jx_0128 - @
+    dw EditIcon - @  ; continue edit
+    dw SaveIcon - @  ; save icon
+    dw NewIcon - @   ; create new
+    dw Quit - @      ; quit
+    dw DoMenu - @
+
 
 CursorData:
-    db $04            ; item count
-    db $04, $06       ; initial position
-    db $04, $7f       ; cursor characters
-    dw call_071d - @  ; update callback
+    db $04           ; item count
+    db $04, $06      ; initial position
+    db $04, $7f      ; cursor characters
+    dw ShowHelp - @  ; update callback
 
 
-jx_0158:
+Quit:
     trap ExitToMenu
 
 
-jx_015a:
-    callx call_05a5
-    jx jx_01e0
+NewIcon:
+    callx ClearIcon
+    jx EditIcon
 
 
-jx_0165:
-    callx call_0465
-    jr c, jx_0128
+SaveIcon:
+    callx EnterFileName
+    jr c, DoMenu
 
-jr_000_016e::
-    ld de, $c791
-    ld hl, $c769
+.tryAgain
+    ld de, VarC791
+    ld hl, VarC769
     ld c, $00
 
-jr_000_0176::
+.copyTitle
     inc c
     ld a, [de]
     inc de
     ld [hl+], a
     or a
-    jr nz, jr_000_0176
+    jr nz, .copyTitle
 
     ld a, $83
-    ld de, $c768
+    ld de, VarFileType
     ld [de], a
-    ld hl, $c500
+    ld hl, VarFileContent
     ld c, $00
     trap $6b
-    jr c, jr_000_01a5
+    jr c, .uniqueFileName
 
-    ld a, $09
-    callx call_06ee
-    callx call_04dc
-    jr c, jx_0128
+    ld a, MSG_SAME_FILE_EXISTS
+    callx ShowTopMsg
+    callx ConfirmAction
+    jr c, DoMenu
 
-    ld hl, $c500
+    ld hl, VarFileContent
     trap $ef
-    jr jr_000_016e
+    jr .tryAgain
 
-jr_000_01a5::
-    ld hl, $c50a
+.uniqueFileName
+    ld hl, VarFileContent + 10
     xor a
     ld [hl+], a
     ld a, [hl]
     ld c, a
     ld b, $00
-    add $c0
+    add ICON_BYTES
     ld [hl+], a
     add hl, bc
-    ld de, $c600
-    ld c, $c0
+    ld de, VarImage
+    ld c, ICON_BYTES
 
-jr_000_01b7::
+.copyIcon
     ld a, [de]
     inc de
     ld [hl+], a
     dec c
-    jr nz, jr_000_01b7
+    jr nz, .copyIcon
 
-    ld hl, $c500
+    ld hl, VarFileContent
     ld de, $0000
     ld bc, $19ff
     trap $e9
-    jr c, jr_000_01ce
+    jr c, .outOfSpace
 
-    jx jx_0128
+    jx DoMenu
 
+.outOfSpace
+    ld a, MSG_OUT_OF_SPACE
+    callx ShowTopMsg
 
-jr_000_01ce::
-    ld a, $08
-    callx call_06ee
-
-jr_000_01d7::
+.awaitButton
     trap InputButtons
     or a
-    jr z, jr_000_01d7
+    jr z, .awaitButton
 
-    jx jx_0128
+    jx DoMenu
 
 
-jx_01e0:
+EditIcon:
     xor a
     trap DrawInit
     trap LCDDisable
-    callx call_054f
+    callx EditInitVideo
     callx call_042e
-    ld a, $63
+    ld a, LCDCF_WIN9C00 | LCDCF_WINON | LCDCF_OBJON | LCDCF_BGON
     trap LCDEnable
 
-jr_000_01f7::
+.loop
     trap AwaitFrame
     ld bc, $2800
     trap $c4
     trap InputButtons
-    callx call_0245
+    callx HandleMove
     ldh a, [$8b]
-    bit 3, a
-    jr z, jr_000_0211
+    bit BTN_STA_F, a
+    jr z, .continue
 
-    jx jx_0119
+    jx PrepMenu
 
-
-jr_000_0211::
+.continue
     or a
-    jr z, jr_000_01f7
+    jr z, .loop
 
-    callx call_0224
-    callx call_038e
-    jr jr_000_01f7
+    callx HandleGrid
+    callx HandleDraw
+    jr .loop
 
-call_0224:
+
+HandleGrid:
     ldh a, [$8b]
-    bit 2, a
+    bit BTN_SEL_F, a
     ret z
 
-    ld hl, $c7b9
+    ld hl, VarGridOn
     inc [hl]
-call_022d:
-    ld a, [$c7b9]
+
+    ; fall through
+
+
+LoadBlankTile:
+    ld a, [VarGridOn]
     ldx de, TileShades
     and $01
-    jr z, jr_000_023c
+    jr z, .load
 
     ldx de, TileGrid
 
-jr_000_023c::
+.load
     ld hl, $9000
     ld bc, $0010
     trap MemCopy
     ret
 
 
-call_0245:
+HandleMove:
     ldh a, [$b6]
     ld b, a
-    and $f0
-    jr z, jr_000_029c
+    and BTN_DIR
+    jr z, .blink
 
-    bit 6, b
-    jr z, jr_000_0259
+    bit BTN_UP_F, b
+    jr z, :+
+    callx MoveCursorUp
+    jr .drag
 
-    callx call_02cf
-    jr jr_000_027e
+:   bit BTN_DN_F, b
+    jr z, :+
+    callx MoveCursorDown
+    jr .drag
 
-jr_000_0259::
-    bit 7, b
-    jr z, jr_000_0266
+:   bit BTN_LT_F, b
+    jr z, :+
+    callx MoveCursorLeft
+    jr .drag
 
-    callx call_02f3
-    jr jr_000_027e
+:   bit BTN_RT_F, b
+    jr z, .drag
+    callx MoveCursorRight
 
-jr_000_0266::
-    bit 5, b
-    jr z, jr_000_0273
-
-    callx call_0319
-    jr jr_000_027e
-
-jr_000_0273::
-    bit 4, b
-    jr z, jr_000_027e
-
-    callx call_033d
-
-jr_000_027e::
-    callx call_0363
+.drag
+    callx UpdatePosText
     ldh a, [$8a]
-    and $03
-    jr z, jr_000_029c
+    and BTN_AB
+    jr z, .blink
 
     callx call_03fa
-    ld a, [$c764]
-    callx call_03ae
+    ld a, [VarLastColor]
+    callx SetPixel
 
-jr_000_029c:
-    ld hl, $c763
+.blink
+    ld hl, VarCursor.blink
     ld a, [hl]
     ld c, a
     inc [hl]
@@ -276,7 +303,7 @@ jr_000_029c:
     ldh a, [$9a]
     ld e, a
     ld hl, $c300
-    ld a, [$c762]
+    ld a, [VarCursor.y]
     inc a
     inc a
     add a
@@ -284,7 +311,7 @@ jr_000_029c:
     add a
     sub e
     ld [hl+], a
-    ld a, [$c761]
+    ld a, [VarCursor.x]
     inc a
     add a
     add a
@@ -297,203 +324,202 @@ jr_000_029c:
     ret
 
 
-call_02c5:
+UpdatePosition:
     ld [hl], a
     add a
     add a
     add a
     ld e, a
     xor a
-    ld [$c763], a
+    ld [VarCursor.blink], a
     ret
 
 
-call_02cf:
-    ld hl, $c762
+MoveCursorUp:
+    ld hl, VarCursor.y
     ld a, [hl]
     dec a
     bit 7, a
-    jr z, jr_000_02d9
+    jr z, .updateScroll
 
     xor a
 
-jr_000_02d9::
-    callx call_02c5
+.updateScroll
+    callx UpdatePosition
     ldh a, [$9a]
     or a
-    jr z, jr_000_02f2
+    jr z, .noUpdate
 
     ld d, a
     sub e
     cpl
     inc a
     cp $20
-    jr nc, jr_000_02f2
+    jr nc, .noUpdate
 
     ld a, d
-    sub $08
+    sub TILE_WIDTH
     ldh [$9a], a
 
-jr_000_02f2::
+.noUpdate
     ret
 
 
-call_02f3:
-    ld hl, $c762
+MoveCursorDown:
+    ld hl, VarCursor.y
     ld a, [hl]
     inc a
-    cp $18
-    jr c, jr_000_02fe
+    cp ICON_HEIGHT
+    jr c, .updateScroll
 
-    ld a, $17
+    ld a, ICON_HEIGHT - 1
 
-jr_000_02fe::
-    callx call_02c5
+.updateScroll
+    callx UpdatePosition
     ldh a, [$9a]
-    cp $50
-    jr nc, jr_000_0318
+    cp MAX_SCROLL_Y
+    jr nc, .noUpdate
 
     ld d, a
     sub e
     cpl
     inc a
     cp $50
-    jr c, jr_000_0318
+    jr c, .noUpdate
 
     ld a, d
-    add $08
+    add TILE_WIDTH
     ldh [$9a], a
 
-jr_000_0318::
+.noUpdate
     ret
 
 
-call_0319:
-    ld hl, $c761
+MoveCursorLeft:
+    ld hl, VarCursor.x
     ld a, [hl]
     dec a
     bit 7, a
-    jr z, jr_000_0323
+    jr z, .updateScroll
 
     xor a
 
-jr_000_0323::
-    callx call_02c5
+.updateScroll
+    callx UpdatePosition
     ldh a, [$9b]
     or a
-    jr z, jr_000_033c
+    jr z, .noUpdate
 
     ld d, a
     sub e
     cpl
     inc a
     cp $20
-    jr nc, jr_000_033c
+    jr nc, .noUpdate
 
     ld a, d
-    sub $08
+    sub TILE_WIDTH
     ldh [$9b], a
 
-jr_000_033c::
+.noUpdate
     ret
 
 
-call_033d:
-    ld hl, $c761
+MoveCursorRight:
+    ld hl, VarCursor.x
     ld a, [hl]
     inc a
-    cp $20
-    jr c, jr_000_0348
+    cp ICON_WIDTH
+    jr c, .updateScroll
 
-    ld a, $1f
+    ld a, ICON_WIDTH - 1
 
-jr_000_0348::
-    callx call_02c5
+.updateScroll
+    callx UpdatePosition
     ldh a, [$9b]
-    cp $60
-    jr nc, jr_000_0362
+    cp MAX_SCROLL_X
+    jr nc, .noUpdate
 
     ld d, a
     sub e
     cpl
     inc a
     cp $80
-    jr c, jr_000_0362
+    jr c, .noUpdate
 
     ld a, d
-    add $08
+    add TILE_WIDTH
     ldh [$9b], a
 
-jr_000_0362::
+.noUpdate
     ret
 
 
-call_0363:
-    ld a, [$c761]
+UpdatePosText:
+    ld a, [VarCursor.x]
     ld e, a
     ld d, $00
-    ld hl, $c758
+    ld hl, VarStrScratch
     trap StrConvInt
     ld hl, $0a22
     trap DrawAt
-    ld hl, $c75c
+    ld hl, VarStrScratch + 4
     trap DrawString
-    ld a, [$c762]
+    ld a, [VarCursor.y]
     ld e, a
     ld d, $00
-    ld hl, $c758
+    ld hl, VarStrScratch
     trap StrConvInt
     ld hl, $0a23
     trap DrawAt
-    ld hl, $c75c
+    ld hl, VarStrScratch + 4
     trap DrawString
     ret
 
 
-call_038e:
+HandleDraw:
     ldh a, [$8b]
     ld e, a
-    and $03
+    and BTN_AB
     ret z
 
     push de
     callx call_03fa
     pop de
-    bit 0, e
-    jr z, jr_000_03a2
-
+    bit BTN_A_F, e
+    jr z, :+
     inc a
 
-jr_000_03a2::
-    bit 1, e
-    jr z, jr_000_03a9
+:   bit BTN_B_F, e
+    jr z, :+
+    ld a, [VarLastColor]
 
-    ld a, [$c764]
+:   and $03
+    ld [VarLastColor], a
 
-jr_000_03a9::
-    and $03
-    ld [$c764], a
+    ; fall through
 
-call_03ae:
+
+SetPixel:
     ld d, a
     ld e, c
     bit 0, d
-    jr nz, jr_000_03b6
+    jr nz, .jr_03b6
 
     ld e, $00
 
-jr_000_03b6::
+.jr_03b6
     ld a, [hl]
     and b
     or e
     ld [hl+], a
     ld e, c
     bit 1, d
-    jr nz, jr_000_03c1
+    jr nz, .jr_03c1
 
     ld e, $00
 
-jr_000_03c1::
+.jr_03c1
     ld a, [hl]
     and b
     or e
@@ -503,7 +529,7 @@ jr_000_03c1::
     ld h, $91
     ld bc, $0002
     trap MemCopy
-    ld a, [$c762]
+    ld a, [VarCursor.y]
     ld h, a
     ld l, $00
     srl h
@@ -512,23 +538,30 @@ jr_000_03c1::
     rr l
     srl h
     rr l
-    ld a, [$c761]
+    ld a, [VarCursor.x]
     or l
     ld l, a
     ld de, $9800
     add hl, de
-    ld de, $c764
+    ld de, VarLastColor
     ld bc, $0001
     trap MemCopy
     ret
 
 
 BitValues:
-    db $80, $40, $20, $10, $08, $04, $02, $01
+    db %10000000
+    db %01000000
+    db %00100000
+    db %00010000
+    db %00001000
+    db %00000100
+    db %00000010
+    db %00000001
 
 
 call_03fa:
-    ld a, [$c761]
+    ld a, [VarCursor.x]
     and $07
     ld e, a
     ld d, $00
@@ -538,42 +571,42 @@ call_03fa:
     ld c, a
     cpl
     ld b, a
-    ld a, [$c761]
+    ld a, [VarCursor.x]
     and $f8
     add a
     ld l, a
     add a
     add l
     ld l, a
-    ld a, [$c762]
+    ld a, [VarCursor.y]
     add a
     add l
     ld l, a
-    ld h, $c6
+    ld h, HIGH(VarImage)
     inc hl
     ld d, $00
     ld a, [hl-]
     and c
-    jr z, jr_000_0425
+    jr z, .jr_0425
 
     inc d
 
-jr_000_0425::
+.jr_0425
     sla d
     ld a, [hl]
     and c
-    jr z, jr_000_042c
+    jr z, .jr_042c
 
     inc d
 
-jr_000_042c::
+.jr_042c
     ld a, d
     ret
 
 
 call_042e:
     xor a
-    ld hl, $c761
+    ld hl, VarCursor.x
     ld d, [hl]
     ld [hl+], a
     ld e, [hl]
@@ -582,46 +615,46 @@ call_042e:
     ld hl, $9800
     ld bc, $0400
 
-jr_000_043d::
+.jr_043d
     push hl
     callx call_03fa
     pop hl
     ld [hl+], a
-    ld de, $c761
+    ld de, VarCursor.x
     ld a, [de]
     inc a
     ld [de], a
     cp $20
-    jr c, jr_000_043d
+    jr c, .jr_043d
 
     xor a
     ld [de], a
-    ld de, $c762
+    ld de, VarCursor.y
     ld a, [de]
     inc a
     ld [de], a
     cp $20
-    jr c, jr_000_043d
+    jr c, .jr_043d
 
     pop de
-    ld hl, $c761
+    ld hl, VarCursor.x
     ld [hl], d
     inc hl
     ld [hl], e
     ret
 
 
-call_0465:
+EnterFileName:
     trap LCDDisable
-    callx call_0605
-    callx call_0599
+    callx ClearScreen
+    callx LoadIconTiles
     ld de, $420d
-    ld hl, $c700
+    ld hl, VarC700
     trap $54
-    ld a, $06
-    callx call_06ee
+    ld a, MSG_ENTER_FILE_NAME
+    callx ShowTopMsg
     ld de, $0107
-    ld bc, call_0605
+    ld bc, $0605
     trap DrawBox
     ld a, $10
     ld de, $0208
@@ -636,118 +669,123 @@ call_0465:
     ld bc, $0a01
     ld hl, $0100
     trap $59
-    ld a, $03
+    ld a, LCDCF_OBJON | LCDCF_BGON
     trap LCDEnable
-    ld de, $c769
-    ld hl, $c791
-    ld bc, $0028
+    ld de, VarC769
+    ld hl, VarC791
+    ld bc, VarC791.end - VarC791
     trap MemCopy
     ld de, $3801
-    ld hl, $c791
+    ld hl, VarC791
     ld b, $0a
     trap $56
-    ld a, $07
-    callx call_06ee
-    callx call_04dc
+    ld a, MSG_CONFIRM_FILE_NAME
+    callx ShowTopMsg
+    callx ConfirmAction
     ret c
 
     or a
     ret
 
 
-call_04dc::
+; Loop until A or B is pressed.
+;
+;   A → clear carry flag
+;   B → set carry flag
+;
+ConfirmAction:
     trap AwaitFrame
     trap InputButtons
-    and $03
-    jr z, call_04dc
+    and BTN_AB
+    jr z, ConfirmAction
 
     or a
-    bit 0, a
+    bit BTN_A_F, a
     ret nz
 
     scf
     ret
 
 
-call_04ea:
-    ld hl, $c509
+LoadIconData:
+    ld hl, VarFileContent + 9
     ld b, [hl]
     inc hl
     inc hl
     ld a, [hl+]
-    bit 4, b
-    jr z, jr_000_04fd
+    bit FILE_ICON_F, b
+    jr z, .haveSize
 
-    sub $60
-    bit 3, b
-    jr z, jr_000_04fd
+    sub ICON_BYTES / 2
+    bit FILE_2BPP_F, b
+    jr z, .haveSize
 
-    sub $60
+    sub ICON_BYTES / 2
 
-jr_000_04fd::
+.haveSize
     ld c, a
-    ld de, $c768
+    ld de, VarFileType
 
-jr_000_0501::
+.copyTitle
     ld a, [hl+]
     ld [de], a
     inc de
     dec c
-    jr nz, jr_000_0501
+    jr nz, .copyTitle
 
     xor a
     ld [de], a
-    ld hl, $c500
-    ld de, $c600
+    ld hl, VarFileContent
+    ld de, VarImage
     trap $64
     ret
 
 
-call_0512:
-    ld hl, $c500
+LoadIcon:
+    ld hl, VarFileContent
     ld a, [hl+]
     or [hl]
     ret z
 
-    callx call_04ea
+    callx LoadIconData
     scf
     ret
 
 
-call_0521:
-    callx call_05a5
+InitMemory:
+    callx ClearIcon
     xor a
-    ld [$c7b9], a
+    ld [VarGridOn], a
     ld a, $03
-    ld [$c764], a
-    ld hl, $c700
-    ld bc, $0058
-    ld e, $20
+    ld [VarLastColor], a
+    ld hl, VarC700
+    ld bc, VarC700.end - VarC700
+    ld e, " "
     trap MemSet
-    ld hl, $c791
-    ld bc, $0028
-    ld e, $20
+    ld hl, VarC791
+    ld bc, VarC791.end - VarC791
+    ld e, " "
     trap MemSet
     xor a
-    ld [$c769], a
-    ld de, $c700
+    ld [VarC769], a
+    ld de, VarC700
     trap $51
     ret
 
 
-call_054f:
-    ld a, $e4
+EditInitVideo:
+    ld a, PALETTE
     ldh [$9d], a
     ld a, $07
     ldh [$a0], a
-    ld a, $70
+    ld a, WINDOW_TOP
     ldh [$9f], a
-    ld a, [$c766]
+    ld a, [VarSaveScroll.x]
     ldh [$9b], a
-    ld a, [$c767]
+    ld a, [VarSaveScroll.y]
     ldh [$9a], a
-    callx call_0599
-    callx call_022d
+    callx LoadIconTiles
+    callx LoadBlankTile
     ldx de, TileShades + $10
     ld hl, $9010
     ld bc, $0030
@@ -758,36 +796,36 @@ call_054f:
     trap MemCopy
     ldx hl, LayoutBottomBar
     trap DrawLayout
-    callx call_0363
+    callx UpdatePosText
     ret
 
 
-call_0599:
+LoadIconTiles:
     ld hl, $9100
-    ld de, $c600
-    ld bc, $0100
+    ld de, VarImage
+    ld bc, VarImage.end - VarImage
     trap MemCopy
     ret
 
 
-call_05a5:
+ClearIcon:
     xor a
-    ld [$c766], a
-    ld [$c767], a
+    ld [VarSaveScroll.x], a
+    ld [VarSaveScroll.y], a
     ldh [$9b], a
     ldh [$9a], a
-    ld [$c761], a
-    ld [$c762], a
-    ld [$c765], a
-    ld hl, $c600
-    ld bc, $0100
+    ld [VarCursor.x], a
+    ld [VarCursor.y], a
+    ld [VarC765], a
+    ld hl, VarImage
+    ld bc, VarImage.end - VarImage
     ld e, $00
     trap MemSet
     ret
 
 
-call_05c4:
-    callx call_0605
+ShowMenu:
+    callx ClearScreen
     ld h, $04
     trap $ca
     ldx de, TileMenuCursor
@@ -810,7 +848,7 @@ TileMenuCursor:
     INCBIN "gfx/iconedit/menucursor.2bpp"
 
 
-call_0605:
+ClearScreen:
     ld bc, $2800
     trap $c4
     ld hl, $9800
@@ -844,39 +882,41 @@ TileCursor:
     INCBIN "gfx/iconedit/cursor.2bpp"
 
 
-call_06ee:
+ShowTopMsg:
     push af
     ld de, $0001
     ld bc, $1405
     trap DrawBox
     pop af
     ld de, $8001
-    jr jr_000_072a
+    jr ShowMsg
 
+
+UnusedShowMsg1:
     bit 6, c
-    jr z, call_071d
+    jr z, ShowHelp
 
     xor a
-    callx call_071d
+    callx ShowHelp
     xor a
     scf
     ret
 
 
-call_070c:
+UnusedShowMsg2:
     bit 7, c
-    jr z, call_071d
+    jr z, ShowHelp
 
     ld a, b
     push bc
-    callx call_071d
+    callx ShowHelp
     pop bc
     ld a, b
     scf
     ret
 
 
-call_071d::
+ShowHelp:
     push af
     ld de, $000d
     ld bc, $1405
@@ -884,11 +924,14 @@ call_071d::
     pop af
     ld de, $2001
 
-jr_000_072a::
+    ; fall through
+
+
+ShowMsg:
     add a
     ld c, a
     ld b, $00
-    ldx hl, MenuLayouts
+    ldx hl, MsgLayouts
     add hl, bc
     ld c, [hl]
     inc hl
@@ -900,7 +943,7 @@ jr_000_072a::
     ret
 
 
-MenuLayouts:
+MsgLayouts:
     dw LayoutDescContinue - @
     dw LayoutDescSave - @
     dw LayoutDescNewIcon - @
@@ -954,3 +997,39 @@ LayoutSameFileExists:
     db $ff
 
     db $ff
+
+SECTION "Variables", WRAM0[$c500]
+
+VarFileContent:
+    ds $100
+
+VarImage:
+    ds $100
+.end
+
+VarC700:
+    ds $58
+.end
+
+VarStrScratch:
+    ds 9
+VarCursor:
+.x      db
+.y      db
+.blink  db
+VarLastColor:
+    db
+VarC765:
+    db
+VarSaveScroll:
+.x  db
+.y  db
+VarFileType:
+    db
+VarC769:
+    ds $28
+VarC791:
+    ds $28
+.end
+VarGridOn:
+    db

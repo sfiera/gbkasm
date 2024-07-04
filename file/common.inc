@@ -1,5 +1,11 @@
 ; Disassembly of "gbkiss.gb"
 
+def FILE_ICON_F  equ 4  ; extra $C0 or $60 bytes after title
+def FILE_2BPP_F  equ 3  ; icon is 2bpp ($C0 bytes)
+def FILE_EXEC_F  equ 2  ; executable
+def FILE_A008_F  equ 1  ; must be installed to base addr $A008
+def FILE_HIST_F  equ 0  ; extra $2E bytes after title/icon
+
 def FILE_ICON  equ %00010000  ; extra $C0 or $60 bytes after title
 def FILE_2BPP  equ %00001000  ; icon is 2bpp ($C0 bytes)
 def FILE_1BPP  equ %00000000  ; icon is 1bpp ($60 bytes)
