@@ -28,59 +28,59 @@ SECTION "ROM Bank $001", ROMX[$4000], BANK[$1]
     db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
 
 traps1::
-    dw trap_4b_7dcc  ; $4b
-    dw trap_4c_7f2f  ; $4c
-    dw trap_4d_7e77  ; $4d
-    dw trap_4e_7f04  ; $4e
-    dw trap_4f_7e90  ; $4f
-    dw trap_50_7260  ; $50
-    dw trap_51_665c  ; $51
-    dw trap_52_7730  ; $52
-    dw trap_53_784d  ; $53
-    dw trap_54_7863  ; $54
-    dw trap_55_793f  ; $55
-    dw trap_56_78f0  ; $56
-    dw trap_57_7df1  ; $57
-    dw trap_58_7e03  ; $58
-    dw trap_59_7e43  ; $59
-    dw trap_5a_7d47  ; $5a
-    dw trap_5b_7d60  ; $5b
-    dw trap_5c_776c  ; $5c
-    dw trap_5d_7daf  ; $5d
-    dw trap_5e_77ae  ; $5e
-    dw trap_5f_777b  ; $5f
-    dw trap_60_6d2f  ; $60
-    dw trap_61_7222  ; $61
-    dw trap_62_6d53  ; $62
-    dw trap_63_6d72  ; $63
-    dw trap_64_6de4  ; $64
-    dw trap_65_6e2e  ; $65
-    dw trap_66_6f66  ; $66
-    dw trap_67_6f7a  ; $67
-    dw trap_68_6f8f  ; $68
-    dw trap_69_6f9b  ; $69
-    dw trap_6a_6fda  ; $6a
-    dw trap_6b_6feb  ; $6b
-    dw trap_6c_714d  ; $6c
-    dw trap_6d_70ba  ; $6d
-    dw trap_6e_71e6  ; $6e
-    dw trap_6f_7138  ; $6f
-    dw trap_70_6e8b  ; $70
-    dw trap_71_6e63  ; $71
-    dw trap_72_6a93  ; $72
-    dw trap_73_6c1b  ; $73
-    dw trap_74_6c28  ; $74
-    dw trap_75_6c2f  ; $75
-    dw trap_76_6c3c  ; $76
-    dw trap_77_6c5b  ; $77
-    dw trap_78_6c38  ; $78
-    dw trap_79_6c67  ; $79
-    dw trap_7a_6cc3  ; $7a
-    dw trap_7b_6c8e  ; $7b
-    dw trap_7c_6c92  ; $7c
-    dw trap_7d_6cd8  ; $7d
-    dw trap_7e_6ca5  ; $7e
-    dw trap_7f_6ca9  ; $7f
+    dw trap_4b_7dcc         ; $4b
+    dw TrapTileLoad         ; $4c
+    dw trap_4d_7e77         ; $4d
+    dw trap_4e_7f04         ; $4e
+    dw trap_4f_7e90         ; $4f
+    dw trap_50_7260         ; $50
+    dw trap_51_665c         ; $51
+    dw trap_52_7730         ; $52
+    dw trap_53_784d         ; $53
+    dw trap_54_7863         ; $54
+    dw trap_55_793f         ; $55
+    dw trap_56_78f0         ; $56
+    dw trap_57_7df1         ; $57
+    dw TrapDrawBox          ; $58
+    dw trap_59_7e43         ; $59
+    dw trap_5a_7d47         ; $5a
+    dw trap_5b_7d60         ; $5b
+    dw TrapDrawLayout       ; $5c
+    dw TrapTileLoadText     ; $5d
+    dw trap_5e_77ae         ; $5e
+    dw TrapInputCursorMenu  ; $5f
+    dw trap_60_6d2f         ; $60
+    dw trap_61_7222         ; $61
+    dw TrapExtractInit      ; $62
+    dw TrapExtractData      ; $63
+    dw trap_64_6de4         ; $64
+    dw trap_65_6e2e         ; $65
+    dw trap_66_6f66         ; $66
+    dw trap_67_6f7a         ; $67
+    dw trap_68_6f8f         ; $68
+    dw TrapDrawString       ; $69
+    dw TrapDrawStringList   ; $6a
+    dw TrapFileSearch       ; $6b
+    dw trap_6c_714d         ; $6c
+    dw trap_6d_70ba         ; $6d
+    dw trap_6e_71e6         ; $6e
+    dw trap_6f_7138         ; $6f
+    dw trap_70_6e8b         ; $70
+    dw trap_71_6e63         ; $71
+    dw TrapIRListen         ; $72
+    dw TrapIRClose          ; $73
+    dw trap_74_6c28         ; $74
+    dw trap_75_6c2f         ; $75
+    dw trap_76_6c3c         ; $76
+    dw trap_77_6c5b         ; $77
+    dw trap_78_6c38         ; $78
+    dw trap_79_6c67         ; $79
+    dw trap_7a_6cc3         ; $7a
+    dw trap_7b_6c8e         ; $7b
+    dw TrapIROpen           ; $7c
+    dw trap_7d_6cd8         ; $7d
+    dw trap_7e_6ca5         ; $7e
+    dw TrapIRSend           ; $7f
 
 j01_4100::
     ld sp, $e000
@@ -840,7 +840,7 @@ Call_001_45ec:
     or a
     jr z, jr_001_4605
 
-    ld hl, KissBanks
+    ld hl, KissCartridgeCode
     cp [hl]
     jr z, jr_001_4605
 
@@ -4101,7 +4101,7 @@ jr_001_6a8e:
     ret
 
 
-trap_72_6a93::
+TrapIRListen::
     call Call_001_6a6d
 
 jr_001_6a96:
@@ -4175,7 +4175,7 @@ code_01_6ae7::
 code_01_6aed::
     ld hl, $0000
     trap $e6
-    ld a, [KissBanks]
+    ld a, [KissCartridgeCode]
     jp Jump_001_6ad8
 
 
@@ -4388,7 +4388,7 @@ Call_001_6c05:
     ret
 
 
-trap_73_6c1b::
+TrapIRClose::
     call Call_001_6a6d
     ld a, $00
     ld [$c0f9], a
@@ -4476,7 +4476,7 @@ trap_7b_6c8e::
     ld a, $09
     jr jr_001_6c94
 
-trap_7c_6c92::
+TrapIROpen::
     ld a, $08
 
 jr_001_6c94:
@@ -4495,7 +4495,7 @@ trap_7e_6ca5::
     ld a, $0c
     jr jr_001_6cab
 
-trap_7f_6ca9::
+TrapIRSend::
     ld a, $0b
 
 jr_001_6cab:
@@ -4650,7 +4650,7 @@ Jump_001_6d4f::
     ret
 
 
-trap_62_6d53::
+TrapExtractInit::
     ld hl, $c3ca
     ld [hl], e
     inc hl
@@ -4679,7 +4679,7 @@ jr_001_6d6d:
     ret
 
 
-trap_63_6d72::
+TrapExtractData::
     push hl
     push de
 
@@ -5212,7 +5212,7 @@ jr_001_6f94:
     inc hl
     jr jr_001_6f94
 
-trap_69_6f9b::
+TrapDrawString::
 .next
     ldh a, [hDrawMode]
     ld e, a
@@ -5267,7 +5267,7 @@ trap_69_6f9b::
     trap $b9
     jr .next
 
-trap_6a_6fda::
+TrapDrawStringList::
     ld a, [hl]
     or a
     ret z
@@ -5278,12 +5278,12 @@ trap_6a_6fda::
     trap DrawAt
     pop hl
     push de
-    call trap_69_6f9b
+    call TrapDrawString
     pop de
     inc e
-    jr trap_6a_6fda
+    jr TrapDrawStringList
 
-trap_6b_6feb::
+TrapFileSearch::
     xor a
     ld b, a
     ld [hl+], a
@@ -5331,7 +5331,7 @@ jr_001_700c:
     ld a, b
     adc h
     ld h, a
-    ld a, [KissBanks]
+    ld a, [KissCartridgeCode]
     ld [hl+], a
     ld [hl], c
     inc hl
@@ -5430,7 +5430,7 @@ jr_001_706b:
     jr z, jr_001_7092
 
     ld b, a
-    ld a, [KissBanks]
+    ld a, [KissCartridgeCode]
     cp b
     jr nz, jr_001_706b
 
@@ -5489,7 +5489,7 @@ trap_6d_70ba::
     or a
     jr z, jr_001_70de
 
-    ld a, [KissBanks]
+    ld a, [KissCartridgeCode]
     cp [hl]
     jr z, jr_001_70de
 
@@ -5959,7 +5959,7 @@ data_01_72d2::
 gfxGBKissLogo::
     INCBIN "gfx/logo.2bpp.hz"
 
-trap_06_76d8::
+TrapJumpViaTable::
     pop de
     ld a, [de]
     inc de
@@ -6112,7 +6112,7 @@ jr_001_7753:
 data_01_7762::
     db $10, $60, $80, $90, $01, $11, $40, $50, $20, $30
 
-trap_5c_776c::
+TrapDrawLayout::
     ld a, [hl+]
     bit 7, a
     ret nz
@@ -6124,9 +6124,9 @@ trap_5c_776c::
     pop hl
     inc hl
     trap DrawString
-    jr trap_5c_776c
+    jr TrapDrawLayout
 
-trap_5f_777b::
+TrapInputCursorMenu::
     add sp, -$0a
     ld hl, sp+$00
     ld [hl+], a
@@ -6508,7 +6508,7 @@ trap_55_793f::
     pop hl
     ldh a, [$a4]
     ld c, a
-    call trap_5d_7daf
+    call TrapTileLoadText
     ldh a, [$a5]
     ld c, a
     or a
@@ -6923,7 +6923,7 @@ Call_001_7b2f:
     add hl, bc
     ld c, $04
     ld e, $01
-    call trap_5d_7daf
+    call TrapTileLoadText
     ret
 
 
@@ -7211,7 +7211,7 @@ jr_001_7d90:
     ret
 
 
-trap_5d_7daf::
+TrapTileLoadText::
     push de
     push bc
     ld b, e
@@ -7286,7 +7286,7 @@ trap_57_7df1::
     ret
 
 
-trap_58_7e03::
+TrapDrawBox::
     call trap_57_7df1
     ld a, $79
     ld de, $7778
@@ -7566,7 +7566,7 @@ Call_001_7f24:
     ld c, $04
     ld hl, data_01_7fb0
 
-trap_4c_7f2f::
+TrapTileLoad::
     ld a, e
     push af
     push hl

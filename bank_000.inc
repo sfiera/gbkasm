@@ -38,8 +38,8 @@ RST_10::
     jp code_00_00c9
 
     db $00
-KissBanks:
-    db $fe    ; Unknown constant, related to bank capacity?
+KissCartridgeCode:
+    db $fe    ; CART_MINIGAME
 KissIndexBank:
     db $03    ; CRAM block of GBKiss file index
 KissIndexAddr:
@@ -318,14 +318,14 @@ HeaderComplementCheck::
 HeaderGlobalChecksum::
     db $75, $09
 
-trap_01_0150::
+TrapExitToMenu::
     ld a, [Config0]
     ldh [hROMBank], a
     ld [rROMBank], a
     jp j01_4100
 
 
-trap_02_015b::
+TrapMemCopy::
     ld a, b
     or c
     ret z
@@ -464,34 +464,34 @@ trap_none_0::
     nop
 
 traps0::
-    dw trap_00_00e9  ; $00
-    dw trap_01_0150  ; $01
-    dw trap_02_015b  ; $02
-    dw trap_03_6f05  ; $03 (bank 1)
-    dw trap_04_6f35  ; $04 (bank 1)
-    dw trap_05_6f3e  ; $05 (bank 1)
-    dw trap_06_76d8  ; $06 (bank 1)
-    dw trap_07_76f1  ; $07 (bank 1)
-    dw trap_08_7712  ; $08 (bank 1)
-    dw trap_08_02fd  ; $09
-    dw trap_none_0   ; $0a
-    dw trap_none_0   ; $0b
-    dw trap_none_0   ; $0c
-    dw trap_none_0   ; $0d
-    dw trap_0e_00b9  ; $0e
-    dw 0            ; $0f
-    dw trap_10_02ed  ; $10
-    dw trap_11_022c  ; $11
-    dw trap_12_0230  ; $12
-    dw trap_13_0234  ; $13
-    dw trap_14_0239  ; $14
-    dw trap_15_023d  ; $15
-    dw trap_16_0241  ; $16
-    dw trap_17_0245  ; $17
-    dw trap_18_0249  ; $18
-    dw trap_19_024d  ; $19
-    dw trap_1a_0218  ; $1a
-    dw trap_1b_0268  ; $1b
+    dw trap_00_00e9            ; trap $00
+    dw TrapExitToMenu          ; trap $01
+    dw TrapMemCopy             ; trap $02
+    dw trap_03_6f05            ; trap $03 (bank 1)
+    dw trap_04_6f35            ; trap $04 (bank 1)
+    dw trap_05_6f3e            ; trap $05 (bank 1)
+    dw TrapJumpViaTable        ; trap $06 (bank 1)
+    dw trap_07_76f1            ; trap $07 (bank 1)
+    dw trap_08_7712            ; trap $08 (bank 1)
+    dw trap_08_02fd            ; trap $09
+    dw trap_none_0             ; trap $0a
+    dw trap_none_0             ; trap $0b
+    dw trap_none_0             ; trap $0c
+    dw trap_none_0             ; trap $0d
+    dw trap_0e_00b9            ; trap $0e
+    dw 0                       ; trap $0f
+    dw trap_10_02ed            ; trap $10
+    dw TrapAudioStopJump       ; trap $11 (bank 4)
+    dw TrapAudioUnknownJump    ; trap $12 (bank 4)
+    dw TrapAudioPlayMusicJump  ; trap $13 (bank 4)
+    dw TrapAudioPlaySoundJump  ; trap $14 (bank 4)
+    dw TrapAudioSilenceJump    ; trap $15 (bank 4)
+    dw TrapAudioGetMusicJump   ; trap $16 (bank 4)
+    dw TrapAudioGetSoundJump   ; trap $17 (bank 4)
+    dw TrapAudioSetVolumeJump  ; trap $18 (bank 4)
+    dw TrapAudioGetCountJump   ; trap $19 (bank 4)
+    dw trap_1a_0218            ; trap $1a
+    dw trap_1b_0268            ; trap $1b
 
 trap_1a_0218::
     ld de, $0038
@@ -504,51 +504,51 @@ Jump_000_021c:
     push hl
     ldh a, [$99]
     bit 2, a
-    call nz, trap_12_0230
+    call nz, TrapAudioUnknownJump
     pop hl
     pop de
     pop bc
     pop af
     reti
 
-trap_11_022c::
-    ld l, $00
-    jr jr_000_024f
+TrapAudioStopJump::
+    ld l, LOW(AudioTraps.stop)
+    jr JumpToAudioBank
 
-trap_12_0230::
-    ld l, $03
-    jr jr_000_024f
+TrapAudioUnknownJump::
+    ld l, LOW(AudioTraps.unknown)
+    jr JumpToAudioBank
 
-trap_13_0234::
+TrapAudioPlayMusicJump::
     xor a
-    ld l, $06
-    jr jr_000_024f
+    ld l, LOW(AudioTraps.playMusic)
+    jr JumpToAudioBank
 
-trap_14_0239::
-    ld l, $09
-    jr jr_000_024f
+TrapAudioPlaySoundJump::
+    ld l, LOW(AudioTraps.playSound)
+    jr JumpToAudioBank
 
-trap_15_023d::
-    ld l, $0c
-    jr jr_000_024f
+TrapAudioSilenceJump::
+    ld l, LOW(AudioTraps.silence)
+    jr JumpToAudioBank
 
-trap_16_0241::
-    ld l, $0f
-    jr jr_000_024f
+TrapAudioGetMusicJump::
+    ld l, LOW(AudioTraps.getMusic)
+    jr JumpToAudioBank
 
-trap_17_0245::
-    ld l, $12
-    jr jr_000_024f
+TrapAudioGetSoundJump::
+    ld l, LOW(AudioTraps.getSound)
+    jr JumpToAudioBank
 
-trap_18_0249::
-    ld l, $15
-    jr jr_000_024f
+TrapAudioSetVolumeJump::
+    ld l, LOW(AudioTraps.setVolume)
+    jr JumpToAudioBank
 
-trap_19_024d::
-    ld l, $18
+TrapAudioGetCountJump::
+    ld l, LOW(AudioTraps.getCount)
 
-jr_000_024f:
-    ld h, $40
+JumpToAudioBank:
+    ld h, HIGH(AudioTraps)
     push af
     call Call_000_025a
     pop hl
@@ -562,7 +562,7 @@ Call_000_025a:
     ldh a, [hROMBank]
     ld hl, sp+$07
     ld [hl], a
-    ld a, BANK(j04_4000)
+    ld a, BANK(AudioTraps)
 
 jr_000_0263:
     call RST_20

@@ -12,134 +12,134 @@ DEF REGION_UNKNOWN   EQU "D" ; Unknown use
 DEF REGION_SPECIAL   EQU "S" ; Must be located at end of Kiss space
 
 traps2::
-    dw trap_80_5267  ; $80
-    dw trap_81_526e  ; $81
-    dw trap_82_5275  ; $82
-    dw trap_83_527c  ; $83
-    dw trap_84_5283  ; $84
-    dw trap_85_52b3  ; $85
-    dw trap_86_52c8  ; $86
-    dw trap_87_52de  ; $87
-    dw trap_88_52e0  ; $88
-    dw trap_89_52e7  ; $89
-    dw trap_8a_5322  ; $8a
-    dw trap_8b_537a  ; $8b
-    dw trap_8c_5384  ; $8c
-    dw trap_8d_53b4  ; $8d
-    dw trap_8e_5389  ; $8e
-    dw trap_8f_496e  ; $8f
-    dw trap_none_2   ; $90
-    dw trap_none_2   ; $91
-    dw trap_none_2   ; $92
-    dw trap_none_2   ; $93
-    dw trap_none_2   ; $94
-    dw trap_none_2   ; $95
-    dw trap_none_2   ; $96
-    dw trap_none_2   ; $97
-    dw trap_none_2   ; $98
-    dw trap_none_2   ; $99
-    dw trap_none_2   ; $9a
-    dw trap_none_2   ; $9b
-    dw trap_none_2   ; $9c
-    dw trap_none_2   ; $9d
-    dw trap_none_2   ; $9e
-    dw trap_none_2   ; $9f
-    dw trap_a0_54d8  ; $a0
-    dw trap_a1_53c1  ; $a1
-    dw trap_a2_53f1  ; $a2
-    dw trap_a3_547e  ; $a3
-    dw trap_a4_559e  ; $a4
-    dw trap_a5_55d2  ; $a5
-    dw trap_a6_55df  ; $a6
-    dw trap_a7_5b8d  ; $a7
-    dw trap_none_2   ; $a8
-    dw trap_none_2   ; $a9
-    dw trap_none_2   ; $aa
-    dw trap_none_2   ; $ab
-    dw trap_none_2   ; $ac
-    dw trap_none_2   ; $ad
-    dw trap_none_2   ; $ae
-    dw trap_none_2   ; $af
-    dw trap_b0_5ff2  ; $b0
-    dw trap_b1_60c5  ; $b1
-    dw trap_b2_61c0  ; $b2
-    dw trap_b3_574b  ; $b3
-    dw trap_b4_578a  ; $b4
-    dw trap_b5_58d3  ; $b5
-    dw trap_b6_605c  ; $b6
-    dw trap_b7_58f8  ; $b7
-    dw trap_b8_5901  ; $b8
-    dw trap_b9_59f5  ; $b9
-    dw trap_ba_5681  ; $ba
-    dw trap_bb_593a  ; $bb
-    dw trap_bc_4100  ; $bc
-    dw trap_bd_5914  ; $bd
-    dw trap_be_5988  ; $be
-    dw trap_bf_5e2e  ; $bf
-    dw trap_c0_5de2  ; $c0
-    dw trap_c1_5e08  ; $c1
-    dw trap_c2_69ee  ; $c2
-    dw trap_c3_4eaf  ; $c3
-    dw trap_c4_58c4  ; $c4
-    dw trap_c5_56c4  ; $c5
-    dw trap_c6_5730  ; $c6
-    dw trap_c7_571c  ; $c7
-    dw trap_c8_591b  ; $c8
-    dw trap_c9_5c54  ; $c9
-    dw trap_ca_5859  ; $ca
-    dw trap_cb_417f  ; $cb
-    dw trap_cc_419f  ; $cc
-    dw trap_cd_59c1  ; $cd
-    dw trap_none_2   ; $ce
-    dw trap_none_2   ; $cf
-    dw trap_none_2   ; $d0
-    dw trap_none_2   ; $d1
-    dw trap_none_2   ; $d2
-    dw trap_none_2   ; $d3
-    dw trap_none_2   ; $d4
-    dw trap_none_2   ; $d5
-    dw trap_none_2   ; $d6
-    dw trap_none_2   ; $d7
-    dw trap_d8_618c  ; $d8
-    dw trap_d9_6209  ; $d9
-    dw trap_da_6178  ; $da
-    dw trap_db_60e2  ; $db
-    dw trap_dc_60d2  ; $dc
-    dw trap_none_2   ; $dd
-    dw trap_none_2   ; $de
-    dw trap_none_2   ; $df
-    dw trap_e0_4437  ; $e0
-    dw trap_e1_4456  ; $e1
-    dw trap_e2_454a  ; $e2
-    dw trap_e3_4566  ; $e3
-    dw trap_e4_4577  ; $e4
-    dw trap_e5_45ca  ; $e5
-    dw trap_e6_45da  ; $e6
-    dw trap_e7_47b7  ; $e7
-    dw trap_e8_49de  ; $e8
-    dw trap_e9_4aa0  ; $e9
-    dw trap_ea_4b98  ; $ea
-    dw trap_eb_4c9a  ; $eb
-    dw trap_ec_4ca9  ; $ec
-    dw trap_ed_4cf1  ; $ed
-    dw trap_none_2   ; $ee
-    dw trap_ef_48ec  ; $ef
-    dw trap_f0_4bed  ; $f0
-    dw trap_f1_4926  ; $f1
-    dw trap_f2_4881  ; $f2
-    dw trap_none_2   ; $f3
-    dw trap_none_2   ; $f4
-    dw trap_none_2   ; $f5
-    dw trap_none_2   ; $f6
-    dw trap_none_2   ; $f7
-    dw trap_f8_41b0  ; $f8
-    dw trap_f9_4259  ; $f9
-    dw trap_none_2   ; $fa
-    dw trap_fb_4586  ; $fb
-    dw trap_fc_4a3c  ; $fc
-    dw trap_fd_4df6  ; $fd
-    dw trap_fe_4e7d  ; $fe
-    dw trap_ff_4e36  ; $ff
+    dw trap_80_5267         ; trap $80
+    dw trap_81_526e         ; trap $81
+    dw trap_82_5275         ; trap $82
+    dw trap_83_527c         ; trap $83
+    dw trap_84_5283         ; trap $84
+    dw trap_85_52b3         ; trap $85
+    dw trap_86_52c8         ; trap $86
+    dw trap_87_52de         ; trap $87
+    dw trap_88_52e0         ; trap $88
+    dw trap_89_52e7         ; trap $89
+    dw trap_8a_5322         ; trap $8a
+    dw trap_8b_537a         ; trap $8b
+    dw trap_8c_5384         ; trap $8c
+    dw TrapRandInit         ; trap $8d
+    dw TrapRandNext         ; trap $8e
+    dw trap_8f_496e         ; trap $8f
+    dw trap_none_2          ; trap $90
+    dw trap_none_2          ; trap $91
+    dw trap_none_2          ; trap $92
+    dw trap_none_2          ; trap $93
+    dw trap_none_2          ; trap $94
+    dw trap_none_2          ; trap $95
+    dw trap_none_2          ; trap $96
+    dw trap_none_2          ; trap $97
+    dw trap_none_2          ; trap $98
+    dw trap_none_2          ; trap $99
+    dw trap_none_2          ; trap $9a
+    dw trap_none_2          ; trap $9b
+    dw trap_none_2          ; trap $9c
+    dw trap_none_2          ; trap $9d
+    dw trap_none_2          ; trap $9e
+    dw trap_none_2          ; trap $9f
+    dw trap_a0_54d8         ; trap $a0
+    dw trap_a1_53c1         ; trap $a1
+    dw trap_a2_53f1         ; trap $a2
+    dw TrapStrConvInt       ; trap $a3
+    dw TrapStrConvHex       ; trap $a4
+    dw trap_a5_55d2         ; trap $a5
+    dw TrapMemSet           ; trap $a6
+    dw trap_a7_5b8d         ; trap $a7
+    dw trap_none_2          ; trap $a8
+    dw trap_none_2          ; trap $a9
+    dw trap_none_2          ; trap $aa
+    dw trap_none_2          ; trap $ab
+    dw trap_none_2          ; trap $ac
+    dw trap_none_2          ; trap $ad
+    dw trap_none_2          ; trap $ae
+    dw trap_none_2          ; trap $af
+    dw trap_b0_5ff2         ; trap $b0
+    dw TrapAwaitFrame       ; trap $b1
+    dw trap_b2_61c0         ; trap $b2
+    dw TrapDrawInit         ; trap $b3
+    dw TrapLCDEnable        ; trap $b4
+    dw TrapLCDDisable       ; trap $b5
+    dw trap_b6_605c         ; trap $b6
+    dw trap_b7_58f8         ; trap $b7
+    dw TrapDrawAt           ; trap $b8
+    dw trap_b9_59f5         ; trap $b9
+    dw trap_ba_5681         ; trap $ba
+    dw TrapDrawChar         ; trap $bb
+    dw trap_bc_4100         ; trap $bc
+    dw trap_bd_5914         ; trap $bd
+    dw trap_be_5988         ; trap $be
+    dw TrapInputHiliteMenu  ; trap $bf
+    dw trap_c0_5de2         ; trap $c0
+    dw trap_c1_5e08         ; trap $c1
+    dw trap_c2_69ee         ; trap $c2
+    dw trap_c3_4eaf         ; trap $c3
+    dw trap_c4_58c4         ; trap $c4
+    dw trap_c5_56c4         ; trap $c5
+    dw trap_c6_5730         ; trap $c6
+    dw trap_c7_571c         ; trap $c7
+    dw trap_c8_591b         ; trap $c8
+    dw trap_c9_5c54         ; trap $c9
+    dw trap_ca_5859         ; trap $ca
+    dw TrapTimerSet         ; trap $cb
+    dw trap_cc_419f         ; trap $cc
+    dw trap_cd_59c1         ; trap $cd
+    dw trap_none_2          ; trap $ce
+    dw trap_none_2          ; trap $cf
+    dw trap_none_2          ; trap $d0
+    dw trap_none_2          ; trap $d1
+    dw trap_none_2          ; trap $d2
+    dw trap_none_2          ; trap $d3
+    dw trap_none_2          ; trap $d4
+    dw trap_none_2          ; trap $d5
+    dw trap_none_2          ; trap $d6
+    dw trap_none_2          ; trap $d7
+    dw TrapInputButtons     ; trap $d8
+    dw trap_d9_6209         ; trap $d9
+    dw trap_da_6178         ; trap $da
+    dw trap_db_60e2         ; trap $db
+    dw trap_dc_60d2         ; trap $dc
+    dw trap_none_2          ; trap $dd
+    dw trap_none_2          ; trap $de
+    dw trap_none_2          ; trap $df
+    dw trap_e0_4437         ; trap $e0
+    dw trap_e1_4456         ; trap $e1
+    dw trap_e2_454a         ; trap $e2
+    dw trap_e3_4566         ; trap $e3
+    dw trap_e4_4577         ; trap $e4
+    dw trap_e5_45ca         ; trap $e5
+    dw trap_e6_45da         ; trap $e6
+    dw trap_e7_47b7         ; trap $e7
+    dw trap_e8_49de         ; trap $e8
+    dw TrapFileWrite        ; trap $e9
+    dw trap_ea_4b98         ; trap $ea
+    dw trap_eb_4c9a         ; trap $eb
+    dw trap_ec_4ca9         ; trap $ec
+    dw trap_ed_4cf1         ; trap $ed
+    dw trap_none_2          ; trap $ee
+    dw trap_ef_48ec         ; trap $ef
+    dw trap_f0_4bed         ; trap $f0
+    dw trap_f1_4926         ; trap $f1
+    dw trap_f2_4881         ; trap $f2
+    dw trap_none_2          ; trap $f3
+    dw trap_none_2          ; trap $f4
+    dw trap_none_2          ; trap $f5
+    dw trap_none_2          ; trap $f6
+    dw trap_none_2          ; trap $f7
+    dw trap_f8_41b0         ; trap $f8
+    dw trap_f9_4259         ; trap $f9
+    dw trap_none_2          ; trap $fa
+    dw trap_fb_4586         ; trap $fb
+    dw trap_fc_4a3c         ; trap $fc
+    dw trap_fd_4df6         ; trap $fd
+    dw trap_fe_4e7d         ; trap $fe
+    dw trap_ff_4e36         ; trap $ff
 
 trap_bc_4100::
     ld d, a
@@ -258,7 +258,7 @@ trap_none_2::
     ret
 
 
-trap_cb_417f::
+TrapTimerSet::
     ldh a, [rLCDC]
     bit 7, a
     ret z
@@ -377,7 +377,7 @@ jr_002_41f5:
     ld b, $06
 
 jr_002_4213:
-    call trap_b1_60c5
+    call TrapAwaitFrame
     dec b
     jr nz, jr_002_4213
 
@@ -390,7 +390,7 @@ jr_002_4213:
     ld b, $06
 
 jr_002_4227:
-    call trap_b1_60c5
+    call TrapAwaitFrame
     dec b
     jr nz, jr_002_4227
 
@@ -1959,7 +1959,7 @@ jr_002_4a90:
     ret
 
 
-trap_e9_4aa0::
+TrapFileWrite::
     ld a, c
     cp $ff
     jr nz, jr_002_4aa8
@@ -4199,7 +4199,7 @@ trap_8c_5384::
 
     jr trap_8b_537a
 
-trap_8e_5389::
+TrapRandNext::
     ld hl, $c3b2
     ld a, [hl+]
     ld h, [hl]
@@ -4234,7 +4234,7 @@ data_02_53ac::
     ret
 
 
-trap_8d_53b4::
+TrapRandInit::
     ld a, l
     ld [$c3b2], a
     ld a, h
@@ -4445,7 +4445,7 @@ jr_002_5471:
     inc de
     jr jr_002_5459
 
-trap_a3_547e::
+TrapStrConvInt::
     ld [hl], $20
     inc hl
     ld a, l
@@ -4669,7 +4669,7 @@ jr_002_556f:
     ret
 
 
-trap_a4_559e::
+TrapStrConvHex::
     ld a, l
     ld l, e
     ld e, a
@@ -4737,7 +4737,7 @@ jr_002_55d9:
     ret
 
 
-trap_a6_55df::
+TrapMemSet::
     ld a, b
     or c
     ret z
@@ -5093,7 +5093,7 @@ jr_002_5736:
     ret
 
 
-trap_b3_574b::
+TrapDrawInit::
     push af
     push bc
     push de
@@ -5130,7 +5130,7 @@ trap_b3_574b::
 
     ld a, $07
 
-trap_b4_578a::
+TrapLCDEnable::
     or $80
     ldh [$86], a
     ldh [rLCDC], a
@@ -5281,7 +5281,7 @@ Call_002_5843:
 Call_002_5850:
     ld hl, $9800
     ld bc, $0800
-    jp trap_a6_55df
+    jp TrapMemSet
 
 
 trap_ca_5859::
@@ -5323,7 +5323,7 @@ jr_002_589c:
     ld hl, $97f0
     ld e, $00
     ld bc, $0010
-    call trap_a6_55df
+    call TrapMemSet
     ret
 
 
@@ -5358,7 +5358,7 @@ jr_002_58cb:
     ret
 
 
-trap_b5_58d3::
+TrapLCDDisable::
     ldh a, [rLCDC]
     and $80
     ret z
@@ -5399,7 +5399,7 @@ trap_b7_58f8::
     ret
 
 
-trap_b8_5901::
+TrapDrawAt::
     ldh a, [hDrawMode]
     bit DrawMode_Bit3, a
     jr nz, jr_002_590e
@@ -5449,7 +5449,7 @@ jr_002_5927:
 
 jr_002_592f:
     ld a, $20
-    call trap_bb_593a
+    call TrapDrawChar
     dec b
     jr nz, jr_002_592f
 
@@ -5459,7 +5459,7 @@ jr_002_5937:
     ret
 
 
-trap_bb_593a::
+TrapDrawChar::
     push bc
     push de
     push hl
@@ -5517,7 +5517,7 @@ Call_002_5970:
     ld l, a
     call Call_002_59dc
     ld bc, $0001
-    jp trap_a6_55df
+    jp TrapMemSet
 
 
 Call_002_597f:
@@ -5592,7 +5592,7 @@ trap_cd_59c1::
     ld e, a
     call Call_002_59dc
     ld bc, $0001
-    call trap_a6_55df
+    call TrapMemSet
     pop hl
     pop de
     pop bc
@@ -5820,7 +5820,7 @@ code_02_5ad0:
     ld c, a
     ld b, $00
     call Call_002_59dc
-    call trap_a6_55df
+    call TrapMemSet
     pop de
     pop bc
     ret
@@ -5840,7 +5840,7 @@ code_02_5ae6:
     ld b, $00
     push af
     call Call_002_59dc
-    call trap_a6_55df
+    call TrapMemSet
     pop af
     ld hl, hCursorX
     add [hl]
@@ -5869,7 +5869,7 @@ jr_002_5b1f:
     push de
     push hl
     ld bc, $0014
-    call trap_a6_55df
+    call TrapMemSet
     pop hl
     pop de
     ld bc, $0020
@@ -6345,7 +6345,7 @@ jr_002_5d06:
     ld e, b
     push bc
     ld bc, $0001
-    call trap_a6_55df
+    call TrapMemSet
     pop bc
     pop hl
     pop de
@@ -6355,7 +6355,7 @@ jr_002_5d06:
     add hl, de
     ld e, c
     ld bc, $0001
-    call trap_a6_55df
+    call TrapMemSet
     pop de
     pop hl
     pop bc
@@ -6506,7 +6506,7 @@ jr_002_5dc1:
     ld l, e
     ld h, d
     pop de
-    jp trap_a6_55df
+    jp TrapMemSet
 
 
 trap_c0_5de2::
@@ -6577,7 +6577,7 @@ jr_002_5e13:
     ret
 
 
-trap_bf_5e2e::
+TrapInputHiliteMenu::
     push hl
     push af
     push bc
@@ -6586,8 +6586,8 @@ trap_bf_5e2e::
     call Call_002_5f2e
 
 jr_002_5e37:
-    call trap_b1_60c5
-    call trap_d8_618c
+    call TrapAwaitFrame
+    call TrapInputButtons
     or a
     jr z, jr_002_5e37
 
@@ -7132,7 +7132,7 @@ Call_002_60b4:
     jp Jump_002_61cc
 
 
-trap_b1_60c5::
+TrapAwaitFrame::
     xor a
     ldh [$82], a
     ei
@@ -7152,8 +7152,8 @@ trap_dc_60d2::
     ld b, a
 
 jr_002_60d4:
-    call trap_b1_60c5
-    call trap_d8_618c
+    call TrapAwaitFrame
+    call TrapInputButtons
     or a
     jr nz, jr_002_60e0
 
@@ -7295,7 +7295,7 @@ trap_da_6178::
     ret
 
 
-trap_d8_618c::
+TrapInputButtons::
     push hl
     call trap_da_6178
     bit 3, a
@@ -7425,7 +7425,7 @@ jr_002_6210:
     inc hl
 
 jr_002_6227:
-    call trap_bb_593a
+    call TrapDrawChar
     jr jr_002_6210
 
 jr_002_622c:
@@ -7519,7 +7519,7 @@ jr_002_6291:
     ld e, a
     ld d, $00
     call trap_a7_5b8d
-    call trap_bb_593a
+    call TrapDrawChar
     pop de
     jr jr_002_6239
 
@@ -7634,7 +7634,7 @@ jr_002_6325:
     call trap_a7_5b8d
 
 jr_002_632c:
-    call trap_bb_593a
+    call TrapDrawChar
     pop de
     inc de
     dec l
@@ -7779,7 +7779,7 @@ jr_002_63c8:
 
 
 Call_002_63cc:
-    call trap_d8_618c
+    call TrapInputButtons
     bit 1, a
     jr nz, jr_002_641b
 

@@ -6,29 +6,13 @@
 SECTION "ROM Bank $005", ROMX[$4000], BANK[$5]
 
     jp Jump_005_407a
-
-
     jp Jump_005_40e9
-
-
     jp Jump_005_401b
-
-
     jp Jump_005_402a
-
-
     jp Jump_005_404b
-
-
     jp Jump_005_404f
-
-
     jp Jump_005_4059
-
-
     jp Jump_005_4063
-
-
     jp Jump_005_406c
 
 
