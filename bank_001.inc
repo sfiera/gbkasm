@@ -7290,21 +7290,23 @@ TrapDrawBox::
     call trap_57_7df1
     ld a, $79
     ld de, $7778
-    call Call_001_7e20
+    call DrawRow
     dec c
     dec c
 
-jr_001_7e10:
+.nextRow
     ld a, $7f
     ld de, $7576
-    call Call_001_7e20
+    call DrawRow
     dec c
-    jr nz, jr_001_7e10
+    jr nz, .nextRow
 
     ld a, $7c
     ld de, $7a7b
 
-Call_001_7e20:
+    ; fall through
+
+DrawRow:
     add sp, -$20
     push hl
     push bc
@@ -7315,10 +7317,10 @@ Call_001_7e20:
     ld [hl], d
     inc hl
 
-jr_001_7e2b:
+.nextCol
     ld [hl+], a
     dec b
-    jr nz, jr_001_7e2b
+    jr nz, .nextCol
 
     ld [hl], e
     pop de
