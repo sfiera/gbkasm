@@ -286,7 +286,7 @@ HeaderLogo::
     db $bb, $bb, $67, $63, $6e, $0e, $ec, $cc, $dd, $dc, $99, $9f, $bb, $b9, $33, $3e
 
 HeaderTitle::
-    dp "GBKISS MINIGAME", $00
+    dp "GBKISS MINIGAME\0"
 
 HeaderNewLicenseeCode::
     db $31, $38

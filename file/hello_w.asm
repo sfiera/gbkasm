@@ -53,4 +53,4 @@ Main::
 
 
 HelloWorldText:
-    dk "Hello, World!", 0
+    dk "Hello, World!\0"
