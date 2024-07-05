@@ -45,11 +45,11 @@ Main::
     trap DrawString         ; draw "Hello, World!" at pen location
 
 .loop
-    trap AwaitFrame   ; wait one frame
-    trap InputButtons   ; get buttons in register a
-    bit BTN_SEL_F, a  ; check if Select pressed
-    jr z, .loop       ; if not, loop
-    trap ExitToMenu   ; else exit to menu
+    trap AwaitFrame    ; wait one frame
+    trap InputButtons  ; get buttons in register a
+    bit BTN_SEL_F, a   ; check if Select pressed
+    jr z, .loop        ; if not, loop
+    trap ExitToMenu    ; else exit to menu
 
 
 HelloWorldText:
