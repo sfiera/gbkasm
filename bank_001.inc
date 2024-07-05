@@ -17,15 +17,18 @@ SECTION "ROM Bank $001", ROMX[$4000], BANK[$1]
     db $01
     dp "KISS MAIL"
     jp Jump_001_5e9d
+
+data_01_4018:
     db $00, $00
+
+data_01_401a:
     dp "GB KISS MENU"
-    db $20, $00, $00, $00, $82, $82, $44, $44, $28, $28, $10, $10, $28, $28, $44, $44
-    db $82, $82, $00, $00, $10, $10, $38, $28, $38, $28, $7c, $44, $7c, $44, $fe, $82
-    db $fe, $fe, $00, $00, $38, $38, $7c, $44, $fe, $82, $fe, $82, $fe, $82, $7c, $44
-    db $38, $38, $00, $00, $10, $10, $38, $28, $7c, $44, $fe, $82, $7c, $44, $38, $28
-    db $10, $10, $00, $00, $38, $38, $7c, $44, $fe, $92, $fe, $aa, $fe, $92, $7c, $44
-    db $38, $38, $10, $10, $18, $18, $fc, $fc, $fe, $fe, $fc, $fc, $18, $18, $10, $10
-    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+    db $20, $00
+
+data_01_4028:
+    INCBIN "gfx/attrs.2bpp"
+
+    ds 14
 
 traps1::
     dw trap_4b_7dcc         ; $4b
@@ -414,7 +417,7 @@ jr_001_42d7:
 Call_001_42f5:
     ld [$ce0f], a
     ld hl, $ce00
-    ld de, $4018
+    ld de, data_01_4018
     ld bc, $000f
     trap MemCopy
     trap RandNext
@@ -844,7 +847,7 @@ Call_001_45ec:
     cp [hl]
     jr z, jr_001_4605
 
-    ld de, $4028
+    ld de, data_01_4028
     jr jr_001_461f
 
 jr_001_4605:
@@ -854,19 +857,19 @@ jr_001_4605:
     bit 1, d
     jr z, jr_001_4612
 
-    ld de, $4058
+    ld de, data_01_4028 + $30
     jr jr_001_461f
 
 jr_001_4612:
-    ld de, $4048
+    ld de, data_01_4028 + $20
     jr jr_001_461f
 
 jr_001_4617:
-    ld de, $4068
+    ld de, data_01_4028 + $40
     jr jr_001_461f
 
 jr_001_461c:
-    ld de, $4038
+    ld de, data_01_4028 + $10
 
 jr_001_461f:
     ld hl, $c400
@@ -895,7 +898,7 @@ Call_001_4632:
     ld a, $03
     jp c, Jump_001_471b
 
-    ld hl, $401a
+    ld hl, data_01_401a
     ld de, $ce02
     ld bc, $000d
     trap $67
@@ -3275,7 +3278,7 @@ jr_001_64ec:
 Call_001_6501:
     trap LCDDisable
     call Call_001_66dc
-    ld de, $4078
+    ld de, data_01_4028 + $50
     ld hl, $9700
     ld bc, $0010
     trap MemCopy
