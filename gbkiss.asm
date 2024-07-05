@@ -22,7 +22,6 @@ INCLUDE "bank_001.inc"
 INCLUDE "bank_002.inc"
 INCLUDE "bank_003.inc"
 INCLUDE "bank_004.inc"
-INCLUDE "bank_005.inc"
 
 INCLUDE "group/caravan.inc"
 INCLUDE "group/kissmon.inc"
