@@ -26,7 +26,7 @@ data_01_401a:
     db $20, $00
 
 data_01_4028:
-    INCBIN "gfx/attrs.2bpp"
+    INCBIN "gfx/system/attrs.2bpp"
 
     ds 14
 
@@ -2620,7 +2620,7 @@ data_01_5ccf::
     db $1e, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $20
 
 data_01_5d33::
-    INCBIN "gfx/actions.2bpp.hz"
+    INCBIN "gfx/system/actions.2bpp.hz"
 
 Jump_001_5e9d::
     ld a, $20
@@ -6054,7 +6054,7 @@ data_01_72d2::
     db $10, $09, $70, $7f, $ff
 
 gfxGBKissLogo::
-    INCBIN "gfx/logo.2bpp.hz"
+    INCBIN "gfx/system/logo.2bpp.hz"
 
 TrapJumpViaTable::
     pop de
@@ -7724,10 +7724,10 @@ jr_001_7f52:
 
 
 data_01_7f70::
-    INCBIN "gfx/page.2bpp"
+    INCBIN "gfx/system/page.2bpp"
 
 data_01_7fb0::
-    INCBIN "gfx/pencil.2bpp"
+    INCBIN "gfx/system/pencil.2bpp"
 
 data_01_7ff0::
-    INCBIN "gfx/reticle.2bpp"
+    INCBIN "gfx/system/reticle.2bpp"
