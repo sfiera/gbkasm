@@ -61,7 +61,7 @@ MACRO rev_Check_hardware_inc
     IF \\1 != \\4 || \\2 < \\5 || (\\2 == \\5 && \\3 < \\6)
     	FAIL "Version \\1.\\2.\\3 of 'hardware.inc' is incompatible with requested version \\4.\\5.\\6"
     ENDC
-\nENDM"""
+\0ENDM"""
     INTERNAL_CHK
     ___internal {CUR_VER}, {MIN_VER},0,0
     PURGE CUR_VER, MIN_VER, INTERNAL_CHK, ___internal

@@ -163,11 +163,11 @@ DrawScreen:
 
 
 Layout:
-    dk $03, $01, "SHOOTING MASTER\n"
-    dk $06, $06, "TIME:\n"
-    dk $06, $08, "SHOT:\n"
-    dk $05, $0c, "»HIGH SCORE\n"
-    dk $06, $0e, "SHOT:\n"
+    dk $03, $01, "SHOOTING MASTER\0"
+    dk $06, $06, "TIME:\0"
+    dk $06, $08, "SHOT:\0"
+    dk $05, $0c, "»HIGH SCORE\0"
+    dk $06, $0e, "SHOT:\0"
     dk $ff
 
 

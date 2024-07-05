@@ -147,9 +147,9 @@ jump_0122:
     jx jump_0122
 
 strPerfect:
-    dk "PERFECT!!\n"
+    dk "PERFECT!!\0"
 strGameOver:
-    dk "GAME OVER\n"
+    dk "GAME OVER\0"
 
 ShowTitleScreen:
     ld a, $0c
@@ -242,15 +242,15 @@ ShowHiScore:
     ret
 
 strMenu:
-    dk 3, 2, "SAME GAME KISS\n"
-    dk 2, 12, "HIGH SCORE\n"
-    dk 2, 13, "NAME: \n"
+    dk 3, 2, "SAME GAME KISS\0"
+    dk 2, 12, "HIGH SCORE\0"
+    dk 2, 13, "NAME: \0"
     dk $ff
 strCredits:
-    dk 2, 5, "ORIGINAL DESIGN\n"
-    dk 3, 6, "BY KYOTO 1992\n"
-    dk 2, 8, "SPECIAL THANKS\n"
-    dk 4, 9, "TO MORISUKE\n"
+    dk 2, 5, "ORIGINAL DESIGN\0"
+    dk 3, 6, "BY KYOTO 1992\0"
+    dk 2, 8, "SPECIAL THANKS\0"
+    dk 4, 9, "TO MORISUKE\0"
     dk $ff
 
 call_0322:
@@ -745,9 +745,9 @@ call_05d5:
     ret
 
 strStatus:
-    dk "SAME     GET  SCORE\n"
-    dk "GAME\n"
-    dk "\n"
+    dk "SAME     GET  SCORE\0"
+    dk "GAME\0"
+    dk "\0"
 
 call_060d:
     ld hl, $c3b2

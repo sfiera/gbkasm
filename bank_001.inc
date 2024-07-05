@@ -611,7 +611,7 @@ Call_001_43f1:
 
 
 data_01_440d::
-    dk "エリアのあきができます»\n"
+    dk "エリアのあきができます»\0"
 
 
 Jump_001_441d:
@@ -681,22 +681,22 @@ Call_001_44a1:
 
 
 data_01_44a6::
-    dk "なまえ»:\n"
-    dk "      エリア すう»:\n"
-    dk "      ポイントかち»:\n"
-    dk "      ファイルじっこう:»\n"
-    dk "« --- つうしん　りれき ---»\n"
-    dk "さくしゃ:»\n"
-    dk "No.1:\n"
-    dk "No.2:\n"
-    dk "No.3:\n"
-    dk "\n"
+    dk "なまえ»:\0"
+    dk "      エリア すう»:\0"
+    dk "      ポイントかち»:\0"
+    dk "      ファイルじっこう:»\0"
+    dk "« --- つうしん　りれき ---»\0"
+    dk "さくしゃ:»\0"
+    dk "No.1:\0"
+    dk "No.2:\0"
+    dk "No.3:\0"
+    dk "\0"
 
 data_01_4510::
-    dk "ユーザー　:\n"
+    dk "ユーザー　:\0"
 
 data_01_4518::
-    dk "ポイントごうけい:»\n"
+    dk "ポイントごうけい:»\0"
 
 Call_001_4526:
     ld hl, $c500
@@ -1716,7 +1716,7 @@ jr_001_4aad:
 
 
 data_01_4ac2::
-    dk "エリア  No.\n"
+    dk "エリア  No.\0"
 
 Call_001_4acb:
 Jump_001_4acb:
@@ -1972,50 +1972,50 @@ data_01_4bf6::
     dw data_01_4eef
 
 data_01_4c02::
-    dk "\n"
-    dk "   この\n"
+    dk "\0"
+    dk "   この\0"
     extstr File
-    dh "は\n"
+    dh "は\0"
     db $ee, $00, $08
     db $ee, $00, $ff
 
 data_01_4c15::
     db $08
-    dk "«　　　せんたくしている\n"
+    dk "«　　　せんたくしている\0"
     db $ee, $00, $ff
 
 StrFile:
-    dh "ファイル«\n"
+    dh "ファイル«\0"
 StrDekimasen:
-    dk "デキマセン\n"
+    dk "デキマセン\0"
 StrHaiIie:
-    dk "はい　いいえ\n"
+    dk "はい　いいえ\0"
 StrGameBoy:
-    dh "ゲームボーイ«\n"
+    dh "ゲームボーイ«\0"
 StrButtonOshite:
-    dk "ボタンを　おしてください\n"
+    dk "ボタンを　おしてください\0"
 StrAreaTarimasen:
-    dk "あきエリアすうがたりません\n"
+    dk "あきエリアすうがたりません\0"
 StrAreaKakuho:
-    dk "あきエリアを　かくほ\n"
+    dk "あきエリアを　かくほ\0"
 StrAreaMadeJushin::
-    dk "エリアまでじゅしんかのうです\n"
+    dk "エリアまでじゅしんかのうです\0"
 StrJushinAreaAitemasen::
-    dk "じゅしんエリアが　あいていません\n"
+    dk "じゅしんエリアが　あいていません\0"
 
 data_01_4ca0::
-    dk $08, "つうしんを　ちゅうしするばあいは\n"
-    dk "\n"
-    dk $10, "Ｂ\n"
+    dk $08, "つうしんを　ちゅうしするばあいは\0"
+    dk "\0"
+    dk $10, "Ｂ\0"
     extstr ButtonOshite
     db $f0, $00, $ff
 
 data_01_4cbe::
     db $08
     extstr GameBoy
-    dh "どうしを　くっつけて\n"
-    dk "\n"
-    db $10, "Ａ\n"
+    dh "どうしを　くっつけて\0"
+    dk "\0"
+    db $10, "Ａ\0"
     extstr ButtonOshite
     db $f0, $00
     db $ff
@@ -2025,7 +2025,7 @@ data_01_4cd8::
     db $f0, $00
     db $08
     extstr File
-    dh "を　おくっています\n"
+    dh "を　おくっています\0"
     db $f0, $00
     db $10
     db $f0, $00
@@ -2036,7 +2036,7 @@ data_01_4cef::
     db $f0, $00
     db $08
     extstr File
-    dh "を　おくりました！\n"
+    dh "を　おくりました！\0"
     db $f0, $00
     db $10
     db $f0, $00
@@ -2047,7 +2047,7 @@ data_01_4d06::
     db $f0, $00
     db $08
     extstr File
-    dh "を　うけとっています\n"
+    dh "を　うけとっています\0"
     db $f0, $00
     db $10
     db $f0, $00
@@ -2058,7 +2058,7 @@ data_01_4d1e::
     db $f0, $00
     db $08
     extstr File
-    dh "を　うけとりました！\n"
+    dh "を　うけとりました！\0"
     db $f0, $00
     db $10
     db $f0, $00
@@ -2066,50 +2066,50 @@ data_01_4d1e::
 
 data_01_4d36::
     db $00
-    dk "あいての\n"
+    dk "あいての\0"
     extstr GameBoy
-    dh "の\n"
+    dh "の\0"
     db $f0, $00
     db $08
     extstr AreaTarimasen
     db $f0, $00
-    dk $10, "かくほして　もらってください\n"
+    dk $10, "かくほして　もらってください\0"
     db $f0, $00, $ff
 
 data_01_4d5f::
     db $00
-    dk "つうしんを　しっぱいしました\n"
+    dk "つうしんを　しっぱいしました\0"
     db $f0, $00
     db $08
     db $f0, $00
     db $10
-    dk "もういちどやりなおしてください　\n"
-    dk "\n"
+    dk "もういちどやりなおしてください　\0"
+    dk "\0"
     db $ff
 
 data_01_4d8d::
     db $00
-    dk "あいての\n"
+    dk "あいての\0"
     extstr GameBoy
-    dh "が\n"
+    dh "が\0"
     db $f0, $00
     db $08
-    dk "GB KISS メニューの\n"
+    dk "GB KISS メニューの\0"
     db $f0, $00
     db $10
-    dk "じゅしんじょうたいでありません　\n"
-    dk "\n"
+    dk "じゅしんじょうたいでありません　\0"
+    dk "\0"
     db $ff
 
 data_01_4dc6::
     db $00
-    dk "あいてに　おなじ\n"
+    dk "あいてに　おなじ\0"
     extstr File
-    dh "が\n"
+    dh "が\0"
     db $f0, $00
-    dk $08, "そんざいします\n"
+    dk $08, "そんざいします\0"
     db $f0, $00
-    dk $10, "うわがきしますか？\n"
+    dk $10, "うわがきしますか？\0"
     extstr HaiIie
     db $f0, $00
     db $ff
@@ -2124,88 +2124,88 @@ data_01_4dfe::
     extstr AreaTarimasen
     db $f0, $00
     db $08
-    dk "いくつか\n"
+    dk "いくつか\0"
     extstr File
-    dk "をさくじょして\n"
+    dk "をさくじょして\0"
     db $f0, $00
     db $10
     extstr AreaKakuho
-    dh "してください\n"
-    dh "\n"
+    dh "してください\0"
+    dh "\0"
     db $ff
 
 data_01_4e28:
     db $00, $e3
-    dk "＜　スタート　＞\n"
+    dk "＜　スタート　＞\0"
     db $ee, $00, $fd
-    dh "をじっこうします　»\n"
-    dk "\n"
+    dh "をじっこうします　»\0"
+    dk "\0"
     db $ff
 
 data_01_4e44:
     db $00
-    db "　＜\n"
+    db "　＜\0"
     extstr File
-    dh "　じょうほう＞　\n"
-    dk "\n"
+    dh "　じょうほう＞　\0"
+    dk "\0"
     db $fd
-    dh "のじょうほうです　\n"
-    dk "\n"
+    dh "のじょうほうです　\0"
+    dk "\0"
     db $ff
 
 data_01_4e65:
     db $00
-    dh "　＜　\n"
+    dh "　＜　\0"
     extstr File
-    dh "いれかえ　＞　\n"
-    dk "\n"
+    dh "いれかえ　＞　\0"
+    dk "\0"
     db $08
-    dk "«　せんたくした　\n"
+    dk "«　せんたくした　\0"
     extstr File
-    dh "と　\n"
-    dk "\n"
-    dk $10, "«　　ばしょをいれかえます\n"
+    dh "と　\0"
+    dk "\0"
+    dk $10, "«　　ばしょをいれかえます\0"
     db $ee, $00, $ff
 
 data_01_4e9b:
     db $00
-    dh "　＜　\n"
+    dh "　＜　\0"
     extstr File
-    dh "そうしん　＞　\n"
-    dh "\n"
+    dh "そうしん　＞　\0"
+    dh "\0"
     db $fd
-    dh "をそうしんします　\n"
-    dk "\n"
+    dh "をそうしんします　\0"
+    dk "\0"
     db $ff
 
 data_01_4eb9:
     db $00
-    dh "　＜　\n"
+    dh "　＜　\0"
     extstr File
-    dh "じゅしん　＞　\n"
-    dk "\n"
-    dk $08, "«　　　せんたくぶぶんに\n"
+    dh "じゅしん　＞　\0"
+    dk "\0"
+    dk $08, "«　　　せんたくぶぶんに\0"
     db $ee, $00
-    dh $10, "　\n"
+    dh $10, "　\0"
     extstr File
-    dh "を　うけとります　\n"
-    dk "\n"
+    dh "を　うけとります　\0"
+    dk "\0"
     db $ff
 
 data_01_4eef:
     db $00
-    dh "　＜　\n"
+    dh "　＜　\0"
     extstr File
-    dh "さくじょ　＞　\n"
-    dk "\n"
+    dh "さくじょ　＞　\0"
+    dk "\0"
     db $fd
-    dh "をさくじょします　\n"
-    dk "\n"
+    dh "をさくじょします　\0"
+    dk "\0"
     db $ff
 
 data_01_4f0f::
     db $00
-    dk "«　ほんとうにさくじょして\n"
+    dk "«　ほんとうにさくじょして\0"
     db $ee, $00, $08
     extstr SpaceYorishiiDesuKau
     db $ee, $00, $10
@@ -2216,40 +2216,40 @@ data_01_4f0f::
 StrSpaceYorishiiDesuKau:
     dk "　"
 StrYoroshiiDesuKa:
-    dk "よろしいですか？\n"
+    dk "よろしいですか？\0"
 
 data_01_4f3b::
     db $00
     db $ee, $00, $08
     db $ee, $00, $10
     db $ee, $00, $02
-    dk " GB KISS メニュー\n"
-    dk "\n"
-    dk "»« とうろく\n"
+    dk " GB KISS メニュー\0"
+    dk "\0"
+    dk "»« とうろく\0"
     extstr File
-    dh "　　　こ\n"
-    dk "\n"
+    dh "　　　こ\0"
+    dk "\0"
     db $ff
 
 data_01_4f66::
     db $fe, $10, $e2
-    dk "さくじょ\n"
+    dk "さくじょ\0"
     extstr Dekimasen
     db $ee, $00, $ff
 
 data_01_4f76::
     db $fe, $10, $e2
-    dk "そうしん\n"
+    dk "そうしん\0"
     extstr Dekimasen
     db $ee, $00, $ff
 
 data_01_4f85::
     db $00
-    dk "«　　この\n"
+    dk "«　　この\0"
     extstr File
-    dh "をけして\n"
+    dh "をけして\0"
     db $ee, $00, $08
-    dk "«　ここにじゅしんしますか？\n"
+    dk "«　ここにじゅしんしますか？\0"
     db $ee, $00, $10
     db $e4
     extstr HaiIie
@@ -2257,18 +2257,18 @@ data_01_4f85::
 
 data_01_4fb1::
     db $fe, $10, $e2
-    dk "じっこう\n"
+    dk "じっこう\0"
     extstr Dekimasen
     db $ee, $00, $ff
 
 data_01_4fc1::
     db $00
-    dk "ないぶデータの　ならべかえで\n"
-    dk "\n"
+    dk "ないぶデータの　ならべかえで\0"
+    dk "\0"
     db $08
     extstr AreaKakuho
-    dh "します　\n"
-    dk "\n"
+    dh "します　\0"
+    dk "\0"
     db $10
     extstr YoroshiiDesuKa
     extstr HaiIie
@@ -3241,7 +3241,7 @@ data_01_61a1::
     db $b6, $3f, $00, $ff
 
 data_01_64c5::
-    dh $01, $10, "はい:A いいえ:B\n"
+    dh $01, $10, "はい:A いいえ:B\0"
     db $ff
 
 Call_001_64d3::
@@ -3303,12 +3303,12 @@ Call_001_652c:
 
 
 data_01_6535::
-    dk $05, $05, "つづける\n"
-    dh $05, $06, "セーブする\n"
-    dh $05, $07, "そうしんする\n"
-    dh $05, $08, "じゅしんする\n"
-    dh $05, $09, "ポケベルにおくる\n"
-    dh $05, $0a, "KISSメニューにもどる»\n"
+    dk $05, $05, "つづける\0"
+    dh $05, $06, "セーブする\0"
+    dh $05, $07, "そうしんする\0"
+    dh $05, $08, "じゅしんする\0"
+    dh $05, $09, "ポケベルにおくる\0"
+    dh $05, $0a, "KISSメニューにもどる»\0"
     db $ff
 
 Call_001_657f:
@@ -3390,8 +3390,8 @@ jr_001_65e1:
 
 
 data_01_6607::
-    dk $06, $00, "KISS MAIL\n"
-    dh $02, $02, "タイトル:\n"
+    dk $06, $00, "KISS MAIL\0"
+    dh $02, $02, "タイトル:\0"
     db $ff
 
 data_01_661d::
@@ -3667,11 +3667,11 @@ Call_001_67b5:
 
 
 data_01_67c2::
-    dk $04, $01, "このカートリッジにあなたの\n"
-    dh $04, $02, "じょうほうをとうろくします\n"
-    dh $02, $04, "なまえ:\n"
-    dh $02, $05, "でんわ:\n"
-    dh $03, $06, "メモ:\n"
+    dk $04, $01, "このカートリッジにあなたの\0"
+    dh $04, $02, "じょうほうをとうろくします\0"
+    dh $02, $04, "なまえ:\0"
+    dh $02, $05, "でんわ:\0"
+    dh $03, $06, "メモ:\0"
     db $ff
 
 data_01_67fe::
@@ -3683,17 +3683,17 @@ data_01_67fe::
     db $ff
 
 data_01_680e::
-    dk $03, $0a, "このじょうほうでいいですか？\n"
+    dk $03, $0a, "このじょうほうでいいですか？\0"
     db $ff
 
 data_01_6824::
-    dk $01, $0e, "このじょうほうをかえると,すべての\n"
-    dh $01, $0f, "ファイルがきえますが、いいですか？\n"
+    dk $01, $0e, "このじょうほうをかえると,すべての\0"
+    dh $01, $0f, "ファイルがきえますが、いいですか？\0"
     db $ff
 
 data_01_6855::
-    dh "はい　\n"
-    dh "いいえ\n"
+    dh "はい　\0"
+    dh "いいえ\0"
 
 Call_001_685d:
     ldh [hDraw91], a

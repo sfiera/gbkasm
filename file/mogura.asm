@@ -913,7 +913,7 @@ call_a7d4:
 
 
 data_a80d:
-    dh " TIME\n"
+    dh " TIME\0"
 
 
 call_a813:
@@ -941,9 +941,9 @@ call_a813:
 
 
 data_a842:
-    dh "SCORE \n"
+    dh "SCORE \0"
 data_a849:
-    dh "00\n"
+    dh "00\0"
 
 
 call_a84c:
@@ -975,7 +975,7 @@ jr_000_085b::
 
 
 data_a878:
-    dh "HIT \n"
+    dh "HIT \0"
 
 
 call_a87d:
@@ -2553,34 +2553,34 @@ jr_000_1118::
     ret
 
 data_b129:
-    dh "»　　　　　　　スタッフ\n"
+    dh "»　　　　　　　スタッフ\0"
 data_b136:
-    dh "»　ゲームデザイン«　　　なかざき　あきら　\n"
+    dh "»　ゲームデザイン«　　　なかざき　あきら　\0"
 data_b151:
-    dh "»　グラフィク　　　　　こうら　じゅんこ\n"
+    dh "»　グラフィク　　　　　こうら　じゅんこ\0"
 data_b169:
-    dh "«　　　　　　　　　　　せざき　れおな\n"
+    dh "«　　　　　　　　　　　せざき　れおな\0"
 data_b17e:
-    dh "»　プログラム　　　　　きむら　しゅうさく\n"
+    dh "»　プログラム　　　　　きむら　しゅうさく\0"
 data_b197:
-    dh "«　　　　　　　　　　　しばた　よしたか\n"
+    dh "«　　　　　　　　　　　しばた　よしたか\0"
 data_b1ad:
-    dh "»　ディレクション　　　たけした　こういち\n"
+    dh "»　ディレクション　　　たけした　こういち\0"
 data_b1c5:
-    dh "»　プロデュース　　　　もとさこ　よしお　\n"
+    dh "»　プロデュース　　　　もとさこ　よしお　\0"
 data_b1de:
-    dh "»　　SPECIAL　THANKS\n"
+    dh "»　　SPECIAL　THANKS\0"
 data_b1f0:
-    dh "ゲーム　　しゅうりょう\n"
+    dh "ゲーム　　しゅうりょう\0"
 
 data_b1ff:
-    dh "PUSH START  RETRY\n"
+    dh "PUSH START  RETRY\0"
 data_b211:
-    dh "PUSH SELECT EXIT\n"
+    dh "PUSH SELECT EXIT\0"
 data_b222:
-    dh "CLR HI SCORE  A+LEFT\n"
+    dh "CLR HI SCORE  A+LEFT\0"
 data_b237:
-    dh "HI SCORE\n"
+    dh "HI SCORE\0"
 
 data_b240:
     dw 10
@@ -2762,7 +2762,7 @@ data_b729:
 data_b735:
     dh "モグラ", $02, $02, $02, $03, $03, $03, $03, $03
     dh "ヒヨコ", $02, $02, $02, $03, $03, $03, $03, $03
-    dh "オヤジ\n"
+    dh "オヤジ\0"
 
 data_b754:
     dk "とにかくたたけ！　　　　　　　"
@@ -2788,7 +2788,7 @@ data_b754:
     dk "でてきたモグラは　　　　　　　"
     dk $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $03
     dk "たたきほうだい！　　　　　　　"
-    dk "\n"
+    dk "\0"
 
 data_b876:
     db $0f, $b5, $c3, $c2, $b7, $ca, $b9, $de, $dd, $c3, $dd, $c0, $de, $d6, $21, $00

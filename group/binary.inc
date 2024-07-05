@@ -15,13 +15,13 @@ FileCollection4::
     TableBlank
 
 .worm
-    TableEntry FileWorm, "WORM\n"
+    TableEntry FileWorm, "WORM\0"
 .binary
-    TableEntry FileBinary, "バイナリーランド\n"
+    TableEntry FileBinary, "バイナリーランド\0"
 .roulette
-    TableEntry FileRoulette, "ルーレット\n"
+    TableEntry FileRoulette, "ルーレット\0"
 .blackjack
-    TableEntry FileBlackjack, "ブラックジャック\n"
+    TableEntry FileBlackjack, "ブラックジャック\0"
 
 FileRoulette::
     INCBIN "file/roulette.gbf"

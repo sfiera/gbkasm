@@ -318,21 +318,21 @@ DrawStopPlay:
     ret
 
 StrTitle:
-    dk "SOUND TEST ROOM\n"
+    dk "SOUND TEST ROOM\0"
 StrInterface:
-    dk "MUSIC No.    /\n"
-    dk "EFECT No.    /\n"
-    dk "OffChannel   /\n"
-    dk "VOLUME       /\n"
-    dk "M_PAUSE \n"
-    dk "VsyncTimer   /\n"
-    dk "\n"
+    dk "MUSIC No.    /\0"
+    dk "EFECT No.    /\0"
+    dk "OffChannel   /\0"
+    dk "VOLUME       /\0"
+    dk "M_PAUSE \0"
+    dk "VsyncTimer   /\0"
+    dk "\0"
 StrStatus:
-    dk "Mst=STOP  Est=STOP\n"
+    dk "Mst=STOP  Est=STOP\0"
 StrStop:
-    dk "STOP\n"
+    dk "STOP\0"
 StrPlay:
-    dk "PLAY\n"
+    dk "PLAY\0"
 
 
 SECTION "Variables", WRAM0[$c600]

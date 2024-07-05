@@ -76,11 +76,11 @@ jr_0166:
     jx jr_0126
 
 data_0171:
-    dk "STOP WATCH\n"
+    dk "STOP WATCH\0"
 data_017c:
-    dk "[B]:Lap/Clear   \n"
+    dk "[B]:Lap/Clear   \0"
 data_018d:
-    dk "[START] :Timer    \n"
+    dk "[START] :Timer    \0"
 
 call_01a0:
     ldx hl, data_0171
@@ -337,9 +337,9 @@ data_0375:
     db 6, 0, 0, 0, $04  ; 60:00, alarm 4
 
 data_0393:
-    dk "  TIMER   \n"
-    dk "[B]:Rec.No/Clear\n"
-    dk "[START] :StopWatch\n"
+    dk "  TIMER   \0"
+    dk "[B]:Rec.No/Clear\0"
+    dk "[START] :StopWatch\0"
 
 call_03c2:
     ldx hl, data_0393
@@ -635,7 +635,7 @@ data_060d:
     dk "[A]:Start/Stop\r"
     dk "\r"
     dk "\r"
-    dk "[SELECT]:Exit\n"
+    dk "[SELECT]:Exit\0"
 
 call_0671:
     push hl

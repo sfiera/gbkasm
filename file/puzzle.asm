@@ -2093,33 +2093,33 @@ jr_000_0da1:
 
 
 data_0dbe:
-    db "                    \n"
+    db "                    \0"
 data_0dd3:
-    db "   PUSH A BUTTON!   \n"
+    db "   PUSH A BUTTON!   \0"
 data_0de8:
-    db "       START!       \n"
+    db "       START!       \0"
 data_0dfd:
-    db "  RETIRE  SELECT+B  \n"
+    db "  RETIRE  SELECT+B  \0"
 data_0e12:
-    db "  CONGRATULATION!!  \n"
+    db "  CONGRATULATION!!  \0"
 data_0e27:
-    db "    PUZZLE  GAME    \n"
+    db "    PUZZLE  GAME    \0"
 data_0e3c:
-    db "    GAME  SELECT    \n"
+    db "    GAME  SELECT    \0"
 data_0e51:
-    db "    15 PUZZLE       \n"
+    db "    15 PUZZLE       \0"
 data_0e66:
-    db "    PANEL DE PON!   \n"
+    db "    PANEL DE PON!   \0"
 data_0e7b:
-    db "    EXIT            \n"
+    db "    EXIT            \0"
 data_0e90:
-    db "    MODE  SELECT    \n"
+    db "    MODE  SELECT    \0"
 data_0ea5:
-    db "        EASY        \n"
+    db "        EASY        \0"
 data_0eba:
-    db "        HARD        \n"
+    db "        HARD        \0"
 data_0ecf:
-    db "        EXIT        \n"
+    db "        EXIT        \0"
 
 data_0ee4:
     db $00, $01, $02, $03

@@ -15,11 +15,11 @@ FileCollection6::
     TableBlank
 
 .sramGetAndClear
-    TableEntry FileSRAMGetAndClear, "SRAM GET&CLR\n"
+    TableEntry FileSRAMGetAndClear, "SRAM GET&CLR\0"
 .deleteAll
-    TableEntry FileDeleteAll, "FILE ALL DELETE\n"
+    TableEntry FileDeleteAll, "FILE ALL DELETE\0"
 .charView
-    TableEntry FileCharDump, "CHAR DUMP\n"
+    TableEntry FileCharDump, "CHAR DUMP\0"
 
 FileSRAMGetAndClear::
     INCBIN "file/sramtool.gbf"

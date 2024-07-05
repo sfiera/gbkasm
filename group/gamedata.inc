@@ -15,15 +15,15 @@ FileCollection5::
     TableBlank
 
 .koura1
-    TableEntry FileKoura1, "15パズル　データ1\n"
+    TableEntry FileKoura1, "15パズル　データ1\0"
 .koura2
-    TableEntry FileKoura2, "15パズル　データ2\n"
+    TableEntry FileKoura2, "15パズル　データ2\0"
 .koura3
-    TableEntry FileKoura3, "15パズル　データ3\n"
+    TableEntry FileKoura3, "15パズル　データ3\0"
 .sezaki
-    TableEntry FileSezaki, "モグってナンボ　データ\n"
+    TableEntry FileSezaki, "モグってナンボ　データ\0"
 .num0Data
-    TableEntry FileNum0Data, "ストップウォッチすうじデータ\n"
+    TableEntry FileNum0Data, "ストップウォッチすうじデータ\0"
 
 FileKoura1::
     INCBIN "file/koura1.gbf"

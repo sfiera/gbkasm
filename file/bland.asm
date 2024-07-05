@@ -3777,35 +3777,35 @@ data_b594:
     db $00
 
 data_b597:
-    dp "BINARY+LAND\n"
+    dp "BINARY+LAND\0"
 data_b5a3:
     dp "START++>+"
 data_b5ac:
-    dp "GAME\n"
+    dp "GAME\0"
 data_b5b1:
-    dp "SELECT+>+EXIT\n"
+    dp "SELECT+>+EXIT\0"
 data_b5bf:
-    dp "STAGE+\n"
+    dp "STAGE+\0"
 data_b5c6:
-    dp "BONUS+STAGE!\n"
+    dp "BONUS+STAGE!\0"
 data_b5d3:
-    dp "OVER\n"
+    dp "OVER\0"
 data_b5d8:
-    dp "PAUSE\n"
+    dp "PAUSE\0"
 data_b5de:
-    dp "CONGRATULATIONS!\n"
+    dp "CONGRATULATIONS!\0"
 data_b5ef:
-    dp "THE++END\n"
+    dp "THE++END\0"
 data_b5f8:
-    dp "ROUND:\n"
+    dp "ROUND:\0"
 data_b5ff:
-    dp "LEFT:\n"
+    dp "LEFT:\0"
 data_b605:
-    dp "SC:\n"
+    dp "SC:\0"
 data_b609:
-    dp "HI:\n"
+    dp "HI:\0"
 data_b60d:
-    dp "TIME:\n"
+    dp "TIME:\0"
 
 data_b613:
     dw data_b61b

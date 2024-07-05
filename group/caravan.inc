@@ -15,17 +15,17 @@ FileCollection1::
     TableBlank
 
 .mogutteNanbo
-    TableEntry FileMogutteNanbo, "モグってナンボ\n"
+    TableEntry FileMogutteNanbo, "モグってナンボ\0"
 .sameGame
-    TableEntry FileSameGame, "SAMEGAME KISS\n"
+    TableEntry FileSameGame, "SAMEGAME KISS\0"
 .drive
-    TableEntry FileDrive, "ジャカジャカジャンプでポン\n"
+    TableEntry FileDrive, "ジャカジャカジャンプでポン\0"
 .magnets
-    TableEntry FileMagnets, "がんばれマグネッツMAIN\n"
+    TableEntry FileMagnets, "がんばれマグネッツMAIN\0"
 .magnetsData
-    TableEntry FileMagnetsData, "がんばれマグネッツDATA\n"
+    TableEntry FileMagnetsData, "がんばれマグネッツDATA\0"
 .shot
-    TableEntry FileShot, "SHOOTING MASTER\n"
+    TableEntry FileShot, "SHOOTING MASTER\0"
 
 FileMagnets::
     INCBIN "file/magnets.gbf"

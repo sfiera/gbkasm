@@ -322,13 +322,13 @@ call_031a:
 
 
 layout_033c:
-    dk $05, $02, "CANNON BALL\n"
-    dk $04, $03, "SOUND  CONFIG\n"
-    dk $05, $06, "BGM\n"
-    dk $05, $08, "SHOT\n"
-    dk $05, $0a, "HIT\n"
-    dk $03, $0c, "HISCORE\n"
-    dk $05, $0e, "DEAD\n"
+    dk $05, $02, "CANNON BALL\0"
+    dk $04, $03, "SOUND  CONFIG\0"
+    dk $05, $06, "BGM\0"
+    dk $05, $08, "SHOT\0"
+    dk $05, $0a, "HIT\0"
+    dk $03, $0c, "HISCORE\0"
+    dk $05, $0e, "DEAD\0"
     db $ff
 
 
@@ -1562,10 +1562,10 @@ sprite_bubble_xl:
     db $80
 
 layout_0a30:
-    dk $04, $03, "CANNON BALL\n"
-    dk $02, $07, "PUSH A to START\n"
-    dk $02, $09, "PUSH B to  END\n"
-    dk $03, $0c, "SELECT CONFIG\n"
+    dk $04, $03, "CANNON BALL\0"
+    dk $02, $07, "PUSH A to START\0"
+    dk $02, $09, "PUSH B to  END\0"
+    dk $03, $0c, "SELECT CONFIG\0"
     db $ff
 
 layout_0a72:
@@ -1576,23 +1576,23 @@ layout_0a72:
     db $ff
 
 layout_0ab4:
-    db $04, $0c, "           \n"
+    db $04, $0c, "           \0"
     db $ff
 
 layout_0ac3:
-    db $05, $0c, "GAME  OVER\n"
+    db $05, $0c, "GAME  OVER\0"
     db $ff
 
 layout_0ad1:
-    db $05, $0c, "          \n"
+    db $05, $0c, "          \0"
     db $ff
 
 layout_0adf:
-    db $04, $07, "STAGE CLEAR!\n"
+    db $04, $07, "STAGE CLEAR!\0"
     db $ff
 
 layout_0aef:
-    db $04, $07, "            \n"
+    db $04, $07, "            \0"
     db $ff
 
 layout_0aff:

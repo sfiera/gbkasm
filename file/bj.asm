@@ -1356,52 +1356,52 @@ data_093e:
     INCBIN "gfx/bj/tiles.2bpp.hz"
 
 data_0a5f:
-    dh "BLACK JACK\n"
+    dh "BLACK JACK\0"
 data_0a6a:
-    dh "PUSH A START\n"
+    dh "PUSH A START\0"
 data_0a77:
-    dh "PLAYER  \n"
+    dh "PLAYER  \0"
 data_0a80:
     db $b8, $0b, $00
 data_0a83:
-    dh "P  \n"
+    dh "P  \0"
 data_0a87:
-    dh "PLEASE BET\n"
+    dh "PLEASE BET\0"
 data_0a92:
-    dh "BET POINT \n"
+    dh "BET POINT \0"
 data_0a9d:
-    dh "GET POINT \n"
+    dh "GET POINT \0"
 data_0aa8:
-    dh "   OK ?   \n"
+    dh "   OK ?   \0"
 data_0ab3:
-    dh "HIT CARD ?\n"
+    dh "HIT CARD ?\0"
 data_0abe:
-    dh "  RETRY?  \n"
+    dh "  RETRY?  \0"
 data_0ac9:
     ds 81, " "
-    dh "\n"
+    dh "\0"
 data_0b1b:
     dh "    + -> UP DOWN", $0d
     dh "    A -> OK HIT", $0d
-    dh "    B -> CANCEL\n"
+    dh "    B -> CANCEL\0"
 data_0b4c:
-    dh "                    \n"
+    dh "                    \0"
 data_0b61:
-    dh " YOU WIN! \n"
+    dh " YOU WIN! \0"
 data_0b6c:
-    dh " YOU LOST \n"
+    dh " YOU LOST \0"
 data_0b77:
-    dh "DRAW GAME!\n"
+    dh "DRAW GAME!\0"
 data_0b82:
-    dh ">YES  NO\n"
+    dh ">YES  NO\0"
 data_0b8b:
-    dh " YES >NO\n"
+    dh " YES >NO\0"
 data_0b94:
-    dh " BURST! \n"
+    dh " BURST! \0"
 data_0b9d:
-    dh "　あなた　の　まけです\n"
+    dh "　あなた　の　まけです\0"
 data_0baa:
-    dh "このげーむ　は　きえます\n"
+    dh "このげーむ　は　きえます\0"
 
 
 jx_0bb8:

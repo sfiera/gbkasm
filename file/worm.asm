@@ -116,11 +116,11 @@ DrawTitle:
     ret
 
 strTitleTop:
-    dk "QOOOOOOOOOOOO+\n"
+    dk "QOOOOOOOOOOOO+\0"
 strTitleMid:
-    dk "  W  O  R  M  \n"
+    dk "  W  O  R  M  \0"
 strTitleBot:
-    dk "+OOOOOOOOOOOOQ\n"
+    dk "+OOOOOOOOOOOOQ\0"
 
 DrawMenu:
     ; Draw “GAME START” at (x=5, y=12)
@@ -139,9 +139,9 @@ DrawMenu:
 
 
 strGameStart:
-    dk "GAME START\n"
+    dk "GAME START\0"
 strExit:
-    dk "EXIT\n"
+    dk "EXIT\0"
 
 
 HandleMenu:
@@ -328,7 +328,7 @@ DrawScore:
 
 
 strScorePrefix:
-    dk "SC:\n"
+    dk "SC:\0"
 
 DrawHighScore:
     ; Draw “HI:” at (x=0, y=17)
@@ -349,7 +349,7 @@ DrawHighScore:
     ret
 
 strHiScorePrefix:
-    dk "HI:\n"
+    dk "HI:\0"
 
 UpdateHighScore:
     ld a, [varScore]
@@ -395,7 +395,7 @@ DrawPoints:
 
 
 strPointPrefix:
-    dk "P:\n"
+    dk "P:\0"
 
 DrawGameOver:
     ; Draw outer top of GAMEOVER box at (x=4, y=6)
@@ -437,11 +437,11 @@ DrawGameOver:
 
 
 strGameOverOuter:
-    dk "+----------+\n"
+    dk "+----------+\0"
 strGameOverInner:
-    dk "|          |\n"
+    dk "|          |\0"
 strGameOver:
-    dk "| GAMEOVER |\n"
+    dk "| GAMEOVER |\0"
 
 DrawPerfect:
     ; Draw outer top of PERFECT box at (x=4, y=6)
@@ -483,11 +483,11 @@ DrawPerfect:
 
 
 strPerfectOuter:
-    dk "+----------+\n"
+    dk "+----------+\0"
 strPerfectInner:
-    dk "|          |\n"
+    dk "|          |\0"
 strPerfect:
-    dk "| PERFECT! |\n"
+    dk "| PERFECT! |\0"
 
 InitField:
     trap RandNext

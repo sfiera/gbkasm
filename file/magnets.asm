@@ -305,7 +305,7 @@ jr_a20b::
 
 
 data_a213:
-    db $66, "MAGNETS DATA\n"
+    db $66, "MAGNETS DATA\0"
 
 
 call_a221:

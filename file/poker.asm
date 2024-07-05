@@ -23,7 +23,7 @@ History:
 .points
     dw 1
 .author
-    db "S.KIMURA\n\n", 2
+    db "S.KIMURA\0\0", 2
 .history
     ds 11
     ds 11

@@ -29,7 +29,7 @@ History:
 .points
     dw 100
 .author
-    dp "つもり\n\n\n\n\n\n\n", 2
+    dp "つもり\0\0\0\0\0\0\0", 2
 .history
     ds 11
     ds 11

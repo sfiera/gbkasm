@@ -1318,13 +1318,13 @@ jr_000_05b9:
 
 
 strPasswordMenu::
-    dk "　PASSWORD INPUT»\r", $01, "\n"
-    dk "　キャラバンバージョン　5ゲーム\r", $01, "\n"
-    dk "　キスモン&バケちゅリレーほか4»\r", $01, "\n"
-    dk "　15パズル&キャノン«　ほか4こ»\r", $01, "\n"
-    dk "　バイナリーランド«&BJほか2こ»\r", $01, "\n"
-    dk "　ミニゲームがぞういれかえデータ\r", $01, "\n"
-    dk "　GB KISS TOOLS\r", $01, "\n"
+    dk "　PASSWORD INPUT»\r", $01, "\0"
+    dk "　キャラバンバージョン　5ゲーム\r", $01, "\0"
+    dk "　キスモン&バケちゅリレーほか4»\r", $01, "\0"
+    dk "　15パズル&キャノン«　ほか4こ»\r", $01, "\0"
+    dk "　バイナリーランド«&BJほか2こ»\r", $01, "\0"
+    dk "　ミニゲームがぞういれかえデータ\r", $01, "\0"
+    dk "　GB KISS TOOLS\r", $01, "\0"
 
 strPasswords::
     dp "KISSMON "
@@ -1334,13 +1334,13 @@ strPasswords::
     dp "KISSTOOL"
 
 strPasswordMenuMessage::
-    dk "　　メニューを　せんたくして»\n"
-    dk "　\n"
-    dk "«START/Aを　おしてください»\n"
-    dk "\n"
+    dk "　　メニューを　せんたくして»\0"
+    dk "　\0"
+    dk "«START/Aを　おしてください»\0"
+    dk "\0"
 
 strPasswordDashes::
-    dp "--------\n"
+    dp "--------\0"
 
 
 Jump_000_06b9::
@@ -1451,10 +1451,10 @@ jr_000_0772:
 
 
 strEnterPassword::
-    dk "　\n"
-    dk "パスワードを　にゅうりょくして　»\n"
-    dk "«STARTを　おしてください　　»\n"
-    dk "\n"
+    dk "　\0"
+    dk "パスワードを　にゅうりょくして　»\0"
+    dk "«STARTを　おしてください　　»\0"
+    dk "\0"
 
 
 Jump_000_07a4::
@@ -1531,13 +1531,13 @@ Call_000_07e6:
 
 
 strPasswordMenuTitle::
-    dk "GB KISS  MINI GAME\n"
+    dk "GB KISS  MINI GAME\0"
 
 strLoadMenuMessage::
-    dk "していのデータを　てんそうします»\n"
-    dk "«　　AでGBKISSてんそう　　»\n"
-    dk "«STARTで　じぶんのSRAMへ»\n"
-    dk "\n"
+    dk "していのデータを　てんそうします»\0"
+    dk "«　　AでGBKISSてんそう　　»\0"
+    dk "«STARTで　じぶんのSRAMへ»\0"
+    dk "\0"
 
 Call_000_087f:
     ld bc, $99c2
@@ -2252,16 +2252,16 @@ jr_000_0c02:
 
 
 strBeamFilePrep::
-    dk "つうしんじゅんびちゅう　にして　　»\n"
-    dk "ゲームボーイどうしを　くっつけ　»\n"
-    dk "Aボタンを　おしてください　　　»\n"
-    dk "\n"
+    dk "つうしんじゅんびちゅう　にして　　»\0"
+    dk "ゲームボーイどうしを　くっつけ　»\0"
+    dk "Aボタンを　おしてください　　　»\0"
+    dk "\0"
 
 strBeamFileStarted::
-    dk "つうしんを　ちゅうしするばあいは　»\n"
-    dk "                \n"
-    dk "Bボタンを　おしてください　　　»\n"
-    dk "\n"
+    dk "つうしんを　ちゅうしするばあいは　»\0"
+    dk "                \0"
+    dk "Bボタンを　おしてください　　　»\0"
+    dk "\0"
 
 Call_000_0c95:
     ld hl, strBeamFilePrep
@@ -2377,13 +2377,13 @@ jr_000_0d3b:
 
 
 strLoadSuccess::
-    dk "«- <てんそう　されました> -»\n"
+    dk "«- <てんそう　されました> -»\0"
 
 strLoadFailure::
-    dk "«- てんそうできませんでした -»\n"
+    dk "«- てんそうできませんでした -»\0"
 
 strLoadOverwrite::
-    dk "«- おなじファイルがあります -»\n"
+    dk "«- おなじファイルがあります -»\0"
 
 SECTION "ROM Bank $3fe0", ROM0[$3fe0]
 
