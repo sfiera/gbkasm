@@ -40,7 +40,7 @@ Main::
     trap DrawInit  ; initialize drawing with flags off
 
     ld hl, $0408            ;
-    trap DrawAt            ; move pen to (4, 8)
+    trap DrawAt             ; move pen to (4, 8)
     ldx hl, HelloWorldText  ; load with relative (ldx) addressing
     trap DrawString         ; draw "Hello, World!" at pen location
 
