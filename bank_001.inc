@@ -1848,13 +1848,13 @@ jr_001_4b6d:
     ld hl, $c400
     trap StrConvInt
     pop af
-    ld hl, data_01_4c8a
+    ld hl, StrJushinAreaAitemasen
     or a
     jr z, jr_001_4b85
 
     ld hl, $c404
     trap DrawString
-    ld hl, data_01_4c77
+    ld hl, StrAreaMadeJushin
 
 jr_001_4b85:
     trap DrawString
@@ -1955,76 +1955,131 @@ jr_001_4bf1:
     trap DrawString
     jr jr_001_4be1
 
+MACRO extstr
+    db $fc
+    dw Str\1
+ENDM
+
 data_01_4bf6::
-    db $28, $4e, $44, $4e, $65, $4e, $9b, $4e, $b9, $4e, $ef, $4e
+    dw data_01_4e28
+    dw data_01_4e44
+    dw data_01_4e65
+    dw data_01_4e9b
+    dw data_01_4eb9
+    dw data_01_4eef
 
 data_01_4c02::
     dk "\n"
     dk "   この\n"
-    db $fc, $26, $4c, $ca, $00, $ee, $00, $08, $ee, $00, $ff
+    extstr File
+    dh "は\n"
+    db $ee, $00, $08
+    db $ee, $00, $ff
 
 data_01_4c15::
     db $08
     dk "«　　　せんたくしている\n"
     db $ee, $00, $ff
+
+StrFile:
     dh "ファイル«\n"
+StrDekimasen:
     dk "デキマセン\n"
+StrHaiIie:
     dk "はい　いいえ\n"
+StrGameBoy:
     dh "ゲームボーイ«\n"
+StrButtonOshite:
     dk "ボタンを　おしてください\n"
+StrAreaTarimasen:
     dk "あきエリアすうがたりません\n"
+StrAreaKakuho:
     dk "あきエリアを　かくほ\n"
-
-data_01_4c77::
+StrAreaMadeJushin::
     dk "エリアまでじゅしんかのうです\n"
-
-data_01_4c8a::
+StrJushinAreaAitemasen::
     dk "じゅしんエリアが　あいていません\n"
 
 data_01_4ca0::
-    db $08
-    dk "つうしんを　ちゅうしするばあいは\n"
+    dk $08, "つうしんを　ちゅうしするばあいは\n"
     dk "\n"
-    db $10, $42, $00, $fc, $47, $4c, $f0, $00, $ff
+    dk $10, "Ｂ\n"
+    extstr ButtonOshite
+    db $f0, $00, $ff
 
 data_01_4cbe::
-    db $08, $fc, $3c, $4c
+    db $08
+    extstr GameBoy
     dh "どうしを　くっつけて\n"
     dk "\n"
-    db $10, $41, $00, $fc, $47, $4c, $f0, $00, $ff
+    db $10, "Ａ\n"
+    extstr ButtonOshite
+    db $f0, $00
+    db $ff
 
 data_01_4cd8::
-    db $00, $f0, $00, $08, $fc, $26, $4c
+    db $00
+    db $f0, $00
+    db $08
+    extstr File
     dh "を　おくっています\n"
-    db $f0, $00, $10, $f0, $00, $ff
+    db $f0, $00
+    db $10
+    db $f0, $00
+    db $ff
 
 data_01_4cef::
-    db $00, $f0, $00, $08, $fc, $26, $4c
+    db $00
+    db $f0, $00
+    db $08
+    extstr File
     dh "を　おくりました！\n"
-    db $f0, $00, $10, $f0, $00, $ff
+    db $f0, $00
+    db $10
+    db $f0, $00
+    db $ff
 
 data_01_4d06::
-    db $00, $f0, $00, $08, $fc, $26, $4c
+    db $00
+    db $f0, $00
+    db $08
+    extstr File
     dh "を　うけとっています\n"
-    db $f0, $00, $10, $f0, $00, $ff
+    db $f0, $00
+    db $10
+    db $f0, $00
+    db $ff
 
 data_01_4d1e::
-    db $00, $f0, $00, $08, $fc, $26, $4c
+    db $00
+    db $f0, $00
+    db $08
+    extstr File
     dh "を　うけとりました！\n"
-    db $f0, $00, $10, $f0, $00, $ff
+    db $f0, $00
+    db $10
+    db $f0, $00
+    db $ff
 
 data_01_4d36::
     db $00
     dk "あいての\n"
-    db $fc, $3c, $4c, $c9, $00, $f0, $00, $08, $fc
-    db $57, $4c, $f0, $00, $10
-    dk "かくほして　もらってください\n"
+    extstr GameBoy
+    dh "の\n"
+    db $f0, $00
+    db $08
+    extstr AreaTarimasen
+    db $f0, $00
+    dk $10, "かくほして　もらってください\n"
     db $f0, $00, $ff
 
 data_01_4d5f::
     db $00
     dk "つうしんを　しっぱいしました\n"
-    db $f0, $00, $08, $f0, $00, $10
+    db $f0, $00
+    db $08
+    db $f0, $00
+    db $10
     dk "もういちどやりなおしてください　\n"
     dk "\n"
     db $ff
@@ -2032,11 +2087,13 @@ data_01_4d5f::
 data_01_4d8d::
     db $00
     dk "あいての\n"
-    db $fc, $3c, $4c
+    extstr GameBoy
     dh "が\n"
-    db $f0, $00, $08
+    db $f0, $00
+    db $08
     dk "GB KISS メニューの\n"
-    db $f0, $00, $10
+    db $f0, $00
+    db $10
     dk "じゅしんじょうたいでありません　\n"
     dk "\n"
     db $ff
@@ -2044,60 +2101,99 @@ data_01_4d8d::
 data_01_4dc6::
     db $00
     dk "あいてに　おなじ\n"
-    db $fc, $26, $4c, $b6, $de, $00, $f0, $00, $08
-    dk "そんざいします\n"
-    db $f0, $00, $10
-    dk "うわがきしますか？\n"
-    db $fc, $34, $4c, $f0, $00, $ff
+    extstr File
+    dh "が\n"
+    db $f0, $00
+    dk $08, "そんざいします\n"
+    db $f0, $00
+    dk $10, "うわがきしますか？\n"
+    extstr HaiIie
+    db $f0, $00
+    db $ff
 
 data_01_4dfa::
-    db $10, $f0, $00, $ff
+    db $10
+    db $f0, $00
+    db $ff
 
 data_01_4dfe::
-    db $00, $fc, $57, $4c, $f0, $00, $08
+    db $00
+    extstr AreaTarimasen
+    db $f0, $00
+    db $08
     dk "いくつか\n"
-    db $fc, $26, $4c
+    extstr File
     dk "をさくじょして\n"
-    db $f0, $00, $10, $fc, $69, $4c
+    db $f0, $00
+    db $10
+    extstr AreaKakuho
     dh "してください\n"
-    dk "\n"
-    db $ff, $00, $e3
+    dh "\n"
+    db $ff
+
+data_01_4e28:
+    db $00, $e3
     dk "＜　スタート　＞\n"
     db $ee, $00, $fd
     dh "をじっこうします　»\n"
     dk "\n"
-    db $ff, $00, $20, $3c, $00, $fc, $26, $4c
-    dh "　じょうほう> \n"
+    db $ff
+
+data_01_4e44:
+    db $00
+    db "　＜\n"
+    extstr File
+    dh "　じょうほう＞　\n"
     dk "\n"
     db $fd
     dh "のじょうほうです　\n"
     dk "\n"
-    db $ff, $00, $20, $3c, $20, $00, $fc, $26, $4c
-    dh "いれかえ　> \n"
+    db $ff
+
+data_01_4e65:
+    db $00
+    dh "　＜　\n"
+    extstr File
+    dh "いれかえ　＞　\n"
     dk "\n"
     db $08
     dk "«　せんたくした　\n"
-    db $fc, $26, $4c
+    extstr File
     dh "と　\n"
     dk "\n"
-    db $10
-    dk "«　　ばしょをいれかえます\n"
-    db $ee, $00, $ff, $00, $20, $3c, $20, $00, $fc, $26, $4c
-    dh "そうしん　> \n"
-    dk "\n"
+    dk $10, "«　　ばしょをいれかえます\n"
+    db $ee, $00, $ff
+
+data_01_4e9b:
+    db $00
+    dh "　＜　\n"
+    extstr File
+    dh "そうしん　＞　\n"
+    dh "\n"
     db $fd
     dh "をそうしんします　\n"
     dk "\n"
-    db $ff, $00, $20, $3c, $20, $00, $fc, $26, $4c
-    dh "じゅしん　> \n"
+    db $ff
+
+data_01_4eb9:
+    db $00
+    dh "　＜　\n"
+    extstr File
+    dh "じゅしん　＞　\n"
     dk "\n"
-    db $08
-    dk "«　　　せんたくぶぶんに\n"
-    db $ee, $00, $10, $20, $00, $fc, $26, $4c
+    dk $08, "«　　　せんたくぶぶんに\n"
+    db $ee, $00
+    dh $10, "　\n"
+    extstr File
     dh "を　うけとります　\n"
     dk "\n"
-    db $ff, $00, $20, $3c, $20, $00, $fc, $26, $4c
-    dh "さくじょ　> \n"
+    db $ff
+
+data_01_4eef:
+    db $00
+    dh "　＜　\n"
+    extstr File
+    dh "さくじょ　＞　\n"
     dk "\n"
     db $fd
     dh "をさくじょします　\n"
@@ -2107,15 +2203,27 @@ data_01_4dfe::
 data_01_4f0f::
     db $00
     dk "«　ほんとうにさくじょして\n"
-    db $ee, $00, $08, $fc, $2f, $4f, $ee, $00, $10, $e4, $fc, $34, $4c, $ee, $00, $ff
-    dk "　«よろしいですか？\n"
+    db $ee, $00, $08
+    extstr SpaceYorishiiDesuKau
+    db $ee, $00, $10
+    db $e4
+    extstr HaiIie
+    db $ee, $00, $ff
+
+StrSpaceYorishiiDesuKau:
+    dk "　"
+StrYoroshiiDesuKa:
+    dk "よろしいですか？\n"
 
 data_01_4f3b::
-    db $00, $ee, $00, $08, $ee, $00, $10, $ee, $00, $02
+    db $00
+    db $ee, $00, $08
+    db $ee, $00, $10
+    db $ee, $00, $02
     dk " GB KISS メニュー\n"
     dk "\n"
     dk "»« とうろく\n"
-    db $fc, $26, $4c
+    extstr File
     dh "　　　こ\n"
     dk "\n"
     db $ff
@@ -2123,35 +2231,45 @@ data_01_4f3b::
 data_01_4f66::
     db $fe, $10, $e2
     dk "さくじょ\n"
-    db $fc, $2d, $4c, $ee, $00, $ff
+    extstr Dekimasen
+    db $ee, $00, $ff
 
 data_01_4f76::
     db $fe, $10, $e2
     dk "そうしん\n"
-    db $fc, $2d, $4c, $ee, $00, $ff
+    extstr Dekimasen
+    db $ee, $00, $ff
 
 data_01_4f85::
     db $00
-    db $0f, $20, $20, $ba, $c9, $00
-    db $fc, $26, $4c
-    db $a6, $b9, $bc, $c3, $00
+    dk "«　　この\n"
+    extstr File
+    dh "をけして\n"
     db $ee, $00, $08
     dk "«　ここにじゅしんしますか？\n"
-    db $ee, $00, $10, $e4, $fc, $34, $4c, $ee, $00, $ff
+    db $ee, $00, $10
+    db $e4
+    extstr HaiIie
+    db $ee, $00, $ff
 
 data_01_4fb1::
     db $fe, $10, $e2
     dk "じっこう\n"
-    db $fc, $2d, $4c, $ee, $00, $ff
+    extstr Dekimasen
+    db $ee, $00, $ff
 
 data_01_4fc1::
     db $00
     dk "ないぶデータの　ならべかえで\n"
     dk "\n"
-    db $08, $fc, $69, $4c
+    db $08
+    extstr AreaKakuho
     dh "します　\n"
     dk "\n"
-    db $10, $fc, $30, $4f, $fc, $34, $4c, $00, $ff
+    db $10
+    extstr YoroshiiDesuKa
+    extstr HaiIie
+    db $00, $ff
 
 Call_001_4fec:
     push bc
@@ -2492,38 +2610,14 @@ data_01_5c3c::
     db $68, $6b, $04
 
 data_01_5ccf::
-    db $00, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01
-    db $01, $01, $01, $02, $03, $04, $ca, $cd, $d0, $d3, $d6, $d9, $dc, $df, $e2, $e5
-    db $e8, $eb, $ee, $f1, $f4, $f7, $04, $11, $03, $04, $cb, $ce, $d1, $d4, $d7, $da
-    db $dd, $e0, $e3, $e6, $e9, $ec, $ef, $f2, $f5, $f8, $04, $11, $03, $04, $cc, $cf
-    db $d2, $d5, $d8, $db, $de, $e1, $e4, $e7, $ea, $ed, $f0, $f3, $f6, $f9, $04, $11
-    db $1e, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f
-    db $1f, $1f, $1f, $20
+    db $00, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $02
+    db $03, $04, $ca, $cd, $d0, $d3, $d6, $d9, $dc, $df, $e2, $e5, $e8, $eb, $ee, $f1, $f4, $f7, $04, $11
+    db $03, $04, $cb, $ce, $d1, $d4, $d7, $da, $dd, $e0, $e3, $e6, $e9, $ec, $ef, $f2, $f5, $f8, $04, $11
+    db $03, $04, $cc, $cf, $d2, $d5, $d8, $db, $de, $e1, $e4, $e7, $ea, $ed, $f0, $f3, $f6, $f9, $04, $11
+    db $1e, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $20
 
 data_01_5d33::
-    db $bc, $ff, $ee, $1f, $c0, $3f, $c0, $20, $f5, $06, $fe, $30, $17, $ef, $00, $80
-    db $7f, $2c, $ef, $22, $30, $36, $ff, $00, $47, $df, $f1, $ed, $6c, $1f, $30, $80
-    db $ff, $91, $63, $ff, $0f, $74, $c4, $ff, $d5, $a7, $60, $fc, $00, $fa, $06, $e0
-    db $0a, $f6, $0a, $f2, $f6, $ff, $07, $18, $d0, $f1, $df, $02, $fe, $2c, $01, $3f
-    db $3f, $7f, $40, $ff, $fe, $80, $ff, $81, $ff, $97, $ff, $99, $37, $ef, $91, $ff
-    db $87, $35, $10, $9f, $ff, $82, $ff, $87, $8c, $33, $31, $00, $2f, $ad, $41, $ff
-    db $02, $ff, $ff, $e4, $ff, $11, $ff, $d2, $ff, $16, $ff, $a9, $ca, $55, $f2, $45
-    db $13, $62, $51, $ee, $00, $fc, $b8, $fe, $56, $01, $ff, $f9, $73, $12, $74, $5a
-    db $04, $21, $7e, $3e, $00, $61, $73, $71, $00, $6f, $2f, $51, $88, $ce, $ff, $8b
-    db $39, $44, $01, $9b, $ff, $9e, $9d, $87, $8a, $97, $10, $a4, $4a, $a0, $46, $ef
-    db $ff, $c2, $74, $ec, $11, $e5, $ff, $25, $b7, $22, $c1, $3a, $6a, $ff, $51, $ff
-    db $e9, $ff, $49, $ff, $d1, $ff, $e0, $59, $ff, $69, $d7, $10, $d6, $dc, $00, $e0
-    db $8a, $a1, $bb, $84, $43, $8e, $ff, $95, $f9, $31, $8f, $ff, $87, $85, $03, $44
-    db $0a, $4a, $34, $01, $f7, $ff, $a2, $7f, $19, $67, $ff, $92, $ff, $e2, $ff, $c7
-    db $54, $51, $1b, $f1, $69, $b1, $d7, $11, $a9, $7b, $3a, $25, $8a, $21, $3f, $8a
-    db $a0, $a4, $81, $97, $11, $98, $01, $5c, $96, $01, $89, $a3, $8c, $ff, $93, $a9
-    db $b0, $c4, $ff, $43, $ff, $e4, $ff, $8d, $ff, $f4, $ff, $e8, $c5, $ff, $24, $bf
-    db $11, $15, $bd, $2a, $a3, $46, $23, $97, $70, $28, $09, $47, $d0, $16, $02, $21
-    db $9e, $ff, $ef, $91, $ff, $96, $15, $86, $ff, $83, $ff, $8f, $9c, $09, $b0, $22
-    db $78, $23, $1d, $ff, $94, $ff, $e8, $55, $ff, $44, $03, $75, $89, $ff, $9a, $ab
-    db $91, $94, $95, $b9, $c0, $01, $99, $bd, $9f, $1d, $5c, $68, $90, $16, $df, $10
-    db $e0, $56, $3b, $12, $38, $e0, $00, $36, $ba, $64, $e9, $b1, $71, $ff, $89, $a7
-    db $a9, $f5, $30, $00, $f6, $5c, $02, $64, $aa, $30
+    INCBIN "gfx/actions.2bpp.hz"
 
 Jump_001_5e9d::
     ld a, $20
