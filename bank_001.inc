@@ -3,9 +3,6 @@
 ; mgbdis v2.0 - Game Boy ROM disassembler by Matt Currie and contributors.
 ; https://github.com/mattcurrie/mgbdis
 
-DEF IR_ID0 EQU "H"
-DEF IR_ID1 EQU "u"
-
 SECTION "ROM Bank $001", ROMX[$4000], BANK[$1]
 
     dw $a55a, $0000, $a000

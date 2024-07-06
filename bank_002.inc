@@ -5,12 +5,6 @@
 
 SECTION "ROM Bank $002", ROMX[$4000], BANK[$2]
 
-DEF REGION_FREE      EQU "F" ; Available to use
-DEF REGION_ZEROFILE  EQU "Z" ; Must be located at $a002 (diamond)
-DEF REGION_REGFILE   EQU "R" ; Regular file; may be located anywhere (circle, triangle)
-DEF REGION_UNKNOWN   EQU "D" ; Unknown use
-DEF REGION_SPECIAL   EQU "S" ; Must be located at end of Kiss space
-
 traps2::
     dw trap_80_5267         ; trap $80
     dw trap_81_526e         ; trap $81

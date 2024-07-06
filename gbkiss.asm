@@ -5,18 +5,12 @@
 
 INCLUDE "hardware.inc"
 
-def rIRMode     equ $0000
-def kIRModeOff  equ $00
-def kIRModeOn   equ $0a
-def rROMBank    equ $2000
-def rRAMBank    equ $4000
-def rIgnored    equ $6000
-def rIR         equ $a000
-
+INCLUDE "charmap.inc"
+INCLUDE "consts.inc"
+INCLUDE "hram.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
-INCLUDE "charmap.inc"
-INCLUDE "hram.inc"
+
 INCLUDE "bank_000.inc"
 INCLUDE "bank_001.inc"
 INCLUDE "bank_002.inc"
