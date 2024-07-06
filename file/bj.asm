@@ -1381,8 +1381,8 @@ data_0ac9:
     ds 81, " "
     dh "\0"
 data_0b1b:
-    dh "    + -> UP DOWN", $0d
-    dh "    A -> OK HIT", $0d
+    dh "    + -> UP DOWN\r"
+    dh "    A -> OK HIT\r"
     dh "    B -> CANCEL\0"
 data_0b4c:
     dh "                    \0"

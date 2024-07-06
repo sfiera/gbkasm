@@ -1050,41 +1050,39 @@ data_0b0f:
     db $02, $03, $05, $04, $05, $00, $05, $00, $01, $02, $03, $04, $05
 
 data_0b43:
-    db $0c, "    SLOT MACHINE", $0d
-    db $0d
-    db $0d
-    db "250    XX 125    XX", $0d
-    db $0d
-    db $0d
-    db " 30    XX   8    XX", $0d
-    db $0d
-    db $0d
-    db "  5    XX   4    XX", $0d
-    db $0d
-    db $0d
-    db "  2    X*   1    **", $0d
-    db $0d
-    db $0d
-    db $0d
-    db "  PUSH A TO START", $0d
-    db $00
+    db $0c, "    SLOT MACHINE\r"
+    db "\r"
+    db "\r"
+    db "250    XX 125    XX\r"
+    db "\r"
+    db "\r"
+    db " 30    XX   8    XX\r"
+    db "\r"
+    db "\r"
+    db "  5    XX   4    XX\r"
+    db "\r"
+    db "\r"
+    db "  2    X*   1    **\r"
+    db "\r"
+    db "\r"
+    db "\r"
+    db "  PUSH A TO START\r\0"
 
 data_0bc3:
-    db $0c, "    SLOT MACHINE", $0d
-    db $0d
-    db $0d
-    db $0d
-    db $0d
-    db $0d
-    db $0d
-    db $0d
-    db $0d
-    db $0d
-    db $0d
-    db $0d
-    db $0d
-    db $0d
-    db $0d
-    db "    CREDIT:     ", $0d
-    db "   PAY OUT:     "
-    db $00
+    db $0c, "    SLOT MACHINE\r"
+    db "\r"
+    db "\r"
+    db "\r"
+    db "\r"
+    db "\r"
+    db "\r"
+    db "\r"
+    db "\r"
+    db "\r"
+    db "\r"
+    db "\r"
+    db "\r"
+    db "\r"
+    db "\r"
+    db "    CREDIT:     \r"
+    db "   PAY OUT:     \0"
