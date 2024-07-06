@@ -50,7 +50,7 @@ call_a110:
     trap StrConvHex
     trap DrawString
     ld a, $01
-    trap $b9
+    trap DrawCtrlChar
     pop hl
     pop de
     pop bc
@@ -71,7 +71,7 @@ jr_a12b:
     trap StrConvInt
     trap DrawString
     ld a, $01
-    trap $b9
+    trap DrawCtrlChar
     pop hl
     pop de
     pop bc
@@ -176,7 +176,7 @@ jp_a18c:
     dec hl
     trap DrawString
     ld a, $01
-    trap $b9
+    trap DrawCtrlChar
     pop hl
     pop de
     pop bc
@@ -195,7 +195,7 @@ jp_a1a4:
     dec hl
     trap DrawString
     ld a, $01
-    trap $b9
+    trap DrawCtrlChar
     pop hl
     pop de
     pop bc
@@ -216,7 +216,7 @@ jp_a1ba:
     dec hl
     trap DrawString
     ld a, $01
-    trap $b9
+    trap DrawCtrlChar
     pop hl
     pop de
     pop bc
@@ -1012,11 +1012,11 @@ jr_a638::
     ld a, $12
     trap DrawChar
     ld a, $03
-    trap $b9
+    trap DrawCtrlChar
     ld a, $02
-    trap $b9
+    trap DrawCtrlChar
     ld a, $02
-    trap $b9
+    trap DrawCtrlChar
     ld a, $13
     trap DrawChar
     ld a, $14

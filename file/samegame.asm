@@ -153,7 +153,7 @@ strGameOver:
 
 ShowTitleScreen:
     ld a, $0c
-    trap $b9
+    trap DrawCtrlChar
     ldx hl, strCredits
     trap DrawLayout
     callx ShowHiScore

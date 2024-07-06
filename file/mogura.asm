@@ -46,7 +46,7 @@ jr_000_0103::
 
     trap LCDDisable
     ld a, $0c
-    trap $b9
+    trap DrawCtrlChar
     xor a
     ld d, a
     ld h, a
@@ -880,7 +880,7 @@ jr_000_07c4::
 
 call_a7d4:
     ld a, $06
-    trap $b9
+    trap DrawCtrlChar
     ld hl, $0802
     trap DrawAt
     ld hl, data_a80d
@@ -908,7 +908,7 @@ call_a7d4:
     pop hl
     trap DrawString
     ld a, $07
-    trap $b9
+    trap DrawCtrlChar
     ret
 
 
@@ -918,7 +918,7 @@ data_a80d:
 
 call_a813:
     ld a, $06
-    trap $b9
+    trap DrawCtrlChar
     ld hl, $0800
     trap DrawAt
     ld hl, data_a842
@@ -936,7 +936,7 @@ call_a813:
     ld hl, data_a849
     trap DrawString
     ld a, $07
-    trap $b9
+    trap DrawCtrlChar
     ret
 
 
@@ -948,7 +948,7 @@ data_a849:
 
 call_a84c:
     ld a, $06
-    trap $b9
+    trap DrawCtrlChar
     ld hl, $0000
     trap DrawAt
     ld hl, data_a878
@@ -970,7 +970,7 @@ jr_000_085b::
     pop hl
     trap DrawString
     ld a, $07
-    trap $b9
+    trap DrawCtrlChar
     ret
 
 

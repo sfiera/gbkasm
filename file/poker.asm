@@ -402,7 +402,7 @@ jr_000_0202::
     ld a, $03
     callx @+$11ce
     ld a, $0c
-    trap $b9
+    trap DrawCtrlChar
     ld hl, $0703
     trap DrawAt
     ld hl, $c800
@@ -515,7 +515,7 @@ jr_000_02f4::
     ld [hl+], a
     ld [hl], a
     ld a, $0c
-    trap $b9
+    trap DrawCtrlChar
     ld hl, $0201
     trap DrawAt
     ld hl, $c813
@@ -1627,7 +1627,7 @@ Jump_000_0a01::
     callx @+$06be
     callx @+$06d3
     ld a, $0c
-    trap $b9
+    trap DrawCtrlChar
     ld a, [$ca41]
     set 7, a
     ld e, a
@@ -2033,7 +2033,7 @@ Call_000_0fdf::
 
 
     ld a, $0e
-    trap $b9
+    trap DrawCtrlChar
     ld l, c
     ld h, b
     trap DrawAt
@@ -2137,7 +2137,7 @@ Jump_000_1052::
 
 
     ld a, $0e
-    trap $b9
+    trap DrawCtrlChar
     push de
     ld hl, $ca2c
     ld a, $da
@@ -2577,7 +2577,7 @@ jr_000_12f4::
     xor a
     trap AudioPlayMusic
     ld a, $0c
-    trap $b9
+    trap DrawCtrlChar
     trap AwaitFrame
     trap LCDDisable
     ld hl, $0305

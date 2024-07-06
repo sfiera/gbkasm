@@ -1311,9 +1311,9 @@ jr_000_05b9:
     jr nz, jr_000_05b9
 
     ld a, $0d
-    trap $b9
+    trap DrawCtrlChar
     ld a, $01
-    trap $b9
+    trap DrawCtrlChar
     ret
 
 
@@ -1502,7 +1502,7 @@ Jump_000_07db::
 Call_000_07e6:
     trap LCDDisable
     ld a, $0c
-    trap $b9
+    trap DrawCtrlChar
     ld hl, $8800
     ld e, $00
     ld bc, $0a00

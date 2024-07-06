@@ -76,7 +76,7 @@ Run:
 
 call_0067:
     ld a, $0c
-    trap $b9
+    trap DrawCtrlChar
     ret
 
 

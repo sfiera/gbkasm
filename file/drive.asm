@@ -1515,7 +1515,7 @@ jr_000_0a02::
 
 
     ld a, $0c
-    trap $b9
+    trap DrawCtrlChar
     ld a, $03
     trap LCDEnable
     callx @+$0072
@@ -1793,7 +1793,7 @@ jr_000_0bc7::
     jr jr_000_0b98
 
     ld a, $0c
-    trap $b9
+    trap DrawCtrlChar
     trap AudioGetCount
     ld a, d
     ld [$cb5c], a

@@ -63,7 +63,7 @@ traps2::
     dw trap_b6_605c         ; trap $b6
     dw trap_b7_58f8         ; trap $b7
     dw TrapDrawAt           ; trap $b8
-    dw trap_b9_59f5         ; trap $b9
+    dw TrapDrawCtrlChar     ; trap $b9
     dw trap_ba_5681         ; trap $ba
     dw TrapDrawChar         ; trap $bb
     dw trap_bc_4100         ; trap $bc
@@ -5622,18 +5622,18 @@ Call_002_59dc:
     ret
 
 
-trap_b9_59f5::
+TrapDrawCtrlChar::
     push bc
     push de
     push hl
-    call Call_002_59ff
+    call DrawCtrlCharProc
     pop hl
     pop de
     pop bc
     ret
 
 
-Call_002_59ff:
+DrawCtrlCharProc:
     ld hl, hDrawMode
     bit DrawMode_Bit7, [hl]
     jr z, jr_002_5a15
@@ -7423,7 +7423,7 @@ jr_002_6227:
     jr jr_002_6210
 
 jr_002_622c:
-    call trap_b9_59f5
+    call TrapDrawCtrlChar
     jr jr_002_6210
 
 jr_002_6231:
@@ -7492,7 +7492,7 @@ jr_002_6269:
     jr z, jr_002_6291
 
     ld a, $08
-    call trap_b9_59f5
+    call TrapDrawCtrlChar
     jr jr_002_6239
 
 jr_002_6287:
@@ -7505,7 +7505,7 @@ jr_002_628c:
 
 jr_002_6291:
     ld a, $08
-    call trap_b9_59f5
+    call TrapDrawCtrlChar
     dec de
     ld a, [de]
     inc de
@@ -7659,7 +7659,7 @@ jr_002_633d:
 
     ld d, a
     ld a, $08
-    call trap_b9_59f5
+    call TrapDrawCtrlChar
     ld a, d
     jr jr_002_632c
 

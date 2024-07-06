@@ -2010,13 +2010,13 @@ call_0d1b:
     push hl
     push de
     ld a, $06
-    trap $b9
+    trap DrawCtrlChar
     pop hl
     trap DrawAt
     pop hl
     trap DrawString
     ld a, $07
-    trap $b9
+    trap DrawCtrlChar
     pop af
     pop bc
     pop de

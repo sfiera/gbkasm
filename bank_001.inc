@@ -1665,7 +1665,7 @@ jr_001_4a7c:
     ld hl, $c400
     trap DrawString
     ld a, $0e
-    trap $b9
+    trap DrawCtrlChar
     ld a, $0e
     trap $c8
     ld hl, $0068
@@ -1920,7 +1920,7 @@ jr_001_4bc4:
 
 jr_001_4bce:
     ld a, $0e
-    trap $b9
+    trap DrawCtrlChar
 
 Call_001_4bd2:
 jr_001_4bd2:
@@ -3699,7 +3699,7 @@ Call_001_685d:
 jr_001_6861:
     ldh [hDraw90], a
     ld a, $0f
-    trap $b9
+    trap DrawCtrlChar
     ldh a, [hDraw91]
     ld e, a
     ld d, $07
@@ -5358,7 +5358,7 @@ TrapDrawString::
     ld a, $01
 
 .ctrlChar
-    trap $b9
+    trap DrawCtrlChar
     jr .next
 
 TrapDrawStringList::
@@ -7250,7 +7250,7 @@ jr_001_7d6d:
     cp $20
     jr nc, jr_001_7d79
 
-    trap $b9
+    trap DrawCtrlChar
     jr jr_001_7d6d
 
 jr_001_7d79:
@@ -7629,7 +7629,7 @@ jr_001_7f07:
     cp $20
     jr nc, jr_001_7f13
 
-    trap $b9
+    trap DrawCtrlChar
     jr jr_001_7f07
 
 jr_001_7f13:

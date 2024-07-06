@@ -333,27 +333,27 @@ call_0246:
 
 
     ld a, $0c
-    trap $b9
+    trap DrawCtrlChar
     ret
 
 
     ld a, $0f
-    trap $b9
+    trap DrawCtrlChar
     ret
 
 
     ld a, $0e
-    trap $b9
+    trap DrawCtrlChar
     ret
 
 
     ld a, $02
-    trap $b9
+    trap DrawCtrlChar
     ret
 
 
     ld a, $01
-    trap $b9
+    trap DrawCtrlChar
     ret
 
 
