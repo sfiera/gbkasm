@@ -31,67 +31,352 @@ History:
 .end
 
 Main::
-    db $af, $cf, $b3, $d7, $06, $00, $d7, $3b, $02, $c9, $38, $0a, $b7, $28, $09, $3d
-    db $20, $04, $d7, $1e, $01, $c9, $cf, $01, $d7, $37, $00, $e1, $cf, $69, $21, $0e
-    db $00, $cf, $b8, $d7, $db, $00, $e1, $cf, $69, $21, $0f, $01, $16, $20, $1e, $3e
-    db $01, $01, $02, $cf, $5e, $38, $17, $b7, $20, $14, $21, $10, $00, $cf, $b8, $d7
-    db $06, $00, $d7, $8a, $02, $c9, $cf, $69, $cf, $db, $3e, $78, $cf, $dc, $cf, $01
-    db $0c, $20, $20, $0e, $ca, $de, $af, $b8, $b1, $af, $cc, $df, $c3, $de, $b0, $c0
-    db $0f, $c9, $20, $0e, $ba, $cb, $df, $b0, $0d, $0d, $0d, $0f, $b1, $b2, $c3, $c9
-    db $0e, $b9, $de, $b0, $d1, $ce, $de, $b0, $b2, $0f, $ca, $20, $47, $42, $20, $4b
-    db $49, $53, $53, $20, $0d, $0e, $d2, $c6, $ad, $b0, $0f, $c3, $de, $20, $53, $54
-    db $41, $52, $54, $0e, $ce, $de, $c0, $dd, $0f, $a6, $20, $b5, $bc, $c3, $20, $0d
-    db $c2, $b3, $bc, $dd, $bc, $de, $ad, $dd, $cb, $de, $c1, $ad, $b3, $20, $c6, $bc
-    db $c3, $b8, $c0, $de, $bb, $b2, $a1, $0d, $0d, $bc, $de, $cc, $de, $dd, $c9, $20
-    db $0e, $ca, $de, $af, $b8, $b1, $af, $cc, $df, $c3, $de, $b0, $c0, $0f, $ca, $20
-    db $b3, $dc, $b6, $de, $b7, $0d, $bb, $da, $c3, $20, $b7, $b4, $c3, $bc, $cf, $b2
-    db $cf, $bd, $0e, $00, $00, $0e, $ca, $de, $af, $b8, $b1, $af, $cc, $df, $c3, $de
-    db $b0, $c0, $0f, $a6, $20, $bd, $cd, $de, $c3, $20, $b9, $bc, $cf, $bd, $20, $0f
-    db $20, $20, $20, $20, $20, $20, $d6, $db, $bc, $b2, $c3, $de, $bd, $b6, $3f, $20
-    db $20, $20, $20, $20, $20, $20, $20, $ca, $b2, $0d, $20, $20, $b2, $b2, $b4, $0e
-    db $00, $0f, $20, $20, $bd, $cd, $de, $c3, $20, $b9, $bc, $cf, $bc, $c0, $21, $0e
-    db $00, $21, $0e, $00, $cf, $b8, $d7, $ae, $ff, $e1, $cf, $69, $21, $10, $01, $16
-    db $20, $1e, $3e, $01, $01, $02, $cf, $5e, $38, $19, $b7, $20, $16, $d7, $06, $00
-    db $d7, $13, $02, $c9, $21, $11, $00, $cf, $b8, $d7, $c7, $ff, $e1, $cf, $69, $3e
-    db $78, $cf, $dc, $cf, $01, $20, $20, $20, $20, $53, $52, $41, $4d, $20, $47, $45
-    db $54, $26, $43, $4c, $52, $0d, $0d, $0f, $ba, $c9, $0e, $cc, $df, $db, $b8, $de
-    db $d7, $d1, $0f, $ca, $20, $b1, $b2, $c3, $c9, $0e, $b9, $de, $b0, $d1, $ce, $de
-    db $b0, $b2, $0f, $c9, $0d, $0e, $ca, $de, $af, $b8, $b1, $af, $cc, $df, $c3, $de
-    db $b0, $c0, $0f, $a6, $bc, $de, $cc, $de, $dd, $c9, $0e, $b9, $de, $b0, $d1, $ce
-    db $de, $b0, $b2, $0d, $0f, $c6, $0e, $ba, $cb, $df, $b0, $0f, $bc, $c0, $d8, $a4
-    db $bc, $de, $cc, $de, $dd, $c9, $0e, $b9, $de, $b0, $d1, $ce, $de, $b0, $b2, $0f
-    db $c9, $20, $0d, $0e, $ca, $de, $af, $b8, $b1, $af, $cc, $df, $c3, $de, $b0, $c0
-    db $0f, $a6, $20, $bd, $cd, $de, $c3, $20, $b9, $bd, $c0, $d2, $c9, $0d, $d3, $c9
-    db $c3, $de, $bd, $a1, $b1, $c2, $b6, $b2, $c6, $ca, $20, $bc, $de, $ad, $b3, $cc
-    db $de, $dd, $20, $b7, $a6, $0d, $c2, $b9, $c3, $b8, $c0, $de, $bb, $b2, $a1, $0d
-    db $0d, $20, $20, $0e, $ca, $de, $af, $b8, $b1, $af, $cc, $df, $c3, $de, $b0, $c0
-    db $0f, $c9, $20, $0e, $ba, $cb, $df, $b0, $0d, $20, $20, $0e, $ca, $de, $af, $b8
-    db $b1, $af, $cc, $df, $c3, $de, $b0, $c0, $0f, $c9, $20, $bc, $ae, $b3, $b7, $ae
-    db $0e, $00, $d7, $22, $ff, $e1, $cf, $69, $21, $0e, $01, $16, $20, $1e, $3e, $01
-    db $00, $02, $cf, $5e, $c9, $47, $42, $20, $4b, $49, $53, $53, $20, $4d, $45, $4e
-    db $55, $20, $0f, $20, $20, $bd, $cd, $de, $c3, $20, $bc, $de, $ad, $bc, $dd, $bc
-    db $cf, $bc, $c0, $21, $0e, $00, $0f, $bc, $de, $ad, $bc, $dd, $0e, $b4, $d7, $b0
-    db $0f, $b6, $de, $ca, $af, $be, $b2, $bc, $cf, $bc, $c0, $21, $0e, $00, $0f, $b1
-    db $b2, $c3, $c9, $20, $bc, $de, $ae, $b3, $c0, $b2, $b6, $de, $20, $b2, $bc, $de
-    db $ae, $b3, $c3, $de, $bd, $0e, $00, $0f, $b5, $c5, $bc, $de, $0e, $b6, $b0, $c4
-    db $d8, $af, $bc, $de, $0f, $c3, $de, $ca, $b1, $d8, $cf, $be, $dd, $0e, $00, $cf
-    db $73, $d7, $cc, $ff, $e1, $c9, $cf, $73, $d7, $de, $ff, $e1, $c9, $21, $00, $ce
-    db $11, $00, $c7, $0e, $10, $cf, $7c, $38, $61, $d7, $7b, $ff, $e1, $11, $02, $c7
-    db $01, $0d, $00, $cf, $67, $7c, $b5, $20, $d6, $21, $14, $00, $11, $00, $c7, $0e
-    db $04, $cf, $7c, $38, $45, $21, $14, $00, $11, $00, $c7, $01, $04, $00, $cf, $67
-    db $7c, $b5, $20, $c2, $3e, $01, $ea, $00, $c7, $11, $00, $ce, $21, $00, $c7, $0e
-    db $01, $cf, $7f, $38, $25, $cf, $73, $d7, $06, $00, $d7, $b2, $00, $c9, $79, $b8
-    db $38, $1d, $3e, $02, $ea, $00, $c7, $11, $00, $ce, $21, $00, $c7, $0e, $01, $cf
-    db $7f, $38, $07, $cf, $73, $d7, $2c, $ff, $e1, $c9, $d7, $3b, $ff, $e1, $c9, $c5
-    db $e5, $d7, $06, $00, $d7, $71, $00, $c9, $e1, $c1, $38, $ee, $c5, $e5, $d7, $06
-    db $00, $d7, $45, $00, $c9, $e1, $c1, $2e, $00, $24, $7c, $fe, $20, $38, $e0, $26
-    db $00, $0c, $18, $ba, $21, $00, $c6, $11, $93, $41, $06, $80, $72, $23, $73, $23
-    db $05, $20, $f9, $d7, $06, $00, $d7, $56, $00, $c9, $79, $b8, $38, $01, $c9, $c5
-    db $e5, $d7, $06, $00, $d7, $12, $00, $c9, $e1, $c1, $2e, $00, $24, $7c, $fe, $20
-    db $38, $ed, $26, $00, $0c, $18, $e3, $79, $e6, $fc, $e0, $97, $79, $0f, $0f, $0f
-    db $e6, $60, $b4, $57, $5d, $21, $00, $c6, $6b, $01, $00, $01, $79, $93, $4f, $78
-    db $de, $00, $47, $cf, $e5, $c9, $79, $0f, $0f, $0f, $47, $e6, $e0, $b4, $67, $11
-    db $00, $c6, $5d, $78, $e6, $1f, $47, $af, $95, $4f, $cf, $7b, $c9, $21, $15, $00
-    db $4e, $23, $5e, $23, $56, $7a, $e6, $1f, $57, $21, $80, $00, $19, $7c, $fe, $20
-    db $38, $03, $0c, $26, $00, $06, $04, $fa, $49, $01, $fe, $03, $c8, $06, $10, $d0
-    db $06, $00, $c9
+    xor a
+    trap DrawInit
+    callx call_0282
+    jr c, .jr_0056
+
+    or a
+    jr z, .jr_0058
+
+    dec a
+    jr nz, .jr_0056
+
+    jx call_0171
+
+
+.jr_0056
+    trap ExitToMenu
+
+.jr_0058
+    ldx hl, data_0090
+    trap DrawString
+    ld hl, $000e
+    trap DrawAt
+    ldx hl, data_013f
+    trap DrawString
+    ld hl, $010f
+    ld d, $20
+    ld e, $3e
+    ld bc, $0201
+    trap $5e
+    jr c, .jr_008e
+
+    or a
+    jr nz, .jr_008e
+
+    ld hl, $0010
+    trap DrawAt
+    callx call_030d
+    trap DrawString
+    trap $db
+    ld a, $78
+    trap $dc
+
+.jr_008e
+    trap ExitToMenu
+
+
+data_0090:
+    dh $0c, "　　バックアップデータの　コピー\r"
+    dk "\r"
+    dk "\r"
+    dk "あいてのゲームボーイは　ＧＢ　ＫＩＳＳ　\r"
+    dh "メニューで　ＳＴＡＲＴボタンを　おして　\r"
+    dh "つうしんじゅんびちゅう　にしてください。\r"
+    dh "\r"
+    dh "じぶんの　バックアップデータは　うわがき\r"
+    dh "されて　きえてしまいます»\0"
+    dk "\0"
+
+data_0125:
+    dh "バックアップデータを　すべて　けします　"
+
+data_013f:
+    dk "«　　　　　　よろしいですか？　　　　　　"
+    dh "　　はい\r"
+    dh "　　いいえ»\0"
+
+data_0161:
+    dk "«　　すべて　けしました！»\0"
+
+call_0171:
+    ld hl, $000e
+    trap DrawAt
+    ldx hl, data_0125
+    trap DrawString
+    ld hl, $0110
+    ld d, $20
+    ld e, $3e
+    ld bc, $0201
+    trap $5e
+    jr c, .jr_01a3
+
+    or a
+    jr nz, .jr_01a3
+
+    callx call_03a4
+    ld hl, $0011
+    trap DrawAt
+    ldx hl, data_0161
+    trap DrawString
+    ld a, $78
+    trap $dc
+
+.jr_01a3
+    trap ExitToMenu
+
+
+data_01a5:
+    dk "　　　　ＳＲＡＭ　ＧＥＴ＆ＣＬＲ\r"
+    dk "\r"
+    dk "このプログラムは　あいてのゲームボーイの\r"
+    dh "バックアップデータをじぶんのゲームボーイ\r"
+    dk "にコピーしたり、じぶんのゲームボーイの　\r"
+    dh "バックアップデータを　すべて　けすための\r"
+    dh "ものです。あつかいには　じゅうぶん　きを\r"
+    dh "つけてください。\r"
+    dh "\r"
+    dh "　　バックアップデータの　コピー\r"
+    dh "　　バックアップデータの　しょうきょ»", $00
+
+call_0282:
+    ldx hl, data_01a5
+    trap DrawString
+    ld hl, $010e
+    ld d, $20
+    ld e, $3e
+    ld bc, $0200
+    trap $5e
+    ret
+
+data_0295:
+    dk "GB KISS MENU "
+
+data_02a2:
+    dk "«　　すべて　じゅしんしました！»\0"
+
+data_02b6:
+    dk "じゅしんエラーがはっせいしました！»\0"
+
+data_02ce:
+    dk "あいての　じょうたいが　いじょうです»\0"
+
+data_02e7:
+    dk "おなじカートリッジではありません»\0"
+
+jr_02ff:
+    trap IRClose
+    ldx hl, data_02ce
+    ret
+
+
+jr_0306:
+    trap IRClose
+    ldx hl, data_02e7
+    ret
+
+
+call_030d:
+    ld hl, $ce00
+    ld de, $c700
+    ld c, $10
+    trap IROpen
+    jr c, .jr_037a
+
+    ldx hl, data_0295
+    ld de, $c702
+    ld bc, $000d
+    trap $67
+    ld a, h
+    or l
+    jr nz, jr_02ff
+
+    ld hl, $0014
+    ld de, $c700
+    ld c, $04
+    trap IROpen
+    jr c, .jr_037a
+
+    ld hl, $0014
+    ld de, $c700
+    ld bc, $0004
+    trap $67
+    ld a, h
+    or l
+    jr nz, jr_0306
+
+    ld a, $01
+    ld [$c700], a
+    ld de, $ce00
+    ld hl, $c700
+    ld c, $01
+    trap IRSend
+    jr c, .jr_037a
+
+    trap IRClose
+    callx call_040d
+
+.jr_035e
+    ld a, c
+    cp b
+    jr c, .jr_037f
+
+    ld a, $02
+    ld [$c700], a
+    ld de, $ce00
+    ld hl, $c700
+    ld c, $01
+    trap IRSend
+    jr c, .jr_037a
+
+    trap IRClose
+    ldx hl, data_02a2
+    ret
+
+
+.jr_037a
+    ldx hl, data_02b6
+    ret
+
+
+.jr_037f
+    push bc
+    push hl
+    callx call_03f6
+    pop hl
+    pop bc
+    jr c, .jr_037a
+
+    push bc
+    push hl
+    callx call_03d7
+    pop hl
+    pop bc
+    ld l, $00
+    inc h
+    ld a, h
+    cp $20
+    jr c, .jr_037f
+
+    ld h, $00
+    inc c
+    jr .jr_035e
+
+
+call_03a4:
+    ld hl, $c600
+    ld de, $4193
+    ld b, $80
+
+.jr_03ac
+    ld [hl], d
+    inc hl
+    ld [hl], e
+    inc hl
+    dec b
+    jr nz, .jr_03ac
+
+    callx call_040d
+
+.jr_03ba
+    ld a, c
+    cp b
+    jr c, .jr_03bf
+
+    ret
+
+
+.jr_03bf
+    push bc
+    push hl
+    callx call_03d7
+    pop hl
+    pop bc
+    ld l, $00
+    inc h
+    ld a, h
+    cp $20
+    jr c, .jr_03bf
+
+    ld h, $00
+    inc c
+    jr .jr_03ba
+
+
+call_03d7:
+    ld a, c
+    and $fc
+    ldh [$97], a
+    ld a, c
+    rrca
+    rrca
+    rrca
+    and $60
+    or h
+    ld d, a
+    ld e, l
+    ld hl, $c600
+    ld l, e
+    ld bc, $0100
+    ld a, c
+    sub e
+    ld c, a
+    ld a, b
+    sbc $00
+    ld b, a
+    trap $e5
+    ret
+
+
+call_03f6:
+    ld a, c
+    rrca
+    rrca
+    rrca
+    ld b, a
+    and $e0
+    or h
+    ld h, a
+    ld de, $c600
+    ld e, l
+    ld a, b
+    and $1f
+    ld b, a
+    xor a
+    sub l
+    ld c, a
+    trap $7b
+    ret
+
+
+call_040d:
+    ld hl, $0015
+    ld c, [hl]
+    inc hl
+    ld e, [hl]
+    inc hl
+    ld d, [hl]
+    ld a, d
+    and $1f
+    ld d, a
+    ld hl, $0080
+    add hl, de
+    ld a, h
+    cp $20
+    jr c, .jr_0425
+
+    inc c
+    ld h, $00
+
+.jr_0425
+    ld b, $04
+    ld a, [$0149]
+    cp $03
+    ret z
+
+    ld b, $10
+    ret nc
+
+    ld b, $00
+    ret
