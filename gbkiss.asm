@@ -7,9 +7,10 @@ INCLUDE "hardware.inc"
 
 INCLUDE "charmap.inc"
 INCLUDE "consts.inc"
-INCLUDE "hram.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
+
+INCLUDE "ram.inc"
 
 INCLUDE "bank_000.inc"
 INCLUDE "bank_001.inc"

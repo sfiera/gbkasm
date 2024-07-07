@@ -61,7 +61,7 @@ traps2::
     dw TrapLCDEnable        ; trap $b4
     dw TrapLCDDisable       ; trap $b5
     dw trap_b6_605c         ; trap $b6
-    dw trap_b7_58f8         ; trap $b7
+    dw TrapDrawBaseAddr     ; trap $b7
     dw TrapDrawAt           ; trap $b8
     dw TrapDrawCtrlChar     ; trap $b9
     dw trap_ba_5681         ; trap $ba
@@ -2999,6 +2999,7 @@ jr_002_4ecd:
     ret
 
 
+data_02_4f08:
     ld a, [hl]
     cpl
     ld [hl+], a
@@ -3734,7 +3735,7 @@ data_02_511d::
     ret
 
 
-data_02_51e4::
+Call_02_51e4::
     ldh a, [$88]
     ld l, a
     ldh a, [$87]
@@ -3770,7 +3771,7 @@ data_02_51e4::
     ret c
 
     ld h, $c2
-    ld de, data_02_51e4
+    ld de, Call_02_51e4
     push de
     ldh a, [$89]
     sub b
@@ -5095,10 +5096,10 @@ TrapDrawInit::
     di
     call trap_b0_5ff2
     ld hl, $9800
-    call trap_b7_58f8
+    call TrapDrawBaseAddr
     xor a
-    ldh [hCursorX], a
-    ldh [hCursorY], a
+    ldh [hPenX], a
+    ldh [hPenY], a
     call Call_002_58e1
     call Call_002_5831
     call Call_002_5843
@@ -5385,11 +5386,11 @@ jr_002_58f4:
     ret
 
 
-trap_b7_58f8::
+TrapDrawBaseAddr::
     ld a, l
-    ld [$c3c8], a
+    ld [VarDrawBaseAddr], a
     ld a, h
-    ld [$c3c9], a
+    ld [VarDrawBaseAddr + 1], a
     ret
 
 
@@ -5399,9 +5400,9 @@ TrapDrawAt::
     jr nz, jr_002_590e
 
     ld a, h
-    ldh [hCursorX], a
+    ldh [hPenX], a
     ld a, l
-    ldh [hCursorY], a
+    ldh [hPenY], a
     ret
 
 
@@ -5429,7 +5430,7 @@ trap_c8_591b::
     ldh a, [hDraw90]
     jr nz, jr_002_5927
 
-    ldh a, [hCursorX]
+    ldh a, [hPenX]
 
 jr_002_5927:
     ld b, a
@@ -5462,8 +5463,8 @@ TrapDrawChar::
     bit DrawMode_Bit3, a
     jr nz, jr_002_594e
 
-    call Call_002_5970
-    call Call_002_5b39
+    call SetCharAtPen
+    call MovePenForward
     pop hl
     pop de
     pop bc
@@ -5480,7 +5481,6 @@ jr_002_594e:
 
 
 Call_002_5958:
-Jump_002_5958:
     push bc
     push de
     push hl
@@ -5489,7 +5489,7 @@ Jump_002_5958:
     bit DrawMode_Bit3, a
     jr nz, jr_002_5969
 
-    call Call_002_5970
+    call SetCharAtPen
     pop hl
     pop de
     pop bc
@@ -5504,12 +5504,12 @@ jr_002_5969:
     ret
 
 
-Call_002_5970:
-    ldh a, [hCursorX]
+SetCharAtPen:
+    ldh a, [hPenX]
     ld h, a
-    ldh a, [hCursorY]
+    ldh a, [hPenY]
     ld l, a
-    call Call_002_59dc
+    call GetPenAddress
     ld bc, $0001
     jp TrapMemSet
 
@@ -5584,7 +5584,7 @@ trap_cd_59c1::
     ld h, d
     ld l, e
     ld e, a
-    call Call_002_59dc
+    call GetPenAddress
     ld bc, $0001
     call TrapMemSet
     pop hl
@@ -5600,7 +5600,7 @@ trap_cd_59c1::
     ret
 
 
-Call_002_59dc:
+GetPenAddress:
     ld a, h
     ld h, $00
     add hl, hl
@@ -5613,10 +5613,10 @@ Call_002_59dc:
     ld a, $00
     adc h
     ld h, a
-    ld a, [$c3c8]
+    ld a, [VarDrawBaseAddr]
     add l
     ld l, a
-    ld a, [$c3c9]
+    ld a, [VarDrawBaseAddr + 1]
     adc h
     ld h, a
     ret
@@ -5626,42 +5626,52 @@ TrapDrawCtrlChar::
     push bc
     push de
     push hl
-    call DrawCtrlCharProc
+    call CtrlChar
     pop hl
     pop de
     pop bc
     ret
 
 
-DrawCtrlCharProc:
+; Possibilities:
+;   bit3  bit7  character  table  hl
+;   ----  ----  ---------  -----  --
+;   1     1     \x01-\x0c  b      hDraw90
+;   1     1     \x0d-\x17  b      hDrawMode
+;   0     1     \x01-\x0c  a      hPenX
+;   0     1     \x0d-\x0f  a      hDrawMode
+;   0/1   0     \x01-\x06  a      hPenX
+;   0/1   0     \x08-\x0c  a      hPenX
+;   0/1   0     \x0d-\x0f  a      hDrawMode
+CtrlChar::
     ld hl, hDrawMode
     bit DrawMode_Bit7, [hl]
-    jr z, jr_002_5a15
+    jr z, .noBit7
 
     bit DrawMode_Bit3, [hl]
-    jr z, jr_002_5a19
+    jr z, .noBit3
 
-    ld de, data_02_5a5c
+    ld de, CtrlCharTableB
     ld bc, hDraw90
     cp $18
-    jr c, jr_002_5a23
+    jr c, .useTable
 
     ret
 
 
-jr_002_5a15:
+.noBit7::
     cp $07
-    jr z, jr_002_5a3d
+    jr z, CtrlChar.done
 
-jr_002_5a19:
-    ld de, data_02_5a3e
-    ld bc, hCursorX
+.noBit3::
+    ld de, CtrlCharTable
+    ld bc, hPenX
     cp $10
-    jr nc, jr_002_5a3d
+    jr nc, CtrlChar.done
 
-jr_002_5a23:
+.useTable::
     sub $01
-    jr c, jr_002_5a3d
+    jr c, CtrlChar.done
 
     cp $0d
     push af
@@ -5678,151 +5688,151 @@ jr_002_5a23:
     push de
     ld l, c
     ld h, b
-    jr c, jr_002_5a3d
+    jr c, CtrlChar.done
 
     ld hl, hDrawMode
 
-jr_002_5a3d:
+.done
+NoEffect::
     ret
 
 
-data_02_5a3e::
-    dw code_02_5b3c
-    dw Call_002_5b4c
-    dw code_02_5b43
-    dw code_02_5b5d
-    dw code_02_5ad0
-    dw code_02_5a8a
-    dw code_02_5a90
-    dw code_02_5b09
-    dw code_02_5ae6
-    dw jr_002_5a3d
-    dw code_02_5b35
-    dw code_02_5b11
-    dw code_02_5b41
-    dw code_02_5a96
-    dw code_02_5a99
+CtrlCharTable::
+    dw MovePenForward.inc       ; \x01
+    dw MovePenBack              ; \x02
+    dw MovePenForward.vt        ; \x03
+    dw MovePenUp                ; \x04
+    dw Ctrl05                   ; \x05
+    dw CtrlCharTableB.clr3      ; \x06
+    dw CtrlCharTableB.set3      ; \x07
+    dw CtrlBackspace            ; \x08
+    dw CtrlTab                  ; \x09
+    dw NoEffect                 ; \x0a: no effect
+    dw ResetPen                 ; \x0b
+    dw CtrlClearScreen          ; \x0c
+    dw MovePenForward.cr        ; \x0d
+    dw CtrlCharTableB.hiragana  ; \x0e
+    dw CtrlCharTableB.katakana  ; \x0f
 
-; Control character implementations
-data_02_5a5c::
-    dw code_02_5b6e   ; \x01
-    dw Call_002_5b7d  ; \x02
-    dw code_02_5b77   ; \x03
-    dw code_02_5b86   ; \x04
-    dw jr_002_5a3d    ; \x05: no effect
-    dw code_02_5a8a   ; \x06
-    dw code_02_5a90   ; \x07
-    dw code_02_5b63   ; \x08
-    dw jr_002_5a3d    ; \x09: no effect
-    dw jr_002_5a3d    ; \x0a: no effect
-    dw code_02_5b35   ; \x0b
-    dw code_02_5d78   ; \x0c
-    dw code_02_5b75   ; \x0d
-    dw code_02_5a96   ; \x0e: mode=hiragana
-    dw code_02_5a99   ; \x0f: mode=katakana
-    dw code_02_5a9c   ; \x10: fg=#fff
-    dw code_02_5aa1   ; \x11: fg=#aaa
-    dw code_02_5aa8   ; \x12: fg=#555
-    dw code_02_5aaf   ; \x13: fg=#000
-    dw code_02_5ab6   ; \x14: bg=#fff
-    dw code_02_5abb   ; \x15: bg=#aaa
-    dw code_02_5ac2   ; \x16: bg=#555
-    dw code_02_5ac9   ; \x17: bg=#000
+CtrlCharTableB::
+    dw Ctrl01     ; \x01
+    dw Ctrl02     ; \x02
+    dw Ctrl03     ; \x03
+    dw Ctrl04     ; \x04
+    dw NoEffect   ; \x05: no effect
+    dw .clr3      ; \x06
+    dw .set3      ; \x07
+    dw Ctrl08     ; \x08
+    dw NoEffect   ; \x09: no effect
+    dw NoEffect   ; \x0a: no effect
+    dw ResetPen   ; \x0b
+    dw Ctrl0C     ; \x0c
+    dw Ctrl0D     ; \x0d
+    dw .hiragana  ; \x0e: mode=hiragana
+    dw .katakana  ; \x0f: mode=katakana
+    dw .fg0       ; \x10: fg=#fff
+    dw .fg1       ; \x11: fg=#aaa
+    dw .fg2       ; \x12: fg=#555
+    dw .fg3       ; \x13: fg=#000
+    dw .bg0       ; \x14: bg=#fff
+    dw .bg1       ; \x15: bg=#aaa
+    dw .bg2       ; \x16: bg=#555
+    dw .bg3       ; \x17: bg=#000
 
 
-code_02_5a8a:
+.clr3::
     ld hl, hDrawMode
     res DrawMode_Bit3, [hl]
     ret
 
-code_02_5a90:
+.set3::
     ld hl, hDrawMode
     set DrawMode_Bit3, [hl]
     ret
 
-code_02_5a96:
+.hiragana::
     res 2, [hl]
     ret
 
-code_02_5a99:
+.katakana::
     set 2, [hl]
     ret
 
-code_02_5a9c:
+.fg0::
     ld a, [hl]
-    and $fc
+    and ~$03
     ld [hl], a
     ret
 
-code_02_5aa1:
+.fg1::
     ld a, [hl]
-    and $fc
+    and ~$03
     or $01
     ld [hl], a
     ret
 
-code_02_5aa8:
+.fg2::
     ld a, [hl]
-    and $fc
+    and ~$03
     or $02
     ld [hl], a
     ret
 
-code_02_5aaf:
+.fg3::
     ld a, [hl]
-    and $fc
+    and ~$03
     or $03
     ld [hl], a
     ret
 
-code_02_5ab6:
+.bg0::
     ld a, [hl]
-    and $cf
+    and ~$30
     ld [hl], a
     ret
 
-code_02_5abb:
+.bg1::
     ld a, [hl]
-    and $cf
+    and ~$30
     or $10
     ld [hl], a
     ret
 
-code_02_5ac2:
+.bg2::
     ld a, [hl]
-    and $cf
+    and ~$30
     or $20
     ld [hl], a
     ret
 
-code_02_5ac9:
+.bg3::
     ld a, [hl]
-    and $cf
+    and ~$30
     or $30
     ld [hl], a
     ret
 
-code_02_5ad0:
+Ctrl05::
     push bc
     push de
-    ld e, $20
+    ld e, " "
     ld a, [hl+]
     ld l, [hl]
     ld h, a
-    ld a, $14
+    ld a, SCRN_X_B
     sub h
     ld c, a
     ld b, $00
-    call Call_002_59dc
+    call GetPenAddress
     call TrapMemSet
     pop de
     pop bc
     ret
 
-code_02_5ae6:
+CtrlTab::
     push bc
     push de
-    ld e, $20
+    ld e, " "
     ld a, [hl+]
     ld l, [hl]
     ld h, a
@@ -5833,101 +5843,103 @@ code_02_5ae6:
     ld c, a
     ld b, $00
     push af
-    call Call_002_59dc
+    call GetPenAddress
     call TrapMemSet
     pop af
-    ld hl, hCursorX
+    ld hl, hPenX
     add [hl]
     ld [hl], a
-    call Call_002_5b3e
+    call MovePenForward.checkNewLine
     pop de
     pop bc
     ret
 
-code_02_5b09:
-    call Call_002_5b4c
-    ld a, $20
-    jp Jump_002_5958
+CtrlBackspace::
+    call MovePenBack
+    ld a, " "
+    jp Call_002_5958
 
-code_02_5b11:
+CtrlClearScreen::
     push bc
     push de
-    ld a, [$c3c8]
+    ld a, [VarDrawBaseAddr]
     ld l, a
-    ld a, [$c3c9]
+    ld a, [VarDrawBaseAddr + 1]
     ld h, a
-    ld e, $20
-    ld d, $12
+    ld e, " "
+    ld d, SCRN_Y_B
 
-jr_002_5b1f:
+.nextLine::
     push de
     push hl
-    ld bc, $0014
+    ld bc, SCRN_X_B
     call TrapMemSet
     pop hl
     pop de
-    ld bc, $0020
+    ld bc, SCRN_VX_B
     add hl, bc
     dec d
-    jr nz, jr_002_5b1f
+    jr nz, .nextLine
 
     pop de
     pop bc
-    ld hl, hCursorX
+    ld hl, hPenX
 
-code_02_5b35:
+ResetPen::
     xor a
     ld [hl+], a
     ld [hl], a
     ret
 
 
-Call_002_5b39:
-    ld hl, hCursorX
+MovePenForward::
+    ld hl, hPenX
 
-code_02_5b3c:
+.inc::
     inc [hl]
     ld a, [hl]
 
-Call_002_5b3e:
-    cp $14
+.checkNewLine::
+    cp SCRN_X_B
     ret c
 
-code_02_5b41:
+.cr::
     ld [hl], $00
-code_02_5b43:
+
+.vt::
     inc hl
     inc [hl]
     ld a, [hl]
-    cp $12
+    cp SCRN_Y_B
     ret c
 
     ld [hl], $00
     ret
 
 
-Call_002_5b4c:
+MovePenBack::
     ld a, [hl]
     dec [hl]
     or a
-    jr nz, jr_002_5b5c
+    jr nz, .jr_5b5c
 
-    ld [hl], $13
+    ld [hl], SCRN_X_B - 1
     inc hl
     ld a, [hl]
     dec [hl]
     or a
-    jr nz, jr_002_5b5b
+    jr nz, .jr_5b5b
 
-    ld [hl], $11
+    ld [hl], SCRN_Y_B - 1
 
-jr_002_5b5b:
+.jr_5b5b::
     dec hl
 
-jr_002_5b5c:
+.jr_5b5c::
     ret
 
-code_02_5b5d:
+
+MovePenUp::
     inc hl
     ld a, [hl]
     or a
@@ -5937,26 +5949,26 @@ code_02_5b5d:
     ret
 
 
-code_02_5b63:
-    call Call_002_5b7d
-    ld a, $20
-    jp Jump_002_5958
+Ctrl08::
+    call Ctrl02
+    ld a, " "
+    jp Call_002_5958
 
 
-Call_002_5b6b:
+Call_002_5b6b::
     ld hl, hDraw90
 
-code_02_5b6e:
+Ctrl01::
     inc [hl]
     ld a, [$c3b9]
     dec a
     cp [hl]
     ret nc
 
-code_02_5b75:
+Ctrl0D::
     ld [hl], $00
 
-code_02_5b77:
+Ctrl03::
     inc hl
     ld a, [hl]
     add $09
@@ -5964,7 +5976,7 @@ code_02_5b77:
     ret
 
 
-Call_002_5b7d:
+Ctrl02::
     ld a, [hl]
     dec [hl]
     or a
@@ -5974,7 +5986,7 @@ Call_002_5b7d:
     dec a
     ld [hl], a
 
-code_02_5b86:
+Ctrl04::
     inc hl
     ld a, [hl]
     sub $09
@@ -6204,7 +6216,7 @@ trap_c9_5c54::
     ld [hl], d
     ld h, c
     ld l, b
-    call Call_002_59dc
+    call GetPenAddress
     ld a, [$c3b5]
     ld c, a
 
@@ -6283,7 +6295,7 @@ Call_002_5cb6:
     push hl
     ld h, c
     ld l, b
-    call Call_002_59dc
+    call GetPenAddress
     pop bc
     push bc
     push de
@@ -6424,7 +6436,7 @@ jr_002_5d74:
     ld l, $7c
     jr jr_002_5d64
 
-code_02_5d78:
+Ctrl0C:
     ldh a, [hDrawMode]
     ld b, a
 
@@ -6953,7 +6965,7 @@ jr_002_5fbd:
     ld d, a
     add a
     add d
-    ld de, $4f08
+    ld de, data_02_4f08
     add e
     ld [hl], a
     ld a, $00
@@ -6984,9 +6996,9 @@ trap_b0_5ff2::
     trap MemCopy
     ld a, [$000f]
     ld [$c00b], a
-    ld de, $6052
-    ld hl, $fff5
-    ld bc, $000a
+    ld de, DMASprites
+    ld hl, $ffff - (DMASprites.end - DMASprites)
+    ld bc, (DMASprites.end - DMASprites)
     trap MemCopy
     xor a
     ldh [$82], a
@@ -7036,15 +7048,17 @@ code_02_603c::
     reti
 
 
+DMASprites:
     ld a, $c3
     ldh [rDMA], a
     ld a, $28
 
-jr_002_6058:
+.loop
     dec a
-    jr nz, jr_002_6058
+    jr nz, .loop
 
     ret
+.end
 
 
 trap_b6_605c::
@@ -7086,7 +7100,7 @@ jr_002_607f:
     ldh a, [$99]
     bit 0, a
     call nz, $fff5
-    call data_02_51e4
+    call Call_02_51e4
 
 jr_002_608f:
     ldh a, [$99]
@@ -7695,7 +7709,7 @@ jr_002_6361:
 
 jr_002_636c:
     push af
-    ld a, $20
+    ld a, " "
     call Call_002_5958
     pop af
     pop de
@@ -7810,9 +7824,9 @@ jr_002_63f2:
     xor a
     ldh [$95], a
     ldh [$94], a
-    ldh a, [$93]
+    ldh a, [hDrawMode2]
     ld c, $10
-    call $662b
+    call Call_02_662b
     pop hl
     pop de
     pop bc
@@ -7852,7 +7866,7 @@ jr_002_641f:
     push hl
     xor a
     ldh [$95], a
-    ldh a, [$93]
+    ldh a, [hDrawMode2]
     ld e, a
     ld d, $00
     ld hl, data_02_64d7
@@ -7869,28 +7883,28 @@ jr_002_643c:
     push hl
     ld e, a
     ld d, $03
-    ldh a, [$93]
+    ldh a, [hDrawMode2]
     ld l, a
     add a
     add l
-    ld hl, $64eb
+    ld hl, data_02_64eb
     dec e
     jr z, jr_002_6462
 
-    ld hl, $6527
+    ld hl, data_02_6527
     dec e
     jr z, jr_002_6462
 
     ld l, a
-    ldh a, [$93]
+    ldh a, [hDrawMode2]
     add a
     add l
-    ld hl, $6563
+    ld hl, data_02_6563
     ld d, $05
     dec e
     jr z, jr_002_6462
 
-    ld hl, $65c7
+    ld hl, data_02_65c7
 
 jr_002_6462:
     add l
@@ -7930,7 +7944,7 @@ Jump_002_6483:
     push de
     push hl
     ld b, a
-    ldh a, [$93]
+    ldh a, [hDrawMode2]
     ld c, a
     bit 7, b
     call nz, Call_002_64bb
@@ -7940,7 +7954,7 @@ Jump_002_6483:
     call nz, Call_002_64c9
     bit 4, b
     call nz, Call_002_64cf
-    ldh [$93], a
+    ldh [hDrawMode2], a
     ld b, a
     ld a, c
     sub b
@@ -7948,10 +7962,10 @@ Jump_002_6483:
 
     ld a, c
     ld c, $00
-    call $662b
+    call Call_02_662b
     ld a, b
     ld c, $10
-    call $662b
+    call Call_02_662b
     xor a
     ldh [$94], a
     call Call_002_640d
@@ -7998,36 +8012,61 @@ Call_002_64cf:
 
 
 data_02_64d7::
-    db $37, $38, $39, $2f, $1c, $34, $35, $36, $2a, $1d, $31, $32, $33, $2d, $1e, $30
-    db $23, $3d, $2b, $1f, $41, $42, $43, $44, $45, $46, $47, $48, $49, $28, $3c, $5b
-    db $1d, $1d, $1d, $4a, $4b, $4c, $4d, $4e, $4f, $50, $51, $52, $29, $3e, $5d, $1e
-    db $1e, $1e, $53, $54, $55, $56, $57, $58, $59, $5a, $40, $3a, $3b, $7e, $1f, $1f
-    db $1f, $2e, $21, $3f, $20, $20, $20, $2c, $22, $27, $5f, $7e, $5e, $1b, $1b, $1b
-    db $61, $62, $63, $64, $65, $66, $67, $68, $69, $23, $25, $26, $1e, $1e, $1e, $6a
-    db $6b, $6c, $6d, $6e, $6f, $70, $71, $72, $24, $5c, $7c, $1f, $1f, $1f, $73, $74
-    db $75, $76, $77, $78, $79, $7a, $60, $3a, $3b, $7e, $1b, $1b, $1b, $2e, $21, $3f
-    db $20, $20, $20, $2c, $22, $27, $5f, $7e, $5e, $1c, $1c, $1c, $b1, $b2, $b3, $b4
-    db $b5, $b6, $b7, $b8, $b9, $ba, $bb, $bc, $bd, $be, $bf, $a7, $a8, $a9, $aa, $ab
-    db $1f, $1f, $1f, $1f, $1f, $c0, $c1, $c2, $c3, $c4, $c5, $c6, $c7, $c8, $c9, $ca
-    db $cb, $cc, $cd, $ce, $ac, $ad, $ae, $af, $2d, $1b, $1b, $1b, $1b, $1b, $cf, $d0
-    db $d1, $d2, $d3, $d4, $d5, $d6, $a2, $a3, $d7, $d8, $d9, $da, $db, $a4, $2c, $3b
-    db $28, $29, $1c, $1c, $1c, $1c, $1c, $dc, $a6, $dd, $5b, $5d, $de, $22, $27, $24
-    db $5c, $df, $21, $3f, $26, $7e, $a1, $2e, $3a, $3c, $3e, $1d, $1d, $1d, $1d, $1d
-    db $b1, $b2, $b3, $b4, $b5, $b6, $b7, $b8, $b9, $ba, $bb, $bc, $bd, $be, $bf, $a7
-    db $a8, $a9, $aa, $ab, $1b, $1b, $1b, $1b, $1b, $c0, $c1, $c2, $c3, $c4, $c5, $c6
-    db $c7, $c8, $c9, $ca, $cb, $cc, $cd, $ce, $ac, $ad, $ae, $af, $2d, $1c, $1c, $1c
-    db $1c, $1c, $cf, $d0, $d1, $d2, $d3, $d4, $d5, $d6, $a2, $a3, $d7, $d8, $d9, $da
-    db $db, $a4, $2c, $3b, $28, $29, $1d, $1d, $1d, $1d, $1d, $dc, $a6, $dd, $5b, $5d
-    db $de, $22, $27, $24, $5c, $df, $21, $3f, $26, $7e, $a1, $2e, $3a, $3c, $3e, $1e
-    db $1e, $1e, $1e, $1e, $87, $87, $87, $6f, $26, $00, $11, $03, $c3, $19, $71, $23
-    db $23, $23, $23, $71, $c9, $46, $66, $5a, $66, $6e, $66, $82, $66, $96, $66, $37
-    db $38, $39, $2f, $41, $34, $35, $36, $2a, $61, $31, $32, $33, $2d, $01, $30, $23
-    db $3d, $2b, $00, $41, $44, $47, $28, $61, $4a, $4d, $50, $29, $01, $53, $56, $59
-    db $3a, $00, $2e, $20, $2c, $5f, $30, $61, $64, $67, $23, $01, $6a, $6d, $70, $24
-    db $00, $73, $76, $79, $3a, $30, $2e, $20, $2c, $5f, $41, $b1, $b6, $bb, $a7, $00
-    db $c0, $c5, $ca, $ac, $30, $cf, $d4, $d7, $a4, $41, $dc, $de, $df, $a1, $61, $b1
-    db $b6, $bb, $a7, $30, $c0, $c5, $ca, $ac, $41, $cf, $d4, $d7, $a4, $61, $dc, $de
-    db $df, $a1, $01
+    db $37, $38, $39, $2f, $1c, $34, $35, $36, $2a, $1d, $31, $32, $33, $2d, $1e
+    db $30, $23, $3d, $2b, $1f
+data_02_64eb:
+    db $41, $42, $43, $44, $45, $46, $47, $48, $49, $28, $3c, $5b, $1d, $1d, $1d
+    db $4a, $4b, $4c, $4d, $4e, $4f, $50, $51, $52, $29, $3e, $5d, $1e, $1e, $1e
+    db $53, $54, $55, $56, $57, $58, $59, $5a, $40, $3a, $3b, $7e, $1f, $1f, $1f
+    db $2e, $21, $3f, $20, $20, $20, $2c, $22, $27, $5f, $7e, $5e, $1b, $1b, $1b
+data_02_6527:
+    db $61, $62, $63, $64, $65, $66, $67, $68, $69, $23, $25, $26, $1e, $1e, $1e
+    db $6a, $6b, $6c, $6d, $6e, $6f, $70, $71, $72, $24, $5c, $7c, $1f, $1f, $1f
+    db $73, $74, $75, $76, $77, $78, $79, $7a, $60, $3a, $3b, $7e, $1b, $1b, $1b
+    db $2e, $21, $3f, $20, $20, $20, $2c, $22, $27, $5f, $7e, $5e, $1c, $1c, $1c
+data_02_6563:
+    db $b1, $b2, $b3, $b4, $b5, $b6, $b7, $b8, $b9, $ba, $bb, $bc, $bd, $be, $bf
+    db $a7, $a8, $a9, $aa, $ab, $1f, $1f, $1f, $1f, $1f, $c0, $c1, $c2, $c3, $c4
+    db $c5, $c6, $c7, $c8, $c9, $ca, $cb, $cc, $cd, $ce, $ac, $ad, $ae, $af, $2d
+    db $1b, $1b, $1b, $1b, $1b, $cf, $d0, $d1, $d2, $d3, $d4, $d5, $d6, $a2, $a3
+    db $d7, $d8, $d9, $da, $db, $a4, $2c, $3b, $28, $29, $1c, $1c, $1c, $1c, $1c
+    db $dc, $a6, $dd, $5b, $5d, $de, $22, $27, $24, $5c, $df, $21, $3f, $26, $7e
+    db $a1, $2e, $3a, $3c, $3e, $1d, $1d, $1d, $1d, $1d
+data_02_65c7:
+    db $b1, $b2, $b3, $b4, $b5, $b6, $b7, $b8, $b9, $ba, $bb, $bc, $bd, $be, $bf
+    db $a7, $a8, $a9, $aa, $ab, $1b, $1b, $1b, $1b, $1b, $c0, $c1, $c2, $c3, $c4
+    db $c5, $c6, $c7, $c8, $c9, $ca, $cb, $cc, $cd, $ce, $ac, $ad, $ae, $af, $2d
+    db $1c, $1c, $1c, $1c, $1c, $cf, $d0, $d1, $d2, $d3, $d4, $d5, $d6, $a2, $a3
+    db $d7, $d8, $d9, $da, $db, $a4, $2c, $3b, $28, $29, $1d, $1d, $1d, $1d, $1d
+    db $dc, $a6, $dd, $5b, $5d, $de, $22, $27, $24, $5c, $df, $21, $3f, $26, $7e
+    db $a1, $2e, $3a, $3c, $3e, $1e, $1e, $1e, $1e, $1e
+
+
+Call_02_662b:
+    add a
+    add a
+    add a
+    ld l, a
+    ld h, $00
+    ld de, $c303
+    add hl, de
+    ld [hl], c
+    inc hl
+    inc hl
+    inc hl
+    inc hl
+    ld [hl], c
+    ret
+
+
+data_02_663c:
+    db $46, $66, $5a, $66, $6e, $66, $82, $66, $96, $66, $37, $38, $39, $2f, $41, $34
+    db $35, $36, $2a, $61, $31, $32, $33, $2d, $01, $30, $23, $3d, $2b, $00, $41, $44
+    db $47, $28, $61, $4a, $4d, $50, $29, $01, $53, $56, $59, $3a, $00, $2e, $20, $2c
+    db $5f, $30, $61, $64, $67, $23, $01, $6a, $6d, $70, $24, $00, $73, $76, $79, $3a
+    db $30, $2e, $20, $2c, $5f, $41, $b1, $b6, $bb, $a7, $00, $c0, $c5, $ca, $ac, $30
+    db $cf, $d4, $d7, $a4, $41, $dc, $de, $df, $a1, $61, $b1, $b6, $bb, $a7, $30, $c0
+    db $c5, $ca, $ac, $41, $cf, $d4, $d7, $a4, $61, $dc, $de, $df, $a1, $01
 
 Call_002_66aa:
 Jump_002_66aa:
@@ -8038,7 +8077,7 @@ Jump_002_66aa:
     add a
     ld l, a
     ld h, $00
-    ld de, $663c
+    ld de, data_02_663c
     add hl, de
     ld e, [hl]
     inc hl

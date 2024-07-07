@@ -4745,7 +4745,7 @@ Jump_001_6d4f::
 
 
 TrapExtractInit::
-    ld hl, $c3ca
+    ld hl, VarExtractAddr
     ld [hl], e
     inc hl
     ld [hl], d
@@ -4816,7 +4816,7 @@ jr_001_6d8c:
 
 
 jr_001_6d96:
-    ld hl, $c3ca
+    ld hl, VarExtractAddr
     ld c, [hl]
     inc hl
     ld b, [hl]
@@ -4838,7 +4838,7 @@ jr_001_6da8:
     inc bc
     jr nc, jr_001_6dbe
 
-    ld hl, $c3ca
+    ld hl, VarExtractAddr
     ld [hl], c
     inc hl
     ld [hl], b
@@ -4870,7 +4870,7 @@ jr_001_6dd0:
     inc a
     ld [hl+], a
     push hl
-    ld hl, $c3ca
+    ld hl, VarExtractAddr
     ld [hl], c
     inc hl
     ld [hl], b

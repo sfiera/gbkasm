@@ -49,6 +49,7 @@ DEF AwaitFrame        EQU $b1
 DEF DrawInit          EQU $b3
 DEF LCDEnable         EQU $b4  ; a|$80 → LCDC; $00 → BGP/OBP1/OBP2
 DEF LCDDisable        EQU $b5  ; safe LCDC &= $7f
+DEF DrawBaseAddr      EQU $b7
 DEF DrawAt            EQU $b8
 DEF DrawCtrlChar      EQU $b9
 DEF DrawChar          EQU $bb
