@@ -38,6 +38,11 @@ DEF IRClose           EQU $73
 DEF IROpen            EQU $7c
 DEF IRSend            EQU $7f
 
+DEF BitXor16          EQU $80  ; hl ^= de
+DEF BitOr16           EQU $81  ; hl |= de
+DEF BitAnd16          EQU $82  ; hl |= de
+DEF BitCpl16          EQU $83  ; hl = ~hl
+
 DEF RandInit          EQU $8d
 DEF RandNext          EQU $8e
 

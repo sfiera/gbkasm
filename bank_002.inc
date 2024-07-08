@@ -6,10 +6,10 @@
 SECTION "ROM Bank $002", ROMX[$4000], BANK[$2]
 
 traps2::
-    dw trap_80_5267         ; trap $80
-    dw trap_81_526e         ; trap $81
-    dw trap_82_5275         ; trap $82
-    dw trap_83_527c         ; trap $83
+    dw TrapBitXor16         ; trap $80
+    dw TrapBitOr16          ; trap $81
+    dw TrapBitAnd16         ; trap $82
+    dw TrapBitCpl16         ; trap $83
     dw trap_84_5283         ; trap $84
     dw trap_85_52b3         ; trap $85
     dw trap_86_52c8         ; trap $86
@@ -3873,7 +3873,7 @@ jr_002_5263:
     ret
 
 
-trap_80_5267::
+TrapBitXor16::
     ld a, h
     xor d
     ld h, a
@@ -3883,7 +3883,7 @@ trap_80_5267::
     ret
 
 
-trap_81_526e::
+TrapBitOr16::
     ld a, h
     or d
     ld h, a
@@ -3893,7 +3893,7 @@ trap_81_526e::
     ret
 
 
-trap_82_5275::
+TrapBitAnd16::
     ld a, h
     and d
     ld h, a
@@ -3903,7 +3903,7 @@ trap_82_5275::
     ret
 
 
-trap_83_527c::
+TrapBitCpl16::
     ld a, h
     cpl
     ld h, a
