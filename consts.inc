@@ -6,11 +6,13 @@
 DEF IR_ID0 EQU "H"
 DEF IR_ID1 EQU "u"
 
-DEF REGION_FREE      EQU "F" ; Available to use
-DEF REGION_ZEROFILE  EQU "Z" ; Must be located at $a002 (diamond)
-DEF REGION_REGFILE   EQU "R" ; Regular file; may be located anywhere (circle, triangle)
-DEF REGION_UNKNOWN   EQU "D" ; Unknown use
-DEF REGION_SPECIAL   EQU "S" ; Must be located at end of Kiss space
+DEF REGION_TYPE_FREE      EQU "F" ; Available to use
+DEF REGION_TYPE_ZEROFILE  EQU "Z" ; Must be located at $a002 (diamond)
+DEF REGION_TYPE_REGFILE   EQU "R" ; Regular file; may be located anywhere (circle, triangle)
+DEF REGION_TYPE_UNKNOWN   EQU "D" ; Unknown use
+DEF REGION_TYPE_SPECIAL   EQU "S" ; Must be located at end of Kiss space
+
+DEF HEADER_SIZE  EQU 6
 
 DEF DrawMode_Bit0 EQU 0
 DEF DrawMode_Bit1 EQU 1
@@ -21,10 +23,14 @@ DEF DrawMode_Bit5 EQU 5
 DEF DrawMode_Bit6 EQU 6
 DEF DrawMode_Bit7 EQU 7
 
-def rIRMode     equ $0000
-def kIRModeOff  equ $00
-def kIRModeOn   equ $0a
-def rROMBank    equ $2000
-def rRAMBank    equ $4000
-def rIgnored    equ $6000
-def rIR         equ $a000
+def rIRMode       EQU $0000
+def kIRReadOnly   EQU $00
+def kIRReadWrite  EQU $0a
+def kIRModeOn     EQU $0e
+def rROMBank      EQU $2000
+def rRAMBank      EQU $4000
+def rIgnored      EQU $6000
+def rIR           EQU $a000
+
+def REGION_BEGIN EQU $a002
+def REGION_END   EQU $c000

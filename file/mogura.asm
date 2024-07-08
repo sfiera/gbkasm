@@ -2528,7 +2528,7 @@ jr_000_1096::
 jr_000_10f6::
     ld de, $ff46
     ld bc, $000a
-    trap $e4
+    trap FileRead
     xor a
     ld [$c40a], a
     ld hl, $0510

@@ -59,4 +59,8 @@ DEF TimerSet          EQU $cb  ; h → TAC; l → TMA; TACF_START? → IEF_TIMER
 
 DEF InputButtons      EQU $d8
 
+DEF KissClearAll      EQU $e0
+DEF FileRead          EQU $e4
 DEF FileWrite         EQU $e9
+
+DEF AddrGBToCRAM      EQU $fb

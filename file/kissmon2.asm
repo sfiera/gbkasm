@@ -1761,7 +1761,7 @@ call_ad9a:
     push hl
     ld de, $ff46
     ld bc, $000a
-    trap $e4
+    trap FileRead
     pop hl
     ld de, data_addd
     ld b, $0a

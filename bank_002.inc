@@ -102,11 +102,11 @@ traps2::
     dw trap_none_2          ; trap $dd
     dw trap_none_2          ; trap $de
     dw trap_none_2          ; trap $df
-    dw trap_e0_4437         ; trap $e0
+    dw TrapKissClearAll     ; trap $e0
     dw trap_e1_4456         ; trap $e1
     dw trap_e2_454a         ; trap $e2
     dw trap_e3_4566         ; trap $e3
-    dw trap_e4_4577         ; trap $e4
+    dw TrapFileRead         ; trap $e4
     dw trap_e5_45ca         ; trap $e5
     dw trap_e6_45da         ; trap $e6
     dw trap_e7_47b7         ; trap $e7
@@ -129,7 +129,7 @@ traps2::
     dw trap_f8_41b0         ; trap $f8
     dw trap_f9_4259         ; trap $f9
     dw trap_none_2          ; trap $fa
-    dw trap_fb_4586         ; trap $fb
+    dw TrapAddrGBToCRAM     ; trap $fb
     dw trap_fc_4a3c         ; trap $fc
     dw trap_fd_4df6         ; trap $fd
     dw trap_fe_4e7d         ; trap $fe
@@ -476,17 +476,17 @@ data_02_430a::
     db $36, $32, $39, $37, $33, $39, $38, $34, $39, $39, $35, $39, $30, $36, $30, $36
     db $37, $30, $37, $38, $30, $38, $39, $30, $39, $30, $30, $30, $00
 
-trap_e0_4437::
+TrapKissClearAll::
     ldh a, [hRAMBank]
     push af
-    call Call_002_44e9
+    call KissClearAllProc
 
-Jump_002_443d:
+RestoreRAMBankAndLock:
     pop af
     or a
-    call Call_002_4475
+    call SetRAMBank
 
-Call_002_4442:
+LockCRAM:
     xor a
     ld [rIRMode], a
     ret
@@ -494,14 +494,14 @@ Call_002_4442:
 
 Jump_002_4447:
     pop af
-    call Call_002_4475
-    call Call_002_4442
+    call SetRAMBank
+    call LockCRAM
     scf
     ret
 
 
-Call_002_4450:
-    ld a, kIRModeOn
+UnlockCRAM:
+    ld a, kIRReadWrite
     ld [rIRMode], a
     ret
 
@@ -512,9 +512,9 @@ trap_e1_4456::
     call Call_002_447b
     jr c, jr_002_4466
 
-Jump_002_445e:
+RestoreRAMBank:
     pop af
-    call Call_002_4475
+    call SetRAMBank
     xor a
     ret
 
@@ -525,27 +525,26 @@ Jump_002_4464:
 Jump_002_4466:
 jr_002_4466:
     pop af
-    call Call_002_4475
+    call SetRAMBank
     scf
     ret
 
 
-FindKissIndex:
+LocateOwnerRegion:
     ld hl, KissIndexAddr
     ld a, [hl+]
     ld h, [hl]
     ld l, a
     ld a, [KissIndexBank]
 
-Call_002_4475:
-Jump_002_4475:
+SetRAMBank:
     ldh [hRAMBank], a
     ld [rRAMBank], a
     ret
 
 
 Call_002_447b:
-    call FindKissIndex
+    call LocateOwnerRegion
     ld de, data_02_53ac
     ld a, [hl+]
     cp d
@@ -567,7 +566,7 @@ Call_002_447b:
     cp e
     jr nz, jr_002_44e5
 
-    ld de, $c000
+    ld de, REGION_END
     dec bc
     jr jr_002_44a4
 
@@ -620,24 +619,24 @@ jr_002_44c4:
     jr z, jr_002_44e5
 
     dec a
-    call Call_002_4475
-    ld de, $c000
+    call SetRAMBank
+    ld de, REGION_END
 
 jr_002_44d0:
     ld a, [hl]
-    cp REGION_FREE
+    cp REGION_TYPE_FREE
     jr z, jr_002_449b
 
-    cp REGION_ZEROFILE
+    cp REGION_TYPE_ZEROFILE
     jr z, jr_002_449b
 
-    cp REGION_REGFILE
+    cp REGION_TYPE_REGFILE
     jr z, jr_002_449b
 
-    cp REGION_UNKNOWN
+    cp REGION_TYPE_UNKNOWN
     jr z, jr_002_449b
 
-    cp REGION_SPECIAL
+    cp REGION_TYPE_SPECIAL
     jr z, jr_002_449b
 
 jr_002_44e5:
@@ -650,53 +649,52 @@ jr_002_44e7:
     ret
 
 
-Call_002_44e9:
-    call FindKissIndex
-    call Call_002_4450
+KissClearAllProc::
+    call LocateOwnerRegion
+    call UnlockCRAM
     push hl
-    ld bc, $fe1a
+    ld bc, -(6 + 240 + 240)
     add hl, bc
     push hl
     xor a
-    ld b, $f6
-    call Call_002_4545
-    ld b, $f0
-    call Call_002_4545
+    ld b, 6 + 240
+    call SimpleMemSet
+    ld b, 240
+    call SimpleMemSet
     ld b, $46
-    call Call_002_4545
+    call SimpleMemSet
     ld a, $20
     ld b, $3a
-    call Call_002_4545
+    call SimpleMemSet
     pop bc
     pop hl
-    ld de, $c000
-    call Call_002_4534
-    ld bc, $a002
-    call Call_002_4534
+    ld de, REGION_END
+    call CreateSpecialRegion
+    ld bc, REGION_BEGIN
+    call CreateSpecialRegion
 
-jr_002_451a:
+.next
     ldh a, [hRAMBank]
     or a
-    jr nz, jr_002_4522
+    jr nz, :+
 
     ld bc, rRAMBank
 
-jr_002_4522:
-    ld a, $46
-    call Call_002_4536
-    ld de, $c000
+:   ld a, REGION_TYPE_FREE
+    call CreateRegion
+    ld de, REGION_END
     ldh a, [hRAMBank]
     or a
     ret z
 
     dec a
-    call Call_002_4475
-    jr jr_002_451a
+    call SetRAMBank
+    jr .next
 
-Call_002_4534:
-    ld a, $53
+CreateSpecialRegion:
+    ld a, REGION_TYPE_SPECIAL
 
-Call_002_4536:
+CreateRegion:
     push hl
     ld [hl+], a
     cpl
@@ -714,11 +712,10 @@ Call_002_4536:
     ret
 
 
-Call_002_4545:
-jr_002_4545:
+SimpleMemSet::
     ld [hl+], a
     dec b
-    jr nz, jr_002_4545
+    jr nz, SimpleMemSet
 
     ret
 
@@ -730,18 +727,18 @@ trap_e2_454a::
     ld a, [hl+]
     ld h, [hl]
     ld l, a
-    jp Jump_002_445e
+    jp RestoreRAMBank
 
 
 Call_002_4556:
-    call FindKissIndex
+    call LocateOwnerRegion
     ld a, e
     and $1f
     add a
     ld e, a
     ld d, $00
     add hl, de
-    ld de, $0006
+    ld de, HEADER_SIZE
     add hl, de
     ret
 
@@ -751,38 +748,42 @@ trap_e3_4566::
     push af
     push hl
     call Call_002_4556
-    call Call_002_4450
+    call UnlockCRAM
     pop de
     ld [hl], e
     inc hl
     ld [hl], d
-    jp Jump_002_443d
+    jp RestoreRAMBankAndLock
 
 
-trap_e4_4577::
+TrapFileRead::
     ldh a, [hRAMBank]
     push af
     push hl
-    call trap_fb_4586
+    call TrapAddrGBToCRAM
     ld e, l
     ld d, h
     pop hl
     trap MemCopy
-    jp Jump_002_445e
+    jp RestoreRAMBank
 
 
-trap_fb_4586::
+; $0000-$7fff: selects RAM bank for de and puts mapped address in hl
+; $fe00-$feff: select index RAM bank and return something
+; $ff00-$ffff: select owner RAM bank and return (addr + e)
+TrapAddrGBToCRAM::
     ld a, d
     cp $ff
-    jr z, jr_002_45a8
+    jr z, LocateOwnerRegionOffset
 
     cp $fe
-    jr z, jr_002_45af
+    jr z, LocateIndexRegionOffset
 
     ld h, d
     ld l, e
 
-Call_002_4591:
+; TrapAddrGBToCRAM but without $feXX/$ffXX handling.
+RealAddrGBToCRAM:
     ld a, h
     and $60
     rlca
@@ -798,26 +799,25 @@ Call_002_4591:
     ld hl, $ff97
     or [hl]
     pop hl
-    jp Jump_002_4475
+    jp SetRAMBank
 
 
-Call_002_45a8:
-jr_002_45a8:
-    call FindKissIndex
+LocateOwnerRegionOffset:
+    call LocateOwnerRegion
     ld d, $00
     add hl, de
     ret
 
 
-jr_002_45af:
-    call FindKissIndex
-    ld a, $77
+LocateIndexRegionOffset:
+    call LocateOwnerRegion
+    ld a, 119
     sub e
-    jr nc, jr_002_45b9
+    jr nc, .jr_002_45b9
 
-    ld a, $77
+    ld a, 119
 
-jr_002_45b9:
+.jr_002_45b9
     inc a
     push af
     ld e, l
@@ -840,11 +840,11 @@ trap_e5_45ca::
     ldh a, [hRAMBank]
     push af
     push hl
-    call trap_fb_4586
-    call Call_002_4450
+    call TrapAddrGBToCRAM
+    call UnlockCRAM
     pop de
     trap MemCopy
-    jp Jump_002_443d
+    jp RestoreRAMBankAndLock
 
 
 trap_e6_45da::
@@ -858,7 +858,7 @@ jr_002_45e1:
     ldh a, [hRAMBank]
     push af
     push hl
-    call FindKissIndex
+    call LocateOwnerRegion
     pop bc
     ld de, $0000
     push de
@@ -868,14 +868,14 @@ jr_002_45e1:
     ld b, a
     ld a, e
     and $e0
-    ld e, REGION_UNKNOWN
+    ld e, REGION_TYPE_UNKNOWN
     jr z, jr_002_4606
 
-    ld e, REGION_REGFILE
+    ld e, REGION_TYPE_REGFILE
     cp $20
     jr z, jr_002_4606
 
-    ld e, REGION_ZEROFILE
+    ld e, REGION_TYPE_ZEROFILE
     cp $40
     jp nz, Jump_002_4464
 
@@ -887,7 +887,7 @@ jr_002_4606:
     jp c, Jump_002_46ee
 
     ld a, e
-    cp REGION_ZEROFILE
+    cp REGION_TYPE_ZEROFILE
     jr nz, .checkBlockSize
 
     ld a, h
@@ -952,9 +952,9 @@ jr_002_4606:
     pop de
     pop hl
     push hl
-    call Call_002_4450
+    call UnlockCRAM
     ld a, e
-    cp REGION_ZEROFILE
+    cp REGION_TYPE_ZEROFILE
     jr z, jr_002_467f
 
     push de
@@ -1077,31 +1077,31 @@ jr_002_46c5:
     or e
     jr nz, jr_002_46df
 
-    ld de, $a002
+    ld de, REGION_BEGIN
     ldh a, [hRAMBank]
     inc a
-    call Call_002_4475
+    call SetRAMBank
     call Call_002_4877
     ldh a, [hRAMBank]
     dec a
-    call Call_002_4475
+    call SetRAMBank
     jr jr_002_46e2
 
 jr_002_46df:
     call Call_002_4877
 
 jr_002_46e2:
-    ld de, $0006
+    ld de, HEADER_SIZE
     add hl, de
     call Call_002_470a
     add sp, $02
-    jp Jump_002_443d
+    jp RestoreRAMBankAndLock
 
 
 Jump_002_46ee:
     pop hl
     set 7, h
-    jp Jump_002_445e
+    jp RestoreRAMBank
 
 
 Call_002_46f4:
@@ -1110,7 +1110,7 @@ Jump_002_46f4:
     push af
 
 jr_002_46f7:
-    call FindKissIndex
+    call LocateOwnerRegion
     ld d, $44
     call Call_002_471e
     jp c, Jump_002_4466
@@ -1170,7 +1170,7 @@ jr_002_4739:
     jr z, jr_002_475b
 
     dec a
-    call Call_002_4475
+    call SetRAMBank
 
 jr_002_4742:
     ld l, c
@@ -1179,19 +1179,19 @@ jr_002_4742:
     cp d
     ret z
 
-    cp REGION_FREE
+    cp REGION_TYPE_FREE
     jr z, jr_002_471e
 
-    cp REGION_ZEROFILE
+    cp REGION_TYPE_ZEROFILE
     jr z, jr_002_471e
 
-    cp REGION_REGFILE
+    cp REGION_TYPE_REGFILE
     jr z, jr_002_471e
 
-    cp REGION_UNKNOWN
+    cp REGION_TYPE_UNKNOWN
     jr z, jr_002_471e
 
-    cp REGION_SPECIAL
+    cp REGION_TYPE_SPECIAL
     jr z, jr_002_471e
 
 jr_002_475b:
@@ -1238,15 +1238,15 @@ Call_002_4773:
 
     ldh a, [hRAMBank]
     dec a
-    call Call_002_4475
+    call SetRAMBank
     push hl
-    ld hl, $c000
+    ld hl, REGION_END
     call Call_002_483d
     pop hl
     push af
     ldh a, [hRAMBank]
     inc a
-    call Call_002_4475
+    call SetRAMBank
     pop af
     ret
 
@@ -1259,15 +1259,15 @@ Call_002_4791:
 
     ldh a, [hRAMBank]
     inc a
-    call Call_002_4475
+    call SetRAMBank
     push de
-    ld de, $a002
+    ld de, REGION_BEGIN
     call Call_002_4856
     pop de
     push af
     ldh a, [hRAMBank]
     dec a
-    call Call_002_4475
+    call SetRAMBank
     pop af
     ret
 
@@ -1288,7 +1288,7 @@ trap_e7_47b7::
     or l
     jp z, Jump_002_46f4
 
-    ld de, $fffa
+    ld de, -HEADER_SIZE
     add hl, de
     ccf
     ret c
@@ -1302,7 +1302,7 @@ Call_002_47c5:
     ld d, h
     ldh a, [hRAMBank]
     push af
-    call trap_fb_4586
+    call TrapAddrGBToCRAM
     push hl
     ld a, [hl+]
     cp $53
@@ -1321,7 +1321,7 @@ Call_002_47c5:
     call Call_002_4791
     jp nz, Jump_002_4466
 
-    call Call_002_4450
+    call UnlockCRAM
     ld a, $46
     ld [hl+], a
     cpl
@@ -1355,12 +1355,12 @@ jr_002_4808:
 
     ldh a, [hRAMBank]
     inc a
-    call Call_002_4475
-    ld de, $a002
+    call SetRAMBank
+    ld de, REGION_BEGIN
     call Call_002_4877
     ldh a, [hRAMBank]
     dec a
-    call Call_002_4475
+    call SetRAMBank
     jr jr_002_4835
 
 jr_002_4824:
@@ -1379,7 +1379,7 @@ jr_002_4832:
     call Call_002_4877
 
 jr_002_4835:
-    jp Jump_002_443d
+    jp RestoreRAMBankAndLock
 
 
 Jump_002_4838:
@@ -1485,7 +1485,7 @@ Call_002_4889:
     ld d, h
     ldh a, [hRAMBank]
     push af
-    call trap_fb_4586
+    call TrapAddrGBToCRAM
     push hl
     ld a, [hl+]
     cpl
@@ -1538,10 +1538,10 @@ jr_002_48ce:
     ld a, d
     sbc b
     ld h, a
-    ld de, $fffa
+    ld de, -HEADER_SIZE
     add hl, de
     xor a
-    jp Jump_002_445e
+    jp RestoreRAMBank
 
 
 Call_002_48dc:
@@ -1551,7 +1551,7 @@ Call_002_48dc:
     ld d, a
     ld a, [hl]
     ldh [$97], a
-    ld hl, $fffa
+    ld hl, -HEADER_SIZE
     add hl, de
     ccf
     ret c
@@ -1572,8 +1572,8 @@ trap_ef_48ec::
     push af
     push de
     ld de, $fe00
-    call Call_002_4450
-    call trap_fb_4586
+    call UnlockCRAM
+    call TrapAddrGBToCRAM
     ld b, a
     pop de
 
@@ -1597,7 +1597,7 @@ jr_002_4904:
     ld a, $78
     sub b
     ldh [$b7], a
-    jp Jump_002_443d
+    jp RestoreRAMBankAndLock
 
 
 jr_002_491d:
@@ -1609,7 +1609,7 @@ jr_002_491e:
     dec b
     jr nz, jr_002_4904
 
-    jp Jump_002_443d
+    jp RestoreRAMBankAndLock
 
 
 trap_f1_4926::
@@ -1618,7 +1618,7 @@ trap_f1_4926::
     push af
     push af
     ld de, $fe00
-    call trap_fb_4586
+    call TrapAddrGBToCRAM
     ld b, a
     ld c, $00
 
@@ -1640,7 +1640,7 @@ jr_002_4939:
     sub c
     ld b, a
     pop af
-    jp z, Jump_002_445e
+    jp z, RestoreRAMBank
 
     push bc
     ld hl, $0000
@@ -1668,7 +1668,7 @@ jr_002_495d:
     call Call_002_46f4
     pop de
     pop bc
-    jp Jump_002_445e
+    jp RestoreRAMBank
 
 
 trap_8f_496e::
@@ -1692,7 +1692,7 @@ trap_8f_496e::
     bit 0, a
     jr z, jr_002_49dc
 
-    ld hl, $fffa
+    ld hl, -HEADER_SIZE
     add hl, de
     jr nc, jr_002_49dc
 
@@ -1703,7 +1703,7 @@ trap_8f_496e::
     push bc
     ldh a, [hRAMBank]
     push af
-    call Call_002_4591
+    call RealAddrGBToCRAM
     ld bc, $000a
     add hl, bc
     ld c, [hl]
@@ -1713,7 +1713,7 @@ trap_8f_496e::
     inc hl
     ld d, [hl]
     pop af
-    call Call_002_4475
+    call SetRAMBank
     pop bc
     ld a, c
     ld bc, $0000
@@ -1740,8 +1740,8 @@ jr_002_49ba:
     push de
     push bc
     ld e, $40
-    call Call_002_45a8
-    call Call_002_4450
+    call LocateOwnerRegionOffset
+    call UnlockCRAM
     pop bc
     pop de
     ld a, [hl]
@@ -1757,8 +1757,8 @@ jr_002_49ba:
     adc b
     ld [hl], a
     pop af
-    call Call_002_4475
-    call Call_002_4442
+    call SetRAMBank
+    call LockCRAM
 
 Jump_002_49dc:
 jr_002_49dc:
@@ -1778,7 +1778,7 @@ trap_e8_49de::
 
     ld a, [hl]
     ldh [$97], a
-    ld hl, $fffa
+    ld hl, -HEADER_SIZE
     add hl, de
     jr nc, jr_002_49fc
 
@@ -1788,7 +1788,7 @@ trap_e8_49de::
 
     ldh a, [hRAMBank]
     push af
-    call Call_002_4591
+    call RealAddrGBToCRAM
     jr jr_002_4a0b
 
 jr_002_49fc:
@@ -1807,7 +1807,7 @@ jr_002_4a00:
 jr_002_4a05:
     ldh a, [hRAMBank]
     push af
-    call FindKissIndex
+    call LocateOwnerRegion
 
 jr_002_4a0b:
     ld e, l
@@ -1840,19 +1840,19 @@ jr_002_4a24:
     jr z, jr_002_4a00
 
     dec a
-    call Call_002_4475
+    call SetRAMBank
 
 jr_002_4a2d:
     ld a, [hl]
-    cp REGION_REGFILE
+    cp REGION_TYPE_REGFILE
     jr z, jr_002_4a36
 
-    cp REGION_ZEROFILE
+    cp REGION_TYPE_ZEROFILE
     jr nz, jr_002_4a0b
 
 jr_002_4a36:
     call Call_002_4a4b
-    jp Jump_002_445e
+    jp RestoreRAMBank
 
 
 trap_fc_4a3c::
@@ -1860,13 +1860,13 @@ trap_fc_4a3c::
     ldh [$97], a
     ldh a, [hRAMBank]
     push af
-    call Call_002_4591
+    call RealAddrGBToCRAM
     call Call_002_4a4f
-    jp Jump_002_445e
+    jp RestoreRAMBank
 
 
 Call_002_4a4b:
-    ld de, $0006
+    ld de, HEADER_SIZE
     add hl, de
 
 Call_002_4a4f:
@@ -2032,7 +2032,7 @@ jr_002_4adf:
     ld [hl], a
     inc hl
     push hl
-    ld bc, $0006
+    ld bc, HEADER_SIZE
     add hl, bc
     ld b, [hl]
     inc hl
@@ -2085,7 +2085,7 @@ jr_002_4adf:
     ld de, $ff46
     ld bc, $000a
     push bc
-    call trap_e4_4577
+    call TrapFileRead
     pop bc
     pop hl
     add hl, bc
@@ -2111,8 +2111,8 @@ jr_002_4b5c:
     push hl
     push hl
     ld d, $fe
-    call Call_002_4450
-    call trap_fb_4586
+    call UnlockCRAM
+    call TrapAddrGBToCRAM
     ld b, a
 
 jr_002_4b6c:
@@ -2156,7 +2156,7 @@ jr_002_4b7e:
     ld a, [de]
     ld [hl], a
     pop hl
-    jp Jump_002_443d
+    jp RestoreRAMBankAndLock
 
 
 trap_ea_4b98::
@@ -2282,7 +2282,7 @@ trap_f0_4bed::
     ld hl, sp+$06
     ld de, $ff46
     ld bc, $000a
-    call trap_e4_4577
+    call TrapFileRead
     pop hl
     push hl
     ld a, [hl+]
@@ -2417,7 +2417,7 @@ trap_eb_4c9a::
     pop hl
     push bc
     ldh [$97], a
-    call trap_e4_4577
+    call TrapFileRead
     pop bc
     pop hl
     ret
@@ -6991,7 +6991,7 @@ jr_002_5fbd:
 trap_b0_5ff2::
     di
     ld de, code_02_6036
-    ld hl, $c000
+    ld hl, REGION_END
     ld bc, $001c
     trap MemCopy
     ld a, [$000f]

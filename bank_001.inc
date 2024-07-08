@@ -95,7 +95,7 @@ Jump_001_410e:
     ld hl, $ffc0
     ld de, $ff44
     ld bc, $0001
-    trap $e4
+    trap FileRead
     ld a, $ff
     ldh [$c2], a
     xor a
@@ -299,14 +299,14 @@ Call_001_4235:
     push de
     ld d, $fe
     ld bc, $0004
-    trap $e4
+    trap FileRead
     pop de
     ld hl, sp+$04
     push de
     ld e, d
     ld d, $fe
     ld bc, $0004
-    trap $e4
+    trap FileRead
     pop de
     ld hl, sp+$04
     push de
@@ -635,7 +635,7 @@ Jump_001_441d:
     ld hl, $c400
     ld de, $ff46
     ld bc, $000a
-    trap $e4
+    trap FileRead
     xor a
     ld [$c40a], a
     ld hl, $c400
@@ -648,7 +648,7 @@ Jump_001_441d:
     ld hl, sp+$00
     ld de, $ff40
     ld bc, $0004
-    trap $e4
+    trap FileRead
     pop de
     pop bc
     ld hl, $c400
@@ -3522,7 +3522,7 @@ Call_001_66e1:
     ld bc, $003a
     push hl
     push bc
-    trap $e4
+    trap FileRead
     pop bc
     pop hl
     ret
@@ -4447,7 +4447,7 @@ code_01_6bdc::
     jr c, jr_001_6c01
 
     call Call_001_6c05
-    ld a, kIRModeOn
+    ld a, kIRReadWrite
     ld [rIRMode], a
 
 jr_001_6bf8:
@@ -4950,7 +4950,7 @@ jr_001_6e2b:
 
 
 trap_65_6e2e::
-    trap $e0
+    trap KissClearAll
     ld hl, $4000
     ld de, $fe00
 
@@ -5000,7 +5000,7 @@ trap_71_6e63::
     ld hl, sp+$02
     ld d, $fe
     ld bc, $0004
-    trap $e4
+    trap FileRead
     pop bc
     pop hl
     pop de
@@ -5535,7 +5535,7 @@ jr_001_7092:
 
     ld hl, $c400
     call Call_001_7118
-    trap $fb
+    trap AddrGBToCRAM
     ld d, h
     ld e, l
 
@@ -5598,7 +5598,7 @@ jr_001_70de:
     and $04
     jp z, Jump_001_705b
 
-    trap $fb
+    trap AddrGBToCRAM
     ld d, h
     ld e, l
     jr jr_001_70ee
@@ -5858,7 +5858,7 @@ trap_6e_71e6::
     ld de, $ff45
     ld bc, $0001
     ld hl, sp+$00
-    trap $e4
+    trap FileRead
     pop hl
     bit 0, l
     ret z
@@ -5874,7 +5874,7 @@ trap_6e_71e6::
     ld hl, sp+$00
     ld de, $ff3c
     ld bc, $0004
-    trap $e4
+    trap FileRead
     pop de
     pop bc
     ld a, d
