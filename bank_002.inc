@@ -1093,7 +1093,7 @@ jr_002_46df:
 jr_002_46e2:
     ld de, HEADER_SIZE
     add hl, de
-    call Call_002_470a
+    call AlternateAddrGBToCRAM
     add sp, $02
     jp RestoreRAMBankAndLock
 
@@ -1115,11 +1115,11 @@ jr_002_46f7:
     call Call_002_471e
     jp c, Jump_002_4466
 
-    call Call_002_470a
+    call AlternateAddrGBToCRAM
     call Call_002_47c5
     jr jr_002_46f7
 
-Call_002_470a:
+AlternateAddrGBToCRAM:
     ld a, h
     and $1f
     ld h, a
@@ -1861,7 +1861,7 @@ trap_fc_4a3c::
     ldh a, [hRAMBank]
     push af
     call RealAddrGBToCRAM
-    call Call_002_4a4f
+    call FileCopyHeader
     jp RestoreRAMBank
 
 
@@ -1869,10 +1869,10 @@ Call_002_4a4b:
     ld de, HEADER_SIZE
     add hl, de
 
-Call_002_4a4f:
+FileCopyHeader:
     ld e, l
     ld d, h
-    call Call_002_470a
+    call AlternateAddrGBToCRAM
     push bc
     ld a, l
     ld [bc], a
@@ -1908,34 +1908,34 @@ Call_002_4a4f:
     ld [hl+], a
     ld c, a
     or a
-    jr z, jr_002_4a82
+    jr z, .noVariablePart
 
     push bc
 
-jr_002_4a7b:
+.copyVariablePart::
     ld a, [de]
     inc de
     ld [hl+], a
     dec c
-    jr nz, jr_002_4a7b
+    jr nz, .copyVariablePart
 
     pop bc
 
-jr_002_4a82:
+.noVariablePart::
     pop hl
-    call Call_002_4a88
+    call GetBodyOffset
     pop hl
     ret
 
 
-Call_002_4a88:
+GetBodyOffset:
     ld de, $002e
     bit 0, b
-    jr nz, jr_002_4a90
+    jr nz, .hasHistory
 
     ld e, d
 
-jr_002_4a90:
+.hasHistory::
     ld a, $05
     add c
     ld c, a
@@ -2040,7 +2040,7 @@ jr_002_4adf:
     ld c, [hl]
     pop hl
     push de
-    call Call_002_4a88
+    call GetBodyOffset
     pop de
     pop hl
     push hl

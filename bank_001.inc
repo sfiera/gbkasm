@@ -4995,28 +4995,41 @@ jr_001_6e36:
 
 
 trap_71_6e63::
+    ; Create 4 bytes of scratch space on the stack.
+    ; Save hl and set it to the scratch space addr.
     add sp, -$04
     push hl
     ld hl, sp+$02
+
+    ; Read (e)th index entry to scratch space.
     ld d, $fe
     ld bc, $0004
     trap FileRead
+
+    ; Pop saved hl and index entry. After this:
+    ; * bc contains original value of hl.
+    ; * hl contains CRAM address of file.
+    ; * d contains owner code of file.
+    ; * e contains cartridge code of file.
     pop bc
     pop hl
     pop de
+
+    ; Check if there is a file at this index (hl != 0).
     ld a, l
     or h
-    jr z, jr_001_6e7f
+    jr z, .noFile
 
+    ; Check if this is Kiss Mail (not an installed file).
     ld a, e
     cp $ff
-    jp z, Jump_001_71a1
+    jp z, KissMail
 
     trap $fc
     ret
 
 
-jr_001_6e7f:
+.noFile::
     ld l, c
     ld h, b
     xor a
@@ -5779,7 +5792,7 @@ jr_001_719d:
     ld de, $0006
     add hl, de
 
-Jump_001_71a1:
+KissMail:
     ld e, l
     ld d, h
     push bc
