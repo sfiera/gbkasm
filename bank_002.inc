@@ -5698,21 +5698,21 @@ NoEffect::
 
 
 CtrlCharTable::
-    dw MovePenForward.inc       ; \x01
-    dw MovePenBack              ; \x02
-    dw MovePenForward.vt        ; \x03
-    dw MovePenUp                ; \x04
+    dw MovePenForward.inc       ; \x01: pen.x++
+    dw MovePenBack              ; \x02: pen.x--
+    dw MovePenForward.vt        ; \x03: pen.y++
+    dw MovePenUp                ; \x04: pen.y--
     dw Ctrl05                   ; \x05
     dw CtrlCharTableB.clr3      ; \x06
     dw CtrlCharTableB.set3      ; \x07
     dw CtrlBackspace            ; \x08
-    dw CtrlTab                  ; \x09
-    dw NoEffect                 ; \x0a: no effect
-    dw ResetPen                 ; \x0b
-    dw CtrlClearScreen          ; \x0c
-    dw MovePenForward.cr        ; \x0d
-    dw CtrlCharTableB.hiragana  ; \x0e
-    dw CtrlCharTableB.katakana  ; \x0f
+    dw CtrlTab                  ; \t: horizontal tab
+    dw NoEffect                 ; \n: no effect
+    dw ResetPen                 ; \x0b: pen.x = pen.y = 0
+    dw CtrlClearScreen          ; \x0c: clear screen
+    dw MovePenForward.cr        ; \r: pen.y++; pen.x = 0
+    dw CtrlCharTableB.hiragana  ; \x0e: mode=hiragana
+    dw CtrlCharTableB.katakana  ; \x0f: mode=katakana
 
 CtrlCharTableB::
     dw Ctrl01     ; \x01
@@ -5723,11 +5723,11 @@ CtrlCharTableB::
     dw .clr3      ; \x06
     dw .set3      ; \x07
     dw Ctrl08     ; \x08
-    dw NoEffect   ; \x09: no effect
-    dw NoEffect   ; \x0a: no effect
+    dw NoEffect   ; \t: no effect
+    dw NoEffect   ; \n: no effect
     dw ResetPen   ; \x0b
     dw Ctrl0C     ; \x0c
-    dw Ctrl0D     ; \x0d
+    dw Ctrl0D     ; \r
     dw .hiragana  ; \x0e: mode=hiragana
     dw .katakana  ; \x0f: mode=katakana
     dw .fg0       ; \x10: fg=#fff
