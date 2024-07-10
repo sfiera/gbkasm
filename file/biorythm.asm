@@ -118,7 +118,7 @@ data_0106:
 
 call_0126:
     ld hl, $0003
-    trap BitAnd16
+    trap MathAnd16
     ld a, l
     ret
 

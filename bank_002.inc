@@ -6,19 +6,19 @@
 SECTION "ROM Bank $002", ROMX[$4000], BANK[$2]
 
 traps2::
-    dw TrapBitXor16         ; trap $80
-    dw TrapBitOr16          ; trap $81
-    dw TrapBitAnd16         ; trap $82
-    dw TrapBitCpl16         ; trap $83
+    dw TrapMathXor16        ; trap $80
+    dw TrapMathOr16         ; trap $81
+    dw TrapMathAnd16        ; trap $82
+    dw TrapMathCpl16        ; trap $83
     dw trap_84_5283         ; trap $84
     dw trap_85_52b3         ; trap $85
     dw trap_86_52c8         ; trap $86
-    dw trap_87_52de         ; trap $87
-    dw trap_88_52e0         ; trap $88
+    dw TrapMathAdd16        ; trap $87
+    dw TrapMathSub16        ; trap $88
     dw trap_89_52e7         ; trap $89
     dw trap_8a_5322         ; trap $8a
-    dw trap_8b_537a         ; trap $8b
-    dw trap_8c_5384         ; trap $8c
+    dw TrapMathNeg16        ; trap $8b
+    dw TrapMathAbs16        ; trap $8c
     dw TrapRandInit         ; trap $8d
     dw TrapRandNext         ; trap $8e
     dw trap_8f_496e         ; trap $8f
@@ -3873,7 +3873,7 @@ jr_002_5263:
     ret
 
 
-TrapBitXor16::
+TrapMathXor16::
     ld a, h
     xor d
     ld h, a
@@ -3883,7 +3883,7 @@ TrapBitXor16::
     ret
 
 
-TrapBitOr16::
+TrapMathOr16::
     ld a, h
     or d
     ld h, a
@@ -3893,7 +3893,7 @@ TrapBitOr16::
     ret
 
 
-TrapBitAnd16::
+TrapMathAnd16::
     ld a, h
     and d
     ld h, a
@@ -3903,7 +3903,7 @@ TrapBitAnd16::
     ret
 
 
-TrapBitCpl16::
+TrapMathCpl16::
     ld a, h
     cpl
     ld h, a
@@ -4007,12 +4007,12 @@ jr_002_52da:
     ret
 
 
-trap_87_52de::
+TrapMathAdd16::
     add hl, de
     ret
 
 
-trap_88_52e0::
+TrapMathSub16::
     ld a, e
     sub l
     ld l, a
@@ -4160,7 +4160,7 @@ jr_002_5364:
     pop af
     jr nc, jr_002_536e
 
-    call trap_8b_537a
+    call TrapMathNeg16
 
 jr_002_536e:
     ld a, l
@@ -4174,7 +4174,7 @@ jr_002_5378:
     pop af
     ret nc
 
-trap_8b_537a::
+TrapMathNeg16::
     ld a, h
     cpl
     ld h, a
@@ -4188,11 +4188,11 @@ trap_8b_537a::
     ret
 
 
-trap_8c_5384::
+TrapMathAbs16::
     bit 7, h
     ret z
 
-    jr trap_8b_537a
+    jr TrapMathNeg16
 
 TrapRandNext::
     ld hl, $c3b2
