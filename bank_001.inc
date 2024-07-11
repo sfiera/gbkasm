@@ -201,7 +201,7 @@ Jump_001_41ab:
 
     push de
     ld hl, $c500
-    trap $71
+    trap FileGetHeader
     pop de
     ld hl, $c500
     ld a, [hl+]
@@ -1142,7 +1142,7 @@ jr_001_47a6:
     push bc
     push de
     push hl
-    trap $71
+    trap FileGetHeader
     pop hl
     pop de
     pop bc

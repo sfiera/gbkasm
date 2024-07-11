@@ -97,7 +97,7 @@ Menu::
     add [hl]
     ld hl, VarFile
     ld e, a
-    trap $71
+    trap FileGetHeader
     callx DrawTitle
     pop af
 
@@ -190,7 +190,7 @@ AdjustPageIndex::
 ShowInfo::
     ld hl, VarFile
     ld e, a
-    trap $71
+    trap FileGetHeader
 
     ; Load base address from start of result.
     ; If there is no file, return now.

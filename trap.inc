@@ -33,6 +33,7 @@ DEF DrawString        EQU $69
 DEF DrawStringList    EQU $6a
 DEF FileSearch        EQU $6b
 
+DEF FileGetHeader     EQU $71
 DEF IRListen          EQU $72
 DEF IRClose           EQU $73
 DEF IROpen            EQU $7c
