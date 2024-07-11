@@ -149,3 +149,5 @@ Homebrew Files
      * Description
    * * `hello_w.asm <file/hello_w.asm>`_
      * `“Hello, World!” program <https://en.wikipedia.org/wiki/%22Hello,_World!%22_program>`_ for GBKiss
+   * * `cksum.asm <file/cksum.asm>`_
+     * Lists files and calculates CRC-32
