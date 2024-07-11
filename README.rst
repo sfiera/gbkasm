@@ -121,11 +121,11 @@ Other Official Files
    * * `family_s.asm <file/family_s.asm>`_
      * `Family Shot <https://gbkiss.org/file/family-shot>`_
      * Hudson Website
-     * Prints photo from Pocket Family to Game Boy Printer
+     * Prints photo to Game Boy Printer
    * * `kissmon2.asm <file/kissmon2.asm>`_
      * `Kiss-Mon 2 <https://gbkiss.org/file/kiss-mon-2>`_
      * `Pocket Bomberman <https://gbkiss.org/cart/apoj>`_
-     * Upgraded Kiss-Mon with Levels and custom portraits
+     * Kiss-Mon with custom portraits and levels
    * * `passwords.asm <file/passwords.asm>`_
      * `Mail <https://gbkiss.org/file/mail>`_
      * `Kiss Mail <https://gbkiss.org/file/kiss-mail>`_
@@ -133,7 +133,7 @@ Other Official Files
    * * `saita.asm <file/saita.asm>`_
      * `Saita Saita <https://gbkiss.org/file/saita>`_
      * Hudson Website
-     * Adds children’s song to Pocket Family alarm list
+     * Children’s song as Pocket Family alarm
    * * `simula1.asm <file/simula1.asm>`_
      * `Icon <https://gbkiss.org/file/icon>`_
      * `Icon-Send`_
@@ -150,4 +150,4 @@ Homebrew Files
    * * `hello_w.asm <file/hello_w.asm>`_
      * `“Hello, World!” program <https://en.wikipedia.org/wiki/%22Hello,_World!%22_program>`_ for GBKiss
    * * `cksum.asm <file/cksum.asm>`_
-     * Lists files and calculates CRC-32
+     * Lists files and calculates `CRC-32 <https://en.wikipedia.org/wiki/Cyclic_redundancy_check>`_
