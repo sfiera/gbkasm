@@ -167,20 +167,19 @@ PrevPage::
 NextPage::
     ld hl, VarPageIndex
     ld a, [hl]
-    inc a
-    cp PAGE_COUNT
-    jr nz, SetPageStart
-    add -PAGE_COUNT
+    sub PAGE_COUNT - 1
+    jr nc, SetPageStart
+    add PAGE_COUNT
     jr SetPageStart
 
 SetPageStart::
     ld [hl], a
 
     ; Multiply page index by 10 (PAGE_SIZE)
-    rlca
-    rlca
+    add a
+    add a
     add [hl]
-    rlca
+    add a
     inc hl
     ld [hl], a  ; [VarPageStart] = [VarPageIndex] * 10
 
@@ -502,7 +501,8 @@ CalcFileCRC::
     ; so the value in memory can be used directly
     ; but it’s necessary to check if 1 or 2 bytes is needed.
 .appendLength
-    ld a, [VarFile.size + 1]
+    ld hl, VarFile.size + 1
+    ld a, [hl-]
     or a
     ld a, 2
     jr nz, .largeFile
@@ -510,7 +510,6 @@ CalcFileCRC::
     dec a
 
 .largeFile
-    ld hl, VarFile.size
     callx AppendCRCBlock
 
     ; fall through
