@@ -73,8 +73,8 @@ Main::
 
     ; Loop until ExitToMenu is called.
 .loop
-    callx Menu
-    jr .loop
+    pushx .loop
+    ; fall through
 
 
 ; Run file menu for current page of files.
@@ -496,8 +496,8 @@ CalcFileCRC::
     ld hl, VarTmp
     callx AppendCRCBlock
 
-    ; Append the length of the file and sum it.
-    ; This is the common practice for CRC32 of files.
+    ; Append the length of the file and calculate the sum.
+    ; This is common practice for CRC32 file checksums.
     ; The sum uses little-endian order, with no trailing zeroes,
     ; so the value in memory can be used directly
     ; but it’s necessary to check if 1 or 2 bytes is needed.
@@ -513,7 +513,26 @@ CalcFileCRC::
     ld hl, VarFile.size
     callx AppendCRCBlock
 
-    callx FinishCRC
+    ; fall through
+
+
+; Finalizes CRC-32 calculation.
+;
+;   bcde [inout]: CRC-32 checksum in progress
+;
+FinishCRC::
+    ld a, b
+    cpl
+    ld b, a
+    ld a, c
+    cpl
+    ld c, a
+    ld a, d
+    cpl
+    ld d, a
+    ld a, e
+    cpl
+    ld e, a
     ret
 
 
@@ -561,26 +580,6 @@ AppendCRCBlock::
     pop af
     dec a
     jr nz, AppendCRCBlock
-    ret
-
-
-; Finalizes CRC-32 calculation.
-;
-;   bcde [inout]: CRC-32 checksum in progress
-;
-FinishCRC::
-    ld a, b
-    cpl
-    ld b, a
-    ld a, c
-    cpl
-    ld c, a
-    ld a, d
-    cpl
-    ld d, a
-    ld a, e
-    cpl
-    ld e, a
     ret
 
 
