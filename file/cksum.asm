@@ -132,16 +132,17 @@ Menu::
     jr z, PrevPage   ; if (a == 12) PrevPage()
     jr nc, NextPage  ; if (a > 12) NextPage()
 
+    ; else ShowInfo(a + [VarPageStart])
     ld hl, VarPageStart
     add [hl]
-    jr ShowInfo      ; else ShowInfo(a + [VarPageStart])
+    jr ShowInfo
 
 
 MenuConfig::
-    db PAGE_SIZE + 2  ; item count
-    db 0, 0           ; initial position
+    db PAGE_SIZE + 2  ; item count (including prev/next page)
+    db 0, 0           ; position of first item
     db "> "           ; cursor characters
-    dw 0              ; update callback
+    dw 0              ; update callback (none)
 
 PrevNextPageStrings:
     dk "PREV PAGE\0"
@@ -164,6 +165,13 @@ NextPage::
     ld b, PAGE_COUNT - 1
     ; fall through
 
+; Previous and next page are handled with the same subtraction,
+; but different subtrahends: sub 1 for prev and sub 9 for next.
+; It would be more straightforward to use add 1 for next page,
+; but within mod-10 arithmetic sub 9 is the same thing,
+; and sub 9 allows use of the same code for both prev and next.
+; If the value is less than 9, sub 9 will overflow and set c,
+; so the fix is to add 10, same as sub 1 for previous page.
 AdjustPageIndex::
     ld hl, VarPageIndex
     ld a, [hl]
@@ -173,7 +181,7 @@ AdjustPageIndex::
     add PAGE_COUNT
 
 .setPageStart
-    ld [hl], a
+    ld [hl], a  ; [VarPageIndex] = a
 
     ; Multiply page index by 10 (PAGE_SIZE)
     add a
@@ -193,7 +201,7 @@ ShowInfo::
     trap FileGetHeader
 
     ; Load base address from start of result.
-    ; If there is no file, return now.
+    ; If zero, there is no file at this index, so return.
     ld hl, VarFile.addr
     ld a, [hl+]
     ld l, a
