@@ -157,22 +157,22 @@ Exit::
 
 
 PrevPage::
-    ld hl, VarPageIndex
-    ld a, [hl]
-    sub 1  ; dec a doesn’t set c
-    jr nc, SetPageStart
-    add PAGE_COUNT
-    jr SetPageStart
+    ld b, 1
+    jr AdjustPageIndex
 
 NextPage::
+    ld b, PAGE_COUNT - 1
+    ; fall through
+
+AdjustPageIndex::
     ld hl, VarPageIndex
     ld a, [hl]
-    sub PAGE_COUNT - 1
-    jr nc, SetPageStart
-    add PAGE_COUNT
-    jr SetPageStart
+    sub b
+    jr nc, .setPageStart
 
-SetPageStart::
+    add PAGE_COUNT
+
+.setPageStart
     ld [hl], a
 
     ; Multiply page index by 10 (PAGE_SIZE)
