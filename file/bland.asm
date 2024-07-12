@@ -3916,261 +3916,261 @@ data_b687:
     dw data_b873 
 
 data_b697:
-    db $04
-    db $f9, $ff, $00, $80
-    db $f9, $07, $01, $80
-    db $01, $ff, $02, $80
-    db $01, $07, $03, $80
+    db 4
+    db -7, -1, $00, OAMF_PRI
+    db -7, +7, $01, OAMF_PRI
+    db +1, -1, $02, OAMF_PRI
+    db +1, +7, $03, OAMF_PRI
 
 data_b6a8:
-    db $03
-    db $f9, $00, $04, $80
-    db $01, $ff, $05, $80
-    db $01, $07, $06, $80
+    db 3
+    db -7,  0, $04, OAMF_PRI
+    db +1, -1, $05, OAMF_PRI
+    db +1, +7, $06, OAMF_PRI
 
 data_b6b5:
-    db $03
-    db $f9, $00, $04, $80
-    db $01, $ff, $07, $80
-    db $01, $07, $08, $80
+    db 3
+    db -7,  0, $04, OAMF_PRI
+    db +1, -1, $07, OAMF_PRI
+    db +1, +7, $08, OAMF_PRI
 
 data_b6c2:
-    db $03
-    db $f9, $00, $09, $80
-    db $01, $ff, $0a, $80
-    db $01, $07, $0b, $80
+    db 3
+    db -7,  0, $09, OAMF_PRI
+    db +1, -1, $0a, OAMF_PRI
+    db +1, +7, $0b, OAMF_PRI
 
 data_b6cf:
-    db $03
-    db $f9, $00, $09, $a0
-    db $01, $01, $0a, $a0
-    db $01, $f9, $0b, $a0
+    db 3
+    db -7,  0, $09, OAMF_PRI | OAMF_XFLIP
+    db +1, +1, $0a, OAMF_PRI | OAMF_XFLIP
+    db +1, -7, $0b, OAMF_PRI | OAMF_XFLIP
 
 data_b6dc:
-    db $03
-    db $f9, $ff, $0c, $80
-    db $01, $ff, $0d, $80
-    db $01, $07, $0e, $80
+    db 3
+    db -7, -1, $0c, OAMF_PRI
+    db +1, -1, $0d, OAMF_PRI
+    db +1, +7, $0e, OAMF_PRI
 
 data_b6e9:
-    db $03
-    db $f9, $01, $0c, $a0
-    db $01, $01, $0d, $a0
-    db $01, $f9, $0e, $a0
+    db 3
+    db -7, +1, $0c, OAMF_PRI | OAMF_XFLIP
+    db +1, +1, $0d, OAMF_PRI | OAMF_XFLIP
+    db +1, -7, $0e, OAMF_PRI | OAMF_XFLIP
 
 data_b6f6:
-    db $03
-    db $f9, $ff, $0f, $80
-    db $01, $ff, $10, $80
-    db $01, $07, $11, $80
+    db 3
+    db -7, -1, $0f, OAMF_PRI
+    db +1, -1, $10, OAMF_PRI
+    db +1, +7, $11, OAMF_PRI
 
 data_b703:
-    db $03
-    db $f9, $ff, $12, $80
-    db $01, $ff, $13, $80
-    db $01, $07, $14, $80
+    db 3
+    db -7, -1, $12, OAMF_PRI
+    db +1, -1, $13, OAMF_PRI
+    db +1, +7, $14, OAMF_PRI
 
 data_b710:
-    db $03
-    db $f9, $ff, $12, $80
-    db $01, $ff, $15, $80
-    db $01, $07, $14, $80
+    db 3
+    db -7, -1, $12, OAMF_PRI
+    db +1, -1, $15, OAMF_PRI
+    db +1, +7, $14, OAMF_PRI
 
 data_b71d:
-    db $03
-    db $f9, $ff, $16, $80
-    db $01, $ff, $17, $80
-    db $01, $07, $18, $80
+    db 3
+    db -7, -1, $16, OAMF_PRI
+    db +1, -1, $17, OAMF_PRI
+    db +1, +7, $18, OAMF_PRI
 
 data_b72a:
-    db $03
-    db $f9, $01, $16, $a0
-    db $01, $01, $17, $a0
-    db $01, $f9, $18, $a0
+    db 3
+    db -7, +1, $16, OAMF_PRI | OAMF_XFLIP
+    db +1, +1, $17, OAMF_PRI | OAMF_XFLIP
+    db +1, -7, $18, OAMF_PRI | OAMF_XFLIP
 
 data_b737:
-    db $03
-    db $f9, $ff, $19, $80
-    db $01, $ff, $1a, $80
-    db $01, $07, $1b, $80
+    db 3
+    db -7, -1, $19, OAMF_PRI
+    db +1, -1, $1a, OAMF_PRI
+    db +1, +7, $1b, OAMF_PRI
 
 data_b744:
-    db $03
-    db $f9, $01, $19, $a0
-    db $01, $01, $1a, $a0
-    db $01, $f9, $1b, $a0
+    db 3
+    db -7, +1, $19, OAMF_PRI | OAMF_XFLIP
+    db +1, +1, $1a, OAMF_PRI | OAMF_XFLIP
+    db +1, -7, $1b, OAMF_PRI | OAMF_XFLIP
 
 data_b751:
-    db $04
-    db $f9, $ff, $00, $80
-    db $f9, $07, $01, $80
-    db $01, $ff, $1c, $80
-    db $01, $07, $03, $80
+    db 4
+    db -7, -1, $00, OAMF_PRI
+    db -7, +7, $01, OAMF_PRI
+    db +1, -1, $1c, OAMF_PRI
+    db +1, +7, $03, OAMF_PRI
 
 data_b762:
-    db $03
-    db $f9, $00, $04, $80
-    db $01, $ff, $1d, $80
-    db $01, $07, $06, $80
+    db 3
+    db -7,  0, $04, OAMF_PRI
+    db +1, -1, $1d, OAMF_PRI
+    db +1, +7, $06, OAMF_PRI
 
 data_b76f:
-    db $03
-    db $f9, $00, $04, $80
-    db $01, $ff, $1e, $80
-    db $01, $07, $08, $80
+    db 3
+    db -7,  0, $04, OAMF_PRI
+    db +1, -1, $1e, OAMF_PRI
+    db +1, +7, $08, OAMF_PRI
 
 data_b77c:
-    db $03
-    db $f9, $ff, $0f, $80
-    db $01, $ff, $1f, $80
-    db $01, $07, $11, $80
+    db 3
+    db -7, -1, $0f, OAMF_PRI
+    db +1, -1, $1f, OAMF_PRI
+    db +1, +7, $11, OAMF_PRI
 
 data_b789:
-    db $03
-    db $f9, $ff, $12, $80
-    db $01, $ff, $20, $80
-    db $01, $07, $14, $80
+    db 3
+    db -7, -1, $12, OAMF_PRI
+    db +1, -1, $20, OAMF_PRI
+    db +1, +7, $14, OAMF_PRI
 
 data_b796:
-    db $03
-    db $f9, $ff, $12, $80
-    db $01, $ff, $21, $80
-    db $01, $07, $14, $80
+    db 3
+    db -7, -1, $12, OAMF_PRI
+    db +1, -1, $21, OAMF_PRI
+    db +1, +7, $14, OAMF_PRI
 
 data_b7a3:
-    db $04
-    db $f9, $ff, $00, $00
-    db $f9, $07, $01, $00
-    db $01, $ff, $22, $00
-    db $01, $07, $03, $00
+    db 4
+    db -7, -1, $00, 0
+    db -7, +7, $01, 0
+    db +1, -1, $22, 0
+    db +1, +7, $03, 0
 
 data_b7b4:
-    db $03
-    db $f9, $ff, $0f, $00
-    db $01, $ff, $23, $00
-    db $01, $07, $11, $00
+    db 3
+    db -7, -1, $0f, 0
+    db +1, -1, $23, 0
+    db +1, +7, $11, 0
 
 data_b7c1:
-    db $04
-    db $f9, $ff, $00, $00
-    db $f9, $07, $01, $00
-    db $01, $ff, $24, $00
-    db $01, $07, $03, $00
+    db 4
+    db -7, -1, $00, 0
+    db -7, +7, $01, 0
+    db +1, -1, $24, 0
+    db +1, +7, $03, 0
 
 data_b7d2:
-    db $03
-    db $f9, $ff, $0f, $00
-    db $01, $ff, $25, $00
-    db $01, $07, $11, $00
+    db 3
+    db -7, -1, $0f, 0
+    db +1, -1, $25, 0
+    db +1, +7, $11, 0
 
 data_b7df:
-    db $03
-    db $f9, $ff, $0c, $00
-    db $01, $ff, $26, $00
-    db $01, $07, $27, $00
+    db 3
+    db -7, -1, $0c, 0
+    db +1, -1, $26, 0
+    db +1, +7, $27, 0
 
 data_b7ec:
-    db $03
-    db $f9, $ff, $0c, $20
-    db $01, $f9, $27, $20
-    db $01, $01, $26, $20
+    db 3
+    db -7, -1, $0c, OAMF_XFLIP
+    db +1, -7, $27, OAMF_XFLIP
+    db +1, +1, $26, OAMF_XFLIP
 
 data_b7f9:
-    db $02
-    db $01, $ff, $28, $00
-    db $01, $07, $29, $00
+    db 2
+    db +1, -1, $28, 0
+    db +1, +7, $29, 0
 
 data_b802:
-    db $02
-    db $01, $f9, $29, $20
-    db $01, $01, $28, $20
+    db 2
+    db +1, -7, $29, OAMF_XFLIP
+    db +1, +1, $28, OAMF_XFLIP
 
 data_b80b:
-    db $03
-    db $f8, $00, $2a, $00
-    db $00, $ff, $2b, $00
-    db $00, $07, $2c, $00
+    db 3
+    db -8,  0, $2a, 0
+    db  0, -1, $2b, 0
+    db  0, +7, $2c, 0
 
 data_b818:
-    db $03
-    db $f8, $00, $2a, $20
-    db $00, $f9, $2c, $20
-    db $00, $01, $2b, $20
+    db 3
+    db -8,  0, $2a, OAMF_XFLIP
+    db  0, -7, $2c, OAMF_XFLIP
+    db  0, +1, $2b, OAMF_XFLIP
 
 data_b825:
-    db $03
-    db $f8, $00, $2d, $00
-    db $00, $ff, $2e, $00
-    db $00, $07, $2f, $00
+    db 3
+    db -8,  0, $2d, 0
+    db  0, -1, $2e, 0
+    db  0, +7, $2f, 0
 
 data_b832:
-    db $03
-    db $f8, $00, $2d, $20
-    db $00, $f9, $2f, $20
-    db $00, $01, $2e, $20
+    db 3
+    db -8,  0, $2d, OAMF_XFLIP
+    db  0, -7, $2f, OAMF_XFLIP
+    db  0, +1, $2e, OAMF_XFLIP
 
 data_b83f:
-    db $01
-    db $00, $00, $30, $00
+    db 1
+    db  0,  0, $30, 0
 
 data_b844:
-    db $01
-    db $00, $00, $31, $00
+    db 1
+    db  0,  0, $31, 0
 
 data_b849:
-    db $01
-    db $00, $00, $30, $20
+    db 1
+    db  0,  0, $30, OAMF_XFLIP
 
 data_b84e:
-    db $01
-    db $00, $00, $32, $00
+    db 1
+    db  0,  0, $32, 0
 
 data_b853:
-    db $01
-    db $00, $00, $33, $00
+    db 1
+    db  0,  0, $33, 0
 
 data_b858:
-    db $03
-    db $f9, $00, $34, $00
-    db $01, $00, $35, $00
-    db $01, $08, $36, $00
+    db 3
+    db -7,  0, $34, 0
+    db +1,  0, $35, 0
+    db +1, $08, $36, 0
 
 data_b865:
-    db $02
-    db $00, $fc, $37, $00
-    db $00, $05, $38, $00
+    db 2
+    db  0, $fc, $37, 0
+    db  0, $05, $38, 0
 
 data_b86e:
-    db $01
-    db $00, $f7, $39, $00
+    db 1
+    db  0, -9, $39, 0
 
 data_b873:
-    db $01
-    db $00, $f7, $39, $10
+    db 1
+    db  0, -9, $39, OAMF_PAL1
 
 data_b878:
-    db $01
-    db $09, $00, $3a, $00
+    db 1
+    db +9,  0, $3a, 0
 
 data_b87d:
-    db $01
-    db $09, $00, $3a, $10
+    db 1
+    db +9,  0, $3a, OAMF_PAL1
 
 data_b882:
-    db $01
-    db $00, $09, $39, $20
+    db 1
+    db  0, +9, $39, OAMF_XFLIP
 
 data_b887:
-    db $01
-    db $00, $09, $39, $30
+    db 1
+    db  0, +9, $39, OAMF_PAL1 | OAMF_XFLIP
 
 data_b88c:
-    db $01
-    db $f7, $00, $3a, $40
+    db 1
+    db -9,  0, $3a, OAMF_YFLIP
 
 data_b891:
-    db $01
-    db $f7, $00, $3a, $50
+    db 1
+    db -9,  0, $3a, OAMF_PAL1 | OAMF_YFLIP
 
 data_b896:
     INCBIN "gfx/bland/sprites.2bpp.hz"

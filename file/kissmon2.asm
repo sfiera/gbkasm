@@ -2021,16 +2021,16 @@ call_aee7:
 
 
 data_aef6:
-    db $09
-    db $00, $00, $06, OAMF_XFLIP
-    db $08, $00, $07, OAMF_XFLIP
-    db $10, $00, $08, OAMF_XFLIP
-    db $00, $08, $03, OAMF_XFLIP
-    db $08, $08, $04, OAMF_XFLIP
-    db $10, $08, $05, OAMF_XFLIP
-    db $00, $10, $00, OAMF_XFLIP
-    db $08, $10, $01, OAMF_XFLIP
-    db $10, $10, $02, OAMF_XFLIP
+    db 9
+    db  0,  0, $06, OAMF_XFLIP
+    db  8,  0, $07, OAMF_XFLIP
+    db 16,  0, $08, OAMF_XFLIP
+    db  0,  8, $03, OAMF_XFLIP
+    db  8,  8, $04, OAMF_XFLIP
+    db 16,  8, $05, OAMF_XFLIP
+    db  0, 16, $00, OAMF_XFLIP
+    db  8, 16, $01, OAMF_XFLIP
+    db 16, 16, $02, OAMF_XFLIP
 
 data_af1b:
     db $07, $06, $1b, $19, $03

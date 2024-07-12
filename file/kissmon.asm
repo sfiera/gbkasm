@@ -1510,16 +1510,16 @@ call_0ca1:
 
 
 data_0cb0:
-    db $09
-    db $00, $00, $8f, $20
-    db $08, $00, $90, $20
-    db $10, $00, $91, $20
-    db $00, $08, $8c, $20
-    db $08, $08, $8d, $20
-    db $10, $08, $8e, $20
-    db $00, $10, $89, $20
-    db $08, $10, $8a, $20
-    db $10, $10, $8b, $20
+    db 9
+    db  0,  0, $8f, OAMF_XFLIP
+    db  8,  0, $90, OAMF_XFLIP
+    db 16,  0, $91, OAMF_XFLIP
+    db  0,  8, $8c, OAMF_XFLIP
+    db  8,  8, $8d, OAMF_XFLIP
+    db 16,  8, $8e, OAMF_XFLIP
+    db  0, 16, $89, OAMF_XFLIP
+    db  8, 16, $8a, OAMF_XFLIP
+    db 16, 16, $8b, OAMF_XFLIP
 
 
 call_0cd5:
