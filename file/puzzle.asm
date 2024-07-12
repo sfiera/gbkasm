@@ -286,7 +286,7 @@ jr_000_0302:
     ld hl, $d5aa
     ld d, $00
     ld e, a
-    trap $87
+    trap MathAdd16
     ld a, [hl]
     cp $01
     jr nz, jr_000_031e
@@ -826,7 +826,7 @@ call_062a:
     ld d, h
     ld e, l
     ld hl, $d5b9
-    trap $88
+    trap MathSub16
     ld a, l
     ld [$d5a6], a
     callx call_03b2
@@ -1720,7 +1720,7 @@ call_0b10:
     push hl
     ld hl, $d5b9
     pop de
-    trap $88
+    trap MathSub16
     ld a, l
     ld [$d5a6], a
     push hl
@@ -1757,7 +1757,7 @@ call_0b5a:
     push hl
     ld hl, $d5b9
     pop de
-    trap $88
+    trap MathSub16
     ld a, l
     ld [$d5a6], a
     push hl
@@ -1800,7 +1800,7 @@ call_0ba4:
     push hl
     ld hl, $d5b9
     pop de
-    trap $88
+    trap MathSub16
     ld a, l
     ld [$d5a6], a
     push hl
@@ -1852,7 +1852,7 @@ call_0bf7:
     push hl
     ld hl, $d5b9
     pop de
-    trap $88
+    trap MathSub16
     ld a, l
     ld [$d5a6], a
     push hl

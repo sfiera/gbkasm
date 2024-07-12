@@ -158,7 +158,7 @@ jr_000_0131::
     push de
     push bc
     ld hl, $0794
-    trap $88
+    trap MathSub16
     push hl
     ld de, $016d
     trap $89
@@ -167,9 +167,9 @@ jr_000_0131::
     ld hl, $0004
     trap $8a
     ld de, $0001
-    trap $87
+    trap MathAdd16
     pop de
-    trap $87
+    trap MathAdd16
     pop bc
     push bc
     ld a, b
@@ -185,11 +185,11 @@ jr_000_0131::
     ld a, [hl+]
     ld d, a
     pop hl
-    trap $87
+    trap MathAdd16
     pop bc
     ld e, c
     ld d, $00
-    trap $87
+    trap MathAdd16
     pop de
     ld a, b
     cp $03
@@ -204,7 +204,7 @@ jr_000_0131::
     ld d, h
     ld e, l
     ld hl, $0001
-    trap $88
+    trap MathSub16
 
 jr_000_01ad::
     ld d, h
@@ -229,7 +229,7 @@ call_01c2:
     ld bc, $014e
     callx @+$ff8f
     ld hl, $0001
-    trap $88
+    trap MathSub16
     ld d, h
     ld e, l
     ld hl, $0007
@@ -621,7 +621,7 @@ jr_000_03b4::
 
 jr_000_03ff::
     ld hl, $0001
-    trap $87
+    trap MathAdd16
     ld d, h
     ld e, l
 
@@ -641,7 +641,7 @@ jr_000_0406::
 
 jr_000_041b::
     ld hl, $0001
-    trap $88
+    trap MathSub16
     ld d, h
     ld e, l
 
@@ -1310,7 +1310,7 @@ call_09ef:
     ld e, a
     ld a, [$c62a]
     ld d, a
-    trap $88
+    trap MathSub16
     push hl
     ld de, $0000
     ld c, $04
@@ -1588,7 +1588,7 @@ call_0bb4:
     ld l, a
     ld a, [$c628]
     ld h, a
-    trap $88
+    trap MathSub16
     ld a, l
     ld [$c621], a
     ld a, h
@@ -1604,9 +1604,9 @@ call_0bb4:
     ld l, a
     ld a, [$c628]
     ld h, a
-    trap $88
+    trap MathSub16
     ld de, $0001
-    trap $87
+    trap MathAdd16
     ld a, l
     ld [$c623], a
     ld a, h
@@ -1670,7 +1670,7 @@ jr_000_0d4a:
     ld l, a
     ld a, [$c619]
     ld h, a
-    trap $88
+    trap MathSub16
     push hl
     ld a, [$b2bd]
     ld d, a
@@ -1708,7 +1708,7 @@ jr_000_0d93::
     ld l, a
     ld a, [$c619]
     ld h, a
-    trap $88
+    trap MathSub16
     inc l
     ld a, [$b2bd]
     cp $04
@@ -1945,7 +1945,7 @@ jr_000_10e8::
     ld a, [$c61d]
     ld d, a
     ld hl, $0001
-    trap $88
+    trap MathSub16
     ld a, l
     ld [$c61c], a
     ld a, h
@@ -2018,7 +2018,7 @@ jr_000_1149::
     ld a, [$c61d]
     ld d, a
     ld hl, $0001
-    trap $87
+    trap MathAdd16
     ld a, l
     ld [$c61c], a
     ld a, h

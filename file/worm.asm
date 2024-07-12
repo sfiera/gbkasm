@@ -1011,7 +1011,7 @@ HandleFoodHit:
     ld h, $00
     ld a, [varPoint]
     ld l, a
-    trap $87
+    trap MathAdd16
     ld a, l
     ld [varScore], a
     ld a, h

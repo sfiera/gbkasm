@@ -1376,7 +1376,7 @@ call_a852:
 
 jr_000_a8a8:
     ld [$ca3c], a
-    trap $8c
+    trap MathAbs16
     ld a, l
     ld [$ca3a], a
     ld a, h
@@ -1394,7 +1394,7 @@ jr_000_a8a8:
 
 jr_000_a8c0:
     ld [$ca46], a
-    trap $8c
+    trap MathAbs16
     ld a, l
     ld [$ca44], a
     ld a, h
@@ -1422,7 +1422,7 @@ jr_000_a8e0:
 
 jr_000_a8e4:
     ld [$ca47], a
-    trap $8b
+    trap MathNeg16
     ld a, l
     ld [$ca42], a
     ld a, h
@@ -1556,7 +1556,7 @@ call_a9a9:
     ld h, a
     sla l
     rl h
-    trap $88
+    trap MathSub16
     ld a, l
     ld [$ca42], a
     ld a, h

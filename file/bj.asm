@@ -531,7 +531,7 @@ jr_000_0376::
     ld e, a
     ld d, $00
     push hl
-    trap $88
+    trap MathSub16
     pop hl
     ret c
 
@@ -577,7 +577,7 @@ jr_000_03bb::
     ld e, a
     ld d, $00
     push hl
-    trap $88
+    trap MathSub16
     pop hl
     ret c
 
@@ -1159,7 +1159,7 @@ jr_000_07a5::
     ld e, a
     ld a, [$c8d0]
     ld d, a
-    trap $88
+    trap MathSub16
     ld a, h
     cp $ff
     jr nc, jr_000_07ee
