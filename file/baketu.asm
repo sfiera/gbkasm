@@ -487,101 +487,101 @@ Sprites:
     dw .mouseLeft3 - @
 
 .ball
-    db $01
-    db $00, $00, $1e, 0
+    db 1
+    db 0, 0, $1e, 0
 
 .splat1
-    db $04
-    db $fc, $fc, $1f, 0
-    db $04, $fc, $20, 0
-    db $fc, $04, $21, 0
-    db $04, $04, $22, 0
+    db 4
+    db -4, -4, $1f, 0
+    db +4, -4, $20, 0
+    db -4, +4, $21, 0
+    db +4, +4, $22, 0
 
 .splat2
-    db $04
-    db $fc, $fc, $23, 0
-    db $04, $fc, $24, 0
-    db $fc, $04, $25, 0
-    db $04, $04, $26, 0
+    db 4
+    db -4, -4, $23, 0
+    db +4, -4, $24, 0
+    db -4, +4, $25, 0
+    db +4, +4, $26, 0
 
 .splat3
-    db $04
-    db $fc, $fc, $27, 0
-    db $04, $fc, $28, 0
-    db $fc, $04, $29, 0
-    db $04, $04, $2a, 0
+    db 4
+    db -4, -4, $27, 0
+    db +4, -4, $28, 0
+    db -4, +4, $29, 0
+    db +4, +4, $2a, 0
 
 .mouseWait1
-    db $09
-    db $00, $00, $00, 0
-    db $08, $00, $01, 0
-    db $10, $00, $02, 0
-    db $00, $08, $03, 0
-    db $08, $08, $04, 0
-    db $10, $08, $05, 0
-    db $00, $10, $06, 0
-    db $08, $10, $07, 0
-    db $10, $10, $08, 0
+    db 9
+    db  0,  0, $00, 0
+    db  8,  0, $01, 0
+    db 16,  0, $02, 0
+    db  0,  8, $03, 0
+    db  8,  8, $04, 0
+    db 16,  8, $05, 0
+    db  0, 16, $06, 0
+    db  8, 16, $07, 0
+    db 16, 16, $08, 0
 
 .mouseRight1
-    db $07
-    db $00, $00, $09, 0
-    db $08, $00, $0a, 0
-    db $10, $00, $0b, 0
-    db $08, $08, $0c, 0
-    db $10, $08, $0d, 0
-    db $08, $10, $0e, 0
-    db $10, $10, $0f, 0
+    db 7
+    db  0,  0, $09, 0
+    db  8,  0, $0a, 0
+    db 16,  0, $0b, 0
+    db  8,  8, $0c, 0
+    db 16,  8, $0d, 0
+    db  8, 16, $0e, 0
+    db 16, 16, $0f, 0
 
 .mouseRight2
-    db $07
-    db $00, $00, $10, 0
-    db $08, $00, $11, 0
-    db $10, $00, $12, 0
-    db $08, $08, $13, 0
-    db $10, $08, $14, 0
-    db $08, $10, $15, 0
-    db $10, $10, $16, 0
+    db 7
+    db  0,  0, $10, 0
+    db  8,  0, $11, 0
+    db 16,  0, $12, 0
+    db  8,  8, $13, 0
+    db 16,  8, $14, 0
+    db  8, 16, $15, 0
+    db 16, 16, $16, 0
 
 .mouseRight3
-    db $07
-    db $00, $00, $17, 0
-    db $08, $00, $18, 0
-    db $10, $00, $19, 0
-    db $08, $08, $1a, 0
-    db $10, $08, $1b, 0
-    db $08, $10, $1c, 0
-    db $10, $10, $1d, 0
+    db 7
+    db  0,  0, $17, 0
+    db  8,  0, $18, 0
+    db 16,  0, $19, 0
+    db  8,  8, $1a, 0
+    db 16,  8, $1b, 0
+    db  8, 16, $1c, 0
+    db 16, 16, $1d, 0
 
 .mouseLeft1
-    db $07
-    db $08, $00, $0e, OAMF_XFLIP
-    db $10, $00, $0f, OAMF_XFLIP
-    db $08, $08, $0c, OAMF_XFLIP
-    db $10, $08, $0d, OAMF_XFLIP
-    db $00, $10, $09, OAMF_XFLIP
-    db $08, $10, $0a, OAMF_XFLIP
-    db $10, $10, $0b, OAMF_XFLIP
+    db 7
+    db  8,  0, $0e, OAMF_XFLIP
+    db 16,  0, $0f, OAMF_XFLIP
+    db  8,  8, $0c, OAMF_XFLIP
+    db 16,  8, $0d, OAMF_XFLIP
+    db  0, 16, $09, OAMF_XFLIP
+    db  8, 16, $0a, OAMF_XFLIP
+    db 16, 16, $0b, OAMF_XFLIP
 
 .mouseLeft2
-    db $07
-    db $08, $00, $15, OAMF_XFLIP
-    db $10, $00, $16, OAMF_XFLIP
-    db $08, $08, $13, OAMF_XFLIP
-    db $10, $08, $14, OAMF_XFLIP
-    db $00, $10, $10, OAMF_XFLIP
-    db $08, $10, $11, OAMF_XFLIP
-    db $10, $10, $12, OAMF_XFLIP
+    db 7
+    db  8,  0, $15, OAMF_XFLIP
+    db 16,  0, $16, OAMF_XFLIP
+    db  8,  8, $13, OAMF_XFLIP
+    db 16,  8, $14, OAMF_XFLIP
+    db  0, 16, $10, OAMF_XFLIP
+    db  8, 16, $11, OAMF_XFLIP
+    db 16, 16, $12, OAMF_XFLIP
 
 .mouseLeft3
-    db $07
-    db $08, $00, $1c, OAMF_XFLIP
-    db $10, $00, $1d, OAMF_XFLIP
-    db $08, $08, $1a, OAMF_XFLIP
-    db $10, $08, $1b, OAMF_XFLIP
-    db $00, $10, $17, OAMF_XFLIP
-    db $08, $10, $18, OAMF_XFLIP
-    db $10, $10, $19, OAMF_XFLIP
+    db 7
+    db  8,  0, $1c, OAMF_XFLIP
+    db 16,  0, $1d, OAMF_XFLIP
+    db  8,  8, $1a, OAMF_XFLIP
+    db 16,  8, $1b, OAMF_XFLIP
+    db  0, 16, $17, OAMF_XFLIP
+    db  8, 16, $18, OAMF_XFLIP
+    db 16, 16, $19, OAMF_XFLIP
 
 call_0689:
     ld hl, var_ccc9
