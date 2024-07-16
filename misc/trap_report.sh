@@ -1,6 +1,6 @@
 #!/bin/sh
 
-grep -o 'trap \$..' file/*.asm \
+grep -o '^\s*trap \$..\|call trap_..' file/*.asm bank_*.inc \
     | sort \
     | uniq -c \
-    | sed 's/^ *\([0-9]*\) \([^:]*\):trap \(.*\)/\3\t\2\t\1/'
+    | sed -E 's/^ *([0-9]*) ([^:]*):.*(trap \$|call trap_)(.*)/$\4\t\2\t\1/'
