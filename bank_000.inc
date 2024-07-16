@@ -732,7 +732,7 @@ Jump_000_0309:
     ld e, l
     ldh a, [hROMBank]
     push af
-    ld a, $06
+    ld a, BANK(FileRandomSelection)
     ldh [hROMBank], a
     ld [rROMBank], a
     ld hl, rRAMBank
@@ -744,7 +744,7 @@ Jump_000_0309:
     ld a, [$c3b0]
     ld h, a
     push hl
-    call Call_000_033e
+    call AddFileFromRandomSelection
     pop hl
     ld a, h
     inc a
@@ -760,17 +760,17 @@ jr_000_0337:
     ret
 
 
-Call_000_033e:
+AddFileFromRandomSelection:
     add a
     ld e, a
     ld d, $00
-    ld hl, $4001
+    ld hl, FileRandomSelection.files
     add hl, de
     ld a, [hl+]
     ld h, [hl]
     ld l, a
     push hl
-    call Call_000_037f
+    call AddFile
     pop hl
     ret c
 
@@ -817,16 +817,16 @@ jr_000_035e:
     ret
 
 
-Call_000_037f:
+AddFile:
     ld e, [hl]
     inc hl
     ld d, [hl]
     inc hl
-    push de
-    ld b, [hl]
-    inc hl
-    ld a, [hl+]
-    ld c, [hl]
+    push de      ; de = file length
+    ld b, [hl]   ; b = flags
+    inc hl       ;
+    ld a, [hl+]  ; a = cartridge code
+    ld c, [hl]   ; c = header length
     inc hl
     push bc
     push af
