@@ -1075,16 +1075,14 @@ Call_001_475c:
 jr_001_475c:
     xor a
     trap $cc
-    db $3e
-
-    or h
+    ld a, $b4
     trap $dc
-    db $c9
+    ret
 
 Call_001_4764:
     ld a, $01
     trap $cc
-    db $c9
+    ret
 
 Call_001_4769:
     ld hl, $c509
@@ -1453,7 +1451,7 @@ Call_001_492c:
     ld de, $ffd2
     ld b, $00
     trap $ea
-    db $c9
+    ret
 
 Call_001_4934:
     ld a, [$c502]
@@ -3518,7 +3516,7 @@ Call_001_66c2:
 Call_001_66dc:
     ld h, $04
     trap $ca
-    db $c9
+    ret
 
 Call_001_66e1:
     ld de, $ff46
@@ -5935,9 +5933,7 @@ Call_001_7227:
     trap LCDEnable
     ld a, $f0
     trap $dc
-    db $cb
-
-    ld d, a
+    bit 2, a
     jp nz, Jump_001_66ee
 
     ret
