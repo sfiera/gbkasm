@@ -32,9 +32,10 @@ History:
 .end
 
 Main::
-    jx @+$1211
+    jx jp_130b
 
 
+jp_00fd::
     trap AudioStop
     ld a, $0a
     ld [$0000], a
@@ -47,6 +48,9 @@ Main::
     xor a
     ld [$0000], a
     trap ExitToMenu
+
+
+call_0115::
     ld a, $20
     trap DrawInit
     trap AudioStop
@@ -60,22 +64,24 @@ Main::
     ld a, [de]
     ld h, a
     trap RandInit
-    callx @+$0035
-    callx @+$015c
+    callx call_0167
+    callx call_0295
     ret
 
 
+call_013d:
     trap LCDDisable
-    callx @+$00a8
-    callx @+$0139
-    callx @+$013b
-    callx @+$00d3
-    callx @+$082f
+    callx call_01eb
+    callx call_0283
+    callx call_028c
+    callx call_022b
+    callx call_098e
     ld a, $03
     trap LCDEnable
     ret
 
 
+call_0167:
     ld e, $00
     ld bc, $0262
     ld hl, $c900
@@ -98,18 +104,18 @@ Main::
     ld [$cb30], a
     ld a, $a0
     ld [$cb3e], a
-    ld bc, $0003
+    ld bc, VarCB52.end - VarCB50
     ldx de, data_11d0
-    ld hl, $cb50
+    ld hl, VarCB50
     trap MemCopy
-    ld bc, $0008
-    ldx de, data_11d3
-    ld hl, $cb53
+    ld bc, VarSounds.end - VarSounds
+    ldx de, SavedSounds
+    ld hl, VarSounds
     trap MemCopy
-    ldx hl, data_11db
+    ldx hl, SavedMusic
     ld a, [hl]
-    ld [$cb5b], a
-    callx @+$0010
+    ld [VarMusic], a
+    callx call_01d2
     ldx hl, data_11dc
     ld a, [hl+]
     ld [$cb60], a
@@ -118,9 +124,10 @@ Main::
     ret
 
 
+call_01d2:
     trap AudioGetCount
-    ld hl, $cb53
-    ld c, $08
+    ld hl, VarSounds
+    ld c, VarSounds.end - VarSounds
 
 jr_000_01d9::
     ld a, [hl]
@@ -147,6 +154,7 @@ jr_000_01e0::
     ret
 
 
+call_01eb:
     ld bc, $2800
     trap $c4
     ld c, $28
@@ -164,9 +172,9 @@ jr_000_01f9::
     jr nz, jr_000_01f9
 
     ld bc, $0000
-    callx @+$05b7
+    callx call_07c0
     xor a
-    callx @+$0ffa
+    callx call_120b
     ld a, $04
     ld [$cb33], a
     ld a, $50
@@ -178,9 +186,10 @@ jr_000_01f9::
     ret
 
 
-    ld de, $cb52
+call_022b:
+    ld de, VarCB52
     ld hl, $c352
-    callx @+$07cb
+    callx call_0a00
     ld a, $78
     ld b, $30
     ld c, $06
@@ -228,55 +237,60 @@ jr_000_0254::
     ret
 
 
+call_0283:
     ld bc, $00b0
     ld de, $9410
     trap ExtractData
     ret
 
 
+call_028c:
     ld bc, $00c0
     ld de, $9610
     trap ExtractData
     ret
 
 
+call_0295:
     ld bc, $03c0
     ld de, $8000
     trap ExtractData
     ret
 
 
-jr_000_029e::
+call_029e::
     trap AwaitFrame
     ldh a, [$8a]
     and a
-    jr nz, jr_000_029e
+    jr nz, call_029e
 
     ret
 
 
-jr_000_02a6::
+call_02a6::
     trap AwaitFrame
     ldh a, [$8a]
     and a
-    jr z, jr_000_02a6
+    jr z, call_02a6
 
     ret
 
 
-    callx @+$ffec
-    callx @+$ffed
-    callx @+$ffde
+call_02ae:
+    callx call_029e
+    callx call_02a6
+    callx call_029e
     ret
 
 
+call_02c4:
     ld a, [$c92d]
     and a
     ret z
 
 jr_000_02c9::
     push af
-    callx @+$0008
+    callx call_02d6
     pop af
     dec a
     jr nz, jr_000_02c9
@@ -284,12 +298,13 @@ jr_000_02c9::
     ret
 
 
+call_02d6:
     ldh a, [$9a]
     and $07
     jr nz, jr_000_02f6
 
-    callx @+$00d3
-    callx @+$00a5
+    callx call_03b3
+    callx call_038c
     ld a, [$c904]
     sub $01
     jr nc, jr_000_02f3
@@ -306,13 +321,14 @@ jr_000_02f6::
     ret
 
 
+call_02fc:
     ld a, [$c92d]
     and a
     ret z
 
 jr_000_0301::
     push af
-    callx @+$001c
+    callx call_0322
     pop af
     dec a
     jr nz, jr_000_0301
@@ -327,11 +343,12 @@ jr_000_0301::
 
     ld a, $01
     ld [$cb31], a
-    ld a, [$cb56]
+    ld a, [VarSounds.4]
     trap AudioPlaySound
     ret
 
 
+call_0322:
     ld a, [$c90c]
     and a
     ret nz
@@ -340,31 +357,34 @@ jr_000_0301::
     bit 5, a
     jr z, jr_000_0334
 
-    callx @+$0011
+    callx call_0342
 
 jr_000_0334::
     ldh a, [$8a]
     bit 4, a
     jr z, jr_000_0341
 
-    callx @+$000a
+    callx call_0348
 
 jr_000_0341::
     ret
 
 
+call_0342:
     ldh a, [$9b]
     dec a
     ldh [$9b], a
     ret
 
 
+call_0348:
     ldh a, [$9b]
     inc a
     ldh [$9b], a
     ret
 
 
+call_034e:
     trap LCDDisable
     ld a, $01
     ld [$c90c], a
@@ -379,8 +399,8 @@ jr_000_0341::
 
 jr_000_0365::
     push bc
-    callx @+$0049
-    callx @+$001b
+    callx call_03b3
+    callx call_038c
     ld a, [$c904]
     inc a
     ld [$c904], a
@@ -397,6 +417,7 @@ jr_000_0365::
     ret
 
 
+call_038c:
     ld a, [$c904]
     ld b, $00
     ld c, a
@@ -418,12 +439,13 @@ jr_000_0365::
     ret
 
 
-    callx @+$01ea
+call_03b3:
+    callx call_05a1
     ld e, $41
     ld bc, $0020
     ld hl, $c90d
     trap MemSet
-    callx @+$00d9
+    callx call_04a1
     ld a, [$c907]
     inc a
     srl a
@@ -438,11 +460,11 @@ jr_000_0365::
     dec a
     and $1f
     ld [$c909], a
-    callx @+$033b
-    callx @+$004c
-    callx @+$0060
-    callx @+$035c
-    callx @+$0010
+    callx call_0725
+    callx call_043d
+    callx call_0458
+    callx call_075b
+    callx call_0416
     ld a, [$cb30]
     ld b, $00
     ld c, a
@@ -452,6 +474,7 @@ jr_000_0365::
     ret
 
 
+call_0416:
     ld a, [$cb30]
     ld b, $00
     ld c, a
@@ -473,6 +496,7 @@ jr_000_0365::
     ret
 
 
+call_043d:
     ld a, [$c907]
     ld e, a
     ld b, $00
@@ -494,6 +518,7 @@ jr_000_0447::
     ret
 
 
+call_0458:
     ld a, [$c90b]
     ld b, $00
     ld c, a
@@ -588,13 +613,13 @@ code_04d3:
 
 code_04d4:
     dec [hl]
-    callx @+$002c
+    callx call_0505
     ret
 
 
 code_04d9:
     dec [hl]
-    callx @+$0013
+    callx call_04f5
     ret
 
 
@@ -620,7 +645,7 @@ code_04f4:
     ret
 
 
-code_04f5:
+call_04f5:
     ld a, [$c907]
     and $01
     ld c, a
@@ -631,7 +656,7 @@ code_04f5:
     ret
 
 
-code_0505:
+call_0505:
     ld a, [$c907]
     and $01
     xor $01
@@ -659,7 +684,7 @@ code_051e:
     ld a, [$c907]
     inc a
     ld [$c907], a
-    callx @+$ffc6
+    callx call_04f5
     ret
 
 
@@ -671,7 +696,7 @@ code_0533:
     ld a, [$c907]
     inc a
     ld [$c907], a
-    callx @+$ffc1
+    callx call_0505
     ret
 
 
@@ -755,14 +780,14 @@ code_059c:
     ret
 
 
-call_051a:
+call_05a1:
     ld a, $20
     ld [$c90a], a
     ld a, [$c902]
     and a
     jr nz, jr_000_05b3
 
-    callx @+$0112
+    callx call_06c2
 
 jr_000_05b3:
     ld a, [$c900]
@@ -806,7 +831,7 @@ code_05da:
 jr_000_05e6::
     xor a
     ld [$c902], a
-    jx @+$ffb6
+    jx call_05a1
 
 
 code_05ee:
@@ -822,7 +847,7 @@ code_05ee:
 jr_000_05fa::
     xor a
     ld [$c902], a
-    jx @+$ffa2
+    jx call_05a1
 
 
 code_0602:
@@ -838,7 +863,7 @@ code_0602:
 jr_000_060e::
     xor a
     ld [$c902], a
-    jx @+$ff8e
+    jx call_05a1
 
 
 code_0616:
@@ -851,7 +876,7 @@ code_0616:
 
     xor a
     ld [$c902], a
-    jx @+$ff7d
+    jx call_05a1
 
 
 jr_000_0627::
@@ -894,7 +919,7 @@ code_0656:
 jr_000_065d::
     xor a
     ld [$c902], a
-    jx @+$ff3f
+    jx call_05a1
 
 
 jr_000_0665::
@@ -915,7 +940,7 @@ code_0671:
 jr_000_0678::
     xor a
     ld [$c902], a
-    jx @+$ff24
+    jx call_05a1
 
 
 jr_000_0680::
@@ -936,7 +961,7 @@ code_068c:
 jr_000_0693::
     xor a
     ld [$c902], a
-    jx @+$ff09
+    jx call_05a1
 
 
 jr_000_069b::
@@ -957,7 +982,7 @@ code_06a7:
 jr_000_06ae::
     xor a
     ld [$c902], a
-    jx @+$feee
+    jx call_05a1
 
 
 jr_000_06b6::
@@ -970,7 +995,7 @@ jr_000_06b6::
     ret
 
 
-jr_000_06c2::
+call_06c2::
     ld a, [$cb3d]
     and a
     jr nz, jr_000_06cf
@@ -985,13 +1010,13 @@ jr_000_06cf::
     jr jr_000_06dc
 
 jr_000_06d5::
-    callx @+$0032
+    callx call_070b
 
 jr_000_06dc::
-    callx @+$0033
+    callx call_0713
     ld a, [$c901]
     and a
-    jr z, jr_000_06c2
+    jr z, call_06c2
 
     ld a, $01
     ld [$c902], a
@@ -1003,19 +1028,21 @@ jr_000_06dc::
 
     ld a, $20
     ld [$cb35], a
-    ld a, [$cb58]
+    ld a, [VarSounds.6]
     trap AudioPlaySound
     xor a
-    callx @+$012e
+    callx call_0835
     ret
 
 
+call_070b:
     trap RandNext
     and $07
     ld [$c900], a
     ret
 
 
+call_0713:
     trap RandNext
 
 jr_000_0715::
@@ -1033,6 +1060,7 @@ jr_000_0721::
     ret
 
 
+call_0725:
     ld a, [$cb36]
     and a
     ret nz
@@ -1057,13 +1085,14 @@ jr_000_0721::
     ld [$cb38], a
     ld a, $20
     ld [$cb35], a
-    ld a, [$cb58]
+    ld a, [VarSounds.6]
     trap AudioPlaySound
     ld a, $01
-    callx @+$00de
+    callx call_0835
     ret
 
 
+call_075b:
     ld a, [$cb36]
     and a
     ret z
@@ -1082,10 +1111,11 @@ jr_000_0721::
 
 
 jr_000_0772::
-    callx @+$0004
+    callx call_077a
     ret
 
 
+call_077a:
     ld a, [$cb36]
     and $7f
     sla a
@@ -1131,6 +1161,7 @@ jr_000_07bb::
     ret
 
 
+call_07c0:
     ld a, $78
     add c
     ld [$c300], a
@@ -1148,6 +1179,7 @@ jr_000_07bb::
     ret
 
 
+call_07e3:
     ld a, [$cb32]
     and a
     jr nz, jr_000_07f7
@@ -1190,6 +1222,7 @@ jr_000_07f7::
     ret
 
 
+call_0835:
     sla a
     sla a
     add $1d
@@ -1203,12 +1236,13 @@ jr_000_07f7::
     ret
 
 
+call_084b:
     ld a, [$cb3d]
     and a
     ret z
 
     ld a, [$cb3e]
-    callx @+$0024
+    callx call_087b
     ld a, [$cb3e]
     dec a
     ld [$cb3e], a
@@ -1226,6 +1260,7 @@ jr_000_07f7::
     ret
 
 
+call_087b:
     ld b, a
     ld c, $05
     ld de, $0004
@@ -1250,16 +1285,17 @@ jr_000_088a::
     ret
 
 
-    callx @+$09c2
-    callx @+$0047
-    callx @+$0066
+call_0894:
+    callx call_125a
+    callx call_08e6
+    callx call_090c
     ld a, $08
     ld [$cb3f], a
 
 jr_000_08ae::
-    callx @+$0018
+    callx call_08ca
     ld a, $02
-    callx @+$0923
+    callx call_11de
     ld a, [$cb3f]
     inc a
     ld [$cb3f], a
@@ -1269,6 +1305,7 @@ jr_000_08ae::
     ret
 
 
+call_08ca:
     ld b, a
     ld c, $08
     ld de, $fffc
@@ -1297,6 +1334,7 @@ jr_000_08e0::
     ret
 
 
+call_08e6:
     ld de, $0004
     ld hl, $c382
     ld a, $37
@@ -1325,6 +1363,7 @@ jr_000_08e0::
     ret
 
 
+call_090c:
     ld c, $08
     ld e, $68
     ld hl, $c39d
@@ -1344,6 +1383,7 @@ jr_000_0913::
     ret
 
 
+call_0921:
     ld a, [$cb31]
     and a
     ret z
@@ -1368,8 +1408,8 @@ jr_000_0935::
     cpl
     inc a
     ld c, a
-    callx @+$fe7e
-    callx @+$fe9a
+    callx call_07c0
+    callx call_07e3
     ret
 
 
@@ -1392,8 +1432,8 @@ jr_000_095f::
     cpl
     inc a
     ld c, a
-    callx @+$fe54
-    callx @+$fe70
+    callx call_07c0
+    callx call_07e3
     ret
 
 
@@ -1416,23 +1456,25 @@ jr_000_098a::
     ret
 
 
-    callx @+$0031
+call_098e:
+    callx call_09c3
     ld de, $cb3b
     ld hl, $c36a
-    callx @+$0061
-    callx @+$0039
+    callx call_0a00
+    callx call_09df
     ret nc
 
-    ld bc, $0003
+    ld bc, VarCB52.end - VarCB50
     ld de, $cb39
-    ld hl, $cb50
+    ld hl, VarCB50
     trap MemCopy
-    ld de, $cb52
+    ld de, VarCB52
     ld hl, $c352
-    callx @+$0041
+    callx call_0a00
     ret
 
 
+call_09c3:
     xor a
     ld c, a
     ld hl, $cb39
@@ -1461,9 +1503,10 @@ jr_000_09d6::
     ret
 
 
+call_09df:
     ld c, $03
     ld de, $cb3b
-    ld hl, $cb52
+    ld hl, VarCB52
 
 jr_000_09e7::
     ld a, [de]
@@ -1482,11 +1525,12 @@ jr_000_09e7::
 
     ld a, $01
     ld [$cb3c], a
-    ld a, [$cb5a]
+    ld a, [VarSounds.8]
     trap AudioPlaySound
     ret
 
 
+call_0a00:
     ld c, $03
 
 jr_000_0a02::
@@ -1514,18 +1558,19 @@ jr_000_0a02::
     ret
 
 
+call_0a1f:
     ld a, $0c
     trap DrawCtrlChar
     ld a, $03
     trap LCDEnable
-    callx @+$0072
-    callx @+$008c
-    callx @+$00e1
+    callx call_0a9d
+    callx call_0abe
+    callx call_0b1a
     ld bc, $4010
     ld e, $04
 
 jr_000_0a41::
-    callx @+$0141
+    callx call_0b86
     bit 0, a
     jr nz, jr_000_0a52
 
@@ -1535,8 +1580,8 @@ jr_000_0a41::
     jr jr_000_0a41
 
 jr_000_0a52::
-    callx @+$f848
-    ld a, [$cb54]
+    callx call_029e
+    ld a, [VarSounds.2]
     trap AudioPlaySound
     ld a, [$cb40]
     and a
@@ -1549,21 +1594,22 @@ jr_000_0a65::
     dec a
     jr nz, jr_000_0a6c
 
-    jx @+$0167
+    jx jp_0bd0
 
 
 jr_000_0a6c:
     dec a
     jr nz, jr_000_0a73
 
-    jx @+$0007
+    jx jp_0a77
 
 
 jr_000_0a73::
-    jx @+$f689
+    jx jp_00fd
 
 
-    ld hl, $cb50
+jp_0a77::
+    ld hl, VarCB50
     xor a
     ld [hl+], a
     ld a, $30
@@ -1583,9 +1629,10 @@ jr_000_0a73::
     ld [$0000], a
     xor a
     ld [$cb40], a
-    jx @+$ff85
+    jx call_0a1f
 
 
+call_0a9d:
     ld hl, $c300
     ld a, $40
     ld [hl+], a
@@ -1610,13 +1657,14 @@ jr_000_0a73::
     ret
 
 
+call_0abe:
     ld c, $80
 
 jr_000_0ac0::
     push bc
     ld a, $02
-    callx @+$0717
-    callx @+$0801
+    callx call_11de
+    callx call_12cf
     pop bc
     ldh a, [$8a]
     and a
@@ -1654,7 +1702,7 @@ jr_000_0ac0::
     jr nz, jr_000_0ac0
 
 jr_000_0afd::
-    callx @+$f79d
+    callx call_029e
     ld hl, $c300
     ld a, $40
     ld [hl+], a
@@ -1674,6 +1722,7 @@ jr_000_0afd::
     ret
 
 
+call_0b1a:
     ld hl, $0403
     trap DrawAt
     ldx hl, data_114e
@@ -1702,7 +1751,7 @@ jr_000_0afd::
     ld a, $3a
     ld [hl+], a
     ld c, $03
-    ld de, $cb52
+    ld de, VarCB52
 
 jr_000_0b62::
     ld a, [de]
@@ -1730,10 +1779,10 @@ jr_000_0b62::
     ret
 
 
-jr_000_0b86::
+call_0b86::
     ldh a, [$8a]
     and a
-    jr z, jr_000_0b86
+    jr z, call_0b86
 
     bit 6, a
     jr nz, jr_000_0bbf
@@ -1759,8 +1808,8 @@ jr_000_0b9d::
 
     add b
     ld [$c300], a
-    callx @+$f6f5
-    jr jr_000_0b86
+    callx call_029e
+    jr call_0b86
 
 jr_000_0bae::
     ld hl, $cb40
@@ -1773,7 +1822,7 @@ jr_000_0bae::
 
 jr_000_0bb7::
     ld [hl], a
-    ld a, [$cb53]
+    ld a, [VarSounds.1]
     trap AudioPlaySound
     jr jr_000_0b98
 
@@ -1788,10 +1837,12 @@ jr_000_0bbf::
 jr_000_0bc7::
     dec a
     ld [hl], a
-    ld a, [$cb53]
+    ld a, [VarSounds.1]
     trap AudioPlaySound
     jr jr_000_0b98
 
+
+jp_0bd0::
     ld a, $0c
     trap DrawCtrlChar
     trap AudioGetCount
@@ -1799,7 +1850,7 @@ jr_000_0bc7::
     ld [$cb5c], a
     ld a, e
     ld [$cb5d], a
-    callx @+$00c6
+    callx call_0ca8
     ld a, $30
     ld [$c300], a
     ld a, $20
@@ -1807,13 +1858,13 @@ jr_000_0bc7::
     xor a
     ld [$cb40], a
 
-jr_000_0bf3::
+jp_0bf3::
     ld a, $02
-    callx @+$05e5
-    callx @+$011b
+    callx call_11de
+    callx call_0d1b
     ld bc, $3008
     ld e, $09
-    callx @+$ff7a
+    callx call_0b86
     bit 1, a
     jr nz, jr_000_0c21
 
@@ -1826,26 +1877,26 @@ jr_000_0bf3::
     bit 0, a
     jr nz, jr_000_0c7e
 
-    jr jr_000_0bf3
+    jr jp_0bf3
 
 jr_000_0c21::
     xor a
     ld [$cb40], a
     ld a, $0a
     ld [$0000], a
-    ld bc, $0009
-    ld de, $cb53
-    ldx hl, data_11d3
+    ld bc, VarMusic.end - VarSounds
+    ld de, VarSounds
+    ldx hl, SavedSounds
     trap MemCopy
     xor a
     ld [$0000], a
     trap AudioStop
-    jx @+$fde2
+    jx call_0a1f
 
 
 jr_000_0c40::
     ld a, [$cb40]
-    ld hl, $cb53
+    ld hl, VarSounds
     ld c, a
     ld b, $00
     add hl, bc
@@ -1856,26 +1907,26 @@ jr_000_0c40::
     ld c, a
     ld a, [hl]
     cp c
-    jr nc, jr_000_0bf3
+    jr nc, jp_0bf3
 
     inc a
     ld [hl], a
-    jr jr_000_0bf3
+    jr jp_0bf3
 
 jr_000_0c5a::
     ld a, [$cb5c]
     ld c, a
     ld a, [hl]
     cp c
-    jr nc, jr_000_0bf3
+    jr nc, jp_0bf3
 
     inc a
     ld [hl], a
-    jr jr_000_0bf3
+    jr jp_0bf3
 
 jr_000_0c66::
     ld a, [$cb40]
-    ld hl, $cb53
+    ld hl, VarSounds
     ld c, a
     ld b, $00
     add hl, bc
@@ -1883,18 +1934,18 @@ jr_000_0c66::
     and a
     jr nz, jr_000_0c78
 
-    jx @+$ff7e
+    jx jp_0bf3
 
 
 jr_000_0c78::
     dec a
     ld [hl], a
-    jx @+$ff78
+    jx jp_0bf3
 
 
 jr_000_0c7e::
     ld a, [$cb40]
-    ld hl, $cb53
+    ld hl, VarSounds
     ld c, a
     ld b, $00
     add hl, bc
@@ -1903,17 +1954,18 @@ jr_000_0c7e::
 
     ld a, [hl]
     trap AudioPlaySound
-    callx @+$f60b
-    jx @+$ff5c
+    callx call_029e
+    jx jp_0bf3
 
 
 jr_000_0c9a::
     ld a, [hl]
     trap AudioPlayMusic
-    callx @+$f5fd
-    jx @+$ff4e
+    callx call_029e
+    jx jp_0bf3
 
 
+call_0ca8::
     xor a
     ld [$cb40], a
     ld hl, $0602
@@ -1959,13 +2011,14 @@ jr_000_0c9a::
     ret
 
 
+call_0d1b:
     ld c, $09
 
 jr_000_0d1d::
     ld a, $09
     sub c
     ld b, a
-    ld hl, $cb53
+    ld hl, VarSounds
     ld e, a
     ld d, $00
     add hl, de
@@ -1988,6 +2041,7 @@ jr_000_0d1d::
     ret
 
 
+call_0d41:
     ld a, [$cb31]
     and a
     ret nz
@@ -2080,11 +2134,20 @@ data_11cc:
     dk "BGM\0"
 
 data_11d0:
-    db $00, $30, $00
-data_11d3:
-    db $01, $02, $2e, $1f, $0f, $36, $37, $1e
-data_11db:
+    db $00, $30
+    db $00
+SavedSounds:
+.1  db $01
+.2  db $02
+.3  db $2e
+.4  db $1f
+.5  db $0f
+.6  db $36
+.7  db $37
+.8  db $1e
+SavedMusic:
     db $05
+
 data_11dc:
     db $34, $12
 
@@ -2099,6 +2162,7 @@ call_11de::
     ret
 
 
+call_11e6:
     ld a, [$cb31]
     and a
     ret nz
@@ -2117,8 +2181,10 @@ call_11de::
     srl a
     ld c, a
     ld b, $00
-    callx @+$f5b9
+    callx call_07c0
     pop af
+
+call_120b:
     ld [$c302], a
     inc a
     ld [$c306], a
@@ -2129,6 +2195,7 @@ call_11de::
     ret
 
 
+call_121b:
     xor a
     ld [$cb34], a
     ld c, $0f
@@ -2147,13 +2214,14 @@ jr_000_1221::
     xor $04
     ld [$cb34], a
     ld a, $05
-    callx @+$ff9b
+    callx call_11de
     dec c
     jr nz, jr_000_1221
 
     ret
 
 
+call_124a:
     ld a, [$cb35]
     and a
     ret z
@@ -2164,6 +2232,7 @@ jr_000_1221::
     srl a
     jr c, jr_000_1268
 
+call_125a:
     xor a
     ld [$c320], a
     ld [$c324], a
@@ -2188,6 +2257,7 @@ jr_000_1268::
     ret
 
 
+call_1289:
     ld a, [$cb5e]
     ld l, a
     ld a, [$cb5f]
@@ -2205,7 +2275,7 @@ jr_000_1268::
 
 jr_000_12a0::
     ld [$c92f], a
-    ld a, [$cb59]
+    ld a, [VarSounds.7]
     trap AudioPlaySound
     ld hl, $0000
 
@@ -2217,6 +2287,7 @@ jr_000_12ab::
     ret
 
 
+call_12b4:
     ld a, [$c92f]
     ld b, a
     ld a, [$c92e]
@@ -2231,6 +2302,7 @@ jr_000_12ab::
     ret
 
 
+call_12cf:
     trap RandNext
     ld b, a
     xor c
@@ -2248,68 +2320,94 @@ jr_000_12ab::
     ret
 
 
+call_12e7:
     ldh a, [$8a]
     bit 3, a
     ret z
 
-    ld a, [$cb55]
+    ld a, [VarSounds.3]
     trap AudioPlaySound
-    callx @+$efa9
+    callx call_029e
 
 jr_000_12f8::
     ldh a, [$8a]
     bit 3, a
     jr z, jr_000_12f8
 
-    ld a, [$cb55]
+    ld a, [VarSounds.3]
     trap AudioPlaySound
-    callx @+$ef97
+    callx call_029e
     ret
 
 
+jp_130b:
     ld sp, $e000
-    callx @+$ee03
-    callx @+$f706
-    callx @+$ee1d
-    callx @+$f027
+    callx call_0115
+    callx call_0a1f
+    callx call_013d
+    callx call_034e
     ld a, $01
     ld [$c90c], a
     ld [$cb3d], a
-    ld a, [$cb5b]
+    ld a, [VarMusic]
     trap AudioPlayMusic
+
+jp_1337::
     ld a, $01
-    callx @+$fea1
-    callx @+$f64a
-    callx @+$efb1
-    callx @+$f5cf
-    callx @+$fe8d
-    callx @+$feea
-    callx @+$f4e4
-    callx @+$ff46
-    callx @+$ef4f
-    callx @+$f9c5
+    callx call_11de
+    callx call_098e
+    callx call_02fc
+    callx call_0921
+    callx call_11e6
+    callx call_124a
+    callx call_084b
+    callx call_12b4
+    callx call_02c4
+    callx call_0d41
     jr c, jr_000_139a
 
-    callx @+$ff04
-    callx @+$ff43
-    callx @+$ff54
-    jx @+$ffa0
+    callx call_1289
+    callx call_12cf
+    callx call_12e7
+    jx jp_1337
 
 
 jr_000_139a::
     xor a
     trap AudioPlayMusic
-    ld a, [$cb57]
+    ld a, [VarSounds.5]
     trap AudioPlaySound
-    callx @+$fe75
-    callx @+$f4e7
-    callx @+$eefa
+    callx call_121b
+    callx call_0894
+    callx call_02ae
     ld a, $0a
     ld [$0000], a
-    ld bc, $000c
-    ld de, $cb50
+    ld bc, VarMusic.end - VarCB50
+    ld de, VarCB50
     ldx hl, data_11d0
     trap MemCopy
     xor a
     ld [$0000], a
-    jx @+$ed2c
+    jx Main
+
+
+SECTION "Variables", WRAM0[$cb50]
+
+VarCB50:
+    ds 2
+VarCB52:
+    db
+.end
+VarSounds:
+.1  db
+.2  db
+.3  db
+.4  db
+.5  db
+.6  db
+.7  db
+.8  db
+.end
+VarMusic:
+    db
+.end
