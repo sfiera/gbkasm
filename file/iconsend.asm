@@ -6,6 +6,9 @@ INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 INCLUDE "file/common.inc"
 
+DEF OWNER_CODE_ICON  EQU $83
+DEF ICON_SIZE        EQU $c0
+
 SECTION "ROM Bank $000", ROM0[$0]
 
 Header::
@@ -23,8 +26,11 @@ History:
 .end
 
 Main::
-    ldx hl, strings
+    ldx hl, IconData
     push hl
+
+    ; load offset from string list to compressed data
+    ; and prepare to decompress it
     ld e, [hl]
     inc hl
     ld d, [hl]
@@ -34,62 +40,75 @@ Main::
     ld d, h
     ld b, $c6
     trap ExtractInit
+
+    ; advance hl to start of string list
     pop hl
     inc hl
     inc hl
 
-jr0:
+.nextIcon
     ld de, $cae4
-    ld a, $83
+    ld a, OWNER_CODE_ICON
     ld [de], a
     inc de
+
+    ; empty string terminates list of file names
+    ; so if string is empty, extraction is complete
     ld a, [hl]
     or a
-    jr nz, jr1
+    jr nz, .copyTitle
+
     trap ExitToMenu
 
-jr1:
-    ld a, [hli]
+.copyTitle
+    ld a, [hl+]
     ld [de], a
     inc de
     or a
-    jr nz, jr1
+    jr nz, .copyTitle
+
     push hl
 
-jr2:
+.searchFile
     ld de, $cae4
     ld hl, $c500
     ld c, $00
     trap FileSearch
-    jr c, jr3
-    trap $ef
-    jr jr2
+    jr c, .readyToWrite
 
-jr3:
+    trap $ef
+    jr .searchFile
+
+.readyToWrite
     ld hl, $c50a
-    ld [hl], $00
+    ld [hl], 0
     inc hl
     ld a, [hl]
     ld c, a
     ld b, $00
-    add $c0
-    ld [hli], a
+    add ICON_SIZE
+    ld [hl+], a
+
     add hl, bc
     ld e, l
     ld d, h
-    ld bc, $00c0
+    ld bc, ICON_SIZE
     trap ExtractData
+
     ld hl, $c500
-    ld de, $0000
-    ld bc, $1900
+    ld de, $0000  ; icon body is empty
+    ld bc, (FILE_ICON | FILE_2BPP | FILE_HIST) << 8
     trap FileWrite
+
     pop hl
-    jr nc, jr0
+    jr nc, .nextIcon
 
     trap ExitToMenu
 
-strings:
-    dw content - @
+
+IconData:
+    dw IconGfx - @
+
     dk "SIMULA1\0"
     dk "JYANKEN0\0"
     dk "IE2\0"
@@ -132,9 +151,7 @@ strings:
     dk "MEMO\0"
     dk "PUZZLE1\0"
     dk "CURSORS\0"
-    dk $00
+    db 0
 
-content:
+IconGfx:
     INCBIN "gfx/iconsend/icons.2bpp.hz"
-
-End::
