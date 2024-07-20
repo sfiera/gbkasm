@@ -102,7 +102,7 @@ KissFile = collections.namedtuple(
 )
 
 
-class KissChunk(collections.namedtuple("KissChunk", "type addr prev next")):
+class KissRegion(collections.namedtuple("KissRegion", "type addr prev next")):
 
     __slots__ = ()
 
@@ -143,12 +143,12 @@ def write_struct(fmt, file, *args):
     file.write(struct.pack(fmt, *args))
 
 
-CHUNK_FREE = ord("F")
-CHUNK_REGULAR = ord("R")
-CHUNK_INITIAL = ord("Z")
-CHUNK_FILE = [CHUNK_REGULAR, CHUNK_INITIAL]
-CHUNK_SPECIAL = ord("S")
-CHUNK_VALID = [CHUNK_FREE, CHUNK_REGULAR, CHUNK_INITIAL, CHUNK_SPECIAL]
+REGION_FREE = ord("F")
+REGION_REGULAR = ord("R")
+REGION_INITIAL = ord("Z")
+REGION_FILE = [REGION_REGULAR, REGION_INITIAL]
+REGION_SPECIAL = ord("S")
+REGION_VALID = [REGION_FREE, REGION_REGULAR, REGION_INITIAL, REGION_SPECIAL]
 
 HEADER_SIZE = 6
 INDEX_COUNT = 120
@@ -227,7 +227,7 @@ def detect_meta(sav):
         return None
 
     offset = 0
-    magic = bytes([CHUNK_SPECIAL, CHUNK_SPECIAL ^ 0xFF])
+    magic = bytes([REGION_SPECIAL, REGION_SPECIAL ^ 0xFF])
     while offset < len(data):
         try:
             i = data.index(magic, offset)
@@ -237,10 +237,10 @@ def detect_meta(sav):
             break
         offset = i + 2
 
-        index = read_chunk_header(sav, seek=Addr(cram=i))
-        profile = read_chunk_header(sav, seek=Addr(cram=i + INDEX_SIZE))
+        index = read_region_header(sav, seek=Addr(cram=i))
+        profile = read_region_header(sav, seek=Addr(cram=i + INDEX_SIZE))
         if (
-            (profile.type == CHUNK_SPECIAL)
+            (profile.type == REGION_SPECIAL)
             and (index.next == profile.addr)
             and (profile.prev == index.addr)
             and (profile.next.gb == 0xC000)
@@ -250,10 +250,10 @@ def detect_meta(sav):
     return None
 
 
-def read_chunk_header(sav, *, seek):
+def read_region_header(sav, *, seek):
     sav.seek(seek.cram)
     ctype, inv_ctype, prevc, nextc = read_struct("<BBHH", sav)
-    assert (ctype ^ inv_ctype) == 0xFF, f"invalid chunk at {seek}"
+    assert (ctype ^ inv_ctype) == 0xFF, f"invalid region at {seek}"
     if prevc < 0x8000:
         prevc = Addr(rom=prevc)
     elif seek.gb == 0xA002:
@@ -261,7 +261,7 @@ def read_chunk_header(sav, *, seek):
     else:
         prevc = Addr(bank=seek.bank, gb=prevc)
     nextc = Addr(bank=seek.bank, gb=nextc)
-    return KissChunk(ctype, seek, prevc, nextc)
+    return KissRegion(ctype, seek, prevc, nextc)
 
 
 def read_index(sav, meta):
@@ -274,14 +274,14 @@ def read_index(sav, meta):
     return entries
 
 
-def read_all_chunks(sav, meta):
-    chunks = []
+def read_all_regions(sav, meta):
+    regions = []
     for bank in range(0, meta.profile.addr.bank + 1):
         addr = Addr(bank=bank, gb=0xA002)
         while addr.gb != 0xC000:
-            chunks.append(read_chunk_header(sav, seek=addr))
-            addr = chunks[-1].next
-    return chunks
+            regions.append(read_region_header(sav, seek=addr))
+            addr = regions[-1].next
+    return regions
 
 
 def read_file_header(sav, *, seek):
@@ -313,57 +313,57 @@ def check_command(parser, args):
             if entry.addr.cram > 0 and entry.cart_id != 0xFF:
                 files[entry.addr - HEADER_SIZE] = read_file_header(sav, seek=entry.addr)
 
-        chunks = {c.addr: c for c in read_all_chunks(sav, meta)}
-        for addr, chunk in chunks.items():
-            if chunk != meta.profile:
-                next = chunks[chunk.next.adjusted()]
-                if next.prev != chunk.addr:
+        regions = {c.addr: c for c in read_all_regions(sav, meta)}
+        for addr, region in regions.items():
+            if region != meta.profile:
+                next = regions[region.next.adjusted()]
+                if next.prev != region.addr:
                     print(
-                        f"Chunk {next.body} has bad back-reference"
-                        f" to {next.prev}; expected {chunk.body}"
+                        f"Region {next.body} has bad back-reference"
+                        f" to {next.prev}; expected {region.body}"
                     )
                     ok = False
-            if chunk.type not in CHUNK_VALID:
-                print(f"Invalid chunk type ${chunk.type:02x} at {addr}")
+            if region.type not in REGION_VALID:
+                print(f"Invalid region type ${region.type:02x} at {addr}")
                 ok = False
 
-        file_chunks = {k: v for k, v in chunks.items() if v.type in CHUNK_FILE}
-        for addr in frozenset(files) | frozenset(file_chunks):
-            if addr not in chunks:
-                print(f"Index references non-chunk {addr}")
+        file_regions = {k: v for k, v in regions.items() if v.type in REGION_FILE}
+        for addr in frozenset(files) | frozenset(file_regions):
+            if addr not in regions:
+                print(f"Index references non-region {addr}")
                 ok = False
-            elif addr not in file_chunks:
-                print(f"Index references non-file chunk {addr}")
+            elif addr not in file_regions:
+                print(f"Index references non-file region {addr}")
                 ok = False
             elif addr not in files:
-                print(f"Index lacks reference to file chunk {addr}")
+                print(f"Index lacks reference to file region {addr}")
                 ok = False
             else:
-                chunk = chunks[addr]
+                region = regions[addr]
                 file = files[addr]
-                calc_size = chunk.next.cram - chunk.body.cram
+                calc_size = region.next.cram - region.body.cram
                 if (calc_size < file.size) or (calc_size > file.size + 5):
                     print(
-                        f"File chunk {addr} has bad size ${calc_size:04x};"
+                        f"File region {addr} has bad size ${calc_size:04x};"
                         f" expected ${file.size:04x}"
                     )
                     ok = False
 
-        special_chunks = {k: v for k, v in chunks.items() if v.type == CHUNK_SPECIAL}
-        del special_chunks[meta.profile.addr]
-        del special_chunks[meta.index.addr]
-        for addr in special_chunks:
-            print(f"Invalid special chunk {addr}")
+        special_regions = {k: v for k, v in regions.items() if v.type == REGION_SPECIAL}
+        del special_regions[meta.profile.addr]
+        del special_regions[meta.index.addr]
+        for addr in special_regions:
+            print(f"Invalid special region {addr}")
             ok = False
 
-        free_chunks = {k: v for k, v in chunks.items() if v.type == CHUNK_FREE}
-        for addr, chunk in free_chunks.items():
-            if chunk.next in free_chunks:
-                print(f"Consecutive free chunks {addr} and {chunk.next}")
+        free_regions = {k: v for k, v in regions.items() if v.type == REGION_FREE}
+        for addr, region in free_regions.items():
+            if region.next in free_regions:
+                print(f"Consecutive free regions {addr} and {region.next}")
                 ok = False
 
     if ok:
-        print(f"Validated {len(files)} files in {len(chunks)} chunks")
+        print(f"Validated {len(files)} files in {len(regions)} regions")
     else:
         sys.exit(1)
 
@@ -480,62 +480,62 @@ def add_command(parser, args):
         else:
             raise ToolError(f"no space in index")
 
-        chunks = read_all_chunks(sav, meta)
-        chunks = {c for c in chunks if c.type == CHUNK_FREE}
-        chunks = {c for c in chunks if c.size >= file.size}
-        if not chunks:
+        regions = read_all_regions(sav, meta)
+        regions = {c for c in regions if c.type == REGION_FREE}
+        regions = {c for c in regions if c.size >= file.size}
+        if not regions:
             raise ToolError(f"no space in CRAM")
         if diamond:
-            chunks = {c for c in chunks if c.body.gb == 0xA008}
-            if not chunks:
+            regions = {c for c in regions if c.body.gb == 0xA008}
+            if not regions:
                 raise ToolError(f"no valid diamond space in CRAM")
-        chunk = max(chunks, key=lambda chunk: chunk.body)
+        region = max(regions, key=lambda region: region.body)
 
-        # Split chunk if large enough: if it has space for another header
-        # even if there would be zero space remaining for a chunk body.
-        # Even though that chunk would not itself be useful,
-        # if would be possible to merge into the following chunk,
-        # if the file in the following chunk were to be deleted.
-        if chunk.size >= (file.size + HEADER_SIZE):
+        # Split region if large enough: if it has space for another header
+        # even if there would be zero space remaining for a region body.
+        # Even though that region would not itself be useful,
+        # if would be possible to merge into the following region,
+        # if the file in the following region were to be deleted.
+        if region.size >= (file.size + HEADER_SIZE):
             if diamond:
-                addr2 = chunk.body + file.size
+                addr2 = region.body + file.size
             else:
-                addr2 = chunk.next - file.size - HEADER_SIZE
+                addr2 = region.next - file.size - HEADER_SIZE
 
-            chunk1 = KissChunk(CHUNK_FREE, chunk.addr, chunk.prev, addr2)
-            sav.seek(chunk1.addr.cram + 4)
-            write_struct("<H", sav, chunk1.next.gb)
+            region1 = KissRegion(REGION_FREE, region.addr, region.prev, addr2)
+            sav.seek(region1.addr.cram + 4)
+            write_struct("<H", sav, region1.next.gb)
 
-            chunk2 = KissChunk(CHUNK_FREE, addr2, chunk.addr, chunk.next)
-            sav.seek(chunk2.addr.cram)
+            region2 = KissRegion(REGION_FREE, addr2, region.addr, region.next)
+            sav.seek(region2.addr.cram)
             write_struct(
                 "<BBHH",
                 sav,
-                chunk2.type,
-                chunk2.type ^ 0xFF,
-                chunk2.prev.gb,
-                chunk2.next.gb,
+                region2.type,
+                region2.type ^ 0xFF,
+                region2.prev.gb,
+                region2.next.gb,
             )
 
-            sav.seek(chunk2.next.adjusted().cram + 2)
-            write_struct("<H", sav, chunk2.addr.gb)
+            sav.seek(region2.next.adjusted().cram + 2)
+            write_struct("<H", sav, region2.addr.gb)
 
             if diamond:
-                chunk = chunk1
+                region = region1
             else:
-                chunk = chunk2
-            assert chunk.size == file.size
+                region = region2
+            assert region.size == file.size
 
-        sav.seek(chunk.addr.cram)
+        sav.seek(region.addr.cram)
         if diamond:
-            write_struct("<BB", sav, CHUNK_INITIAL, CHUNK_INITIAL ^ 0xFF)
+            write_struct("<BB", sav, REGION_INITIAL, REGION_INITIAL ^ 0xFF)
         else:
-            write_struct("<BB", sav, CHUNK_REGULAR, CHUNK_REGULAR ^ 0xFF)
-        sav.seek(chunk.body.cram)
+            write_struct("<BB", sav, REGION_REGULAR, REGION_REGULAR ^ 0xFF)
+        sav.seek(region.body.cram)
         sav.write(data)
 
         sav.seek(meta.index.body.cram + (4 * index_loc))
-        meta = write_struct("<HBB", sav, chunk.body.cram, file.cart_id, file.owner)
+        meta = write_struct("<HBB", sav, region.body.cram, file.cart_id, file.owner)
 
 
 def move_command(parser, args):
@@ -556,31 +556,31 @@ def del_command(parser, args):
         else:
             raise KeyError(args.title)
 
-        # Set the chunk type to $46 (free)
-        chunk = read_chunk_header(sav, seek=entry.addr - HEADER_SIZE)
-        sav.seek(chunk.addr.cram)
-        write_struct("<BB", sav, CHUNK_FREE, CHUNK_FREE ^ 0xFF)
+        # Set the region type to $46 (free)
+        region = read_region_header(sav, seek=entry.addr - HEADER_SIZE)
+        sav.seek(region.addr.cram)
+        write_struct("<BB", sav, REGION_FREE, REGION_FREE ^ 0xFF)
 
-        # Merge this chunk into previous, if previous chunk is free too.
-        if chunk.addr.gb != 0xA002:
-            prev = read_chunk_header(sav, seek=chunk.prev)
-            if prev.type == CHUNK_FREE:
-                chunk = KissChunk(CHUNK_FREE, prev.addr, prev.prev, chunk.next)
-                sav.seek(chunk.addr.cram + 4)
-                write_struct("<H", sav, chunk.next.gb)
+        # Merge this region into previous, if previous region is free too.
+        if region.addr.gb != 0xA002:
+            prev = read_region_header(sav, seek=region.prev)
+            if prev.type == REGION_FREE:
+                region = KissRegion(REGION_FREE, prev.addr, prev.prev, region.next)
+                sav.seek(region.addr.cram + 4)
+                write_struct("<H", sav, region.next.gb)
 
-        # Merge next chunk into this, if next chunk is free too.
-        if chunk.next.gb != 0xC000:
-            next = read_chunk_header(sav, seek=chunk.next)
-            if next.type == CHUNK_FREE:
-                chunk = KissChunk(CHUNK_FREE, chunk.addr, chunk.prev, next.next)
-                sav.seek(chunk.addr.cram + 4)
-                write_struct("<H", sav, chunk.next.gb)
+        # Merge next region into this, if next region is free too.
+        if region.next.gb != 0xC000:
+            next = read_region_header(sav, seek=region.next)
+            if next.type == REGION_FREE:
+                region = KissRegion(REGION_FREE, region.addr, region.prev, next.next)
+                sav.seek(region.addr.cram + 4)
+                write_struct("<H", sav, region.next.gb)
 
-        # Ensure next chunk points to this.
-        # There is always a next chunk, because only special chunks are final.
-        sav.seek(chunk.next.adjusted().cram + 2)
-        write_struct("<H", sav, chunk.addr.gb)
+        # Ensure next region points to this.
+        # There is always a next region, because only special regions are final.
+        sav.seek(region.next.adjusted().cram + 2)
+        write_struct("<H", sav, region.addr.gb)
 
         # Zero out the entry in the index.
         sav.seek(meta.index.body.cram + (4 * i))
