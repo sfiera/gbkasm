@@ -78,6 +78,11 @@ class Addr(collections.namedtuple("Addr", "bank gb rom")):
     def cram(self):
         return (self[0] << 13) + (self[1] - 0xA000)
 
+    def adjusted(self):
+        if self.gb == 0xC000:
+            return self + 2
+        return self
+
     def __str__(self):
         if self.rom is not None:
             return f"ROM:${self.rom:04x}"
@@ -88,9 +93,6 @@ class Addr(collections.namedtuple("Addr", "bank gb rom")):
 
     def __sub__(self, value):
         return type(self)(cram=self.cram - value)
-
-    def reloc(self, value):
-        return type(self)(bank=self.bank, gb=value)
 
 
 KissMeta = collections.namedtuple("KissMeta", "profile index".split())
@@ -107,6 +109,10 @@ class KissChunk(collections.namedtuple("KissChunk", "type addr prev next")):
     @property
     def body(self):
         return self.addr + HEADER_SIZE
+
+    @property
+    def size(self):
+        return self.next.cram - self.addr.cram - HEADER_SIZE
 
 
 class KissError(Exception):
@@ -278,10 +284,6 @@ def read_all_chunks(sav, meta):
     return chunks
 
 
-def chunk_size(chunk):
-    return chunk.next.cram - chunk.body.cram
-
-
 def read_file_header(sav, *, seek):
     sav.seek(seek.cram)
     size, flags, cart_id, header_size, owner = read_struct("<HBBBB", sav)
@@ -314,10 +316,7 @@ def check_command(parser, args):
         chunks = {c.addr: c for c in read_all_chunks(sav, meta)}
         for addr, chunk in chunks.items():
             if chunk != meta.profile:
-                if chunk.next.gb == 0xC000:
-                    next = chunks[chunk.next + 2]
-                else:
-                    next = chunks[chunk.next]
+                next = chunks[chunk.next.adjusted()]
                 if next.prev != chunk.addr:
                     print(
                         f"Chunk {next.body} has bad back-reference"
@@ -396,10 +395,8 @@ def list_command(parser, args):
         table = [("N", "TITLE", "ADDR", "SIZE", "MARK", "OWNER", "ICON")]
 
         if meta is not None:
-            index = read_index(sav, meta)
-
             addrs = []
-            for i, entry in enumerate(index):
+            for i, entry in enumerate(read_index(sav, meta)):
                 if entry.addr.cram == 0:
                     continue
                 elif entry.cart_id == 0xFF:
@@ -438,9 +435,8 @@ def get_command(parser, args):
 
     with open_kiss(args, "rb") as (meta, rom, sav):
         if meta is not None:
-            index = read_index(sav, meta)
             addrs = []
-            for i, entry in enumerate(index):
+            for i, entry in enumerate(read_index(sav, meta)):
                 if (entry.addr.cram != 0) and (entry.cart_id != 0xFF):
                     addrs.append((i, entry.addr))
         else:
@@ -477,8 +473,7 @@ def add_command(parser, args):
         if rom is not None:
             raise ToolError("cannot add file to ROM file")
 
-        index = read_index(sav, meta)
-        for i, entry in enumerate(index):
+        for i, entry in enumerate(read_index(sav, meta)):
             if entry.addr.cram == 0:
                 index_loc = i
                 break
@@ -487,7 +482,7 @@ def add_command(parser, args):
 
         chunks = read_all_chunks(sav, meta)
         chunks = {c for c in chunks if c.type == CHUNK_FREE}
-        chunks = {c for c in chunks if chunk_size(c) >= file.size}
+        chunks = {c for c in chunks if c.size >= file.size}
         if not chunks:
             raise ToolError(f"no space in CRAM")
         if diamond:
@@ -496,8 +491,12 @@ def add_command(parser, args):
                 raise ToolError(f"no valid diamond space in CRAM")
         chunk = max(chunks, key=lambda chunk: chunk.body)
 
-        # if large enough to split in two
-        if chunk_size(chunk) >= (file.size + HEADER_SIZE):
+        # Split chunk if large enough: if it has space for another header
+        # even if there would be zero space remaining for a chunk body.
+        # Even though that chunk would not itself be useful,
+        # if would be possible to merge into the following chunk,
+        # if the file in the following chunk were to be deleted.
+        if chunk.size >= (file.size + HEADER_SIZE):
             if diamond:
                 addr2 = chunk.body + file.size
             else:
@@ -518,16 +517,14 @@ def add_command(parser, args):
                 chunk2.next.gb,
             )
 
-            next_at = chunk2.next
-            if next_at.gb == 0xC000:
-                next_at += 2
-            sav.seek(next_at.cram + 2)
+            sav.seek(chunk2.next.adjusted().cram + 2)
             write_struct("<H", sav, chunk2.addr.gb)
 
             if diamond:
                 chunk = chunk1
             else:
                 chunk = chunk2
+            assert chunk.size == file.size
 
         sav.seek(chunk.addr.cram)
         if diamond:
@@ -538,7 +535,7 @@ def add_command(parser, args):
         sav.write(data)
 
         sav.seek(meta.index.body.cram + (4 * index_loc))
-        meta = write_struct("<HBB", sav, chunk.body.cram, 0x00, data[5])
+        meta = write_struct("<HBB", sav, chunk.body.cram, file.cart_id, file.owner)
 
 
 def move_command(parser, args):
@@ -550,12 +547,12 @@ def del_command(parser, args):
         if rom is not None:
             raise ToolError("cannot delete file from ROM file")
 
-        index = read_index(sav, meta)
-        for i, entry in enumerate(index):
-            if entry.addr.cram > 0 and entry.cart_id == 0x00:
-                file = read_file_header(sav, seek=entry.addr)
-                if file.title == args.title:
-                    break
+        for i, entry in enumerate(read_index(sav, meta)):
+            if entry.addr.cram == 0 or entry.cart_id == 0xFF:
+                continue
+            file = read_file_header(sav, seek=entry.addr)
+            if (file.title == args.title) or (str(i) == args.title):
+                break
         else:
             raise KeyError(args.title)
 
@@ -564,7 +561,7 @@ def del_command(parser, args):
         sav.seek(chunk.addr.cram)
         write_struct("<BB", sav, CHUNK_FREE, CHUNK_FREE ^ 0xFF)
 
-        # Merge this chunk into previous, if previous chunk is free too
+        # Merge this chunk into previous, if previous chunk is free too.
         if chunk.addr.gb != 0xA002:
             prev = read_chunk_header(sav, seek=chunk.prev)
             if prev.type == CHUNK_FREE:
@@ -572,7 +569,7 @@ def del_command(parser, args):
                 sav.seek(chunk.addr.cram + 4)
                 write_struct("<H", sav, chunk.next.gb)
 
-        # Merge next chunk into this, if next chunk is free too
+        # Merge next chunk into this, if next chunk is free too.
         if chunk.next.gb != 0xC000:
             next = read_chunk_header(sav, seek=chunk.next)
             if next.type == CHUNK_FREE:
@@ -582,13 +579,10 @@ def del_command(parser, args):
 
         # Ensure next chunk points to this.
         # There is always a next chunk, because only special chunks are final.
-        next_at = chunk.next
-        if next_at.gb == 0xC000:
-            next_at += 2
-        sav.seek(next_at.cram + 2)
+        sav.seek(chunk.next.adjusted().cram + 2)
         write_struct("<H", sav, chunk.addr.gb)
 
-        # Zero out the entry in the index
+        # Zero out the entry in the index.
         sav.seek(meta.index.body.cram + (4 * i))
         write_struct("<HBB", sav, 0, 0, 0)
 
