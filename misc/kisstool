@@ -124,17 +124,26 @@ class KissError(Exception):
 @contextlib.contextmanager
 def open_kiss(args, mode):
     with open(args.file, mode) as f:
+        if "+" in mode:
+            data = f.read()
+
+        meta = None
         rom_info = detect_rom(f)
-        if rom_info is not None:
-            yield None, rom_info, f
-            return
+        if rom_info is None:
+            meta = detect_meta(f)
+            if meta is None:
+                raise Exception("file contains neither ROM data nor GBKiss data")
 
-        meta = detect_meta(f)
-        if meta is not None:
-            yield meta, None, f
-            return
+        try:
+            yield meta, rom_info, f
+        except:
+            if "+" in mode:
+                # Revert all changes in case of exception
+                # So as not to leave file in indeterminate state
+                f.seek(0)
+                f.write(data)
+            raise
 
-    raise Exception("file contains neither ROM data nor GBKiss data")
 
 
 def read_struct(fmt, file):
@@ -287,7 +296,10 @@ def read_all_regions(sav, meta):
 
 
 def read_file_header(sav, *, seek):
-    sav.seek(seek.cram)
+    if seek.rom is not None:
+        sav.seek(seek.rom)
+    else:
+        sav.seek(seek.cram)
     size, flags, cart_id, header_size, owner = read_struct("<HBBBB", sav)
     icon_size = {
         0x10: ICON_SIZE_1BPP,
@@ -409,7 +421,7 @@ def list_command(parser, args):
         else:
             if rom not in ROMS:
                 raise ToolError("ROM contains no GBKiss files")
-            addrs = list(enumerate(ROMS[rom]))
+            addrs = [(i, Addr(rom=a)) for i, a in enumerate(ROMS[rom])]
 
         for i, addr in addrs:
             file = read_file_header(sav, seek=addr)
@@ -444,7 +456,7 @@ def get_command(parser, args):
         else:
             if rom not in ROMS:
                 raise ToolError("ROM contains no GBKiss files")
-            addrs = list(enumerate(ROMS[rom]))
+            addrs = [(i, Addr(rom=a)) for i, a in enumerate(ROMS[rom])]
 
         for i, addr in addrs:
             file = read_file_header(sav, seek=addr)
@@ -453,7 +465,10 @@ def get_command(parser, args):
         else:
             raise ToolError(f"file {args.title}: not found")
 
-        sav.seek(addr.cram)
+        if addr.rom is not None:
+            sav.seek(addr.rom)
+        else:
+            sav.seek(addr.cram)
         data = sav.read(file.size)
         with open(out_path, "wb") as out:
             out.write(data)
