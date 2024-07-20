@@ -26,11 +26,13 @@ def main():
     sub("info", func=info_command, help="Show user info from save file")
     sub("check", func=check_command, help="Check validity of save file")
     sub("list", func=list_command, help="List file entries in save file")
-    sub("move", func=move_command, help="Move file entry within save file")
+    move = sub("move", func=move_command, help="Move file entry within save file")
     get = sub("get", func=get_command, help="Extract local file from save file")
     add = sub("add", func=add_command, help="Insert local file into save file")
     delete = sub("del", func=del_command, help="Delete file entry from save file")
 
+    move.add_argument("title")
+    move.add_argument("pos", type=int)
     add.add_argument("path")
     get.add_argument("title")
     get.add_argument("-o", "--out")
@@ -40,7 +42,7 @@ def main():
     try:
         args.func(parser, args)
     except ToolError as e:
-        print(f"{args.path}: {e}", file=sys.stderr)
+        print(f"{args.file}: {e}", file=sys.stderr)
         exit(1)
 
 
@@ -267,7 +269,7 @@ def read_region_header(sav, *, seek):
 def read_index(sav, meta):
     sav.seek(meta.index.body.cram)
     entries = []
-    for i in range(120):
+    for i in range(INDEX_COUNT):
         addr, cart_id, owner = read_struct("<HBB", sav)
         addr = Addr(cram=addr)
         entries.append(KissEntry(addr, cart_id, owner))
@@ -535,11 +537,38 @@ def add_command(parser, args):
         sav.write(data)
 
         sav.seek(meta.index.body.cram + (4 * index_loc))
-        meta = write_struct("<HBB", sav, region.body.cram, file.cart_id, file.owner)
+        write_struct("<HBB", sav, region.body.cram, file.cart_id, file.owner)
 
 
 def move_command(parser, args):
-    raise NotImplementedError()
+    if not (0 <= args.pos < INDEX_COUNT):
+        raise ToolError(f"{args.pos}: invalid position")
+
+    with open_kiss(args, "rb+") as (meta, rom, sav):
+        if rom is not None:
+            raise ToolError("cannot move file within ROM file")
+
+        index = read_index(sav, meta)
+        for i, entry in enumerate(index):
+            if entry.addr.cram == 0 or entry.cart_id == 0xFF:
+                continue
+            file = read_file_header(sav, seek=entry.addr)
+            if (file.title == args.title) or (str(i) == args.title):
+                break
+        else:
+            raise KeyError(args.title)
+
+        from_pos, to_pos = i, args.pos
+        if from_pos == to_pos:
+            print(f"{file.title} is already at position {to_pos}", file=sys.stderr)
+            return
+
+        e = index[from_pos]
+        sav.seek(meta.index.body.cram + (4 * to_pos))
+        write_struct("<HBB", sav, e.addr.cram, e.cart_id, e.owner)
+        e = index[to_pos]
+        sav.seek(meta.index.body.cram + (4 * from_pos))
+        write_struct("<HBB", sav, e.addr.cram, e.cart_id, e.owner)
 
 
 def del_command(parser, args):
