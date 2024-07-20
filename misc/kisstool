@@ -150,7 +150,6 @@ def open_kiss(args, mode):
             raise
 
 
-
 def read_struct(fmt, file):
     return struct.unpack(fmt, file.read(struct.calcsize(fmt)))
 
@@ -236,9 +235,9 @@ def detect_rom(rom):
     return rom.read(16).rstrip(b"\0")
 
 
-def detect_meta(sav):
-    sav.seek(0)
-    data = sav.read()
+def detect_meta(f):
+    f.seek(0)
+    data = f.read()
     if data[2] ^ data[3] != 0xFF:
         return None
 
@@ -253,8 +252,8 @@ def detect_meta(sav):
             break
         offset = i + 2
 
-        index = read_region_header(sav, seek=Addr(cram=i))
-        profile = read_region_header(sav, seek=Addr(cram=i + INDEX_SIZE))
+        index = read_region_header(f, seek=Addr(cram=i))
+        profile = read_region_header(f, seek=Addr(cram=i + INDEX_SIZE))
         if (
             (profile.type == REGION_SPECIAL)
             and (index.next == profile.addr)
@@ -266,9 +265,9 @@ def detect_meta(sav):
     return None
 
 
-def read_region_header(sav, *, seek):
-    sav.seek(seek.cram)
-    ctype, inv_ctype, prevc, nextc = read_struct("<BBHH", sav)
+def read_region_header(f, *, seek):
+    f.seek(seek.cram)
+    ctype, inv_ctype, prevc, nextc = read_struct("<BBHH", f)
     assert (ctype ^ inv_ctype) == 0xFF, f"invalid region at {seek}"
     if prevc < 0x8000:
         prevc = Addr(rom=prevc)
@@ -280,38 +279,38 @@ def read_region_header(sav, *, seek):
     return KissRegion(ctype, seek, prevc, nextc)
 
 
-def read_index(sav, meta):
-    sav.seek(meta.index.body.cram)
+def read_index(f, meta):
+    f.seek(meta.index.body.cram)
     entries = []
     for i in range(INDEX_COUNT):
-        addr, cart_id, owner = read_struct("<HBB", sav)
+        addr, cart_id, owner = read_struct("<HBB", f)
         addr = Addr(cram=addr)
         entries.append(KissEntry(addr, cart_id, owner))
     return entries
 
 
-def read_all_regions(sav, meta):
+def read_all_regions(f, meta):
     regions = []
     for bank in range(0, meta.profile.addr.bank + 1):
         addr = Addr(bank=bank, gb=0xA002)
         while addr.gb != 0xC000:
-            regions.append(read_region_header(sav, seek=addr))
+            regions.append(read_region_header(f, seek=addr))
             addr = regions[-1].next
     return regions
 
 
-def read_file_header(sav, *, seek):
-    sav.seek(abs(seek.rom))
-    size, flags, cart_id, header_size, owner = read_struct("<HBBBB", sav)
+def read_file_header(f, *, seek):
+    f.seek(abs(seek.rom))
+    size, flags, cart_id, header_size, owner = read_struct("<HBBBB", f)
     icon_size = {
         0x10: ICON_SIZE_1BPP,
         0x18: ICON_SIZE_2BPP,
     }.get(flags & 0x18, 0)
-    title = sav.read(header_size - icon_size - 1).decode("gbkiss_string")
+    title = f.read(header_size - icon_size - 1).decode("gbkiss_string")
     icon = None
     if icon_size:
-        icon = sav.read(icon_size)
-    return KissFile(sav.tell(), size, flags, cart_id, owner, title, icon)
+        icon = f.read(icon_size)
+    return KissFile(f.tell(), size, flags, cart_id, owner, title, icon)
 
 
 def help_command(parser, args):
@@ -320,16 +319,16 @@ def help_command(parser, args):
 
 def check_command(parser, args):
     ok = True
-    with open_kiss(args, "rb") as (meta, rom, sav):
+    with open_kiss(args, "rb") as (meta, rom, f):
         if rom is not None:
             raise ToolError("cannot check ROM file")
 
         files = {}
-        for entry in read_index(sav, meta):
+        for entry in read_index(f, meta):
             if entry.addr.cram > 0 and entry.cart_id != 0xFF:
-                files[entry.addr - HEADER_SIZE] = read_file_header(sav, seek=entry.addr)
+                files[entry.addr - HEADER_SIZE] = read_file_header(f, seek=entry.addr)
 
-        regions = {c.addr: c for c in read_all_regions(sav, meta)}
+        regions = {c.addr: c for c in read_all_regions(f, meta)}
         for addr, region in regions.items():
             if region != meta.profile:
                 next = regions[region.next.adjusted()]
@@ -385,12 +384,12 @@ def check_command(parser, args):
 
 
 def info_command(parser, args):
-    with open_kiss(args, "rb") as (meta, rom, sav):
+    with open_kiss(args, "rb") as (meta, rom, f):
         if rom is not None:
             raise ToolError("cannot get user info from ROM file")
 
-        sav.seek(meta.profile.body.cram)
-        profile = sav.read(122)
+        f.seek(meta.profile.body.cram)
+        profile = f.read(122)
         name = profile[64:74].decode("gbkiss_char").rstrip()
         number = profile[74:86].decode("gbkiss_char").rstrip()
         memo = [
@@ -407,12 +406,12 @@ def info_command(parser, args):
 
 
 def list_command(parser, args):
-    with open_kiss(args, "rb") as (meta, rom, sav):
+    with open_kiss(args, "rb") as (meta, rom, f):
         table = [("N", "TITLE", "ADDR", "SIZE", "MARK", "OWNER", "ICON")]
 
         if meta is not None:
             addrs = []
-            for i, entry in enumerate(read_index(sav, meta)):
+            for i, entry in enumerate(read_index(f, meta)):
                 if entry.addr.cram == 0:
                     continue
                 elif entry.cart_id == 0xFF:
@@ -426,7 +425,7 @@ def list_command(parser, args):
             addrs = [(i, Addr(rom=a)) for i, a in enumerate(ROMS[rom])]
 
         for i, addr in addrs:
-            file = read_file_header(sav, seek=addr)
+            file = read_file_header(f, seek=addr)
             icon_kind = BUILTIN_ICONS.get(file.owner, "")
             if file.icon:
                 icon_kind = "%dbpp" % (len(file.icon) // 0x60)
@@ -449,10 +448,10 @@ def get_command(parser, args):
     if out_path is None:
         out_path = args.title + ".gbf"
 
-    with open_kiss(args, "rb") as (meta, rom, sav):
+    with open_kiss(args, "rb") as (meta, rom, f):
         if meta is not None:
             addrs = []
-            for i, entry in enumerate(read_index(sav, meta)):
+            for i, entry in enumerate(read_index(f, meta)):
                 if (entry.addr.cram != 0) and (entry.cart_id != 0xFF):
                     addrs.append((i, entry.addr))
         else:
@@ -461,14 +460,14 @@ def get_command(parser, args):
             addrs = [(i, Addr(rom=a)) for i, a in enumerate(ROMS[rom])]
 
         for i, addr in addrs:
-            file = read_file_header(sav, seek=addr)
+            file = read_file_header(f, seek=addr)
             if (file.title == args.title) or (str(i) == args.title):
                 break
         else:
             raise ToolError(f"file {args.title}: not found")
 
-        sav.seek(abs(addr.rom))
-        data = sav.read(file.size)
+        f.seek(abs(addr.rom))
+        data = f.read(file.size)
         with open(out_path, "wb") as out:
             out.write(data)
         print(f"Wrote {file.size} bytes to {out_path}", file=sys.stderr)
@@ -485,18 +484,18 @@ def add_command(parser, args):
             f"declared file size ${file.size:04x} != observed ${len(data):04x}"
         )
 
-    with open_kiss(args, "rb+") as (meta, rom, sav):
+    with open_kiss(args, "rb+") as (meta, rom, f):
         if rom is not None:
             raise ToolError("cannot add file to ROM file")
 
-        for i, entry in enumerate(read_index(sav, meta)):
+        for i, entry in enumerate(read_index(f, meta)):
             if entry.addr.cram == 0:
                 index_loc = i
                 break
         else:
             raise ToolError(f"no space in index")
 
-        regions = read_all_regions(sav, meta)
+        regions = read_all_regions(f, meta)
         regions = {c for c in regions if c.type == REGION_FREE}
         regions = {c for c in regions if c.size >= file.size}
         if not regions:
@@ -519,22 +518,22 @@ def add_command(parser, args):
                 addr2 = region.next - file.size - HEADER_SIZE
 
             region1 = KissRegion(REGION_FREE, region.addr, region.prev, addr2)
-            sav.seek(region1.addr.cram + 4)
-            write_struct("<H", sav, region1.next.gb)
+            f.seek(region1.addr.cram + 4)
+            write_struct("<H", f, region1.next.gb)
 
             region2 = KissRegion(REGION_FREE, addr2, region.addr, region.next)
-            sav.seek(region2.addr.cram)
+            f.seek(region2.addr.cram)
             write_struct(
                 "<BBHH",
-                sav,
+                f,
                 region2.type,
                 region2.type ^ 0xFF,
                 region2.prev.gb,
                 region2.next.gb,
             )
 
-            sav.seek(region2.next.adjusted().cram + 2)
-            write_struct("<H", sav, region2.addr.gb)
+            f.seek(region2.next.adjusted().cram + 2)
+            write_struct("<H", f, region2.addr.gb)
 
             if diamond:
                 region = region1
@@ -542,31 +541,31 @@ def add_command(parser, args):
                 region = region2
             assert region.size == file.size
 
-        sav.seek(region.addr.cram)
+        f.seek(region.addr.cram)
         if diamond:
-            write_struct("<BB", sav, REGION_INITIAL, REGION_INITIAL ^ 0xFF)
+            write_struct("<BB", f, REGION_INITIAL, REGION_INITIAL ^ 0xFF)
         else:
-            write_struct("<BB", sav, REGION_REGULAR, REGION_REGULAR ^ 0xFF)
-        sav.seek(region.body.cram)
-        sav.write(data)
+            write_struct("<BB", f, REGION_REGULAR, REGION_REGULAR ^ 0xFF)
+        f.seek(region.body.cram)
+        f.write(data)
 
-        sav.seek(meta.index.body.cram + (4 * index_loc))
-        write_struct("<HBB", sav, region.body.cram, file.cart_id, file.owner)
+        f.seek(meta.index.body.cram + (4 * index_loc))
+        write_struct("<HBB", f, region.body.cram, file.cart_id, file.owner)
 
 
 def move_command(parser, args):
     if not (0 <= args.pos < INDEX_COUNT):
         raise ToolError(f"{args.pos}: invalid position")
 
-    with open_kiss(args, "rb+") as (meta, rom, sav):
+    with open_kiss(args, "rb+") as (meta, rom, f):
         if rom is not None:
             raise ToolError("cannot move file within ROM file")
 
-        index = read_index(sav, meta)
+        index = read_index(f, meta)
         for i, entry in enumerate(index):
             if entry.addr.cram == 0 or entry.cart_id == 0xFF:
                 continue
-            file = read_file_header(sav, seek=entry.addr)
+            file = read_file_header(f, seek=entry.addr)
             if (file.title == args.title) or (str(i) == args.title):
                 break
         else:
@@ -578,56 +577,56 @@ def move_command(parser, args):
             return
 
         e = index[from_pos]
-        sav.seek(meta.index.body.cram + (4 * to_pos))
-        write_struct("<HBB", sav, e.addr.cram, e.cart_id, e.owner)
+        f.seek(meta.index.body.cram + (4 * to_pos))
+        write_struct("<HBB", f, e.addr.cram, e.cart_id, e.owner)
         e = index[to_pos]
-        sav.seek(meta.index.body.cram + (4 * from_pos))
-        write_struct("<HBB", sav, e.addr.cram, e.cart_id, e.owner)
+        f.seek(meta.index.body.cram + (4 * from_pos))
+        write_struct("<HBB", f, e.addr.cram, e.cart_id, e.owner)
 
 
 def del_command(parser, args):
-    with open_kiss(args, "rb+") as (meta, rom, sav):
+    with open_kiss(args, "rb+") as (meta, rom, f):
         if rom is not None:
             raise ToolError("cannot delete file from ROM file")
 
-        for i, entry in enumerate(read_index(sav, meta)):
+        for i, entry in enumerate(read_index(f, meta)):
             if entry.addr.cram == 0 or entry.cart_id == 0xFF:
                 continue
-            file = read_file_header(sav, seek=entry.addr)
+            file = read_file_header(f, seek=entry.addr)
             if (file.title == args.title) or (str(i) == args.title):
                 break
         else:
             raise KeyError(args.title)
 
         # Set the region type to $46 (free)
-        region = read_region_header(sav, seek=entry.addr - HEADER_SIZE)
-        sav.seek(region.addr.cram)
-        write_struct("<BB", sav, REGION_FREE, REGION_FREE ^ 0xFF)
+        region = read_region_header(f, seek=entry.addr - HEADER_SIZE)
+        f.seek(region.addr.cram)
+        write_struct("<BB", f, REGION_FREE, REGION_FREE ^ 0xFF)
 
         # Merge this region into previous, if previous region is free too.
         if region.addr.gb != 0xA002:
-            prev = read_region_header(sav, seek=region.prev)
+            prev = read_region_header(f, seek=region.prev)
             if prev.type == REGION_FREE:
                 region = KissRegion(REGION_FREE, prev.addr, prev.prev, region.next)
-                sav.seek(region.addr.cram + 4)
-                write_struct("<H", sav, region.next.gb)
+                f.seek(region.addr.cram + 4)
+                write_struct("<H", f, region.next.gb)
 
         # Merge next region into this, if next region is free too.
         if region.next.gb != 0xC000:
-            next = read_region_header(sav, seek=region.next)
+            next = read_region_header(f, seek=region.next)
             if next.type == REGION_FREE:
                 region = KissRegion(REGION_FREE, region.addr, region.prev, next.next)
-                sav.seek(region.addr.cram + 4)
-                write_struct("<H", sav, region.next.gb)
+                f.seek(region.addr.cram + 4)
+                write_struct("<H", f, region.next.gb)
 
         # Ensure next region points to this.
         # There is always a next region, because only special regions are final.
-        sav.seek(region.next.adjusted().cram + 2)
-        write_struct("<H", sav, region.addr.gb)
+        f.seek(region.next.adjusted().cram + 2)
+        write_struct("<H", f, region.addr.gb)
 
         # Zero out the entry in the index.
-        sav.seek(meta.index.body.cram + (4 * i))
-        write_struct("<HBB", sav, 0, 0, 0)
+        f.seek(meta.index.body.cram + (4 * i))
+        write_struct("<HBB", f, 0, 0, 0)
 
         print(f"Reclaimed {file.size+HEADER_SIZE} bytes of space", file=sys.stderr)
 
