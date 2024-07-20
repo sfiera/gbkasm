@@ -48,12 +48,65 @@ class ToolError(Exception):
     pass
 
 
-KissMeta = collections.namedtuple("KissMeta", "cap bank addr".split())
-KissChunk = collections.namedtuple("KissChunk", "type body prev next".split())
+class Addr(collections.namedtuple("Addr", "bank gb rom")):
+
+    __slots__ = ()
+
+    def __new__(cls, *, bank=None, gb=None, cram=None, rom=None):
+        if gb is not None:
+            assert cram is None
+            assert rom is None
+            assert 0xA000 <= gb <= 0xC000
+            assert 0 <= bank < 4
+        elif cram is not None:
+            assert bank is None
+            assert gb is None
+            assert rom is None
+            assert 0 <= cram <= 0x8000
+            bank = cram >> 13
+            gb = (cram & 0x1FFF) + 0xA000
+        elif rom is not None:
+            assert bank is None
+            assert gb is None
+            assert cram is None
+        else:
+            raise TypeError("invalid arguments")
+
+        return super().__new__(cls, bank, gb, rom)
+
+    @property
+    def cram(self):
+        return (self[0] << 13) + (self[1] - 0xA000)
+
+    def __str__(self):
+        if self.rom is not None:
+            return f"ROM:${self.rom:04x}"
+        return f"${self.bank:02x}:${self.gb:04x}"
+
+    def __add__(self, value):
+        return type(self)(cram=self.cram + value)
+
+    def __sub__(self, value):
+        return type(self)(cram=self.cram - value)
+
+    def reloc(self, value):
+        return type(self)(bank=self.bank, gb=value)
+
+
+KissMeta = collections.namedtuple("KissMeta", "profile index".split())
 KissEntry = collections.namedtuple("KissEntry", "addr cart_id owner".split())
 KissFile = collections.namedtuple(
     "KissFile", "body size flags cart_id owner title icon".split()
 )
+
+
+class KissChunk(collections.namedtuple("KissChunk", "type addr prev next")):
+
+    __slots__ = ()
+
+    @property
+    def body(self):
+        return self.addr + HEADER_SIZE
 
 
 class KissError(Exception):
@@ -76,17 +129,6 @@ def open_kiss(args, mode):
     raise Exception("file contains neither ROM data nor GBKiss data")
 
 
-def gb2cram(bank, addr):
-    """Convert addr in CRAM memory space to Game Boy space"""
-    assert 0xA000 <= addr <= 0xC000
-    return (bank << 13) + (addr - 0xA000)
-
-
-def cram2gb(addr):
-    """Convert addr in Game Boy memory space to CRAM space"""
-    return (addr >> 13), ((addr % 0x2000) + 0xA000)
-
-
 def read_struct(fmt, file):
     return struct.unpack(fmt, file.read(struct.calcsize(fmt)))
 
@@ -101,6 +143,12 @@ CHUNK_INITIAL = ord("Z")
 CHUNK_FILE = [CHUNK_REGULAR, CHUNK_INITIAL]
 CHUNK_SPECIAL = ord("S")
 CHUNK_VALID = [CHUNK_FREE, CHUNK_REGULAR, CHUNK_INITIAL, CHUNK_SPECIAL]
+
+HEADER_SIZE = 6
+INDEX_COUNT = 120
+INDEX_SIZE = HEADER_SIZE + (INDEX_COUNT * 4)
+PROFILE_SIZE = 128
+
 ICON_SIZE_2BPP = 0xC0
 ICON_SIZE_1BPP = 0x60
 BUILTIN_ICONS = {
@@ -153,7 +201,7 @@ ROMS = {
         0x391A8,
         0x39811,
         0x3C04F,
-        0x3c482,
+        0x3C482,
         0x3C4A1,
     ],
 }
@@ -169,88 +217,73 @@ def detect_rom(rom):
 def detect_meta(sav):
     sav.seek(0)
     data = sav.read()
+    if data[2] ^ data[3] != 0xFF:
+        return None
+
     offset = 0
-    magic = b"\x53\xac"
-    cram_addr = None
+    magic = bytes([CHUNK_SPECIAL, CHUNK_SPECIAL ^ 0xFF])
     while offset < len(data):
         try:
             i = data.index(magic, offset)
         except ValueError:
             break
+        if i > len(data) - (INDEX_SIZE + PROFILE_SIZE):
+            break
         offset = i + 2
-        index_header = i
-        index_next = index_header + 4
-        profile_header = i + 486
-        profile_prev = profile_header + 2
-        profile_end = profile_header + 128
-        if profile_end > len(data):
-            break
 
-        (index_next,) = struct.unpack("<H", data[index_next : index_next + 2])
-        (profile_prev,) = struct.unpack("<H", data[profile_prev : profile_prev + 2])
+        index = read_chunk_header(sav, seek=Addr(cram=i))
+        profile = read_chunk_header(sav, seek=Addr(cram=i + INDEX_SIZE))
         if (
-            (data[profile_header : profile_header + 2] == magic)
-            and (cram2gb(index_header)[1] == profile_prev)
-            and (cram2gb(profile_header)[1] == index_next)
+            (profile.type == CHUNK_SPECIAL)
+            and (index.next == profile.addr)
+            and (profile.prev == index.addr)
+            and (profile.next.gb == 0xC000)
         ):
-            cram_addr = profile_header
-            break
+            return KissMeta(profile, index)
 
-    if cram_addr is None:
-        return None
-    bank, addr = cram2gb(cram_addr)
-    return KissMeta(None, bank, addr)
+    return None
 
 
-def read_chunk_header(sav, *, seek=None):
-    if seek is not None:
-        sav.seek(seek)
+def read_chunk_header(sav, *, seek):
+    sav.seek(seek.cram)
     ctype, inv_ctype, prevc, nextc = read_struct("<BBHH", sav)
-    assert (ctype ^ inv_ctype) == 0xFF, f"invalid chunk at ${sav.tell():x}"
-    return KissChunk(ctype, sav.tell(), prevc, nextc)
+    assert (ctype ^ inv_ctype) == 0xFF, f"invalid chunk at {seek}"
+    if prevc < 0x8000:
+        prevc = Addr(rom=prevc)
+    elif seek.gb == 0xA002:
+        prevc = Addr(bank=seek.bank - 1, gb=prevc)
+    else:
+        prevc = Addr(bank=seek.bank, gb=prevc)
+    nextc = Addr(bank=seek.bank, gb=nextc)
+    return KissChunk(ctype, seek, prevc, nextc)
 
 
-def read_profile_chunk_header(sav, *, seek=None):
-    profile = read_chunk_header(sav, seek=seek)
-    assert profile.type == CHUNK_SPECIAL
-    assert (profile.next % 0x2000) == 0
-    _, addr = cram2gb(profile.body)
-    assert (addr - profile.prev) == 492
-    return profile
-
-
-def read_index_chunk_header(sav, *, seek=None):
-    index = read_chunk_header(sav, seek=seek)
-    assert index.type == CHUNK_SPECIAL
-    return index
-
-
-def read_index(sav, *, seek=None):
-    _ = read_index_chunk_header(sav, seek=seek)
+def read_index(sav, meta):
+    sav.seek(meta.index.body.cram)
     entries = []
     for i in range(120):
-        entries.append(KissEntry(*read_struct("<HBB", sav)))
+        addr, cart_id, owner = read_struct("<HBB", sav)
+        addr = Addr(cram=addr)
+        entries.append(KissEntry(addr, cart_id, owner))
     return entries
 
 
-def read_all_chunks(sav, banks):
+def read_all_chunks(sav, meta):
     chunks = []
-    for bank in range(0, banks):
-        addr = 0xA002
-        while addr != 0xC000:
-            chunks.append(read_chunk_header(sav, seek=gb2cram(bank, addr)))
+    for bank in range(0, meta.profile.addr.bank + 1):
+        addr = Addr(bank=bank, gb=0xA002)
+        while addr.gb != 0xC000:
+            chunks.append(read_chunk_header(sav, seek=addr))
             addr = chunks[-1].next
     return chunks
 
 
 def chunk_size(chunk):
-    bank, _ = cram2gb(chunk.body)
-    return gb2cram(bank, chunk.next) - chunk.body
+    return chunk.next.cram - chunk.body.cram
 
 
-def read_file_header(sav, *, seek=None):
-    if seek is not None:
-        sav.seek(seek)
+def read_file_header(sav, *, seek):
+    sav.seek(seek.cram)
     size, flags, cart_id, header_size, owner = read_struct("<HBBBB", sav)
     icon_size = {
         0x10: ICON_SIZE_1BPP,
@@ -273,66 +306,61 @@ def check_command(parser, args):
         if rom is not None:
             raise ToolError("cannot check ROM file")
 
-        profile = read_profile_chunk_header(sav, seek=gb2cram(meta.bank, meta.addr))
-
         files = {}
-        for entry in read_index(sav, seek=gb2cram(meta.bank, profile.prev)):
-            if entry.addr > 0 and entry.cart_id == 0x00:
-                files[entry.addr] = read_file_header(sav, seek=entry.addr)
+        for entry in read_index(sav, meta):
+            if entry.addr.cram > 0 and entry.cart_id != 0xFF:
+                files[entry.addr - HEADER_SIZE] = read_file_header(sav, seek=entry.addr)
 
-        chunks = {chunk.body: chunk for chunk in read_all_chunks(sav, meta.bank + 1)}
+        chunks = {c.addr: c for c in read_all_chunks(sav, meta)}
         for addr, chunk in chunks.items():
-            bank, addr = cram2gb(addr)
-            if chunk.next == 0xC000:
-                continue
-            next = chunks[gb2cram(bank, chunk.next) + 6]
-            back_cram = gb2cram(bank, next.prev)
-            if back_cram != chunk.body - 6:
-                print(
-                    f"Chunk ${next.body - 6:04x} has bad back-reference"
-                    f" to ${back_cram:04x}; expected ${chunk.body - 6:04x}"
-                )
-                ok = False
+            if chunk != meta.profile:
+                if chunk.next.gb == 0xC000:
+                    next = chunks[chunk.next + 2]
+                else:
+                    next = chunks[chunk.next]
+                if next.prev != chunk.addr:
+                    print(
+                        f"Chunk {next.body} has bad back-reference"
+                        f" to {next.prev}; expected {chunk.body}"
+                    )
+                    ok = False
             if chunk.type not in CHUNK_VALID:
-                print(f"Invalid chunk type ${chunk.type:02x} at ${addr:04x}")
+                print(f"Invalid chunk type ${chunk.type:02x} at {addr}")
                 ok = False
 
         file_chunks = {k: v for k, v in chunks.items() if v.type in CHUNK_FILE}
         for addr in frozenset(files) | frozenset(file_chunks):
             if addr not in chunks:
-                print(f"Index references non-chunk ${addr:04x}")
+                print(f"Index references non-chunk {addr}")
                 ok = False
             elif addr not in file_chunks:
-                print(f"Index references non-file chunk ${addr:04x}")
+                print(f"Index references non-file chunk {addr}")
                 ok = False
             elif addr not in files:
-                print(f"Index lacks reference to file chunk ${addr:04x}")
+                print(f"Index lacks reference to file chunk {addr}")
                 ok = False
             else:
                 chunk = chunks[addr]
                 file = files[addr]
-                _, gb_addr = cram2gb(addr)
-                calc_size = chunk.next - gb_addr
+                calc_size = chunk.next.cram - chunk.body.cram
                 if (calc_size < file.size) or (calc_size > file.size + 5):
                     print(
-                        f"File chunk ${addr:04x} has bad size ${calc_size:04x};"
+                        f"File chunk {addr} has bad size ${calc_size:04x};"
                         f" expected ${file.size:04x}"
                     )
                     ok = False
 
         special_chunks = {k: v for k, v in chunks.items() if v.type == CHUNK_SPECIAL}
-        del special_chunks[gb2cram(meta.bank, meta.addr) + 6]  # profile
-        del special_chunks[gb2cram(meta.bank, profile.prev) + 6]  # index
+        del special_chunks[meta.profile.addr]
+        del special_chunks[meta.index.addr]
         for addr in special_chunks:
-            print(f"Invalid special chunk ${addr:04x}")
+            print(f"Invalid special chunk {addr}")
             ok = False
 
         free_chunks = {k: v for k, v in chunks.items() if v.type == CHUNK_FREE}
         for addr, chunk in free_chunks.items():
-            bank, _ = cram2gb(addr)
-            next_cram = gb2cram(bank, chunk.next) + 6
-            if next_cram in free_chunks:
-                print(f"Consecutive free chunks ${addr:04x} and ${next_cram:04x}")
+            if chunk.next in free_chunks:
+                print(f"Consecutive free chunks {addr} and {chunk.next}")
                 ok = False
 
     if ok:
@@ -346,8 +374,7 @@ def info_command(parser, args):
         if rom is not None:
             raise ToolError("cannot get user info from ROM file")
 
-        profile = read_profile_chunk_header(sav, seek=gb2cram(meta.bank, meta.addr))
-
+        sav.seek(meta.profile.body.cram)
         profile = sav.read(122)
         name = profile[64:74].decode("gbkiss_char").rstrip()
         number = profile[74:86].decode("gbkiss_char").rstrip()
@@ -369,12 +396,11 @@ def list_command(parser, args):
         table = [("N", "TITLE", "ADDR", "SIZE", "MARK", "OWNER", "ICON")]
 
         if meta is not None:
-            profile = read_profile_chunk_header(sav, seek=gb2cram(meta.bank, meta.addr))
-            index = read_index(sav, seek=gb2cram(meta.bank, profile.prev))
+            index = read_index(sav, meta)
 
             addrs = []
             for i, entry in enumerate(index):
-                if entry.addr == 0:
+                if entry.addr.cram == 0:
                     continue
                 elif entry.cart_id == 0xFF:
                     table.append((i, "KISS MAIL", "n/a", "n/a", "◎", "$01", "auto"))
@@ -400,7 +426,6 @@ def list_command(parser, args):
             else:
                 mark = "△"
             owner = "$%02x" % file.owner
-            addr = "$%04x" % addr
             table.append((i, file.title, addr, file.size, mark, owner, icon_kind))
 
         _columnify(table)
@@ -413,11 +438,10 @@ def get_command(parser, args):
 
     with open_kiss(args, "rb") as (meta, rom, sav):
         if meta is not None:
-            profile = read_profile_chunk_header(sav, seek=gb2cram(meta.bank, meta.addr))
-            index = read_index(sav, seek=gb2cram(meta.bank, profile.prev))
+            index = read_index(sav, meta)
             addrs = []
             for i, entry in enumerate(index):
-                if (entry.addr != 0) and (entry.cart_id != 0xFF):
+                if (entry.addr.cram != 0) and (entry.cart_id != 0xFF):
                     addrs.append((i, entry.addr))
         else:
             if rom not in ROMS:
@@ -431,7 +455,7 @@ def get_command(parser, args):
         else:
             raise ToolError(f"file {args.title}: not found")
 
-        sav.seek(addr)
+        sav.seek(addr.cram)
         data = sav.read(file.size)
         with open(out_path, "wb") as out:
             out.write(data)
@@ -441,7 +465,7 @@ def get_command(parser, args):
 def add_command(parser, args):
     with open(args.path, "rb") as f:
         data = f.read()
-        file = read_file_header(f, seek=0)
+        file = read_file_header(f, seek=Addr(cram=0))
 
     diamond = (file.flags & 0x06) == 0x06
     if file.size != len(data):
@@ -453,61 +477,68 @@ def add_command(parser, args):
         if rom is not None:
             raise ToolError("cannot add file to ROM file")
 
-        profile = read_profile_chunk_header(sav, seek=gb2cram(meta.bank, meta.addr))
-        index = read_index(sav, seek=gb2cram(meta.bank, profile.prev))
+        index = read_index(sav, meta)
         for i, entry in enumerate(index):
-            if entry.addr == 0:
+            if entry.addr.cram == 0:
                 index_loc = i
                 break
         else:
             raise ToolError(f"no space in index")
 
-        chunks = read_all_chunks(sav, meta.bank + 1)
+        chunks = read_all_chunks(sav, meta)
         chunks = {c for c in chunks if c.type == CHUNK_FREE}
         chunks = {c for c in chunks if chunk_size(c) >= file.size}
         if not chunks:
             raise ToolError(f"no space in CRAM")
         if diamond:
-            chunks = {c for c in chunks if cram2gb(c.body)[1] == 0xA008}
+            chunks = {c for c in chunks if c.body.gb == 0xA008}
             if not chunks:
                 raise ToolError(f"no valid diamond space in CRAM")
         chunk = max(chunks, key=lambda chunk: chunk.body)
-        bank, addr = cram2gb(chunk.body)
 
         # if large enough to split in two
-        if chunk_size(chunk) >= (file.size + 6):
+        if chunk_size(chunk) >= (file.size + HEADER_SIZE):
             if diamond:
-                new_addr = addr + file.size
+                addr2 = chunk.body + file.size
             else:
-                new_addr = chunk.next - file.size - 6
-            chunk2 = KissChunk(
-                CHUNK_FREE, gb2cram(bank, new_addr) + 6, addr - 6, chunk.next
-            )
-            chunk = KissChunk(CHUNK_FREE, chunk.body, chunk.prev, new_addr)
-            sav.seek(chunk.body - 6)
+                addr2 = chunk.next - file.size - HEADER_SIZE
+
+            chunk1 = KissChunk(CHUNK_FREE, chunk.addr, chunk.prev, addr2)
+            sav.seek(chunk1.addr.cram + 4)
+            write_struct("<H", sav, chunk1.next.gb)
+
+            chunk2 = KissChunk(CHUNK_FREE, addr2, chunk.addr, chunk.next)
+            sav.seek(chunk2.addr.cram)
             write_struct(
-                "<BBHH", sav, chunk.type, chunk.type ^ 0xFF, chunk.prev, chunk.next
+                "<BBHH",
+                sav,
+                chunk2.type,
+                chunk2.type ^ 0xFF,
+                chunk2.prev.gb,
+                chunk2.next.gb,
             )
-            sav.seek(chunk2.body - 6)
-            write_struct(
-                "<BBHH", sav, chunk2.type, chunk2.type ^ 0xFF, chunk2.prev, chunk2.next
-            )
-            if chunk2.next != 0xC000:
-                sav.seek(gb2cram(bank, chunk2.next + 2))
-                write_struct("<H", sav, cram2gb(chunk2.body)[1] - 6)
-            if not diamond:
+
+            next_at = chunk2.next
+            if next_at.gb == 0xC000:
+                next_at += 2
+            sav.seek(next_at.cram + 2)
+            write_struct("<H", sav, chunk2.addr.gb)
+
+            if diamond:
+                chunk = chunk1
+            else:
                 chunk = chunk2
 
-        sav.seek(chunk.body - 6)
+        sav.seek(chunk.addr.cram)
         if diamond:
             write_struct("<BB", sav, CHUNK_INITIAL, CHUNK_INITIAL ^ 0xFF)
         else:
             write_struct("<BB", sav, CHUNK_REGULAR, CHUNK_REGULAR ^ 0xFF)
-        sav.seek(chunk.body)
+        sav.seek(chunk.body.cram)
         sav.write(data)
 
-        sav.seek(gb2cram(meta.bank, profile.prev) + 6 + (4 * index_loc))
-        meta = write_struct("<HBB", sav, chunk.body, 0x00, data[5])
+        sav.seek(meta.index.body.cram + (4 * index_loc))
+        meta = write_struct("<HBB", sav, chunk.body.cram, 0x00, data[5])
 
 
 def move_command(parser, args):
@@ -519,10 +550,9 @@ def del_command(parser, args):
         if rom is not None:
             raise ToolError("cannot delete file from ROM file")
 
-        profile = read_profile_chunk_header(sav, seek=gb2cram(meta.bank, meta.addr))
-        index = read_index(sav, seek=gb2cram(meta.bank, profile.prev))
+        index = read_index(sav, meta)
         for i, entry in enumerate(index):
-            if entry.addr > 0 and entry.cart_id == 0x00:
+            if entry.addr.cram > 0 and entry.cart_id == 0x00:
                 file = read_file_header(sav, seek=entry.addr)
                 if file.title == args.title:
                     break
@@ -530,39 +560,39 @@ def del_command(parser, args):
             raise KeyError(args.title)
 
         # Set the chunk type to $46 (free)
-        chunk = read_chunk_header(sav, seek=entry.addr - 6)
-        sav.seek(entry.addr - 6)
+        chunk = read_chunk_header(sav, seek=entry.addr - HEADER_SIZE)
+        sav.seek(chunk.addr.cram)
         write_struct("<BB", sav, CHUNK_FREE, CHUNK_FREE ^ 0xFF)
 
         # Merge this chunk into previous, if previous chunk is free too
-        bank, addr = cram2gb(entry.addr)
-        if addr != 0xA008:
-            prev = read_chunk_header(sav, seek=gb2cram(bank, chunk.prev))
+        if chunk.addr.gb != 0xA002:
+            prev = read_chunk_header(sav, seek=chunk.prev)
             if prev.type == CHUNK_FREE:
-                sav.seek(gb2cram(bank, chunk.prev))
-                write_struct(
-                    "<BBHH", sav, CHUNK_FREE, CHUNK_FREE ^ 0xFF, prev.prev, chunk.next
-                )
-                chunk = KissChunk(CHUNK_FREE, prev.body, prev.prev, chunk.next)
+                chunk = KissChunk(CHUNK_FREE, prev.addr, prev.prev, chunk.next)
+                sav.seek(chunk.addr.cram + 4)
+                write_struct("<H", sav, chunk.next.gb)
 
         # Merge next chunk into this, if next chunk is free too
-        if chunk.next != 0xC000:
-            next = read_chunk_header(sav, seek=gb2cram(bank, chunk.next))
+        if chunk.next.gb != 0xC000:
+            next = read_chunk_header(sav, seek=chunk.next)
             if next.type == CHUNK_FREE:
-                sav.seek(entry.addr - 2)
-                write_struct("<H", sav, next.next)
-                chunk = KissChunk(CHUNK_FREE, chunk.body, chunk.prev, next.next)
+                chunk = KissChunk(CHUNK_FREE, chunk.addr, chunk.prev, next.next)
+                sav.seek(chunk.addr.cram + 4)
+                write_struct("<H", sav, chunk.next.gb)
 
-        # Ensure next chunk points to this, if there is a next chunk
-        if chunk.next != 0xC000:
-            sav.seek(gb2cram(bank, chunk.next + 2))
-            write_struct("<H", sav, cram2gb(chunk.body - 6)[1])
+        # Ensure next chunk points to this.
+        # There is always a next chunk, because only special chunks are final.
+        next_at = chunk.next
+        if next_at.gb == 0xC000:
+            next_at += 2
+        sav.seek(next_at.cram + 2)
+        write_struct("<H", sav, chunk.addr.gb)
 
         # Zero out the entry in the index
-        sav.seek(gb2cram(meta.bank, profile.prev) + 6 + (4 * i))
+        sav.seek(meta.index.body.cram + (4 * i))
         write_struct("<HBB", sav, 0, 0, 0)
 
-        print(f"Reclaimed {file.size+6} bytes of space", file=sys.stderr)
+        print(f"Reclaimed {file.size+HEADER_SIZE} bytes of space", file=sys.stderr)
 
 
 def _columnify(table):
@@ -619,10 +649,14 @@ _katakana.update(
 )
 _hiragana = dict(_katakana)
 _katakana.update(enumerate("ヲァィゥェォャュョッー", start=0xA6))
-_katakana.update(enumerate("アイウエオカキクケコサシスセソタチツテトナニヌネノ", start=0xB1))
+_katakana.update(
+    enumerate("アイウエオカキクケコサシスセソタチツテトナニヌネノ", start=0xB1)
+)
 _katakana.update(enumerate("ハヒフヘホマミムメモヤユヨラリルレロワン", start=0xCA))
 _hiragana.update(enumerate("をぁぃぅぇぉゃゅょっー", start=0xA6))
-_hiragana.update(enumerate("あいうえおかきくけこさしすせそたちつてとなにぬねの", start=0xB1))
+_hiragana.update(
+    enumerate("あいうえおかきくけこさしすせそたちつてとなにぬねの", start=0xB1)
+)
 _hiragana.update(enumerate("はひふへほまみむめもやゆよらりるれろわん", start=0xCA))
 
 _charmaps = {0x0E: _katakana, 0x0F: _hiragana}
