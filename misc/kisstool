@@ -96,6 +96,11 @@ class Addr(collections.namedtuple("Addr", "bank gb rom")):
     def __sub__(self, value):
         return type(self)(cram=self.cram - value)
 
+    def __abs__(self):
+        if self.rom is not None:
+            return self.rom
+        return self.cram
+
 
 KissMeta = collections.namedtuple("KissMeta", "profile index".split())
 KissEntry = collections.namedtuple("KissEntry", "addr cart_id owner".split())
@@ -296,10 +301,7 @@ def read_all_regions(sav, meta):
 
 
 def read_file_header(sav, *, seek):
-    if seek.rom is not None:
-        sav.seek(seek.rom)
-    else:
-        sav.seek(seek.cram)
+    sav.seek(abs(seek.rom))
     size, flags, cart_id, header_size, owner = read_struct("<HBBBB", sav)
     icon_size = {
         0x10: ICON_SIZE_1BPP,
@@ -465,10 +467,7 @@ def get_command(parser, args):
         else:
             raise ToolError(f"file {args.title}: not found")
 
-        if addr.rom is not None:
-            sav.seek(addr.rom)
-        else:
-            sav.seek(addr.cram)
+        sav.seek(abs(addr.rom))
         data = sav.read(file.size)
         with open(out_path, "wb") as out:
             out.write(data)
