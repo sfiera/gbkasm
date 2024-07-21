@@ -33,11 +33,11 @@ def main():
 
     move.add_argument("title")
     move.add_argument("pos", type=int)
-    add.add_argument("path")
+    add.add_argument("path", nargs="+")
     add.add_argument("-u", "--update", action="store_true")
-    get.add_argument("title")
+    get.add_argument("title", nargs="+")
     get.add_argument("-o", "--out")
-    delete.add_argument("title")
+    delete.add_argument("title", nargs="+")
 
     args = parser.parse_args()
     try:
@@ -445,28 +445,32 @@ def list_command(parser, args):
 
 
 def get_command(parser, args):
+    if args.out and (len(args.title) > 1):
+        raise ToolError("--out: requires single file")
+
     with open_kiss(args, "rb") as (meta, rom, f):
-        if meta is not None:
-            _, entry, file = find_file(f, meta, title=args.title)
-            addr = entry.addr
-        else:
-            if rom not in ROMS:
-                raise ToolError("ROM contains no GBKiss files")
-
-            for i, addr in enumerate(ROMS[rom]):
-                addr = Addr(rom=addr)
-                file = read_file_header(f, seek=addr)
-                if (file.title == args.title) or (str(i) == args.title):
-                    break
+        for title in args.title:
+            if meta is not None:
+                _, entry, file = find_file(f, meta, title=title)
+                addr = entry.addr
             else:
-                raise ToolError(f"file {args.title}: not found")
+                if rom not in ROMS:
+                    raise ToolError("ROM contains no GBKiss files")
 
-        f.seek(abs(addr))
-        data = f.read(file.size)
-        out_path = args.out or (file.title + ".gbf")
-        with open(out_path, "wb") as out:
-            out.write(data)
-        print(f"Wrote {file.size} bytes to {out_path}", file=sys.stderr)
+                for i, addr in enumerate(ROMS[rom]):
+                    addr = Addr(rom=addr)
+                    file = read_file_header(f, seek=addr)
+                    if (file.title == title) or (str(i) == title):
+                        break
+                else:
+                    raise ToolError(f"{title}: file not found")
+
+            f.seek(abs(addr))
+            data = f.read(file.size)
+            out_path = args.out or (file.title + ".gbf")
+            with open(out_path, "wb") as out:
+                out.write(data)
+            print(f"{out_path}: {file.size} bytes", file=sys.stderr)
 
 
 def find_empty_index(f, meta):
@@ -486,7 +490,7 @@ def find_file(f, meta, *, title, owner=None):
         if (title != file.title) and (title != str(i)):
             continue
         return i, entry, file
-    raise ToolError(f"file {title}: not found")
+    raise ToolError(f"{title}: file not found")
 
 
 def add_file(f, meta, at, file, data):
@@ -583,25 +587,27 @@ def del_file(f, meta, at, entry):
 
 
 def add_command(parser, args):
-    with open(args.path, "rb") as f:
-        data = f.read()
-        file = read_file_header(f, seek=Addr(rom=0))
-
-    if file.size != len(data):
-        raise ToolError(
-            f"declared file size ${file.size:04x} != observed ${len(data):04x}"
-        )
-
     with open_kiss(args, "rb+") as (meta, rom, f):
         if rom is not None:
             raise ToolError("cannot add file to ROM file")
 
-        if args.update:
-            at, entry, _ = find_file(f, meta, title=file.title, owner=file.owner)
-            del_file(f, meta, at, entry)
-        else:
-            at = find_empty_index(f, meta)
-        add_file(f, meta, at, file, data)
+        for path in args.path:
+            with open(path, "rb") as f2:
+                data = f2.read()
+                file = read_file_header(f2, seek=Addr(rom=0))
+
+            if file.size != len(data):
+                raise ToolError(
+                    f"{path}: declared file size ${file.size:04x}"
+                    f" != observed ${len(data):04x}"
+                )
+
+            if args.update:
+                at, entry, _ = find_file(f, meta, title=file.title, owner=file.owner)
+                del_file(f, meta, at, entry)
+            else:
+                at = find_empty_index(f, meta)
+            add_file(f, meta, at, file, data)
 
 
 def move_command(parser, args):
@@ -634,9 +640,10 @@ def del_command(parser, args):
         if rom is not None:
             raise ToolError("cannot delete file from ROM file")
 
-        at, entry, file = find_file(f, meta, title=args.title)
-        del_file(f, meta, at, entry)
-        print(f"Reclaimed {file.size+HEADER_SIZE} bytes of space", file=sys.stderr)
+        for title in args.title:
+            at, entry, file = find_file(f, meta, title=title)
+            del_file(f, meta, at, entry)
+            print(f"{file.title}: {file.size} bytes", file=sys.stderr)
 
 
 def _columnify(table):
