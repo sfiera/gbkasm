@@ -14,7 +14,6 @@ import unicodedata
 def main():
     parser = argparse.ArgumentParser()
     parser.set_defaults(func=help_command)
-    parser.add_argument("file")
     subparsers = parser.add_subparsers(dest="command")
 
     def sub(name, func, **kwds):
@@ -22,22 +21,33 @@ def main():
         parser.set_defaults(func=func)
         return parser
 
-    sub("help", func=help_command, help="Show help")
-    sub("info", func=info_command, help="Show user info from save file")
-    sub("check", func=check_command, help="Check validity of save file")
-    sub("list", func=list_command, help="List file entries in save file")
-    move = sub("move", func=move_command, help="Move file entry within save file")
-    get = sub("get", func=get_command, help="Extract local file from save file")
-    add = sub("add", func=add_command, help="Insert local file into save file")
-    delete = sub("del", func=del_command, help="Delete file entry from save file")
+    profc = sub("prof", func=prof_command, help="Show user profile from save file")
+    profc.add_argument("file")
 
-    move.add_argument("title")
-    move.add_argument("pos", type=int)
-    add.add_argument("path", nargs="+")
-    add.add_argument("-u", "--update", action="store_true")
-    get.add_argument("title", nargs="+")
-    get.add_argument("-o", "--out")
-    delete.add_argument("title", nargs="+")
+    checkc = sub("check", func=check_command, help="Check validity of save file")
+    checkc.add_argument("file")
+
+    listc = sub("list", func=list_command, help="List file entries in ROM or save file")
+    listc.add_argument("file")
+
+    movec = sub("move", func=move_command, help="Move file entry within save file")
+    movec.add_argument("file")
+    movec.add_argument("title")
+    movec.add_argument("pos", type=int)
+
+    getc = sub("get", func=get_command, help="Extract local file from ROM or save file")
+    getc.add_argument("file")
+    getc.add_argument("title", nargs="+")
+    getc.add_argument("-o", "--out")
+
+    addc = sub("add", func=add_command, help="Insert local file into save file")
+    addc.add_argument("file")
+    addc.add_argument("path", nargs="+")
+    addc.add_argument("-u", "--update", action="store_true")
+
+    delc = sub("del", func=del_command, help="Delete file entry from save file")
+    delc.add_argument("file")
+    delc.add_argument("title", nargs="+")
 
     args = parser.parse_args()
     try:
@@ -384,10 +394,10 @@ def check_command(parser, args):
         sys.exit(1)
 
 
-def info_command(parser, args):
+def prof_command(parser, args):
     with open_kiss(args, "rb") as (meta, rom, f):
         if rom is not None:
-            raise ToolError("cannot get user info from ROM file")
+            raise ToolError("cannot get user profile from ROM file")
 
         f.seek(meta.profile.body.cram)
         profile = f.read(122)
