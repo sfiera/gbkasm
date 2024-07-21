@@ -34,6 +34,7 @@ def main():
     move.add_argument("title")
     move.add_argument("pos", type=int)
     add.add_argument("path")
+    add.add_argument("-u", "--update", action="store_true")
     get.add_argument("title")
     get.add_argument("-o", "--out")
     delete.add_argument("title")
@@ -300,7 +301,7 @@ def read_all_regions(f, meta):
 
 
 def read_file_header(f, *, seek):
-    f.seek(abs(seek.rom))
+    f.seek(abs(seek))
     size, flags, cart_id, header_size, owner = read_struct("<HBBBB", f)
     icon_size = {
         0x10: ICON_SIZE_1BPP,
@@ -444,41 +445,148 @@ def list_command(parser, args):
 
 
 def get_command(parser, args):
-    out_path = args.out
-    if out_path is None:
-        out_path = args.title + ".gbf"
-
     with open_kiss(args, "rb") as (meta, rom, f):
         if meta is not None:
-            addrs = []
-            for i, entry in enumerate(read_index(f, meta)):
-                if (entry.addr.cram != 0) and (entry.cart_id != 0xFF):
-                    addrs.append((i, entry.addr))
+            _, entry, file = find_file(f, meta, title=args.title)
+            addr = entry.addr
         else:
             if rom not in ROMS:
                 raise ToolError("ROM contains no GBKiss files")
-            addrs = [(i, Addr(rom=a)) for i, a in enumerate(ROMS[rom])]
 
-        for i, addr in addrs:
-            file = read_file_header(f, seek=addr)
-            if (file.title == args.title) or (str(i) == args.title):
-                break
-        else:
-            raise ToolError(f"file {args.title}: not found")
+            for i, addr in enumerate(ROMS[rom]):
+                addr = Addr(rom=addr)
+                file = read_file_header(f, seek=addr)
+                if (file.title == args.title) or (str(i) == args.title):
+                    break
+            else:
+                raise ToolError(f"file {args.title}: not found")
 
-        f.seek(abs(addr.rom))
+        f.seek(abs(addr))
         data = f.read(file.size)
+        out_path = args.out or (file.title + ".gbf")
         with open(out_path, "wb") as out:
             out.write(data)
         print(f"Wrote {file.size} bytes to {out_path}", file=sys.stderr)
 
 
+def find_empty_index(f, meta):
+    for i, entry in enumerate(read_index(f, meta)):
+        if entry.addr.cram == 0:
+            return i
+    raise ToolError(f"no empty slots in menu")
+
+
+def find_file(f, meta, *, title, owner=None):
+    for i, entry in enumerate(read_index(f, meta)):
+        if entry.addr.cram == 0 or entry.cart_id == 0xFF:
+            continue
+        file = read_file_header(f, seek=entry.addr)
+        if (owner is not None) and (owner != file.owner):
+            continue
+        if (title != file.title) and (title != str(i)):
+            continue
+        return i, entry, file
+    raise ToolError(f"file {title}: not found")
+
+
+def add_file(f, meta, at, file, data):
+    diamond = (file.flags & 0x06) == 0x06
+
+    regions = read_all_regions(f, meta)
+    regions = {c for c in regions if c.type == REGION_FREE}
+    regions = {c for c in regions if c.size >= file.size}
+    if not regions:
+        raise ToolError(f"no space in CRAM")
+    if diamond:
+        regions = {c for c in regions if c.body.gb == 0xA008}
+        if not regions:
+            raise ToolError(f"no valid diamond space in CRAM")
+    region = max(regions, key=lambda region: region.body)
+
+    # Split region if large enough: if it has space for another header
+    # even if there would be zero space remaining for a region body.
+    # Even though that region would not itself be useful,
+    # if would be possible to merge into the following region,
+    # if the file in the following region were to be deleted.
+    if region.size >= (file.size + HEADER_SIZE):
+        if diamond:
+            addr2 = region.body + file.size
+        else:
+            addr2 = region.next - file.size - HEADER_SIZE
+
+        region1 = KissRegion(REGION_FREE, region.addr, region.prev, addr2)
+        f.seek(region1.addr.cram + 4)
+        write_struct("<H", f, region1.next.gb)
+
+        region2 = KissRegion(REGION_FREE, addr2, region.addr, region.next)
+        f.seek(region2.addr.cram)
+        write_struct(
+            "<BBHH",
+            f,
+            region2.type,
+            region2.type ^ 0xFF,
+            region2.prev.gb,
+            region2.next.gb,
+        )
+
+        f.seek(region2.next.adjusted().cram + 2)
+        write_struct("<H", f, region2.addr.gb)
+
+        if diamond:
+            region = region1
+        else:
+            region = region2
+        assert region.size == file.size
+
+    f.seek(region.addr.cram)
+    if diamond:
+        write_struct("<BB", f, REGION_INITIAL, REGION_INITIAL ^ 0xFF)
+    else:
+        write_struct("<BB", f, REGION_REGULAR, REGION_REGULAR ^ 0xFF)
+    f.seek(region.body.cram)
+    f.write(data)
+
+    f.seek(meta.index.body.cram + (4 * at))
+    write_struct("<HBB", f, region.body.cram, file.cart_id, file.owner)
+
+
+def del_file(f, meta, at, entry):
+    # Set the region type to $46 (free)
+    region = read_region_header(f, seek=entry.addr - HEADER_SIZE)
+    f.seek(region.addr.cram)
+    write_struct("<BB", f, REGION_FREE, REGION_FREE ^ 0xFF)
+
+    # Merge this region into previous, if previous region is free too.
+    if region.addr.gb != 0xA002:
+        prev = read_region_header(f, seek=region.prev)
+        if prev.type == REGION_FREE:
+            region = KissRegion(REGION_FREE, prev.addr, prev.prev, region.next)
+            f.seek(region.addr.cram + 4)
+            write_struct("<H", f, region.next.gb)
+
+    # Merge next region into this, if next region is free too.
+    if region.next.gb != 0xC000:
+        next = read_region_header(f, seek=region.next)
+        if next.type == REGION_FREE:
+            region = KissRegion(REGION_FREE, region.addr, region.prev, next.next)
+            f.seek(region.addr.cram + 4)
+            write_struct("<H", f, region.next.gb)
+
+    # Ensure next region points to this.
+    # There is always a next region, because only special regions are final.
+    f.seek(region.next.adjusted().cram + 2)
+    write_struct("<H", f, region.addr.gb)
+
+    # Zero out the entry in the index.
+    f.seek(meta.index.body.cram + (4 * at))
+    write_struct("<HBB", f, 0, 0, 0)
+
+
 def add_command(parser, args):
     with open(args.path, "rb") as f:
         data = f.read()
-        file = read_file_header(f, seek=Addr(cram=0))
+        file = read_file_header(f, seek=Addr(rom=0))
 
-    diamond = (file.flags & 0x06) == 0x06
     if file.size != len(data):
         raise ToolError(
             f"declared file size ${file.size:04x} != observed ${len(data):04x}"
@@ -488,69 +596,12 @@ def add_command(parser, args):
         if rom is not None:
             raise ToolError("cannot add file to ROM file")
 
-        for i, entry in enumerate(read_index(f, meta)):
-            if entry.addr.cram == 0:
-                index_loc = i
-                break
+        if args.update:
+            at, entry, _ = find_file(f, meta, title=file.title, owner=file.owner)
+            del_file(f, meta, at, entry)
         else:
-            raise ToolError(f"no space in index")
-
-        regions = read_all_regions(f, meta)
-        regions = {c for c in regions if c.type == REGION_FREE}
-        regions = {c for c in regions if c.size >= file.size}
-        if not regions:
-            raise ToolError(f"no space in CRAM")
-        if diamond:
-            regions = {c for c in regions if c.body.gb == 0xA008}
-            if not regions:
-                raise ToolError(f"no valid diamond space in CRAM")
-        region = max(regions, key=lambda region: region.body)
-
-        # Split region if large enough: if it has space for another header
-        # even if there would be zero space remaining for a region body.
-        # Even though that region would not itself be useful,
-        # if would be possible to merge into the following region,
-        # if the file in the following region were to be deleted.
-        if region.size >= (file.size + HEADER_SIZE):
-            if diamond:
-                addr2 = region.body + file.size
-            else:
-                addr2 = region.next - file.size - HEADER_SIZE
-
-            region1 = KissRegion(REGION_FREE, region.addr, region.prev, addr2)
-            f.seek(region1.addr.cram + 4)
-            write_struct("<H", f, region1.next.gb)
-
-            region2 = KissRegion(REGION_FREE, addr2, region.addr, region.next)
-            f.seek(region2.addr.cram)
-            write_struct(
-                "<BBHH",
-                f,
-                region2.type,
-                region2.type ^ 0xFF,
-                region2.prev.gb,
-                region2.next.gb,
-            )
-
-            f.seek(region2.next.adjusted().cram + 2)
-            write_struct("<H", f, region2.addr.gb)
-
-            if diamond:
-                region = region1
-            else:
-                region = region2
-            assert region.size == file.size
-
-        f.seek(region.addr.cram)
-        if diamond:
-            write_struct("<BB", f, REGION_INITIAL, REGION_INITIAL ^ 0xFF)
-        else:
-            write_struct("<BB", f, REGION_REGULAR, REGION_REGULAR ^ 0xFF)
-        f.seek(region.body.cram)
-        f.write(data)
-
-        f.seek(meta.index.body.cram + (4 * index_loc))
-        write_struct("<HBB", f, region.body.cram, file.cart_id, file.owner)
+            at = find_empty_index(f, meta)
+        add_file(f, meta, at, file, data)
 
 
 def move_command(parser, args):
@@ -562,14 +613,7 @@ def move_command(parser, args):
             raise ToolError("cannot move file within ROM file")
 
         index = read_index(f, meta)
-        for i, entry in enumerate(index):
-            if entry.addr.cram == 0 or entry.cart_id == 0xFF:
-                continue
-            file = read_file_header(f, seek=entry.addr)
-            if (file.title == args.title) or (str(i) == args.title):
-                break
-        else:
-            raise KeyError(args.title)
+        i, _, file = find_file(f, meta, title=args.title)
 
         from_pos, to_pos = i, args.pos
         if from_pos == to_pos:
@@ -579,6 +623,7 @@ def move_command(parser, args):
         e = index[from_pos]
         f.seek(meta.index.body.cram + (4 * to_pos))
         write_struct("<HBB", f, e.addr.cram, e.cart_id, e.owner)
+
         e = index[to_pos]
         f.seek(meta.index.body.cram + (4 * from_pos))
         write_struct("<HBB", f, e.addr.cram, e.cart_id, e.owner)
@@ -589,45 +634,8 @@ def del_command(parser, args):
         if rom is not None:
             raise ToolError("cannot delete file from ROM file")
 
-        for i, entry in enumerate(read_index(f, meta)):
-            if entry.addr.cram == 0 or entry.cart_id == 0xFF:
-                continue
-            file = read_file_header(f, seek=entry.addr)
-            if (file.title == args.title) or (str(i) == args.title):
-                break
-        else:
-            raise KeyError(args.title)
-
-        # Set the region type to $46 (free)
-        region = read_region_header(f, seek=entry.addr - HEADER_SIZE)
-        f.seek(region.addr.cram)
-        write_struct("<BB", f, REGION_FREE, REGION_FREE ^ 0xFF)
-
-        # Merge this region into previous, if previous region is free too.
-        if region.addr.gb != 0xA002:
-            prev = read_region_header(f, seek=region.prev)
-            if prev.type == REGION_FREE:
-                region = KissRegion(REGION_FREE, prev.addr, prev.prev, region.next)
-                f.seek(region.addr.cram + 4)
-                write_struct("<H", f, region.next.gb)
-
-        # Merge next region into this, if next region is free too.
-        if region.next.gb != 0xC000:
-            next = read_region_header(f, seek=region.next)
-            if next.type == REGION_FREE:
-                region = KissRegion(REGION_FREE, region.addr, region.prev, next.next)
-                f.seek(region.addr.cram + 4)
-                write_struct("<H", f, region.next.gb)
-
-        # Ensure next region points to this.
-        # There is always a next region, because only special regions are final.
-        f.seek(region.next.adjusted().cram + 2)
-        write_struct("<H", f, region.addr.gb)
-
-        # Zero out the entry in the index.
-        f.seek(meta.index.body.cram + (4 * i))
-        write_struct("<HBB", f, 0, 0, 0)
-
+        at, entry, file = find_file(f, meta, title=args.title)
+        del_file(f, meta, at, entry)
         print(f"Reclaimed {file.size+HEADER_SIZE} bytes of space", file=sys.stderr)
 
 
