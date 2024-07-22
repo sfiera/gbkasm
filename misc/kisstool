@@ -114,7 +114,7 @@ class Addr(collections.namedtuple("Addr", "bank gb rom")):
 
 
 KissMeta = collections.namedtuple("KissMeta", "profile index".split())
-KissEntry = collections.namedtuple("KissEntry", "addr cart_id owner".split())
+KissEntry = collections.namedtuple("KissEntry", "pos addr cart_id owner".split())
 KissFile = collections.namedtuple(
     "KissFile", "body size flags cart_id owner title icon".split()
 )
@@ -296,7 +296,7 @@ def read_index(f, meta):
     for i in range(INDEX_COUNT):
         addr, cart_id, owner = read_struct("<HBB", f)
         addr = Addr(cram=addr)
-        entries.append(KissEntry(addr, cart_id, owner))
+        entries.append(KissEntry(i, addr, cart_id, owner))
     return entries
 
 
@@ -422,14 +422,13 @@ def list_command(parser, args):
 
         if meta is not None:
             addrs = []
-            for i, entry in enumerate(read_index(f, meta)):
+            for entry in read_index(f, meta):
                 if entry.addr.cram == 0:
                     continue
                 elif entry.cart_id == 0xFF:
-                    table.append((i, "KISS MAIL", "n/a", "n/a", "◎", "$01", "auto"))
-                    continue
+                    table.append((entry.pos, "KISS MAIL", "n/a", "n/a", "◎", "$01", "auto"))
                 else:
-                    addrs.append((i, entry.addr))
+                    addrs.append((entry.pos, entry.addr))
         else:
             if rom not in ROMS:
                 raise ToolError("ROM contains no GBKiss files")
@@ -484,22 +483,22 @@ def get_command(parser, args):
 
 
 def find_empty_index(f, meta):
-    for i, entry in enumerate(read_index(f, meta)):
+    for entry in read_index(f, meta):
         if entry.addr.cram == 0:
-            return i
+            return entry.pos
     raise ToolError(f"no empty slots in menu")
 
 
 def find_file(f, meta, *, title, owner=None):
-    for i, entry in enumerate(read_index(f, meta)):
+    for entry in read_index(f, meta):
         if entry.addr.cram == 0 or entry.cart_id == 0xFF:
             continue
         file = read_file_header(f, seek=entry.addr)
         if (owner is not None) and (owner != file.owner):
             continue
-        if (title != file.title) and (title != str(i)):
+        if (title != file.title) and (title != str(entry.pos)):
             continue
-        return i, entry, file
+        return entry, file
     raise ToolError(f"{title}: file not found")
 
 
@@ -564,7 +563,7 @@ def add_file(f, meta, at, file, data):
     write_struct("<HBB", f, region.body.cram, file.cart_id, file.owner)
 
 
-def del_file(f, meta, at, entry):
+def del_file(f, meta, entry):
     # Set the region type to $46 (free)
     region = read_region_header(f, seek=entry.addr - HEADER_SIZE)
     f.seek(region.addr.cram)
@@ -592,7 +591,7 @@ def del_file(f, meta, at, entry):
     write_struct("<H", f, region.addr.gb)
 
     # Zero out the entry in the index.
-    f.seek(meta.index.body.cram + (4 * at))
+    f.seek(meta.index.body.cram + (4 * entry.pos))
     write_struct("<HBB", f, 0, 0, 0)
 
 
@@ -613,11 +612,12 @@ def add_command(parser, args):
                 )
 
             if args.update:
-                at, entry, _ = find_file(f, meta, title=file.title, owner=file.owner)
-                del_file(f, meta, at, entry)
+                entry, _ = find_file(f, meta, title=file.title, owner=file.owner)
+                pos = entry.pos
+                del_file(f, meta, entry)
             else:
-                at = find_empty_index(f, meta)
-            add_file(f, meta, at, file, data)
+                pos = find_empty_index(f, meta)
+            add_file(f, meta, pos, file, data)
 
 
 def move_command(parser, args):
@@ -629,9 +629,9 @@ def move_command(parser, args):
             raise ToolError("cannot move file within ROM file")
 
         index = read_index(f, meta)
-        i, _, file = find_file(f, meta, title=args.title)
+        entry, file = find_file(f, meta, title=args.title)
 
-        from_pos, to_pos = i, args.pos
+        from_pos, to_pos = entry.pos, args.pos
         if from_pos == to_pos:
             print(f"{file.title} is already at position {to_pos}", file=sys.stderr)
             return
@@ -651,8 +651,8 @@ def del_command(parser, args):
             raise ToolError("cannot delete file from ROM file")
 
         for title in args.title:
-            at, entry, file = find_file(f, meta, title=title)
-            del_file(f, meta, at, entry)
+            entry, file = find_file(f, meta, title=title)
+            del_file(f, meta, entry)
             print(f"{file.title}: {file.size} bytes", file=sys.stderr)
 
 
