@@ -98,7 +98,7 @@ class Addr(collections.namedtuple("Addr", "bank gb rom")):
 
     def __str__(self):
         if self.rom is not None:
-            return f"ROM:${self.rom:04x}"
+            return f"${self.rom:05x}"
         return f"${self.bank:02x}:${self.gb:04x}"
 
     def __add__(self, value):
@@ -148,7 +148,7 @@ def open_kiss(args, mode):
         if rom_info is None:
             meta = detect_meta(f)
             if meta is None:
-                raise Exception("file contains neither ROM data nor GBKiss data")
+                raise ToolError("contains neither ROM data nor GBKiss data")
 
         try:
             yield meta, rom_info, f
@@ -197,44 +197,50 @@ BUILTIN_ICONS = {
 }
 
 
+ROMEntry = collections.namedtuple("KissEntry", "pos addr")
 NINTENDO_LOGO = (
     b"\xCE\xED\x66\x66\xCC\x0D\x00\x0B\x03\x73\x00\x83\x00\x0C\x00\x0D"
     b"\x00\x08\x11\x1F\x88\x89\x00\x0E\xDC\xCC\x6E\xE6\xDD\xDD\xD9\x99"
     b"\xBB\xBB\x67\x63\x6E\x0E\xEC\xCC\xDD\xDC\x99\x9F\xBB\xB9\x33\x3E"
 )
 ROMS = {
-    b"POKEBOM": [0x74003],
+    b"POKEBOM": [ROMEntry(0, Addr(rom=0x74003))],
     b"GBKISS MINIGAME": [
-        0x18007,
-        0x19EDD,
-        0x1B2AD,
-        0x1C09A,
-        0x1DE25,
-        0x1F66C,
-        0x20000,
-        0x2160F,
-        0x21E16,
-        0x2407A,
-        0x243E6,
-        0x256FE,
-        0x28000,
-        0x29690,
-        0x29F1A,
-        0x2B2DF,
-        0x2C07A,
-        0x2DAC6,
-        0x30000,
-        0x30718,
-        0x3404D,
-        0x354AE,
-        0x3807F,
-        0x385DC,
-        0x38BEB,
-        0x391A8,
-        0x39811,
-        0x3C04F,
-        0x3C482,
-        0x3C4A1,
+        ROMEntry(i, Addr(rom=addr))
+        for i, addr in enumerate(
+            [
+                0x18007,
+                0x19EDD,
+                0x1B2AD,
+                0x1C09A,
+                0x1DE25,
+                0x1F66C,
+                0x20000,
+                0x2160F,
+                0x21E16,
+                0x2407A,
+                0x243E6,
+                0x256FE,
+                0x28000,
+                0x29690,
+                0x29F1A,
+                0x2B2DF,
+                0x2C07A,
+                0x2DAC6,
+                0x30000,
+                0x30718,
+                0x3404D,
+                0x354AE,
+                0x3807F,
+                0x385DC,
+                0x38BEB,
+                0x391A8,
+                0x39811,
+                0x3C04F,
+                0x3C482,
+                0x3C4A1,
+            ]
+        )
     ],
 }
 
@@ -416,6 +422,16 @@ def prof_command(parser, args):
         print("MEMO: " + "\n      ".join(memo))
 
 
+def get_attr(file: KissFile):
+    if file.cart_id == 0xFF:
+        return "×"
+    elif file.flags & 0x06 == 0x06:
+        return "◇"
+    elif file.flags & 0x06 == 0x04:
+        return "○"
+    return "△"
+
+
 def list_command(parser, args):
     with open_kiss(args, "rb") as (meta, rom, f):
         table = [("N", "TITLE", "ADDR", "SIZE", "MARK", "OWNER", "ICON")]
@@ -426,29 +442,26 @@ def list_command(parser, args):
                 if entry.addr.cram == 0:
                     continue
                 elif entry.cart_id == 0xFF:
-                    table.append((entry.pos, "KISS MAIL", "n/a", "n/a", "◎", "$01", "auto"))
+                    table.append(
+                        (entry.pos, "KISS MAIL", "n/a", "n/a", "◎", "$01", "auto")
+                    )
                 else:
-                    addrs.append((entry.pos, entry.addr))
+                    addrs.append(entry)
         else:
             if rom not in ROMS:
                 raise ToolError("ROM contains no GBKiss files")
-            addrs = [(i, Addr(rom=a)) for i, a in enumerate(ROMS[rom])]
+            addrs = ROMS[rom]
 
-        for i, addr in addrs:
-            file = read_file_header(f, seek=addr)
+        for entry in addrs:
+            file = read_file_header(f, seek=entry.addr)
             icon_kind = BUILTIN_ICONS.get(file.owner, "")
             if file.icon:
                 icon_kind = "%dbpp" % (len(file.icon) // 0x60)
-            if file.cart_id == 0xFF:
-                mark = "×"
-            elif file.flags & 0x06 == 0x06:
-                mark = "◇"
-            elif file.flags & 0x06 == 0x04:
-                mark = "○"
-            else:
-                mark = "△"
+            attr = get_attr(file)
             owner = "$%02x" % file.owner
-            table.append((i, file.title, addr, file.size, mark, owner, icon_kind))
+            table.append(
+                (entry.pos, file.title, entry.addr, file.size, attr, owner, icon_kind)
+            )
 
         _columnify(table)
 
@@ -460,21 +473,19 @@ def get_command(parser, args):
     with open_kiss(args, "rb") as (meta, rom, f):
         for title in args.title:
             if meta is not None:
-                _, entry, file = find_file(f, meta, title=title)
-                addr = entry.addr
+                entry, file = find_file(f, meta, title=title)
             else:
                 if rom not in ROMS:
                     raise ToolError("ROM contains no GBKiss files")
 
-                for i, addr in enumerate(ROMS[rom]):
-                    addr = Addr(rom=addr)
-                    file = read_file_header(f, seek=addr)
-                    if (file.title == title) or (str(i) == title):
+                for entry in ROMS[rom]:
+                    file = read_file_header(f, seek=entry.addr)
+                    if (file.title == title) or (str(entry.pos) == title):
                         break
                 else:
                     raise ToolError(f"{title}: file not found")
 
-            f.seek(abs(addr))
+            f.seek(abs(entry.addr))
             data = f.read(file.size)
             out_path = args.out or (file.title + ".gbf")
             with open(out_path, "wb") as out:
