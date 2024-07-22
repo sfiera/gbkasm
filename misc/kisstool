@@ -5,6 +5,7 @@ import codecs
 import collections
 import contextlib
 import itertools
+import os
 import os.path
 import struct
 import sys
@@ -253,33 +254,32 @@ def detect_rom(rom):
 
 
 def detect_meta(f):
-    f.seek(0)
-    data = f.read()
-    if data[2] ^ data[3] != 0xFF:
+    f.seek(0, os.SEEK_END)
+    if f.tell() != 0x8000:
         return None
 
-    offset = 0
-    magic = bytes([REGION_SPECIAL, REGION_SPECIAL ^ 0xFF])
-    while offset < len(data):
-        try:
-            i = data.index(magic, offset)
-        except ValueError:
-            break
-        if i > len(data) - (INDEX_SIZE + PROFILE_SIZE):
-            break
-        offset = i + 2
+    prev_addr = Addr(rom=0x4000)
+    for bank in range(4):
+        addr = Addr(bank=bank, gb=0xA002)
+        while addr.gb != 0xC000:
+            rgn = read_region_header(f, seek=addr)
+            if (rgn.prev != prev_addr) or not (addr.gb < rgn.next.gb <= 0xC000):
+                return None
+            elif rgn.type != REGION_SPECIAL:
+                prev_addr = addr
+                addr = rgn.next
+                continue
 
-        index = read_region_header(f, seek=Addr(cram=i))
-        profile = read_region_header(f, seek=Addr(cram=i + INDEX_SIZE))
-        if (
-            (profile.type == REGION_SPECIAL)
-            and (index.next == profile.addr)
-            and (profile.prev == index.addr)
-            and (profile.next.gb == 0xC000)
-        ):
-            return KissMeta(profile, index)
-
-    return None
+            index = rgn
+            profile = read_region_header(f, seek=index.next)
+            if (
+                index.size == INDEX_COUNT * 4
+                and (profile.type == REGION_SPECIAL)
+                and (profile.prev == index.addr)
+                and (profile.next.gb == 0xC000)
+            ):
+                return KissMeta(profile, index)
+            return None
 
 
 def read_region_header(f, *, seek):
