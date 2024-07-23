@@ -1,4 +1,9 @@
-gfx/drive/tiles.2bpp.hz: gfx/drive/tiles.2bpp
+gfx/drive/tiles.2bpp.hz: gfx/drive/car.2bpp
+gfx/drive/tiles.2bpp.hz: gfx/drive/cursor.2bpp
+gfx/drive/tiles.2bpp.hz: gfx/drive/effects.2bpp
+gfx/drive/tiles.2bpp.hz: gfx/drive/text.2bpp
+gfx/drive/tiles.2bpp.hz: gfx/drive/track.2bpp
+gfx/drive/tiles.2bpp.hz: gfx/drive/hazards.2bpp
 
 # ff0f 0f54 7b30 7f50 7f7f f300 030c 0708
 # 040b f0fe f02a de0c fe0a fe03 fcc0 30e0

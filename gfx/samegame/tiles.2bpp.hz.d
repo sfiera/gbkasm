@@ -1,4 +1,5 @@
-gfx/samegame/tiles.2bpp.hz: gfx/samegame/tiles.2bpp
+gfx/samegame/tiles.2bpp.hz: gfx/samegame/cursor.2bpp
+gfx/samegame/tiles.2bpp.hz: gfx/samegame/grid.2bpp
 
 # ffc0 c0e0 a0f0 90f8 88ff fc84 fe9a e7a5
 # c3c3 50ed 0118 017e 0512 01ff 440f 08e3

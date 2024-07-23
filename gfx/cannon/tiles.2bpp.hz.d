@@ -1,4 +1,30 @@
-gfx/cannon/tiles.2bpp.hz: gfx/cannon/tiles.2bpp
+gfx/cannon/tiles.2bpp.hz: gfx/cannon/bubbles.2bpp
+gfx/cannon/tiles.2bpp.hz: gfx/cannon/squid.2bpp
+gfx/cannon/tiles.2bpp.hz: gfx/cannon/block.2bpp
+
+gfx/cannon/tiles.2bpp.hz: gfx/cannon/bubbles.2bpp
+gfx/cannon/tiles.2bpp.hz: gfx/cannon/squid.2bpp
+gfx/cannon/tiles.2bpp.hz: gfx/cannon/block.2bpp
+
+gfx/cannon/tiles.2bpp.hz: gfx/cannon/bubbles.2bpp
+gfx/cannon/tiles.2bpp.hz: gfx/cannon/squid.2bpp
+gfx/cannon/tiles.2bpp.hz: gfx/cannon/block.2bpp
+
+gfx/cannon/tiles.2bpp.hz: gfx/cannon/bubbles.2bpp
+gfx/cannon/tiles.2bpp.hz: gfx/cannon/squid.2bpp
+gfx/cannon/tiles.2bpp.hz: gfx/cannon/block.2bpp
+
+gfx/cannon/tiles.2bpp.hz: gfx/cannon/bubbles.2bpp
+gfx/cannon/tiles.2bpp.hz: gfx/cannon/squid.2bpp
+gfx/cannon/tiles.2bpp.hz: gfx/cannon/block.2bpp
+
+gfx/cannon/tiles.2bpp.hz: gfx/cannon/bubbles.2bpp
+gfx/cannon/tiles.2bpp.hz: gfx/cannon/squid.2bpp
+gfx/cannon/tiles.2bpp.hz: gfx/cannon/block.2bpp
+
+gfx/cannon/tiles.2bpp.hz: gfx/cannon/bubbles.2bpp
+gfx/cannon/tiles.2bpp.hz: gfx/cannon/squid.2bpp
+gfx/cannon/tiles.2bpp.hz: gfx/cannon/block.2bpp
 
 # ff3c 3c42 42b1 91a1 a187 81f7 10f1 ef0f
 # de00 0303 ff0c 0c10 1024 2428 28a0 401b
