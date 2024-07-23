@@ -629,6 +629,7 @@ def add_command(parser, args):
             else:
                 pos = find_empty_index(f, meta)
             add_file(f, meta, pos, file, data)
+            print(f"{file.title}: {file.size} bytes", file=sys.stderr)
 
 
 def move_command(parser, args):
