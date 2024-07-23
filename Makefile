@@ -1,7 +1,9 @@
 GBF_ASM = $(wildcard file/*.asm)
 GB_ASM = $(wildcard *.asm)
 PNG = $(wildcard gfx/*.png gfx/*/*.png)
+HZD = $(wildcard gfx/*.hz.d gfx/*/*.hz.d)
 GFX = $(PNG:%.png=%)
+HZ = $(HZD:%.d=%)
 
 ASM = $(GB_ASM) $(GBF_ASM)
 OBJ = $(ASM:%.asm=%.o)
@@ -21,7 +23,7 @@ RGBGFX=rgbgfx
 .PHONY: all
 all: $(GB) $(GBF)
 
-%.o: %.asm | $(GFX)
+%.o: %.asm | $(GFX) $(HZ)
 	$(RGBASM) -M $*.d -o $@ $<
 
 %.gb: %.o
@@ -37,6 +39,9 @@ all: $(GB) $(GBF)
 %.1bpp: %.1bpp.png %.1bpp.flags
 	$(RGBGFX) -d1 -o $@ $< @$*.1bpp.flags
 
+%.hz: %.hz.d
+	misc/compress.py $@ $<
+
 .PHONY: clean
 clean:
 	rm -f *.gb file/*.gbf
@@ -48,4 +53,5 @@ check: $(GB) $(GBF)
 	shasum -c roms.sha1
 
 -include $(DEP)
+-include $(HZD)
 gbkiss.o: | $(GBF)

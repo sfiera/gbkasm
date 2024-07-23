@@ -1,0 +1,42 @@
+gfx/bland/sprites.2bpp.hz: gfx/bland/sprites.2bpp
+
+# 7bee aa73 739e edee 8080 fd40 c0bf c0ff
+# 9211 007f ff4c 3f21 1e1e 1212 21a8 330d
+# c00d 0040 0bde f3ee cfe7 e7fd 080f 1f1e
+# 0111 0f22 1720 252a 3f7e 5e20 223f 4fae
+# eb06 0619 1f3e 31fd 7b4c fb8c ffe0 0f02
+# 7ff8 7f02 1204 360b 73f7 eef6 0303 0c0f
+# 8fa0 00c1 0b0f 9fac a719 0017 7f40 7f52
+# 78f1 00de adff 8099 1b22 cf0f 5b0f a3e4
+# f1f5 817f 7e01 8f21 592a 01ed 91a0 7f5f
+# 203f 2e7e 821c 1c3e 227f 41fc 7f49 ff88
+# fbe4 f79b 2206 b003 2f09 56f2 f701 c3b0
+# 4808 73c9 00f7 f710 40ed eb02 fbde 9eed
+# af8a 1f1e 0111 bfe1 7e5e 205e 0022 e013
+# b17f 03bb 231f e243 2aef 934a bfd2 ffff
+# 92ff 8c7f 4c3f 2d21 b943 4140 4710 14ea
+# 31af b34a 6716 5eb7 0311 73e3 9ee7 60ff
+# 0704 3c3b 5d6b 7957 ffbc c3f9 c73e 3e04
+# 041b a9a9 425f 4040 7f00 3838 f65e 667f
+# 51af efd9 5100 f009 0f06 069f 6b04 5fa9
+# 4b7f 8e2a 2a55 552a 7f54 fd7e 81de bfbe
+# e3a7 005d 837f 5b66 35b0 8bf0 8e15 1afb
+# 0517 2876 490f 00fe 81da ffbf 403f 3f6a
+# 16c0 e17f 6121 2525 7f5b 7e7e feff e6bc
+# bca4 a427 2360 7d6c 2424 7e5a ff05 02e7
+# fdbd bd42 4224 668e 24f9 003c 3c18 1812
+# 178e 10e7 0808 10bd f18e 5522 cbfb 77ab
+# dfe1 9fd8 0043 7ff1 263e 1c1c 2662 0cb5
+# 08ff 0418 0e15 1b1d 1312 bf1e 7b20 0103
+# 1020 5870 f788 f848 7873 5070 e0bf e0e0
+# 0060 b058 302e 9cc3 522f 8583 0081 7f00
+# 0018 7f16 243c 663c 5ae7 a5d7 dbdb c00f
+# a52c 0002 7cf5 3a6e 3a56 b300 02f3 3e24
+# a310 0be7 0201 903c 0200 c17f bf00 817e
+# 0081 89f7 81f9 db42 ff3c bdd1 cf00 89ff
+# 7e0c 9d0e bf3f ff2a ffab 0889 28a9 917e
+# 8dfb 7e14 9d24 a5f3 6ced fdb6 93da b7ed
+# 7eed 0018 fb99 1c9d 1293 0574 f5ff 90b1
+# e17e 56fd abaa 7f11 00d5 fe9f 8e91 91cf
+# ff4e 7ebd 7e81 a766 e7fd ffd7 cfef 5ead
+# d918 001f 00

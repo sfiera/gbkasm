@@ -5,6 +5,9 @@
 *.sym
 *.o
 *.d
+!*.hz.d
+*.hz
 *.1bpp
 *.2bpp
 *.icon
+__pycache__
