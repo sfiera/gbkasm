@@ -1353,7 +1353,7 @@ jr_000_093a::
 
 
 data_093e:
-    INCBIN "gfx/bj/tiles.2bpp.hz"
+    INCBIN "frag/bj/tiles.hz"
 
 data_0a5f:
     dh "BLACK JACK\0"

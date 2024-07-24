@@ -31,4 +31,4 @@ History:
 .end
 
 Body::
-    INCBIN "gfx/puzzle/koura-3.2bpp.hz"
+    INCBIN "frag/puzzle/koura-3.hz"

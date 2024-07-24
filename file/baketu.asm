@@ -1013,7 +1013,7 @@ call_0916:
 
 
 data_0928:
-    INCBIN "gfx/baketu/tiles.2bpp.hz"
+    INCBIN "frag/baketu/tiles.hz"
 
 SECTION "Status Bar", WRAM0[$cc40]
 

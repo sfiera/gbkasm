@@ -2088,7 +2088,7 @@ jr_000_0d7e::
 
 
 data_0d80:
-    INCBIN "gfx/drive/tiles.2bpp.hz"
+    INCBIN "frag/drive/tiles.hz"
 
 data_1126:
     db $00, $01, $02, $03

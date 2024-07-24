@@ -154,4 +154,4 @@ IconData:
     db 0
 
 IconGfx:
-    INCBIN "gfx/iconsend/icons.2bpp.hz"
+    INCBIN "frag/iconsend/icons.hz"

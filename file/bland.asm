@@ -4173,7 +4173,7 @@ data_b891:
     db -9,  0, $3a, OAMF_PAL1 | OAMF_YFLIP
 
 data_b896:
-    INCBIN "gfx/bland/sprites.2bpp.hz"
+    INCBIN "frag/bland/sprites.hz"
 
 data_bb0b:
     ; 30 compressed blocks of 20 bytes each. Level data?

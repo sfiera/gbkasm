@@ -1,4 +1,4 @@
-; Disassembly of "koura-2.gbf"
+; Disassembly of "frag-2.gbf"
 
 INCLUDE "charmap.inc"
 INCLUDE "hardware.inc"
@@ -31,4 +31,4 @@ History:
 .end
 
 Body::
-    INCBIN "gfx/puzzle/koura-2.2bpp.hz"
+    INCBIN "frag/puzzle/koura-2.hz"

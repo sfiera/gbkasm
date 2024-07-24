@@ -1796,7 +1796,7 @@ jr_000_0b93::
 
 
 data_0ba3:
-    INCBIN "gfx/poker/tiles.2bpp.hz"
+    INCBIN "frag/poker/tiles.hz"
 
 data_0cec:
     db $00, $18, $18, $3c, $3c, $7e, $7e, $ff, $00, $ff, $00, $00, $00, $00, $00, $00

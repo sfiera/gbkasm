@@ -2618,7 +2618,7 @@ data_01_5ccf::
     db $1e, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $20
 
 data_01_5d33::
-    INCBIN "gfx/system/actions.2bpp.hz"
+    INCBIN "frag/system/actions.hz"
 
 Jump_001_5e9d::
     ld a, $20
@@ -6063,7 +6063,7 @@ data_01_72d2::
     db $10, $09, $70, $7f, $ff
 
 gfxGBKissLogo::
-    INCBIN "gfx/system/logo.2bpp.hz"
+    INCBIN "frag/system/logo.hz"
 
 TrapJumpViaTable::
     pop de

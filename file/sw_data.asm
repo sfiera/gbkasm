@@ -123,4 +123,4 @@ TilemapColon:
     db $89
 
 Tileset:
-    INCBIN "gfx/sw_timer/digits.2bpp.hz"
+    INCBIN "frag/sw_timer/digits.hz"

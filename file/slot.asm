@@ -1035,7 +1035,7 @@ data_07c1:
     dw 100
 
 data_07c3:
-    INCBIN "gfx/slot/tiles.2bpp.hz"
+    INCBIN "frag/slot/tiles.hz"
 
 data_0b05:
     db $fa, $7d, $1e, $08, $05, $04, $02, $01
