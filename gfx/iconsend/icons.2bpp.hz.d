@@ -1,4 +1,45 @@
-gfx/iconsend/icons.2bpp.hz: gfx/iconsend/icons.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/simula1.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/jyanken0.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/ie2.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/boad0.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/hata.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/golf.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/hikou0.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/action1.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/simula0.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/map.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/card0.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/cat.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/gun.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/action0.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/puzzle0.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/ken0.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/dog.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/tuki.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/taiyo.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/address.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/mail.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/letter2.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/dentaku.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/letter1.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/king.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/tokei.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/ie.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/letter.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/kaeru.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/fune.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/icon.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/sakana.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/yakyu.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/battle0.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/jisyaku.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/oyaji.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/hikou.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/kaeru2.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/heart.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/memo.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/puzzle1.2bpp
+gfx/iconsend/icons.2bpp.hz: gfx/iconsend/cursors.2bpp
 
 # efff 0080 f0b0 8202 8505 ff8d 0989 0990
 # 1898 107f 099c 108e 088b 0c84 f807 bf03
