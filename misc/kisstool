@@ -254,10 +254,6 @@ def detect_rom(rom):
 
 
 def detect_meta(f):
-    f.seek(0, os.SEEK_END)
-    if f.tell() != 0x8000:
-        return None
-
     prev_addr = Addr(rom=0x4000)
     for bank in range(4):
         addr = Addr(bank=bank, gb=0xA002)
