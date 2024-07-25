@@ -48,7 +48,7 @@ $(OBJ): %.o: %.asm | $(GFX)
 	$(RGBGFX) -d1 -o $@ $<
 
 %.hz: %.frag
-	misc/compress.py $@ $<
+	tools/compress.py $@ $<
 
 .PHONY: clean
 clean:
