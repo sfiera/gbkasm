@@ -1,8 +1,8 @@
-GB_ASM = $(wildcard *.asm)
-GBF_ASM = $(wildcard file/*.asm)
-FRAG_ASM = $(wildcard frag/*/*.asm)
-PNGH = $(wildcard gfx/*/*.h.png)
-PNGV = $(wildcard gfx/*/*.v.png)
+GB_ASM = $(wildcard src/*.asm)
+GBF_ASM = $(wildcard src/file/*.asm)
+FRAG_ASM = $(wildcard src/frag/*/*.asm)
+PNGH = $(wildcard src/gfx/*/*.h.png)
+PNGV = $(wildcard src/gfx/*/*.v.png)
 GFX = $(PNGH:%.h.png=%) $(PNGV:%.v.png=%)
 HZ = $(FRAG_ASM:%.asm=%.hz)
 
@@ -12,10 +12,10 @@ DEP = $(ASM:%.asm=%.d)
 SYM = $(ASM:%.asm=%.sym)
 MAP = $(ASM:%.asm=%.map)
 FRAG = $(FRAG_ASM:%.asm=%.frag)
-GBF = $(GBF_ASM:%.asm=%.gbf)
-GB = $(GB_ASM:%.asm=%.gb)
+GBF = $(GBF_ASM:src/file/%.asm=%.gbf)
+GB = $(GB_ASM:src/%.asm=%.gb)
 
-RGBASM=rgbasm -Wall -Werror
+RGBASM=rgbasm -Wall -Werror -Isrc
 RGBLINK=rgblink
 RGBFIX=rgbfix
 RGBGFX=rgbgfx
@@ -25,14 +25,14 @@ RGBGFX=rgbgfx
 .PHONY: all
 all: $(GB) $(GBF)
 
-%.o: %.asm
+%.o: %.asm | $(GFX)
 	$(RGBASM) -M $*.d -o $@ $<
 
-%.gb: %.o
+%.gb: src/%.o
 	$(RGBLINK) -n $*.sym -m $*.map -o $@ $<
 	$(RGBFIX) -v -p 255 $@
 
-%.gbf: %.o
+%.gbf: src/file/%.o
 	$(RGBLINK) -n $*.sym -x -o $@ $<
 
 %.frag: %.o
@@ -67,6 +67,6 @@ check: $(GB) $(GBF)
 	shasum -c roms.sha1
 
 -include $(DEP)
-gbkiss.o: | $(GBF) $(HZ)
-$(FRAG_ASM:%.asm=%.o): %.o: | $(GFX)
-$(GBF_ASM:%.asm=%.o): %.o: | $(GFX) $(HZ)
+src/gbkiss.o: | $(GBF) $(HZ)
+$(FRAG_ASM:%.asm=%.o): %.o:
+$(GBF_ASM:%.asm=%.o): %.o: | $(HZ)

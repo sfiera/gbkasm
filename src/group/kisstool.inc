@@ -22,10 +22,10 @@ FileCollection6::
     TableEntry FileCharDump, "CHAR DUMP\0"
 
 FileSRAMGetAndClear::
-    INCBIN "file/sramtool.gbf"
+    INCBIN "../sramtool.gbf"
 
 FileDeleteAll::
-    INCBIN "file/del_all.gbf"
+    INCBIN "../del_all.gbf"
 
 FileCharDump::
-    INCBIN "file/chardump.gbf"
+    INCBIN "../chardump.gbf"

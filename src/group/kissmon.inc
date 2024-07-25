@@ -28,22 +28,22 @@ FileCollection2::
     TableEntry FileBakechuRelay, "バケちゅリレー\0"
 
 FileSoundTest::
-    INCBIN "file/soundtst.gbf"
+    INCBIN "../soundtst.gbf"
 
 FileBiorhythm::
-    INCBIN "file/biorythm.gbf"
+    INCBIN "../biorythm.gbf"
 
 FileBakechuRelay::
-    INCBIN "file/baketu.gbf"
+    INCBIN "../baketu.gbf"
 
 
 SECTION "ROM Bank $008", ROMX[$4000], BANK[$8]
 
 FileKissMon::
-    INCBIN "file/kissmon.gbf"
+    INCBIN "../kissmon.gbf"
 
 FileWatchAndTimer::
-    INCBIN "file/sw_timer.gbf"
+    INCBIN "../sw_timer.gbf"
 
 FileCalculator::
-    INCBIN "file/dentaku.gbf"
+    INCBIN "../dentaku.gbf"

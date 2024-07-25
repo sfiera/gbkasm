@@ -26,16 +26,16 @@ FileCollection5::
     TableEntry FileNum0Data, "ストップウォッチすうじデータ\0"
 
 FileKoura1::
-    INCBIN "file/koura1.gbf"
+    INCBIN "../koura1.gbf"
 
 FileKoura2::
-    INCBIN "file/koura2.gbf"
+    INCBIN "../koura2.gbf"
 
 FileKoura3::
-    INCBIN "file/koura3.gbf"
+    INCBIN "../koura3.gbf"
 
 FileSezaki::
-    INCBIN "file/sezaki.gbf"
+    INCBIN "../sezaki.gbf"
 
 FileNum0Data::
-    INCBIN "file/sw_data.gbf"
+    INCBIN "../sw_data.gbf"
