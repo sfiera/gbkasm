@@ -15,10 +15,16 @@ FRAG = $(FRAG_ASM:%.asm=%.frag)
 GBF = $(GBF_ASM:src/file/%.asm=%.gbf)
 GB = $(GB_ASM:src/%.asm=%.gb)
 
-RGBASM=rgbasm -Wall -Werror -Isrc
-RGBLINK=rgblink
-RGBFIX=rgbfix
-RGBGFX=rgbgfx
+RGBASM  ?= rgbasm
+RGBLINK ?= rgblink
+RGBFIX  ?= rgbfix
+RGBGFX  ?= rgbgfx
+
+RGBASMFLAGS ?= -Wall -Werror -Isrc
+
+ifeq ($(DEBUG),1)
+RGBASMFLAGS += -E
+endif
 
 .SECONDARY:
 
@@ -26,17 +32,25 @@ RGBGFX=rgbgfx
 all: compare
 
 $(OBJ): %.o: %.asm | $(GFX)
-	$(RGBASM) -M $*.d -o $@ $<
+	$(RGBASM) $(RGBASMFLAGS) -M $*.d -o $@ $<
 
 %.gb: src/%.o
+ifeq ($(DEBUG),1)
 	$(RGBLINK) -n $*.sym -m $*.map -o $@ $<
+else
+	$(RGBLINK) -o $@ $<
+endif
 	$(RGBFIX) -v -p 255 $@
 
 %.gbf: src/file/%.o
+ifeq ($(DEBUG),1)
 	$(RGBLINK) -n $*.sym -x -o $@ $<
+else
+	$(RGBLINK) -x -o $@ $<
+endif
 
 %.frag: %.o
-	$(RGBLINK) -n $*.sym -x -o $@ $<
+	$(RGBLINK) -x -o $@ $<
 
 %.2bpp: %.2bpp.h.png
 	$(RGBGFX) -d2 -o $@ $<
