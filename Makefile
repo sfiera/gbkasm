@@ -23,7 +23,7 @@ RGBGFX=rgbgfx
 .SECONDARY:
 
 .PHONY: all
-all: $(GB) $(GBF)
+all: compare
 
 $(OBJ): %.o: %.asm | $(GFX)
 	$(RGBASM) -M $*.d -o $@ $<
@@ -62,8 +62,8 @@ clean:
 	       -name '*.sym' -or \
 	       -name '*.map' | xargs rm -f
 
-.PHONY: check
-check: $(GB) $(GBF)
+.PHONY: compare
+compare: $(GB) $(GBF)
 	shasum -c roms.sha1
 
 -include $(DEP)
