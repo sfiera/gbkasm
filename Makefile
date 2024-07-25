@@ -1,8 +1,9 @@
 GB_ASM = $(wildcard *.asm)
 GBF_ASM = $(wildcard file/*.asm)
 FRAG_ASM = $(wildcard frag/*/*.asm)
-PNG = $(wildcard gfx/*.png gfx/*/*.png)
-GFX = $(PNG:%.png=%)
+PNGH = $(wildcard gfx/*/*.h.png)
+PNGV = $(wildcard gfx/*/*.v.png)
+GFX = $(PNGH:%.h.png=%) $(PNGV:%.v.png=%)
 HZ = $(FRAG_ASM:%.asm=%.hz)
 
 ASM = $(GB_ASM) $(GBF_ASM) $(FRAG_ASM)
@@ -37,11 +38,14 @@ all: $(GB) $(GBF)
 %.frag: %.o
 	$(RGBLINK) -n $*.sym -x -o $@ $<
 
-%.2bpp: %.2bpp.png %.2bpp.flags
-	$(RGBGFX) -d2 -o $@ $< @$*.2bpp.flags
+%.2bpp: %.2bpp.h.png
+	$(RGBGFX) -d2 -o $@ $<
 
-%.1bpp: %.1bpp.png %.1bpp.flags
-	$(RGBGFX) -d1 -o $@ $< @$*.1bpp.flags
+%.2bpp: %.2bpp.v.png
+	$(RGBGFX) --columns -d2 -o $@ $<
+
+%.1bpp: %.1bpp.h.png
+	$(RGBGFX) -d1 -o $@ $<
 
 %.hz: %.frag
 	misc/compress.py $@ $<
