@@ -1,10 +1,10 @@
 ; Disassembly of "roulette.gbf"
 
 INCLUDE "charmap.inc"
+INCLUDE "common.inc"
 INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
-INCLUDE "file/common.inc"
 
 MACRO wtrap
     ld a, \1

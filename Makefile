@@ -25,7 +25,7 @@ RGBGFX=rgbgfx
 .PHONY: all
 all: $(GB) $(GBF)
 
-%.o: %.asm | $(GFX)
+$(OBJ): %.o: %.asm | $(GFX)
 	$(RGBASM) -M $*.d -o $@ $<
 
 %.gb: src/%.o
@@ -68,5 +68,4 @@ check: $(GB) $(GBF)
 
 -include $(DEP)
 src/gbkiss.o: | $(GBF) $(HZ)
-$(FRAG_ASM:%.asm=%.o): %.o:
 $(GBF_ASM:%.asm=%.o): %.o: | $(HZ)

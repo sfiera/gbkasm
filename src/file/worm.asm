@@ -1,9 +1,9 @@
 ; Disassembly of "gbkiss.gb"
 
 INCLUDE "charmap.inc"
+INCLUDE "common.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
-INCLUDE "file/common.inc"
 
 DEF SND_WALL_HIT  EQU 3
 DEF SND_SELF_HIT  EQU 4

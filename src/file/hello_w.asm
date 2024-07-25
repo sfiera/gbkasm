@@ -4,10 +4,10 @@
 ; then waits for the player to exit by pressing Select
 
 INCLUDE "charmap.inc"
+INCLUDE "common.inc"
 INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
-INCLUDE "file/common.inc"
 
 SECTION "GBKiss File", ROM0[$0]
 

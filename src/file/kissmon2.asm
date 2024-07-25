@@ -1,10 +1,10 @@
 ; Disassembly of "kissmon2.gbf"
 
 INCLUDE "charmap.inc"
+INCLUDE "common.inc"
 INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
-INCLUDE "file/common.inc"
 
 DEF IR_ID0 EQU "k"
 DEF IR_ID1 EQU "2"

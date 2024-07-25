@@ -1,10 +1,10 @@
 ; Disassembly of "mogutte-nanbo.gbf"
 
 INCLUDE "charmap.inc"
+INCLUDE "common.inc"
 INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
-INCLUDE "file/common.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 LOAD "CRAM Code", SRAM[$a008]

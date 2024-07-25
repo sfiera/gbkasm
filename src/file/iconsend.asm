@@ -1,10 +1,10 @@
 ; Disassembly of "icon-send.gbf"
 
 INCLUDE "charmap.inc"
+INCLUDE "common.inc"
 INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
-INCLUDE "file/common.inc"
 
 DEF OWNER_CODE_ICON  EQU $83
 DEF ICON_SIZE        EQU $c0

@@ -1,10 +1,10 @@
 ; Disassembly of "saita.gbf"
 
 INCLUDE "charmap.inc"
+INCLUDE "common.inc"
 INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
-INCLUDE "file/common.inc"
 
 DEF FIELD_WIDTH   EQU $14
 DEF FIELD_HEIGHT  EQU $10

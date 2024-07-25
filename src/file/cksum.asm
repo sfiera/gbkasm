@@ -4,10 +4,10 @@
 ; Shows info for selected files, including a CRC-32 sum.
 
 INCLUDE "charmap.inc"
+INCLUDE "common.inc"
 INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
-INCLUDE "file/common.inc"
 
 DEF CRC_POLY_0 EQU $04
 DEF CRC_POLY_1 EQU $c1
