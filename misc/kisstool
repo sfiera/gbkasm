@@ -567,7 +567,7 @@ def add_file(f, meta, at, file, data):
     f.write(data)
 
     f.seek(meta.index.body.cram + (4 * at))
-    write_struct("<HBB", f, region.body.cram, file.cart_id, file.owner)
+    write_struct("<HBB", f, region.body.cram, 0, file.owner)
 
 
 def del_file(f, meta, entry):
