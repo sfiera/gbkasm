@@ -1,76 +1,677 @@
-SECTION "Fragment", ROM0[$0]
+; Disassembly of "dentaku.gbf"
 
-    db $31, $00, $e0, $cd, $6d, $c8, $cd, $6e, $ca, $11, $1d, $01, $01, $0c, $53, $2e
-    db $1e, $3e, $00, $26, $03, $cf, $bf, $cb, $4c, $20, $0d, $f5, $c5, $d5, $e5, $cd
-    db $2a, $c8, $e1, $d1, $c1, $f1, $18, $eb, $cf, $01, $6f, $26, $00, $23, $cf, $03
-    db $1e, $1e, $02, $24, $02, $29, $02, $37, $02, $a3, $02, $aa, $02, $22, $03, $2c
-    db $03, $36, $03, $40, $03, $43, $03, $a1, $03, $a4, $03, $a7, $03, $b1, $03, $b4
-    db $03, $b7, $03, $ba, $03, $bd, $03, $c7, $03, $ca, $03, $cd, $03, $d0, $03, $d3
-    db $03, $dd, $03, $e0, $03, $e3, $03, $ed, $03, $f7, $03, $02, $04, $3e, $c4, $01
-    db $01, $02, $11, $11, $0d, $21, $91, $17, $cf, $b3, $21, $05, $0f, $11, $16, $78
-    db $01, $1e, $4f, $cf, $c2, $af, $ea, $15, $c6, $21, $1f, $0a, $11, $26, $1d, $01
-    db $e4, $5f, $cf, $c2, $21, $1f, $22, $11, $26, $35, $01, $e4, $5f, $cf, $c2, $21
-    db $1f, $3a, $11, $26, $4d, $01, $e4, $5f, $cf, $c2, $21, $1f, $52, $11, $26, $65
-    db $01, $e4, $5f, $cf, $c2, $21, $1f, $6a, $11, $26, $7d, $01, $e4, $5f, $cf, $c2
-    db $21, $2b, $0a, $11, $32, $1d, $01, $e4, $5f, $cf, $c2, $21, $2b, $22, $11, $32
-    db $35, $01, $e4, $5f, $cf, $c2, $21, $2b, $3a, $11, $32, $4d, $01, $e4, $5f, $cf
-    db $c2, $21, $2b, $52, $11, $32, $65, $01, $e4, $5f, $cf, $c2, $21, $2b, $6a, $11
-    db $32, $7d, $01, $e4, $5f, $cf, $c2, $21, $37, $0a, $11, $3e, $1d, $01, $e4, $5f
-    db $cf, $c2, $21, $37, $22, $11, $3e, $35, $01, $e4, $5f, $cf, $c2, $21, $37, $3a
-    db $11, $3e, $4d, $01, $e4, $5f, $cf, $c2, $21, $37, $52, $11, $3e, $65, $01, $e4
-    db $5f, $cf, $c2, $21, $37, $6a, $11, $3e, $7d, $01, $e4, $5f, $cf, $c2, $21, $43
-    db $0a, $11, $4a, $1d, $01, $e4, $5f, $cf, $c2, $21, $43, $22, $11, $4a, $35, $01
-    db $e4, $5f, $cf, $c2, $21, $43, $3a, $11, $4a, $4d, $01, $e4, $5f, $cf, $c2, $21
-    db $43, $52, $11, $4a, $65, $01, $e4, $5f, $cf, $c2, $21, $43, $6a, $11, $4a, $7d
-    db $01, $e4, $5f, $cf, $c2, $21, $4f, $0a, $11, $56, $1d, $01, $e4, $5f, $cf, $c2
-    db $21, $4f, $22, $11, $56, $35, $01, $e4, $5f, $cf, $c2, $21, $4f, $3a, $11, $56
-    db $4d, $01, $e4, $5f, $cf, $c2, $21, $4f, $52, $11, $56, $65, $01, $e4, $5f, $cf
-    db $c2, $21, $4f, $6a, $11, $56, $7d, $01, $e4, $5f, $cf, $c2, $21, $5b, $0a, $11
-    db $63, $1d, $01, $e4, $5f, $cf, $c2, $21, $5b, $22, $11, $63, $35, $01, $e4, $5f
-    db $cf, $c2, $21, $5b, $3a, $11, $63, $4d, $01, $e4, $5f, $cf, $c2, $21, $5b, $52
-    db $11, $63, $65, $01, $e4, $5f, $cf, $c2, $21, $5b, $6a, $11, $63, $7d, $01, $e4
-    db $5f, $cf, $c2, $21, $e4, $c9, $2a, $b7, $c8, $e5, $6f, $26, $01, $cf, $bd, $e1
-    db $cf, $69, $18, $f2, $1f, $15, $31, $36, $01, $31, $30, $01, $01, $43, $01, $41
-    db $43, $01, $01, $46, $00, $2b, $01, $5e, $01, $01, $7e, $01, $01, $26, $01, $01
-    db $3c, $01, $01, $45, $00, $37, $01, $37, $01, $01, $38, $01, $01, $39, $01, $01
-    db $3e, $01, $01, $44, $00, $43, $01, $34, $01, $01, $35, $01, $01, $36, $01, $01
-    db $2a, $01, $01, $43, $00, $4f, $01, $31, $01, $01, $32, $01, $01, $33, $01, $01
-    db $2f, $01, $01, $42, $00, $5b, $01, $30, $01, $01, $2b, $01, $01, $2d, $01, $01
-    db $3d, $01, $01, $41, $14, $00, $00, $44, $65, $63, $00, $48, $65, $78, $00, $3e
-    db $01, $ea, $14, $c6, $c3, $a2, $ca, $af, $ea, $14, $c6, $c3, $a2, $ca, $af, $ea
-    db $16, $c6, $ea, $00, $c6, $ea, $01, $c6, $c3, $a2, $ca, $cf, $87, $c9, $fa, $6b
-    db $ca, $ea, $17, $c6, $fa, $6d, $ca, $ea, $19, $c6, $af, $ea, $16, $c6, $ea, $18
-    db $c6, $ea, $14, $c6, $ea, $00, $c6, $ea, $01, $c6, $ea, $0a, $c6, $ea, $0b, $c6
-    db $21, $0e, $02, $cf, $bd, $21, $68, $cc, $7d, $ea, $1a, $c6, $7c, $ea, $1b, $c6
-    db $cf, $69, $21, $05, $02, $cf, $bd, $21, $47, $ca, $fa, $14, $c6, $b7, $28, $03
-    db $21, $4b, $ca, $cf, $69, $21, $0a, $c6, $01, $05, $09, $cd, $72, $cc, $fa, $15
-    db $c6, $b7, $28, $0e, $21, $0e, $06, $cf, $bd, $21, $68, $cc, $cf, $69, $af, $ea
-    db $15, $c6, $21, $00, $c6, $01, $0e, $09, $cd, $72, $cc, $c9, $0e, $0f, $c3, $be
-    db $cb, $58, $4f, $52, $00, $3e, $80, $21, $e1, $ca, $e5, $f5, $7d, $ea, $1a, $c6
-    db $7c, $ea, $1b, $c6, $fa, $16, $c6, $b7, $28, $52, $21, $0a, $c6, $5e, $23, $56
-    db $21, $00, $c6, $2a, $66, $6f, $fa, $18, $c6, $b7, $c4, $17, $c6, $7d, $ea, $0a
-    db $c6, $7c, $ea, $0b, $c6, $af, $ea, $00, $c6, $ea, $01, $c6, $ea, $16, $c6, $fa
-    db $18, $c6, $fe, $8a, $20, $23, $21, $0e, $06, $cf, $bd, $21, $59, $cb, $cf, $69
-    db $3e, $01, $ea, $15, $c6, $21, $b0, $c3, $01, $0e, $09, $cd, $72, $cc, $21, $0a
-    db $c6, $01, $05, $09, $cd, $72, $cc, $18, $03, $cd, $b5, $ca, $21, $0e, $02, $cf
-    db $bd, $f1, $e1, $ea, $18, $c6, $cf, $69, $c9, $0f, $b1, $cf, $d8, $0e, $00, $3e
-    db $81, $21, $67, $cb, $c3, $ea, $ca, $4f, $52, $20, $00, $3e, $82, $21, $73, $cb
-    db $c3, $ea, $ca, $41, $4e, $44, $00, $3e, $86, $21, $7f, $cb, $c3, $ea, $ca, $53
-    db $4c, $41, $00, $0e, $0e, $c3, $be, $cb, $0e, $07, $fa, $16, $c6, $3c, $ea, $16
-    db $c6, $fa, $14, $c6, $b7, $20, $33, $21, $00, $c6, $5e, $23, $56, $cb, $23, $cb
-    db $12, $d5, $cb, $23, $cb, $12, $cb, $23, $cb, $12, $79, $83, $5f, $3e, $00, $8a
-    db $57, $c1, $79, $83, $5f, $78, $8a, $57, $72, $2b, $73, $c3, $be, $ca, $fa, $14
-    db $c6, $b7, $c8, $fa, $16, $c6, $3c, $ea, $16, $c6, $21, $00, $c6, $5e, $23, $56
-    db $cb, $23, $cb, $12, $cb, $23, $cb, $12, $cb, $23, $cb, $12, $cb, $23, $cb, $12
-    db $72, $2b, $7b, $b1, $77, $c3, $be, $ca, $0e, $08, $c3, $8a, $cb, $0e, $09, $c3
-    db $8a, $cb, $3e, $85, $21, $fa, $cb, $c3, $ea, $ca, $53, $52, $4c, $00, $0e, $0d
-    db $c3, $be, $cb, $0e, $04, $c3, $8a, $cb, $0e, $05, $c3, $8a, $cb, $0e, $06, $c3
-    db $8a, $cb, $3e, $89, $21, $1a, $cc, $c3, $ea, $ca, $2a, $20, $20, $00, $0e, $0c
-    db $c3, $be, $cb, $0e, $01, $c3, $8a, $cb, $0e, $02, $c3, $8a, $cb, $0e, $03, $c3
-    db $8a, $cb, $3e, $8a, $21, $3a, $cc, $c3, $ea, $ca, $2f, $20, $20, $00, $0e, $0b
-    db $c3, $be, $cb, $0e, $00, $c3, $8a, $cb, $3e, $87, $21, $50, $cc, $c3, $ea, $ca
-    db $2b, $20, $20, $00, $3e, $88, $21, $5c, $cc, $c3, $ea, $ca, $2d, $20, $20, $00
-    db $3e, $00, $21, $68, $cc, $c3, $ea, $ca, $20, $20, $20, $00, $c9, $0e, $0a, $c3
-    db $be, $cb, $5e, $23, $56, $23, $e5, $c5, $fa, $14, $c6, $b7, $28, $11, $cf, $a4
-    db $e1, $cf, $bd, $3e, $20, $cf, $bb, $3e, $20, $cf, $bb, $e1, $cf, $69, $c9, $cf
-    db $a3, $e1, $cf, $bd, $e1, $cf, $69, $c9
+INCLUDE "charmap.inc"
+INCLUDE "common.inc"
+INCLUDE "hardware.inc"
+INCLUDE "macro.inc"
+INCLUDE "trap.inc"
+
+SECTION "Fragment", ROM0[$0]
+LOAD "WRAM Code", WRAM0[$c800]
+
+call_c800:
+    ld sp, $e000
+    call call_c86d
+    call call_ca6e
+    ld de, $011d
+    ld bc, $530c
+    ld l, $1e
+    ld a, $00
+
+jr_c813:
+    ld h, $03
+    trap InputHiliteMenu
+    bit 1, h
+    jr nz, jr_c828
+
+    push af
+    push bc
+    push de
+    push hl
+    call call_c82a
+    pop hl
+    pop de
+    pop bc
+    pop af
+    jr jr_c813
+
+jr_c828:
+    trap ExitToMenu
+
+
+call_c82a:
+    ld l, a
+    ld h, $00
+    inc hl
+    trap $03
+    db 30
+    dw jp_ca4f - @
+    dw jp_ca57 - @
+    dw jp_ca5e - @
+    dw call_ca6e - @
+    dw jp_cadc - @
+    dw jp_cae5 - @
+    dw jp_cb5f - @
+    dw jp_cb6b - @
+    dw jp_cb77 - @
+    dw jp_cb83 - @
+    dw jp_cb88 - @
+    dw jp_cbe8 - @
+    dw jp_cbed - @
+    dw jp_cbf2 - @
+    dw jp_cbfe - @
+    dw jp_cc03 - @
+    dw jp_cc08 - @
+    dw jp_cc0d - @
+    dw jp_cc12 - @
+    dw jp_cc1e - @
+    dw jp_cc23 - @
+    dw jp_cc28 - @
+    dw jp_cc2d - @
+    dw jp_cc32 - @
+    dw jp_cc3e - @
+    dw jp_cc43 - @
+    dw jp_cc48 - @
+    dw jp_cc54 - @
+    dw jp_cc60 - @
+    dw jp_cc6d - @
+
+call_c86d:
+    ld a, $c4
+    ld bc, $0201
+    ld de, $0d11
+    ld hl, $1791
+    trap DrawInit
+    ld hl, $0f05
+    ld de, $7816
+    ld bc, $4f1e
+    trap $c2
+    xor a
+    ld [$c615], a
+    ld hl, $0a1f
+    ld de, $1d26
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $221f
+    ld de, $3526
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $3a1f
+    ld de, $4d26
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $521f
+    ld de, $6526
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $6a1f
+    ld de, $7d26
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $0a2b
+    ld de, $1d32
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $222b
+    ld de, $3532
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $3a2b
+    ld de, $4d32
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $522b
+    ld de, $6532
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $6a2b
+    ld de, $7d32
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $0a37
+    ld de, $1d3e
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $2237
+    ld de, $353e
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $3a37
+    ld de, $4d3e
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $5237
+    ld de, $653e
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $6a37
+    ld de, $7d3e
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $0a43
+    ld de, $1d4a
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $2243
+    ld de, $354a
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $3a43
+    ld de, $4d4a
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $5243
+    ld de, $654a
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $6a43
+    ld de, $7d4a
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $0a4f
+    ld de, $1d56
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $224f
+    ld de, $3556
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $3a4f
+    ld de, $4d56
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $524f
+    ld de, $6556
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $6a4f
+    ld de, $7d56
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $0a5b
+    ld de, $1d63
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $225b
+    ld de, $3563
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $3a5b
+    ld de, $4d63
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $525b
+    ld de, $6563
+    ld bc, $5fe4
+    trap $c2
+    ld hl, $6a5b
+    ld de, $7d63
+    ld bc, $5fe4
+    trap $c2
+    ld hl, data_c9e4
+
+jr_c9d6:
+    ld a, [hl+]
+    or a
+    ret z
+
+    push hl
+    ld l, a
+    ld h, $01
+    trap $bd
+    pop hl
+    trap DrawString
+    jr jr_c9d6
+
+
+data_c9e4:
+    db $1f, $15, $31, $36, $01, $31, $30, $01, $01, $43, $01, $41, $43, $01, $01, $46, $00
+    db $2b, $01, $5e, $01, $01, $7e, $01, $01, $26, $01, $01, $3c, $01, $01, $45, $00
+    db $37, $01, $37, $01, $01, $38, $01, $01, $39, $01, $01, $3e, $01, $01, $44, $00
+    db $43, $01, $34, $01, $01, $35, $01, $01, $36, $01, $01, $2a, $01, $01, $43, $00
+    db $4f, $01, $31, $01, $01, $32, $01, $01, $33, $01, $01, $2f, $01, $01, $42, $00
+    db $5b, $01, $30, $01, $01, $2b, $01, $01, $2d, $01, $01, $3d, $01, $01, $41, $14, $00
+    db $00
+
+
+data_ca47:
+    dk "Dec\0"
+
+
+data_ca4b:
+    dk "Hex\0"
+
+
+jp_ca4f:
+    ld a, $01
+    ld [$c614], a
+    jp jp_caa2
+
+
+jp_ca57:
+    xor a
+    ld [$c614], a
+    jp jp_caa2
+
+
+jp_ca5e:
+    xor a
+    ld [$c616], a
+    ld [$c600], a
+    ld [$c601], a
+    jp jp_caa2
+
+
+data_ca6b:
+    trap $87
+
+data_ca6d:
+    ret
+
+
+call_ca6e:
+    ld a, [data_ca6b]
+    ld [$c617], a
+    ld a, [data_ca6d]
+    ld [$c619], a
+    xor a
+    ld [$c616], a
+    ld [$c618], a
+    ld [$c614], a
+    ld [$c600], a
+    ld [$c601], a
+    ld [$c60a], a
+    ld [$c60b], a
+    ld hl, $020e
+    trap $bd
+    ld hl, data_cc68
+    ld a, l
+    ld [$c61a], a
+    ld a, h
+    ld [$c61b], a
+    trap DrawString
+
+jp_caa2:
+    ld hl, $0205
+    trap $bd
+    ld hl, data_ca47
+    ld a, [$c614]
+    or a
+    jr z, jr_cab3
+
+    ld hl, data_ca4b
+
+jr_cab3:
+    trap DrawString
+
+call_cab5:
+    ld hl, $c60a
+    ld bc, $0905
+    call call_cc72
+
+jp_cabe:
+    ld a, [$c615]
+    or a
+    jr z, jr_cad2
+
+    ld hl, $060e
+    trap $bd
+    ld hl, data_cc68
+    trap DrawString
+    xor a
+    ld [$c615], a
+
+jr_cad2:
+    ld hl, $c600
+    ld bc, $090e
+    call call_cc72
+    ret
+
+
+jp_cadc:
+    ld c, $0f
+    jp jp_cbbe
+
+
+data_cae1:
+    dk "XOR\0"
+
+
+jp_cae5:
+    ld a, $80
+    ld hl, data_cae1
+
+jp_caea:
+    push hl
+    push af
+    ld a, l
+    ld [$c61a], a
+    ld a, h
+    ld [$c61b], a
+    ld a, [$c616]
+    or a
+    jr z, jr_cb4c
+
+    ld hl, $c60a
+    ld e, [hl]
+    inc hl
+    ld d, [hl]
+    ld hl, $c600
+    ld a, [hl+]
+    ld h, [hl]
+    ld l, a
+    ld a, [$c618]
+    or a
+    call nz, $c617
+    ld a, l
+    ld [$c60a], a
+    ld a, h
+    ld [$c60b], a
+    xor a
+    ld [$c600], a
+    ld [$c601], a
+    ld [$c616], a
+    ld a, [$c618]
+    cp $8a
+    jr nz, jr_cb49
+
+    ld hl, $060e
+    trap $bd
+    ld hl, data_cb59
+    trap DrawString
+    ld a, $01
+    ld [$c615], a
+    ld hl, $c3b0
+    ld bc, $090e
+    call call_cc72
+    ld hl, $c60a
+    ld bc, $0905
+    call call_cc72
+    jr jr_cb4c
+
+jr_cb49:
+    call call_cab5
+
+jr_cb4c:
+    ld hl, $020e
+    trap $bd
+    pop af
+    pop hl
+    ld [$c618], a
+    trap DrawString
+    ret
+
+
+data_cb59:
+    dk "«あまり»\0"
+
+
+jp_cb5f:
+    ld a, $81
+    ld hl, data_cb67
+    jp jp_caea
+
+
+data_cb67:
+    dk "OR \0"
+
+
+jp_cb6b:
+    ld a, $82
+    ld hl, data_cb73
+    jp jp_caea
+
+
+data_cb73:
+    dk "AND\0"
+
+
+jp_cb77:
+    ld a, $86
+    ld hl, data_cb7f
+    jp jp_caea
+
+
+data_cb7f:
+    dk "SLA\0"
+
+
+jp_cb83:
+    ld c, $0e
+    jp jp_cbbe
+
+
+jp_cb88:
+    ld c, $07
+
+jp_cb8a:
+    ld a, [$c616]
+    inc a
+    ld [$c616], a
+    ld a, [$c614]
+    or a
+    jr nz, jr_cbca
+
+    ld hl, $c600
+    ld e, [hl]
+    inc hl
+    ld d, [hl]
+    sla e
+    rl d
+    push de
+    sla e
+    rl d
+    sla e
+    rl d
+    ld a, c
+    add e
+    ld e, a
+    ld a, $00
+    adc d
+    ld d, a
+    pop bc
+    ld a, c
+    add e
+    ld e, a
+    ld a, b
+    adc d
+    ld d, a
+    ld [hl], d
+    dec hl
+    ld [hl], e
+    jp jp_cabe
+
+
+jp_cbbe:
+    ld a, [$c614]
+    or a
+    ret z
+
+    ld a, [$c616]
+    inc a
+    ld [$c616], a
+
+jr_cbca:
+    ld hl, $c600
+    ld e, [hl]
+    inc hl
+    ld d, [hl]
+    sla e
+    rl d
+    sla e
+    rl d
+    sla e
+    rl d
+    sla e
+    rl d
+    ld [hl], d
+    dec hl
+    ld a, e
+    or c
+    ld [hl], a
+    jp jp_cabe
+
+
+jp_cbe8:
+    ld c, $08
+    jp jp_cb8a
+
+
+jp_cbed:
+    ld c, $09
+    jp jp_cb8a
+
+
+jp_cbf2:
+    ld a, $85
+    ld hl, data_cbfa
+    jp jp_caea
+
+
+data_cbfa:
+    dk "SRL\0"
+
+
+jp_cbfe:
+    ld c, $0d
+    jp jp_cbbe
+
+
+jp_cc03:
+    ld c, $04
+    jp jp_cb8a
+
+
+jp_cc08:
+    ld c, $05
+    jp jp_cb8a
+
+
+jp_cc0d:
+    ld c, $06
+    jp jp_cb8a
+
+
+jp_cc12:
+    ld a, $89
+    ld hl, data_cc1a
+    jp jp_caea
+
+
+data_cc1a:
+    dk "*  \0"
+
+
+jp_cc1e:
+    ld c, $0c
+    jp jp_cbbe
+
+
+jp_cc23:
+    ld c, $01
+    jp jp_cb8a
+
+
+jp_cc28:
+    ld c, $02
+    jp jp_cb8a
+
+
+jp_cc2d:
+    ld c, $03
+    jp jp_cb8a
+
+
+jp_cc32:
+    ld a, $8a
+    ld hl, data_cc3a
+    jp jp_caea
+
+
+data_cc3a:
+    dk "/  \0"
+
+
+jp_cc3e:
+    ld c, $0b
+    jp jp_cbbe
+
+
+jp_cc43:
+    ld c, $00
+    jp jp_cb8a
+
+
+jp_cc48:
+    ld a, $87
+    ld hl, data_cc50
+    jp jp_caea
+
+
+data_cc50:
+    dk "+  \0"
+
+
+jp_cc54:
+    ld a, $88
+    ld hl, data_cc5c
+    jp jp_caea
+
+
+data_cc5c:
+    dk "-  \0"
+
+
+jp_cc60:
+    ld a, $00
+    ld hl, data_cc68
+    jp jp_caea
+
+
+data_cc68:
+    dk "   \0"
+
+
+jp_cc6c:
+    ret
+
+
+jp_cc6d:
+    ld c, $0a
+    jp jp_cbbe
+
+
+call_cc72:
+    ld e, [hl]
+
+jr_cc73:
+    inc hl
+    ld d, [hl]
+    inc hl
+    push hl
+    push bc
+    ld a, [$c614]
+    or a
+    jr z, jr_cc8f
+
+    trap StrConvHex
+    pop hl
+    trap $bd
+    ld a, " "
+    trap DrawChar
+    ld a, " "
+    trap DrawChar
+    pop hl
+    trap DrawString
+    ret
+
+
+jr_cc8f:
+    trap StrConvInt
+    pop hl
+    trap $bd
+    pop hl
+    trap DrawString
+    ret
+
+ENDL

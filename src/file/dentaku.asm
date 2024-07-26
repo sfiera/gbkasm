@@ -1,4 +1,4 @@
-; Disassembly of "calculator.gbf"
+; Disassembly of "dentaku.gbf"
 
 INCLUDE "charmap.inc"
 INCLUDE "common.inc"
