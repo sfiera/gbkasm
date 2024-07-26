@@ -9,9 +9,9 @@ INCLUDE "trap.inc"
 SECTION "Fragment", ROM0[$0]
 LOAD "WRAM Code", WRAM0[$c800]
 
-call_c800:
+Main:
     ld sp, $e000
-    call call_c86d
+    call InitTiles
     call BtnAllClear
     ld de, $011d
     ld bc, $530c
@@ -28,7 +28,7 @@ jr_c813:
     push bc
     push de
     push hl
-    call call_c82a
+    call HandleBtn
     pop hl
     pop de
     pop bc
@@ -39,7 +39,7 @@ jr_c828:
     trap ExitToMenu
 
 
-call_c82a:
+HandleBtn:
     ld l, a
     ld h, $00
     inc hl
@@ -52,7 +52,8 @@ call_c82a:
     dw Btn1 - @,        Btn2 - @,        Btn3 - @,         BtnDivide - @,      BtnB - @
     dw Btn0 - @,        BtnAdd - @,      BtnSubtract - @,  BtnEqual - @,       BtnA - @
 
-call_c86d:
+
+InitTiles:
     ld a, $c4
     ld bc, $0201
     ld de, $0d11
@@ -283,7 +284,7 @@ jr_cab3:
 call_cab5:
     ld hl, VarResult
     ld bc, $0905
-    call call_cc72
+    call DrawNum
 
 jp_cabe:
     ld a, [VarC615]
@@ -300,7 +301,7 @@ jp_cabe:
 jr_cad2:
     ld hl, VarOperand
     ld bc, $090e
-    call call_cc72
+    call DrawNum
     ret
 
 
@@ -317,7 +318,7 @@ BtnXor:
     ld a, MathXor16
     ld hl, StrXor
 
-jp_caea:
+BtnOperator:
     push hl
     push af
     ld a, l
@@ -359,10 +360,10 @@ jp_caea:
     ld [VarC615], a
     ld hl, $c3b0
     ld bc, $090e
-    call call_cc72
+    call DrawNum
     ld hl, VarResult
     ld bc, $0905
-    call call_cc72
+    call DrawNum
     jr jr_cb4c
 
 jr_cb49:
@@ -385,7 +386,7 @@ data_cb59:
 BtnOr:
     ld a, MathOr16
     ld hl, StrOr
-    jp jp_caea
+    jp BtnOperator
 
 
 StrOr:
@@ -395,7 +396,7 @@ StrOr:
 BtnAnd:
     ld a, MathAnd16
     ld hl, StrAnd
-    jp jp_caea
+    jp BtnOperator
 
 
 StrAnd:
@@ -405,7 +406,7 @@ StrAnd:
 BtnShiftLeft:
     ld a, MathSla16
     ld hl, StrShiftLeft
-    jp jp_caea
+    jp BtnOperator
 
 
 StrShiftLeft:
@@ -501,7 +502,7 @@ Btn9:
 BtnShiftRight:
     ld a, MathSrl16
     ld hl, StrShiftRight
-    jp jp_caea
+    jp BtnOperator
 
 
 StrShiftRight:
@@ -531,7 +532,7 @@ Btn6:
 BtnMultiply:
     ld a, MathMul16
     ld hl, StrMultiply
-    jp jp_caea
+    jp BtnOperator
 
 
 StrMultiply:
@@ -561,7 +562,7 @@ Btn3:
 BtnDivide:
     ld a, MathDiv16
     ld hl, StrDivide
-    jp jp_caea
+    jp BtnOperator
 
 
 StrDivide:
@@ -581,7 +582,7 @@ Btn0:
 BtnAdd:
     ld a, MathAdd16
     ld hl, StrAdd
-    jp jp_caea
+    jp BtnOperator
 
 
 StrAdd:
@@ -591,7 +592,7 @@ StrAdd:
 BtnSubtract:
     ld a, MathSub16
     ld hl, StrSubtract
-    jp jp_caea
+    jp BtnOperator
 
 
 StrSubtract:
@@ -601,7 +602,7 @@ StrSubtract:
 BtnEqual:
     ld a, $00
     ld hl, StrNone
-    jp jp_caea
+    jp BtnOperator
 
 
 StrNone:
@@ -617,10 +618,8 @@ BtnA:
     jp BtnHexDigit
 
 
-call_cc72:
+DrawNum:
     ld e, [hl]
-
-jr_cc73:
     inc hl
     ld d, [hl]
     inc hl
