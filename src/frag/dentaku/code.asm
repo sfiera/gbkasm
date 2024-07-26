@@ -12,7 +12,7 @@ LOAD "WRAM Code", WRAM0[$c800]
 call_c800:
     ld sp, $e000
     call call_c86d
-    call call_ca6e
+    call BtnAllClear
     ld de, $011d
     ld bc, $530c
     ld l, $1e
@@ -45,36 +45,12 @@ call_c82a:
     inc hl
     trap $03
     db 30
-    dw jp_ca4f - @
-    dw jp_ca57 - @
-    dw jp_ca5e - @
-    dw call_ca6e - @
-    dw jp_cadc - @
-    dw jp_cae5 - @
-    dw jp_cb5f - @
-    dw jp_cb6b - @
-    dw jp_cb77 - @
-    dw jp_cb83 - @
-    dw jp_cb88 - @
-    dw jp_cbe8 - @
-    dw jp_cbed - @
-    dw jp_cbf2 - @
-    dw jp_cbfe - @
-    dw jp_cc03 - @
-    dw jp_cc08 - @
-    dw jp_cc0d - @
-    dw jp_cc12 - @
-    dw jp_cc1e - @
-    dw jp_cc23 - @
-    dw jp_cc28 - @
-    dw jp_cc2d - @
-    dw jp_cc32 - @
-    dw jp_cc3e - @
-    dw jp_cc43 - @
-    dw jp_cc48 - @
-    dw jp_cc54 - @
-    dw jp_cc60 - @
-    dw jp_cc6d - @
+    dw BtnModeHex - @,  BtnModeDec - @,  BtnClear - @,     BtnAllClear - @,    BtnF - @
+    dw BtnXor - @,      BtnOr - @,       BtnAnd - @,       BtnShiftLeft - @,   BtnE - @
+    dw Btn7 - @,        Btn8 - @,        Btn9 - @,         BtnShiftRight - @,  BtnD - @
+    dw Btn4 - @,        Btn5 - @,        Btn6 - @,         BtnMultiply - @,    BtnC - @
+    dw Btn1 - @,        Btn2 - @,        Btn3 - @,         BtnDivide - @,      BtnB - @
+    dw Btn0 - @,        BtnAdd - @,      BtnSubtract - @,  BtnEqual - @,       BtnA - @
 
 call_c86d:
     ld a, $c4
@@ -87,7 +63,7 @@ call_c86d:
     ld bc, $4f1e
     trap $c2
     xor a
-    ld [$c615], a
+    ld [VarC615], a
     ld hl, $0a1f
     ld de, $1d26
     ld bc, $5fe4
@@ -234,144 +210,144 @@ data_c9e4:
     db $00
 
 
-data_ca47:
+StrModeDec:
     dk "Dec\0"
 
 
-data_ca4b:
+StrModeHex:
     dk "Hex\0"
 
 
-jp_ca4f:
+BtnModeHex:
     ld a, $01
-    ld [$c614], a
+    ld [VarModeHexOn], a
     jp jp_caa2
 
 
-jp_ca57:
+BtnModeDec:
     xor a
-    ld [$c614], a
+    ld [VarModeHexOn], a
     jp jp_caa2
 
 
-jp_ca5e:
+BtnClear:
     xor a
-    ld [$c616], a
-    ld [$c600], a
-    ld [$c601], a
+    ld [VarC616], a
+    ld [VarOperand], a
+    ld [VarOperand + 1], a
     jp jp_caa2
 
 
 data_ca6b:
-    trap $87
-
-data_ca6d:
+.rst
+    trap MathAdd16
+.ret
     ret
 
 
-call_ca6e:
-    ld a, [data_ca6b]
-    ld [$c617], a
-    ld a, [data_ca6d]
-    ld [$c619], a
+BtnAllClear:
+    ld a, [data_ca6b.rst]
+    ld [VarOpFunc.rst], a
+    ld a, [data_ca6b.ret]
+    ld [VarOpFunc.ret], a
     xor a
-    ld [$c616], a
-    ld [$c618], a
-    ld [$c614], a
-    ld [$c600], a
-    ld [$c601], a
-    ld [$c60a], a
-    ld [$c60b], a
+    ld [VarC616], a
+    ld [VarOpFunc.trap], a
+    ld [VarModeHexOn], a
+    ld [VarOperand], a
+    ld [VarOperand + 1], a
+    ld [VarResult], a
+    ld [VarResult + 1], a
     ld hl, $020e
     trap $bd
-    ld hl, data_cc68
+    ld hl, StrNone
     ld a, l
-    ld [$c61a], a
+    ld [VarC61A], a
     ld a, h
-    ld [$c61b], a
+    ld [VarC61A + 1], a
     trap DrawString
 
 jp_caa2:
     ld hl, $0205
     trap $bd
-    ld hl, data_ca47
-    ld a, [$c614]
+    ld hl, StrModeDec
+    ld a, [VarModeHexOn]
     or a
     jr z, jr_cab3
 
-    ld hl, data_ca4b
+    ld hl, StrModeHex
 
 jr_cab3:
     trap DrawString
 
 call_cab5:
-    ld hl, $c60a
+    ld hl, VarResult
     ld bc, $0905
     call call_cc72
 
 jp_cabe:
-    ld a, [$c615]
+    ld a, [VarC615]
     or a
     jr z, jr_cad2
 
     ld hl, $060e
     trap $bd
-    ld hl, data_cc68
+    ld hl, StrNone
     trap DrawString
     xor a
-    ld [$c615], a
+    ld [VarC615], a
 
 jr_cad2:
-    ld hl, $c600
+    ld hl, VarOperand
     ld bc, $090e
     call call_cc72
     ret
 
 
-jp_cadc:
+BtnF:
     ld c, $0f
-    jp jp_cbbe
+    jp BtnHexDigit
 
 
-data_cae1:
+StrXor:
     dk "XOR\0"
 
 
-jp_cae5:
-    ld a, $80
-    ld hl, data_cae1
+BtnXor:
+    ld a, MathXor16
+    ld hl, StrXor
 
 jp_caea:
     push hl
     push af
     ld a, l
-    ld [$c61a], a
+    ld [VarC61A], a
     ld a, h
-    ld [$c61b], a
-    ld a, [$c616]
+    ld [VarC61A + 1], a
+    ld a, [VarC616]
     or a
     jr z, jr_cb4c
 
-    ld hl, $c60a
+    ld hl, VarResult
     ld e, [hl]
     inc hl
     ld d, [hl]
-    ld hl, $c600
+    ld hl, VarOperand
     ld a, [hl+]
     ld h, [hl]
     ld l, a
-    ld a, [$c618]
+    ld a, [VarOpFunc.trap]
     or a
-    call nz, $c617
+    call nz, VarOpFunc
     ld a, l
-    ld [$c60a], a
+    ld [VarResult], a
     ld a, h
-    ld [$c60b], a
+    ld [VarResult + 1], a
     xor a
-    ld [$c600], a
-    ld [$c601], a
-    ld [$c616], a
-    ld a, [$c618]
+    ld [VarOperand], a
+    ld [VarOperand + 1], a
+    ld [VarC616], a
+    ld a, [VarOpFunc.trap]
     cp $8a
     jr nz, jr_cb49
 
@@ -380,11 +356,11 @@ jp_caea:
     ld hl, data_cb59
     trap DrawString
     ld a, $01
-    ld [$c615], a
+    ld [VarC615], a
     ld hl, $c3b0
     ld bc, $090e
     call call_cc72
-    ld hl, $c60a
+    ld hl, VarResult
     ld bc, $0905
     call call_cc72
     jr jr_cb4c
@@ -397,7 +373,7 @@ jr_cb4c:
     trap $bd
     pop af
     pop hl
-    ld [$c618], a
+    ld [VarOpFunc.trap], a
     trap DrawString
     ret
 
@@ -406,53 +382,53 @@ data_cb59:
     dk "«あまり»\0"
 
 
-jp_cb5f:
-    ld a, $81
-    ld hl, data_cb67
+BtnOr:
+    ld a, MathOr16
+    ld hl, StrOr
     jp jp_caea
 
 
-data_cb67:
+StrOr:
     dk "OR \0"
 
 
-jp_cb6b:
-    ld a, $82
-    ld hl, data_cb73
+BtnAnd:
+    ld a, MathAnd16
+    ld hl, StrAnd
     jp jp_caea
 
 
-data_cb73:
+StrAnd:
     dk "AND\0"
 
 
-jp_cb77:
-    ld a, $86
-    ld hl, data_cb7f
+BtnShiftLeft:
+    ld a, MathSla16
+    ld hl, StrShiftLeft
     jp jp_caea
 
 
-data_cb7f:
+StrShiftLeft:
     dk "SLA\0"
 
 
-jp_cb83:
+BtnE:
     ld c, $0e
-    jp jp_cbbe
+    jp BtnHexDigit
 
 
-jp_cb88:
+Btn7:
     ld c, $07
 
-jp_cb8a:
-    ld a, [$c616]
+BtnDecDigit:
+    ld a, [VarC616]
     inc a
-    ld [$c616], a
-    ld a, [$c614]
+    ld [VarC616], a
+    ld a, [VarModeHexOn]
     or a
     jr nz, jr_cbca
 
-    ld hl, $c600
+    ld hl, VarOperand
     ld e, [hl]
     inc hl
     ld d, [hl]
@@ -482,17 +458,17 @@ jp_cb8a:
     jp jp_cabe
 
 
-jp_cbbe:
-    ld a, [$c614]
+BtnHexDigit:
+    ld a, [VarModeHexOn]
     or a
     ret z
 
-    ld a, [$c616]
+    ld a, [VarC616]
     inc a
-    ld [$c616], a
+    ld [VarC616], a
 
 jr_cbca:
-    ld hl, $c600
+    ld hl, VarOperand
     ld e, [hl]
     inc hl
     ld d, [hl]
@@ -512,123 +488,123 @@ jr_cbca:
     jp jp_cabe
 
 
-jp_cbe8:
+Btn8:
     ld c, $08
-    jp jp_cb8a
+    jp BtnDecDigit
 
 
-jp_cbed:
+Btn9:
     ld c, $09
-    jp jp_cb8a
+    jp BtnDecDigit
 
 
-jp_cbf2:
-    ld a, $85
-    ld hl, data_cbfa
+BtnShiftRight:
+    ld a, MathSrl16
+    ld hl, StrShiftRight
     jp jp_caea
 
 
-data_cbfa:
+StrShiftRight:
     dk "SRL\0"
 
 
-jp_cbfe:
+BtnD:
     ld c, $0d
-    jp jp_cbbe
+    jp BtnHexDigit
 
 
-jp_cc03:
+Btn4:
     ld c, $04
-    jp jp_cb8a
+    jp BtnDecDigit
 
 
-jp_cc08:
+Btn5:
     ld c, $05
-    jp jp_cb8a
+    jp BtnDecDigit
 
 
-jp_cc0d:
+Btn6:
     ld c, $06
-    jp jp_cb8a
+    jp BtnDecDigit
 
 
-jp_cc12:
-    ld a, $89
-    ld hl, data_cc1a
+BtnMultiply:
+    ld a, MathMul16
+    ld hl, StrMultiply
     jp jp_caea
 
 
-data_cc1a:
+StrMultiply:
     dk "*  \0"
 
 
-jp_cc1e:
+BtnC:
     ld c, $0c
-    jp jp_cbbe
+    jp BtnHexDigit
 
 
-jp_cc23:
+Btn1:
     ld c, $01
-    jp jp_cb8a
+    jp BtnDecDigit
 
 
-jp_cc28:
+Btn2:
     ld c, $02
-    jp jp_cb8a
+    jp BtnDecDigit
 
 
-jp_cc2d:
+Btn3:
     ld c, $03
-    jp jp_cb8a
+    jp BtnDecDigit
 
 
-jp_cc32:
-    ld a, $8a
-    ld hl, data_cc3a
+BtnDivide:
+    ld a, MathDiv16
+    ld hl, StrDivide
     jp jp_caea
 
 
-data_cc3a:
+StrDivide:
     dk "/  \0"
 
 
-jp_cc3e:
+BtnB:
     ld c, $0b
-    jp jp_cbbe
+    jp BtnHexDigit
 
 
-jp_cc43:
+Btn0:
     ld c, $00
-    jp jp_cb8a
+    jp BtnDecDigit
 
 
-jp_cc48:
-    ld a, $87
-    ld hl, data_cc50
+BtnAdd:
+    ld a, MathAdd16
+    ld hl, StrAdd
     jp jp_caea
 
 
-data_cc50:
+StrAdd:
     dk "+  \0"
 
 
-jp_cc54:
-    ld a, $88
-    ld hl, data_cc5c
+BtnSubtract:
+    ld a, MathSub16
+    ld hl, StrSubtract
     jp jp_caea
 
 
-data_cc5c:
+StrSubtract:
     dk "-  \0"
 
 
-jp_cc60:
+BtnEqual:
     ld a, $00
-    ld hl, data_cc68
+    ld hl, StrNone
     jp jp_caea
 
 
-data_cc68:
+StrNone:
     dk "   \0"
 
 
@@ -636,9 +612,9 @@ jp_cc6c:
     ret
 
 
-jp_cc6d:
+BtnA:
     ld c, $0a
-    jp jp_cbbe
+    jp BtnHexDigit
 
 
 call_cc72:
@@ -650,7 +626,7 @@ jr_cc73:
     inc hl
     push hl
     push bc
-    ld a, [$c614]
+    ld a, [VarModeHexOn]
     or a
     jr z, jr_cc8f
 
@@ -675,3 +651,29 @@ jr_cc8f:
     ret
 
 ENDL
+
+SECTION "Variables", WRAM0[$c600]
+
+VarOperand:
+    dw
+VarOperandStr:
+    ds 8
+VarResult:
+    dw
+VarResultStr:
+    ds 8
+
+VarModeHexOn:
+    db
+VarC615:
+    db
+VarC616:
+    db
+
+VarOpFunc:
+.rst   db
+.trap  db
+.ret   db
+
+VarC61A:
+    dw

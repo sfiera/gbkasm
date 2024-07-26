@@ -43,8 +43,12 @@ DEF MathXor16         EQU $80  ; hl ^= de
 DEF MathOr16          EQU $81  ; hl |= de
 DEF MathAnd16         EQU $82  ; hl &= de
 DEF MathCpl16         EQU $83  ; hl = ~hl
+DEF MathSrl16         EQU $85  ; hl >>= de
+DEF MathSla16         EQU $86  ; hl <<= de
 DEF MathAdd16         EQU $87  ; hl += de
 DEF MathSub16         EQU $88  ; hl -= de
+DEF MathMul16         EQU $89  ; hl *= de
+DEF MathDiv16         EQU $8a  ; hl /= de
 DEF MathNeg16         EQU $8b  ; hl = -hl
 DEF MathAbs16         EQU $8c  ; hl = abs(hl)
 
