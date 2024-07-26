@@ -50,7 +50,11 @@ else
 endif
 
 %.frag: %.o
+ifeq ($(DEBUG),1)
+	$(RGBLINK) -n $*.sym -x -o $@ $<
+else
 	$(RGBLINK) -x -o $@ $<
+endif
 
 %.2bpp: %.2bpp.h.png
 	$(RGBGFX) -d2 -o $@ $<
