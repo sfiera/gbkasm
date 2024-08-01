@@ -18,11 +18,11 @@ Main:
     ld l, $1e
     ld a, $00
 
-jr_c813:
+.jr_c813
     ld h, $03
     trap InputHiliteMenu
     bit 1, h
-    jr nz, jr_c828
+    jr nz, .jr_c828
 
     push af
     push bc
@@ -33,9 +33,9 @@ jr_c813:
     pop de
     pop bc
     pop af
-    jr jr_c813
+    jr .jr_c813
 
-jr_c828:
+.jr_c828
     trap ExitToMenu
 
 
@@ -187,7 +187,7 @@ InitTiles:
     trap $c2
     ld hl, data_c9e4
 
-jr_c9d6:
+.jr_c9d6
     ld a, [hl+]
     or a
     ret z
@@ -198,7 +198,7 @@ jr_c9d6:
     trap $bd
     pop hl
     trap DrawString
-    jr jr_c9d6
+    jr .jr_c9d6
 
 
 data_c9e4:
@@ -274,11 +274,11 @@ jp_caa2:
     ld hl, StrModeDec
     ld a, [VarModeHexOn]
     or a
-    jr z, jr_cab3
+    jr z, .jr_cab3
 
     ld hl, StrModeHex
 
-jr_cab3:
+.jr_cab3
     trap DrawString
 
 call_cab5:
@@ -289,7 +289,7 @@ call_cab5:
 jp_cabe:
     ld a, [VarC615]
     or a
-    jr z, jr_cad2
+    jr z, .jr_cad2
 
     ld hl, $060e
     trap $bd
@@ -298,7 +298,7 @@ jp_cabe:
     xor a
     ld [VarC615], a
 
-jr_cad2:
+.jr_cad2
     ld hl, VarOperand
     ld bc, $090e
     call DrawNum
@@ -327,7 +327,7 @@ BtnOperator:
     ld [VarC61A + 1], a
     ld a, [VarC616]
     or a
-    jr z, jr_cb4c
+    jr z, .jr_cb4c
 
     ld hl, VarResult
     ld e, [hl]
@@ -350,7 +350,7 @@ BtnOperator:
     ld [VarC616], a
     ld a, [VarOpFunc.trap]
     cp $8a
-    jr nz, jr_cb49
+    jr nz, .jr_cb49
 
     ld hl, $060e
     trap $bd
@@ -364,12 +364,12 @@ BtnOperator:
     ld hl, VarResult
     ld bc, $0905
     call DrawNum
-    jr jr_cb4c
+    jr .jr_cb4c
 
-jr_cb49:
+.jr_cb49
     call call_cab5
 
-jr_cb4c:
+.jr_cb4c
     ld hl, $020e
     trap $bd
     pop af
@@ -427,7 +427,7 @@ BtnDecDigit:
     ld [VarC616], a
     ld a, [VarModeHexOn]
     or a
-    jr nz, jr_cbca
+    jr nz, AppendHex
 
     ld hl, VarOperand
     ld e, [hl]
@@ -467,8 +467,10 @@ BtnHexDigit:
     ld a, [VarC616]
     inc a
     ld [VarC616], a
+    ; fall through
 
-jr_cbca:
+
+AppendHex:
     ld hl, VarOperand
     ld e, [hl]
     inc hl
@@ -627,7 +629,7 @@ DrawNum:
     push bc
     ld a, [VarModeHexOn]
     or a
-    jr z, jr_cc8f
+    jr z, .jr_cc8f
 
     trap StrConvHex
     pop hl
@@ -641,7 +643,7 @@ DrawNum:
     ret
 
 
-jr_cc8f:
+.jr_cc8f
     trap StrConvInt
     pop hl
     trap $bd
