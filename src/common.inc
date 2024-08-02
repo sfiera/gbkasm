@@ -44,3 +44,12 @@ DEF CART_ROBOPON       EQU $08
 DEF CART_MINIGAME      EQU $fe
 DEF CART_NOTINST       EQU $ff  ; file not installed; install failed or unnecessary
 DEF CART_ANY           EQU $00  ; file can run anywhere after installation
+
+DEF FG0  EQU $10  ; fg=#fff
+DEF FG1  EQU $11  ; fg=#aaa
+DEF FG2  EQU $12  ; fg=#555
+DEF FG3  EQU $13  ; fg=#000
+DEF BG0  EQU $14  ; bg=#fff
+DEF BG1  EQU $15  ; bg=#aaa
+DEF BG2  EQU $16  ; bg=#555
+DEF BG3  EQU $17  ; bg=#000

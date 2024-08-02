@@ -6,6 +6,25 @@ INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
+DEF BTN_CNT  EQU 30
+DEF BTN_W    EQU 24
+DEF BTN_H    EQU 12
+DEF BTN_X0   EQU 1
+DEF BTN_Y0   EQU 29
+DEF BTN_X1   EQU BTN_X0 + BTN_W
+DEF BTN_X2   EQU BTN_X1 + BTN_W
+DEF BTN_X3   EQU BTN_X2 + BTN_W
+DEF BTN_X4   EQU BTN_X3 + BTN_W
+DEF BTN_Y1   EQU BTN_Y0 + BTN_H
+DEF BTN_Y2   EQU BTN_Y1 + BTN_H
+DEF BTN_Y3   EQU BTN_Y2 + BTN_H
+DEF BTN_Y4   EQU BTN_Y3 + BTN_H
+DEF BTN_Y5   EQU BTN_Y4 + BTN_H
+
+MACRO ld2
+    ld \1, ((\2) << 8) | (\3)
+ENDM
+
 SECTION "Fragment", ROM0[$0]
 LOAD "WRAM Code", WRAM0[$c800]
 
@@ -13,16 +32,17 @@ Main:
     ld sp, $e000
     call InitTiles
     call BtnAllClear
-    ld de, $011d
-    ld bc, $530c
-    ld l, $1e
-    ld a, $00
 
-.jr_c813
+    ld2 de, BTN_X0, BTN_Y0
+    ld2 bc, $53, BTN_H
+    ld l, BTN_CNT
+    ld a, 0
+
+.nextInput
     ld h, $03
     trap InputHiliteMenu
     bit 1, h
-    jr nz, .jr_c828
+    jr nz, .exit
 
     push af
     push bc
@@ -33,9 +53,9 @@ Main:
     pop de
     pop bc
     pop af
-    jr .jr_c813
+    jr .nextInput
 
-.jr_c828
+.exit
     trap ExitToMenu
 
 
@@ -44,7 +64,7 @@ HandleBtn:
     ld h, $00
     inc hl
     trap $03
-    db 30
+    db BTN_CNT
     dw BtnModeHex - @,  BtnModeDec - @,  BtnClear - @,     BtnAllClear - @,    BtnF - @
     dw BtnXor - @,      BtnOr - @,       BtnAnd - @,       BtnShiftLeft - @,   BtnE - @
     dw Btn7 - @,        Btn8 - @,        Btn9 - @,         BtnShiftRight - @,  BtnD - @
@@ -53,162 +73,85 @@ HandleBtn:
     dw Btn0 - @,        BtnAdd - @,      BtnSubtract - @,  BtnEqual - @,       BtnA - @
 
 
+MACRO box
+    ld2 hl, \1 + 9, \2 + 2
+    ld2 de, \1 + \3 + 4, \2 + \4 - 3
+    ld2 bc, \5, \6
+    trap $c2
+ENDM
+
 InitTiles:
     ld a, $c4
     ld bc, $0201
-    ld de, $0d11
+    ld2 de, 13, 17
     ld hl, $1791
     trap DrawInit
-    ld hl, $0f05
-    ld de, $7816
-    ld bc, $4f1e
-    trap $c2
+
+    box 6, 3, 110, 22, $4f, $1e
+
     xor a
     ld [VarC615], a
-    ld hl, $0a1f
-    ld de, $1d26
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $221f
-    ld de, $3526
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $3a1f
-    ld de, $4d26
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $521f
-    ld de, $6526
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $6a1f
-    ld de, $7d26
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $0a2b
-    ld de, $1d32
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $222b
-    ld de, $3532
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $3a2b
-    ld de, $4d32
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $522b
-    ld de, $6532
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $6a2b
-    ld de, $7d32
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $0a37
-    ld de, $1d3e
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $2237
-    ld de, $353e
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $3a37
-    ld de, $4d3e
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $5237
-    ld de, $653e
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $6a37
-    ld de, $7d3e
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $0a43
-    ld de, $1d4a
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $2243
-    ld de, $354a
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $3a43
-    ld de, $4d4a
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $5243
-    ld de, $654a
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $6a43
-    ld de, $7d4a
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $0a4f
-    ld de, $1d56
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $224f
-    ld de, $3556
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $3a4f
-    ld de, $4d56
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $524f
-    ld de, $6556
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $6a4f
-    ld de, $7d56
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $0a5b
-    ld de, $1d63
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $225b
-    ld de, $3563
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $3a5b
-    ld de, $4d63
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $525b
-    ld de, $6563
-    ld bc, $5fe4
-    trap $c2
-    ld hl, $6a5b
-    ld de, $7d63
-    ld bc, $5fe4
-    trap $c2
-    ld hl, data_c9e4
 
-.jr_c9d6
+    box BTN_X0, BTN_Y0, BTN_W, BTN_H, $5f, $e4
+    box BTN_X1, BTN_Y0, BTN_W, BTN_H, $5f, $e4
+    box BTN_X2, BTN_Y0, BTN_W, BTN_H, $5f, $e4
+    box BTN_X3, BTN_Y0, BTN_W, BTN_H, $5f, $e4
+    box BTN_X4, BTN_Y0, BTN_W, BTN_H, $5f, $e4
+                      
+    box BTN_X0, BTN_Y1, BTN_W, BTN_H, $5f, $e4
+    box BTN_X1, BTN_Y1, BTN_W, BTN_H, $5f, $e4
+    box BTN_X2, BTN_Y1, BTN_W, BTN_H, $5f, $e4
+    box BTN_X3, BTN_Y1, BTN_W, BTN_H, $5f, $e4
+    box BTN_X4, BTN_Y1, BTN_W, BTN_H, $5f, $e4
+                      
+    box BTN_X0, BTN_Y2, BTN_W, BTN_H, $5f, $e4
+    box BTN_X1, BTN_Y2, BTN_W, BTN_H, $5f, $e4
+    box BTN_X2, BTN_Y2, BTN_W, BTN_H, $5f, $e4
+    box BTN_X3, BTN_Y2, BTN_W, BTN_H, $5f, $e4
+    box BTN_X4, BTN_Y2, BTN_W, BTN_H, $5f, $e4
+                      
+    box BTN_X0, BTN_Y3, BTN_W, BTN_H, $5f, $e4
+    box BTN_X1, BTN_Y3, BTN_W, BTN_H, $5f, $e4
+    box BTN_X2, BTN_Y3, BTN_W, BTN_H, $5f, $e4
+    box BTN_X3, BTN_Y3, BTN_W, BTN_H, $5f, $e4
+    box BTN_X4, BTN_Y3, BTN_W, BTN_H, $5f, $e4
+                      
+    box BTN_X0, BTN_Y4, BTN_W, BTN_H, $5f, $e4
+    box BTN_X1, BTN_Y4, BTN_W, BTN_H, $5f, $e4
+    box BTN_X2, BTN_Y4, BTN_W, BTN_H, $5f, $e4
+    box BTN_X3, BTN_Y4, BTN_W, BTN_H, $5f, $e4
+    box BTN_X4, BTN_Y4, BTN_W, BTN_H, $5f, $e4
+                      
+    box BTN_X0, BTN_Y5, BTN_W, BTN_H + 1, $5f, $e4
+    box BTN_X1, BTN_Y5, BTN_W, BTN_H + 1, $5f, $e4
+    box BTN_X2, BTN_Y5, BTN_W, BTN_H + 1, $5f, $e4
+    box BTN_X3, BTN_Y5, BTN_W, BTN_H + 1, $5f, $e4
+    box BTN_X4, BTN_Y5, BTN_W, BTN_H + 1, $5f, $e4
+
+    ld hl, CalculatorText
+
+.nextLine
     ld a, [hl+]
     or a
     ret z
 
     push hl
     ld l, a
-    ld h, $01
+    ld h, BTN_X0
     trap $bd
     pop hl
     trap DrawString
-    jr .jr_c9d6
+    jr .nextLine
 
 
-data_c9e4:
-    db $1f, $15, $31, $36, $01, $31, $30, $01, $01, $43, $01, $41, $43, $01, $01, $46, $00
-    db $2b, $01, $5e, $01, $01, $7e, $01, $01, $26, $01, $01, $3c, $01, $01, $45, $00
-    db $37, $01, $37, $01, $01, $38, $01, $01, $39, $01, $01, $3e, $01, $01, $44, $00
-    db $43, $01, $34, $01, $01, $35, $01, $01, $36, $01, $01, $2a, $01, $01, $43, $00
-    db $4f, $01, $31, $01, $01, $32, $01, $01, $33, $01, $01, $2f, $01, $01, $42, $00
-    db $5b, $01, $30, $01, $01, $2b, $01, $01, $2d, $01, $01, $3d, $01, $01, $41, $14, $00
-    db $00
+CalculatorText:
+    dh BTN_Y0 + 2, BG1, "16→10→→C→AC→→F\0"
+    dh BTN_Y1 + 2, "→^→→¯→→&→→<→→E\0"
+    dh BTN_Y2 + 2, "→7→→8→→9→→>→→D\0"
+    dh BTN_Y3 + 2, "→4→→5→→6→→*→→C\0"
+    dh BTN_Y4 + 2, "→1→→2→→3→→/→→B\0"
+    dh BTN_Y5 + 2, "→0→→+→→-→→=→→A", BG0, "\0"
+    db 0
 
 
 StrModeDec:
@@ -259,7 +202,7 @@ BtnAllClear:
     ld [VarOperand + 1], a
     ld [VarResult], a
     ld [VarResult + 1], a
-    ld hl, $020e
+    ld2 hl, 2, 14
     trap $bd
     ld hl, StrNone
     ld a, l
@@ -269,7 +212,7 @@ BtnAllClear:
     trap DrawString
 
 jp_caa2:
-    ld hl, $0205
+    ld2 hl, 2, 5
     trap $bd
     ld hl, StrModeDec
     ld a, [VarModeHexOn]
@@ -291,7 +234,7 @@ jp_cabe:
     or a
     jr z, .jr_cad2
 
-    ld hl, $060e
+    ld2 hl, 6, 14
     trap $bd
     ld hl, StrNone
     trap DrawString
@@ -352,7 +295,7 @@ BtnOperator:
     cp $8a
     jr nz, .jr_cb49
 
-    ld hl, $060e
+    ld2 hl, 6, 14
     trap $bd
     ld hl, data_cb59
     trap DrawString
@@ -370,7 +313,7 @@ BtnOperator:
     call call_cab5
 
 .jr_cb4c
-    ld hl, $020e
+    ld2 hl, 2, 14
     trap $bd
     pop af
     pop hl
