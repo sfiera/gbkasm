@@ -120,7 +120,7 @@ Other Official Files
      * Description
    * * `family_s.asm <src/file/family_s.asm>`_
      * `Family Shot <https://gbkiss.org/file/family-shot>`_
-     * Hudson Website
+     * `Hudson Website <https://web.archive.org/web/20021020134646/http://www.hudson.co.jp/gamenavi/gamedb/softinfo/family/date.html>`_
      * Prints photo to Game Boy Printer
    * * `kissmon2.asm <src/file/kissmon2.asm>`_
      * `Kiss-Mon 2 <https://gbkiss.org/file/kiss-mon-2>`_
@@ -132,7 +132,7 @@ Other Official Files
      * Sample Kiss Mail message
    * * `saita.asm <src/file/saita.asm>`_
      * `Saita Saita <https://gbkiss.org/file/saita>`_
-     * Hudson Website
+     * `Hudson Website <https://web.archive.org/web/20021020134646/http://www.hudson.co.jp/gamenavi/gamedb/softinfo/family/date.html>`_
      * Children’s song as Pocket Family alarm
    * * `simula1.asm <src/file/simula1.asm>`_
      * `Icon <https://gbkiss.org/file/icon>`_
