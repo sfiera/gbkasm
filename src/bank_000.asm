@@ -739,7 +739,7 @@ Jump_000_0309:
     ld e, l
     ldh a, [hROMBank]
     push af
-    ld a, BANK(FileRandomSelection)
+    ld a, BANK(FileRandomSelection.count)
     ldh [hROMBank], a
     ld [rROMBank], a
     ld hl, rRAMBank
@@ -1465,43 +1465,43 @@ strEnterPassword::
 
 
 Jump_000_07a4::
-    ld de, $4000
-    ld a, $07
+    ld de, FileCollection1
+    ld a, BANK(FileCollection1)
     call Call_000_089a
     jp Jump_000_0543
 
 
 Jump_000_07af::
-    ld de, $4000
-    ld a, $09
+    ld de, FileCollection2
+    ld a, BANK(FileCollection2)
     call Call_000_089a
     jp Jump_000_0543
 
 
 Jump_000_07ba::
-    ld de, $4000
-    ld a, $0b
+    ld de, FileCollection3
+    ld a, BANK(FileCollection3)
     call Call_000_089a
     jp Jump_000_0543
 
 
 Jump_000_07c5::
-    ld de, $4000
-    ld a, $0d
+    ld de, FileCollection4
+    ld a, BANK(FileCollection4)
     call Call_000_089a
     jp Jump_000_0543
 
 
 Jump_000_07d0::
-    ld de, $4000
-    ld a, $0e
+    ld de, FileCollection5
+    ld a, BANK(FileCollection5)
     call Call_000_089a
     jp Jump_000_0543
 
 
 Jump_000_07db::
-    ld de, $4000
-    ld a, $0f
+    ld de, FileCollection6
+    ld a, BANK(FileCollection6)
     call Call_000_089a
     jp Jump_000_0543
 

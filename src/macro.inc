@@ -20,17 +20,3 @@ MACRO ldx
     pushx \2
     pop \1
 ENDM
-
-MACRO TableEntry
-    db $46, BANK(\1)
-    dw \1
-SHIFT
-REPT _NARG
-    dk \1
-    SHIFT
-ENDR
-ENDM
-
-MACRO TableBlank
-    ds 4, $00
-ENDM
