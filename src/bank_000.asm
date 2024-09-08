@@ -3,6 +3,13 @@
 ; mgbdis v2.0 - Game Boy ROM disassembler by Matt Currie and contributors.
 ; https://github.com/mattcurrie/mgbdis
 
+INCLUDE "charmap.inc"
+INCLUDE "common.inc"
+INCLUDE "consts.inc"
+INCLUDE "hardware.inc"
+INCLUDE "macro.inc"
+INCLUDE "trap.inc"
+
 SECTION "ROM Bank $000", ROM0[$0]
 
 RST_00::
@@ -38,11 +45,11 @@ RST_10::
     jp code_00_00c9
 
     db $00
-KissCartridgeCode:
+KissCartridgeCode::
     db $fe    ; CART_MINIGAME
-KissIndexBank:
+KissIndexBank::
     db $03    ; CRAM block of GBKiss file index
-KissIndexAddr:
+KissIndexAddr::
     dw $bf00  ; CRAM address of GBKiss file index
 
 RST_18::
@@ -111,8 +118,8 @@ TimerOverflowInterrupt::
     jp $c000
 
 
-Call_000_0053:
-Jump_000_0053:
+Call_000_0053::
+Jump_000_0053::
     jp Jump_000_021c
 
 
@@ -713,7 +720,7 @@ Jump_000_0300:
     jp Jump_000_03f8
 
 
-Jump_000_0303:
+Jump_000_0303::
     jp Jump_000_0402
 
 

@@ -3,6 +3,12 @@
 ; mgbdis v2.0 - Game Boy ROM disassembler by Matt Currie and contributors.
 ; https://github.com/mattcurrie/mgbdis
 
+INCLUDE "charmap.inc"
+INCLUDE "common.inc"
+INCLUDE "hardware.inc"
+INCLUDE "macro.inc"
+INCLUDE "trap.inc"
+
 DEF SUFFIX EQUS ""
 FOR _BANK, 4, 6
 IF _BANK == 4
@@ -13,24 +19,24 @@ ENDC
 
 SECTION "ROM Bank $00{_BANK}", ROMX[$4000], BANK[_BANK]
 
-AudioTraps{SUFFIX}:
-.stop
+AudioTraps{SUFFIX}::
+.stop::
     jp TrapAudioStop       ; from trap $11
-.unknown
+.unknown::
     jp TrapAudioUnknown    ; from trap $12
-.playMusic
+.playMusic::
     jp TrapAudioPlayMusic  ; from trap $13
-.playSound
+.playSound::
     jp TrapAudioPlaySound  ; from trap $14
-.silence
+.silence::
     jp TrapAudioSilence    ; from trap $15
-.getMusic
+.getMusic::
     jp TrapAudioGetMusic   ; from trap $16
-.getSound
+.getSound::
     jp TrapAudioGetSound   ; from trap $17
-.setVolume
+.setVolume::
     jp TrapAudioSetVolume  ; from trap $18
-.getCount
+.getCount::
     jp TrapAudioGetCount   ; from trap $19
 
 

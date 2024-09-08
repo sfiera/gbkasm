@@ -6,14 +6,17 @@ PNGV = $(wildcard src/gfx/*/*.v.png)
 GFX = $(PNGH:%.h.png=%) $(PNGV:%.v.png=%)
 HZ = $(FRAG_ASM:%.asm=%.hz)
 
+GB_OBJ = $(GB_ASM:%.asm=%.o)
+GBF_OBJ = $(GBF_ASM:%.asm=%.o)
+FRAG_OBJ = $(FRAG_ASM:%.asm=%.o)
 ASM = $(GB_ASM) $(GBF_ASM) $(FRAG_ASM)
-OBJ = $(ASM:%.asm=%.o)
+OBJ = $(GB_OBJ) $(GBF_OBJ) $(FRAG_OBJ)
 DEP = $(ASM:%.asm=%.d)
 SYM = $(ASM:%.asm=%.sym)
 MAP = $(ASM:%.asm=%.map)
 FRAG = $(FRAG_ASM:%.asm=%.frag)
 GBF = $(GBF_ASM:src/file/%.asm=%.gbf)
-GB = $(GB_ASM:src/%.asm=%.gb)
+GB = gbkiss.gb
 
 RGBASM  ?= rgbasm
 RGBLINK ?= rgblink
@@ -34,11 +37,11 @@ all: compare
 $(OBJ): %.o: %.asm | $(GFX)
 	$(RGBASM) $(RGBASMFLAGS) -M $*.d -o $@ $<
 
-%.gb: src/%.o
+$(GB): %.gb: $(GB_OBJ)
 ifeq ($(DEBUG),1)
-	$(RGBLINK) -n $*.sym -m $*.map -o $@ $<
+	$(RGBLINK) -n $*.sym -m $*.map -o $@ $+
 else
-	$(RGBLINK) -o $@ $<
+	$(RGBLINK) -o $@ $+
 endif
 	$(RGBFIX) -v -p 255 $@
 
@@ -85,5 +88,5 @@ compare: $(GB) $(GBF)
 	shasum -c roms.sha1
 
 -include $(DEP)
-src/gbkiss.o: | $(GBF) $(HZ)
-$(GBF_ASM:%.asm=%.o): %.o: | $(HZ)
+$(GB_OBJ): %.o: | $(GBF) $(HZ)
+$(GBF_OBJ): %.o: | $(HZ)

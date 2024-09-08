@@ -42,7 +42,7 @@ SECTION "ROM Bank $006", ROMX[$4000], BANK[$6]
 FileRandomSelection::
 .count
     db $03
-.files
+.files::
     dw FileMogutteNanbo
     dw FileDrive
     dw FileSameGame
