@@ -181,7 +181,7 @@ call_030d:
     ld hl, $ce00
     ld de, $c700
     ld c, $10
-    trap IROpen
+    trap IRRead
     jr c, .jr_037a
 
     ldx hl, data_0295
@@ -195,7 +195,7 @@ call_030d:
     ld hl, $0014
     ld de, $c700
     ld c, $04
-    trap IROpen
+    trap IRRead
     jr c, .jr_037a
 
     ld hl, $0014
@@ -211,7 +211,7 @@ call_030d:
     ld de, $ce00
     ld hl, $c700
     ld c, $01
-    trap IRSend
+    trap IRWrite
     jr c, .jr_037a
 
     trap IRClose
@@ -227,7 +227,7 @@ call_030d:
     ld de, $ce00
     ld hl, $c700
     ld c, $01
-    trap IRSend
+    trap IRWrite
     jr c, .jr_037a
 
     trap IRClose

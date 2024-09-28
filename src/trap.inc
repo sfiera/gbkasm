@@ -36,8 +36,8 @@ DEF FileSearch        EQU $6b
 DEF FileGetHeader     EQU $71
 DEF IRListen          EQU $72
 DEF IRClose           EQU $73
-DEF IROpen            EQU $7c
-DEF IRSend            EQU $7f
+DEF IRRead            EQU $7c
+DEF IRWrite           EQU $7f
 
 DEF MathXor16         EQU $80  ; hl ^= de
 DEF MathOr16          EQU $81  ; hl |= de

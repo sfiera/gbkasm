@@ -1087,7 +1087,7 @@ call_a8bb:
     ld de, $c600
     push de
     ld c, $02
-    trap IROpen
+    trap IRRead
     pop hl
     jr c, .jr_a8d6
 
@@ -1104,13 +1104,13 @@ call_a8bb:
     ld c, $a0
     push hl
     push de
-    trap IROpen
+    trap IRRead
     pop de
     pop hl
     jr c, .jr_a8d6
 
     ld c, $a0
-    trap IRSend
+    trap IRWrite
     jr c, .jr_a8d6
 
     trap IRClose

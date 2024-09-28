@@ -848,7 +848,7 @@ call_07cc:
     ld de, $c600
     push de
     ld c, $02
-    trap IROpen
+    trap IRRead
     pop hl
     jr c, .jr_07e7
 
@@ -865,13 +865,13 @@ call_07cc:
     ld c, $0e
     push hl
     push de
-    trap IROpen
+    trap IRRead
     pop de
     pop hl
     jr c, .jr_07e7
 
     ld c, $0e
-    trap IRSend
+    trap IRWrite
     jr c, .jr_07e7
 
     trap IRClose

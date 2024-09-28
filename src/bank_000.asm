@@ -2334,7 +2334,7 @@ strGBKissMenu:
 
 Call_000_0cff:
     trap $c3
-    trap IROpen
+    trap IRRead
     jr jr_000_0d3b
 
 Call_000_0d05:
@@ -2343,7 +2343,7 @@ Call_000_0d05:
     ld hl, $c800
     ld c, $01
     trap $c3
-    trap IRSend
+    trap IRWrite
     jr jr_000_0d3b
 
 Call_000_0d16:

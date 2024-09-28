@@ -84,10 +84,10 @@ traps1::
     dw trap_79_6c67         ; $79
     dw trap_7a_6cc3         ; $7a
     dw trap_7b_6c8e         ; $7b
-    dw TrapIROpen           ; $7c
+    dw TrapIRRead           ; $7c
     dw trap_7d_6cd8         ; $7d
     dw trap_7e_6ca5         ; $7e
-    dw TrapIRSend           ; $7f
+    dw TrapIRWrite          ; $7f
 
 j01_4100::
     ld sp, $e000
@@ -494,7 +494,7 @@ Call_001_435f:
 
 Call_001_4370:
     trap $c3
-    trap IROpen
+    trap IRRead
     jr jr_001_43ac
 
 Call_001_4376:
@@ -504,7 +504,7 @@ Call_001_4376:
     ld e, l
     ld c, $01
     trap $c3
-    trap IRSend
+    trap IRWrite
     jr jr_001_43ac
 
 Call_001_4384:
@@ -2990,7 +2990,7 @@ Jump_001_6071:
     ld e, l
     ld d, h
     ld c, $99
-    trap IRSend
+    trap IRWrite
     jr c, jr_001_60b5
 
     trap IRClose
@@ -3088,7 +3088,7 @@ Call_001_611d:
     ld hl, $c6d5
     ld de, $c400
     ld bc, $000a
-    trap IROpen
+    trap IRRead
     jr c, jr_001_6146
 
     ld hl, $c400
@@ -3103,7 +3103,7 @@ Call_001_611d:
     ld [hl], a
     ld de, $c6d5
     ld bc, $000a
-    trap IRSend
+    trap IRWrite
     ret nc
 
 jr_001_6146:
@@ -4578,7 +4578,7 @@ trap_7b_6c8e::
     ld a, $09
     jr jr_001_6c94
 
-TrapIROpen::
+TrapIRRead::
     ld a, $08
 
 jr_001_6c94:
@@ -4597,7 +4597,7 @@ trap_7e_6ca5::
     ld a, $0c
     jr jr_001_6cab
 
-TrapIRSend::
+TrapIRWrite:
     ld a, $0b
 
 jr_001_6cab:

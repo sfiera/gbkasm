@@ -180,7 +180,7 @@ Transmit:
     ld hl, var_ccc1
     ld de, $c600
     ld c, $02
-    trap IROpen
+    trap IRRead
     jr c, .cancel
 
     ld hl, $c600
@@ -195,7 +195,7 @@ Transmit:
     ld hl, transmit_start
     ld de, transmit_start
     ld c, transmit_end - transmit_start
-    trap IRSend
+    trap IRWrite
     jr c, .cancel
 
     trap IRClose
