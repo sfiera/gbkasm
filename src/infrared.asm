@@ -13,7 +13,6 @@ INCLUDE "trap.inc"
 SECTION "ROM Infrared", ROMX[$68a9], BANK[$1]
 
 Call_001_68a9:
-Jump_001_68a9:
     ldh [hRAMBank], a
     ld [rRAMBank], a
     ret
@@ -21,14 +20,14 @@ Jump_001_68a9:
 
 Call_001_68af:
     dec c
-    jr z, jr_001_68b6
+    jr z, .jr_001_68b6
 
     or a
     bit 0, [hl]
     ret
 
 
-jr_001_68b6:
+.jr_001_68b6
     scf
     ret
 
@@ -684,7 +683,7 @@ IRCmd09:
     pop hl
     call SendIRRange
     pop af
-    jp Jump_001_68a9
+    jp Call_001_68a9
 
 
 IRCmdWrite:
@@ -735,7 +734,7 @@ IRCmd0C:
 
 .jr_001_6c01
     pop af
-    jp Jump_001_68a9
+    jp Call_001_68a9
 
 
 Call_001_6c05:
@@ -879,12 +878,12 @@ jr_001_6cab:
     jr c, jr_001_6c7b
 
     add b
-    jr nz, jr_001_6cbe
+    jr nz, .jr_001_6cbe
 
     xor a
     jr jr_001_6c7b
 
-jr_001_6cbe:
+.jr_001_6cbe
     call ReportIRFailure
 
 jr_001_6cc1:
