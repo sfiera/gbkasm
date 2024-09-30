@@ -32,7 +32,7 @@ Call_001_68af:
     ret
 
 
-SendIRWord1:
+SendIRByte1:
     ld c, 8
 
 .nextBit
@@ -41,6 +41,7 @@ SendIRWord1:
 
     ld b, 10
     jr .pulse
+
 
 .bit1
     ld b, [hl]
@@ -60,7 +61,7 @@ SendIRWord1:
     ret
 
 
-RecvIRWord1:
+RecvIRByte1:
     ld b, $00
 
 .nextBit
@@ -73,6 +74,7 @@ RecvIRWord1:
     cp 15
     rl d
     jr .nextBit
+
 
 .stop
     ldh a, [rP1]
@@ -98,7 +100,7 @@ RecvIRWord1:
     ret
 
 
-SendIRWord2:
+SendIRByte2:
     push hl
     push de
     push bc
@@ -136,6 +138,7 @@ SendIRWord2:
     ld b, 10
     jr .pulse
 
+
 .bit1
     ld b, [hl]
     ld b, 18
@@ -156,7 +159,7 @@ SendIRWord2:
     ret
 
 
-RecvIRWord2:
+RecvIRByte2:
     push hl
     push de
     push bc
@@ -297,8 +300,8 @@ SendIRHandshake:
     jr z, ReportIRFailure
 
     ld a, $aa
-    call SendIRWord1
-    call RecvIRWord1
+    call SendIRByte1
+    call RecvIRByte1
     cp $55
     jr nz, .retry
 
@@ -307,8 +310,8 @@ SendIRHandshake:
     jr z, ReportIRFailure
 
     ld a, $c3
-    call SendIRWord1
-    call RecvIRWord1
+    call SendIRByte1
+    call RecvIRByte1
     cp $3c
     jr nz, .retry
 
@@ -326,22 +329,22 @@ ReceiveIRHandshake:
     bit 1, a
     jr z, ReportIRFailure
 
-    call RecvIRWord1
+    call RecvIRByte1
     cp $aa
     jr nz, .retry
 
     ld a, $55
-    call SendIRWord1
+    call SendIRByte1
     ldh a, [rP1]
     bit 1, a
     jr z, ReportIRFailure
 
-    call RecvIRWord1
+    call RecvIRByte1
     cp $c3
     jr nz, .retry
 
     ld a, $3c
-    call SendIRWord1
+    call SendIRByte1
     xor a
     ret
 
@@ -355,9 +358,9 @@ SendIRRegisters:
     jr c, ReportIRFailureLong
 
     ld a, IR_ID0
-    call SendIRWord2
+    call SendIRByte2
     ld a, IR_ID1
-    call SendIRWord2
+    call SendIRByte2
     ld hl, $c0f8
     ld c, $08
     jp SendIRRange
@@ -368,11 +371,11 @@ RecvIRRegisters:
     call ReceiveIRHandshake
     jr c, ReportIRFailureLong
 
-    call RecvIRWord2
+    call RecvIRByte2
     cp IR_ID0
     jr nz, .retry
 
-    call RecvIRWord2
+    call RecvIRByte2
     cp IR_ID1
     jr nz, .retry
 
@@ -384,21 +387,21 @@ RecvIRRegisters:
 SendIRRange:
     ld b, $00
 
-.nextWord
+.nextByte
     ld a, b
     add [hl]
     ld b, a
     ld a, [hl+]
-    call SendIRWord2
+    call SendIRByte2
     jr c, .jr_001_6a57
 
     dec c
-    jr nz, .nextWord
+    jr nz, .nextByte
 
     ld a, b
     cpl
     inc a
-    call SendIRWord2
+    call SendIRByte2
 
 .jr_001_6a57
     ret
@@ -408,7 +411,7 @@ RecvIRRange:
     ld b, $00
 
 .jr_001_6a5a
-    call RecvIRWord2
+    call RecvIRByte2
     jr c, ReportIRFailureLong
 
     ld [hl+], a
@@ -417,7 +420,7 @@ RecvIRRange:
     dec c
     jr nz, .jr_001_6a5a
 
-    call RecvIRWord2
+    call RecvIRByte2
     add b
     or a
     jr nz, ReportIRFailureLong
@@ -450,6 +453,7 @@ DisableIRMode:
     xor a
     jr EnableIRMode.set
 
+
 EnableIRMode:
     push af
     ld a, kIRModeOn
@@ -477,6 +481,7 @@ TrapIRListen::
 
     call RunIRCommand
     jr .next
+
 
 .fail
     call FinishIR
@@ -553,7 +558,7 @@ IRCmdFileSearch:
     ; fall through
 
 
-Call_001_6b10:
+SendIRFileData:
     call EnableIRMode
     call IRRespondRegisters
     ret c
@@ -564,19 +569,19 @@ Call_001_6b10:
 
 
 IRCmdFileWrite:
-    call Call_001_6b88
+    call RecvIRFileData
     ret c
 
     trap FileWrite
-    jr Call_001_6b10
+    jr SendIRFileData
 
 
 IRCmd05:
-    call Call_001_6b88
+    call RecvIRFileData
     ret c
 
     trap $e8
-    jr Call_001_6b10
+    jr SendIRFileData
 
 
 IRCmd04:
@@ -629,7 +634,7 @@ IRCmd0A:
 
 
 IRCmd06:
-    call Call_001_6b88
+    call RecvIRFileData
     ret c
 
     trap $ef
@@ -637,7 +642,7 @@ IRCmd06:
     jp IRRespondRegisters
 
 
-Call_001_6b88:
+RecvIRFileData:
     ld hl, $c500
     ld c, $00
     call RecvIRRange
@@ -699,7 +704,7 @@ Call_001_6bd2:
     jr c, .done
 
     sub b
-    call SendIRWord2
+    call SendIRByte2
 
 .done
     ret
@@ -760,19 +765,19 @@ TrapIRClose::
     ld a, $00
     ld [$c0f9], a
     call SendIRRegisters
-    jr jr_001_6c7b
+    jr FinishIRaf
 
 
 trap_74_6c28::
     call Call_001_6c81
-    jr c, jr_001_6c7b
+    jr c, FinishIRaf
 
-    jr jr_001_6c78
+    jr FinishIRRestoreRegisters
 
 
 TrapIRFileSearch::
     ld a, $02
-    call Call_001_6ceb
+    call SendIRCommand
     ld l, e
     ld h, d
     jr jr_001_6c43
@@ -787,47 +792,59 @@ TrapIRFileWrite::
     ld a, $03
 
 jr_001_6c3e:
-    call Call_001_6ceb
+    call SendIRCommand
     ld c, $00
+
+    ; fall through
+
 
 jr_001_6c43:
     call SendIRRange
-    jr c, jr_001_6c7b
+    jr c, FinishIRaf
 
     call RestoreRegisters
     push hl
     call Call_001_6c81
     pop hl
-    jr c, jr_001_6c7b
+    jr c, FinishIRaf
 
     ld c, $00
     call RecvIRRange
-    jr c, jr_001_6c7b
+    jr c, FinishIRaf
 
-    jr jr_001_6c78
+    jr FinishIRRestoreRegisters
+
 
 TrapIR04::
     ld a, $04
-    call Call_001_6ceb
+    call SendIRCommand
     call Call_001_6c81
-    jr c, jr_001_6c7b
+    jr c, FinishIRaf
 
-    jr jr_001_6c78
+    jr FinishIRRestoreRegisters
+
 
 TrapIR06::
     ld a, $06
-    call Call_001_6ceb
+    call SendIRCommand
     ld c, $00
     call SendIRRange
-    jr c, jr_001_6c7b
+    jr c, FinishIRaf
 
     call Call_001_6c81
-    jr c, jr_001_6c7b
+    jr c, FinishIRaf
 
-jr_001_6c78:
+    ; fall through
+
+
+FinishIRRestoreRegisters:
     call RestoreRegisters
 
-jr_001_6c7b:
+    ; fall through
+
+
+; Call FinishIR but preserve value of af registers.
+FinishIRaf:
     push af
     call FinishIR
     pop af
@@ -836,7 +853,7 @@ jr_001_6c7b:
 
 Call_001_6c81:
     call ReceiveIRHandshake
-    jr c, jr_001_6c7b
+    jr c, FinishIRaf
 
     ld hl, $c0f8
     ld c, $08
@@ -845,79 +862,89 @@ Call_001_6c81:
 
 TrapIR09::
     ld a, $09
-    jr jr_001_6c94
+    jr TrapIRRead.jr_001_6c94
+
 
 TrapIRRead::
     ld a, $08
 
-jr_001_6c94:
-    call Call_001_6ceb
+.jr_001_6c94
+    call SendIRCommand
     push de
     push bc
     call ReceiveIRHandshake
     pop bc
     pop hl
-    jr c, jr_001_6c7b
+    jr c, FinishIRaf
 
     call RecvIRRange
-    jr jr_001_6c7b
+    jr FinishIRaf
+
 
 TrapIR0C::
     ld a, $0c
-    jr jr_001_6cab
+    jr TrapIRWrite.jr_001_6cab
+
 
 TrapIRWrite::
     ld a, $0b
 
-jr_001_6cab:
-    call Call_001_6ceb
+.jr_001_6cab
+    call SendIRCommand
     call SendIRRange
-    jr c, jr_001_6c7b
+    jr c, FinishIRaf
 
-    call RecvIRWord2
-    jr c, jr_001_6c7b
+    call RecvIRByte2
+    jr c, FinishIRaf
 
     add b
     jr nz, .jr_001_6cbe
 
     xor a
-    jr jr_001_6c7b
+    jr FinishIRaf
+
 
 .jr_001_6cbe
     call ReportIRFailure
 
-jr_001_6cc1:
-    jr jr_001_6c7b
+    ; fall though
+
+
+FinishIRafLong:
+    jr FinishIRaf
+
 
 TrapIR07::
     ld a, $07
-    call Call_001_6ceb
+    call SendIRCommand
     push de
     push bc
     call Call_001_6c81
     pop bc
     pop hl
-    jr c, jr_001_6c7b
+    jr c, FinishIRaf
 
     call RecvIRRange
-    jr c, jr_001_6c7b
+    jr c, FinishIRaf
 
-    jr jr_001_6c78
+    jr FinishIRRestoreRegisters
+
 
 TrapIR0A::
     ld a, $0a
-    call Call_001_6ceb
+    call SendIRCommand
     ld l, e
     ld h, d
     call SendIRRange
-    jr c, jr_001_6c7b
+    jr c, FinishIRaf
 
     call Call_001_6c81
-    jr c, jr_001_6c7b
+    jr c, FinishIRaf
 
-    jr jr_001_6c78
+    jr FinishIRRestoreRegisters
 
-Call_001_6ceb:
+
+SendIRCommand:
     push hl
     push de
     push bc
@@ -931,8 +958,10 @@ Call_001_6ceb:
 
     inc sp
     inc sp
-    jr jr_001_6cc1
+    jr FinishIRafLong
 
+
+; Copy registers (falhedcb) into the 8 bytes at $c0f8.
 SaveRegisters:
     push de
     push hl
@@ -959,6 +988,7 @@ SaveRegisters:
     ret
 
 
+; Copy the 8 bytes at $c0f8 into registers (falhedcb).
 RestoreRegisters:
     ld hl, $c0f8
     ld e, [hl]
