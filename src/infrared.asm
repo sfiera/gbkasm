@@ -111,7 +111,7 @@ SendIRByte2:
 
 .jr_001_6907
     call Call_001_68af
-    jr c, jr_001_6987
+    jr c, DisableIRAndReportFailure
 
     jr z, .jr_001_6907
 
@@ -124,7 +124,7 @@ SendIRByte2:
 
 .jr_001_6916
     call Call_001_68af
-    jr c, jr_001_6987
+    jr c, DisableIRAndReportFailure
 
     jr nz, .jr_001_6916
 
@@ -169,7 +169,7 @@ RecvIRByte2:
 
 .jr_001_6946
     call Call_001_68af
-    jr c, jr_001_6987
+    jr c, DisableIRAndReportFailure
 
     jr z, .jr_001_6946
 
@@ -178,7 +178,7 @@ RecvIRByte2:
 
 .jr_001_6951
     call Call_001_68af
-    jr c, jr_001_6987
+    jr c, DisableIRAndReportFailure
 
     jr nz, .jr_001_6951
 
@@ -192,7 +192,7 @@ RecvIRByte2:
 
 .jr_001_6962:
     inc b
-    jr z, jr_001_6987
+    jr z, DisableIRAndReportFailure
 
     bit 0, [hl]
     jr z, .jr_001_6962
@@ -201,7 +201,7 @@ RecvIRByte2:
 
 .jr_001_696b
     call TimeIR
-    jr c, jr_001_6987
+    jr c, DisableIRAndReportFailure
 
     cp 15
     rl d
@@ -212,7 +212,7 @@ RecvIRByte2:
 
 .jr_001_6979
     call Call_001_68af
-    jr c, jr_001_6987
+    jr c, DisableIRAndReportFailure
 
     jr nz, .jr_001_6979
 
@@ -225,7 +225,7 @@ RecvIRByte2:
     ret
 
 
-jr_001_6987:
+DisableIRAndReportFailure:
     ld [hl], $00
     pop bc
     pop de
@@ -504,19 +504,19 @@ RunIRCommand:
 
 
 IRCommands:
-    dw IRCmdClose
-    dw IRCmd01
-    dw IRCmdFileSearch
-    dw IRCmdFileWrite
-    dw IRCmd04
-    dw IRCmd05
-    dw IRCmd06
-    dw IRCmd07
-    dw IRCmdRead
-    dw IRCmd09
-    dw IRCmd0A
-    dw IRCmdWrite
-    dw IRCmd0C
+    dw IRCmdClose       ;
+    dw IRCmd01          ; trap $e6
+    dw IRCmdFileSearch  ;
+    dw IRCmdFileWrite   ;
+    dw IRCmd04          ; trap $ea
+    dw IRCmdFileNext    ;
+    dw IRCmdFileDelete  ;
+    dw IRCmd07          ; trap $eb
+    dw IRCmdRead        ; WRAM; ROM?
+    dw IRCmd09          ; SRAM read?
+    dw IRCmd0A          ; trap $ec
+    dw IRCmdWrite       ; WRAM; ROM?
+    dw IRCmd0C          ; SRAM write?
 .end
 
 IRRespondRegisters:
@@ -576,11 +576,11 @@ IRCmdFileWrite:
     jr SendIRFileData
 
 
-IRCmd05:
+IRCmdFileNext:
     call RecvIRFileData
     ret c
 
-    trap $e8
+    trap FileNext
     jr SendIRFileData
 
 
@@ -633,11 +633,11 @@ IRCmd0A:
     jp IRRespondRegisters
 
 
-IRCmd06:
+IRCmdFileDelete:
     call RecvIRFileData
     ret c
 
-    trap $ef
+    trap FileDelete
     call EnableIRMode
     jp IRRespondRegisters
 
@@ -780,25 +780,25 @@ TrapIRFileSearch::
     call SendIRCommand
     ld l, e
     ld h, d
-    jr jr_001_6c43
+    jr TrapIRFileWrite.sendRange
 
 
-TrapIR05::
+TrapIRFileNext::
     ld a, $05
-    jr jr_001_6c3e
+    jr TrapIRFileWrite.sendCmd
 
 
 TrapIRFileWrite::
     ld a, $03
 
-jr_001_6c3e:
+.sendCmd
     call SendIRCommand
     ld c, $00
 
     ; fall through
 
 
-jr_001_6c43:
+.sendRange
     call SendIRRange
     jr c, FinishIRaf
 
@@ -824,7 +824,7 @@ TrapIR04::
     jr FinishIRRestoreRegisters
 
 
-TrapIR06::
+TrapIRFileDelete::
     ld a, $06
     call SendIRCommand
     ld c, $00

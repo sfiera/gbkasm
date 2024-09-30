@@ -824,7 +824,7 @@ jp_0608:
     ret nz
 
     ld hl, $c600
-    trap $ef
+    trap FileDelete
     ld a, $78
     trap $dc
     xor a

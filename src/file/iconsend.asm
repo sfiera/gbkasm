@@ -76,7 +76,7 @@ Main::
     trap FileSearch
     jr c, .readyToWrite
 
-    trap $ef
+    trap FileDelete
     jr .searchFile
 
 .readyToWrite

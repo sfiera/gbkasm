@@ -30,10 +30,10 @@ Main::
 
 jr1:
     push hl
-    trap $e8
+    trap FileNext
     jr c, jr2
 
-    trap $ef
+    trap FileDelete
     pop hl
     jr jr1
 

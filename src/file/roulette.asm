@@ -1759,7 +1759,7 @@ jr_000_10c8::
     ld [hl], e
     inc hl
     ld [hl], d
-    wtrap $ef
+    wtrap FileDelete
     ld hl, $0000
     push hl
     ld hl, $c605

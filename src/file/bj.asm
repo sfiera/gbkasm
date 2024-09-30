@@ -1205,7 +1205,7 @@ jr_000_0808::
     ldx hl, data_0baa
     trap DrawString
     ld hl, $c600
-    trap $ef
+    trap FileDelete
     ld a, $78
     trap $dc
     ld a, $78

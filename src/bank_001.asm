@@ -80,8 +80,8 @@ traps1::
     dw TrapIRFileSearch     ; $75
     dw TrapIRFileWrite      ; $76
     dw TrapIR04             ; $77
-    dw TrapIR05             ; $78
-    dw TrapIR06             ; $79
+    dw TrapIRFileNext       ; $78
+    dw TrapIRFileDelete     ; $79
     dw TrapIR07             ; $7a
     dw TrapIR09             ; $7b
     dw TrapIRRead           ; $7c
@@ -194,7 +194,7 @@ jr_001_419b:
 
 Call_001_41a3:
     ld hl, $c500
-    trap $ef
+    trap FileDelete
     ret
 
 
@@ -278,7 +278,7 @@ jr_001_4212:
 
 jr_001_421d:
     ld hl, $c700
-    trap $ef
+    trap FileDelete
     jr jr_001_422c
 
 jr_001_4224:
@@ -2947,7 +2947,7 @@ jr_001_6037:
     jr c, jr_001_606b
 
     ld hl, $c500
-    trap $ef
+    trap FileDelete
     jr jr_001_6025
 
 jr_001_6059:
@@ -4767,7 +4767,7 @@ trap_6c_714d::
 
 jr_001_7158:
     dec hl
-    trap $e8
+    trap FileNext
     ret nc
     xor a
     ld [hl+], a

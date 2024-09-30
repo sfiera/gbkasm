@@ -156,7 +156,7 @@ SaveIcon:
     jr c, DoMenu
 
     ld hl, VarFileContent
-    trap $ef
+    trap FileDelete
     jr .tryAgain
 
 .uniqueFileName

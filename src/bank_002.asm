@@ -117,14 +117,14 @@ traps2::
     dw trap_e5_45ca         ; trap $e5
     dw trap_e6_45da         ; trap $e6
     dw trap_e7_47b7         ; trap $e7
-    dw trap_e8_49de         ; trap $e8
+    dw TrapFileNext         ; trap $e8
     dw TrapFileWrite        ; trap $e9
     dw trap_ea_4b98         ; trap $ea
     dw trap_eb_4c9a         ; trap $eb
     dw trap_ec_4ca9         ; trap $ec
     dw trap_ed_4cf1         ; trap $ed
     dw trap_none_2          ; trap $ee
-    dw trap_ef_48ec         ; trap $ef
+    dw TrapFileDelete       ; trap $ef
     dw trap_f0_4bed         ; trap $f0
     dw trap_f1_4926         ; trap $f1
     dw trap_f2_4881         ; trap $f2
@@ -1568,7 +1568,7 @@ Call_002_48dc:
     ret
 
 
-trap_ef_48ec::
+TrapFileDelete::
     call Call_002_48dc
     ret c
 
@@ -1773,7 +1773,7 @@ jr_002_49dc:
     ret
 
 
-trap_e8_49de::
+TrapFileNext::
     ld c, l
     ld b, h
     ld a, [hl+]
@@ -2134,7 +2134,7 @@ jr_002_4b6c:
     jr nz, jr_002_4b6c
 
     pop hl
-    call trap_ef_48ec
+    call TrapFileDelete
     pop hl
     jp Jump_002_4447
 

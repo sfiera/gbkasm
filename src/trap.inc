@@ -40,7 +40,7 @@ DEF IRClose           EQU $73
 DEF IRFileSearch      EQU $75
 DEF IRFileWrite       EQU $76
 DEF IR04              EQU $77
-DEF IR05              EQU $78
+DEF IRFileNext        EQU $78
 DEF IR06              EQU $79
 DEF IR07              EQU $7a
 DEF IR09              EQU $7b
@@ -85,6 +85,8 @@ DEF InputButtons      EQU $d8
 
 DEF KissClearAll      EQU $e0
 DEF FileRead          EQU $e4
+DEF FileNext          EQU $e8
 DEF FileWrite         EQU $e9
+DEF FileDelete        EQU $ef
 
 DEF AddrGBToCRAM      EQU $fb

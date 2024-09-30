@@ -856,7 +856,7 @@ AddFile:
 
     push bc
     push de
-    trap $ef
+    trap FileDelete
     pop de
     pop bc
     ld hl, $c500

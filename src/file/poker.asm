@@ -2553,7 +2553,7 @@ jr_000_12f4::
     jr jr_000_12f4
 
     ld hl, $c600
-    trap $ef
+    trap FileDelete
     xor a
     trap AudioPlayMusic
     ld a, $0c
