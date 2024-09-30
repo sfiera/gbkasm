@@ -77,16 +77,16 @@ traps1::
     dw TrapIRListen         ; $72
     dw TrapIRClose          ; $73
     dw trap_74_6c28         ; $74
-    dw trap_75_6c2f         ; $75
-    dw trap_76_6c3c         ; $76
-    dw trap_77_6c5b         ; $77
-    dw trap_78_6c38         ; $78
-    dw trap_79_6c67         ; $79
-    dw trap_7a_6cc3         ; $7a
-    dw trap_7b_6c8e         ; $7b
+    dw TrapIRFileSearch     ; $75
+    dw TrapIRFileWrite      ; $76
+    dw TrapIR04             ; $77
+    dw TrapIR05             ; $78
+    dw TrapIR06             ; $79
+    dw TrapIR07             ; $7a
+    dw TrapIR09             ; $7b
     dw TrapIRRead           ; $7c
-    dw trap_7d_6cd8         ; $7d
-    dw trap_7e_6ca5         ; $7e
+    dw TrapIR0A             ; $7d
+    dw TrapIR0C             ; $7e
     dw TrapIRWrite          ; $7f
 
 j01_4100::
@@ -515,7 +515,7 @@ Call_001_4384:
 Call_001_438a:
     ld hl, $c700
     trap $c3
-    trap $79
+    trap IR06
     jr jr_001_43ac
 
 Call_001_4393:
@@ -523,22 +523,22 @@ Call_001_4393:
 
 Jump_001_4396:
     trap $c3
-    trap $7d
+    trap IR0A
     jr jr_001_43ac
 
 Call_001_439c:
     trap $c3
-    trap $77
+    trap IR04
     jr jr_001_43ac
 
 Call_001_43a2:
     trap $c3
-    trap $76
+    trap IRFileWrite
     jr jr_001_43ac
 
 Call_001_43a8:
     trap $c3
-    trap $75
+    trap IRFileSearch
 
 jr_001_43ac:
     push af
@@ -3802,7 +3802,7 @@ SendIRWord1:
     ret
 
 
-RecvIRWord:
+RecvIRWord1:
     ld b, $00
 
 .nextBit
@@ -3898,7 +3898,7 @@ SendIRWord2:
     ret
 
 
-Call_001_693c:
+RecvIRWord2:
     push hl
     push de
     push bc
@@ -3906,20 +3906,20 @@ Call_001_693c:
     ld c, $00
     ld [hl], $00
 
-jr_001_6946:
+.jr_001_6946
     call Call_001_68af
     jr c, jr_001_6987
 
-    jr z, jr_001_6946
+    jr z, .jr_001_6946
 
     ld [hl], $01
     ld c, $00
 
-jr_001_6951:
+.jr_001_6951
     call Call_001_68af
     jr c, jr_001_6987
 
-    jr nz, jr_001_6951
+    jr nz, .jr_001_6951
 
     push bc
     pop bc
@@ -3929,31 +3929,31 @@ jr_001_6951:
     ld c, $08
     ld b, $00
 
-jr_001_6962:
+.jr_001_6962:
     inc b
     jr z, jr_001_6987
 
     bit 0, [hl]
-    jr z, jr_001_6962
+    jr z, .jr_001_6962
 
     ld c, $08
 
-jr_001_696b:
+.jr_001_696b
     call TimeIR
     jr c, jr_001_6987
 
     cp 15
     rl d
     dec c
-    jr nz, jr_001_696b
+    jr nz, .jr_001_696b
 
     ld c, $00
 
-jr_001_6979:
+.jr_001_6979
     call Call_001_68af
     jr c, jr_001_6987
 
-    jr nz, jr_001_6979
+    jr nz, .jr_001_6979
 
     ld a, d
     cpl
@@ -4040,7 +4040,7 @@ SendIRHandshake:
 
     ld a, $aa
     call SendIRWord1
-    call RecvIRWord
+    call RecvIRWord1
     cp $55
     jr nz, .retry
 
@@ -4050,7 +4050,7 @@ SendIRHandshake:
 
     ld a, $c3
     call SendIRWord1
-    call RecvIRWord
+    call RecvIRWord1
     cp $3c
     jr nz, .retry
 
@@ -4068,7 +4068,7 @@ ReceiveIRHandshake:
     bit 1, a
     jr z, ReportIRFailure
 
-    call RecvIRWord
+    call RecvIRWord1
     cp $aa
     jr nz, .retry
 
@@ -4078,7 +4078,7 @@ ReceiveIRHandshake:
     bit 1, a
     jr z, ReportIRFailure
 
-    call RecvIRWord
+    call RecvIRWord1
     cp $c3
     jr nz, .retry
 
@@ -4092,7 +4092,7 @@ ReportIRFailureLong:
     jp ReportIRFailure
 
 
-SendIRCommand:
+SendIRRegisters:
     call SendIRHandshake
     jr c, ReportIRFailureLong
 
@@ -4102,32 +4102,31 @@ SendIRCommand:
     call SendIRWord2
     ld hl, $c0f8
     ld c, $08
-    jp Jump_001_6a43
+    jp SendIRRange
 
 
-RecvIRCommand:
+RecvIRRegisters:
 .retry
     call ReceiveIRHandshake
     jr c, ReportIRFailureLong
 
-    call Call_001_693c
+    call RecvIRWord2
     cp IR_ID0
     jr nz, .retry
 
-    call Call_001_693c
+    call RecvIRWord2
     cp IR_ID1
     jr nz, .retry
 
     ld hl, $c0f8
     ld c, $08
-    jp Call_001_6a58
+    jp RecvIRRange
 
 
-Call_001_6a43:
-Jump_001_6a43:
+SendIRRange:
     ld b, $00
 
-jr_001_6a45:
+.nextWord
     ld a, b
     add [hl]
     ld b, a
@@ -4136,7 +4135,7 @@ jr_001_6a45:
     jr c, .jr_001_6a57
 
     dec c
-    jr nz, jr_001_6a45
+    jr nz, .nextWord
 
     ld a, b
     cpl
@@ -4147,20 +4146,20 @@ jr_001_6a45:
     ret
 
 
-Call_001_6a58:
+RecvIRRange:
     ld b, $00
 
-jr_001_6a5a:
-    call Call_001_693c
+.jr_001_6a5a
+    call RecvIRWord2
     jr c, ReportIRFailureLong
 
     ld [hl+], a
     add b
     ld b, a
     dec c
-    jr nz, jr_001_6a5a
+    jr nz, .jr_001_6a5a
 
-    call Call_001_693c
+    call RecvIRWord2
     add b
     or a
     jr nz, ReportIRFailureLong
@@ -4207,7 +4206,7 @@ TrapIRListen::
     call BeginIR
 
 .next
-    call RecvIRCommand
+    call RecvIRRegisters
     jr c, .fail
 
     jr nz, .next
@@ -4242,33 +4241,32 @@ RunIRCommand:
 
 
 IRCommands:
-    dw IRCmd00
+    dw IRCmdClose
     dw IRCmd01
-    dw IRCmd02
-    dw IRCmd03
+    dw IRCmdFileSearch
+    dw IRCmdFileWrite
     dw IRCmd04
     dw IRCmd05
     dw IRCmd06
     dw IRCmd07
-    dw IRCmd08
+    dw IRCmdRead
     dw IRCmd09
     dw IRCmd0A
-    dw IRCmd0B
+    dw IRCmdWrite
     dw IRCmd0C
 .end
 
-Call_001_6ad8:
-Jump_001_6ad8:
-    call Call_001_6cff
+IRRespondRegisters:
+    call SaveRegisters
     call SendIRHandshake
     ret c
 
     ld hl, $c0f8
     ld c, $08
-    jp Jump_001_6a43
+    jp SendIRRange
 
 
-IRCmd00::
+IRCmdClose::
     call FinishIR
     pop hl
     or a
@@ -4279,17 +4277,17 @@ IRCmd01::
     ld hl, $0000
     trap $e6
     ld a, [KissCartridgeCode]
-    jp Jump_001_6ad8
+    jp IRRespondRegisters
 
 
-IRCmd02::
-    call Call_001_6d18
+IRCmdFileSearch::
+    call RestoreRegisters
     ld hl, $c400
-    call Call_001_6a58
+    call RecvIRRange
     ret c
 
     call DisableIRMode
-    call Call_001_6d18
+    call RestoreRegisters
     ld hl, $c500
     ld de, $c400
     trap FileSearch
@@ -4299,15 +4297,15 @@ IRCmd02::
 
 Call_001_6b10:
     call EnableIRMode
-    call Call_001_6ad8
+    call IRRespondRegisters
     ret c
 
     ld hl, $c500
     ld c, $00
-    jp Jump_001_6a43
+    jp SendIRRange
 
 
-IRCmd03::
+IRCmdFileWrite::
     call Call_001_6b88
     ret c
 
@@ -4325,11 +4323,11 @@ IRCmd05::
 
 IRCmd04::
     call DisableIRMode
-    call Call_001_6d18
+    call RestoreRegisters
     ld hl, $c500
     trap $ea
     call EnableIRMode
-    jp Jump_001_6ad8
+    jp IRRespondRegisters
 
 
 IRCmd07::
@@ -4337,16 +4335,16 @@ IRCmd07::
     push bc
     trap $eb
     call EnableIRMode
-    call Call_001_6ad8
+    call IRRespondRegisters
     pop bc
     ret c
 
     ld hl, $c400
-    jp Jump_001_6a43
+    jp SendIRRange
 
 
 Call_001_6b54:
-    call Call_001_6d18
+    call RestoreRegisters
     ld b, $00
     inc c
     dec c
@@ -4361,15 +4359,15 @@ Call_001_6b54:
 
 
 IRCmd0A::
-    call Call_001_6d18
+    call RestoreRegisters
     ld hl, $c400
-    call Call_001_6a58
+    call RecvIRRange
     ret c
 
     call Call_001_6b54
     trap $ec
     call EnableIRMode
-    jp Jump_001_6ad8
+    jp IRRespondRegisters
 
 
 IRCmd06::
@@ -4378,34 +4376,34 @@ IRCmd06::
 
     trap $ef
     call EnableIRMode
-    jp Jump_001_6ad8
+    jp IRRespondRegisters
 
 
 Call_001_6b88:
     ld hl, $c500
     ld c, $00
-    call Call_001_6a58
+    call RecvIRRange
     ret c
 
     call DisableIRMode
-    call Call_001_6d18
+    call RestoreRegisters
     ld hl, $c500
     or a
     ret
 
 
-IRCmd08::
+IRCmdRead::
     call SendIRHandshake
     ret c
 
-    call Call_001_6d18
-    jp Jump_001_6a43
+    call RestoreRegisters
+    jp SendIRRange
 
 
 IRCmd09::
     ldh a, [hRAMBank]
     push af
-    call Call_001_6d18
+    call RestoreRegisters
     call Call_001_6c05
     ld de, $c400
     call DisableIRMode
@@ -4425,13 +4423,13 @@ IRCmd09::
 
     pop bc
     pop hl
-    call Call_001_6a43
+    call SendIRRange
     pop af
     jp Jump_001_68a9
 
 
-IRCmd0B::
-    call Call_001_6d18
+IRCmdWrite::
+    call RestoreRegisters
     ld l, e
     ld h, d
 
@@ -4439,20 +4437,20 @@ IRCmd0B::
 
 
 Call_001_6bd2:
-    call Call_001_6a58
-    jr c, .jr_001_6bdb
+    call RecvIRRange
+    jr c, .done
 
     sub b
     call SendIRWord2
 
-.jr_001_6bdb
+.done
     ret
 
 
 IRCmd0C::
     ldh a, [hRAMBank]
     push af
-    call Call_001_6d18
+    call RestoreRegisters
     ld hl, $c400
     push hl
     push de
@@ -4503,7 +4501,7 @@ TrapIRClose::
     call BeginIR
     ld a, $00
     ld [$c0f9], a
-    call SendIRCommand
+    call SendIRRegisters
     jr jr_001_6c7b
 
 
@@ -4514,7 +4512,7 @@ trap_74_6c28::
     jr jr_001_6c78
 
 
-trap_75_6c2f::
+TrapIRFileSearch::
     ld a, $02
     call Call_001_6ceb
     ld l, e
@@ -4522,12 +4520,12 @@ trap_75_6c2f::
     jr jr_001_6c43
 
 
-trap_78_6c38::
+TrapIR05::
     ld a, $05
     jr jr_001_6c3e
 
 
-trap_76_6c3c::
+TrapIRFileWrite::
     ld a, $03
 
 jr_001_6c3e:
@@ -4535,22 +4533,22 @@ jr_001_6c3e:
     ld c, $00
 
 jr_001_6c43:
-    call Call_001_6a43
+    call SendIRRange
     jr c, jr_001_6c7b
 
-    call Call_001_6d18
+    call RestoreRegisters
     push hl
     call Call_001_6c81
     pop hl
     jr c, jr_001_6c7b
 
     ld c, $00
-    call Call_001_6a58
+    call RecvIRRange
     jr c, jr_001_6c7b
 
     jr jr_001_6c78
 
-trap_77_6c5b::
+TrapIR04::
     ld a, $04
     call Call_001_6ceb
     call Call_001_6c81
@@ -4558,18 +4556,18 @@ trap_77_6c5b::
 
     jr jr_001_6c78
 
-trap_79_6c67::
+TrapIR06::
     ld a, $06
     call Call_001_6ceb
     ld c, $00
-    call Call_001_6a43
+    call SendIRRange
     jr c, jr_001_6c7b
 
     call Call_001_6c81
     jr c, jr_001_6c7b
 
 jr_001_6c78:
-    call Call_001_6d18
+    call RestoreRegisters
 
 jr_001_6c7b:
     push af
@@ -4584,10 +4582,10 @@ Call_001_6c81:
 
     ld hl, $c0f8
     ld c, $08
-    jp Call_001_6a58
+    jp RecvIRRange
 
 
-trap_7b_6c8e::
+TrapIR09::
     ld a, $09
     jr jr_001_6c94
 
@@ -4603,10 +4601,10 @@ jr_001_6c94:
     pop hl
     jr c, jr_001_6c7b
 
-    call Call_001_6a58
+    call RecvIRRange
     jr jr_001_6c7b
 
-trap_7e_6ca5::
+TrapIR0C::
     ld a, $0c
     jr jr_001_6cab
 
@@ -4615,10 +4613,10 @@ TrapIRWrite:
 
 jr_001_6cab:
     call Call_001_6ceb
-    call Call_001_6a43
+    call SendIRRange
     jr c, jr_001_6c7b
 
-    call Call_001_693c
+    call RecvIRWord2
     jr c, jr_001_6c7b
 
     add b
@@ -4633,7 +4631,7 @@ jr_001_6cbe:
 jr_001_6cc1:
     jr jr_001_6c7b
 
-trap_7a_6cc3::
+TrapIR07::
     ld a, $07
     call Call_001_6ceb
     push de
@@ -4643,17 +4641,17 @@ trap_7a_6cc3::
     pop hl
     jr c, jr_001_6c7b
 
-    call Call_001_6a58
+    call RecvIRRange
     jr c, jr_001_6c7b
 
     jr jr_001_6c78
 
-trap_7d_6cd8::
+TrapIR0A::
     ld a, $0a
     call Call_001_6ceb
     ld l, e
     ld h, d
-    call Call_001_6a43
+    call SendIRRange
     jr c, jr_001_6c7b
 
     call Call_001_6c81
@@ -4665,9 +4663,9 @@ Call_001_6ceb:
     push hl
     push de
     push bc
-    call Call_001_6cff
+    call SaveRegisters
     call BeginIR
-    call SendIRCommand
+    call SendIRRegisters
     pop bc
     pop de
     pop hl
@@ -4677,7 +4675,7 @@ Call_001_6ceb:
     inc sp
     jr jr_001_6cc1
 
-Call_001_6cff:
+SaveRegisters:
     push de
     push hl
     push af
@@ -4703,7 +4701,7 @@ Call_001_6cff:
     ret
 
 
-Call_001_6d18:
+RestoreRegisters:
     ld hl, $c0f8
     ld e, [hl]
     inc hl

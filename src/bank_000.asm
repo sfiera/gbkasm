@@ -2353,28 +2353,28 @@ Call_000_0d16:
 
     ld hl, $c700
     trap $c3
-    trap $79
+    trap IR06
     jr jr_000_0d3b
 
 Call_000_0d25:
 Jump_000_0d25:
     trap $c3
-    trap $7d
+    trap IR0A
     jr jr_000_0d3b
 
 Call_000_0d2b:
     trap $c3
-    trap $77
+    trap IR04
     jr jr_000_0d3b
 
 Call_000_0d31:
     trap $c3
-    trap $76
+    trap IRFileWrite
     jr jr_000_0d3b
 
 Call_000_0d37:
     trap $c3
-    trap $75
+    trap IRFileSearch
 
 jr_000_0d3b:
     push af

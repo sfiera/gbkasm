@@ -34,9 +34,19 @@ DEF DrawStringList    EQU $6a
 DEF FileSearch        EQU $6b
 
 DEF FileGetHeader     EQU $71
+
 DEF IRListen          EQU $72
 DEF IRClose           EQU $73
+DEF IRFileSearch      EQU $75
+DEF IRFileWrite       EQU $76
+DEF IR04              EQU $77
+DEF IR05              EQU $78
+DEF IR06              EQU $79
+DEF IR07              EQU $7a
+DEF IR09              EQU $7b
 DEF IRRead            EQU $7c
+DEF IR0A              EQU $7d
+DEF IR0C              EQU $7e
 DEF IRWrite           EQU $7f
 
 DEF MathXor16         EQU $80  ; hl ^= de
