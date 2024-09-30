@@ -370,7 +370,7 @@ jr_000_022d::
     push hl
     callx @+$ff68
     ld a, $05
-    trap $dc
+    trap AwaitButton
     pop hl
     pop de
     pop bc
@@ -1183,9 +1183,9 @@ jr_000_07e2::
 jr_000_07ee::
     callx @+$0076
     ld a, $78
-    trap $dc
+    trap AwaitButton
     ld a, $78
-    trap $dc
+    trap AwaitButton
     ld a, [$0014]
     cp $01
     jr nz, jr_000_0808
@@ -1207,11 +1207,11 @@ jr_000_0808::
     ld hl, $c600
     trap FileDelete
     ld a, $78
-    trap $dc
+    trap AwaitButton
     ld a, $78
-    trap $dc
+    trap AwaitButton
     ld a, $78
-    trap $dc
+    trap AwaitButton
     jx @+$f81a
 
 

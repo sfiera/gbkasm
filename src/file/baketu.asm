@@ -157,7 +157,7 @@ Receive:
     ldx hl, LayoutCommError
     trap DrawLayout
     ld a, $b4
-    trap $dc
+    trap AwaitButton
     jr .jr_0194
 
 .jr_000_01e3
@@ -172,7 +172,7 @@ Transmit:
     trap DrawLayout
     trap $c3
     ld a, $78
-    trap $dc
+    trap AwaitButton
     ld a, $03
     ld [var_retries], a
 
@@ -831,7 +831,7 @@ UpdateBall:
     ldx hl, LayoutReceived
     trap DrawLayout
     ld a, $78
-    trap $dc
+    trap AwaitButton
     trap LCDDisable
     callx call_08d8
     ld a, LCDCF_OBJON | LCDCF_BGON | LCDCF_WINON | LCDCF_WIN9C00

@@ -71,7 +71,7 @@ Main::
     trap DrawString
     trap $db
     ld a, $78
-    trap $dc
+    trap AwaitButton
 
 .jr_008e
     trap ExitToMenu
@@ -121,7 +121,7 @@ call_0171:
     ldx hl, data_0161
     trap DrawString
     ld a, $78
-    trap $dc
+    trap AwaitButton
 
 .jr_01a3
     trap ExitToMenu

@@ -105,7 +105,7 @@ traps2::
     dw trap_d9_6209         ; trap $d9
     dw trap_da_6178         ; trap $da
     dw trap_db_60e2         ; trap $db
-    dw trap_dc_60d2         ; trap $dc
+    dw TrapAwaitButton      ; trap $dc
     dw trap_none_2          ; trap $dd
     dw trap_none_2          ; trap $de
     dw trap_none_2          ; trap $df
@@ -7162,7 +7162,7 @@ jr_002_60c9:
     ret
 
 
-trap_dc_60d2::
+TrapAwaitButton::
     push bc
     ld b, a
 

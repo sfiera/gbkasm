@@ -115,7 +115,7 @@ jp_0181::
     ldh a, [$ca]
     inc a
     ldh [$ca], a
-    trap $dc
+    trap AwaitButton
     jr jp_01ed
 
 jr_000_01a6::
@@ -826,7 +826,7 @@ jp_0608:
     ld hl, $c600
     trap FileDelete
     ld a, $78
-    trap $dc
+    trap AwaitButton
     xor a
     trap DrawInit
     ld hl, $0307
@@ -846,11 +846,11 @@ jr_000_0646::
 
     trap $db
     ld a, $f0
-    trap $dc
+    trap AwaitButton
     ld a, $f0
-    trap $dc
+    trap AwaitButton
     ld a, $f0
-    trap $dc
+    trap AwaitButton
     trap ExitToMenu
 
 jr_000_065d::
@@ -873,7 +873,7 @@ jr_000_0666::
     ld d, [hl]
     callx @+$fd8e
     ld a, $05
-    trap $dc
+    trap AwaitButton
     pop de
     pop bc
     ld a, d
@@ -883,7 +883,7 @@ jr_000_0666::
     xor a
     trap AudioPlaySound
     ld a, $3c
-    trap $dc
+    trap AwaitButton
     ld hl, $c762
     ld e, [hl]
     inc hl

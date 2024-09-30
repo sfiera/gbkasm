@@ -360,7 +360,7 @@ Jump_001_4283:
     ld hl, data_01_4f76
     call Call_001_4bd2
     ld a, $b4
-    trap $dc
+    trap AwaitButton
     jp Jump_001_413a
 
 Jump_001_4290:
@@ -554,7 +554,7 @@ jr_001_43b1:
 Jump_001_43b4:
     call Call_001_4bd2
     ld a, $b4
-    trap $dc
+    trap AwaitButton
     jp Jump_001_413a
 
 
@@ -680,7 +680,7 @@ Jump_001_4491:
 
 Call_001_44a1:
     ld a, $32
-    trap $dc
+    trap AwaitButton
     ret
 
 
@@ -1083,7 +1083,7 @@ jr_001_475c:
     xor a
     trap $cc
     ld a, $b4
-    trap $dc
+    trap AwaitButton
     ret
 
 Call_001_4764:
@@ -4980,7 +4980,7 @@ Call_001_7227:
     ld a, $01
     trap LCDEnable
     ld a, $f0
-    trap $dc
+    trap AwaitButton
     bit 2, a
     jp nz, Jump_001_66ee
 

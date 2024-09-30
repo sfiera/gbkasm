@@ -307,11 +307,11 @@ jr_034d:
     ld a, $2b
     trap AudioPlaySound
     ld a, $05
-    trap $dc
+    trap AwaitButton
     dec b
     jr nz, jr_034d
     ld a, $19
-    trap $dc
+    trap AwaitButton
     dec c
     jr nz, jr_034b
     ret
@@ -323,7 +323,7 @@ jr_0362:
     trap AudioPlaySound
     callx jr_0341
     ld a, $0a
-    trap $dc
+    trap AwaitButton
     dec b
     jr nz, jr_0362
     ret
