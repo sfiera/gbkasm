@@ -3774,73 +3774,73 @@ jr_001_68b6:
     ret
 
 
-Call_001_68b8:
-    ld c, $08
+SendIRWord1:
+    ld c, 8
 
-jr_001_68ba:
+.nextBit
     rla
-    jr c, jr_001_68c1
+    jr c, .bit1
 
-    ld b, $0a
-    jr jr_001_68c4
+    ld b, 10
+    jr .pulse
 
-jr_001_68c1:
+.bit1
     ld b, [hl]
-    ld b, $12
+    ld b, 18
 
-jr_001_68c4:
-    call Call_001_6991
+.pulse
+    call PulseIR
     dec c
-    jr nz, jr_001_68ba
+    jr nz, .nextBit
 
     push bc
     pop bc
-    ld b, $23
-    call Call_001_6991
-    ld b, $0a
-    call Call_001_6991
+    ld b, 35
+    call PulseIR
+    ld b, 10
+    call PulseIR
     ret
 
 
-Call_001_68d7:
+ReadIRWord:
     ld b, $00
 
-jr_001_68d9:
+.jr_001_68d9
     call Call_001_69a0
-    jr c, jr_001_68fa
+    jr c, .cancel
 
     cp $1a
-    jr nc, jr_001_68e8
+    jr nc, .jr_001_68e8
 
     cp $0f
     rl d
-    jr jr_001_68d9
+    jr .jr_001_68d9
 
-jr_001_68e8:
+.jr_001_68e8
     ldh a, [rP1]
     bit 1, a
-    jr z, jr_001_68fa
+    jr z, .cancel
 
     bit 0, [hl]
-    jr nz, jr_001_68e8
+    jr nz, .jr_001_68e8
 
     ld a, $0a
 
-jr_001_68f4:
+.jr_001_68f4
     dec a
-    jr nz, jr_001_68f4
+    jr nz, .jr_001_68f4
 
     ld a, d
     cpl
     ret
 
 
-jr_001_68fa:
+.cancel
     xor a
     ret
 
 
-Call_001_68fc:
+SendIRWord2:
     push hl
     push de
     push bc
@@ -3849,11 +3849,11 @@ Call_001_68fc:
     ld [hl], $01
     ld c, $00
 
-jr_001_6907:
+.jr_001_6907
     call Call_001_68af
     jr c, jr_001_6987
 
-    jr z, jr_001_6907
+    jr z, .jr_001_6907
 
     push bc
     pop bc
@@ -3862,35 +3862,35 @@ jr_001_6907:
     ld [hl], $00
     ld c, $00
 
-jr_001_6916:
+.jr_001_6916
     call Call_001_68af
     jr c, jr_001_6987
 
-    jr nz, jr_001_6916
+    jr nz, .jr_001_6916
 
     ld a, d
-    ld c, $08
+    ld c, 8
 
-jr_001_6920:
+.nextBit
     rla
-    jr c, jr_001_6927
+    jr c, .bit1
 
-    ld b, $0a
-    jr jr_001_692a
+    ld b, 10
+    jr .pulse
 
-jr_001_6927:
+.bit1
     ld b, [hl]
-    ld b, $12
+    ld b, 18
 
-jr_001_692a:
-    call Call_001_6991
+.pulse
+    call PulseIR
     dec c
-    jr nz, jr_001_6920
+    jr nz, .nextBit
 
     push bc
     pop bc
-    ld b, $0a
-    call Call_001_6991
+    ld b, 10
+    call PulseIR
     xor a
     pop bc
     pop de
@@ -3979,21 +3979,21 @@ jr_001_698c:
     ret
 
 
-Call_001_6991:
+PulseIR:
     push af
     ld a, b
     ld [hl], $01
 
-jr_001_6995:
+.on
     dec a
-    jr nz, jr_001_6995
+    jr nz, .on
 
     ld a, b
     ld [hl], $00
 
-jr_001_699b:
+.off
     dec a
-    jr nz, jr_001_699b
+    jr nz, .off
 
     pop af
     ret
@@ -4033,26 +4033,26 @@ jr_001_69b2:
 Call_001_69bc:
     ld hl, rIR
 
-jr_001_69bf:
+.jr_001_69bf
     ldh a, [rP1]
     bit 1, a
     jr z, jr_001_698c
 
     ld a, $aa
-    call Call_001_68b8
-    call Call_001_68d7
+    call SendIRWord1
+    call ReadIRWord
     cp $55
-    jr nz, jr_001_69bf
+    jr nz, .jr_001_69bf
 
     ldh a, [rP1]
     bit 1, a
     jr z, jr_001_698c
 
     ld a, $c3
-    call Call_001_68b8
-    call Call_001_68d7
+    call SendIRWord1
+    call ReadIRWord
     cp $3c
-    jr nz, jr_001_69bf
+    jr nz, .jr_001_69bf
 
     xor a
     ret
@@ -4061,27 +4061,27 @@ jr_001_69bf:
 Call_001_69e5:
     ld hl, rIR
 
-jr_001_69e8:
+.jr_001_69e8
     ldh a, [rP1]
     bit 1, a
     jr z, jr_001_698c
 
-    call Call_001_68d7
+    call ReadIRWord
     cp $aa
-    jr nz, jr_001_69e8
+    jr nz, .jr_001_69e8
 
     ld a, $55
-    call Call_001_68b8
+    call SendIRWord1
     ldh a, [rP1]
     bit 1, a
     jr z, jr_001_698c
 
-    call Call_001_68d7
+    call ReadIRWord
     cp $c3
-    jr nz, jr_001_69e8
+    jr nz, .jr_001_69e8
 
     ld a, $3c
-    call Call_001_68b8
+    call SendIRWord1
     xor a
     ret
 
@@ -4095,30 +4095,30 @@ Call_001_6a11:
     jr c, jr_001_6a0e
 
     ld a, IR_ID0
-    call Call_001_68fc
+    call SendIRWord2
     ld a, IR_ID1
-    call Call_001_68fc
+    call SendIRWord2
     ld hl, $c0f8
     ld c, $08
     jp Jump_001_6a43
 
 
 Call_001_6a28:
-jr_001_6a28:
+.retry
     call Call_001_69e5
     jr c, jr_001_6a0e
 
     call Call_001_693c
     cp IR_ID0
-    jr nz, jr_001_6a28
+    jr nz, .retry
 
     call Call_001_693c
     cp IR_ID1
-    jr nz, jr_001_6a28
+    jr nz, .retry
 
     ld hl, $c0f8
     ld c, $08
-    jp Jump_001_6a58
+    jp Call_001_6a58
 
 
 Call_001_6a43:
@@ -4130,8 +4130,8 @@ jr_001_6a45:
     add [hl]
     ld b, a
     ld a, [hl+]
-    call Call_001_68fc
-    jr c, jr_001_6a57
+    call SendIRWord2
+    jr c, .jr_001_6a57
 
     dec c
     jr nz, jr_001_6a45
@@ -4139,14 +4139,13 @@ jr_001_6a45:
     ld a, b
     cpl
     inc a
-    call Call_001_68fc
+    call SendIRWord2
 
-jr_001_6a57:
+.jr_001_6a57
     ret
 
 
 Call_001_6a58:
-Jump_001_6a58:
     ld b, $00
 
 jr_001_6a5a:
@@ -4169,7 +4168,7 @@ jr_001_6a5a:
 
 Call_001_6a6d:
     di
-    ld a, $10
+    ld a, P1F_GET_BTN
     ldh [rP1], a
     call EnableIRMode
     xor a
@@ -4181,7 +4180,7 @@ Call_001_6a7a:
     xor a
     ld [rIR], a
     call DisableIRMode
-    ld a, $30
+    ld a, P1F_GET_NONE
     ldh [rP1], a
     ei
     ret
@@ -4433,7 +4432,7 @@ Call_001_6bd2:
     jr c, jr_001_6bdb
 
     sub b
-    call Call_001_68fc
+    call SendIRWord2
 
 jr_001_6bdb:
     ret
@@ -4570,7 +4569,7 @@ Call_001_6c81:
 
     ld hl, $c0f8
     ld c, $08
-    jp Jump_001_6a58
+    jp Call_001_6a58
 
 
 trap_7b_6c8e::
