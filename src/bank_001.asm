@@ -3844,7 +3844,7 @@ Call_001_68fc:
     push hl
     push de
     push bc
-    ld hl, $a000
+    ld hl, rIR
     ld d, a
     ld [hl], $01
     ld c, $00
@@ -3902,7 +3902,7 @@ Call_001_693c:
     push hl
     push de
     push bc
-    ld hl, $a000
+    ld hl, rIR
     ld c, $00
     ld [hl], $00
 
@@ -4031,7 +4031,7 @@ jr_001_69b2:
 
 
 Call_001_69bc:
-    ld hl, $a000
+    ld hl, rIR
 
 jr_001_69bf:
     ldh a, [rP1]
@@ -4059,7 +4059,7 @@ jr_001_69bf:
 
 
 Call_001_69e5:
-    ld hl, $a000
+    ld hl, rIR
 
 jr_001_69e8:
     ldh a, [rP1]
@@ -4171,33 +4171,32 @@ Call_001_6a6d:
     di
     ld a, $10
     ldh [rP1], a
-    call Call_001_6a8b
+    call EnableIRMode
     xor a
-    ld [$a000], a
+    ld [rIR], a
     ret
 
 
 Call_001_6a7a:
     xor a
-    ld [$a000], a
-    call Call_001_6a87
+    ld [rIR], a
+    call DisableIRMode
     ld a, $30
     ldh [rP1], a
     ei
     ret
 
 
-Call_001_6a87:
-Jump_001_6a87:
+DisableIRMode:
     push af
     xor a
-    jr jr_001_6a8e
+    jr EnableIRMode.set
 
-Call_001_6a8b:
+EnableIRMode:
     push af
-    ld a, $0e
+    ld a, kIRModeOn
 
-jr_001_6a8e:
+.set
     ld [rIRMode], a
     pop af
     ret
@@ -4287,14 +4286,14 @@ code_01_6af8::
     call Call_001_6a58
     ret c
 
-    call Call_001_6a87
+    call DisableIRMode
     call Call_001_6d18
     ld hl, $c500
     ld de, $c400
     trap FileSearch
 
 jr_001_6b10:
-    call Call_001_6a8b
+    call EnableIRMode
     call Call_001_6ad8
     ret c
 
@@ -4318,11 +4317,11 @@ code_01_6b27::
     jr jr_001_6b10
 
 code_01_6b2f::
-    call Call_001_6a87
+    call DisableIRMode
     call Call_001_6d18
     ld hl, $c500
     trap $ea
-    call Call_001_6a8b
+    call EnableIRMode
     jp Jump_001_6ad8
 
 
@@ -4330,7 +4329,7 @@ code_01_6b40::
     call Call_001_6b54
     push bc
     trap $eb
-    call Call_001_6a8b
+    call EnableIRMode
     call Call_001_6ad8
     pop bc
     ret c
@@ -4351,7 +4350,7 @@ Call_001_6b54:
 jr_001_6b5e:
     ld hl, $c500
     ld de, $c400
-    jp Jump_001_6a87
+    jp DisableIRMode
 
 
 code_01_6b67::
@@ -4362,7 +4361,7 @@ code_01_6b67::
 
     call Call_001_6b54
     trap $ec
-    call Call_001_6a8b
+    call EnableIRMode
     jp Jump_001_6ad8
 
 
@@ -4371,7 +4370,7 @@ code_01_6b7c::
     ret c
 
     trap $ef
-    call Call_001_6a8b
+    call EnableIRMode
     jp Jump_001_6ad8
 
 
@@ -4381,7 +4380,7 @@ Call_001_6b88:
     call Call_001_6a58
     ret c
 
-    call Call_001_6a87
+    call DisableIRMode
     call Call_001_6d18
     ld hl, $c500
     or a
@@ -4402,7 +4401,7 @@ code_01_6ba6::
     call Call_001_6d18
     call Call_001_6c05
     ld de, $c400
-    call Call_001_6a87
+    call DisableIRMode
     push de
     push bc
 
@@ -4413,7 +4412,7 @@ jr_001_6bb7:
     dec c
     jr nz, jr_001_6bb7
 
-    call Call_001_6a8b
+    call EnableIRMode
     call Call_001_69bc
     ret c
 
@@ -4465,7 +4464,7 @@ jr_001_6bf8:
     dec c
     jr nz, jr_001_6bf8
 
-    call Call_001_6a8b
+    call EnableIRMode
 
 jr_001_6c01:
     pop af
