@@ -286,7 +286,7 @@ jr_000_0213::
     ld h, b
     ld l, c
     ld c, $04
-    trap $84
+    trap MathCmp16
     ld a, l
     pop hl
     pop bc
@@ -612,7 +612,7 @@ jr_000_03b4::
 
     ld hl, $07e9
     ld c, $08
-    trap $84
+    trap MathCmp16
     ld a, l
     cp $00
     jr z, jr_000_03ff
@@ -632,7 +632,7 @@ jr_000_0406::
 
     ld hl, $0794
     ld c, $08
-    trap $84
+    trap MathCmp16
     ld a, l
     cp $00
     jr z, jr_000_041b
@@ -1080,7 +1080,7 @@ jr_000_07b7::
     ld a, [$c619]
     ld h, a
     ld c, $06
-    trap $84
+    trap MathCmp16
     ld a, l
     cp $00
     ld a, $00
@@ -1095,7 +1095,7 @@ jr_000_07b7::
     ld a, [$c619]
     ld h, a
     ld c, $08
-    trap $84
+    trap MathCmp16
     ld a, l
     cp $00
     ld a, $01
@@ -1314,7 +1314,7 @@ call_09ef:
     push hl
     ld de, $0000
     ld c, $04
-    trap $84
+    trap MathCmp16
     ld a, l
     pop hl
     cp $00
@@ -1322,7 +1322,7 @@ call_09ef:
     push hl
     ld de, $0012
     ld c, $02
-    trap $84
+    trap MathCmp16
     ld a, l
     pop hl
     cp $00
@@ -1681,7 +1681,7 @@ jr_000_0d4a:
     ld a, [$c61b]
     ld l, a
     ld c, $07
-    trap $84
+    trap MathCmp16
     ld a, l
     cp $00
     pop hl
@@ -1970,7 +1970,7 @@ jr_000_1118::
     ld a, [$c61d]
     ld h, a
     ld c, $08
-    trap $84
+    trap MathCmp16
     ld a, l
     cp $00
     jr nz, jr_000_1136
@@ -2004,7 +2004,7 @@ jr_000_1149::
     ld a, [$c61d]
     ld h, a
     ld c, $08
-    trap $84
+    trap MathCmp16
     ld a, l
     cp $00
     jr nz, jr_000_118e

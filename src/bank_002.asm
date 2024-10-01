@@ -17,7 +17,7 @@ traps2::
     dw TrapMathOr16         ; trap $81
     dw TrapMathAnd16        ; trap $82
     dw TrapMathCpl16        ; trap $83
-    dw trap_84_5283         ; trap $84
+    dw TrapMathCmp16        ; trap $84
     dw trap_85_52b3         ; trap $85
     dw trap_86_52c8         ; trap $86
     dw TrapMathAdd16        ; trap $87
@@ -552,7 +552,7 @@ SetRAMBank:
 
 Call_002_447b:
     call LocateOwnerRegion
-    ld de, data_02_53ac
+    ld de, $53ac
     ld a, [hl+]
     cp d
     jr nz, jr_002_44e5
@@ -3920,69 +3920,84 @@ TrapMathCpl16::
     ret
 
 
-trap_84_5283::
+TrapMathCmp16::
+    ; Test: do hl and de have the same sign?
+    ; If not, jump to .testNeg
+    ; If it is,
     ld a, d
     xor h
     rlca
     ld a, d
-    jr c, jr_002_5295
+    jr c, .testNeg
 
+    ; hl = de - hl
     ld a, e
     sub l
     ld l, a
     ld a, d
     sbc h
     ld h, a
-    ld b, $01
+
+    ; Test: is hl zero? If so, jump to .result
+    ld b, %001
     or l
-    jr z, jr_002_529c
+    jr z, .result
 
     ld a, h
 
-jr_002_5295:
-    ld b, $02
+.testNeg
+    ; Test: is a negative? If so, jump to .result
+    ; If the original signs matched, a is the high byte of (de - hl).
+    ; If the original signs mismatched, a is the high byte of de.
+    ld b, %010
     rlca
-    jr c, jr_002_529c
+    jr c, .result
 
-    ld b, $04
+    ld b, %100
 
-jr_002_529c:
+.result
     ld a, b
     ld b, $00
-    ld hl, data_02_52aa
+    ld hl, .cmpFields
     add hl, bc
     and [hl]
-    jr z, jr_002_52da
+    jr z, ReturnZero
 
     ld hl, $ffff
     ret
 
 
-data_02_52aa::
-    db $06, $06
-    db $05, $05
-    db $03, $03
-    db $04, $02, $01
+.cmpFields
+    db %110  ; 0: hl != de
+    db %110  ; 1: hl != de
+    db %101  ; 2: hl <= de
+    db %101  ; 3: hl <= de
+    db %011  ; 4: hl >= de
+    db %011  ; 5: hl >= de
+    db %100  ; 6: hl < de
+    db %010  ; 7: hl > de
+    db %001  ; 8: hl == de
+
 
 trap_85_52b3::
     ld a, h
     or a
-    jr nz, jr_002_52da
+    jr nz, ReturnZero
 
     ld a, l
     cp $10
-    jr nc, jr_002_52da
+    jr nc, ReturnZero
 
     ld l, e
     ld h, d
     or a
     ret z
 
-jr_002_52c0:
+.jr_002_52c0
     srl h
     rr l
     dec a
-    jr nz, jr_002_52c0
+    jr nz, .jr_002_52c0
 
     ret
 
@@ -3990,26 +4005,26 @@ jr_002_52c0:
 trap_86_52c8::
     ld a, h
     or a
-    jr nz, jr_002_52da
+    jr nz, ReturnZero
 
     ld a, l
     cp $10
-    jr nc, jr_002_52da
+    jr nc, ReturnZero
 
     ld l, e
     ld h, d
     or a
     ret z
 
-jr_002_52d5:
+.jr_002_52d5
     add hl, hl
     dec a
-    jr nz, jr_002_52d5
+    jr nz, .jr_002_52d5
 
     ret
 
 
-jr_002_52da:
+ReturnZero:
     ld hl, $0000
     ret
 
@@ -4036,7 +4051,7 @@ trap_89_52e7::
 
     ld a, d
     or e
-    jr z, jr_002_52da
+    jr z, ReturnZero
 
     ld a, h
     xor d
@@ -4044,7 +4059,7 @@ trap_89_52e7::
     push af
     ld a, d
     rlca
-    jr nc, jr_002_52fd
+    jr nc, .jr_002_52fd
 
     ld a, d
     cpl
@@ -4054,10 +4069,10 @@ trap_89_52e7::
     ld e, a
     inc de
 
-jr_002_52fd:
+.jr_002_52fd
     ld a, h
     rlca
-    jr nc, jr_002_5308
+    jr nc, .jr_002_5308
 
     ld a, h
     cpl
@@ -4067,36 +4082,36 @@ jr_002_52fd:
     ld l, a
     inc hl
 
-jr_002_5308:
+.jr_002_5308
     ld b, h
     ld c, l
     ld hl, $0000
     ld a, $10
 
-jr_002_530f:
+.jr_002_530f
     add hl, hl
     rl c
     rl b
-    jr nc, jr_002_531d
+    jr nc, .jr_002_531d
 
     add hl, de
-    jr nc, jr_002_531d
+    jr nc, .jr_002_531d
 
     inc c
-    jr nz, jr_002_531d
+    jr nz, .jr_002_531d
 
     inc b
 
-jr_002_531d:
+.jr_002_531d
     dec a
-    jr nz, jr_002_530f
+    jr nz, .jr_002_530f
 
     jr jr_002_5378
 
 trap_8a_5322::
     ld a, h
     or l
-    jr nz, jr_002_532e
+    jr nz, .jr_002_532e
 
     xor a
     ld [$c3b0], a
@@ -4104,7 +4119,7 @@ trap_8a_5322::
     ret
 
 
-jr_002_532e:
+.jr_002_532e
     ld a, d
     xor h
     rlca
@@ -4112,7 +4127,7 @@ jr_002_532e:
     ld a, d
     rlca
     push af
-    jr nc, jr_002_533e
+    jr nc, .jr_002_533e
 
     ld a, d
     cpl
@@ -4122,10 +4137,10 @@ jr_002_532e:
     ld e, a
     inc de
 
-jr_002_533e:
+.jr_002_533e
     ld a, h
     rlca
-    jr nc, jr_002_5349
+    jr nc, .jr_002_5349
 
     ld a, h
     cpl
@@ -4135,13 +4150,13 @@ jr_002_533e:
     ld l, a
     inc hl
 
-jr_002_5349:
+.jr_002_5349
     ld b, h
     ld c, l
     ld hl, $0000
     ld a, $10
 
-jr_002_5350:
+.jr_002_5350
     push af
     sla e
     rl d
@@ -4151,7 +4166,7 @@ jr_002_5350:
     sub c
     ld a, h
     sbc b
-    jr c, jr_002_5364
+    jr c, .jr_002_5364
 
     ld h, a
     ld a, l
@@ -4159,17 +4174,17 @@ jr_002_5350:
     ld l, a
     inc e
 
-jr_002_5364:
+.jr_002_5364
     pop af
     dec a
-    jr nz, jr_002_5350
+    jr nz, .jr_002_5350
 
     pop af
-    jr nc, jr_002_536e
+    jr nc, .jr_002_536e
 
     call TrapMathNeg16
 
-jr_002_536e:
+.jr_002_536e
     ld a, l
     ld [$c3b0], a
     ld a, h
@@ -4177,9 +4192,15 @@ jr_002_536e:
     ld l, e
     ld h, d
 
+    ; fall through
+
+
 jr_002_5378:
     pop af
     ret nc
+
+    ; fall through
+
 
 TrapMathNeg16::
     ld a, h
@@ -4200,6 +4221,7 @@ TrapMathAbs16::
     ret z
 
     jr TrapMathNeg16
+
 
 TrapRandNext::
     ld hl, $c3b2
@@ -4227,8 +4249,6 @@ TrapRandNext::
     ld a, l
     ld [$c3b2], a
     ld a, h
-
-data_02_53ac::
     ld [$c3b3], a
     xor l
     ld l, a

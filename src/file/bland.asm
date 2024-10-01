@@ -1405,7 +1405,7 @@ jr_000_a8c0:
     push hl
     push de
     ld c, $07
-    trap $84
+    trap MathCmp16
     ld a, l
     and a
     jr nz, jr_000_a8e0

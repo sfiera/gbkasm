@@ -2928,7 +2928,7 @@ jr_b1ab::
     ld d, a
     ld c, $08
     ld hl, $0309
-    trap $84
+    trap MathCmp16
     and l
     jr z, jr_b1f1
 
@@ -4006,7 +4006,7 @@ jr_bc61::
     ld a, [$d09b]
     ld h, a
     ld c, $07
-    trap $84
+    trap MathCmp16
     ld a, l
     cp $00
     jr nz, jr_bc9a
@@ -4078,7 +4078,7 @@ jr_bcbf::
     ld d, $00
     ld e, $00
     ld c, $06
-    trap $84
+    trap MathCmp16
     ld a, l
     jr nz, jr_bd25
 
@@ -4139,7 +4139,7 @@ jr_bd29::
     ld d, $00
     ld e, $00
     ld c, $06
-    trap $84
+    trap MathCmp16
     ld a, l
     jr nz, jr_bd8f
 

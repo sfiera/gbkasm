@@ -361,7 +361,7 @@ UpdateHighScore:
     ld a, [SavedHiScore + 1]
     ld h, a
     ld c, $06
-    trap $84
+    trap MathCmp16
     ld a, l
     cp $00
     ret z

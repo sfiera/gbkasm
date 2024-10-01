@@ -53,6 +53,7 @@ DEF MathXor16         EQU $80  ; hl ^= de
 DEF MathOr16          EQU $81  ; hl |= de
 DEF MathAnd16         EQU $82  ; hl &= de
 DEF MathCpl16         EQU $83  ; hl = ~hl
+DEF MathCmp16         EQU $84  ; cmp(hl, de)
 DEF MathSrl16         EQU $85  ; hl >>= de
 DEF MathSla16         EQU $86  ; hl <<= de
 DEF MathAdd16         EQU $87  ; hl += de
