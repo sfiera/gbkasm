@@ -41,24 +41,24 @@ Main::
     cp $ff
     jr z, jr_000_0057
 
-    callx @+$0037
+    callx call_008b
 
 jr_000_0057::
-    callx @+$0497
+    callx call_04f2
     and $06
 
 jr_000_0060:
     jr nz, jr_000_0085
 
-    callx @+$04d9
+    callx call_053f
     bit 2, a
     jr nz, jr_000_0085
 
-    callx @+$0683
+    callx call_06f4
     bit 2, a
     jr nz, jr_000_0085
 
-    callx @+$0775
+    callx call_07f1
     bit 2, a
     jr nz, jr_000_0085
 
@@ -68,6 +68,9 @@ jr_000_0085::
     xor a
     ld [$0000], a
     trap ExitToMenu
+
+
+call_008b:
     ld a, $ff
     ld [$b2ba], a
     xor a
@@ -155,6 +158,7 @@ jr_000_0131::
     ret
 
 
+call_015b:
     push de
     push bc
     ld hl, $0794
@@ -178,7 +182,7 @@ jr_000_0131::
     ld c, a
     ld b, $00
     push hl
-    ldx hl, data_01b0
+    ldx hl, Months
     add hl, bc
     ld a, [hl+]
     ld e, a
@@ -196,7 +200,7 @@ jr_000_0131::
     jr nc, jr_000_01ad
 
     push hl
-    callx @+$ff88
+    callx call_0126
     pop hl
     cp $00
     jr nz, jr_000_01ad
@@ -212,22 +216,22 @@ jr_000_01ad::
     ret
 
 
-data_01b0:
-    db $00, $00
-    db $1f, $00
-    db $3b, $00
-    db $5a, $00
-    db $78, $00
-    db $97, $00
-    db $b5, $00
-    db $d4, $00
-    db $f3, $00
+Months:
+    dw 0    ; Jan 01
+    dw 31   ; Feb 01
+    dw 59   ; Mar 01
+    dw 90   ; Apr 01
+    dw 120  ; May 01
+    dw 151  ; Jun 01
+    dw 181  ; Jul 01
+    dw 212  ; Aug 01
+    dw 243  ; Sep 01
+    dw 273  ; Oct 01
+    dw 304  ; Nov 01
+    dw 334  ; Dec 01
 
-
-call_01c2:
-    ld de, $3001
-    ld bc, $014e
-    callx @+$ff8f
+call_01c8:
+    callx call_015b
     ld hl, $0001
     trap MathSub16
     ld d, h
@@ -238,6 +242,7 @@ call_01c2:
     ret
 
 
+call_01df:
     push bc
     ld c, b
     ld b, $00
@@ -251,7 +256,7 @@ call_01c2:
     ret nz
 
     push bc
-    callx @+$ff32
+    callx call_0126
     pop bc
     cp $00
     ret nz
@@ -319,7 +324,7 @@ data_022e:
 
 call_0246:
     push bc
-    callx @+$ff94
+    callx call_01df
     ld e, c
     pop bc
     ld a, e
@@ -332,34 +337,40 @@ call_0246:
     ret
 
 
+call_0259:
     ld a, $0c
     trap DrawCtrlChar
     ret
 
 
+call_025e:
     ld a, $0f
     trap DrawCtrlChar
     ret
 
 
+call_0263:
     ld a, $0e
     trap DrawCtrlChar
     ret
 
 
+call_0268:
     ld a, $02
     trap DrawCtrlChar
     ret
 
 
+call_026d:
     ld a, $01
     trap DrawCtrlChar
     ret
 
 
+call_0272:
     push hl
     push de
-    callx @+$0085
+    callx call_02fd
     pop de
     ld l, e
     ld a, d
@@ -420,7 +431,7 @@ jr_000_02b5::
 jr_000_02b6::
     ld a, [hl]
     trap DrawChar
-    callx @+$ffab
+    callx call_0268
     ldh a, [$b6]
     bit 5, a
     jr z, jr_000_02d3
@@ -431,7 +442,7 @@ jr_000_02b6::
 
     dec b
     dec hl
-    callx @+$ff98
+    callx call_0268
 
 jr_000_02d3::
     ldh a, [$b6]
@@ -444,7 +455,7 @@ jr_000_02d3::
 
     inc b
     inc hl
-    callx @+$ff8b
+    callx call_026d
 
 jr_000_02e5::
     ldh a, [$8b]
@@ -457,9 +468,11 @@ jr_000_02e5::
 
     ld a, $00
     trap DrawChar
-    callx @+$ff70
+    callx call_0268
     jr jr_000_028a
 
+
+call_02fd::
     push hl
     ld h, d
     ld l, e
@@ -469,11 +482,11 @@ jr_000_02e5::
     ret
 
 
-jr_000_0306::
+call_0306::
     push hl
     push de
     push bc
-    callx @+$0088
+    callx call_0395
     pop bc
     pop de
     pop hl
@@ -488,21 +501,21 @@ jr_000_0319::
     cp $00
     jr nz, jr_000_032a
 
-    callx @+$00b7
+    callx call_03de
 
 jr_000_032a::
     ld a, [$c620]
     cp $01
     jr nz, jr_000_0338
 
-    callx @+$0116
+    callx call_044b
 
 jr_000_0338::
     ld a, [$c620]
     cp $02
     jr nz, jr_000_0346
 
-    callx @+$0156
+    callx call_0499
 
 jr_000_0346:
     pop hl
@@ -516,7 +529,7 @@ jr_000_0346:
 
     dec a
     ld [$c620], a
-    jr jr_000_0306
+    jr call_0306
 
 jr_000_0359::
     ldh a, [$b6]
@@ -529,7 +542,7 @@ jr_000_0359::
 
     inc a
     ld [$c620], a
-    jr jr_000_0306
+    jr call_0306
 
 jr_000_036b::
     ldh a, [$8b]
@@ -557,14 +570,13 @@ jr_000_0384::
     pop hl
     jr jr_000_0319
 
-    dh "　　"
 
-    jr nz, jr_000_03b1
+data_038d:
+    dh "　　  \0"
+    dh "  \0"
 
-    nop
-    jr nz, jr_000_03b4
 
-    nop
+call_0395:
     trap DrawAt
     ld hl, $c600
     push bc
@@ -572,13 +584,9 @@ jr_000_0384::
     pop bc
     ld hl, $c602
     trap DrawString
-    callx @+$fec6
-    callx @+$febf
-
-jr_000_03b1::
+    callx call_026d
+    callx call_026d
     ld hl, $c600
-
-jr_000_03b4::
     ld d, $00
     ld e, b
     push bc
@@ -586,8 +594,8 @@ jr_000_03b4::
     pop bc
     ld hl, $c604
     trap DrawString
-    callx @+$fea9
-    callx @+$fea2
+    callx call_026d
+    callx call_026d
     ld hl, $c600
     ld d, $00
     ld e, c
@@ -599,12 +607,14 @@ jr_000_03b4::
     ret
 
 
+call_03de:
     push bc
-    callx @+$0005
+    callx call_03e8
     pop bc
     ret
 
 
+call_03e8:
     trap DrawAt
     ldh a, [$b6]
     bit 6, a
@@ -652,19 +662,20 @@ jr_000_0422::
     ld hl, $c602
     trap DrawString
     pop de
-    callx @+$fe36
-    callx @+$fe2f
-    callx @+$fe28
-    callx @+$fe21
+    callx call_0268
+    callx call_0268
+    callx call_0268
+    callx call_0268
     ret
 
 
+call_044b:
     ld a, h
     add $06
     ld h, a
     push de
     push bc
-    callx @+$0008
+    callx call_045d
     ld a, b
     pop bc
     ld b, a
@@ -672,6 +683,7 @@ jr_000_0422::
     ret
 
 
+call_045d:
     trap DrawAt
     ldh a, [$b6]
     bit 6, a
@@ -709,17 +721,18 @@ jr_000_047b::
     ld hl, $c604
     trap DrawString
     pop bc
-    callx @+$fdda
-    callx @+$fdd3
+    callx call_0268
+    callx call_0268
     ret
 
 
+call_0499:
     ld a, h
     add $0a
     ld h, a
     push de
     push bc
-    callx @+$0008
+    callx call_04ab
     ld a, c
     pop bc
     ld c, a
@@ -727,9 +740,10 @@ jr_000_047b::
     ret
 
 
+call_04ab:
     trap DrawAt
     push bc
-    callx @+$fd2d
+    callx call_01df
     ld a, c
     pop bc
     ld b, a
@@ -771,13 +785,14 @@ jr_000_04d4::
     ld hl, $c604
     trap DrawString
     pop bc
-    callx @+$fd81
-    callx @+$fd7a
+    callx call_0268
+    callx call_0268
     ret
 
 
-    callx @+$fd63
-    callx @+$000a
+call_04f2:
+    callx call_0259
+    callx call_0507
 
 jr_000_0500::
     ldh a, [$8b]
@@ -802,11 +817,13 @@ data_0511:
 
 
 call_053f:
-    callx @+$fd16
-    callx @+$fd14
-    callx @+$00b9
+    callx call_0259
+    callx call_025e
+    callx call_060a
+
+jx_0554:
     trap AwaitFrame
-    callx @+$0118
+    callx call_0672
 
 jr_000_055d::
     ld a, $ff
@@ -822,7 +839,7 @@ jr_000_0564::
     ld b, $00
 
 jr_000_056f::
-    callx @+$004d
+    callx call_05c0
     ld a, b
     cp $00
     ld a, $02
@@ -837,7 +854,7 @@ jr_000_057f::
     jr nz, jr_000_05a3
 
 jr_000_0588::
-    callx @+$0044
+    callx call_05d0
     ld a, [$c620]
     cp $00
     ld a, $02
@@ -852,7 +869,7 @@ jr_000_059a::
     jr z, jr_000_0564
 
 jr_000_05a3::
-    callx @+$0106
+    callx call_06ad
     ldh a, [$8b]
     and $05
     ret nz
@@ -861,30 +878,29 @@ jr_000_05a3::
     bit 1, a
     jr z, jr_000_0564
 
-    callx @+$012d
-    jx @+$ff97
+    callx call_06e6
+    jx jx_0554
 
 
+call_05c0:
     ld hl, $c610
     ld de, $0806
     ld c, $07
-    callx @+$fca6
+    callx call_0272
     ret
 
 
-jr_000_05d0::
+call_05d0::
     ld a, [$c618]
     ld e, a
     ld a, [$c619]
     ld d, a
     ld a, [$c61a]
     ld b, a
-
-jr_000_05dc::
     ld a, [$c61b]
     ld c, a
     ld hl, $030a
-    callx @+$fd1f
+    callx call_0306
     ld a, e
     ld [$c618], a
     ld a, d
@@ -893,16 +909,18 @@ jr_000_05dc::
     ld [$c61a], a
     ld a, c
     ld [$c61b], a
-    callx @+$fc48
+    callx call_0246
     cp $00
     ret z
 
     ld a, c
     ld [$c61b], a
-    jr jr_000_05d0
+    jr call_05d0
 
+
+call_060a:
     ldx hl, data_0614
-    ld de, jr_000_0306
+    ld de, $0306
     trap DrawStringList
     ret
 
@@ -949,6 +967,7 @@ call_0672:
     ret
 
 
+call_06ad:
     ld a, [$b2bf]
     sla a
     sla a
@@ -978,6 +997,7 @@ call_0672:
     ret
 
 
+call_06e6:
     ld a, [$b2bf]
     inc a
     cp $08
@@ -990,15 +1010,15 @@ jr_000_06f0::
     ret
 
 
-jr_000_06f4::
-    callx @+$fb61
-    callx @+$fb5f
-    callx @+$006e
+call_06f4::
+    callx call_0259
+    callx call_025e
+    callx call_0774
     ld a, $ff
     ld [$c620], a
 
 jr_000_070e::
-    callx @+$0027
+    callx call_0739
     ld a, [$c620]
     cp $00
     ld a, $02
@@ -1014,16 +1034,16 @@ jr_000_0720::
 
     ld b, a
     push bc
-    callx @+$0080
+    callx call_07af
     pop bc
     cp $00
-    jr nz, jr_000_06f4
+    jr nz, call_06f4
 
     ld a, b
     ret
 
 
-jr_000_0739::
+call_0739::
     ld a, [$b2bb]
     ld e, a
     ld a, [$b2bc]
@@ -1033,7 +1053,7 @@ jr_000_0739::
     ld a, [$b2be]
     ld c, a
     ld hl, $0308
-    callx @+$fbb6
+    callx call_0306
     ld a, e
     ld [$b2bb], a
     ld a, d
@@ -1042,17 +1062,18 @@ jr_000_0739::
     ld [$b2bd], a
     ld a, c
     ld [$b2be], a
-    callx @+$fadf
+    callx call_0246
     cp $00
     ret z
 
     ld a, c
     ld [$b2be], a
-    jr jr_000_0739
+    jr call_0739
 
     ret
 
 
+call_0774:
     ldx hl, data_077e
     ld de, $0307
     trap DrawStringList
@@ -1066,15 +1087,11 @@ data_077e:
     db $00
 
 
-code_07af:
+call_07af:
     ld a, [$b2bb]
     ld e, a
-
-jr_000_07b3::
     ld a, [$b2bc]
     ld d, a
-
-jr_000_07b7::
     ld a, [$c618]
     ld l, a
     ld a, [$c619]
@@ -1112,25 +1129,25 @@ jr_000_07b7::
     ret
 
 
-    callx @+$0091
-    callx @+$0899
-    callx @+$08b2
+call_07f1:
+    callx call_0886
+    callx call_1095
+    callx call_10b5
 
 jr_000_0806:
-    callx @+$086b
-    callx @+$03be
-    callx @+$039c
-    callx @+$fa3a
-    callx @+$0081
-    callx @+$0201
-    callx @+$0277
-    callx @+$02f2
-    callx @+$01ad
-
+    callx call_1075
+    callx call_0bcf
+    callx call_0bb4
+    callx call_0259
+    callx call_08a7
+    callx call_0a2e
+    callx call_0aab
+    callx call_0b2d
+    callx call_09ef
 
 jr_000_0845:
     trap AwaitFrame
-    callx @+$088a
+    callx call_10d5
     cp $00
     jr nz, jr_000_0806
 
@@ -1138,7 +1155,7 @@ jr_000_0845:
     bit 6, a
     jr z, jr_000_0861
 
-    callx @+$04e4
+    callx call_0d40
     jr jr_000_0806
 
 jr_000_0861::
@@ -1146,7 +1163,7 @@ jr_000_0861::
     bit 7, a
     jr z, jr_000_0870
 
-    callx @+$0926
+    callx call_1191
     jr jr_000_0806
 
 jr_000_0870::
@@ -1154,7 +1171,7 @@ jr_000_0870::
     bit 1, a
     jr z, jr_000_087f
 
-    callx @+$0375
+    callx call_0bef
     jr jr_000_0806
 
 jr_000_087f::
@@ -1165,6 +1182,7 @@ jr_000_087f::
     ret
 
 
+call_0886:
     ld a, [$b2bb]
     ld [$c61c], a
     ld a, [$b2bc]
@@ -1189,10 +1207,10 @@ call_08a7:
     trap DrawStringList
     ld hl, $0001
     trap DrawAt
-    callx @+$f9a5
+    callx call_025e
     ldx hl, data_097e
     trap DrawString
-    callx @+$f99d
+    callx call_0263
     ldx hl, data_098c
     trap DrawString
     ld hl, $0201
@@ -1246,7 +1264,7 @@ jr_000_0920::
     ld b, a
     ld a, [$c61f]
     ld c, a
-    callx @+$f88f
+    callx call_01c8
     ld b, $00
     ld c, a
     ldx hl, data_09d3
@@ -1341,6 +1359,7 @@ call_09ef:
     ret
 
 
+call_0a2e:
     ld hl, $0017
     ld a, [$c621]
     ld e, a
@@ -1495,14 +1514,13 @@ jr_000_0b0a::
 
 
 data_0b11:
-    db $00, $ff, $fe, $fd, $fc, $fb, $fb, $fb, $fb, $fb, $fc, $fd, $fe
-    db $00, $00, $02, $03, $04, $05, $05, $05, $05, $05, $04, $03, $02
+    db $00, $ff, $fe, $fd, $fc, $fb, $fb, $fb, $fb, $fb, $fc, $fd, $fe, $00
+    db $00, $02, $03, $04, $05, $05, $05, $05, $05, $04, $03, $02, $01, $00
 
-
-call_0b2b:
-    ld bc, $2100
-    ld hl, $fa00
-    ld hl, $5fc6
+call_0b2d:
+    ld hl, $0021
+    ld a, [$c621]
+    ld e, a
     ld a, [$c622]
     ld d, a
     trap $8a
@@ -1596,6 +1614,7 @@ call_0bb4:
     ret
 
 
+call_0bcf:
     ld a, [$c629]
     ld e, a
     ld a, [$c62a]
@@ -1615,7 +1634,7 @@ call_0bb4:
 
 
 call_0bef:
-    callx @+$f66b
+    callx call_025e
     ldx hl, data_0c06
     ld de, $0101
     trap DrawStringList
@@ -1649,14 +1668,11 @@ data_0c06:
 
 
 call_0d40:
-    callx @+$f51a
-    pushx @+$0112
-
-jr_000_0d4a:
-    pop hl
+    callx call_025e
+    ldx hl, $0e5a
     ld de, $0105
     trap DrawStringList
-    ld hl, jr_000_0306
+    ld hl, $0306
     trap DrawAt
     ld hl, $c610
     trap DrawString
@@ -1742,7 +1758,7 @@ jr_000_0dc2::
     ld a, [$c61b]
     ld c, a
     ld hl, $0308
-    callx @+$f5ab
+    callx call_0395
     ld hl, $0309
     trap DrawAt
     ld a, [$c618]
@@ -1753,7 +1769,7 @@ jr_000_0dc2::
     ld b, a
     ld a, [$c61b]
     ld c, a
-    callx @+$f3c2
+    callx call_01c8
     sla a
     sla a
     ld c, a
@@ -1767,7 +1783,7 @@ jr_000_0dc2::
     ld b, a
     ld a, [$c61b]
     ld c, a
-    callx @+$f3e2
+    callx call_020a
     ld a, c
     sla a
     sla a
@@ -1853,7 +1869,8 @@ data_0f85:
     dh "こうこう３ねんせい　　\0"
     dh "　　　　　　　　　　　\0"
 
-jr_000_1075::
+
+call_1075::
     ld a, [$c61c]
     ld e, a
     ld a, [$c61d]
@@ -1864,15 +1881,7 @@ jr_000_107c::
     ld b, a
     ld a, [$c61f]
     ld c, a
-    pushx @+$0006
-
-jr_000_1088::
-    pushx @+$f0d2
-
-jr_000_108b:
-    ret
-
-
+    callx call_015b
     ld a, e
 
 jr_000_108d::
@@ -1884,6 +1893,7 @@ jr_000_1091::
     ret
 
 
+call_1095:
     ld a, [$c618]
     ld e, a
     ld a, [$c619]
@@ -1892,7 +1902,7 @@ jr_000_1091::
     ld b, a
     ld a, [$c61b]
     ld c, a
-    callx @+$f0b2
+    callx call_015b
     ld a, e
     ld [$c627], a
     ld a, d
@@ -1900,6 +1910,7 @@ jr_000_1091::
     ret
 
 
+call_10b5:
     ld a, [$b2bb]
     ld e, a
     ld a, [$b2bc]
@@ -1908,7 +1919,7 @@ jr_000_1091::
     ld b, a
     ld a, [$b2be]
     ld c, a
-    callx @+$f092
+    callx call_015b
     ld a, e
     ld [$c629], a
     ld a, d
@@ -1916,6 +1927,7 @@ jr_000_1091::
     ret
 
 
+call_10d5:
     ldh a, [$8b]
     bit 5, a
     jr z, jr_000_1136
@@ -2039,7 +2051,7 @@ jr_000_118e::
 
 
 call_1191:
-    callx @+$f0c9
+    callx call_025e
     ldx hl, data_122c
     ld de, $0106
     trap DrawStringList
@@ -2062,7 +2074,7 @@ jr_000_11af::
     trap DrawString
     pop bc
     pop hl
-    callx @+$f0a8
+    callx call_026d
     inc b
     ld a, b
     cp c
@@ -2087,7 +2099,7 @@ jr_000_11db::
     trap DrawString
     pop bc
     pop hl
-    callx @+$f07c
+    callx call_026d
     inc b
     ld a, b
     cp c
@@ -2112,7 +2124,7 @@ jr_000_1207::
     trap DrawString
     pop bc
     pop hl
-    callx @+$f050
+    callx call_026d
     inc b
     ld a, b
     cp c
