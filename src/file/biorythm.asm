@@ -277,7 +277,7 @@ call_020a:
     ld d, b
     ld e, c
     ld bc, $0000
-    ldx hl, data_022e
+    ldx hl, ZodiacEndDates
 
 jr_000_0213::
     push bc
@@ -305,19 +305,19 @@ jr_000_0213::
     ret
 
 
-data_022e:
-    db $01, $13
-    db $02, $12
-    db $03, $14
-    db $04, $13
-    db $05, $14
-    db $06, $15
-    db $07, $16
-    db $08, $16
-    db $09, $16
-    db $0a, $17
-    db $0b, $17
-    db $0c, $15
+ZodiacEndDates:
+    db 1, 19   ; Capricorn
+    db 2, 18   ; Aquarius
+    db 3, 20   ; Pisces
+    db 4, 19   ; Aries
+    db 5, 20   ; Taurus
+    db 6, 21   ; Gemini
+    db 7, 22   ; Cancer
+    db 8, 22   ; Leo
+    db 9, 22   ; Virgo
+    db 10, 23  ; Libra
+    db 11, 23  ; Scorpius
+    db 12, 21  ; Sagittarius
 
 
 call_0246:
@@ -618,17 +618,17 @@ call_03e8:
     bit 6, a
     jr z, jr_000_0406
 
-    ld hl, $07e9
+    ld hl, 2025
     ld c, $08
     trap MathCmp16
     ld a, l
     cp $00
     jr z, jr_000_03ff
 
-    ld de, $0793
+    ld de, 1939
 
 jr_000_03ff::
-    ld hl, $0001
+    ld hl, 1
     trap MathAdd16
     ld d, h
     ld e, l
@@ -645,10 +645,10 @@ jr_000_0406::
     cp $00
     jr z, jr_000_041b
 
-    ld de, $07ea
+    ld de, 2026
 
 jr_000_041b::
-    ld hl, $0001
+    ld hl, 1
     trap MathSub16
     ld d, h
     ld e, l
@@ -1348,11 +1348,11 @@ call_09ef:
     inc h
     ld l, $03
     trap DrawAt
-    ld a, $3a
+    ld a, ":"
     trap DrawChar
     ld l, $0f
     trap DrawAt
-    ld a, $3a
+    ld a, ":"
     trap DrawChar
     ret
 
@@ -1382,7 +1382,7 @@ jr_000_0a4c::
     add $09
     ld l, a
     trap DrawAt
-    ld a, $50
+    ld a, "P"
     trap DrawChar
     ld a, l
     cp $09
@@ -1462,7 +1462,7 @@ jr_000_0ac9::
     add $09
     ld l, a
     trap DrawAt
-    ld a, $53
+    ld a, "S"
     trap DrawChar
     ld a, l
     cp $09
@@ -1540,7 +1540,7 @@ jr_000_0b4b::
     add $09
     ld l, a
     trap DrawAt
-    ld a, $49
+    ld a, "I"
     trap DrawChar
     ld a, l
     cp $09
@@ -1667,7 +1667,7 @@ data_0c06:
 
 call_0d40:
     callx call_025e
-    ldx hl, $0e5a
+    ldx hl, data_0e5a
     ld de, $0105
     trap DrawStringList
     ld hl, $0306
@@ -1823,48 +1823,48 @@ data_0e5a:
     db $00
 
 data_0f09:
-    dh "やぎざ　　\0"
-    dh "みずがめ　\0"
-    dh "うおざ　　　\0"
-    dh "おひつじざ\0"
-    dh "おうしざ　　\0"
-    dh "ふたござ　\0"
-    dh "かにざ　　　\0"
-    dh "ししざ　　　\0"
-    dh "おとめざ　　\0"
-    dh "てんびんざ\0"
-    dh "さそりざ　　\0"
-    dh "いてざ　　　\0"
+    dh "やぎざ　　\0"    ; Capricorn
+    dh "みずがめ　\0"    ; Aquarius
+    dh "うおざ　　　\0"  ; Pisces
+    dh "おひつじざ\0"    ; Aries
+    dh "おうしざ　　\0"  ; Taurus
+    dh "ふたござ　\0"    ; Gemini
+    dh "かにざ　　　\0"  ; Cancer
+    dh "ししざ　　　\0"  ; Leo
+    dh "おとめざ　　\0"  ; Virgo
+    dh "てんびんざ\0"    ; Libra
+    dh "さそりざ　　\0"  ; Scorpius
+    dh "いてざ　　　\0"  ; Sagittarius
 
 data_0f69:
-    dh "げつ\0"
-    dh "か　　\0"
-    dh "すい　\0"
-    dh "もく　\0"
-    dh "きん　\0"
-    dh "ど　\0"
-    dh "にち　\0"
+    dh "げつ\0"    ; Monday
+    dh "か　　\0"  ; Tuesday
+    dh "すい　\0"  ; Wednesday
+    dh "もく　\0"  ; Thursday
+    dh "きん　\0"  ; Friday
+    dh "ど　\0"    ; Saturday
+    dh "にち　\0"  ; Sunday
 
 data_0f85:
     dh "　　　　　　　　　　　\0"
     dh "　　　　　　　　　　　\0"
     dh "　　　　　　　　　　　\0"
     dh "　　　　　　　　　　　\0"
-    dh "ようちえん　ねんしょう\0"
-    dh "ようちえん　ねんちゅう\0"
-    dh "ようちえん　ねんちょう\0"
-    dh "しょうがく１ねんせい\0"
-    dh "しょうがく２ねんせい\0"
-    dh "しょうがく３ねんせい\0"
-    dh "しょうがく４ねんせい\0"
-    dh "しょうがく５ねんせい\0"
-    dh "しょうがく６ねんせい\0"
-    dh "ちゅうがく１ねんせい\0"
-    dh "ちゅうがく２ねんせい\0"
-    dh "ちゅうがく３ねんせい\0"
-    dh "こうこう１ねんせい　　\0"
-    dh "こうこう２ねんせい　　\0"
-    dh "こうこう３ねんせい　　\0"
+    dh "ようちえん　ねんしょう\0"  ; Kindergarten (low)
+    dh "ようちえん　ねんちゅう\0"  ; Kindergarten (mid)
+    dh "ようちえん　ねんちょう\0"  ; Kindergarten (high)
+    dh "しょうがく１ねんせい\0"    ; Elementary 1st year
+    dh "しょうがく２ねんせい\0"    ; Elementary 2nd year
+    dh "しょうがく３ねんせい\0"    ; Elementary 3rd year
+    dh "しょうがく４ねんせい\0"    ; Elementary 4th year
+    dh "しょうがく５ねんせい\0"    ; Elementary 5th year
+    dh "しょうがく６ねんせい\0"    ; Elementary 6th year
+    dh "ちゅうがく１ねんせい\0"    ; Middle 1st year
+    dh "ちゅうがく２ねんせい\0"    ; Middle 2nd year
+    dh "ちゅうがく３ねんせい\0"    ; Middle 3rd year
+    dh "こうこう１ねんせい　　\0"  ; High 1st year
+    dh "こうこう２ねんせい　　\0"  ; High 2nd year
+    dh "こうこう３ねんせい　　\0"  ; High 3rd year
     dh "　　　　　　　　　　　\0"
 
 
