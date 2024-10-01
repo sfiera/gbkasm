@@ -2937,7 +2937,7 @@ jr_b1ab::
 
 jr_b1f1::
     ld hl, $00c8
-    trap $8a
+    trap MathDiv16
     ld a, $07
     add l
 
@@ -3505,7 +3505,7 @@ call_b92c:
     ld a, [$cf04]
     ld d, a
     ld hl, $0064
-    trap $8a
+    trap MathDiv16
     ld a, [$c3b0]
     ld e, a
     ld a, [$c3b1]
@@ -4065,7 +4065,7 @@ jr_bcbf::
     ld d, a
     ld l, $02
     ld h, $00
-    trap $89
+    trap MathMul16
     ld a, [$d09e]
     ld e, a
     ld a, [$d09f]
@@ -4093,7 +4093,7 @@ jr_bcbf::
     ld d, a
     ld l, $02
     ld h, $00
-    trap $89
+    trap MathMul16
     ld a, [$d09e]
     ld e, a
     ld a, [$d09f]
@@ -4126,7 +4126,7 @@ jr_bd29::
     ld d, a
     ld l, $02
     ld h, $00
-    trap $89
+    trap MathMul16
     ld a, [$d09e]
     ld e, a
     ld a, [$d09f]
@@ -4154,7 +4154,7 @@ jr_bd29::
     ld d, a
     ld l, $02
     ld h, $00
-    trap $89
+    trap MathMul16
     ld a, [$d09e]
     ld e, a
     ld a, [$d09f]

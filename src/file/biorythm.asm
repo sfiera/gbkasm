@@ -128,10 +128,8 @@ call_0126:
 
 call_012d:
     push de
-    ld hl, $0190
-
-jr_000_0131::
-    trap $8a
+    ld hl, 400
+    trap MathDiv16
     ld a, [$c3b0]
     pop de
     cp $00
@@ -139,16 +137,16 @@ jr_000_0131::
     ret z
 
     push de
-    ld hl, $0064
-    trap $8a
+    ld hl, 100
+    trap MathDiv16
     ld a, [$c3b0]
     pop de
     cp $00
     ld a, $00
     ret z
 
-    ld hl, $0004
-    trap $8a
+    ld hl, 4
+    trap MathDiv16
     ld a, [$c3b0]
     cp $00
     ld a, $00
@@ -161,16 +159,16 @@ jr_000_0131::
 call_015b:
     push de
     push bc
-    ld hl, $0794
+    ld hl, 1940
     trap MathSub16
     push hl
-    ld de, $016d
-    trap $89
+    ld de, 365
+    trap MathMul16
     pop de
     push hl
-    ld hl, $0004
-    trap $8a
-    ld de, $0001
+    ld hl, 4
+    trap MathDiv16
+    ld de, 1
     trap MathAdd16
     pop de
     trap MathAdd16
@@ -236,8 +234,8 @@ call_01c8:
     trap MathSub16
     ld d, h
     ld e, l
-    ld hl, $0007
-    trap $8a
+    ld hl, 7
+    trap MathDiv16
     ld a, [$c3b0]
     ret
 
@@ -640,7 +638,7 @@ jr_000_0406::
     bit 7, a
     jr z, jr_000_0422
 
-    ld hl, $0794
+    ld hl, 1940
     ld c, $08
     trap MathCmp16
     ld a, l
@@ -1360,12 +1358,12 @@ call_09ef:
 
 
 call_0a2e:
-    ld hl, $0017
+    ld hl, 23
     ld a, [$c621]
     ld e, a
     ld a, [$c622]
     ld d, a
-    trap $8a
+    trap MathDiv16
     ld b, $00
     ld a, [$c3b0]
     ld c, a
@@ -1440,12 +1438,12 @@ data_0a94:
 
 
 call_0aab:
-    ld hl, $001c
+    ld hl, 28
     ld a, [$c621]
     ld e, a
     ld a, [$c622]
     ld d, a
-    trap $8a
+    trap MathDiv16
     ld b, $00
     ld a, [$c3b0]
     ld c, a
@@ -1518,12 +1516,12 @@ data_0b11:
     db $00, $02, $03, $04, $05, $05, $05, $05, $05, $04, $03, $02, $01, $00
 
 call_0b2d:
-    ld hl, $0021
+    ld hl, 33
     ld a, [$c621]
     ld e, a
     ld a, [$c622]
     ld d, a
-    trap $8a
+    trap MathDiv16
     ld b, $00
     ld a, [$c3b0]
     ld c, a
@@ -1743,7 +1741,7 @@ jr_000_0dc2::
     ld l, a
     ld h, $00
     ld de, $000c
-    trap $89
+    trap MathMul16
     ld b, h
     ld c, l
     ldx hl, data_0f85

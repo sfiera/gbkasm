@@ -1357,9 +1357,9 @@ jr_001_48af:
     ld d, $00
     ld hl, $001e
     push hl
-    trap $8a
+    trap MathDiv16
     pop de
-    trap $89
+    trap MathMul16
     ld a, l
     pop hl
     jr jr_001_48c4

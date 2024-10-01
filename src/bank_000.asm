@@ -746,7 +746,7 @@ Jump_000_0309:
     ld l, [hl]
     ld h, d
     push hl
-    trap $8a
+    trap MathDiv16
     pop hl
     ld a, [$c3b0]
     ld h, a

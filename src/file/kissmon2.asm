@@ -1924,7 +1924,7 @@ call_ae5c:
     trap RandNext
     ld l, a
     ld h, $00
-    trap $89
+    trap MathMul16
     ld a, h
     pop bc
     pop de
@@ -1947,7 +1947,7 @@ call_ae6e:
     ld h, $00
     ld bc, $0080
     add hl, bc
-    trap $89
+    trap MathMul16
     ld a, h
     pop bc
     pop de
@@ -2603,7 +2603,7 @@ call_b2b1:
     ld e, a
     ld d, $00
     ld hl, $0090
-    trap $89
+    trap MathMul16
     ld de, data_b2c0
     add hl, de
     ld e, l

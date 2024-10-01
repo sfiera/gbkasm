@@ -892,7 +892,7 @@ jr_000_0666::
     ldh a, [$c7]
     ld l, a
     ld h, $00
-    trap $89
+    trap MathMul16
     ld e, l
     ld d, h
     pop bc

@@ -533,7 +533,7 @@ jr_000_0967::
     push hl
     ld hl, $000f
     pop de
-    trap $89
+    trap MathMul16
     push hl
     ld hl, $c644
     ld l, [hl]
@@ -543,7 +543,7 @@ jr_000_0967::
     push hl
     ld hl, $0002
     pop de
-    trap $89
+    trap MathMul16
     push hl
     ld hl, $0001
     pop de
@@ -1078,7 +1078,7 @@ jr_000_0c96::
     push hl
     ld hl, $0020
     pop de
-    trap $89
+    trap MathMul16
     pop de
     add hl, de
     push hl
@@ -1095,7 +1095,7 @@ jr_000_0c96::
     push hl
     ld hl, $0014
     pop de
-    trap $89
+    trap MathMul16
     pop de
     add hl, de
     push hl
@@ -1615,7 +1615,7 @@ jr_000_0ff2::
     ld l, [hl]
     ld h, $00
     pop de
-    trap $89
+    trap MathMul16
     push hl
     ld hl, $c652
     pop de
@@ -1910,7 +1910,7 @@ call_11e8:
     push hl
     ld hl, $000f
     pop de
-    trap $89
+    trap MathMul16
     push hl
     ld hl, $c644
     ld l, [hl]
@@ -2046,7 +2046,7 @@ jp_12a8:
     ld l, [hl]
     ld h, $00
     pop de
-    trap $8a
+    trap MathDiv16
     push hl
     ld hl, $c65c
     pop de
@@ -2261,7 +2261,7 @@ jp_138d::
     push hl
     ld hl, $000f
     pop de
-    trap $8a
+    trap MathDiv16
     ld hl, $c3b0
     ld a, [hl+]
     ld h, [hl]
@@ -2277,7 +2277,7 @@ jp_138d::
     push hl
     ld hl, $0009
     pop de
-    trap $8a
+    trap MathDiv16
     ld hl, $c3b0
     ld a, [hl+]
     ld h, [hl]
@@ -2294,7 +2294,7 @@ jp_138d::
     push hl
     ld hl, $000f
     pop de
-    trap $89
+    trap MathMul16
     push hl
     ld hl, $c644
     ld l, [hl]
@@ -2304,7 +2304,7 @@ jp_138d::
     push hl
     ld hl, $0002
     pop de
-    trap $89
+    trap MathMul16
     push hl
     ld hl, $0001
     pop de

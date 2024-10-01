@@ -22,8 +22,8 @@ traps2::
     dw trap_86_52c8         ; trap $86
     dw TrapMathAdd16        ; trap $87
     dw TrapMathSub16        ; trap $88
-    dw trap_89_52e7         ; trap $89
-    dw trap_8a_5322         ; trap $8a
+    dw TrapMathMul16        ; trap $89
+    dw TrapMathDiv16        ; trap $8a
     dw TrapMathNeg16        ; trap $8b
     dw TrapMathAbs16        ; trap $8c
     dw TrapRandInit         ; trap $8d
@@ -2078,9 +2078,9 @@ jr_002_4adf:
     inc hl
     ld d, [hl]
     ld hl, $000a
-    trap $8a
+    trap MathDiv16
     ld de, $000a
-    trap $89
+    trap MathMul16
     ld e, l
     ld d, h
     ld hl, sp+$02
@@ -4044,7 +4044,7 @@ TrapMathSub16::
     ret
 
 
-trap_89_52e7::
+TrapMathMul16::
     ld a, h
     or l
     ret z
@@ -4108,7 +4108,7 @@ trap_89_52e7::
 
     jr jr_002_5378
 
-trap_8a_5322::
+TrapMathDiv16::
     ld a, h
     or l
     jr nz, .jr_002_532e
@@ -4995,7 +4995,7 @@ trap_c5_56c4::
     ld h, $00
     ld d, h
     ld e, c
-    trap $89
+    trap MathMul16
     ld b, l
     pop af
     call trap_c6_5730

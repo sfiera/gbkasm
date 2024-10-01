@@ -134,7 +134,7 @@ jr_000_00cb::
     ld d, $00
     ld e, a
     ld hl, $000d
-    trap $8a
+    trap MathDiv16
     ld a, [$c3b0]
     swap l
     or l
@@ -876,7 +876,7 @@ jr_000_05e4::
     ld d, $00
     ld e, a
     ld hl, $0019
-    trap $8a
+    trap MathDiv16
     ld a, [$c3b0]
     ret
 

@@ -1414,7 +1414,7 @@ call_0bfc:
     trap RandNext
     ld l, a
     ld h, $00
-    trap $89
+    trap MathMul16
     ld a, h
     pop bc
     pop de
@@ -1437,7 +1437,7 @@ call_0c0e:
     ld h, $00
     ld bc, $0080
     add hl, bc
-    trap $89
+    trap MathMul16
     ld a, h
     pop bc
     pop de
@@ -1555,7 +1555,7 @@ call_0cf8:
     ld e, a
     ld d, $00
     ld hl, $0090
-    trap $89
+    trap MathMul16
     ldx de, data_0d0f
     add hl, de
     ld e, l

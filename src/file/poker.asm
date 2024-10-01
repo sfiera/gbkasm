@@ -2224,7 +2224,7 @@ jr_000_10f3::
     ld e, a
     ld h, $00
     ld l, $34
-    trap $8a
+    trap MathDiv16
     ld a, [$c3b0]
     ld b, a
     push bc
@@ -2233,7 +2233,7 @@ jr_000_10f3::
     ld e, a
     ld h, $00
     ld l, $34
-    trap $8a
+    trap MathDiv16
     ld a, [$c3b0]
     pop bc
     ld c, a

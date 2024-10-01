@@ -1026,7 +1026,7 @@ jr_000_089e::
     ld h, $00
     ld l, $1e
     push bc
-    trap $8a
+    trap MathDiv16
     pop bc
     ld a, [$c3b0]
     add $0a
@@ -1042,7 +1042,7 @@ jr_000_08c5::
     ld h, $00
     ld l, $14
     push bc
-    trap $8a
+    trap MathDiv16
     pop bc
     ld a, [$c3b0]
     add $0a
@@ -1055,7 +1055,7 @@ jr_000_08dc::
     ld h, $00
     ld l, $0a
     push bc
-    trap $8a
+    trap MathDiv16
     pop bc
     ld a, [$c3b0]
     add $05
@@ -1068,7 +1068,7 @@ jr_000_08ed::
     ld h, $00
     ld l, $06
     push bc
-    trap $8a
+    trap MathDiv16
     pop bc
     ld a, [$c3b0]
     add $00
@@ -1177,7 +1177,7 @@ jr_000_0967::
     ld h, $00
     ld l, c
     push bc
-    trap $8a
+    trap MathDiv16
     pop bc
     ld a, [$c3b0]
     add b
@@ -1290,7 +1290,7 @@ call_a9e8:
     ld h, $00
     ld l, c
     push bc
-    trap $8a
+    trap MathDiv16
     pop bc
     ld a, [$c3b0]
     add b
