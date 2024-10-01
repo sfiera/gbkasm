@@ -80,6 +80,7 @@ DEF DrawCtrlChar      EQU $b9
 DEF DrawChar          EQU $bb
 DEF InputHiliteMenu   EQU $bf
 
+DEF AwaitBlit         EQU $c3
 DEF TimerSet          EQU $cb  ; h → TAC; l → TMA; TACF_START? → IEF_TIMER?
 
 DEF InputButtons      EQU $d8

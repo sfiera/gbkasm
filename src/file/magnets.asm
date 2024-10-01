@@ -2837,7 +2837,7 @@ jr_b113::
     call call_abfe
     call call_ab4c
     call call_ac57
-    trap $c3
+    trap AwaitBlit
     call call_b067
     call call_b27d
     call call_a3db

@@ -2333,7 +2333,7 @@ strGBKissMenu:
     dp "GB KISS MENU "
 
 Call_000_0cff:
-    trap $c3
+    trap AwaitBlit
     trap IRRead
     jr jr_000_0d3b
 
@@ -2342,38 +2342,38 @@ Call_000_0d05:
     ld de, $ce00
     ld hl, $c800
     ld c, $01
-    trap $c3
+    trap AwaitBlit
     trap IRWrite
     jr jr_000_0d3b
 
 Call_000_0d16:
-    trap $c3
+    trap AwaitBlit
     trap IRClose
     jr jr_000_0d3b
 
     ld hl, $c700
-    trap $c3
+    trap AwaitBlit
     trap IR06
     jr jr_000_0d3b
 
 Call_000_0d25:
 Jump_000_0d25:
-    trap $c3
+    trap AwaitBlit
     trap IR0A
     jr jr_000_0d3b
 
 Call_000_0d2b:
-    trap $c3
+    trap AwaitBlit
     trap IR04
     jr jr_000_0d3b
 
 Call_000_0d31:
-    trap $c3
+    trap AwaitBlit
     trap IRFileWrite
     jr jr_000_0d3b
 
 Call_000_0d37:
-    trap $c3
+    trap AwaitBlit
     trap IRFileSearch
 
 jr_000_0d3b:

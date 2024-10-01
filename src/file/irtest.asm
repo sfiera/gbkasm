@@ -70,7 +70,7 @@ Menu:
 Receive:
     ldx hl, LayoutReceiving
     trap DrawLayout
-    trap $c3
+    trap AwaitBlit
 
     ; Set up the identifying code where the remote device expects it.
     ld hl, VarIRCode
@@ -129,7 +129,7 @@ Error:
 Send:
     ldx hl, LayoutSending
     trap DrawLayout
-    trap $c3
+    trap AwaitBlit
 
     ; Read the identifying code from the remote device.
     ld hl, VarIRCode

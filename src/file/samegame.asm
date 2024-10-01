@@ -374,16 +374,16 @@ call_03b7:
     ld [hl], a
     callx call_041f
     callx call_057d
-    trap $c3
+    trap AwaitBlit
     callx call_0486
     callx call_0514
     callx call_057d
-    trap $c3
+    trap AwaitBlit
     callx call_0445
     jr nc, .jr_041d
     callx call_0514
     callx call_057d
-    trap $c3
+    trap AwaitBlit
 .jr_041d
     scf
     ret

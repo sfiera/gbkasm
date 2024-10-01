@@ -80,7 +80,7 @@ traps2::
     dw trap_c0_5de2         ; trap $c0
     dw trap_c1_5e08         ; trap $c1
     dw trap_c2_69ee         ; trap $c2
-    dw trap_c3_4eaf         ; trap $c3
+    dw TrapAwaitBlit        ; trap $c3
     dw trap_c4_58c4         ; trap $c4
     dw trap_c5_56c4         ; trap $c5
     dw trap_c6_5730         ; trap $c6
@@ -2924,12 +2924,12 @@ jr_002_4eab:
     pop af
     call Call_002_4eb8
 
-trap_c3_4eaf::
+TrapAwaitBlit::
     ei
     halt
     ldh a, [$89]
     or a
-    jr nz, trap_c3_4eaf
+    jr nz, TrapAwaitBlit
 
     ret
 
@@ -5386,7 +5386,7 @@ TrapLCDDisable::
     ret z
 
     ei
-    call trap_c3_4eaf
+    call TrapAwaitBlit
     call Call_002_58e1
     ei
     ret

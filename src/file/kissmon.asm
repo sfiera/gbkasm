@@ -60,7 +60,7 @@ Main::
     ld bc, $0303
     trap $c5
     trap AwaitFrame
-    trap $c3
+    trap AwaitBlit
     trap AudioStop
     callx call_07cc
     jr c, .jr_0161

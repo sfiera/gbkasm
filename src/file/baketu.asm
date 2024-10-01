@@ -121,7 +121,7 @@ Receive:
 .jr_0194
     ldx hl, LayoutWaitToReceive
     trap DrawLayout
-    trap $c3
+    trap AwaitBlit
 .retry
     ld hl, var_ccc1
     ld [hl], IR_ID0
@@ -170,7 +170,7 @@ Receive:
 Transmit:
     ldx hl, LayoutSending
     trap DrawLayout
-    trap $c3
+    trap AwaitBlit
     ld a, $78
     trap AwaitButton
     ld a, $03

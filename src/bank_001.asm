@@ -481,7 +481,7 @@ jr_001_4358:
 
 
 Call_001_435f:
-    trap $c3
+    trap AwaitBlit
     trap IRListen
     ld a, [$ce00]
     push af
@@ -493,7 +493,7 @@ Call_001_435f:
 
 
 Call_001_4370:
-    trap $c3
+    trap AwaitBlit
     trap IRRead
     jr jr_001_43ac
 
@@ -503,18 +503,18 @@ Call_001_4376:
     ld d, h
     ld e, l
     ld c, $01
-    trap $c3
+    trap AwaitBlit
     trap IRWrite
     jr jr_001_43ac
 
 Call_001_4384:
-    trap $c3
+    trap AwaitBlit
     trap IRClose
     jr jr_001_43ac
 
 Call_001_438a:
     ld hl, $c700
-    trap $c3
+    trap AwaitBlit
     trap IR06
     jr jr_001_43ac
 
@@ -522,22 +522,22 @@ Call_001_4393:
     ld de, $c600
 
 Jump_001_4396:
-    trap $c3
+    trap AwaitBlit
     trap IR0A
     jr jr_001_43ac
 
 Call_001_439c:
-    trap $c3
+    trap AwaitBlit
     trap IR04
     jr jr_001_43ac
 
 Call_001_43a2:
-    trap $c3
+    trap AwaitBlit
     trap IRFileWrite
     jr jr_001_43ac
 
 Call_001_43a8:
-    trap $c3
+    trap AwaitBlit
     trap IRFileSearch
 
 jr_001_43ac:
@@ -2982,7 +2982,7 @@ Jump_001_6071:
     call Call_001_5f89
     ld a, $01
     trap $cc
-    trap $c3
+    trap AwaitBlit
     call Call_001_611d
     jr c, jr_001_60b0
 
@@ -3028,7 +3028,7 @@ Jump_001_60ba:
 jr_001_60c9:
     ld a, $11
     call Call_001_5f89
-    trap $c3
+    trap AwaitBlit
     ld de, data_01_661d
     ld hl, $c6d5
     ld bc, $000a
