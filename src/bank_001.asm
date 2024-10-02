@@ -1216,11 +1216,13 @@ Jump_001_47eb:
     ld hl, data_01_47da
     ld a, $1c
     trap $60
-    jr @+$07
+    jr jr_001_4811
 
 jr_001_480c:
     ld bc, $041c
     trap $c4
+
+jr_001_4811:
     call Call_001_479d
 
 Jump_001_4814:
