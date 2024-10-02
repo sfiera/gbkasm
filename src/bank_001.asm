@@ -83,10 +83,10 @@ traps1::
     dw TrapIRFileNext       ; $78
     dw TrapIRFileDelete     ; $79
     dw TrapIR07             ; $7a
-    dw TrapIR09             ; $7b
+    dw TrapIRReadSRAM       ; $7b
     dw TrapIRRead           ; $7c
     dw TrapIR0A             ; $7d
-    dw TrapIR0C             ; $7e
+    dw TrapIRWriteSRAM      ; $7e
     dw TrapIRWrite          ; $7f
 
 j01_4100::

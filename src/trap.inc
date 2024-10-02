@@ -43,10 +43,10 @@ DEF IR04              EQU $77
 DEF IRFileNext        EQU $78
 DEF IR06              EQU $79
 DEF IR07              EQU $7a
-DEF IR09              EQU $7b
+DEF IRReadSRAM        EQU $7b
 DEF IRRead            EQU $7c
 DEF IR0A              EQU $7d
-DEF IR0C              EQU $7e
+DEF IRWriteSRAM       EQU $7e
 DEF IRWrite           EQU $7f
 
 DEF MathXor16         EQU $80  ; hl ^= de

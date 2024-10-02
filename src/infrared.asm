@@ -12,13 +12,13 @@ INCLUDE "trap.inc"
 
 SECTION "ROM Infrared", ROMX[$68a9], BANK[$1]
 
-Call_001_68a9:
+SetSRAMBank:
     ldh [hRAMBank], a
     ld [rRAMBank], a
     ret
 
 
-Call_001_68af:
+TestIR:
     dec c
     jr z, .jr_001_68b6
 
@@ -32,7 +32,7 @@ Call_001_68af:
     ret
 
 
-SendIRByte1:
+SendIRSyncByte:
     ld c, 8
 
 .nextBit
@@ -61,7 +61,7 @@ SendIRByte1:
     ret
 
 
-RecvIRByte1:
+RecvIRSyncByte:
     ld b, $00
 
 .nextBit
@@ -100,7 +100,7 @@ RecvIRByte1:
     ret
 
 
-SendIRByte2:
+SendIRByte:
     push hl
     push de
     push bc
@@ -110,7 +110,7 @@ SendIRByte2:
     ld c, $00
 
 .jr_001_6907
-    call Call_001_68af
+    call TestIR
     jr c, DisableIRAndReportFailure
 
     jr z, .jr_001_6907
@@ -123,7 +123,7 @@ SendIRByte2:
     ld c, $00
 
 .jr_001_6916
-    call Call_001_68af
+    call TestIR
     jr c, DisableIRAndReportFailure
 
     jr nz, .jr_001_6916
@@ -159,7 +159,7 @@ SendIRByte2:
     ret
 
 
-RecvIRByte2:
+RecvIRByte:
     push hl
     push de
     push bc
@@ -168,7 +168,7 @@ RecvIRByte2:
     ld [hl], $00
 
 .jr_001_6946
-    call Call_001_68af
+    call TestIR
     jr c, DisableIRAndReportFailure
 
     jr z, .jr_001_6946
@@ -177,7 +177,7 @@ RecvIRByte2:
     ld c, $00
 
 .jr_001_6951
-    call Call_001_68af
+    call TestIR
     jr c, DisableIRAndReportFailure
 
     jr nz, .jr_001_6951
@@ -190,7 +190,7 @@ RecvIRByte2:
     ld c, $08
     ld b, $00
 
-.jr_001_6962:
+.jr_001_6962
     inc b
     jr z, DisableIRAndReportFailure
 
@@ -211,7 +211,7 @@ RecvIRByte2:
     ld c, $00
 
 .jr_001_6979
-    call Call_001_68af
+    call TestIR
     jr c, DisableIRAndReportFailure
 
     jr nz, .jr_001_6979
@@ -300,8 +300,8 @@ SendIRHandshake:
     jr z, ReportIRFailure
 
     ld a, $aa
-    call SendIRByte1
-    call RecvIRByte1
+    call SendIRSyncByte
+    call RecvIRSyncByte
     cp $55
     jr nz, .retry
 
@@ -310,8 +310,8 @@ SendIRHandshake:
     jr z, ReportIRFailure
 
     ld a, $c3
-    call SendIRByte1
-    call RecvIRByte1
+    call SendIRSyncByte
+    call RecvIRSyncByte
     cp $3c
     jr nz, .retry
 
@@ -320,7 +320,7 @@ SendIRHandshake:
 
 
 ; Read %10101010 and write %01010101
-; Read %11001100 and write %00110011
+; Read %11000011 and write %00111100
 ReceiveIRHandshake:
     ld hl, rIR
 
@@ -329,22 +329,22 @@ ReceiveIRHandshake:
     bit 1, a
     jr z, ReportIRFailure
 
-    call RecvIRByte1
+    call RecvIRSyncByte
     cp $aa
     jr nz, .retry
 
     ld a, $55
-    call SendIRByte1
+    call SendIRSyncByte
     ldh a, [rP1]
     bit 1, a
     jr z, ReportIRFailure
 
-    call RecvIRByte1
+    call RecvIRSyncByte
     cp $c3
     jr nz, .retry
 
     ld a, $3c
-    call SendIRByte1
+    call SendIRSyncByte
     xor a
     ret
 
@@ -358,9 +358,9 @@ SendIRRegisters:
     jr c, ReportIRFailureLong
 
     ld a, IR_ID0
-    call SendIRByte2
+    call SendIRByte
     ld a, IR_ID1
-    call SendIRByte2
+    call SendIRByte
     ld hl, $c0f8
     ld c, $08
     jp SendIRRange
@@ -371,11 +371,11 @@ RecvIRRegisters:
     call ReceiveIRHandshake
     jr c, ReportIRFailureLong
 
-    call RecvIRByte2
+    call RecvIRByte
     cp IR_ID0
     jr nz, .retry
 
-    call RecvIRByte2
+    call RecvIRByte
     cp IR_ID1
     jr nz, .retry
 
@@ -392,8 +392,8 @@ SendIRRange:
     add [hl]
     ld b, a
     ld a, [hl+]
-    call SendIRByte2
-    jr c, .jr_001_6a57
+    call SendIRByte
+    jr c, .done
 
     dec c
     jr nz, .nextByte
@@ -401,9 +401,9 @@ SendIRRange:
     ld a, b
     cpl
     inc a
-    call SendIRByte2
+    call SendIRByte
 
-.jr_001_6a57
+.done
     ret
 
 
@@ -411,7 +411,7 @@ RecvIRRange:
     ld b, $00
 
 .jr_001_6a5a
-    call RecvIRByte2
+    call RecvIRByte
     jr c, ReportIRFailureLong
 
     ld [hl+], a
@@ -420,7 +420,7 @@ RecvIRRange:
     dec c
     jr nz, .jr_001_6a5a
 
-    call RecvIRByte2
+    call RecvIRByte
     add b
     or a
     jr nz, ReportIRFailureLong
@@ -513,10 +513,10 @@ IRCommands:
     dw IRCmdFileDelete  ;
     dw IRCmd07          ; trap $eb
     dw IRCmdRead        ; WRAM; ROM?
-    dw IRCmd09          ; SRAM read?
+    dw IRCmdReadSRAM    ; SRAM read
     dw IRCmd0A          ; trap $ec
     dw IRCmdWrite       ; WRAM; ROM?
-    dw IRCmd0C          ; SRAM write?
+    dw IRCmdWriteSRAM   ; SRAM write
 .end
 
 IRRespondRegisters:
@@ -594,7 +594,7 @@ IRCmd04:
 
 
 IRCmd07:
-    call Call_001_6b54
+    call PrepareFileRange
     push bc
     trap $eb
     call EnableIRMode
@@ -606,7 +606,12 @@ IRCmd07:
     jp SendIRRange
 
 
-Call_001_6b54:
+; Sets up the following register values:
+; af: from sent af
+; hl: $c500
+; de: $c400
+; bc: from sent c (if c is 0, set bc to $100)
+PrepareFileRange:
     call RestoreRegisters
     ld b, $00
     inc c
@@ -627,7 +632,7 @@ IRCmd0A:
     call RecvIRRange
     ret c
 
-    call Call_001_6b54
+    call PrepareFileRange
     trap $ec
     call EnableIRMode
     jp IRRespondRegisters
@@ -663,11 +668,11 @@ IRCmdRead:
     jp SendIRRange
 
 
-IRCmd09:
+IRCmdReadSRAM:
     ldh a, [hRAMBank]
     push af
     call RestoreRegisters
-    call Call_001_6c05
+    call MapSRAMAddress
     ld de, $c400
     call DisableIRMode
     push de
@@ -688,7 +693,7 @@ IRCmd09:
     pop hl
     call SendIRRange
     pop af
-    jp Call_001_68a9
+    jp SetSRAMBank
 
 
 IRCmdWrite:
@@ -704,13 +709,13 @@ Call_001_6bd2:
     jr c, .done
 
     sub b
-    call SendIRByte2
+    call SendIRByte
 
 .done
     ret
 
 
-IRCmd0C:
+IRCmdWriteSRAM:
     ldh a, [hRAMBank]
     push af
     call RestoreRegisters
@@ -724,7 +729,7 @@ IRCmd0C:
     pop de
     jr c, .jr_001_6c01
 
-    call Call_001_6c05
+    call MapSRAMAddress
     ld a, kIRReadWrite
     ld [rIRMode], a
 
@@ -739,10 +744,13 @@ IRCmd0C:
 
 .jr_001_6c01
     pop af
-    jp Call_001_68a9
+    jp SetSRAMBank
 
 
-Call_001_6c05:
+; Map a given SRAM address into memory.
+; Set the bank to ((hl & $E000) >> 13).
+; Then set hl to ((hl & $1FFF) | $A000).
+MapSRAMAddress:
     push hl
     ld a, b
     rl h
@@ -751,7 +759,7 @@ Call_001_6c05:
     rla
     rl h
     rla
-    call Call_001_68a9
+    call SetSRAMBank
     pop hl
     ld a, h
     and $1f
@@ -769,7 +777,7 @@ TrapIRClose::
 
 
 trap_74_6c28::
-    call Call_001_6c81
+    call RecvResponse
     jr c, FinishIRaf
 
     jr FinishIRRestoreRegisters
@@ -804,7 +812,7 @@ TrapIRFileWrite::
 
     call RestoreRegisters
     push hl
-    call Call_001_6c81
+    call RecvResponse
     pop hl
     jr c, FinishIRaf
 
@@ -818,7 +826,7 @@ TrapIRFileWrite::
 TrapIR04::
     ld a, $04
     call SendIRCommand
-    call Call_001_6c81
+    call RecvResponse
     jr c, FinishIRaf
 
     jr FinishIRRestoreRegisters
@@ -831,7 +839,7 @@ TrapIRFileDelete::
     call SendIRRange
     jr c, FinishIRaf
 
-    call Call_001_6c81
+    call RecvResponse
     jr c, FinishIRaf
 
     ; fall through
@@ -851,7 +859,7 @@ FinishIRaf:
     ret
 
 
-Call_001_6c81:
+RecvResponse:
     call ReceiveIRHandshake
     jr c, FinishIRaf
 
@@ -860,7 +868,7 @@ Call_001_6c81:
     jp RecvIRRange
 
 
-TrapIR09::
+TrapIRReadSRAM::
     ld a, $09
     jr TrapIRRead.jr_001_6c94
 
@@ -881,7 +889,7 @@ TrapIRRead::
     jr FinishIRaf
 
 
-TrapIR0C::
+TrapIRWriteSRAM::
     ld a, $0c
     jr TrapIRWrite.jr_001_6cab
 
@@ -894,7 +902,7 @@ TrapIRWrite::
     call SendIRRange
     jr c, FinishIRaf
 
-    call RecvIRByte2
+    call RecvIRByte
     jr c, FinishIRaf
 
     add b
@@ -919,7 +927,7 @@ TrapIR07::
     call SendIRCommand
     push de
     push bc
-    call Call_001_6c81
+    call RecvResponse
     pop bc
     pop hl
     jr c, FinishIRaf
@@ -938,7 +946,7 @@ TrapIR0A::
     call SendIRRange
     jr c, FinishIRaf
 
-    call Call_001_6c81
+    call RecvResponse
     jr c, FinishIRaf
 
     jr FinishIRRestoreRegisters

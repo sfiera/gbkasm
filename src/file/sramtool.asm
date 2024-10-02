@@ -346,7 +346,7 @@ call_03f6:
     xor a
     sub l
     ld c, a
-    trap IR09
+    trap IRReadSRAM
     ret
 
 
