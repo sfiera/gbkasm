@@ -504,19 +504,19 @@ RunIRCommand:
 
 
 IRCommands:
-    dw IRCmdClose       ;
-    dw IRCmd01          ; trap $e6
-    dw IRCmdFileSearch  ;
-    dw IRCmdFileWrite   ;
-    dw IRCmd04          ; trap $ea
-    dw IRCmdFileNext    ;
-    dw IRCmdFileDelete  ;
-    dw IRCmd07          ; trap $eb
-    dw IRCmdRead        ; WRAM; ROM?
-    dw IRCmdReadSRAM    ; SRAM read
-    dw IRCmd0A          ; trap $ec
-    dw IRCmdWrite       ; WRAM; ROM?
-    dw IRCmdWriteSRAM   ; SRAM write
+.close       dw IRCmdClose       ;
+.cmd01       dw IRCmd01          ; trap $e6
+.fileSearch  dw IRCmdFileSearch  ;
+.fileWrite   dw IRCmdFileWrite   ;
+.cmd04       dw IRCmd04          ; trap $ea
+.fileNext    dw IRCmdFileNext    ;
+.fileDelete  dw IRCmdFileDelete  ;
+.cmd07       dw IRCmd07          ; trap $eb
+.read        dw IRCmdRead        ; WRAM; ROM?
+.readSRAM    dw IRCmdReadSRAM    ; SRAM read
+.cmd0A       dw IRCmd0A          ; trap $ec
+.write       dw IRCmdWrite       ; WRAM; ROM?
+.writeSRAM   dw IRCmdWriteSRAM   ; SRAM write
 .end
 
 IRRespondRegisters:
@@ -770,7 +770,7 @@ MapSRAMAddress:
 
 TrapIRClose::
     call BeginIR
-    ld a, $00
+    ld a, (IRCommands.close - IRCommands) >> 1
     ld [$c0f9], a
     call SendIRRegisters
     jr FinishIRaf
@@ -784,7 +784,7 @@ trap_74_6c28::
 
 
 TrapIRFileSearch::
-    ld a, $02
+    ld a, (IRCommands.fileSearch - IRCommands) >> 1
     call SendIRCommand
     ld l, e
     ld h, d
@@ -792,12 +792,12 @@ TrapIRFileSearch::
 
 
 TrapIRFileNext::
-    ld a, $05
+    ld a, (IRCommands.fileNext - IRCommands) >> 1
     jr TrapIRFileWrite.sendCmd
 
 
 TrapIRFileWrite::
-    ld a, $03
+    ld a, (IRCommands.fileWrite - IRCommands) >> 1
 
 .sendCmd
     call SendIRCommand
@@ -824,7 +824,7 @@ TrapIRFileWrite::
 
 
 TrapIR04::
-    ld a, $04
+    ld a, (IRCommands.cmd04 - IRCommands) >> 1
     call SendIRCommand
     call RecvResponse
     jr c, FinishIRaf
@@ -833,7 +833,7 @@ TrapIR04::
 
 
 TrapIRFileDelete::
-    ld a, $06
+    ld a, (IRCommands.fileDelete - IRCommands) >> 1
     call SendIRCommand
     ld c, $00
     call SendIRRange
@@ -869,12 +869,12 @@ RecvResponse:
 
 
 TrapIRReadSRAM::
-    ld a, $09
+    ld a, (IRCommands.readSRAM - IRCommands) >> 1
     jr TrapIRRead.jr_001_6c94
 
 
 TrapIRRead::
-    ld a, $08
+    ld a, (IRCommands.read - IRCommands) >> 1
 
 .jr_001_6c94
     call SendIRCommand
@@ -890,12 +890,12 @@ TrapIRRead::
 
 
 TrapIRWriteSRAM::
-    ld a, $0c
+    ld a, (IRCommands.writeSRAM - IRCommands) >> 1
     jr TrapIRWrite.jr_001_6cab
 
 
 TrapIRWrite::
-    ld a, $0b
+    ld a, (IRCommands.write - IRCommands) >> 1
 
 .jr_001_6cab
     call SendIRCommand
@@ -923,7 +923,7 @@ FinishIRafLong:
 
 
 TrapIR07::
-    ld a, $07
+    ld a, (IRCommands.cmd07 - IRCommands) >> 1
     call SendIRCommand
     push de
     push bc
@@ -939,7 +939,7 @@ TrapIR07::
 
 
 TrapIR0A::
-    ld a, $0a
+    ld a, (IRCommands.cmd0A - IRCommands) >> 1
     call SendIRCommand
     ld l, e
     ld h, d
