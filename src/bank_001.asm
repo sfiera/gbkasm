@@ -12,22 +12,30 @@ INCLUDE "trap.inc"
 
 SECTION "ROM Bank $001", ROMX[$4000], BANK[$1]
 
-    dw $a55a, $0000, $a000
+KissMailRegionHeader:
+    db REGION_TYPE_ZEROFILE
+    db REGION_TYPE_ZEROFILE ^ $ff
+    dw $0000
+    dw $a000
 
+KissMailFileHeader:
     dw $001e
-    db $06
-    db $00
-    db $0a
-    db $01
+    db FILE_EXEC | FILE_A008
+    db CART_ANY      ; where file can run
+    db .end - @ - 1  ; length of variable parts of header
+    db $01           ; owner code
+.title
     dp "KISS MAIL"
+.end
+
+KissMailMain:
     jp Jump_001_5e9d
 
 data_01_4018:
-    db $00, $00
+    db "\0\0"
 
 data_01_401a:
-    dp "GB KISS MENU"
-    db $20, $00
+    dp "GB KISS MENU \0"
 
 data_01_4028:
     INCBIN "gfx/system/attrs.2bpp"
