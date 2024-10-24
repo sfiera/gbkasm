@@ -5935,7 +5935,7 @@ Call_001_7b2f:
     add a
     ld c, a
     ld b, $00
-    ld hl, data_01_7b47
+    ld hl, KeyboardNames
     add hl, bc
     ld c, $04
     ld e, $01
@@ -5943,9 +5943,12 @@ Call_001_7b2f:
     ret
 
 
-data_01_7b47::
-    db $7b, $87, $8e, $75, $b6, $c0, $b6, $c5, $31, $32, $33, $34, $41, $42, $43, $44
-    db $d2, $d3, $20, $20
+KeyboardNames:
+    dp "ひらがな"
+    dp "カタカナ"
+    dp "１２３４"
+    dp "ＡＢＣＤ"
+    dp "メモ　　"
 
 Call_001_7b5b:
     push de
