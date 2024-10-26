@@ -637,7 +637,7 @@ Jump_004_43b3{SUFFIX}:
     add a
     ld e, a
     ld d, $00
-    ld hl, $43cb
+    ld hl, .data_43cb
     add hl, de
     ld e, [hl]
     inc hl
@@ -648,117 +648,56 @@ Jump_004_43b3{SUFFIX}:
     jp hl
 
 
-    dec c
-    ld b, l
-    jr .jr_4414
+.data_43cb
+    dw code_04_450d
+    dw code_04_4518
+    dw code_04_4518
+    dw code_04_4518
+    dw code_04_4518
+    dw code_04_4518
+    dw code_04_4518
+    dw code_04_4530
+    dw code_04_4538
+    dw code_04_4540
+    dw code_04_4549
+    dw code_04_4554
+    dw code_04_456f
+    dw code_04_458a
+    dw code_04_4598
+    dw code_04_45a4
+    dw code_04_45b9
+    dw code_04_45d3
+    dw code_04_45da
+    dw code_04_45f1
+    dw code_04_4602
+    dw code_04_460f
+    dw code_04_461c
+    dw code_04_4629
+    dw code_04_4639
+    dw code_04_4646
+    dw code_04_4653
+    dw code_04_4660
+    dw code_04_466d
+    dw code_04_467a
+    dw code_04_4688
+    dw code_04_4688
+    dw code_04_4688
+    dw code_04_4688
+    dw code_04_4688
+    dw code_04_4688
+    dw code_04_4688
+    dw code_04_4688
+    dw code_04_4688
+    dw code_04_4688
+    dw code_04_4688
+    dw code_04_4688
+    dw code_04_4688
+    dw code_04_4688
+    dw code_04_4688
+    dw code_04_4688
+    dw code_04_4688
+    dw code_04_4688
 
-    jr .jr_4416
-
-    jr .jr_4418
-
-    jr .jr_441a
-
-    jr .jr_441c
-
-    jr .jr_441e
-
-    jr nc, .jr_4420
-
-    jr c, .jr_4422
-
-    ld b, b
-    ld b, l
-    ld c, c
-    ld b, l
-    ld d, h
-    ld b, l
-    ld l, a
-    ld b, l
-    adc d
-    ld b, l
-    sbc b
-    ld b, l
-    and h
-    ld b, l
-    cp c
-    ld b, l
-    db $d3
-    ld b, l
-    jp c, $f145
-
-    ld b, l
-    ld [bc], a
-    ld b, [hl]
-    rrca
-    ld b, [hl]
-    inc e
-    ld b, [hl]
-    add hl, hl
-    ld b, [hl]
-    add hl, sp
-    ld b, [hl]
-    ld b, [hl]
-    ld b, [hl]
-    ld d, e
-    ld b, [hl]
-    ld h, b
-    ld b, [hl]
-    ld l, l
-    ld b, [hl]
-    ld a, d
-    ld b, [hl]
-    adc b
-    ld b, [hl]
-    adc b
-    ld b, [hl]
-    adc b
-    ld b, [hl]
-    adc b
-    ld b, [hl]
-    adc b
-    ld b, [hl]
-    adc b
-    ld b, [hl]
-    adc b
-
-.jr_4414
-    ld b, [hl]
-    adc b
-
-.jr_4416
-    ld b, [hl]
-    adc b
-
-.jr_4418
-    ld b, [hl]
-    adc b
-
-.jr_441a
-    ld b, [hl]
-    adc b
-
-.jr_441c
-    ld b, [hl]
-    adc b
-
-.jr_441e
-    ld b, [hl]
-    adc b
-
-.jr_4420
-    ld b, [hl]
-    adc b
-
-.jr_4422
-    ld b, [hl]
-    adc b
-    ld b, [hl]
-    adc b
-    ld b, [hl]
-    adc b
-    ld b, [hl]
-    adc b
-    ld b, [hl]
 
 .jr_442b
     push af
@@ -945,6 +884,7 @@ Jump_004_43b3{SUFFIX}:
     ret
 
 
+code_04_450d{SUFFIX}:
     pop hl
     ld a, [hl+]
     push hl
@@ -954,6 +894,7 @@ Jump_004_43b3{SUFFIX}:
     jp Jump_004_46a4
 
 
+code_04_4518{SUFFIX}:
     and $07
     dec a
     ld hl, $c050
@@ -975,24 +916,28 @@ Jump_004_43b3{SUFFIX}:
     jp Jump_004_46a4
 
 
+code_04_4530{SUFFIX}:
     ld hl, $c050
     add hl, bc
     inc [hl]
     jp Jump_004_46a4
 
 
+code_04_4538{SUFFIX}:
     ld hl, $c050
     add hl, bc
     dec [hl]
     jp Jump_004_46a4
 
 
+code_04_4540{SUFFIX}:
     ld hl, $c032
     add hl, bc
     ld [hl], $80
     jp Jump_004_46a4
 
 
+code_04_4549{SUFFIX}:
     pop hl
     ld a, [hl+]
     push hl
@@ -1002,6 +947,7 @@ Jump_004_43b3{SUFFIX}:
     jp Jump_004_46a4
 
 
+code_04_4554{SUFFIX}:
     pop hl
     ld a, [hl+]
     ld d, a
@@ -1027,6 +973,7 @@ Jump_004_43b3{SUFFIX}:
     jp Jump_004_46a4
 
 
+code_04_456f{SUFFIX}:
     pop hl
     ld a, [hl+]
     push hl
@@ -1053,6 +1000,7 @@ Jump_004_43b3{SUFFIX}:
     jp Jump_004_46a4
 
 
+code_04_458a{SUFFIX}:
     pop de
     push de
     dec de
@@ -1065,6 +1013,7 @@ Jump_004_43b3{SUFFIX}:
     jp Jump_004_46a4
 
 
+code_04_4598{SUFFIX}:
     pop hl
     ld hl, $c03e
     add hl, bc
@@ -1075,6 +1024,7 @@ Jump_004_43b3{SUFFIX}:
     jp Jump_004_43b3
 
 
+code_04_45a4{SUFFIX}:
     pop de
     ld a, [de]
     inc de
@@ -1092,6 +1042,7 @@ Jump_004_43b3{SUFFIX}:
     jp Jump_004_46a4
 
 
+code_04_45b9{SUFFIX}:
     call Call_004_4690
     dec hl
     ld a, [hl]
@@ -1115,6 +1066,7 @@ Jump_004_43b3{SUFFIX}:
     jp Jump_004_46a4
 
 
+code_04_45d3{SUFFIX}:
     pop hl
     ld a, [hl+]
     ld h, [hl]
@@ -1122,6 +1074,7 @@ Jump_004_43b3{SUFFIX}:
     jp Jump_004_43b3
 
 
+code_04_45da{SUFFIX}:
     call Call_004_4690
     pop de
     ld a, e
@@ -1140,6 +1093,7 @@ Jump_004_43b3{SUFFIX}:
     jp Jump_004_46a4
 
 
+code_04_45f1{SUFFIX}:
     pop de
     call Call_004_4690
     dec hl
@@ -1153,6 +1107,7 @@ Jump_004_43b3{SUFFIX}:
     jp Jump_004_46a4
 
 
+code_04_4602{SUFFIX}:
     pop de
     ld a, [de]
     inc de
@@ -1164,6 +1119,7 @@ Jump_004_43b3{SUFFIX}:
     jp Jump_004_43b3
 
 
+code_04_460f{SUFFIX}:
     pop de
     ld a, [de]
     inc de
@@ -1175,6 +1131,7 @@ Jump_004_43b3{SUFFIX}:
     jp Jump_004_43b3
 
 
+code_04_461c{SUFFIX}:
     pop de
     ld a, [de]
     inc de
@@ -1186,6 +1143,7 @@ Jump_004_43b3{SUFFIX}:
     jp Jump_004_43b3
 
 
+code_04_4629{SUFFIX}:
     pop de
     ld a, [de]
     inc de
@@ -1197,6 +1155,7 @@ Jump_004_43b3{SUFFIX}:
     jp Jump_004_43b3
 
 
+code_04_4639{SUFFIX}:
     pop de
     ld a, [de]
     inc de
@@ -1208,6 +1167,7 @@ Jump_004_43b3{SUFFIX}:
     jp Jump_004_43b3
 
 
+code_04_4646{SUFFIX}:
     pop de
     ld a, [de]
     inc de
@@ -1219,6 +1179,7 @@ Jump_004_43b3{SUFFIX}:
     jp Jump_004_43b3
 
 
+code_04_4653{SUFFIX}:
     pop de
     ld a, [de]
     inc de
@@ -1230,6 +1191,7 @@ Jump_004_43b3{SUFFIX}:
     jp Jump_004_43b3
 
 
+code_04_4660{SUFFIX}:
     pop de
     ld a, [de]
     inc de
@@ -1241,6 +1203,7 @@ Jump_004_43b3{SUFFIX}:
     jp Jump_004_43b3
 
 
+code_04_466d{SUFFIX}:
     pop de
     ld a, [de]
     inc de
@@ -1252,6 +1215,7 @@ Jump_004_43b3{SUFFIX}:
     jp Jump_004_43b3
 
 
+code_04_467a{SUFFIX}:
     pop de
     ld a, [de]
     inc de
@@ -1264,6 +1228,7 @@ Jump_004_43b3{SUFFIX}:
     jp Jump_004_43b3
 
 
+code_04_4688{SUFFIX}:
     ld hl, $c02e
     add hl, bc
     ld [hl], $00
@@ -1827,18 +1792,94 @@ Call_004_4933{SUFFIX}:
 
 
 data_04_4946{SUFFIX}:
-    db $9c, $c0, $a8, $c0, $b4, $c0, $c0, $c0, $00, $18, $30, $48, $60, $78, $90, $a8
-    db $2c, $00, $9c, $00, $06, $01, $6b, $01, $c9, $01, $22, $02, $78, $02, $c6, $02
-    db $12, $03, $58, $03, $9b, $03, $da, $03, $16, $04, $4e, $04, $83, $04, $b5, $04
-    db $e5, $04, $11, $05, $3c, $05, $63, $05, $89, $05, $ac, $05, $cd, $05, $ed, $05
-    db $0b, $06, $28, $06, $42, $06, $5b, $06, $72, $06, $89, $06, $9e, $06, $b2, $06
-    db $c4, $06, $d6, $06, $e7, $06, $f6, $06, $05, $07, $14, $07, $21, $07, $2d, $07
-    db $39, $07, $44, $07, $4f, $07, $59, $07, $62, $07, $6b, $07, $73, $07, $7b, $07
-    db $83, $07, $8a, $07, $90, $07, $97, $07, $9d, $07, $a2, $07, $a7, $07, $ac, $07
-    db $b1, $07, $b6, $07, $ba, $07, $be, $07, $c1, $07, $c5, $07, $c8, $07, $cb, $07
-    db $ce, $07, $d1, $07, $d4, $07, $d6, $07, $d9, $07, $db, $07, $dd, $07, $df, $07
-    db $e1, $07, $e3, $07, $e4, $07, $e5, $07, $e7, $07, $e8, $07, $ea, $07, $eb, $07
-    db $ec, $07, $ed, $07, $ee, $07, $ef, $07, $f0, $07
+    db $9c, $c0, $a8, $c0, $b4, $c0, $c0, $c0
+    db $00, $18, $30, $48, $60, $78, $90, $a8
+
+    dw $002c
+    dw $009c
+    dw $0106
+    dw $016b
+    dw $01c9
+    dw $0222
+    dw $0278
+    dw $02c6
+    dw $0312
+    dw $0358
+    dw $039b
+    dw $03da
+    dw $0416
+    dw $044e
+    dw $0483
+    dw $04b5
+    dw $04e5
+    dw $0511
+    dw $053c
+    dw $0563
+    dw $0589
+    dw $05ac
+    dw $05cd
+    dw $05ed
+    dw $060b
+    dw $0628
+    dw $0642
+    dw $065b
+    dw $0672
+    dw $0689
+    dw $069e
+    dw $06b2
+    dw $06c4
+    dw $06d6
+    dw $06e7
+    dw $06f6
+    dw $0705
+    dw $0714
+    dw $0721
+    dw $072d
+    dw $0739
+    dw $0744
+    dw $074f
+    dw $0759
+    dw $0762
+    dw $076b
+    dw $0773
+    dw $077b
+    dw $0783
+    dw $078a
+    dw $0790
+    dw $0797
+    dw $079d
+    dw $07a2
+    dw $07a7
+    dw $07ac
+    dw $07b1
+    dw $07b6
+    dw $07ba
+    dw $07be
+    dw $07c1
+    dw $07c5
+    dw $07c8
+    dw $07cb
+    dw $07ce
+    dw $07d1
+    dw $07d4
+    dw $07d6
+    dw $07d9
+    dw $07db
+    dw $07dd
+    dw $07df
+    dw $07e1
+    dw $07e3
+    dw $07e4
+    dw $07e5
+    dw $07e7
+    dw $07e8
+    dw $07ea
+    dw $07eb
+    dw $07ec
+    dw $07ed
+    dw $07ee
+    dw $07ef
+    dw $07f0
 
 data_04_4a00{SUFFIX}:
     db $04, $04, $04, $04, $04, $04, $04, $04, $04, $04, $04, $04, $04, $05, $05, $05
