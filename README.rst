@@ -146,8 +146,14 @@ Homebrew Files
    :widths: auto
 
    * * File
+     * Info
      * Description
    * * `hello_w.asm <src/file/hello_w.asm>`_
+     * `Hello World <https://gbkiss.org/file/hello-world>`_
      * `“Hello, World!” program <https://en.wikipedia.org/wiki/%22Hello,_World!%22_program>`_ for GBKiss
    * * `cksum.asm <src/file/cksum.asm>`_
+     * `Cksum <https://gbkiss.org/file/cksum>`_
      * Lists files and calculates `CRC-32 <https://en.wikipedia.org/wiki/Cyclic_redundancy_check>`_
+   * * `irtest.asm <src/file/irtest.asm>`_
+     * `IR Test <https://gbkiss.org/file/irtest>`_
+     * Demonstrates infrared communication between carts
