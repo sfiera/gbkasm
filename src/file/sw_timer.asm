@@ -32,7 +32,7 @@ History:
 .end
 
 Main::
-    callx call_06e7
+    callx SetUpGfx
 jr_0106:
     callx call_011a
     db $20, $09
@@ -713,7 +713,7 @@ call_06d4:
     ldh [$83], a
     ret
 
-call_06e7:
+SetUpGfx:
     ld a, $20
     trap DrawInit
     ld hl, $c500
