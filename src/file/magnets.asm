@@ -308,7 +308,7 @@ data_a213:
     db $66, "MAGNETS DATA\0"
 
 
-call_a221:
+DataOpen:
     ld hl, $c500
     ld de, data_a213
     ld c, $0d
@@ -319,7 +319,7 @@ jr_a22c::
     trap ExitToMenu
 
 
-call_a22e:
+DataRead:
     push bc
     ld hl, $c500
     ld b, $00
@@ -335,7 +335,7 @@ call_a22e:
     jr jr_a22c
 
 
-call_a244:
+DataExtract:
     push de
     ld de, $c700
     ld b, $c6
@@ -399,7 +399,7 @@ call_a2a5:
     ld d, a
     ld e, a
     ld bc, $0110
-    call call_a22e
+    call DataRead
     ld bc, $0110
     ld de, $c700
     ld hl, $9000
@@ -407,16 +407,16 @@ call_a2a5:
     call call_a2df
     ld de, $0110
     ld bc, $0566
-    call call_a22e
+    call DataRead
     ld de, $8000
     ld c, $80
-    call call_a244
+    call DataExtract
     ld de, $0676
     ld bc, $04f0
-    call call_a22e
+    call DataRead
     ld de, $8800
     ld c, $80
-    call call_a244
+    call DataExtract
     ret
 
 
@@ -480,10 +480,10 @@ call_a330:
     trap MemSet
     ld de, $0b66
     ld bc, $367b
-    call call_a22e
+    call DataRead
     ld de, $8800
     ld c, $00
-    call call_a244
+    call DataExtract
     ld hl, $9822
     ld a, $80
     ld b, $10
@@ -2756,7 +2756,7 @@ call_b075:
 
 jp_b093:
     ld sp, $e000
-    call call_a221
+    call DataOpen
     call call_a330
     call call_b27d
     call call_a267
