@@ -35,7 +35,7 @@ endif
 .PHONY: all
 all: compare
 
-$(OBJ): %.o: %.asm | $(GFX)
+$(OBJ): %.o: %.asm
 	$(RGBASM) $(RGBASMFLAGS) -M $*.d -o $@ $<
 
 $(GB): %.gb: $(GB_OBJ)
@@ -66,8 +66,8 @@ endif
 %.2bpp: %.2bpp.v.png
 	$(RGBGFX) --columns -d2 -o $@ $<
 
-%.2bpp: %.2bpp.f.png %.flags
-	$(RGBGFX) @$*.flags -d2 -o $@ $<
+%.2bpp %.map: %.2bpp.f.png %.flags
+	$(RGBGFX) @$*.flags -d2 -o $*.2bpp $<
 
 %.1bpp: %.1bpp.h.png
 	$(RGBGFX) -d1 -o $@ $<
@@ -91,6 +91,8 @@ clean:
 compare: $(GB) $(GBF)
 	shasum -c roms.sha1
 
--include $(DEP)
-$(GB_OBJ): %.o: | $(GBF) $(HZ)
-$(GBF_OBJ): %.o: | $(HZ)
+define NL
+
+
+endef
+$(eval $(subst #,$(NL),$(shell python3 tools/deps.py $(OBJ) | tr "\n" "#")))
