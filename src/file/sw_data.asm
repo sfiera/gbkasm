@@ -25,102 +25,102 @@ History:
 Body::
 Tilemap0:
     db $89, $89, $89
-    db $80, $81, $82
-    db $8c, $8d, $8e
-    db $8f, $89, $92
-    db $8f, $89, $92
-    db $a2, $a3, $a4
-    db $aa, $ab, $ac
+    INCBIN "gfx/sw_timer/digits.map", 0, 3
+    INCBIN "gfx/sw_timer/digits.map", 15, 3
+    INCBIN "gfx/sw_timer/digits.map", 30, 3
+    INCBIN "gfx/sw_timer/digits.map", 45, 3
+    INCBIN "gfx/sw_timer/digits.map", 60, 3
+    INCBIN "gfx/sw_timer/digits.map", 75, 3
 
 Tilemap1:
     db $89, $89, $89
-    db $83, $84, $85
-    db $89, $8f, $85
-    db $89, $8f, $85
-    db $89, $8f, $85
-    db $89, $8f, $85
-    db $89, $ad, $ae
+    INCBIN "gfx/sw_timer/digits.map", 3, 3
+    INCBIN "gfx/sw_timer/digits.map", 18, 3
+    INCBIN "gfx/sw_timer/digits.map", 33, 3
+    INCBIN "gfx/sw_timer/digits.map", 48, 3
+    INCBIN "gfx/sw_timer/digits.map", 63, 3
+    INCBIN "gfx/sw_timer/digits.map", 78, 3
 
 Tilemap2:
     db $89, $89, $89
-    db $86, $87, $88
-    db $90, $91, $92
-    db $89, $95, $96
-    db $9c, $9d, $9e
-    db $a5, $a6, $a7
-    db $af, $b0, $b1
+    INCBIN "gfx/sw_timer/digits.map", 6, 3
+    INCBIN "gfx/sw_timer/digits.map", 21, 3
+    INCBIN "gfx/sw_timer/digits.map", 36, 3
+    INCBIN "gfx/sw_timer/digits.map", 51, 3
+    INCBIN "gfx/sw_timer/digits.map", 66, 3
+    INCBIN "gfx/sw_timer/digits.map", 81, 3
 
 Tilemap3:
     db $89, $89, $89
-    db $86, $87, $88
-    db $90, $91, $92
-    db $97, $98, $99
-    db $9f, $a0, $a1
-    db $a8, $a9, $92
-    db $b2, $b3, $b4
+    INCBIN "gfx/sw_timer/digits.map", 9, 3
+    INCBIN "gfx/sw_timer/digits.map", 24, 3
+    INCBIN "gfx/sw_timer/digits.map", 39, 3
+    INCBIN "gfx/sw_timer/digits.map", 54, 3
+    INCBIN "gfx/sw_timer/digits.map", 69, 3
+    INCBIN "gfx/sw_timer/digits.map", 84, 3
 
 Tilemap4:
     db $89, $89, $89
-    db $89, $8a, $8b
-    db $93, $94, $8b
-    db $9a, $9b, $8b
-    db $84, $94, $92
-    db $89, $83, $8b
-    db $89, $b5, $b6
+    INCBIN "gfx/sw_timer/digits.map", 12, 3
+    INCBIN "gfx/sw_timer/digits.map", 27, 3
+    INCBIN "gfx/sw_timer/digits.map", 42, 3
+    INCBIN "gfx/sw_timer/digits.map", 57, 3
+    INCBIN "gfx/sw_timer/digits.map", 72, 3
+    INCBIN "gfx/sw_timer/digits.map", 87, 3
 
 Tilemap5:
     db $89, $89, $89
-    db $84, $b7, $92
-    db $84, $a7, $89
-    db $af, $c3, $c4
-    db $89, $cd, $92
-    db $a8, $a9, $92
-    db $b2, $b3, $b4
+    INCBIN "gfx/sw_timer/digits.map", 90, 3
+    INCBIN "gfx/sw_timer/digits.map", 105, 3
+    INCBIN "gfx/sw_timer/digits.map", 120, 3
+    INCBIN "gfx/sw_timer/digits.map", 135, 3
+    INCBIN "gfx/sw_timer/digits.map", 150, 3
+    INCBIN "gfx/sw_timer/digits.map", 165, 3
 
 Tilemap6:
     db $89, $89, $89
-    db $b8, $b9, $ba
-    db $84, $bd, $be
-    db $84, $c5, $c6
-    db $84, $ce, $a1
-    db $84, $d5, $a4
-    db $d9, $da, $db
+    INCBIN "gfx/sw_timer/digits.map", 93, 3
+    INCBIN "gfx/sw_timer/digits.map", 108, 3
+    INCBIN "gfx/sw_timer/digits.map", 123, 3
+    INCBIN "gfx/sw_timer/digits.map", 138, 3
+    INCBIN "gfx/sw_timer/digits.map", 153, 3
+    INCBIN "gfx/sw_timer/digits.map", 168, 3
 
 Tilemap7:
     db $89, $89, $89
-    db $bb, $b7, $92
-    db $89, $bf, $c0
-    db $89, $c7, $c8
-    db $89, $cf, $d0
-    db $89, $d6, $d7
-    db $89, $dc, $dd
+    INCBIN "gfx/sw_timer/digits.map", 96, 3
+    INCBIN "gfx/sw_timer/digits.map", 111, 3
+    INCBIN "gfx/sw_timer/digits.map", 126, 3
+    INCBIN "gfx/sw_timer/digits.map", 141, 3
+    INCBIN "gfx/sw_timer/digits.map", 156, 3
+    INCBIN "gfx/sw_timer/digits.map", 171, 3
 
 Tilemap8:
     db $89, $89, $89
-    db $bc, $b7, $88
-    db $8f, $c1, $92
-    db $c9, $ca, $99
-    db $d1, $d2, $a1
-    db $8f, $d8, $92
-    db $de, $b0, $b4
+    INCBIN "gfx/sw_timer/digits.map", 99, 3
+    INCBIN "gfx/sw_timer/digits.map", 114, 3
+    INCBIN "gfx/sw_timer/digits.map", 129, 3
+    INCBIN "gfx/sw_timer/digits.map", 144, 3
+    INCBIN "gfx/sw_timer/digits.map", 159, 3
+    INCBIN "gfx/sw_timer/digits.map", 174, 3
 
 Tilemap9:
     db $89, $89, $89
-    db $86, $87, $88
-    db $c2, $91, $92
-    db $cb, $cc, $92
-    db $d3, $d4, $92
-    db $a8, $a9, $92
-    db $b2, $b3, $b4
+    INCBIN "gfx/sw_timer/digits.map", 102, 3
+    INCBIN "gfx/sw_timer/digits.map", 117, 3
+    INCBIN "gfx/sw_timer/digits.map", 132, 3
+    INCBIN "gfx/sw_timer/digits.map", 147, 3
+    INCBIN "gfx/sw_timer/digits.map", 162, 3
+    INCBIN "gfx/sw_timer/digits.map", 177, 3
 
 TilemapColon:
     db $89
-    db $89
-    db $e0
-    db $df
-    db $e0
-    db $df
-    db $89
+    INCBIN "gfx/sw_timer/digits.map", 180, 1
+    INCBIN "gfx/sw_timer/digits.map", 195, 1
+    INCBIN "gfx/sw_timer/digits.map", 210, 1
+    INCBIN "gfx/sw_timer/digits.map", 225, 1
+    INCBIN "gfx/sw_timer/digits.map", 240, 1
+    INCBIN "gfx/sw_timer/digits.map", 255, 1
 
 Tileset:
     INCBIN "frag/sw_timer/digits.hz"

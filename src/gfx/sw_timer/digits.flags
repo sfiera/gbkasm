@@ -1,2 +1,3 @@
 --unique-tiles
 --tilemap src/gfx/sw_timer/digits.map
+--base-tiles 128
