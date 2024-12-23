@@ -3,8 +3,8 @@ GBF_ASM = $(wildcard src/file/*.asm)
 FRAG_ASM = $(wildcard src/frag/*/*.asm)
 PNGH = $(wildcard src/gfx/*/*.h.png)
 PNGV = $(wildcard src/gfx/*/*.v.png)
-PNGU = $(wildcard src/gfx/*/*.u.png)
-GFX = $(PNGH:%.h.png=%) $(PNGV:%.v.png=%) $(PNGU:%.u.png=%)
+PNGF = $(wildcard src/gfx/*/*.f.png)
+GFX = $(PNGH:%.h.png=%) $(PNGV:%.v.png=%) $(PNGF:%.f.png=%)
 HZ = $(FRAG_ASM:%.asm=%.hz)
 
 GB_OBJ = $(GB_ASM:%.asm=%.o)
@@ -66,8 +66,8 @@ endif
 %.2bpp: %.2bpp.v.png
 	$(RGBGFX) --columns -d2 -o $@ $<
 
-%.2bpp: %.2bpp.u.png
-	$(RGBGFX) --unique-tiles --tilemap $*.map -d2 -o $@ $<
+%.2bpp: %.2bpp.f.png %.flags
+	$(RGBGFX) @$*.flags -d2 -o $@ $<
 
 %.1bpp: %.1bpp.h.png
 	$(RGBGFX) -d1 -o $@ $<
