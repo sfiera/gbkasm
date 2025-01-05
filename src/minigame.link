@@ -30,43 +30,43 @@ ROMX $05
 
 ROMX $06
     org $4000
-    "ROM Bank $006"
+    "CARAVAN supplement"
 
 ROMX $07
     org $4000
-    "ROM Bank $007"
+    "CARAVAN index"
 
 ROMX $08
     org $4000
-    "ROM Bank $008"
+    "KISSMON supplement"
 
 ROMX $09
     org $4000
-    "ROM Bank $009"
+    "KISSMON index"
 
 ROMX $0a
     org $4000
-    "ROM Bank $00a"
+    "CANNON supplement"
 
 ROMX $0b
     org $4000
-    "ROM Bank $00b"
+    "CANNON index"
 
 ROMX $0c
     org $4000
-    "ROM Bank $00c"
+    "BINARY supplement"
 
 ROMX $0d
     org $4000
-    "ROM Bank $00d"
+    "BINARY index"
 
 ROMX $0e
     org $4000
-    "ROM Bank $00e"
+    "GAMEDATA index"
 
 ROMX $0f
     org $4000
-    "ROM Bank $00f"
+    "KISSTOOL index"
 
 WRAM0
     org $c3c8
