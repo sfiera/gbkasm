@@ -67,7 +67,7 @@ SECTION "GBKiss Metadata", ROM0
 
     db $00
 KissCartridgeCode::
-    db $fe    ; CART_MINIGAME
+    db CART_MINIGAME
 KissIndexBank::
     db $03    ; CRAM block of GBKiss file index
 KissIndexAddr::
