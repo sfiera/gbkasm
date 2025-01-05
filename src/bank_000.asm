@@ -10,50 +10,19 @@ INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
-SECTION "ROM Bank $000", ROM0
-
-RST_00::
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
+SECTION "RST $08", ROM0
 
 RST_08::
-    jp Jump_000_0068
+    jp InvokeTrap
 
 
-Config0::
-    db BANK(j01_4100)
-
-Config1::
-    db BANK(traps1)
-
-Config2::
-    db ((traps1 - $4000) / 2) - 1
-
-Config3::
-    db BANK(traps1)
-
-Config4::
-    db BANK(traps2)
+SECTION "RST $10", ROM0
 
 RST_10::
-    jp code_00_00c9
+    jp PushRelAddr
 
-    db $00
-KissCartridgeCode::
-    db $fe    ; CART_MINIGAME
-KissIndexBank::
-    db $03    ; CRAM block of GBKiss file index
-KissIndexAddr::
-    dw $bf00  ; CRAM address of GBKiss file index
 
-RST_18::
-    db $00, $00, $00, $00, $00, $00, $00, $00
+SECTION "RST $20", ROM0
 
 RST_20::
     ldh [hROMBank], a
@@ -61,92 +30,34 @@ RST_20::
     ret
 
 
-    nop
-    nop
-
-RST_28::
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-
-RST_30::
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-
-RST_38::
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
+SECTION "VBlank interrupt", ROM0
 
 VBlankInterrupt::
     jp $c006
 
 
-    nop
-    nop
-    nop
-    nop
-    nop
-
-LCDCInterrupt::
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
+SECTION "Timer Overflow interrupt", ROM0
 
 TimerOverflowInterrupt::
     jp $c000
 
+
+SECTION "ROM Bank $000 A", ROM0
 
 Call_000_0053::
 Jump_000_0053::
     jp Jump_000_021c
 
 
-    nop
-    nop
+SECTION "Serial Transfer interrupt", ROM0
 
 SerialTransferCompleteInterrupt::
     jp $c003
 
 
-    nop
-    nop
-    nop
-    nop
-    nop
+SECTION "ROM Bank $000 B", ROM0
 
-JoypadTransitionInterrupt::
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-
-Jump_000_0068:
+InvokeTrap:
     add sp, -$05
     push af
     push de
@@ -163,7 +74,7 @@ Jump_000_0068:
     ld e, a
     ld a, [Config2]
     cp e
-    jr c, jr_000_0093
+    jr c, .jr_000_0093
 
     ld d, $00
     ld hl, traps0
@@ -183,7 +94,7 @@ Jump_000_0068:
     ret
 
 
-jr_000_0093:
+.jr_000_0093
     ld d, e
     dec hl
     ldh a, [hROMBank]
@@ -230,7 +141,7 @@ code_00_00bd::
     ret
 
 
-code_00_00c9::
+PushRelAddr::
     push af
     push af
     push de
@@ -278,52 +189,14 @@ Call_000_00f7:
     ret
 
 
-    nop
-    nop
-    nop
+SECTION "Boot", ROM0
 
 Boot::
     di
     jp Jump_000_02e5
 
 
-HeaderLogo::
-    db $ce, $ed, $66, $66, $cc, $0d, $00, $0b, $03, $73, $00, $83, $00, $0c, $00, $0d
-    db $00, $08, $11, $1f, $88, $89, $00, $0e, $dc, $cc, $6e, $e6, $dd, $dd, $d9, $99
-    db $bb, $bb, $67, $63, $6e, $0e, $ec, $cc, $dd, $dc, $99, $9f, $bb, $b9, $33, $3e
-
-HeaderTitle::
-    dp "GBKISS MINIGAME\0"
-
-HeaderNewLicenseeCode::
-    db $31, $38
-
-HeaderSGBFlag::
-    db $00
-
-HeaderCartridgeType::
-    db $ff
-
-HeaderROMSize::
-    db $03
-
-HeaderRAMSize::
-    db $03
-
-HeaderDestinationCode::
-    db $00
-
-HeaderOldLicenseeCode::
-    db $33
-
-HeaderMaskROMVersion::
-    db $00
-
-HeaderComplementCheck::
-    db $1c
-
-HeaderGlobalChecksum::
-    db $75, $09
+SECTION "ROM Bank $000 C", ROM0
 
 TrapExitToMenu::
     ld a, [Config0]
@@ -431,44 +304,7 @@ trap_none_0::
     ret
 
 
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
+SECTION "ROM Bank $000 D", ROM0
 
 traps0::
     dw trap_00_00e9            ; trap $00

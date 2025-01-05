@@ -1,6 +1,30 @@
 ROM0
-    org $0000
-    "ROM Bank $000"
+    org $0008
+    "RST $08"
+    org $000b
+    "GBKiss Config"
+    org $0010
+    "RST $10"
+    org $0013
+    "GBKiss Metadata"
+    org $0020
+    "RST $20"
+    org $0040
+    "VBlank interrupt"
+    org $0050
+    "Timer Overflow interrupt"
+    "ROM Bank $000 A"
+    org $0058
+    "Serial Transfer interrupt"
+    org $0068
+    "ROM Bank $000 B"
+    org $0100
+    "Boot"
+    org $0104
+    "Game Boy Metadata"
+    "ROM Bank $000 C"
+    org $01e0
+    "ROM Bank $000 D"
     org $3fe0
     "ROM Bank $3fe0"
 
