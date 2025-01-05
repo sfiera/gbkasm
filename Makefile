@@ -1,4 +1,7 @@
-GB_ASM = $(wildcard src/minigame/*.asm)
+MINIGAME = minigame.gb
+MINIGAME_LINK = $(MINIGAME:%.gb=src/%.link)
+
+MINIGAME_ASM = $(wildcard src/minigame/*.asm)
 GBF_ASM = $(wildcard src/file/*.asm)
 FRAG_ASM = $(wildcard src/frag/*/*.asm)
 PNGH = $(wildcard src/gfx/*/*.h.png)
@@ -7,17 +10,12 @@ PNGF = $(wildcard src/gfx/*/*.f.png)
 GFX = $(PNGH:%.h.png=%) $(PNGV:%.v.png=%) $(PNGF:%.f.png=%)
 HZ = $(FRAG_ASM:%.asm=%.hz)
 
-GB_OBJ = $(GB_ASM:%.asm=%.o)
+MINIGAME_OBJ = $(MINIGAME_ASM:%.asm=%.o)
 GBF_OBJ = $(GBF_ASM:%.asm=%.o)
 FRAG_OBJ = $(FRAG_ASM:%.asm=%.o)
-ASM = $(GB_ASM) $(GBF_ASM) $(FRAG_ASM)
-OBJ = $(GB_OBJ) $(GBF_OBJ) $(FRAG_OBJ)
-DEP = $(ASM:%.asm=%.d)
-SYM = $(ASM:%.asm=%.sym)
-MAP = $(ASM:%.asm=%.map)
-FRAG = $(FRAG_ASM:%.asm=%.frag)
+ASM = $(MINIGAME_ASM) $(GBF_ASM) $(FRAG_ASM)
+OBJ = $(MINIGAME_OBJ) $(GBF_OBJ) $(FRAG_OBJ)
 GBF = $(GBF_ASM:src/file/%.asm=%.gbf)
-GB = gbkiss.gb
 
 RGBASM  ?= rgbasm
 RGBLINK ?= rgblink
@@ -38,11 +36,11 @@ all: compare
 $(OBJ): %.o: %.asm
 	$(RGBASM) $(RGBASMFLAGS) -M $*.d -o $@ $<
 
-$(GB): %.gb: $(GB_OBJ)
+$(MINIGAME): %.gb: $(MINIGAME_LINK) $(MINIGAME_OBJ)
 ifeq ($(DEBUG),1)
-	$(RGBLINK) -l src/minigame/minigame.link -n $*.sym -m $*.map -o $@ $+
+	$(RGBLINK) -n $*.sym -m $*.map -o $@ -l $(MINIGAME_LINK) $(MINIGAME_OBJ)
 else
-	$(RGBLINK) -l src/minigame/minigame.link -o $@ $+
+	$(RGBLINK) -o $@ -l $(MINIGAME_LINK) $(MINIGAME_OBJ)
 endif
 	$(RGBFIX) -v -p 255 $@
 
@@ -88,7 +86,7 @@ clean:
 	       -name '*.map' | xargs rm -f
 
 .PHONY: compare
-compare: $(GB) $(GBF)
+compare: $(MINIGAME) $(GBF)
 	shasum -c roms.sha1
 
 define NL
