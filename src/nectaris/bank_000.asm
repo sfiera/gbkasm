@@ -687,7 +687,7 @@ jr_000_02cb:
     rl b
     push hl
     push bc
-    trap $02
+    trap MemCopy
 
 Call_000_02df:
     pop bc
@@ -963,7 +963,7 @@ jr_000_03ea:
     scf
     jr nz, @-$2a
 
-    trap $b1
+    trap AwaitFrame
     pushx @ + $20bc
     jr nz, jr_000_0400
 
@@ -4220,7 +4220,7 @@ Call_000_1730:
     ld [hl+], a
     ldh a, [$80]
     ld [$2000], a
-    trap $11
+    trap AudioStop
     trap $00
     pop hl
     ret
@@ -4248,7 +4248,7 @@ Call_000_1761:
     ld e, l
     ld d, h
     ld c, $00
-    trap $7c
+    trap IRRead
     jr c, jr_000_1770
 
     ld a, $00
@@ -4264,7 +4264,7 @@ jr_000_1772:
 
 Call_000_1776:
     call Call_000_1730
-    trap $73
+    trap IRClose
     jr c, jr_000_1781
 
     ld a, $00
@@ -4280,7 +4280,7 @@ jr_000_1783:
 
 Call_000_1787:
     call Call_000_1730
-    trap $72
+    trap IRListen
     jr c, jr_000_1792
 
     ld a, $00
@@ -6199,7 +6199,7 @@ Jump_000_25c8:
     call Call_000_0ca4
     di
     trap $00
-    trap $11
+    trap AudioStop
     trap $61
 
 Jump_000_25d2:
