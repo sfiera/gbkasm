@@ -10,7 +10,7 @@ INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
-SECTION "ROM Bank $000", ROM0[$0]
+SECTION "ROM Bank $000", ROM0
 
 RST_00::
     nop
@@ -2392,7 +2392,7 @@ strLoadFailure::
 strLoadOverwrite::
     dk "«- おなじファイルがあります -»\0"
 
-SECTION "ROM Bank $3fe0", ROM0[$3fe0]
+SECTION "ROM Bank $3fe0", ROM0
 
 Call_000_3fe0::
     push af

@@ -20,7 +20,7 @@ MACRO TableBlank
     ds 4, $00
 ENDM
 
-SECTION "ROM Bank $007", ROMX[$4000], BANK[$7]
+SECTION "ROM Bank $007", ROMX
 
 FileCollection1::
     TableEntry .mogutteNanbo
@@ -54,7 +54,7 @@ FileShot:
     INCBIN "../shot.gbf"
 
 
-SECTION "ROM Bank $006", ROMX[$4000], BANK[$6]
+SECTION "ROM Bank $006", ROMX
 
 FileRandomSelection:
 .count::
@@ -73,7 +73,7 @@ FileDrive:
 FileSameGame:
     INCBIN "../samegame.gbf"
 
-SECTION "ROM Bank $009", ROMX[$4000], BANK[$9]
+SECTION "ROM Bank $009", ROMX
 
 FileCollection2::
     TableEntry .kissMon
@@ -107,7 +107,7 @@ FileBakechuRelay:
     INCBIN "../baketu.gbf"
 
 
-SECTION "ROM Bank $008", ROMX[$4000], BANK[$8]
+SECTION "ROM Bank $008", ROMX
 
 FileKissMon:
     INCBIN "../kissmon.gbf"
@@ -118,7 +118,7 @@ FileWatchAndTimer:
 FileCalculator:
     INCBIN "../dentaku.gbf"
 
-SECTION "ROM Bank $00b", ROMX[$4000], BANK[$b]
+SECTION "ROM Bank $00b", ROMX
 
 FileCollection3::
     TableEntry .iconSend
@@ -149,7 +149,7 @@ FilePoker:
     INCBIN "../poker.gbf"
 
 
-SECTION "ROM Bank $00a", ROMX[$4000], BANK[$a]
+SECTION "ROM Bank $00a", ROMX
 
 FileIconSend:
     INCBIN "../iconsend.gbf"
@@ -163,7 +163,7 @@ FilePuzzleGame:
 FileSlot:
     INCBIN "../slot.gbf"
 
-SECTION "ROM Bank $00d", ROMX[$4000], BANK[$d]
+SECTION "ROM Bank $00d", ROMX
 
 FileCollection4::
     TableEntry .worm
@@ -190,7 +190,7 @@ FileBlackjack:
     INCBIN "../bj.gbf"
 
 
-SECTION "ROM Bank $00c", ROMX[$4000], BANK[$c]
+SECTION "ROM Bank $00c", ROMX
 
 FileWorm:
     INCBIN "../worm.gbf"
@@ -198,7 +198,7 @@ FileWorm:
 FileBinary:
     INCBIN "../bland.gbf"
 
-SECTION "ROM Bank $00e", ROMX[$4000], BANK[$e]
+SECTION "ROM Bank $00e", ROMX
 
 FileCollection5::
     TableEntry .koura1
@@ -235,7 +235,7 @@ FileSezaki:
 FileNum0Data:
     INCBIN "../sw_data.gbf"
 
-SECTION "ROM Bank $00f", ROMX[$4000], BANK[$f]
+SECTION "ROM Bank $00f", ROMX
 
 FileCollection6::
     TableEntry .sramGetAndClear

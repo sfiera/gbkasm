@@ -10,7 +10,7 @@ INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
-SECTION "ROM Bank $001", ROMX[$4000], BANK[$1]
+SECTION "ROM Bank $001", ROMX
 
 KissMailRegionHeader:
     db REGION_TYPE_ZEROFILE
@@ -3643,7 +3643,7 @@ jr_001_688b:
     ret
 
 
-SECTION "ROM Bank $001-B", ROMX[$6d2f], BANK[$1]
+SECTION "ROM Bank $001-B", ROMX
 
 trap_60_6d2f::
     ld b, [hl]

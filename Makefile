@@ -40,9 +40,9 @@ $(OBJ): %.o: %.asm
 
 $(GB): %.gb: $(GB_OBJ)
 ifeq ($(DEBUG),1)
-	$(RGBLINK) -n $*.sym -m $*.map -o $@ $+
+	$(RGBLINK) -l src/minigame.link -n $*.sym -m $*.map -o $@ $+
 else
-	$(RGBLINK) -o $@ $+
+	$(RGBLINK) -l src/minigame.link -o $@ $+
 endif
 	$(RGBFIX) -v -p 255 $@
 

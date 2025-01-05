@@ -1,0 +1,79 @@
+ROM0
+    org $0000
+    "ROM Bank $000"
+    org $3fe0
+    "ROM Bank $3fe0"
+
+ROMX $01
+    org $4000
+    "ROM Bank $001"
+    "ROM Infrared"
+    "ROM Bank $001-B"
+
+ROMX $02
+    org $4000
+    "ROM Bank $002"
+    "ROM Math"
+    "ROM Bank $002 B"
+
+ROMX $03
+    org $4000
+    "ROM Bank $003"
+
+ROMX $04
+    org $4000
+    "ROM Bank $00$4"
+
+ROMX $05
+    org $4000
+    "ROM Bank $00$5"
+
+ROMX $06
+    org $4000
+    "ROM Bank $006"
+
+ROMX $07
+    org $4000
+    "ROM Bank $007"
+
+ROMX $08
+    org $4000
+    "ROM Bank $008"
+
+ROMX $09
+    org $4000
+    "ROM Bank $009"
+
+ROMX $0a
+    org $4000
+    "ROM Bank $00a"
+
+ROMX $0b
+    org $4000
+    "ROM Bank $00b"
+
+ROMX $0c
+    org $4000
+    "ROM Bank $00c"
+
+ROMX $0d
+    org $4000
+    "ROM Bank $00d"
+
+ROMX $0e
+    org $4000
+    "ROM Bank $00e"
+
+ROMX $0f
+    org $4000
+    "ROM Bank $00f"
+
+WRAM0
+    org $c3c8
+    "WRAM"
+
+HRAM
+    org $ff80
+    "HRAM Banking"
+    org $ff8e
+    "HRAM Text"

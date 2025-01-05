@@ -10,7 +10,7 @@ INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
-SECTION "ROM Math", ROMX[$5267], BANK[$2]
+SECTION "ROM Math", ROMX
 
 TrapMathXor16::
     ld a, h

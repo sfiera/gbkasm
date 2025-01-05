@@ -10,7 +10,7 @@ INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
-SECTION "ROM Bank $002", ROMX[$4000], BANK[$2]
+SECTION "ROM Bank $002", ROMX
 
 traps2::
     dw TrapMathXor16        ; trap $80
@@ -3998,7 +3998,7 @@ jr_002_5263:
     ret
 
 
-SECTION "ROM Bank $002 B", ROMX[$53c1], BANK[$2]
+SECTION "ROM Bank $002 B", ROMX
 
 trap_a1_53c1::
     call Call_002_53c8

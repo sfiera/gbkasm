@@ -17,7 +17,7 @@ ELSE
     REDEF SUFFIX EQUS "Bank5"
 ENDC
 
-SECTION "ROM Bank $00{_BANK}", ROMX[$4000], BANK[_BANK]
+SECTION "ROM Bank $00{_BANK}", ROMX
 
 AudioTraps{SUFFIX}::
 .stop::
