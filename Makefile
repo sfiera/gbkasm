@@ -1,7 +1,10 @@
 MINIGAME = minigame.gb
 MINIGAME_LINK = $(MINIGAME:%.gb=src/%.link)
+NECTARIS = nectaris.gb
+NECTARIS_LINK = $(NECTARIS:%.gb=src/%.link)
 
 MINIGAME_ASM = $(wildcard src/minigame/*.asm)
+NECTARIS_ASM = $(wildcard src/nectaris/*.asm)
 GBF_ASM = $(wildcard src/file/*.asm)
 FRAG_ASM = $(wildcard src/frag/*/*.asm)
 PNGH = $(wildcard src/gfx/*/*.h.png)
@@ -11,10 +14,11 @@ GFX = $(PNGH:%.h.png=%) $(PNGV:%.v.png=%) $(PNGF:%.f.png=%)
 HZ = $(FRAG_ASM:%.asm=%.hz)
 
 MINIGAME_OBJ = $(MINIGAME_ASM:%.asm=%.o)
+NECTARIS_OBJ = $(NECTARIS_ASM:%.asm=%.o)
 GBF_OBJ = $(GBF_ASM:%.asm=%.o)
 FRAG_OBJ = $(FRAG_ASM:%.asm=%.o)
-ASM = $(MINIGAME_ASM) $(GBF_ASM) $(FRAG_ASM)
-OBJ = $(MINIGAME_OBJ) $(GBF_OBJ) $(FRAG_OBJ)
+ASM = $(MINIGAME_ASM) $(NECTARIS_ASM) $(GBF_ASM) $(FRAG_ASM)
+OBJ = $(MINIGAME_OBJ) $(NECTARIS_OBJ) $(GBF_OBJ) $(FRAG_OBJ)
 GBF = $(GBF_ASM:src/file/%.asm=%.gbf)
 
 RGBASM  ?= rgbasm
@@ -41,6 +45,14 @@ ifeq ($(DEBUG),1)
 	$(RGBLINK) -n $*.sym -m $*.map -o $@ -l $(MINIGAME_LINK) $(MINIGAME_OBJ)
 else
 	$(RGBLINK) -o $@ -l $(MINIGAME_LINK) $(MINIGAME_OBJ)
+endif
+	$(RGBFIX) -v -p 255 $@
+
+$(NECTARIS): %.gb: $(NECTARIS_LINK) $(NECTARIS_OBJ)
+ifeq ($(DEBUG),1)
+	$(RGBLINK) -n $*.sym -m $*.map -o $@ -l $(NECTARIS_LINK) $(NECTARIS_OBJ)
+else
+	$(RGBLINK) -o $@ -l $(NECTARIS_LINK) $(NECTARIS_OBJ)
 endif
 	$(RGBFIX) -v -p 255 $@
 
@@ -86,7 +98,7 @@ clean:
 	       -name '*.map' | xargs rm -f
 
 .PHONY: compare
-compare: $(MINIGAME) $(GBF)
+compare: $(MINIGAME) $(NECTARIS) $(GBF)
 	shasum -c roms.sha1
 
 define NL
