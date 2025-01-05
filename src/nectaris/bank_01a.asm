@@ -12,265 +12,93 @@ INCLUDE "trap.inc"
 
 SECTION "ROM Bank $01a", ROMX[$4000], BANK[$1a]
 
-    ld e, d
-    and l
-    nop
-    nop
-    nop
-    and b
-    ld e, $00
-    ld b, $00
-    ld a, [bc]
-    ld bc, $494b
-    ld d, e
-    ld d, e
-    jr nz, jr_01a_405f
+KissMailRegionHeader:
+    db REGION_TYPE_ZEROFILE
+    db REGION_TYPE_ZEROFILE ^ $ff
+    dw $0000
+    dw $a000
 
-    ld b, c
-    ld c, c
-    ld c, h
+KissMailFileHeader:
+    dw $001e
+    db FILE_EXEC | FILE_A008
+    db CART_ANY      ; where file can run
+    db .end - @ - 1  ; length of variable parts of header
+    db $01           ; owner code
+.title
+    dp "KISS MAIL"
+.end
+
+KissMailMain:
     jp $5e9d
 
+data_01_4018:
+    db "\0\0"
 
-    nop
-    nop
-    ld b, a
-    ld b, d
-    jr nz, jr_01a_4069
+data_01_401a:
+    dp "GB KISS MENU \0"
 
-    ld c, c
-    ld d, e
-    ld d, e
-    jr nz, jr_01a_4070
+data_01_4028:
+    INCBIN "gfx/system/attrs.2bpp"
 
-    ld b, l
-    ld c, [hl]
-    ld d, l
-    jr nz, jr_01a_4028
+    ds 14
 
-jr_01a_4028:
-    nop
-    nop
-    add d
-    add d
-    ld b, h
-    ld b, h
-    jr z, jr_01a_4058
-
-    db $10
-    db $10
-    jr z, jr_01a_405c
-
-    ld b, h
-    ld b, h
-    add d
-    add d
-    nop
-    nop
-    db $10
-    db $10
-    jr c, jr_01a_4066
-
-    jr c, @+$2a
-
-    ld a, h
-    ld b, h
-    ld a, h
-    ld b, h
-    cp $82
-    cp $fe
-    nop
-    nop
-    jr c, jr_01a_4084
-
-    ld a, h
-    ld b, h
-    cp $82
-    cp $82
-    cp $82
-    ld a, h
-    ld b, h
-    jr c, jr_01a_4090
-
-jr_01a_4058:
-    nop
-    nop
-    db $10
-    db $10
-
-jr_01a_405c:
-    jr c, @+$2a
-
-    ld a, h
-
-jr_01a_405f:
-    ld b, h
-    cp $82
-    ld a, h
-    ld b, h
-    jr c, jr_01a_408e
-
-jr_01a_4066:
-    db $10
-    stop
-
-jr_01a_4069:
-    nop
-    jr c, jr_01a_40a4
-
-    ld a, h
-    ld b, h
-    cp $92
-
-jr_01a_4070:
-    cp $aa
-    cp $92
-    ld a, h
-    ld b, h
-    jr c, jr_01a_40b0
-
-    db $10
-    db $10
-    jr jr_01a_4094
-
-    db $fc
-    db $fc
-    cp $fe
-    db $fc
-    db $fc
-    jr jr_01a_409c
-
-jr_01a_4084:
-    db $10
-    stop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-
-jr_01a_408e:
-    nop
-    nop
-
-jr_01a_4090:
-    nop
-    nop
-    nop
-    nop
-
-jr_01a_4094:
-    nop
-    nop
-    call z, $2f7d
-    ld a, a
-    ld [hl], a
-    ld a, [hl]
-
-jr_01a_409c:
-    inc b
-    ld a, a
-    sub b
-    ld a, [hl]
-    ld h, b
-    ld [hl], d
-    ld e, h
-    ld h, [hl]
-
-jr_01a_40a4:
-    jr nc, @+$79
-
-    ld c, l
-    ld a, b
-    ld h, e
-    ld a, b
-    ccf
-    ld a, c
-    ldh a, [$78]
-    pop af
-    ld a, l
-
-jr_01a_40b0:
-    inc bc
-    ld a, [hl]
-    ld b, e
-    ld a, [hl]
-    ld b, a
-    ld a, l
-    ld h, b
-    ld a, l
-    ld l, h
-    ld [hl], a
-    xor a
-    ld a, l
-    xor [hl]
-    ld [hl], a
-    ld a, e
-    ld [hl], a
-    cpl
-    ld l, l
-    ld [hl+], a
-    ld [hl], d
-    ld d, e
-    ld l, l
-    ld [hl], d
-    ld l, l
-    db $e4
-    ld l, l
-    ld l, $6e
-    ld h, [hl]
-    ld l, a
-    ld a, d
-    ld l, a
-    adc a
-    ld l, a
-    sbc e
-    ld l, a
-    jp c, $eb6f
-
-    ld l, a
-    ld c, l
-    ld [hl], c
-    cp d
-    ld [hl], b
-    and $71
-    jr c, jr_01a_4151
-
-    adc e
-    ld l, [hl]
-    ld h, e
-    ld l, [hl]
-    sub e
-    ld l, d
-    dec de
-    ld l, h
-    jr z, @+$6e
-
-    cpl
-    ld l, h
-    inc a
-    ld l, h
-    ld e, e
-    ld l, h
-    jr c, jr_01a_415e
-
-    ld h, a
-    ld l, h
-    jp $8e6c
+traps1::
+    dw $7dcc
+    dw $7f2f
+    dw $7e77
+    dw $7f04
+    dw $7e90
+    dw $7260
+    dw $665c
+    dw $7730
+    dw $784d
+    dw $7863
+    dw $793f
+    dw $78f0
+    dw $7df1
+    dw $7e03
+    dw $7e43
+    dw $7d47
+    dw $7d60
+    dw $776c
+    dw $7daf
+    dw $77ae
+    dw $777b
+    dw $6d2f
+    dw $7222
+    dw $6d53
+    dw $6d72
+    dw $6de4
+    dw $6e2e
+    dw $6f66
+    dw $6f7a
+    dw $6f8f
+    dw $6f9b
+    dw $6fda
+    dw $6feb
+    dw $714d
+    dw $70ba
+    dw $71e6
+    dw $7138
+    dw $6e8b
+    dw $6e63
+    dw $6a93
+    dw $6c1b
+    dw $6c28
+    dw $6c2f
+    dw $6c3c
+    dw $6c5b
+    dw $6c38
+    dw $6c67
+    dw $6cc3
+    dw $6c8e
+    dw $6c92
+    dw $6cd8
+    dw $6ca5
+    dw $6ca9
 
 
-    ld l, h
-    sub d
-    ld l, h
-    ret c
-
-    ld l, h
-    and l
-    ld l, h
-    xor c
-    ld l, h
+j1a_4100:
     ld sp, $e000
     ld hl, $4100
     trap $6f

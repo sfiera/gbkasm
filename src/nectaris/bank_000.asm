@@ -27,19 +27,16 @@ RST_08::
 
 
 Config0::
-    db $1a
-
+    db BANK(j1a_4100)
 Config1::
-    db $1a
-
+    db BANK(traps1)
 Config2::
-    db $4a
-
+    db ((traps1 - $4000) / 2) - 1
 Config3::
-    db $1a
-
+    db BANK(traps1)
 Config4::
-    db $1b
+    db BANK(traps2)
+
 
 RST_10::
     jp Jump_000_00c9
@@ -479,10 +476,32 @@ Jump_000_01c3:
     nop
 
 traps0::
-    db $e9, $00, $50, $01, $5b, $01, $05, $6f, $35, $6f, $3e, $6f, $d8, $76, $f1, $76
-    db $12, $77, $fd, $02, $b9, $01, $b9, $01, $b9, $01, $b9, $01, $b9, $00, $00, $00
-    db $e7, $02, $1c, $02, $1c, $02, $1c, $02, $1c, $02, $1c, $02, $1c, $02, $1c, $02
-    db $1c, $02, $1c, $02
+    dw $00e9
+    dw $0150
+    dw $015b
+    dw $6f05
+    dw $6f35
+    dw $6f3e
+    dw $76d8
+    dw $76f1
+    dw $7712
+    dw $02fd
+    dw $01b9
+    dw $01b9
+    dw $01b9
+    dw $01b9
+    dw $00b9
+    dw $0000
+    dw $02e7
+    dw $021c
+    dw $021c
+    dw $021c
+    dw $021c
+    dw $021c
+    dw $021c
+    dw $021c
+    dw $021c
+    dw $021c
 
     jr jr_000_0218
 
