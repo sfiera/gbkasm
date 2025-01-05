@@ -13,9 +13,7 @@ INCLUDE "trap.inc"
 SECTION "Game Boy Metadata", ROM0
 
 HeaderLogo::
-    db $ce, $ed, $66, $66, $cc, $0d, $00, $0b, $03, $73, $00, $83, $00, $0c, $00, $0d
-    db $00, $08, $11, $1f, $88, $89, $00, $0e, $dc, $cc, $6e, $e6, $dd, $dd, $d9, $99
-    db $bb, $bb, $67, $63, $6e, $0e, $ec, $cc, $dd, $dc, $99, $9f, $bb, $b9, $33, $3e
+    NINTENDO_LOGO
 
 HeaderTitle::
     dp "GBKISS MINIGAME\0"
@@ -24,19 +22,19 @@ HeaderNewLicenseeCode::
     db $31, $38
 
 HeaderSGBFlag::
-    db $00
+    db CART_INDICATOR_GB
 
 HeaderCartridgeType::
-    db $ff
+    db CART_ROM_HUDSON_HUC1
 
 HeaderROMSize::
-    db $03
+    db CART_ROM_256KB
 
 HeaderRAMSize::
-    db $03
+    db CART_SRAM_32KB
 
 HeaderDestinationCode::
-    db $00
+    db CART_DEST_JAPANESE
 
 HeaderOldLicenseeCode::
     db $33
