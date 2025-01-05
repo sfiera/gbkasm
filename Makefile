@@ -1,4 +1,4 @@
-GB_ASM = $(wildcard src/*.asm)
+GB_ASM = $(wildcard src/minigame/*.asm)
 GBF_ASM = $(wildcard src/file/*.asm)
 FRAG_ASM = $(wildcard src/frag/*/*.asm)
 PNGH = $(wildcard src/gfx/*/*.h.png)
@@ -40,9 +40,9 @@ $(OBJ): %.o: %.asm
 
 $(GB): %.gb: $(GB_OBJ)
 ifeq ($(DEBUG),1)
-	$(RGBLINK) -l src/minigame.link -n $*.sym -m $*.map -o $@ $+
+	$(RGBLINK) -l src/minigame/minigame.link -n $*.sym -m $*.map -o $@ $+
 else
-	$(RGBLINK) -l src/minigame.link -o $@ $+
+	$(RGBLINK) -l src/minigame/minigame.link -o $@ $+
 endif
 	$(RGBFIX) -v -p 255 $@
 
