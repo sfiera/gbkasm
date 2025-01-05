@@ -202,7 +202,7 @@ TrapExitToMenu::
     ld a, [Config0]
     ldh [hROMBank], a
     ld [rROMBank], a
-    jp j01_4100
+    jp jsys_4100
 
 
 TrapMemCopy::

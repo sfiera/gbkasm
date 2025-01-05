@@ -30,15 +30,15 @@ ROM0
 
 ROMX $01
     org $4000
-    "ROM Bank $001"
+    "Kiss System 1"
     "ROM Infrared"
-    "ROM Bank $001-B"
+    "Kiss System 2"
 
 ROMX $02
     org $4000
-    "ROM Bank $002"
+    "Kiss System 3"
     "ROM Math"
-    "ROM Bank $002 B"
+    "Kiss System 4"
 
 ROMX $03
     org $4000

@@ -51,8 +51,16 @@ ROMX $18
 ROMX $19
 
 ROMX $1a
+    org $4000
+    "Kiss System 1"
+    "ROM Infrared"
+    "Kiss System 2"
 
 ROMX $1b
+    org $4000
+    "Kiss System 3"
+    "ROM Math"
+    "Kiss System 4"
 
 ROMX $1c
 
@@ -61,3 +69,13 @@ ROMX $1d
 ROMX $1e
 
 ROMX $1f
+
+WRAM0
+    org $c3c8
+    "WRAM"
+
+HRAM
+    org $ff80
+    "HRAM Banking"
+    org $ff8e
+    "HRAM Text"

@@ -10,7 +10,7 @@ INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
-SECTION "ROM Bank $001", ROMX
+SECTION "Kiss System 1", ROMX
 
 KissMailRegionHeader:
     db REGION_TYPE_ZEROFILE
@@ -97,9 +97,9 @@ traps1::
     dw TrapIRWriteSRAM      ; $7e
     dw TrapIRWrite          ; $7f
 
-j01_4100::
+jsys_4100::
     ld sp, $e000
-    ld hl, j01_4100
+    ld hl, jsys_4100
     trap $6f
     xor a
     ldh [$b7], a
@@ -165,12 +165,12 @@ Jump_001_4164:
     call Call_001_4990
     push af
 
-jr_001_4170:
+jr_sys_4170:
     call Call_001_47eb
     jr c, jr_001_419b
 
     bit 0, a
-    jr z, jr_001_4170
+    jr z, jr_sys_4170
 
     call Call_001_4990
     pop de
@@ -867,12 +867,12 @@ jr_001_4605:
     jr z, jr_001_461c
 
     bit 1, d
-    jr z, jr_001_4612
+    jr z, jr_sys_4612
 
     ld de, data_01_4028 + $30
     jr jr_001_461f
 
-jr_001_4612:
+jr_sys_4612:
     ld de, data_01_4028 + $20
     jr jr_001_461f
 
@@ -1254,7 +1254,7 @@ jr_001_4814:
     ld l, a
     ldh a, [$8a]
     bit 4, l
-    jr nz, jr_001_4877
+    jr nz, jr_sys_4877
 
     bit 6, l
     jp nz, Jump_001_48d7
@@ -1315,7 +1315,7 @@ jr_001_4872:
     jp Jump_001_47eb
 
 
-jr_001_4877:
+jr_sys_4877:
     ld l, $1e
     bit 2, a
     jr nz, jr_001_48af
@@ -1868,13 +1868,13 @@ jr_001_4b6d:
     pop af
     ld hl, StrJushinAreaAitemasen
     or a
-    jr z, jr_001_4b85
+    jr z, jr_sys_4b85
 
     ld hl, $c404
     trap DrawString
     ld hl, StrAreaMadeJushin
 
-jr_001_4b85:
+jr_sys_4b85:
     trap DrawString
     ret
 
@@ -2681,10 +2681,10 @@ jr_001_5fca:
     jr nz, jr_001_5ffa
 
     bit 0, a
-    jr nz, jr_001_6002
+    jr nz, jr_sys_6002
 
     bit 4, a
-    jr nz, jr_001_6002
+    jr nz, jr_sys_6002
 
     and $06
     jr nz, jr_001_5fe7
@@ -2715,7 +2715,7 @@ jr_001_5ffa:
     call Call_001_5f15
     jr jr_001_5fe2
 
-jr_001_6002:
+jr_sys_6002:
     call Call_001_5ee7
     trap AudioStop
     ld hl, $0400
@@ -3643,7 +3643,7 @@ jr_001_688b:
     ret
 
 
-SECTION "ROM Bank $001-B", ROMX
+SECTION "Kiss System 2", ROMX
 
 trap_60_6d2f::
     ld b, [hl]
@@ -4222,7 +4222,7 @@ jr_001_6f72:
 trap_67_6f7a::
     ld a, [de]
     cp [hl]
-    jr nz, jr_001_6f89
+    jr nz, jr_sys_6f89
 
     inc de
     inc hl
@@ -4235,7 +4235,7 @@ trap_67_6f7a::
     ret
 
 
-jr_001_6f89:
+jr_sys_6f89:
     sbc a
     ld h, a
     add a
@@ -4336,7 +4336,7 @@ TrapFileSearch::
     ld [hl-], a
     ld a, c
     or a
-    jr nz, jr_001_6ffc
+    jr nz, jr_sys_6ffc
 
     inc b
     push de
@@ -4350,7 +4350,7 @@ jr_001_6ff5:
 
     pop de
 
-jr_001_6ffc:
+jr_sys_6ffc:
     push de
     push bc
     call trap_6c_714d
@@ -4359,7 +4359,7 @@ jr_001_6ffc:
     jr c, jr_001_700c
 
     call Call_001_7029
-    jr nz, jr_001_6ffc
+    jr nz, jr_sys_6ffc
 
     xor a
     ret
@@ -4483,7 +4483,7 @@ jr_001_706b:
 jr_001_7092:
     ld a, [$c402]
     cp $ff
-    jr z, jr_001_70aa
+    jr z, jr_sys_70aa
 
     ld hl, $c400
     call Call_001_7118
@@ -4497,7 +4497,7 @@ jr_001_70a3:
     push de
     jr jr_001_70fc
 
-jr_001_70aa:
+jr_sys_70aa:
     call Call_001_7129
     jr jr_001_70a3
 
@@ -4653,7 +4653,7 @@ trap_6c_714d::
     ld a, [hl]
     dec hl
     cp $ff
-    jr z, jr_001_715f
+    jr z, jr_sys_715f
 
 jr_001_7158:
     dec hl
@@ -4663,7 +4663,7 @@ jr_001_7158:
     ld [hl+], a
     ld [hl], a
 
-jr_001_715f:
+jr_sys_715f:
     dec hl
     ld c, l
     ld b, h
@@ -5557,12 +5557,12 @@ trap_55_793f::
     ld c, a
     or a
     ld a, d
-    jr z, jr_001_795e
+    jr z, jr_sys_795e
 
-jr_001_795e:
+jr_sys_795e:
     add e
     dec c
-    jr nz, jr_001_795e
+    jr nz, jr_sys_795e
 
     ldh [$a2], a
     ld a, $01

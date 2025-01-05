@@ -3,6 +3,7 @@ MINIGAME_LINK = $(MINIGAME:%.gb=src/%.link)
 NECTARIS = nectaris.gb
 NECTARIS_LINK = $(NECTARIS:%.gb=src/%.link)
 
+SYSTEM_ASM = $(wildcard src/system/*.asm)
 MINIGAME_ASM = $(wildcard src/minigame/*.asm)
 NECTARIS_ASM = $(wildcard src/nectaris/*.asm)
 GBF_ASM = $(wildcard src/file/*.asm)
@@ -13,12 +14,13 @@ PNGF = $(wildcard src/gfx/*/*.f.png)
 GFX = $(PNGH:%.h.png=%) $(PNGV:%.v.png=%) $(PNGF:%.f.png=%)
 HZ = $(FRAG_ASM:%.asm=%.hz)
 
+SYSTEM_OBJ = $(SYSTEM_ASM:%.asm=%.o)
 MINIGAME_OBJ = $(MINIGAME_ASM:%.asm=%.o)
 NECTARIS_OBJ = $(NECTARIS_ASM:%.asm=%.o)
 GBF_OBJ = $(GBF_ASM:%.asm=%.o)
 FRAG_OBJ = $(FRAG_ASM:%.asm=%.o)
-ASM = $(MINIGAME_ASM) $(NECTARIS_ASM) $(GBF_ASM) $(FRAG_ASM)
-OBJ = $(MINIGAME_OBJ) $(NECTARIS_OBJ) $(GBF_OBJ) $(FRAG_OBJ)
+ASM = $(SYSTEM_ASM) $(MINIGAME_ASM) $(NECTARIS_ASM) $(GBF_ASM) $(FRAG_ASM)
+OBJ = $(SYSTEM_OBJ) $(MINIGAME_OBJ) $(NECTARIS_OBJ) $(GBF_OBJ) $(FRAG_OBJ)
 GBF = $(GBF_ASM:src/file/%.asm=%.gbf)
 
 RGBASM  ?= rgbasm
@@ -40,19 +42,19 @@ all: compare
 $(OBJ): %.o: %.asm
 	$(RGBASM) $(RGBASMFLAGS) -M $*.d -o $@ $<
 
-$(MINIGAME): %.gb: $(MINIGAME_LINK) $(MINIGAME_OBJ)
+$(MINIGAME): %.gb: $(MINIGAME_LINK) $(MINIGAME_OBJ) $(SYSTEM_OBJ)
 ifeq ($(DEBUG),1)
-	$(RGBLINK) -n $*.sym -m $*.map -o $@ -l $(MINIGAME_LINK) $(MINIGAME_OBJ)
+	$(RGBLINK) -n $*.sym -m $*.map -o $@ -l $(MINIGAME_LINK) $(MINIGAME_OBJ) $(SYSTEM_OBJ)
 else
-	$(RGBLINK) -o $@ -l $(MINIGAME_LINK) $(MINIGAME_OBJ)
+	$(RGBLINK) -o $@ -l $(MINIGAME_LINK) $(MINIGAME_OBJ) $(SYSTEM_OBJ)
 endif
 	$(RGBFIX) -v -p 255 $@
 
-$(NECTARIS): %.gb: $(NECTARIS_LINK) $(NECTARIS_OBJ)
+$(NECTARIS): %.gb: $(NECTARIS_LINK) $(NECTARIS_OBJ) $(SYSTEM_OBJ)
 ifeq ($(DEBUG),1)
-	$(RGBLINK) -n $*.sym -m $*.map -o $@ -l $(NECTARIS_LINK) $(NECTARIS_OBJ)
+	$(RGBLINK) -n $*.sym -m $*.map -o $@ -l $(NECTARIS_LINK) $(NECTARIS_OBJ) $(SYSTEM_OBJ)
 else
-	$(RGBLINK) -o $@ -l $(NECTARIS_LINK) $(NECTARIS_OBJ)
+	$(RGBLINK) -o $@ -l $(NECTARIS_LINK) $(NECTARIS_OBJ) $(SYSTEM_OBJ)
 endif
 	$(RGBFIX) -v -p 255 $@
 

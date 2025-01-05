@@ -27,7 +27,7 @@ RST_08::
 
 
 Config0::
-    db BANK(j1a_4100)
+    db BANK(jsys_4100)
 Config1::
     db BANK(traps1)
 Config2::

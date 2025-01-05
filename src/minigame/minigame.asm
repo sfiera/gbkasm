@@ -52,7 +52,7 @@ HeaderGlobalChecksum::
 SECTION "GBKiss Config", ROM0
 
 Config0::
-    db BANK(j01_4100)
+    db BANK(jsys_4100)
 Config1::
     db BANK(traps1)
 Config2::
