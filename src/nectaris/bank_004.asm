@@ -14,15 +14,14 @@ SECTION "ROM Bank $004", ROMX[$4000], BANK[$4]
 
 GameOver:
 .map::
-    INCBIN "gfx/nectaris/gameover.map"
+    INCBIN "gfx/nectaris/gameover.map", 20
 .tiles::
     INCBIN "gfx/nectaris/gameover.2bpp"
 
 WorldMap:
 .map::
-    INCBIN "gfx/nectaris/worldmap.map"
+    INCBIN "gfx/nectaris/worldmap.map", 20
 .tiles::
-    ds 16, $ff
     INCBIN "gfx/nectaris/worldmap.2bpp"
 
 UnknownTileMap::

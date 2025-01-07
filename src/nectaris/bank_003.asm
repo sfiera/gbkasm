@@ -115,9 +115,8 @@ Messages::
 
 TitleScreen:
 .map::
-    INCBIN "gfx/nectaris/title.map"
+    INCBIN "gfx/nectaris/title.map", 20
 .tiles::
-    db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
     INCBIN "gfx/nectaris/title.2bpp"
 
     db $81, $82, $83, $84, $85, $86, $87, $88, $89, $8a, $8b, $8c, $8d, $8e, $80, $8f

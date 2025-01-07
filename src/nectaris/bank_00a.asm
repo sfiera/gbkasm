@@ -14,6 +14,6 @@ SECTION "ROM Bank $00a", ROMX[$4000], BANK[$a]
 
 FactoryTaken:
 .map::
-    INCBIN "gfx/nectaris/factory.map"
+    INCBIN "gfx/nectaris/factory.map", 20
 .tiles::
     INCBIN "gfx/nectaris/factory.2bpp"
