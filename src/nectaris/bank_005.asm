@@ -37,29 +37,20 @@ WinScreen:
 
     screen GameOver
     screen WorldMap
-    dbw $0c, $4000
-    dbw $0c, $4168
-    dbw $0c, $4d28
-    dbw $0c, $4e90
-    dbw $0c, $5eb0
-    dbw $0c, $6018
-    dbw $0c, $6e68
-    dbw $0c, $6fd0
+    screen screen_0c_4000
+    screen screen_0c_4d28
+    screen screen_0c_5eb0
+    screen screen_0c_6e68
     screen Splash1
     screen Splash2
     screen Splash3
     screen Splash4
     screen Splash5
-    dbw $10, $4000
-    dbw $10, $4168
-    dbw $10, $4b58
-    dbw $10, $4cc0
-    dbw $10, $5490
-    dbw $10, $55f8
-    dbw $10, $5b68
-    dbw $10, $5cd0
-    dbw $10, $6230
-    dbw $10, $6398
+    screen screen_10_4000
+    screen screen_10_4b58
+    screen screen_10_5490
+    screen screen_10_5b68
+    screen screen_10_6230
     screen FactoryTaken
 
 Maps::
@@ -73,12 +64,12 @@ Maps::
     laddr map_06_6d8e
     laddr map_06_6f4b
     laddr map_06_7153
-    dbw $0b, $4000
-    dbw $0b, $41c6
-    dbw $0b, $4392
-    dbw $0b, $46e8
-    dbw $0b, $4a44
-    dbw $0b, $4d82
+    laddr map_0b_4000
+    laddr map_0b_41c6
+    laddr map_0b_4392
+    laddr map_0b_46e8
+    laddr map_0b_4a44
+    laddr map_0b_4d82
     laddr map_06_4000
     laddr map_06_40ce
     laddr map_06_41ab
@@ -96,83 +87,83 @@ Maps::
     laddr map_06_5e4d
     laddr map_06_6192
 
-    dbw $08, $4000
-    dbw $08, $40e0
-    dbw $08, $41c9
-    dbw $08, $42a6
-    dbw $08, $4377
-    dbw $08, $445d
-    dbw $08, $453d
-    dbw $08, $4623
-    dbw $08, $470c
-    dbw $08, $47ef
-    dbw $08, $48d5
-    dbw $08, $4a71
-    dbw $08, $4c37
-    dbw $08, $4de8
-    dbw $08, $4f96
-    dbw $08, $5159
-    dbw $08, $5337
-    dbw $08, $54d6
-    dbw $08, $5681
-    dbw $08, $5823
-    dbw $08, $59ec
-    dbw $08, $5ba9
-    dbw $08, $5d69
-    dbw $08, $5f2f
-    dbw $08, $60ec
-    dbw $08, $62be
-    dbw $08, $649c
-    dbw $08, $668c
-    dbw $08, $6834
-    dbw $08, $69fd
-    dbw $08, $6bab
-    dbw $08, $6f16
-    dbw $08, $7281
-    dbw $08, $75ec
-    dbw $08, $7954
-    dbw $08, $7c8f
-    dbw $09, $4000
-    dbw $09, $4365
-    dbw $09, $46af
-    dbw $09, $4a1a
-    dbw $09, $4e56
-    dbw $09, $4d85
-    dbw $09, $53ab
-    dbw $09, $5040
+    laddr map_08_4000
+    laddr map_08_40e0
+    laddr map_08_41c9
+    laddr map_08_42a6
+    laddr map_08_4377
+    laddr map_08_445d
+    laddr map_08_453d
+    laddr map_08_4623
+    laddr map_08_470c
+    laddr map_08_47ef
+    laddr map_08_48d5
+    laddr map_08_4a71
+    laddr map_08_4c37
+    laddr map_08_4de8
+    laddr map_08_4f96
+    laddr map_08_5159
+    laddr map_08_5337
+    laddr map_08_54d6
+    laddr map_08_5681
+    laddr map_08_5823
+    laddr map_08_59ec
+    laddr map_08_5ba9
+    laddr map_08_5d69
+    laddr map_08_5f2f
+    laddr map_08_60ec
+    laddr map_08_62be
+    laddr map_08_649c
+    laddr map_08_668c
+    laddr map_08_6834
+    laddr map_08_69fd
+    laddr map_08_6bab
+    laddr map_08_6f16
+    laddr map_08_7281
+    laddr map_08_75ec
+    laddr map_08_7954
+    laddr map_08_7c8f
+    laddr map_09_4000
+    laddr map_09_4365
+    laddr map_09_46af
+    laddr map_09_4a1a
+    laddr map_09_4e56
+    laddr map_09_4d85
+    laddr map_09_53ab
+    laddr map_09_5040
 
-    dbw $0b, $50ea
-    dbw $0b, $51d0
-    dbw $0b, $52bc
-    dbw $0b, $53c0
-    dbw $0b, $549a
-    dbw $0b, $565d
-    dbw $0b, $5844
-    dbw $0b, $59f8
-    dbw $0b, $5bd0
-    dbw $0b, $5da5
-    dbw $0b, $5f92
-    dbw $0b, $6146
-    dbw $0b, $62f4
-    dbw $0b, $665f
-    dbw $0b, $69b5
-    dbw $0b, $6d05
-    dbw $11, $4000
-    dbw $11, $40e6
-    dbw $11, $41d5
-    dbw $11, $42dc
-    dbw $11, $4474
-    dbw $11, $464e
-    dbw $11, $4801
-    dbw $11, $49fa
-    dbw $11, $4bd2
-    dbw $11, $4f14
-    dbw $11, $525f
-    dbw $11, $559b
-    dbw $11, $58e6
-    dbw $11, $5c31
-    dbw $11, $5f7c
-    dbw $11, $62c1
+    laddr map_0b_50ea
+    laddr map_0b_51d0
+    laddr map_0b_52bc
+    laddr map_0b_53c0
+    laddr map_0b_549a
+    laddr map_0b_565d
+    laddr map_0b_5844
+    laddr map_0b_59f8
+    laddr map_0b_5bd0
+    laddr map_0b_5da5
+    laddr map_0b_5f92
+    laddr map_0b_6146
+    laddr map_0b_62f4
+    laddr map_0b_665f
+    laddr map_0b_69b5
+    laddr map_0b_6d05
+    laddr map_11_4000
+    laddr map_11_40e6
+    laddr map_11_41d5
+    laddr map_11_42dc
+    laddr map_11_4474
+    laddr map_11_464e
+    laddr map_11_4801
+    laddr map_11_49fa
+    laddr map_11_4bd2
+    laddr map_11_4f14
+    laddr map_11_525f
+    laddr map_11_559b
+    laddr map_11_58e6
+    laddr map_11_5c31
+    laddr map_11_5f7c
+    laddr map_11_62c1
 
 Passwords::
     db "STEVEN", -1, -1
