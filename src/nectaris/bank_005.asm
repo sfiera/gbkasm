@@ -63,38 +63,39 @@ WinScreen:
     dbw $0a, $4000
     dbw $0a, $4168
 
-    dbw $06, $64dd
-    dbw $06, $65ab
-    dbw $06, $6688
-    dbw $06, $675f
-    dbw $06, $684b
-    dbw $06, $69ed
-    dbw $06, $6bb3
-    dbw $06, $6d8e
-    dbw $06, $6f4b
-    dbw $06, $7153
+Maps::
+    laddr map_06_64dd
+    laddr map_06_65ab
+    laddr map_06_6688
+    laddr map_06_675f
+    laddr map_06_684b
+    laddr map_06_69ed
+    laddr map_06_6bb3
+    laddr map_06_6d8e
+    laddr map_06_6f4b
+    laddr map_06_7153
     dbw $0b, $4000
     dbw $0b, $41c6
     dbw $0b, $4392
     dbw $0b, $46e8
     dbw $0b, $4a44
     dbw $0b, $4d82
-    dbw $06, $4000
-    dbw $06, $40ce
-    dbw $06, $41ab
-    dbw $06, $4282
-    dbw $06, $440e
-    dbw $06, $459a
-    dbw $06, $4735
-    dbw $06, $48ec
-    dbw $06, $4ad9
-    dbw $06, $4e1e
-    dbw $06, $5169
-    dbw $06, $54ae
-    dbw $06, $57f6
-    dbw $06, $5b20
-    dbw $06, $5e4d
-    dbw $06, $6192
+    laddr map_06_4000
+    laddr map_06_40ce
+    laddr map_06_41ab
+    laddr map_06_4282
+    laddr map_06_440e
+    laddr map_06_459a
+    laddr map_06_4735
+    laddr map_06_48ec
+    laddr map_06_4ad9
+    laddr map_06_4e1e
+    laddr map_06_5169
+    laddr map_06_54ae
+    laddr map_06_57f6
+    laddr map_06_5b20
+    laddr map_06_5e4d
+    laddr map_06_6192
     dbw $08, $4000
     dbw $08, $40e0
     dbw $08, $41c9
