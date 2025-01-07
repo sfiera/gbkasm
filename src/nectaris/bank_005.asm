@@ -96,6 +96,7 @@ Maps::
     laddr map_06_5b20
     laddr map_06_5e4d
     laddr map_06_6192
+
     dbw $08, $4000
     dbw $08, $40e0
     dbw $08, $41c9
@@ -140,6 +141,7 @@ Maps::
     dbw $09, $4d85
     dbw $09, $53ab
     dbw $09, $5040
+
     dbw $0b, $50ea
     dbw $0b, $51d0
     dbw $0b, $52bc
