@@ -60,8 +60,7 @@ WinScreen:
     dbw $10, $5cd0
     dbw $10, $6230
     dbw $10, $6398
-    dbw $0a, $4000
-    dbw $0a, $4168
+    screen FactoryTaken
 
 Maps::
     laddr map_06_64dd
