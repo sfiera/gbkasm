@@ -12,7 +12,7 @@ INCLUDE "trap.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
-RST_00::
+trap_0f_0000::
     jp Jump_000_07e5
 
 
@@ -208,6 +208,8 @@ Jump_000_00b6:
     ld [hl], e
     inc hl
     ld [hl], d
+
+trap_0e_00b9:
     pop hl
     pop de
     pop af
@@ -266,6 +268,7 @@ Jump_000_00e5:
     ret
 
 
+trap_00_00e9:
     xor a
 
 Call_000_00ea:
@@ -288,7 +291,7 @@ Call_000_00f7:
 
 Boot::
     nop
-    jp Jump_000_02e7
+    jp trap_10_02e7
 
 
 HeaderLogo::
@@ -330,13 +333,14 @@ HeaderGlobalChecksum::
     db $d2, $51
 
 
-Jump_000_0150::
+trap_01_0150:
     ld a, [$000b]
     ldh [$80], a
     ld [$2000], a
     jp jsys_4100
 
 
+trap_02_015b:
     ld a, b
     or c
     ret z
@@ -433,6 +437,8 @@ Call_000_01b0:
     add b
     ldh [$89], a
     ei
+
+trap_noop:
     ret
 
 
@@ -478,32 +484,32 @@ Jump_000_01c3:
     nop
 
 traps0::
-    dw $00e9
-    dw Jump_000_0150
-    dw $015b
-    dw $6f05
-    dw $6f35
-    dw $6f3e
-    dw $76d8
-    dw $76f1
-    dw $7712
-    dw $02fd
-    dw $01b9
-    dw $01b9
-    dw $01b9
-    dw $01b9
-    dw $00b9
-    dw $0000
-    dw $02e7
-    dw $021c
-    dw $021c
-    dw $021c
-    dw $021c
-    dw $021c
-    dw $021c
-    dw $021c
-    dw $021c
-    dw $021c
+    dw trap_00_00e9
+    dw trap_01_0150
+    dw trap_02_015b
+    dw trap_03_6f05
+    dw trap_04_6f35
+    dw trap_05_6f3e
+    dw TrapJumpViaTable
+    dw trap_07_76f1
+    dw trap_08_7712
+    dw trap_09_02fd
+    dw trap_noop
+    dw trap_noop
+    dw trap_noop
+    dw trap_noop
+    dw trap_0e_00b9
+    dw trap_0f_0000
+    dw trap_10_02e7
+    dw trap_021c
+    dw trap_021c
+    dw trap_021c
+    dw trap_021c
+    dw trap_021c
+    dw trap_021c
+    dw trap_021c
+    dw trap_021c
+    dw trap_021c
 
     jr jr_000_0218
 
@@ -515,6 +521,7 @@ jr_000_0218:
     ret
 
 
+trap_021c:
     xor a
     ret
 
@@ -700,7 +707,7 @@ Call_000_02df:
     jp RST_20
 
 
-Jump_000_02e7:
+trap_10_02e7:
     di
 
 Call_000_02e8:
@@ -727,6 +734,8 @@ jr_000_02ec:
     nop
     nop
     nop
+
+trap_09_02fd:
     ret
 
 
@@ -748,7 +757,7 @@ Call_000_0306:
 
 Jump_000_030a:
     di
-    jp Jump_000_02e7
+    jp trap_10_02e7
 
 
 Jump_000_030e:
