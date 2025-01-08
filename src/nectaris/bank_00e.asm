@@ -12,6 +12,7 @@ INCLUDE "trap.inc"
 
 SECTION "ROM Bank $00e", ROMX[$4000], BANK[$e]
 
+Call_00e_4000::
     ld a, $00
     ld [$d7b3], a
     call Call_00e_4130

@@ -5285,10 +5285,10 @@ Jump_000_1ee6:
     jr nz, jr_000_1f24
 
     di
-    ld a, $0e
+    ld a, BANK(Call_00e_4000)
     ld [$2000], a
     ld [$d799], a
-    call Call_001_4000
+    call Call_00e_4000
     ld a, $01
     call SetROMBank
     ei
