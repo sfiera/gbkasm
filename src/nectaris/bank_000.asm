@@ -3132,6 +3132,7 @@ Call_000_0f56:
     ret
 
 
+Call_000_0f7e::
     ld [$d872], a
     ld a, [$d799]
     push af
