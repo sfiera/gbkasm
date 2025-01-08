@@ -590,7 +590,7 @@ jr_00f_4329:
     ret
 
 
-Call_00f_4333:
+Call_00f_4333::
     call Call_000_13f0
     ld a, [$d7c3]
     ld [$d99d], a
@@ -2429,7 +2429,7 @@ jr_00f_4d94:
     ret
 
 
-Call_00f_4d9f:
+Call_00f_4d9f::
     ld c, a
     ld d, $00
     ld b, $38
@@ -3614,7 +3614,7 @@ jr_00f_54ab:
     ret
 
 
-Call_00f_54b6:
+Call_00f_54b6::
     ld a, $00
     ld [$d86f], a
     ld hl, $ccf0
@@ -5911,7 +5911,7 @@ jr_00f_623f:
     xor $80
     ld [hl+], a
 
-Call_00f_624a:
+Call_00f_624a::
     ld b, $0a
     call Call_00f_625c
     ld a, c
@@ -9788,7 +9788,7 @@ Jump_00f_7671:
     ret
 
 
-Call_00f_7672:
+Call_00f_7672::
     ld hl, $d572
     ld c, $00
 
@@ -9833,7 +9833,7 @@ jr_00f_7697:
     ret
 
 
-Call_00f_76a3:
+Call_00f_76a3::
     ld a, [$d87b]
     push af
     ld a, [$d87d]

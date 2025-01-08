@@ -1247,7 +1247,7 @@ jr_001_47b1:
     ret
 
 
-Call_001_47b8:
+Call_001_47b8::
     ld hl, $ccf2
     ld c, $16
 
