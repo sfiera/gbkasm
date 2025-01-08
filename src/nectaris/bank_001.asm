@@ -1116,6 +1116,7 @@ Call_001_46d1:
     jp Jump_001_52be
 
 
+data_001_46d4:
     rst $38
     rst $38
     nop
@@ -1124,6 +1125,8 @@ Call_001_46d1:
     nop
     ld bc, $0101
     nop
+
+data_001_46e0:
     nop
     ld bc, $0001
     rst $38
@@ -1144,7 +1147,7 @@ jr_001_46f4:
     pop af
     push af
     add b
-    ld hl, $46d4
+    ld hl, data_001_46d4
     call Call_000_088f
     ld a, [hl]
     ld b, a
@@ -1152,7 +1155,7 @@ jr_001_46f4:
     add b
     ld [$da0d], a
     pop af
-    ld hl, $46e0
+    ld hl, data_001_46e0
     call Call_000_088f
     ld a, [hl]
     ld b, a
@@ -1179,7 +1182,7 @@ Call_001_4719:
     ld [$da0d], a
     ld [$d99f], a
     ld a, [$d9a1]
-    ld hl, $55f9
+    ld hl, data_001_55f9
     call Call_000_088f
     ld a, [hl]
     ld [$d9b4], a
@@ -2143,7 +2146,7 @@ Jump_001_4cff:
     ld a, [$da0d]
     ld [$da39], a
     ld a, [$da3b]
-    ld hl, $5610
+    ld hl, data_001_5610
     call Call_000_088f
     pop af
     push af
@@ -2589,7 +2592,7 @@ jr_001_4f81:
     ld [$d99f], a
     ld a, b
     and $1f
-    ld de, $55f9
+    ld de, data_001_55f9
     call Call_000_08a1
     ld a, [de]
     ld [$d9b4], a
@@ -3629,6 +3632,7 @@ jr_001_55f5:
     ret
 
 
+data_001_55f9:
     ld bc, $0202
     ld [bc], a
     ld b, $06
@@ -3646,6 +3650,8 @@ jr_001_55f5:
     inc bc
     dec b
     inc bc
+
+data_001_5610:
     inc bc
     inc b
     dec b
@@ -3901,7 +3907,7 @@ jr_001_5763:
     ld [$d9b0], a
     ld a, $00
     ld [$d9b2], a
-    ld de, $55f9
+    ld de, data_001_55f9
     ld a, [$d9a1]
     call Call_000_08a1
     ld a, [de]
@@ -4144,6 +4150,7 @@ jr_001_58ba:
     ret
 
 
+data_001_58bb:
     inc b
     inc bc
     ld [bc], a
@@ -4323,7 +4330,7 @@ jr_001_59c1:
     ld [$d9a6], a
 
 jr_001_59e3:
-    ld de, $58bb
+    ld de, data_001_58bb
     call Call_000_08a1
     ld a, [de]
     push bc
@@ -5861,6 +5868,7 @@ jr_001_62cd:
     ret
 
 
+data_001_62d1:
     ld b, $12
     inc h
     inc a
@@ -5887,7 +5895,7 @@ Call_001_62d9:
     cp $08
     jp nc, Jump_001_63a0
 
-    ld hl, $62d1
+    ld hl, data_001_62d1
     call Call_000_088f
     ld a, [hl]
     ld [$da60], a
@@ -7049,10 +7057,11 @@ jr_001_6a95:
     ret
 
 
-    nop
-    ld bc, $0302
-    inc b
-    dec b
+data_001_6a96:
+    db $00, $01, $02
+
+data_001_6a99:
+    db $03, $04, $05
 
 Call_001_6a9c:
     ld a, [$da0c]
@@ -7106,7 +7115,7 @@ jr_001_6aed:
 
 Jump_001_6afa:
     ld a, [$da38]
-    ld hl, $6a96
+    ld hl, data_001_6a96
     call Call_000_088f
     ld a, [hl]
     call Call_001_6bd8
@@ -7117,7 +7126,7 @@ Jump_001_6afa:
     jr c, jr_001_6b45
 
     ld a, [$da38]
-    ld hl, $6a99
+    ld hl, data_001_6a99
     call Call_000_088f
     ld a, [hl]
     call Call_001_6bd8
@@ -7134,7 +7143,7 @@ Jump_001_6afa:
 
 jr_001_6b2d:
     ld a, [$da38]
-    ld hl, $6a99
+    ld hl, data_001_6a99
     call Call_000_088f
     ld a, [hl]
     call Call_001_6bd8
@@ -7600,16 +7609,23 @@ Jump_001_6e12:
     ret
 
 
+data_001_6e21:
     ld bc, $0001
     nop
+
+data_001_6e25:
     inc d
     jr nz, jr_001_6e48
 
     nop
+
+data_001_6e29:
     nop
     inc bc
     nop
     nop
+
+data_001_6e2d:
     nop
     nop
     db $10
@@ -7633,7 +7649,7 @@ Jump_001_6e3d:
 
 jr_001_6e41:
     ld b, a
-    ld hl, $6e21
+    ld hl, data_001_6e21
     call Call_000_088f
 
 jr_001_6e48:
@@ -7641,17 +7657,17 @@ jr_001_6e48:
     ld [$da83], a
     ld [$da69], a
     ld a, b
-    ld hl, $6e25
+    ld hl, data_001_6e25
     call Call_000_088f
     ld a, [hl]
     ld [$da6a], a
     ld a, b
-    ld hl, $6e29
+    ld hl, data_001_6e29
     call Call_000_088f
     ld a, [hl]
     ld [$da68], a
     ld a, b
-    ld hl, $6e2d
+    ld hl, data_001_6e2d
     call Call_000_088f
     ld a, [hl]
     ld [$da40], a
@@ -8437,6 +8453,7 @@ Jump_001_7356:
     ret
 
 
+data_001_736b:
     db $10
     db $10
     ld bc, $0000
@@ -8638,7 +8655,7 @@ jr_001_7460:
     cp $00
     jp z, Jump_001_7580
 
-    ld de, $736b
+    ld de, data_001_736b
     ld a, [$d99d]
     call Call_000_099b
     inc hl

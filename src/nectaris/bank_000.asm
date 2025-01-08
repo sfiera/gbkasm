@@ -9286,6 +9286,7 @@ jr_000_3b55:
     ret
 
 
+data_000_3b68:
     ld b, $09
     rlca
     rlca
@@ -9299,6 +9300,8 @@ jr_000_3b55:
     add hl, bc
     ld bc, $010b
     rlca
+
+data_000_3b78:
     dec c
     add hl, bc
     dec bc
@@ -9348,12 +9351,12 @@ jr_000_3bc6:
     call SetROMBank
     ld a, $81
     ld [$d86f], a
-    ld hl, $3b68
+    ld hl, data_000_3b68
     ld de, $d832
     call Call_000_3be8
     ld a, $85
     ld [$d86f], a
-    ld hl, $3b78
+    ld hl, data_000_3b78
     ld de, $d83a
     call Call_000_3be8
     ret
@@ -9760,7 +9763,7 @@ Call_000_3e3f:
     cp $0a
     jr nz, jr_000_3e68
 
-    ld hl, $6048
+    ld hl, Messages + $500
 
 jr_000_3e68:
     ld de, $8000
@@ -9926,120 +9929,13 @@ Call_000_3f80:
     ldh [$80], a
     ld [$2000], a
     pop af
-    ld bc, $3f8e
+    ld bc, Call_000_3f8e
     push bc
     jp hl
 
 
+Call_000_3f8e:
     ld a, $1c
     ldh [$80], a
     ld [$2000], a
     ret
-
-
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
-    nop
