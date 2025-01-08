@@ -5718,7 +5718,7 @@ Jump_000_21c2:
     inc a
     ld [$d86e], a
     ld hl, $d000
-    ld hl, $43a2
+    ld hl, Menu14
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -5740,7 +5740,7 @@ jr_000_221f:
 Call_000_2222::
     ld a, $0a
     call Call_000_0d07
-    ld hl, $43ee
+    ld hl, Menu15
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -5772,7 +5772,7 @@ Call_000_2222::
 
     ld a, $0a
     call Call_000_0d07
-    ld hl, $445d
+    ld hl, Menu17
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -5787,7 +5787,7 @@ Call_000_2222::
 
 
 jr_000_2287:
-    ld hl, $4475
+    ld hl, Menu18
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -5823,7 +5823,7 @@ Jump_000_22c3::
     cp $00
     jp nz, Jump_000_23de
 
-    ld hl, $43a2
+    ld hl, Menu14
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -5843,7 +5843,7 @@ jr_000_22f1:
     call Call_000_0927
     ld a, $0a
     call Call_000_0d07
-    ld hl, $4425
+    ld hl, Menu16
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -5938,7 +5938,7 @@ jr_000_236a:
     add $06
     ld hl, $d000
     call Call_000_1158
-    ld hl, $445d
+    ld hl, Menu17
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -5955,7 +5955,7 @@ jr_000_236a:
 jr_000_23b6:
     ld a, $0d
     call Call_000_0d07
-    ld hl, $4475
+    ld hl, Menu18
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -6025,7 +6025,7 @@ Jump_000_2408:
     add $06
     ld hl, $d000
     call Call_000_1131
-    ld hl, $435d
+    ld hl, Menu13
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -6044,7 +6044,7 @@ Jump_000_2408:
 jr_000_2464:
     ld a, $0a
     call Call_000_0d07
-    ld hl, $43ee
+    ld hl, Menu15
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -6061,7 +6061,7 @@ jr_000_2464:
 
     ld a, $0a
     call Call_000_0d07
-    ld hl, $445d
+    ld hl, Menu17
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -6076,7 +6076,7 @@ jr_000_2464:
 
 
 jr_000_24b0:
-    ld hl, $4475
+    ld hl, Menu18
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -6110,7 +6110,7 @@ Jump_000_24ce:
     cp $00
     jp nz, Jump_000_23de
 
-    ld hl, $435d
+    ld hl, Menu13
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -6129,7 +6129,7 @@ Jump_000_24ce:
 jr_000_251a:
     ld a, $0a
     call Call_000_0d07
-    ld hl, $4425
+    ld hl, Menu16
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -6175,7 +6175,7 @@ jr_000_251a:
     add $06
     ld hl, $d000
     call Call_000_1158
-    ld hl, $445d
+    ld hl, Menu17
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -6193,7 +6193,7 @@ Jump_000_25a5:
 jr_000_25a5:
     ld a, $0d
     call Call_000_0d07
-    ld hl, $4475
+    ld hl, Menu18
     ld a, l
     ld [$d8e0], a
     ld a, h
