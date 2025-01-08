@@ -2970,7 +2970,7 @@ Call_000_0de7:
     ret
 
 
-Call_000_0e3e:
+RunMenu:
     push hl
     call Call_000_0927
     call Call_000_085d
@@ -5387,14 +5387,14 @@ jr_000_1fd0:
     jr nz, jr_000_200a
 
     call Call_000_11a2
-    ld hl, $4080
+    ld hl, Menu1
     cp $00
     jr z, jr_000_1fe4
 
-    ld hl, $4105
+    ld hl, Menu3
 
 jr_000_1fe4:
-    call Call_000_0e3e
+    call RunMenu
     cp $00
     jr nz, jr_000_1fd0
 
@@ -5419,14 +5419,14 @@ jr_000_1fe4:
 
 jr_000_200a:
     call Call_000_11a2
-    ld hl, $40c8
+    ld hl, Menu2
     cp $00
     jr z, jr_000_2017
 
-    ld hl, $415c
+    ld hl, Menu4
 
 jr_000_2017:
-    call Call_000_0e3e
+    call RunMenu
     cp $00
     jr nz, jr_000_1fd0
 
@@ -5451,8 +5451,8 @@ Jump_000_2038:
     ld [$d8df], a
 
 jr_000_203d:
-    ld hl, $41a8
-    call Call_000_0e3e
+    ld hl, Menu5
+    call RunMenu
     cp $00
     jp nz, Jump_000_1fcb
 
@@ -5530,8 +5530,8 @@ Jump_000_20b4:
     ld [$d8df], a
 
 jr_000_20b9:
-    ld hl, $41d1
-    call Call_000_0e3e
+    ld hl, Menu6
+    call RunMenu
     cp $00
     jp nz, Jump_000_1fcb
 
@@ -5580,8 +5580,8 @@ Jump_000_2103:
     ld [$d8df], a
 
 jr_000_2108:
-    ld hl, $42e4
-    call Call_000_0e3e
+    ld hl, Menu10
+    call RunMenu
     cp $00
     jp nz, Jump_000_1fcb
 
@@ -5623,8 +5623,8 @@ Jump_000_2145:
     ld [$d8df], a
 
 Jump_000_214a:
-    ld hl, $4261
-    call Call_000_0e3e
+    ld hl, Menu8
+    call RunMenu
     cp $00
     jp nz, Jump_000_1fcb
 
@@ -5973,8 +5973,8 @@ Jump_000_23d9:
     ld [$d8df], a
 
 Jump_000_23de:
-    ld hl, $4210
-    call Call_000_0e3e
+    ld hl, Menu7
+    call RunMenu
     cp $00
     jp nz, Jump_000_1fcb
 
@@ -6219,8 +6219,8 @@ Jump_000_25d2:
 
 Jump_000_25d7:
 jr_000_25d7:
-    ld hl, $42a7
-    call Call_000_0e3e
+    ld hl, Menu9
+    call RunMenu
     cp $00
     jp nz, Jump_000_1fcb
 
@@ -6837,8 +6837,8 @@ Jump_000_2a75:
     ld [$d8df], a
 
 jr_000_2ab2:
-    ld hl, $433b
-    call Call_000_0e3e
+    ld hl, Menu12
+    call RunMenu
     cp $00
     jp nz, Jump_000_2b43
 
@@ -6874,8 +6874,8 @@ jr_000_2af3:
     ld [$d8df], a
 
 jr_000_2afb:
-    ld hl, $430c
-    call Call_000_0e3e
+    ld hl, Menu11
+    call RunMenu
     cp $00
     jp nz, Jump_000_2b43
 
