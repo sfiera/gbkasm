@@ -1117,20 +1117,10 @@ Call_001_46d1:
 
 
 data_001_46d4:
-    rst $38
-    rst $38
-    nop
-    ld bc, $ff00
-    rst $38
-    nop
-    ld bc, $0101
-    nop
+    db $ff, $ff, $00, $01, $00, $ff, $ff, $00, $01, $01, $01, $00
 
 data_001_46e0:
-    nop
-    ld bc, $0001
-    rst $38
-    rst $38
+    db $00, $01, $01, $00, $ff, $ff
 
 Call_001_46e6:
     push bc
@@ -3633,30 +3623,11 @@ jr_001_55f5:
 
 
 data_001_55f9:
-    ld bc, $0202
-    ld [bc], a
-    ld b, $06
-    inc b
-    inc b
-    dec b
-    inc c
-    dec b
-    ld b, $06
-    inc bc
-    inc b
-    inc b
-    dec b
-    ld bc, $0a0a
-    inc bc
-    dec b
-    inc bc
+    db $01, $02, $02, $02, $06, $06, $04
+    db $04, $05, $0c, $05, $06, $06, $03, $04, $04, $05, $01, $0a, $0a, $03, $05, $03
 
 data_001_5610:
-    inc bc
-    inc b
-    dec b
-    nop
-    db $01, $02
+    db $03, $04, $05, $00, $01, $02
 
 
 Call_001_5616::
@@ -4151,10 +4122,7 @@ jr_001_58ba:
 
 
 data_001_58bb:
-    inc b
-    inc bc
-    ld [bc], a
-    ld bc, $0400
+    db $04, $03, $02, $01, $00, $04
 
 Call_001_58c1:
     ld a, $00
@@ -5869,13 +5837,7 @@ jr_001_62cd:
 
 
 data_001_62d1:
-    ld b, $12
-    inc h
-    inc a
-    ld e, d
-    ld a, [hl]
-    xor b
-    ret c
+    db $06, $12, $24, $3c, $5a, $7e, $a8, $d8
 
 Call_001_62d9:
     ld a, [$da0c]

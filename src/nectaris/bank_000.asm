@@ -9287,33 +9287,10 @@ jr_000_3b55:
 
 
 data_000_3b68:
-    ld b, $09
-    rlca
-    rlca
-    rlca
-    dec bc
-    inc b
-    rlca
-    inc b
-    dec bc
-    inc bc
-    add hl, bc
-    ld bc, $010b
-    rlca
+    db $06, $09, $07, $07, $07, $0b, $04, $07, $04, $0b, $03, $09, $01, $0b, $01, $07
 
 data_000_3b78:
-    dec c
-    add hl, bc
-    dec bc
-    rlca
-    dec bc
-    dec bc
-    ld c, $07
-    ld c, $0b
-    db $10
-    add hl, bc
-    ld de, $110b
-    rlca
+    db $0d, $09, $0b, $07, $0b, $0b, $0e, $07, $0e, $0b, $10, $09, $11, $0b, $11, $07
 
 Call_000_3b88:
     ld a, BANK(UnknownTileMap7)
