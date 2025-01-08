@@ -329,10 +329,12 @@ HeaderComplementCheck::
 HeaderGlobalChecksum::
     db $d2, $51
 
+
+Jump_000_0150::
     ld a, [$000b]
     ldh [$80], a
     ld [$2000], a
-    jp $4100
+    jp jsys_4100
 
 
     ld a, b
@@ -477,7 +479,7 @@ Jump_000_01c3:
 
 traps0::
     dw $00e9
-    dw $0150
+    dw Jump_000_0150
     dw $015b
     dw $6f05
     dw $6f35
@@ -1362,7 +1364,7 @@ jr_000_05aa:
     ld bc, $0100
     ld h, c
 
-Call_000_05bf:
+SetROMBank:
     di
     ld [$2000], a
     ld [$d799], a
@@ -1453,9 +1455,9 @@ jr_000_063d:
     cp $00
     jr z, jr_000_064c
 
-    ld a, $1c
+    ld a, BANK(Call_01c_4003)
     ld [$2000], a
-    call $4003
+    call Call_01c_4003
 
 jr_000_064c:
     pop af
@@ -2277,22 +2279,22 @@ Call_000_09f9:
 
 Call_000_0a0e:
     push af
-    ld a, $02
-    call Call_000_05bf
-    ld hl, $5000
+    ld a, BANK(Font1)
+    call SetROMBank
+    ld hl, Font1
     pop af
     cp $00
     jr z, jr_000_0a2d
 
-    ld hl, $5800
+    ld hl, Font2
     cp $01
     jr z, jr_000_0a2d
 
-    ld hl, $6000
+    ld hl, Font3
     cp $02
     jr z, jr_000_0a2d
 
-    ld hl, $6800
+    ld hl, Font4
 
 jr_000_0a2d:
     ld de, $8000
@@ -2636,7 +2638,7 @@ jr_000_0c02:
     ld a, c
     ld [$d79e], a
     ld a, $01
-    call Call_000_05bf
+    call SetROMBank
     ret
 
 
@@ -2718,9 +2720,9 @@ jr_000_0c8b:
 Call_000_0ca4:
     ld a, [$d799]
     push af
-    ld a, $1c
-    call Call_000_05bf
-    call $4000
+    ld a, BANK(Call_01c_4000)
+    call SetROMBank
+    call Call_01c_4000
     pop af
     ld [$2000], a
     ld a, $01
@@ -2749,9 +2751,9 @@ jr_000_0cce:
 
     inc a
     ld [$db0c], a
-    ld a, $1c
-    call Call_000_05bf
-    call $4012
+    ld a, BANK(Call_01c_4012)
+    call SetROMBank
+    call Call_01c_4012
     cp $01
     jr z, jr_000_0cce
 
@@ -2764,10 +2766,10 @@ Call_000_0cea:
     call Call_000_0d30
 
 jr_000_0cef:
-    ld a, $1c
-    call Call_000_05bf
+    ld a, BANK(Call_01c_4006)
+    call SetROMBank
     ld a, [$db08]
-    call $4006
+    call Call_01c_4006
     ld a, $01
     ld [$db09], a
     pop af
@@ -2787,10 +2789,10 @@ Jump_000_0d10:
     ld [$db0c], a
     ld a, [$d799]
     push af
-    ld a, $1c
-    call Call_000_05bf
+    ld a, BANK(Call_01c_4009)
+    call SetROMBank
     ld a, [$db0a]
-    call $4009
+    call Call_01c_4009
     ld a, $00
     ld [$db0b], a
     pop af
@@ -2806,9 +2808,9 @@ Call_000_0d30:
     cp $00
     jr z, jr_000_0d43
 
-    ld a, $1c
-    call Call_000_05bf
-    call $4015
+    ld a, BANK(Call_01c_4015)
+    call SetROMBank
+    call Call_01c_4015
 
 jr_000_0d43:
     pop af
@@ -2820,9 +2822,9 @@ jr_000_0d43:
 Call_000_0d4b:
     ld a, [$d799]
     push af
-    ld a, $1c
-    call Call_000_05bf
-    call $401b
+    ld a, BANK(Call_01c_401b)
+    call SetROMBank
+    call Call_01c_401b
     pop af
     ld [$2000], a
     ld [$d799], a
@@ -2832,9 +2834,9 @@ Call_000_0d4b:
 Call_000_0d5f:
     ld a, [$d799]
     push af
-    ld a, $1c
-    call Call_000_05bf
-    call $401e
+    ld a, BANK(Call_01c_401e)
+    call SetROMBank
+    call Call_01c_401e
     pop af
     ld [$2000], a
     ld [$d799], a
@@ -2928,22 +2930,22 @@ Call_000_0de7:
     ld a, [$d799]
     push af
     ld a, $07
-    call Call_000_05bf
+    call SetROMBank
     ld a, [$d872]
     call Call_000_09df
     ld a, $00
     ld [$d79d], a
     ld [$d79e], a
-    ld a, $04
-    call Call_000_05bf
-    ld hl, $6250
+    ld a, BANK(Font7)
+    call SetROMBank
+    ld hl, Font7 + $400
     ld de, $8800
     ld b, $00
     call Call_000_0a36
     ld a, $01
     call Call_000_09f9
     ld a, $01
-    call Call_000_05bf
+    call SetROMBank
     call Call_000_0927
     call Call_000_0933
     call Call_000_0abb
@@ -2967,10 +2969,10 @@ Call_000_0e3e:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $07
-    call Call_000_05bf
+    ld a, BANK(Call_007_44a5)
+    call SetROMBank
     ld a, [$d872]
-    call $44a5
+    call Call_007_44a5
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -2983,10 +2985,10 @@ Call_000_0e66:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $07
-    call Call_000_05bf
+    ld a, BANK(Call_007_454b)
+    call SetROMBank
     ld a, [$d872]
-    call $454b
+    call Call_007_454b
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -2999,10 +3001,10 @@ Call_000_0e86:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $07
-    call Call_000_05bf
+    ld a, BANK(Call_007_5ff4)
+    call SetROMBank
     ld a, [$d872]
-    call $5ff4
+    call Call_007_5ff4
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3015,10 +3017,10 @@ Call_000_0ea6:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $07
-    call Call_000_05bf
+    ld a, BANK(Call_007_6017)
+    call SetROMBank
     ld a, [$d872]
-    call $6017
+    call Call_007_6017
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3035,10 +3037,10 @@ Call_000_0ec6:
     ld a, [$d799]
     pop hl
     push af
-    ld a, $07
-    call Call_000_05bf
+    ld a, BANK(Call_007_45bf)
+    call SetROMBank
     ld a, [$d872]
-    call $45bf
+    call Call_007_45bf
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3051,10 +3053,10 @@ Call_000_0eee:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $07
-    call Call_000_05bf
+    ld a, BANK(Call_007_47c2)
+    call SetROMBank
     ld a, [$d872]
-    call $47c2
+    call Call_007_47c2
     ld [$d872], a
 
 Jump_000_0f03:
@@ -3073,10 +3075,10 @@ Call_000_0f0e:
     ld a, [$d799]
     pop hl
     push af
-    ld a, $07
-    call Call_000_05bf
+    ld a, BANK(Call_007_49c9)
+    call SetROMBank
     ld a, [$d872]
-    call $49c9
+    call Call_007_49c9
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3089,10 +3091,10 @@ Call_000_0f36:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $07
-    call Call_000_05bf
+    ld a, BANK(Call_007_4bb8)
+    call SetROMBank
     ld a, [$d872]
-    call $4bb8
+    call Call_007_4bb8
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3109,10 +3111,10 @@ Call_000_0f56:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $07
-    call Call_000_05bf
+    ld a, BANK(Call_007_4d81)
+    call SetROMBank
     ld a, [$d872]
-    call $4d81
+    call Call_007_4d81
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3124,8 +3126,8 @@ Call_000_0f56:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $05
-    call Call_000_05bf
+    ld a, BANK(Passwords)
+    call SetROMBank
     ld a, [$d872]
     call Call_000_0f9e
     ld [$d872], a
@@ -3138,7 +3140,7 @@ Call_000_0f56:
 
 Call_000_0f9e:
     ld b, $00
-    ld hl, $50ae
+    ld hl, Passwords
 
 jr_000_0fa3:
     push hl
@@ -3182,12 +3184,12 @@ jr_000_0fc7:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $07
-    call Call_000_05bf
+    ld a, BANK(Call_007_4f3a)
+    call SetROMBank
     ld a, [$d872]
 
 Call_000_0fd9:
-    call $4f3a
+    call Call_007_4f3a
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3202,10 +3204,10 @@ Call_000_0fd9:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $07
-    call Call_000_05bf
+    ld a, BANK(Call_007_5125)
+    call SetROMBank
     ld a, [$d872]
-    call $5125
+    call Call_007_5125
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3218,10 +3220,10 @@ Call_000_100b:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $07
-    call Call_000_05bf
+    ld a, BANK(Call_007_6177)
+    call SetROMBank
     ld a, [$d872]
-    call $6177
+    call Call_007_6177
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3234,12 +3236,12 @@ Call_000_102b:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $07
-    call Call_000_05bf
+    ld a, BANK(Call_007_6391)
+    call SetROMBank
     ld a, [$d872]
 
 Call_000_103a:
-    call $6391
+    call Call_007_6391
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3252,10 +3254,10 @@ Call_000_104b:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $07
-    call Call_000_05bf
+    ld a, BANK(Call_007_65a0)
+    call SetROMBank
     ld a, [$d872]
-    call $65a0
+    call Call_007_65a0
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3268,12 +3270,12 @@ Call_000_106b:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $07
+    ld a, BANK(Call_007_6747)
 
 Jump_000_1074:
-    call Call_000_05bf
+    call SetROMBank
     ld a, [$d872]
-    call $6747
+    call Call_007_6747
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3285,34 +3287,34 @@ Jump_000_1074:
 Call_000_108b:
     inc a
     push af
-    ld a, $07
-    call Call_000_05bf
+    ld a, BANK(Call_007_6958)
+    call SetROMBank
     ld a, $02
     call Call_000_05c8
     ld [$4000], a
     ei
     pop af
-    call $6958
+    call Call_007_6958
     ld a, $00
     call Call_000_05c8
     ld [$4000], a
     ei
     ld a, $01
-    call Call_000_05bf
+    call SetROMBank
     ret
 
 
 Call_000_10ae:
     inc a
     push af
-    ld a, $07
-    call Call_000_05bf
+    ld a, BANK(Call_007_6a12)
+    call SetROMBank
     ld a, $02
     call Call_000_05c8
     ld [$4000], a
     ei
     pop af
-    call $6a12
+    call Call_007_6a12
     push af
     ld a, $00
     call Call_000_05c8
@@ -3321,7 +3323,7 @@ Call_000_10c8:
     ld [$4000], a
     ei
     ld a, $01
-    call Call_000_05bf
+    call SetROMBank
     pop af
     ret
 
@@ -3336,19 +3338,19 @@ Call_000_10d3:
     ld [$db06], a
     ld a, [$d79e]
     ld [$db07], a
-    ld a, $07
-    call Call_000_05bf
+    ld a, BANK(Call_007_6b98)
+    call SetROMBank
     ld a, $02
     call Call_000_05c8
     ld [$4000], a
     ei
-    call $6b98
+    call Call_007_6b98
     ld a, $00
     call Call_000_05c8
     ld [$4000], a
     ei
     ld a, $01
-    call Call_000_05bf
+    call SetROMBank
     ret
 
 
@@ -3357,15 +3359,15 @@ Call_000_110e:
 
 
 Call_000_110f:
-    ld a, $07
+    ld a, BANK(Call_007_6bcf)
 
 Call_000_1111:
-    call Call_000_05bf
+    call SetROMBank
     ld a, $02
     call Call_000_05c8
     ld [$4000], a
     ei
-    call $6bcf
+    call Call_007_6bcf
     push af
 
 Call_000_1121:
@@ -3374,7 +3376,7 @@ Call_000_1121:
     ld [$4000], a
     ei
     ld a, $01
-    call Call_000_05bf
+    call SetROMBank
     pop af
     ret
 
@@ -3383,21 +3385,21 @@ Call_000_1131:
     di
     inc a
     push af
-    ld a, $07
-    call Call_000_05bf
+    ld a, BANK(Call_007_6b3a)
+    call SetROMBank
     ld a, $02
     call Call_000_05c8
     ld [$4000], a
     ei
     pop af
-    call $6b3a
+    call Call_007_6b3a
     push af
     ld a, $00
     call Call_000_05c8
     ld [$4000], a
     ei
     ld a, $01
-    call Call_000_05bf
+    call SetROMBank
     pop af
     ei
     ret
@@ -3406,21 +3408,21 @@ Call_000_1131:
 Call_000_1158:
     inc a
     push af
-    ld a, $07
-    call Call_000_05bf
+    ld a, BANK(Call_007_6b69)
+    call SetROMBank
     ld a, $02
     call Call_000_05c8
     ld [$4000], a
     ei
     pop af
-    call $6b69
+    call Call_007_6b69
     push af
     ld a, $00
     call Call_000_05c8
     ld [$4000], a
     ei
     ld a, $01
-    call Call_000_05bf
+    call SetROMBank
     pop af
     ret
 
@@ -3428,54 +3430,54 @@ Call_000_1158:
 Call_000_117d:
     inc a
     push af
-    ld a, $07
-    call Call_000_05bf
+    ld a, BANK(Call_007_6ac0)
+    call SetROMBank
     ld a, $02
     call Call_000_05c8
     ld [$4000], a
     ei
     pop af
-    call $6ac0
+    call Call_007_6ac0
     push af
     ld a, $00
     call Call_000_05c8
     ld [$4000], a
     ei
     ld a, $01
-    call Call_000_05bf
+    call SetROMBank
     pop af
     ret
 
 
 Call_000_11a2:
-    ld a, $07
-    call Call_000_05bf
+    ld a, BANK(Call_007_6be8)
+    call SetROMBank
     ld a, $02
     call Call_000_05c8
     ld [$4000], a
     ei
-    call $6be8
+    call Call_007_6be8
     push af
     ld a, $00
     call Call_000_05c8
     ld [$4000], a
     ei
     ld a, $01
-    call Call_000_05bf
+    call SetROMBank
     pop af
     ret
 
 
 Call_000_11c4:
     push af
-    ld a, $07
-    call Call_000_05bf
+    ld a, BANK(Call_007_6c0f)
+    call SetROMBank
     ld a, $02
     call Call_000_05c8
     ld [$4000], a
     ei
     pop af
-    call $6c0f
+    call Call_007_6c0f
 
 Jump_000_11d7:
     push af
@@ -3484,7 +3486,7 @@ Jump_000_11d7:
     ld [$4000], a
     ei
     ld a, $01
-    call Call_000_05bf
+    call SetROMBank
     pop af
     ret
 
@@ -3492,13 +3494,13 @@ Jump_000_11d7:
 Call_000_11e8:
     call Call_000_11f1
     ld a, $0f
-    call Call_000_05bf
+    call SetROMBank
     ret
 
 
 Call_000_11f1:
-    ld a, $05
-    call Call_000_05bf
+    ld a, BANK(Passwords)
+    call SetROMBank
     ld a, [$d79a]
     ld e, a
     ld d, $00
@@ -3508,7 +3510,7 @@ Call_000_11f1:
     rl d
     sla e
     rl d
-    ld hl, $50ae
+    ld hl, Passwords
     call Call_000_08ba
     ld de, $d7a9
     ld b, $06
@@ -3525,7 +3527,7 @@ jr_000_1213:
     inc de
     ld [de], a
     ld a, $01
-    call Call_000_05bf
+    call SetROMBank
     ret
 
 
@@ -3534,7 +3536,7 @@ Call_000_1224:
     ld a, [$d799]
     push af
     ld a, $01
-    call Call_000_05bf
+    call SetROMBank
     ld a, [$d872]
     call Call_000_3394
     ld [$d872], a
@@ -3550,7 +3552,7 @@ Call_000_1244:
     ld a, [$d799]
     push af
     ld a, $01
-    call Call_000_05bf
+    call SetROMBank
     ld a, [$d872]
     call Call_000_1264
     ld [$d872], a
@@ -3583,10 +3585,10 @@ jr_000_126c:
     sla e
     rl d
     call Call_000_08ba
-    ld de, $4f6a
+    ld de, Maps
     call Call_000_08ba
-    ld a, $05
-    call Call_000_05bf
+    ld a, BANK(Maps)
+    call SetROMBank
     ld a, [hl+]
     push af
     ld a, [hl+]
@@ -3666,10 +3668,10 @@ Call_000_12f0:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_408c)
+    call SetROMBank
     ld a, [$d872]
-    call $408c
+    call Call_00f_408c
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3682,10 +3684,10 @@ Call_000_1310:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_4115)
+    call SetROMBank
     ld a, [$d872]
-    call $4115
+    call Call_00f_4115
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3698,10 +3700,10 @@ Call_000_1330:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_41da)
+    call SetROMBank
     ld a, [$d872]
-    call $41da
+    call Call_00f_41da
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3714,10 +3716,10 @@ Call_000_1350:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_41f4)
+    call SetROMBank
     ld a, [$d872]
-    call $41f4
+    call Call_00f_41f4
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3730,10 +3732,10 @@ Call_000_1370:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_4333)
+    call SetROMBank
     ld a, [$d872]
-    call $4333
+    call Call_00f_4333
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3746,10 +3748,10 @@ Call_000_1390:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_4456)
+    call SetROMBank
     ld a, [$d872]
-    call $4456
+    call Call_00f_4456
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3762,10 +3764,10 @@ Call_000_13b0:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_44c4)
+    call SetROMBank
     ld a, [$d872]
-    call $44c4
+    call Call_00f_44c4
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3780,10 +3782,10 @@ Call_000_13d0:
     push af
 
 Jump_000_13d7:
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_459c)
+    call SetROMBank
     ld a, [$d872]
-    call $459c
+    call Call_00f_459c
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3796,10 +3798,10 @@ Call_000_13f0:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $01
-    call Call_000_05bf
+    ld a, BANK(Call_001_4804)
+    call SetROMBank
     ld a, [$d872]
-    call $4804
+    call Call_001_4804
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3812,10 +3814,10 @@ Call_000_1410:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $01
-    call Call_000_05bf
+    ld a, BANK(Call_001_480b)
+    call SetROMBank
     ld a, [$d872]
-    call $480b
+    call Call_001_480b
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3828,10 +3830,10 @@ Call_000_1430:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_4b98)
+    call SetROMBank
     ld a, [$d872]
-    call $4b98
+    call Call_00f_4b98
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3844,10 +3846,10 @@ Call_000_1450:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_4d9f)
+    call SetROMBank
     ld a, [$d872]
-    call $4d9f
+    call Call_00f_4d9f
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3860,10 +3862,10 @@ Call_000_1470:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_004_4d87)
+    call SetROMBank
     ld a, [$d872]
-    call $4d87
+    call Call_004_4d87
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3876,10 +3878,10 @@ Call_000_1490:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_004_4d3d)
+    call SetROMBank
     ld a, [$d872]
-    call $4d3d
+    call Call_004_4d3d
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3892,10 +3894,10 @@ Call_000_14b0:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_4e0e)
+    call SetROMBank
     ld a, [$d872]
-    call $4e0e
+    call Call_00f_4e0e
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3908,10 +3910,10 @@ Call_000_14d0:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_4e8d)
+    call SetROMBank
     ld a, [$d872]
-    call $4e8d
+    call Call_00f_4e8d
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3924,10 +3926,10 @@ Call_000_14f0:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_4ed6)
+    call SetROMBank
     ld a, [$d872]
-    call $4ed6
+    call Call_00f_4ed6
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3940,10 +3942,10 @@ Call_000_1510:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_4f20)
+    call SetROMBank
     ld a, [$d872]
-    call $4f20
+    call Call_00f_4f20
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3956,10 +3958,10 @@ Call_000_1530:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_4f53)
+    call SetROMBank
     ld a, [$d872]
-    call $4f53
+    call Call_00f_4f53
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3972,10 +3974,10 @@ Call_000_1550:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_4f6a)
+    call SetROMBank
     ld a, [$d872]
-    call $4f6a
+    call Call_00f_4f6a
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3988,10 +3990,10 @@ Call_000_1570:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_4242)
+    call SetROMBank
     ld a, [$d872]
-    call $4242
+    call Call_00f_4242
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4004,10 +4006,10 @@ Call_000_1590:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_53c8)
+    call SetROMBank
     ld a, [$d872]
-    call $53c8
+    call Call_00f_53c8
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4020,10 +4022,10 @@ Call_000_15b0:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_431b)
+    call SetROMBank
     ld a, [$d872]
-    call $431b
+    call Call_00f_431b
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4037,10 +4039,10 @@ Jump_000_15d0:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_54b6)
+    call SetROMBank
     ld a, [$d872]
-    call $54b6
+    call Call_00f_54b6
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4053,10 +4055,10 @@ Call_000_15f0:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_55ad)
+    call SetROMBank
     ld a, [$d872]
-    call $55ad
+    call Call_00f_55ad
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4069,10 +4071,10 @@ Call_000_1610:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_55f5)
+    call SetROMBank
     ld a, [$d872]
-    call $55f5
+    call Call_00f_55f5
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4085,10 +4087,10 @@ Call_000_1630:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_5a94)
+    call SetROMBank
     ld a, [$d872]
-    call $5a94
+    call Call_00f_5a94
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4100,10 +4102,10 @@ Call_000_1630:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_5aab)
+    call SetROMBank
     ld a, [$d872]
-    call $5aab
+    call Call_00f_5aab
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4116,10 +4118,10 @@ Call_000_1670:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_5ab0)
+    call SetROMBank
     ld a, [$d872]
-    call $5ab0
+    call Call_00f_5ab0
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4131,10 +4133,10 @@ Call_000_1670:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_5ab5)
+    call SetROMBank
     ld a, [$d872]
-    call $5ab5
+    call Call_00f_5ab5
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4147,10 +4149,10 @@ Call_000_16b0:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_5ad6)
+    call SetROMBank
     ld a, [$d872]
-    call $5ad6
+    call Call_00f_5ad6
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4163,10 +4165,10 @@ Call_000_16d0:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_5e87)
+    call SetROMBank
     ld a, [$d872]
-    call $5e87
+    call Call_00f_5e87
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4179,10 +4181,10 @@ Call_000_16f0:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_5ec9)
+    call SetROMBank
     ld a, [$d872]
-    call $5ec9
+    call Call_00f_5ec9
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4195,10 +4197,10 @@ Call_000_1710:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_005_586a)
+    call SetROMBank
     ld a, [$d872]
-    call $586a
+    call Call_005_586a
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4298,10 +4300,10 @@ Call_000_1798:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_5b56)
+    call SetROMBank
     ld a, [$d872]
-    call $5b56
+    call Call_00f_5b56
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4314,10 +4316,10 @@ Call_000_17b8:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_5c4f)
+    call SetROMBank
     ld a, [$d872]
-    call $5c4f
+    call Call_00f_5c4f
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4330,10 +4332,10 @@ Call_000_17d8:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_5dff)
+    call SetROMBank
     ld a, [$d872]
-    call $5dff
+    call Call_00f_5dff
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4346,10 +4348,10 @@ Call_000_17f8:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_7293)
+    call SetROMBank
     ld a, [$d872]
-    call $7293
+    call Call_00f_7293
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4363,10 +4365,10 @@ Jump_000_1818:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_729a)
+    call SetROMBank
     ld a, [$d872]
-    call $729a
+    call Call_00f_729a
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4379,10 +4381,10 @@ Call_000_1838:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_732e)
+    call SetROMBank
     ld a, [$d872]
-    call $732e
+    call Call_00f_732e
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4395,10 +4397,10 @@ Call_000_1858:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_753c)
+    call SetROMBank
     ld a, [$d872]
-    call $753c
+    call Call_00f_753c
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4411,10 +4413,10 @@ Call_000_1878:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_759f)
+    call SetROMBank
     ld a, [$d872]
-    call $759f
+    call Call_00f_759f
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4427,10 +4429,10 @@ Call_000_1898:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_75ce)
+    call SetROMBank
     ld a, [$d872]
-    call $75ce
+    call Call_00f_75ce
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4444,7 +4446,7 @@ Call_000_18b8:
     ld a, [$d799]
     push af
     ld a, $0f
-    call Call_000_05bf
+    call SetROMBank
     ld a, [$d872]
     call Call_000_18d8
     ld [$d872], a
@@ -4469,9 +4471,9 @@ Call_000_18d8:
     ld [hl], a
     call Call_000_09df
     call Call_000_0927
-    ld a, $05
-    call Call_000_05bf
-    ld hl, $4f64
+    ld a, BANK(ScreenFactoryTaken)
+    call SetROMBank
+    ld hl, ScreenFactoryTaken
     call Call_000_0bcf
     ld a, $0f
     call Call_000_0cbf
@@ -4488,10 +4490,10 @@ Call_000_1914:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_7672)
+    call SetROMBank
     ld a, [$d872]
-    call $7672
+    call Call_00f_7672
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4504,10 +4506,10 @@ Call_000_1934:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_76a3)
+    call SetROMBank
     ld a, [$d872]
-    call $76a3
+    call Call_00f_76a3
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4520,10 +4522,10 @@ Call_000_1954:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_777a)
+    call SetROMBank
     ld a, [$d872]
-    call $777a
+    call Call_00f_777a
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4537,7 +4539,7 @@ Call_000_1974:
     ld a, [$d799]
     push af
     ld a, $0f
-    call Call_000_05bf
+    call SetROMBank
     ld a, [$d872]
     call Call_000_1994
     ld [$d872], a
@@ -4549,9 +4551,9 @@ Call_000_1974:
 
 
 Call_000_1994:
-    ld a, $04
-    call Call_000_05bf
-    ld hl, $5b80
+    ld a, BANK(UnknownTileMap)
+    call SetROMBank
+    ld hl, UnknownTileMap + $50
     ld de, $c1a0
     ld b, $14
     ld c, $12
@@ -4564,7 +4566,7 @@ Call_000_19a7:
     ld a, [$d799]
     push af
     ld a, $0f
-    call Call_000_05bf
+    call SetROMBank
     ld a, [$d872]
     call Call_000_19c7
     ld [$d872], a
@@ -4576,8 +4578,8 @@ Call_000_19a7:
 
 
 Call_000_19c7:
-    ld a, $04
-    call Call_000_05bf
+    ld a, BANK(UnknownTileMap)
+    call SetROMBank
     ld a, [$d87c]
     ld b, a
     ld a, [$d87b]
@@ -4598,7 +4600,7 @@ Call_000_19c7:
     call Call_000_093f
     push hl
     pop de
-    ld hl, $5b94
+    ld hl, UnknownTileMap + $64
     ld c, $04
 
 jr_000_19f0:
@@ -4631,7 +4633,7 @@ Call_000_1a0a:
     ld a, [$d799]
     push af
     ld a, $0f
-    call Call_000_05bf
+    call SetROMBank
     ld a, [$d872]
     call Call_000_1a2a
     ld [$d872], a
@@ -4645,23 +4647,23 @@ Call_000_1a0a:
 Call_000_1a2a:
     call Call_000_09df
     call Call_000_0927
-    ld a, $04
-    call Call_000_05bf
-    ld hl, $5e50
+    ld a, BANK(Font7)
+    call SetROMBank
+    ld hl, Font7
     ld de, $8800
     ld bc, $00a0
     call Call_000_0a36
-    ld a, $03
-    call Call_000_05bf
+    ld a, BANK(Units)
+    call SetROMBank
     ld a, [$db03]
     cp $00
     jr z, jr_000_1a52
 
-    ld hl, $4600
+    ld hl, Units + $600
     jr jr_000_1a55
 
 jr_000_1a52:
-    ld hl, $4000
+    ld hl, Units
 
 jr_000_1a55:
     ld de, $9200
@@ -4677,7 +4679,7 @@ Call_000_1a64:
     ld a, [$d799]
     push af
     ld a, $0f
-    call Call_000_05bf
+    call SetROMBank
     ld a, [$d872]
     call Call_000_1a84
     ld [$d872], a
@@ -4689,9 +4691,9 @@ Call_000_1a64:
 
 
 Call_000_1a84:
-    ld a, $04
-    call Call_000_05bf
-    ld hl, $5d74
+    ld a, BANK(UnknownTileMap)
+    call SetROMBank
+    ld hl, UnknownTileMap + $244
     ld de, $c4a0
     ld b, $14
     ld c, $06
@@ -4703,10 +4705,10 @@ Call_000_1a97:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_77be)
+    call SetROMBank
     ld a, [$d872]
-    call $77be
+    call Call_00f_77be
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4719,15 +4721,15 @@ Call_000_1ab7:
     call Call_000_09df
     ld a, $00
     call Call_000_09f9
-    ld a, $05
-    call Call_000_05bf
-    ld hl, $4f22
+    ld a, BANK(Screen8)
+    call SetROMBank
+    ld hl, Screen8
     call Call_000_0bcf
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
-    call $5f0b
+    ld a, BANK(Call_00f_5f0b)
+    call SetROMBank
+    call Call_00f_5f0b
     pop af
     ld [$d799], a
     ld [$2000], a
@@ -4738,10 +4740,10 @@ Call_000_1ade:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_6061)
+    call SetROMBank
     ld a, [$d872]
-    call $6061
+    call Call_00f_6061
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4754,10 +4756,10 @@ Call_000_1afe:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_60fa)
+    call SetROMBank
     ld a, [$d872]
-    call $60fa
+    call Call_00f_60fa
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4770,10 +4772,10 @@ Call_000_1b1e:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_612d)
+    call SetROMBank
     ld a, [$d872]
-    call $612d
+    call Call_00f_612d
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4786,10 +4788,10 @@ Call_000_1b3e:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_6183)
+    call SetROMBank
     ld a, [$d872]
-    call $6183
+    call Call_00f_6183
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4802,10 +4804,10 @@ Call_000_1b5e:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_61b5)
+    call SetROMBank
     ld a, [$d872]
-    call $61b5
+    call Call_00f_61b5
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4818,10 +4820,10 @@ Call_000_1b7e:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_6201)
+    call SetROMBank
     ld a, [$d872]
-    call $6201
+    call Call_00f_6201
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4834,10 +4836,10 @@ Call_000_1b9e:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_6230)
+    call SetROMBank
     ld a, [$d872]
-    call $6230
+    call Call_00f_6230
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4850,10 +4852,10 @@ Call_000_1bbe:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_624a)
+    call SetROMBank
     ld a, [$d872]
-    call $624a
+    call Call_00f_624a
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4865,10 +4867,10 @@ Call_000_1bbe:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_6255)
+    call SetROMBank
     ld a, [$d872]
-    call $6255
+    call Call_00f_6255
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4881,10 +4883,10 @@ Call_000_1bfe:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_6275)
+    call SetROMBank
     ld a, [$d872]
-    call $6275
+    call Call_00f_6275
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4897,10 +4899,10 @@ Call_000_1c1e:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_62c3)
+    call SetROMBank
     ld a, [$d872]
-    call $62c3
+    call Call_00f_62c3
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4913,10 +4915,10 @@ Call_000_1c3e:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_6323)
+    call SetROMBank
     ld a, [$d872]
-    call $6323
+    call Call_00f_6323
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4929,10 +4931,10 @@ Call_000_1c5e:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_6567)
+    call SetROMBank
     ld a, [$d872]
-    call $6567
+    call Call_00f_6567
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4945,10 +4947,10 @@ Call_000_1c7e:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_65bc)
+    call SetROMBank
     ld a, [$d872]
-    call $65bc
+    call Call_00f_65bc
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4962,22 +4964,22 @@ Call_000_1c9e:
     ld a, [$d799]
     push af
     ld a, $07
-    call Call_000_05bf
+    call SetROMBank
     ld a, [$d872]
     call Call_000_09df
     ld a, $00
     ld [$d79d], a
     ld [$d79e], a
-    ld a, $12
-    call Call_000_05bf
-    ld hl, $4000
+    ld a, BANK(Font8)
+    call SetROMBank
+    ld hl, Font8
     ld de, $8800
     ld b, $00
     call Call_000_0a36
     ld a, $01
     call Call_000_09f9
     ld a, $01
-    call Call_000_05bf
+    call SetROMBank
     call Call_000_0927
     call Call_000_0933
     call Call_000_0abb
@@ -4997,10 +4999,10 @@ Call_000_1cf5:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_6a2d)
+    call SetROMBank
     ld a, [$d872]
-    call $6a2d
+    call Call_00f_6a2d
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -5013,10 +5015,10 @@ Call_000_1d15:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_6c14)
+    call SetROMBank
     ld a, [$d872]
-    call $6c14
+    call Call_00f_6c14
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -5029,10 +5031,10 @@ Call_000_1d35:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_425d)
+    call SetROMBank
     ld a, [$d872]
-    call $425d
+    call Call_00f_425d
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -5045,10 +5047,10 @@ Call_000_1d55:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_4264)
+    call SetROMBank
     ld a, [$d872]
-    call $4264
+    call Call_00f_4264
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -5061,10 +5063,10 @@ Call_000_1d75:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_6dd4)
+    call SetROMBank
     ld a, [$d872]
-    call $6dd4
+    call Call_00f_6dd4
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -5077,10 +5079,10 @@ Call_000_1d95:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_6ded)
+    call SetROMBank
     ld a, [$d872]
-    call $6ded
+    call Call_00f_6ded
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -5093,10 +5095,10 @@ Call_000_1db5:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_6e56)
+    call SetROMBank
     ld a, [$d872]
-    call $6e56
+    call Call_00f_6e56
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -5109,10 +5111,10 @@ Call_000_1dd5:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_6f64)
+    call SetROMBank
     ld a, [$d872]
-    call $6f64
+    call Call_00f_6f64
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -5125,10 +5127,10 @@ Call_000_1df5:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_6fdf)
+    call SetROMBank
     ld a, [$d872]
-    call $6fdf
+    call Call_00f_6fdf
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -5141,10 +5143,10 @@ Jump_000_1e15:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_7038)
+    call SetROMBank
     ld a, [$d872]
-    call $7038
+    call Call_00f_7038
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -5157,10 +5159,10 @@ Call_000_1e35:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_70f7)
+    call SetROMBank
     ld a, [$d872]
-    call $70f7
+    call Call_00f_70f7
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -5173,10 +5175,10 @@ Call_000_1e55:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_7184)
+    call SetROMBank
     ld a, [$d872]
-    call $7184
+    call Call_00f_7184
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -5189,10 +5191,10 @@ Call_000_1e75:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $01
-    call Call_000_05bf
+    ld a, BANK(Call_001_4750)
+    call SetROMBank
     ld a, [$d872]
-    call $4750
+    call Call_001_4750
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -5205,10 +5207,10 @@ Call_000_1e95:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, $0f
-    call Call_000_05bf
+    ld a, BANK(Call_00f_7230)
+    call SetROMBank
     ld a, [$d872]
-    call $7230
+    call Call_00f_7230
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -5262,11 +5264,11 @@ Jump_000_1ee6:
     ld [$d7a6], a
     ld a, $0a
     ld [$0000], a
-    ld a, $0f
-    call Call_000_05bf
-    call $4000
-    ld a, $01
-    call Call_000_05bf
+    ld a, BANK(Call_00f_4000)
+    call SetROMBank
+    call Call_00f_4000
+    ld a, BANK(Call_001_4000)
+    call SetROMBank
     ldh [$94], a
     ei
     ld a, [$db1e]
@@ -5277,9 +5279,9 @@ Jump_000_1ee6:
     ld a, $0e
     ld [$2000], a
     ld [$d799], a
-    call $4000
+    call Call_001_4000
     ld a, $01
-    call Call_000_05bf
+    call SetROMBank
     ei
 
 jr_000_1f24:
@@ -5341,9 +5343,9 @@ Jump_000_1f4c:
 Jump_000_1f98:
 jr_000_1f98:
     call Call_000_09df
-    ld a, $05
-    call Call_000_05bf
-    ld hl, $4000
+    ld a, BANK(ScreenTitleScreen)
+    call SetROMBank
+    ld hl, ScreenTitleScreen
     call Call_000_0bcf
     ld a, $01
     call Call_000_0cbf
@@ -6280,9 +6282,9 @@ Call_000_2645:
     call Call_000_09df
     call Call_000_0d30
     call Call_000_0927
-    ld a, $05
-    call Call_000_05bf
-    ld hl, $4f10
+    ld a, BANK(Screen5)
+    call SetROMBank
+    ld hl, Screen5
     call Call_000_0bcf
     ld a, $03
     call Call_000_0cbf
@@ -6294,9 +6296,9 @@ Call_000_2645:
     jp nz, Jump_000_2711
 
     call Call_000_09df
-    ld a, $05
-    call Call_000_05bf
-    ld hl, $4f46
+    ld a, BANK(Screen14)
+    call SetROMBank
+    ld hl, Screen14
     call Call_000_0bcf
     call Call_000_09eb
     ld a, $08
@@ -6306,9 +6308,9 @@ Call_000_2645:
     jp nz, Jump_000_2711
 
     call Call_000_09df
-    ld a, $05
-    call Call_000_05bf
-    ld hl, $4f16
+    ld a, BANK(Screen6)
+    call SetROMBank
+    ld hl, Screen6
     call Call_000_0bcf
     call Call_000_09eb
     ld a, $06
@@ -6318,9 +6320,9 @@ Call_000_2645:
     jp nz, Jump_000_2711
 
     call Call_000_09df
-    ld a, $05
-    call Call_000_05bf
-    ld hl, $4f4c
+    ld a, BANK(Screen15)
+    call SetROMBank
+    ld hl, Screen15
     call Call_000_0bcf
     call Call_000_09eb
     ld a, $08
@@ -6330,9 +6332,9 @@ Call_000_2645:
     jp nz, Jump_000_2711
 
     call Call_000_09df
-    ld a, $05
-    call Call_000_05bf
-    ld hl, $4f1c
+    ld a, BANK(Screen7)
+    call SetROMBank
+    ld hl, Screen7
     call Call_000_0bcf
     call Call_000_09eb
     ld a, $06
@@ -6342,9 +6344,9 @@ Call_000_2645:
     jr nz, jr_000_2711
 
     call Call_000_09df
-    ld a, $05
-    call Call_000_05bf
-    ld hl, $4f52
+    ld a, BANK(Screen16)
+    call SetROMBank
+    ld hl, Screen16
     call Call_000_0bcf
     call Call_000_09eb
     ld a, $08
@@ -6354,9 +6356,9 @@ Call_000_2645:
     jr nz, jr_000_2711
 
     call Call_000_09df
-    ld a, $05
-    call Call_000_05bf
-    ld hl, $4f58
+    ld a, BANK(Screen17)
+    call SetROMBank
+    ld hl, Screen17
     call Call_000_0bcf
     call Call_000_09eb
     ld a, $08
@@ -6374,9 +6376,9 @@ jr_000_2711:
 Call_000_2715:
     call Call_000_09df
     call Call_000_0d30
-    ld a, $05
-    call Call_000_05bf
-    ld hl, $4f0a
+    ld a, BANK(ScreenWorldMap)
+    call SetROMBank
+    ld hl, ScreenWorldMap
     call Call_000_0bcf
     ld a, $06
     call Call_000_0cbf
@@ -6402,9 +6404,9 @@ Call_000_274b:
     call Call_000_09df
     call Call_000_0d30
     call Call_000_0927
-    ld a, $05
-    call Call_000_05bf
-    ld hl, $4f28
+    ld a, BANK(Screen9)
+    call SetROMBank
+    ld hl, Screen9
     call Call_000_0bcf
     ld a, $12
     call Call_000_0cbf
@@ -6412,41 +6414,41 @@ Call_000_274b:
     ld a, $0a
     call Call_000_0c65
     call Call_000_09df
-    ld a, $05
-    call Call_000_05bf
-    ld hl, $4f2e
+    ld a, BANK(Screen10)
+    call SetROMBank
+    ld hl, Screen10
     call Call_000_0bcf
     call Call_000_09eb
     ld a, $0b
     call Call_000_0c65
     call Call_000_09df
-    ld a, $05
-    call Call_000_05bf
-    ld hl, $4f34
+    ld a, BANK(Screen11)
+    call SetROMBank
+    ld hl, Screen11
     call Call_000_0bcf
     call Call_000_09eb
     ld a, $0b
     call Call_000_0c65
     call Call_000_09df
-    ld a, $05
-    call Call_000_05bf
-    ld hl, $4f3a
+    ld a, BANK(Screen12)
+    call SetROMBank
+    ld hl, Screen12
     call Call_000_0bcf
     call Call_000_09eb
     ld a, $0b
     call Call_000_0c65
     call Call_000_09df
-    ld a, $05
-    call Call_000_05bf
-    ld hl, $4f40
+    ld a, BANK(Screen13)
+    call SetROMBank
+    ld hl, Screen13
     call Call_000_0bcf
     call Call_000_09eb
     ld a, $0b
     call Call_000_0c65
     call Call_000_09df
-    ld a, $05
-    call Call_000_05bf
-    ld hl, $4f5e
+    ld a, BANK(Screen18)
+    call SetROMBank
+    ld hl, Screen18
     call Call_000_0bcf
     call Call_000_09eb
     ld a, $0b
@@ -6675,7 +6677,7 @@ jr_000_2927:
     ld a, [hl]
     ld [$d7b5], a
     call Call_000_1954
-    call $47b8
+    call Call_001_47b8
     call Call_000_15f0
     call Call_000_12f0
     call Call_000_1430
@@ -7873,7 +7875,7 @@ Jump_000_3193:
     ld a, [$d7b5]
     ld [$d99d], a
     call Call_000_13f0
-    call $477f
+    call Call_001_477f
     call Call_000_16b0
     call Call_000_12f0
     call Call_000_1430
@@ -8047,9 +8049,9 @@ jr_000_32dc:
     call Call_000_09df
     call Call_000_0d30
     call Call_000_0927
-    ld a, $05
-    call Call_000_05bf
-    ld hl, $4006
+    ld a, BANK(ScreenWinScreen)
+    call SetROMBank
+    ld hl, ScreenWinScreen
     call Call_000_0bcf
     ld a, $0f
     call Call_000_0cbf
@@ -8126,9 +8128,9 @@ Jump_000_3370:
     call Call_000_09df
     call Call_000_0d30
     call Call_000_0927
-    ld a, $05
-    call Call_000_05bf
-    ld hl, $4f04
+    ld a, BANK(ScreenGameOver)
+    call SetROMBank
+    ld hl, ScreenGameOver
     call Call_000_0bcf
     ld a, $10
     call Call_000_0cbf
@@ -8140,24 +8142,24 @@ Jump_000_3370:
 
 Call_000_3394:
     call Call_000_09df
-    ld a, $02
-    call Call_000_05bf
-    ld hl, $4000
+    ld a, BANK(MapTiles)
+    call SetROMBank
+    ld hl, MapTiles
     ld de, $8800
     ld bc, $0000
     call Call_000_0a36
-    ld a, $01
-    call Call_000_05bf
+    ld a, BANK(Call_001_5fae)
+    call SetROMBank
     call Call_000_12f0
     call Call_000_1430
     call Call_000_0abb
     call Call_000_14b0
-    call $5fae
+    call Call_001_5fae
     call Call_000_3dd4
     ld a, $01
     call Call_000_09f9
     ld a, $01
-    call Call_000_05bf
+    call SetROMBank
     call Call_000_085d
     call Call_000_085d
     call Call_000_085d
@@ -8636,15 +8638,15 @@ Call_000_368a:
     ld [$d79e], a
     call Call_000_09df
     call Call_000_0927
-    ld a, $03
-    call Call_000_05bf
-    ld hl, $7210
+    ld a, BANK(Font6)
+    call SetROMBank
+    ld hl, Font6
     ld de, $8800
     ld bc, $0000
     call Call_000_0a36
-    ld a, $03
-    call Call_000_05bf
-    ld hl, $70a8
+    ld a, BANK(UnknownTileMap5)
+    call SetROMBank
+    ld hl, UnknownTileMap5
     ld de, $c1a0
     ld b, $12
 
@@ -8689,7 +8691,7 @@ Jump_000_36c0:
     inc a
     ld [hl], a
     ld a, $01
-    call Call_000_05bf
+    call SetROMBank
     ld a, [$d7b5]
     call Call_000_099b
     inc hl
@@ -8855,9 +8857,9 @@ Call_000_3828:
     ld [$d79e], a
     call Call_000_09df
     call Call_000_39bc
-    ld a, $03
-    call Call_000_05bf
-    ld hl, $4db8
+    ld a, BANK(UnknownTileMap3)
+    call SetROMBank
+    ld hl, UnknownTileMap3
     ld de, $c520
     ld b, $14
     ld c, $04
@@ -8870,9 +8872,9 @@ Call_000_3828:
     call Call_000_09eb
     call Call_000_39b3
     call Call_000_0927
-    ld a, $03
-    call Call_000_05bf
-    ld hl, $4db8
+    ld a, BANK(UnknownTileMap3)
+    call SetROMBank
+    ld hl, UnknownTileMap3
     ld de, $c520
     ld b, $14
     ld c, $04
@@ -8885,15 +8887,15 @@ Call_000_3828:
     call Call_000_09eb
     call Call_000_39b3
     call Call_000_0927
-    ld a, $03
-    call Call_000_05bf
-    ld hl, $4e58
+    ld a, BANK(UnknownTileMap6)
+    call SetROMBank
+    ld hl, UnknownTileMap6
     ld de, $c520
     ld b, $14
     ld c, $04
     call Call_000_3b36
     ld a, $01
-    call Call_000_05bf
+    call SetROMBank
     call Call_000_1b3e
     ld a, $02
     call Call_000_1b5e
@@ -8901,15 +8903,15 @@ Call_000_3828:
     call Call_000_1c7e
     call Call_000_39b3
     call Call_000_0927
-    ld a, $03
-    call Call_000_05bf
-    ld hl, $4d18
+    ld a, BANK(UnknownTileMap8)
+    call SetROMBank
+    ld hl, UnknownTileMap8
     ld de, $c520
     ld b, $14
     ld c, $04
     call Call_000_3b36
     ld a, $01
-    call Call_000_05bf
+    call SetROMBank
     call Call_000_1b3e
     ld a, $03
     call Call_000_1b5e
@@ -9012,15 +9014,15 @@ jr_000_39b5:
 
 Call_000_39bc:
     call Call_000_0927
-    ld a, $03
-    call Call_000_05bf
-    ld hl, $5088
+    ld a, BANK(Black)
+    call SetROMBank
+    ld hl, Black
     ld de, $8800
     ld bc, $0000
     call Call_000_0a36
-    ld a, $03
-    call Call_000_05bf
-    ld hl, $4c78
+    ld a, BANK(UnknownTileMap9)
+    call SetROMBank
+    ld hl, UnknownTileMap9
     ld de, $c1a0
     ld b, $14
     ld c, $04
@@ -9130,7 +9132,7 @@ jr_000_3a46:
     call Call_000_3aee
     call Call_000_3b88
     ld a, $01
-    call Call_000_05bf
+    call SetROMBank
     ret
 
 
@@ -9138,8 +9140,8 @@ Call_000_3aac:
     push af
     push bc
     push de
-    ld a, $02
-    call Call_000_05bf
+    ld a, BANK(Font5)
+    call SetROMBank
     ld a, [hl]
     and $1f
     ld b, a
@@ -9156,7 +9158,7 @@ Call_000_3aac:
     rl d
     sla e
     rl d
-    ld hl, $7400
+    ld hl, Font5 + $400
 
 Jump_000_3ad3:
     ld a, d
@@ -9187,8 +9189,8 @@ Call_000_3ad9:
 
 Call_000_3aee:
     push de
-    ld a, $03
-    call Call_000_05bf
+    ld a, BANK(Units)
+    call SetROMBank
     ld a, [$d86f]
     ld b, a
     ld a, [hl]
@@ -9206,7 +9208,7 @@ Call_000_3aee:
     rl d
     sla e
     rl d
-    ld hl, $4000
+    ld hl, Units
     ld a, d
     add h
     ld h, a
@@ -9302,9 +9304,9 @@ jr_000_3b55:
     rlca
 
 Call_000_3b88:
-    ld a, $03
-    call Call_000_05bf
-    ld hl, $4ef8
+    ld a, BANK(UnknownTileMap7)
+    call SetROMBank
+    ld hl, UnknownTileMap7
     ld de, $c360
     ld b, $14
     ld c, $07
@@ -9334,7 +9336,7 @@ jr_000_3bb9:
 
 jr_000_3bc6:
     ld a, $01
-    call Call_000_05bf
+    call SetROMBank
     ld a, $81
     ld [$d86f], a
     ld hl, $3b68
@@ -9409,10 +9411,10 @@ Call_000_3c1f:
     sla a
     sla a
     add $42
-    ld de, $4c00
+    ld de, UnknownTileMap2
     call Call_000_08a1
-    ld a, $03
-    call Call_000_05bf
+    ld a, BANK(UnknownTileMap2)
+    call SetROMBank
     dec hl
     ld a, [de]
     inc de
@@ -9444,7 +9446,7 @@ Call_000_3c3c:
     ld [hl], a
     pop de
     ld a, $01
-    call Call_000_05bf
+    call SetROMBank
     ret
 
 
@@ -9503,14 +9505,14 @@ Call_000_3c96:
     call Call_000_0d07
     call Call_000_0927
     call Call_000_085d
-    ld a, $03
-    call Call_000_05bf
-    ld hl, $5b48
+    ld a, BANK(Messages)
+    call SetROMBank
+    ld hl, Messages
     ld de, $8000
     ld b, $28
     call Call_000_0a36
     ld a, $01
-    call Call_000_05bf
+    call SetROMBank
     ld a, $20
     ld [$d86f], a
     ld d, $a8
@@ -9560,39 +9562,39 @@ jr_000_3cf4:
     ld [$d86c], a
     call Call_000_0927
     call Call_000_085d
-    ld a, $03
-    call Call_000_05bf
+    ld a, BANK(Messages)
+    call SetROMBank
     ld a, [$d7a8]
     cp $0a
     jr nz, jr_000_3d47
 
     ld a, [$d7a4]
-    ld hl, $5dc8
+    ld hl, Messages + $280
     cp $00
     jr nz, jr_000_3d5e
 
-    ld hl, $6048
+    ld hl, Messages + $500
     jr jr_000_3d5e
 
 jr_000_3d47:
     ld a, [$d7a4]
-    ld hl, $5dc8
+    ld hl, Messages + $280
     cp $00
     jr z, jr_000_3d5e
 
-    ld hl, $6048
+    ld hl, Messages + $500
     ld a, [$d7a8]
     cp $14
     jr nz, jr_000_3d5e
 
-    ld hl, $5f08
+    ld hl, Messages + $3c0
 
 jr_000_3d5e:
     ld de, $8000
     ld b, $14
     call Call_000_0a36
     ld a, $01
-    call Call_000_05bf
+    call SetROMBank
     ld a, $30
     ld [$d86f], a
     ld d, $a8
@@ -9605,7 +9607,7 @@ jr_000_3d5e:
     ld a, $01
     call Call_000_09f9
     ld a, $01
-    call Call_000_05bf
+    call SetROMBank
     call Call_000_33d9
     ret
 
@@ -9742,9 +9744,9 @@ Call_000_3e3f:
     call Call_000_14b0
     call Call_000_0927
     call Call_000_085d
-    ld a, $03
-    call Call_000_05bf
-    ld hl, $5dc8
+    ld a, BANK(Messages)
+    call SetROMBank
+    ld hl, Messages + $280
     ld a, [$d7a8]
     cp $0a
     jr nz, jr_000_3e68
@@ -9756,7 +9758,7 @@ jr_000_3e68:
     ld b, $14
     call Call_000_0a36
     ld a, $01
-    call Call_000_05bf
+    call SetROMBank
     ld a, $30
     ld [$d86f], a
     ld d, $a8
@@ -9769,13 +9771,13 @@ jr_000_3e68:
     ld a, $01
     call Call_000_09f9
     ld a, $01
-    call Call_000_05bf
+    call SetROMBank
     ret
 
 
 Jump_000_3e96:
     call Call_000_1954
-    call $47b8
+    call Call_001_47b8
     call Call_000_15f0
     call Call_000_12f0
     call Call_000_1430

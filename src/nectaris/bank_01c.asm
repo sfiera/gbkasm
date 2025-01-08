@@ -12,36 +12,47 @@ INCLUDE "trap.inc"
 
 SECTION "ROM Bank $01c", ROMX[$4000], BANK[$1c]
 
+Call_01c_4000::
     jp Jump_01c_4088
 
 
+Call_01c_4003::
     jp Jump_01c_40f4
 
 
+Call_01c_4006::
     jp Jump_01c_4021
 
 
+Call_01c_4009::
     jp Jump_01c_4038
 
 
+Call_01c_400c::
     jp Jump_01c_4059
 
 
+Call_01c_400f::
     jp Jump_01c_405d
 
 
+Call_01c_4012::
     jp Jump_01c_4067
 
 
+Call_01c_4015::
     jp Jump_01c_4071
 
 
+Call_01c_4018::
     jp Jump_01c_407a
 
 
+Call_01c_401b::
     jp Jump_01c_49b9
 
 
+Call_01c_401e::
     jp Jump_01c_49c3
 
 

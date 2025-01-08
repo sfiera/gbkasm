@@ -26,7 +26,9 @@ ENDM
 
 SECTION "ROM Bank $005", ROMX[$4000], BANK[$5]
 
+ScreenTitleScreen::
     screen TitleScreen
+ScreenWinScreen::
     screen WinScreen
 
 WinScreen:
@@ -35,22 +37,39 @@ WinScreen:
 .tiles
     INCBIN "gfx/nectaris/win.2bpp"
 
+ScreenGameOver::
     screen GameOver
+ScreenWorldMap::
     screen WorldMap
+Screen5::
     screen screen_0c_4000
+Screen6::
     screen screen_0c_4d28
+Screen7::
     screen screen_0c_5eb0
+Screen8::
     screen screen_0c_6e68
+Screen9::
     screen Splash1
+Screen10::
     screen Splash2
+Screen11::
     screen Splash3
+Screen12::
     screen Splash4
+Screen13::
     screen Splash5
+Screen14::
     screen screen_10_4000
+Screen15::
     screen screen_10_4b58
+Screen16::
     screen screen_10_5490
+Screen17::
     screen screen_10_5b68
+Screen18::
     screen screen_10_6230
+ScreenFactoryTaken::
     screen FactoryTaken
 
 Maps::

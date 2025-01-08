@@ -12,7 +12,8 @@ INCLUDE "trap.inc"
 
 SECTION "ROM Bank $001", ROMX[$4000], BANK[$1]
 
-    call $5616
+Call_001_4000::
+    call Call_001_5616
 
 Jump_001_4003:
 jr_001_4003:
@@ -1189,6 +1190,7 @@ Call_001_4719:
     ret
 
 
+Call_001_4750::
     ld a, [$d99d]
     call Call_000_099b
     ld a, [hl+]
@@ -1211,6 +1213,7 @@ Call_001_4719:
     ret
 
 
+Call_001_477f::
     ld a, [$d99d]
     call Call_000_099b
     ld a, [hl+]
@@ -1310,11 +1313,13 @@ jr_001_47f6:
     ret
 
 
+Call_001_4804::
     call Call_001_47b8
     call Call_000_1410
     ret
 
 
+Call_001_480b::
     ld hl, $ccf0
     ld c, $16
 
@@ -3645,9 +3650,11 @@ jr_001_55f5:
     inc b
     dec b
     nop
-    ld bc, $2102
-    jr z, @-$25
+    db $01, $02
 
+
+Call_001_5616::
+    ld hl, $d928
     ld de, $d960
     ld b, $38
 
@@ -5282,6 +5289,7 @@ jr_001_5fa2:
     ret
 
 
+Call_001_5fae::
     ld de, $d918
     ld b, $10
 
