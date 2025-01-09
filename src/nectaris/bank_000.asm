@@ -862,7 +862,7 @@ data_000_0323:
     db "    "
     db " ABCDEFGHIJKLMNOPQRSTUVWXYZ      "
 
-TerrainCost:
+TerrainCost::
     ;  TREAD BUGGY WHEEL BOOTS
     db 1,    1,    2,    1         ; open
     db 1,    1,    1,    1         ; road
@@ -1399,6 +1399,7 @@ jr_000_081a:
     ret
 
 
+Call_000_0823::
 jr_000_0823:
     ld a, [de]
     ld [hl+], a
@@ -2382,7 +2383,7 @@ jr_000_0d43:
     ret
 
 
-Call_000_0d4b:
+Call_000_0d4b::
     ld a, [$d799]
     push af
     ld a, BANK(Call_01c_401b)
@@ -2488,7 +2489,7 @@ Call_000_0db5::
     ret
 
 
-Call_000_0de7:
+Call_000_0de7::
     ld [$d872], a
     ld a, [$d799]
     push af
@@ -2544,7 +2545,7 @@ RunMenu:
     ret
 
 
-Call_000_0e66:
+Call_000_0e66::
     ld [$d872], a
     ld a, [$d799]
     push af
@@ -2612,7 +2613,7 @@ Call_000_0ec6:
     ret
 
 
-Call_000_0eee:
+Call_000_0eee::
     ld [$d872], a
     ld a, [$d799]
     push af
@@ -2650,7 +2651,7 @@ Call_000_0f0e:
     ret
 
 
-Call_000_0f36:
+Call_000_0f36::
     ld [$d872], a
     ld a, [$d799]
     push af
@@ -3111,7 +3112,7 @@ Call_000_1224::
     ret
 
 
-Call_000_1244:
+Call_000_1244::
     ld [$d872], a
     ld a, [$d799]
     push af

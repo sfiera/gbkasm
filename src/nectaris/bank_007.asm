@@ -1653,7 +1653,7 @@ Jump_007_4df5:
     bit 0, a
     jp nz, Jump_007_4df5
 
-    call jr_000_0c3c
+    call Call_000_0c3c
     ld a, $05
     call Call_000_0d07
     pop bc
@@ -3089,7 +3089,7 @@ jr_007_61f1:
     ld [$d79f], a
     ld [$d7a0], a
     ld hl, $d572
-    ld bc, trap_01_0150
+    ld bc, $0150
     ld a, $ff
     call Call_000_080f
     call Call_000_1224
@@ -4253,7 +4253,7 @@ jr_007_69cc:
 
 jr_007_69d5:
     ld hl, $d572
-    ld bc, trap_01_0150
+    ld bc, $0150
     call Call_000_081a
     ld a, [$db04]
     ld [de], a
@@ -4336,7 +4336,7 @@ jr_007_6a49:
     inc de
     ld hl, $d7a9
     ld bc, $0008
-    call jr_000_0823
+    call Call_000_0823
     ld a, [de]
     ld [$d7a4], a
     inc de
@@ -4375,8 +4375,8 @@ jr_007_6a86:
     jr nz, jr_007_6a73
 
     ld hl, $d572
-    ld bc, trap_01_0150
-    call jr_000_0823
+    ld bc, $0150
+    call Call_000_0823
     ld a, [de]
     ld [$d79f], a
     inc de
@@ -4391,7 +4391,7 @@ jr_007_6a86:
     inc de
     ld hl, $d7c5
     ld bc, $0064
-    call jr_000_0823
+    call Call_000_0823
     ld a, $00
     call Call_000_05c8
     ld [Chars], a
