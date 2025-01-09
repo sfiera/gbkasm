@@ -26,51 +26,51 @@ ENDM
 
 SECTION "ROM Bank $005", ROMX[$4000], BANK[$5]
 
-ScreenTitleScreen::
-    screen TitleScreen
-ScreenWinScreen::
-    screen WinScreen
+ScreenTitle::
+    screen ScreenTitleData
+ScreenWin::
+    screen ScreenWinData
 
-WinScreen:
+ScreenWinData:
 .map
     INCBIN "gfx/nectaris/win.map", 20
 .tiles
     INCBIN "gfx/nectaris/win.2bpp"
 
 ScreenGameOver::
-    screen GameOver
+    screen ScreenGameOverData
 ScreenWorldMap::
-    screen WorldMap
-Screen5::
-    screen screen_0c_4000
-Screen6::
-    screen screen_0c_4d28
-Screen7::
-    screen screen_0c_5eb0
-Screen8::
-    screen screen_0c_6e68
-Screen9::
-    screen Splash1
-Screen10::
-    screen Splash2
-Screen11::
-    screen Splash3
-Screen12::
-    screen Splash4
-Screen13::
-    screen Splash5
-Screen14::
-    screen screen_10_4000
-Screen15::
-    screen screen_10_4b58
-Screen16::
-    screen screen_10_5490
-Screen17::
-    screen screen_10_5b68
-Screen18::
-    screen screen_10_6230
+    screen ScreenWorldMapData
+ScreenPrologue1::
+    screen ScreenPrologue1Data
+ScreenPrologue3::
+    screen ScreenPrologue3Data
+ScreenPrologue5::
+    screen ScreenPrologue5Data
+ScreenResults::
+    screen ScreenResultsData
+ScreenEpilogue1::
+    screen ScreenEpilogue1Data
+ScreenEpilogue2::
+    screen ScreenEpilogue2Data
+ScreenEpilogue3::
+    screen ScreenEpilogue3Data
+ScreenEpilogue4::
+    screen ScreenEpilogue4Data
+ScreenEpilogue5::
+    screen ScreenEpilogue5Data
+ScreenPrologue2::
+    screen ScreenPrologue2Data
+ScreenPrologue4::
+    screen ScreenPrologue4Data
+ScreenPrologue6::
+    screen ScreenPrologue6Data
+ScreenPrologue7::
+    screen ScreenPrologue7Data
+ScreenEpilogue6::
+    screen ScreenEpilogue6Data
 ScreenFactoryTaken::
-    screen FactoryTaken
+    screen ScreenFactoryTakenData
 
 Maps::
     laddr MapA01Steven

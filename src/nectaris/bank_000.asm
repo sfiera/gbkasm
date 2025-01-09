@@ -4225,9 +4225,9 @@ Call_000_1ab7:
     call Call_000_09df
     ld a, $00
     call Call_000_09f9
-    ld a, BANK(Screen8)
+    ld a, BANK(ScreenResults)
     call SetROMBank
-    ld hl, Screen8
+    ld hl, ScreenResults
     call Call_000_0bcf
     ld a, [$d799]
     push af
@@ -4847,9 +4847,9 @@ Jump_000_1f4c:
 Jump_000_1f98:
 jr_000_1f98:
     call Call_000_09df
-    ld a, BANK(ScreenTitleScreen)
+    ld a, BANK(ScreenTitle)
     call SetROMBank
-    ld hl, ScreenTitleScreen
+    ld hl, ScreenTitle
     call Call_000_0bcf
     ld a, $01
     call Call_000_0cbf
@@ -5786,9 +5786,9 @@ Call_000_2645:
     call Call_000_09df
     call Call_000_0d30
     call Call_000_0927
-    ld a, BANK(Screen5)
+    ld a, BANK(ScreenPrologue1)
     call SetROMBank
-    ld hl, Screen5
+    ld hl, ScreenPrologue1
     call Call_000_0bcf
     ld a, $03
     call Call_000_0cbf
@@ -5800,9 +5800,9 @@ Call_000_2645:
     jp nz, Jump_000_2711
 
     call Call_000_09df
-    ld a, BANK(Screen14)
+    ld a, BANK(ScreenPrologue2)
     call SetROMBank
-    ld hl, Screen14
+    ld hl, ScreenPrologue2
     call Call_000_0bcf
     call Call_000_09eb
     ld a, $08
@@ -5812,9 +5812,9 @@ Call_000_2645:
     jp nz, Jump_000_2711
 
     call Call_000_09df
-    ld a, BANK(Screen6)
+    ld a, BANK(ScreenPrologue3)
     call SetROMBank
-    ld hl, Screen6
+    ld hl, ScreenPrologue3
     call Call_000_0bcf
     call Call_000_09eb
     ld a, $06
@@ -5824,9 +5824,9 @@ Call_000_2645:
     jp nz, Jump_000_2711
 
     call Call_000_09df
-    ld a, BANK(Screen15)
+    ld a, BANK(ScreenPrologue4)
     call SetROMBank
-    ld hl, Screen15
+    ld hl, ScreenPrologue4
     call Call_000_0bcf
     call Call_000_09eb
     ld a, $08
@@ -5836,9 +5836,9 @@ Call_000_2645:
     jp nz, Jump_000_2711
 
     call Call_000_09df
-    ld a, BANK(Screen7)
+    ld a, BANK(ScreenPrologue5)
     call SetROMBank
-    ld hl, Screen7
+    ld hl, ScreenPrologue5
     call Call_000_0bcf
     call Call_000_09eb
     ld a, $06
@@ -5848,9 +5848,9 @@ Call_000_2645:
     jr nz, jr_000_2711
 
     call Call_000_09df
-    ld a, BANK(Screen16)
+    ld a, BANK(ScreenPrologue6)
     call SetROMBank
-    ld hl, Screen16
+    ld hl, ScreenPrologue6
     call Call_000_0bcf
     call Call_000_09eb
     ld a, $08
@@ -5860,9 +5860,9 @@ Call_000_2645:
     jr nz, jr_000_2711
 
     call Call_000_09df
-    ld a, BANK(Screen17)
+    ld a, BANK(ScreenPrologue7)
     call SetROMBank
-    ld hl, Screen17
+    ld hl, ScreenPrologue7
     call Call_000_0bcf
     call Call_000_09eb
     ld a, $08
@@ -5908,9 +5908,9 @@ Call_000_274b:
     call Call_000_09df
     call Call_000_0d30
     call Call_000_0927
-    ld a, BANK(Screen9)
+    ld a, BANK(ScreenEpilogue1)
     call SetROMBank
-    ld hl, Screen9
+    ld hl, ScreenEpilogue1
     call Call_000_0bcf
     ld a, $12
     call Call_000_0cbf
@@ -5918,41 +5918,41 @@ Call_000_274b:
     ld a, $0a
     call Call_000_0c65
     call Call_000_09df
-    ld a, BANK(Screen10)
+    ld a, BANK(ScreenEpilogue2)
     call SetROMBank
-    ld hl, Screen10
+    ld hl, ScreenEpilogue2
     call Call_000_0bcf
     call Call_000_09eb
     ld a, $0b
     call Call_000_0c65
     call Call_000_09df
-    ld a, BANK(Screen11)
+    ld a, BANK(ScreenEpilogue3)
     call SetROMBank
-    ld hl, Screen11
+    ld hl, ScreenEpilogue3
     call Call_000_0bcf
     call Call_000_09eb
     ld a, $0b
     call Call_000_0c65
     call Call_000_09df
-    ld a, BANK(Screen12)
+    ld a, BANK(ScreenEpilogue4)
     call SetROMBank
-    ld hl, Screen12
+    ld hl, ScreenEpilogue4
     call Call_000_0bcf
     call Call_000_09eb
     ld a, $0b
     call Call_000_0c65
     call Call_000_09df
-    ld a, BANK(Screen13)
+    ld a, BANK(ScreenEpilogue5)
     call SetROMBank
-    ld hl, Screen13
+    ld hl, ScreenEpilogue5
     call Call_000_0bcf
     call Call_000_09eb
     ld a, $0b
     call Call_000_0c65
     call Call_000_09df
-    ld a, BANK(Screen18)
+    ld a, BANK(ScreenEpilogue6)
     call SetROMBank
-    ld hl, Screen18
+    ld hl, ScreenEpilogue6
     call Call_000_0bcf
     call Call_000_09eb
     ld a, $0b
@@ -7553,9 +7553,9 @@ jr_000_32dc:
     call Call_000_09df
     call Call_000_0d30
     call Call_000_0927
-    ld a, BANK(ScreenWinScreen)
+    ld a, BANK(ScreenWin)
     call SetROMBank
-    ld hl, ScreenWinScreen
+    ld hl, ScreenWin
     call Call_000_0bcf
     ld a, $0f
     call Call_000_0cbf

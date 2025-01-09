@@ -12,13 +12,13 @@ INCLUDE "trap.inc"
 
 SECTION "ROM Bank $004", ROMX[$4000], BANK[$4]
 
-GameOver:
+ScreenGameOverData:
 .map::
     INCBIN "gfx/nectaris/gameover.map", 20
 .tiles::
     INCBIN "gfx/nectaris/gameover.2bpp"
 
-WorldMap:
+ScreenWorldMapData:
 .map::
     INCBIN "gfx/nectaris/worldmap.map", 20
 .tiles::

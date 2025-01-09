@@ -129,7 +129,7 @@ Unknown2::
 Messages::
     INCBIN "gfx/nectaris/messages.2bpp"
 
-TitleScreen:
+ScreenTitleData:
 .map::
     INCBIN "gfx/nectaris/title.map", 20
 .tiles::

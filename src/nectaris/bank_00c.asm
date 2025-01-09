@@ -12,28 +12,28 @@ INCLUDE "trap.inc"
 
 SECTION "ROM Bank $00c", ROMX[$4000], BANK[$c]
 
-screen_0c_4000:
+ScreenPrologue1Data:
 .map::
-    INCBIN "gfx/nectaris/begin.map", 20
+    INCBIN "gfx/nectaris/prologue1.map", 20
 .tiles::
-    INCBIN "gfx/nectaris/begin.2bpp"
+    INCBIN "gfx/nectaris/prologue1.2bpp"
 
-screen_0c_4d28:
+ScreenPrologue3Data:
 .map::
-    INCBIN "gfx/nectaris/splash6.map", 20
+    INCBIN "gfx/nectaris/prologue3.map", 20
 .tiles::
-    INCBIN "gfx/nectaris/splash6.2bpp"
+    INCBIN "gfx/nectaris/prologue3.2bpp"
 
     db $e0, $ff, $f8, $ff, $fc, $ff, $fe, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
     db $2a, $00, $00, $7f, $00, $bf, $00, $bf, $00, $df, $80, $df, $c0, $ef, $c0, $ef
 
-screen_0c_5eb0:
+ScreenPrologue5Data:
 .map::
-    INCBIN "gfx/nectaris/splash7.map", 20
+    INCBIN "gfx/nectaris/prologue5.map", 20
 .tiles::
-    INCBIN "gfx/nectaris/splash7.2bpp"
+    INCBIN "gfx/nectaris/prologue5.2bpp"
 
-screen_0c_6e68:
+ScreenResultsData:
 .map::
     INCBIN "gfx/nectaris/results.map", 20
 .tiles::

@@ -12,7 +12,7 @@ INCLUDE "trap.inc"
 
 SECTION "ROM Bank $00a", ROMX[$4000], BANK[$a]
 
-FactoryTaken:
+ScreenFactoryTakenData:
 .map::
     INCBIN "gfx/nectaris/factory.map", 20
 .tiles::

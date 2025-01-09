@@ -12,32 +12,32 @@ INCLUDE "trap.inc"
 
 SECTION "ROM Bank $00d", ROMX[$4000], BANK[$d]
 
-Splash1:
+ScreenEpilogue1Data:
 .map::
-    INCBIN "gfx/nectaris/splash1.map", 20
+    INCBIN "gfx/nectaris/epilogue1.map", 20
 .tiles::
-    INCBIN "gfx/nectaris/splash1.2bpp"
+    INCBIN "gfx/nectaris/epilogue1.2bpp"
 
-Splash2:
+ScreenEpilogue2Data:
 .map::
-    INCBIN "gfx/nectaris/splash2.map", 20
+    INCBIN "gfx/nectaris/epilogue2.map", 20
 .tiles::
-    INCBIN "gfx/nectaris/splash2.2bpp"
+    INCBIN "gfx/nectaris/epilogue2.2bpp"
 
-Splash3:
+ScreenEpilogue3Data:
 .map::
-    INCBIN "gfx/nectaris/splash3.map", 20
+    INCBIN "gfx/nectaris/epilogue3.map", 20
 .tiles::
-    INCBIN "gfx/nectaris/splash3.2bpp"
+    INCBIN "gfx/nectaris/epilogue3.2bpp"
 
-Splash4:
+ScreenEpilogue4Data:
 .map::
-    INCBIN "gfx/nectaris/splash4.map", 20
+    INCBIN "gfx/nectaris/epilogue4.map", 20
 .tiles::
-    INCBIN "gfx/nectaris/splash4.2bpp"
+    INCBIN "gfx/nectaris/epilogue4.2bpp"
 
-Splash5:
+ScreenEpilogue5Data:
 .map::
-    INCBIN "gfx/nectaris/splash5.map", 20
+    INCBIN "gfx/nectaris/epilogue5.map", 20
 .tiles::
-    INCBIN "gfx/nectaris/splash5.2bpp"
+    INCBIN "gfx/nectaris/epilogue5.2bpp"
