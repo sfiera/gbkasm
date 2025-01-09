@@ -14,6 +14,6 @@ SECTION "ROM Bank $00a", ROMX[$4000], BANK[$a]
 
 ScreenFactoryTakenData:
 .map::
-    INCBIN "gfx/nectaris/factory.map", 20
+    INCBIN "gfx/nectaris/factorytaken.map", 20
 .tiles::
-    INCBIN "gfx/nectaris/factory.2bpp"
+    INCBIN "gfx/nectaris/factorytaken.2bpp"

@@ -2441,7 +2441,7 @@ Call_000_0de7::
     ld [$d79e], a
     ld a, BANK(Font7)
     call SetROMBank
-    ld hl, Font7 + $400
+    ld hl, Font7
     ld de, $8800
     ld b, $00
     call Call_000_0a36
@@ -4055,13 +4055,13 @@ Call_000_1974::
 
 
 Call_000_1994:
-    ld a, BANK(UnknownTileMap)
+    ld a, BANK(FactoryTileMap2)
     call SetROMBank
-    ld hl, UnknownTileMap + $50
+    ld hl, FactoryTileMap2
     ld de, $c1a0
     ld b, $14
     ld c, $12
-    call Call_000_3b36
+    call ShowTileMap
     ret
 
 
@@ -4082,7 +4082,7 @@ Call_000_19a7::
 
 
 Call_000_19c7:
-    ld a, BANK(UnknownTileMap)
+    ld a, BANK(FactoryTileMap3)
     call SetROMBank
     ld a, [$d87c]
     ld b, a
@@ -4104,7 +4104,7 @@ Call_000_19c7:
     call Call_000_093f
     push hl
     pop de
-    ld hl, UnknownTileMap + $64
+    ld hl, FactoryTileMap3
     ld c, $04
 
 jr_000_19f0:
@@ -4151,9 +4151,9 @@ Call_000_1a0a::
 Call_000_1a2a:
     call Call_000_09df
     call Call_000_0927
-    ld a, BANK(Font7)
+    ld a, BANK(FactoryTileData)
     call SetROMBank
-    ld hl, Font7
+    ld hl, FactoryTileData
     ld de, $8800
     ld bc, $00a0
     call Call_000_0a36
@@ -4195,13 +4195,13 @@ Call_000_1a64::
 
 
 Call_000_1a84:
-    ld a, BANK(UnknownTileMap)
+    ld a, BANK(FactoryTileMap4)
     call SetROMBank
-    ld hl, UnknownTileMap + $244
+    ld hl, FactoryTileMap4
     ld de, $c4a0
     ld b, $14
     ld c, $06
-    call Call_000_3b36
+    call ShowTileMap
     ret
 
 
@@ -8148,9 +8148,9 @@ Call_000_368a:
     ld de, $8800
     ld bc, $0000
     call Call_000_0a36
-    ld a, BANK(UnknownTileMap5)
+    ld a, BANK(TileMapWeaponData)
     call SetROMBank
-    ld hl, UnknownTileMap5
+    ld hl, TileMapWeaponData
     ld de, $c1a0
     ld b, $12
 
@@ -8361,13 +8361,13 @@ Call_000_3828::
     ld [$d79e], a
     call Call_000_09df
     call Call_000_39bc
-    ld a, BANK(UnknownTileMap3)
+    ld a, BANK(BattleTileMap6)
     call SetROMBank
-    ld hl, UnknownTileMap3
+    ld hl, BattleTileMap6
     ld de, $c520
     ld b, $14
     ld c, $04
-    call Call_000_3b36
+    call ShowTileMap
     call Call_000_1b3e
     ld a, $00
     call Call_000_1b5e
@@ -8376,13 +8376,13 @@ Call_000_3828::
     call Call_000_09eb
     call Call_000_39b3
     call Call_000_0927
-    ld a, BANK(UnknownTileMap3)
+    ld a, BANK(BattleTileMap6)
     call SetROMBank
-    ld hl, UnknownTileMap3
+    ld hl, BattleTileMap6
     ld de, $c520
     ld b, $14
     ld c, $04
-    call Call_000_3b36
+    call ShowTileMap
     call Call_000_1b3e
     ld a, $01
     call Call_000_1b5e
@@ -8391,13 +8391,13 @@ Call_000_3828::
     call Call_000_09eb
     call Call_000_39b3
     call Call_000_0927
-    ld a, BANK(UnknownTileMap6)
+    ld a, BANK(BattleTileMap7)
     call SetROMBank
-    ld hl, UnknownTileMap6
+    ld hl, BattleTileMap7
     ld de, $c520
     ld b, $14
     ld c, $04
-    call Call_000_3b36
+    call ShowTileMap
     ld a, $01
     call SetROMBank
     call Call_000_1b3e
@@ -8407,13 +8407,13 @@ Call_000_3828::
     call Call_000_1c7e
     call Call_000_39b3
     call Call_000_0927
-    ld a, BANK(UnknownTileMap8)
+    ld a, BANK(BattleTileMap5)
     call SetROMBank
-    ld hl, UnknownTileMap8
+    ld hl, BattleTileMap5
     ld de, $c520
     ld b, $14
     ld c, $04
-    call Call_000_3b36
+    call ShowTileMap
     ld a, $01
     call SetROMBank
     call Call_000_1b3e
@@ -8518,20 +8518,20 @@ jr_000_39b5:
 
 Call_000_39bc:
     call Call_000_0927
-    ld a, BANK(Black)
+    ld a, BANK(BattleTileData)
     call SetROMBank
-    ld hl, Black
+    ld hl, BattleTileData
     ld de, $8800
     ld bc, $0000
     call Call_000_0a36
-    ld a, BANK(UnknownTileMap9)
+    ld a, BANK(BattleTileMap4)
     call SetROMBank
-    ld hl, UnknownTileMap9
+    ld hl, BattleTileMap4
     ld de, $c1a0
     ld b, $14
     ld c, $04
-    call Call_000_3b36
-    ld hl, $4c64
+    call ShowTileMap
+    ld hl, BattleTileMap2
     ld a, [$d830]
     ld b, $00
     cp $00
@@ -8565,9 +8565,9 @@ jr_000_3a07:
 jr_000_3a0f:
     ld de, $c2a0
     ld b, $0a
-    ld c, $03
-    call Call_000_3b36
-    ld hl, $4c6e
+    ld c, BANK(BattleTileMap3)
+    call ShowTileMap
+    ld hl, BattleTileMap3
     ld a, [$d831]
     ld b, $00
     cp $00
@@ -8601,13 +8601,13 @@ jr_000_3a3e:
 jr_000_3a46:
     ld de, $c2aa
     ld b, $0a
-    ld c, $03
-    call Call_000_3b36
-    ld hl, $4ef8
+    ld c, BANK(BattleTileMap8)
+    call ShowTileMap
+    ld hl, BattleTileMap8
     ld de, $c360
     ld b, $14
     ld c, $07
-    call Call_000_3b36
+    call ShowTileMap
     ld a, [$d82e]
     call Call_000_099b
     ld de, $8890
@@ -8735,8 +8735,7 @@ Call_000_3b23:
     ret
 
 
-Call_000_3b36:
-jr_000_3b36:
+ShowTileMap:
     push bc
     push de
     push hl
@@ -8756,7 +8755,7 @@ jr_000_3b44:
     ld a, $40
     call Call_000_08a1
     dec c
-    jr nz, jr_000_3b36
+    jr nz, ShowTileMap
 
     ret
 
@@ -8788,13 +8787,13 @@ data_000_3b78:
     db $0d, $09, $0b, $07, $0b, $0b, $0e, $07, $0e, $0b, $10, $09, $11, $0b, $11, $07
 
 Call_000_3b88:
-    ld a, BANK(UnknownTileMap7)
+    ld a, BANK(BattleTileMap8)
     call SetROMBank
-    ld hl, UnknownTileMap7
+    ld hl, BattleTileMap8
     ld de, $c360
     ld b, $14
     ld c, $07
-    call Call_000_3b36
+    call ShowTileMap
     ld a, [$da11]
     cp $00
     jr z, jr_000_3bc6
@@ -8804,7 +8803,7 @@ Call_000_3b88:
     cp $00
     jr nz, jr_000_3bb9
 
-    ld hl, $4c64
+    ld hl, BattleTileMap2
     ld de, $c2a9
     ld b, $01
     ld c, $0a
@@ -8812,7 +8811,7 @@ Call_000_3b88:
     jr jr_000_3bc6
 
 jr_000_3bb9:
-    ld hl, $4c64
+    ld hl, BattleTileMap2
     ld de, $c2aa
     ld b, $01
     ld c, $0a
@@ -8895,9 +8894,9 @@ Call_000_3c1f:
     sla a
     sla a
     add $42
-    ld de, UnknownTileMap2
+    ld de, BattleTileMap1
     call Call_000_08a1
-    ld a, BANK(UnknownTileMap2)
+    ld a, BANK(BattleTileMap1)
     call SetROMBank
     dec hl
     ld a, [de]
