@@ -1,4 +1,4 @@
-; Disassemuly of "Nectaris GB (Japan) (SGB Enhanced).gb"
+; Disassembly of "Nectaris GB (Japan) (SGB Enhanced).gb"
 ; This file was created with:
 ; mgbdis v2.0 - Game Boy ROM disassembler by Matt Currie and contributors.
 ; https://github.com/mattcurrie/mgbdis
@@ -12,7 +12,7 @@ INCLUDE "trap.inc"
 INCLUDE "nectaris/map.inc"
 INCLUDE "nectaris/units.inc"
 
-SECTION "ROM Bank $006", ROMX
+SECTION "Map B01 Revolt", ROMX
 
 MapB01Revolt::
     map "MMMMMM~#MMM~~MM ", \
@@ -36,6 +36,8 @@ MapB01Revolt::
     db FOE | BISON, $00 | $0b, $05
     db FOE | BISON, $00 | $0c, $04
     db $ff
+
+SECTION "Map B02 Icarus", ROMX
 
 MapB02Icarus::
     map "MMM++++++++++++ ", \
@@ -65,6 +67,8 @@ MapB02Icarus::
     db FOE | BISON, $00 | $0d, $06
     db $ff
 
+SECTION "Map B03 Cyrano", ROMX
+
 MapB03Cyrano::
     map "#+++~oM  +  +   ", \
         "##  ++ ++++~+G  ", \
@@ -90,6 +94,8 @@ MapB03Cyrano::
     db OWN | DARBEK, $20 | $0e, $04
     db OWN | NASHORN, $20 | $0e, $04
     db $ff
+
+SECTION "Map B04 Ramsey", ROMX
 
 MapB04Ramsey::
     map "MMM   M ~G  oo# ", \
@@ -134,6 +140,8 @@ MapB04Ramsey::
     db OWN | GRIZZLY, $80 | $02, $0d
     db $ff
 
+SECTION "Map B05 Newton", ROMX
+
 MapB05Newton::
     map "    M M   ~~~## ", \
         "~MU       ### M ", \
@@ -176,6 +184,8 @@ MapB05Newton::
     db OWN | LYNX, $60 | $0c, $0c
     db OWN | MONSTER, $80 | $01, $10
     db $ff
+
+SECTION "Map B06 Seneca", ROMX
 
 MapB06Seneca::
     map "~~~~~~~+ + MM ~ ", \
@@ -225,6 +235,8 @@ MapB06Seneca::
     db OWN | LYNX, $60 | $0c, $02
     db $ff
 
+SECTION "Map B07 Sabine", ROMX
+
 MapB07Sabine::
     map "~~~~~MM ~~MMMM  +  ++  ooooooo x", \
         "~~~     ~~~~MMM + +  oooo ooo  x", \
@@ -266,6 +278,8 @@ MapB07Sabine::
     db OWN | RABBIT, $80 | $1c, $06
     db OWN | HAWKEYE, $80 | $1c, $06
     db $ff
+
+SECTION "Map B08 Aratus", ROMX
 
 MapB08Aratus::
     map "~~~~MMMMMMMMM ~~ MMMM MMM~~    x", \
@@ -326,6 +340,8 @@ MapB08Aratus::
     db OWN | SEEKER, $60 | $17, $02
     db OWN | MUNKS, $60 | $17, $02
     db $ff
+
+SECTION "Map B09 Galois", ROMX
 
 MapB09Galois::
     map "ooo   + ~~MMMMM##~~MMMMMM MMMM x", \
@@ -404,6 +420,8 @@ MapB09Galois::
     db OWN | SLAGGER, $c0 | $1b, $11
     db OWN | FALCO, $c0 | $1b, $11
     db $ff
+
+SECTION "Map B10 Darwin", ROMX
 
 MapB10Darwin::
     map "ooo o  MM M MM~~o oo MMMM MMM  x", \
@@ -485,6 +503,8 @@ MapB10Darwin::
     db OWN | HAWKEYE, $e0 | $1c, $02
     db $ff
 
+SECTION "Map B11 Pascal", ROMX
+
 MapB11Pascal::
     map "MMMMMMMMMMMMMMMMMMMMMM  # #M#M x", \
         "MM o MMMM MMMMM   MMMMM MM#  M x", \
@@ -562,6 +582,8 @@ MapB11Pascal::
     db OWN | MULE, $c0 | $1c, $0f
     db OWN | RHINO, $c0 | $1c, $0f
     db $ff
+
+SECTION "Map B12 Halley", ROMX
 
 MapB12Halley::
     map "MM~+++++##    ~~~~~~~MM MMMMM  x", \
@@ -642,6 +664,8 @@ MapB12Halley::
     db OWN | HAWKEYE, $a0 | $1b, $02
     db $ff
 
+SECTION "Map B13 Borman", ROMX
+
 MapB13Borman::
     map "MMMMMMMMM oMMMM MMMMMMM MMMMMM x", \
         "MMM   M ooooM  ~M  MM    ~ MMM x", \
@@ -710,6 +734,8 @@ MapB13Borman::
     db OWN | MULE, $a0 | $1a, $12
     db OWN | YAMA, $a0 | $1a, $12
     db $ff
+
+SECTION "Map B14 Appolo", ROMX
 
 MapB14Appolo::
     map "~~o       ~       ~~~~~ ooo oo x", \
@@ -780,6 +806,8 @@ MapB14Appolo::
     db OWN | HAWKEYE, $c0 | $1b, $06
     db OWN | GRIZZLY, $c0 | $1b, $06
     db $ff
+
+SECTION "Map B15 Kaiser", ROMX
 
 MapB15Kaiser::
     map " MM+~#MMMM M   +~~~~~  # M##MM x", \
@@ -859,6 +887,8 @@ MapB15Kaiser::
     db OWN | NASHORN, $a0 | $1a, $0d
     db $ff
 
+SECTION "Map B16 Nector", ROMX
+
 MapB16Nector::
     map "MM ~~MMMMM  ooo ooo   MMM   M  x", \
         "MMM~~MMMMMMooo G ooo MMMMM~~ + x", \
@@ -937,476 +967,4 @@ MapB16Nector::
     db OWN | LYNX, $a0 | $19, $12
     db OWN | HAWKEYE, $a0 | $19, $12
     db OWN | FALCO, $a0 | $19, $12
-    db $ff
-
-MapA01Steven::
-    map "MoMMM~# ~ ~~~MMM", \
-        "ooo~M ##    ~~~~", \
-        "oo~    *++++++++", \
-        "o    ++#     G  ", \
-        "o  ++  M#      ~", \
-        " U + ~ M#o~    M", \
-        " + + o~M oo~~ ~o", \
-        "+ + ~oMMMMoo~~oM", \
-        "   ~~~ooMMMMo~MM", \
-        "oo~~~oooMMMMMMMM", \
-        "oMo oMMMMoM MMM "
-    db OWN | BISON, $00 | $01, $06
-    db OWN | MUNKS, $00 | $01, $05
-    db OWN | MUNKS, $00 | $03, $06
-    db FOE | MUNKS, $00 | $0d, $03
-    db OWN | BISON, $00 | $00, $03
-    db OWN | BISON, $00 | $02, $07
-    db FOE | MUNKS, $00 | $0a, $00
-    db FOE | BISON, $00 | $09, $00
-    db FOE | BISON, $00 | $0b, $02
-    db $ff
-
-MapA02Astral::
-    map "M Moo ~   oMM   ", \
-        "MU           ~ o", \
-        "       o o  o oo", \
-        "    ~~ MMMoo  oo", \
-        "  ~~    MMo   o ", \
-        "     o  M       ", \
-        "    ooo        ~", \
-        "oooM~MMM ~~M G ~", \
-        "o  o  oooo~~   ~", \
-        " ~~ o ~ MM~~   ~", \
-        "   M M M  oMMMM "
-    db OWN | BISON, $00 | $03, $00
-    db OWN | BISON, $00 | $03, $03
-    db OWN | BISON, $00 | $01, $03
-    db OWN | BISON, $00 | $05, $00
-    db OWN | BISON, $00 | $03, $06
-    db OWN | MUNKS, $00 | $01, $01
-    db OWN | MUNKS, $00 | $04, $02
-    db OWN | MUNKS, $00 | $02, $03
-    db FOE | BISON, $00 | $0c, $05
-    db FOE | BISON, $00 | $0b, $05
-    db FOE | BISON, $00 | $0c, $03
-    db FOE | MUNKS, $00 | $0d, $07
-    db FOE | MUNKS, $00 | $0d, $06
-    db FOE | BISON, $00 | $0b, $03
-    db $ff
-
-MapA03Heckle::
-    map "MMMMM  # ~     ~", \
-        "MMMMM ##  M ~G  ", \
-        "M MMM #+ + + + +", \
-        "     +*#+ +~+ +M", \
-        "M ~++ MM   ~g   ", \
-        " ++ o MM  ~   ~ ", \
-        "+     oMMM  o~  ", \
-        "  U   ooMo    oM", \
-        "    ~  MooMoMMMM", \
-        "oo Mo  MoMoMMMMM", \
-        "MM   MMMMMMMMMM "
-    db OWN | BISON, $00 | $05, $06
-    db OWN | BISON, $00 | $05, $03
-    db OWN | MUNKS, $00 | $05, $05
-    db FOE | MUNKS, $00 | $0d, $01
-    db FOE | DARBEK, $20 | $0c, $04
-    db OWN | MUNKS, $00 | $05, $08
-    db OWN | BISON, $00 | $02, $07
-    db FOE | NASHORN, $20 | $0c, $04
-    db FOE | BISON, $00 | $0c, $01
-    db FOE | BISON, $00 | $0c, $02
-    db FOE | BISON, $00 | $0d, $02
-    db OWN | BISON, $00 | $0c, $06
-    db $ff
-
-MapA04Reming::
-    map "Mooo           ~", \
-        "M     f         ", \
-        "M        oo o  o", \
-        "  o o     o     ", \
-        "    ~oo~o       ", \
-        "      o ~o  G  o", \
-        "o      ~ o      ", \
-        " U     o        ", \
-        "        o ~   MM", \
-        "    o      Mo  M", \
-        " M M M MM MM ~  "
-    db OWN | RABBIT, $20 | $06, $01
-    db OWN | RABBIT, $20 | $06, $01
-    db OWN | LENET, $00 | $03, $03
-    db OWN | LENET, $00 | $04, $05
-    db OWN | BISON, $00 | $02, $06
-    db OWN | BISON, $00 | $01, $04
-    db OWN | NASHORN, $00 | $03, $07
-    db OWN | MUNKS, $00 | $01, $05
-    db OWN | DARBEK, $00 | $01, $07
-    db OWN | DARBEK, $00 | $06, $06
-    db FOE | NASHORN, $00 | $0c, $05
-    db FOE | RABBIT, $00 | $0e, $04
-    db FOE | SLAGGER, $00 | $0d, $06
-    db FOE | BISON, $00 | $0b, $03
-    db FOE | BISON, $00 | $0a, $05
-    db FOE | BISON, $00 | $0a, $07
-    db FOE | DARBEK, $00 | $0c, $03
-    db FOE | DARBEK, $00 | $0a, $06
-    db FOE | DARBEK, $00 | $0c, $07
-    db $ff
-
-MapA05Steyer::
-    map "MMMoo   ~   ooMM", \
-        "Mo~    ~ o   ~MM", \
-        "Mo    oMMM~   oM", \
-        "o     oMMo     ~", \
-        "o~  U MMM~f    ~", \
-        "~    ooMMMo   ~M", \
-        "M~   MMMMM~   ~M", \
-        "Mo  ~MMMMMM  ~oM", \
-        "MM~ oMMMMMM  ooM", \
-        "Mo~ MMMMM~M  oMM", \
-        "Mo  ~MMMM~    MM", \
-        "MM  oMMMMM o ~MM", \
-        "M   ~ooMMMMo MoM", \
-        "M~   ooMMMM~ oMM", \
-        "~f   oMMMMo   MM", \
-        "    ~MMMMMM   MM", \
-        "    MMMMMoG  ~MM", \
-        "o   o~M~M     ~M", \
-        "Mo            oM", \
-        "MMo  ~~      ooM", \
-        "MM~M~M~M~M~M~MMM", \
-        "MMMMMMM M M~MMMM"
-    db OWN | MUNKS, $00 | $05, $04
-    db OWN | MUNKS, $00 | $05, $02
-    db OWN | RABBIT, $00 | $02, $04
-    db OWN | BISON, $00 | $04, $04
-    db FOE | JAVI, $40 | $01, $0e
-    db FOE | LYNX, $40 | $01, $0e
-    db FOE | SLAGGER, $40 | $01, $0e
-    db FOE | MONSTER, $40 | $01, $0e
-    db OWN | LENET, $20 | $0a, $04
-    db OWN | HAWKEYE, $20 | $0a, $04
-    db OWN | DILLO, $20 | $0a, $04
-    db OWN | SEEKER, $20 | $0a, $04
-    db FOE | MUNKS, $00 | $0c, $0e
-    db FOE | BISON, $00 | $0a, $10
-    db FOE | DRAPER, $00 | $09, $12
-    db FOE | RABBIT, $00 | $07, $11
-    db FOE | RABBIT, $00 | $09, $11
-    db FOE | GRIZZLY, $00 | $06, $13
-    db OWN | BISON, $00 | $03, $05
-    db FOE | BISON, $00 | $0c, $11
-    db OWN | RABBIT, $00 | $03, $03
-    db $ff
-
-MapA06Walthe::
-    map "~  ~          ~M", \
-        " U        f  ~ M", \
-        "     ~  ~      M", \
-        "          ~    M", \
-        "   ~ ~ ~    ~  M", \
-        "~  o~MoMoo~~   M", \
-        "M~~MMoMoMoo   ~M", \
-        "MMM~o ~ ~  ~~oMM", \
-        "MMoo      ooooMM", \
-        "MM~~   f   ~oM~M", \
-        "oMM        MMMMM", \
-        "~ ~ o~    ~MMMMM", \
-        "~   oMoo~ooMo~oM", \
-        "    ~oMMoMM~o ~M", \
-        " ~    ~~~~~   ~M", \
-        "    ~          M", \
-        " f        ~    M", \
-        "    ~ ~     G  M", \
-        "~       ~      M", \
-        "~~ ~ ~~      ~~M", \
-        "MM~M~M~M~M~M~M~M", \
-        "MMMMMMMMM MMMMMM"
-    db OWN | NASHORN, $00 | $04, $03
-    db OWN | GRIZZLY, $00 | $04, $01
-    db OWN | BISON, $00 | $03, $02
-    db OWN | RABBIT, $00 | $01, $04
-    db OWN | FALCO, $00 | $06, $04
-    db OWN | JAVI, $00 | $04, $05
-    db OWN | MUNKS, $00 | $01, $01
-    db OWN | MUNKS, $00 | $01, $02
-    db OWN | MULE, $00 | $04, $02
-    db OWN | JAVI, $20 | $0a, $01
-    db OWN | DILLO, $20 | $0a, $01
-    db OWN | SEEKER, $20 | $0a, $01
-    db FOE | ESTOL, $60 | $01, $10
-    db FOE | SEEKER, $60 | $01, $10
-    db FOE | GIANT, $60 | $01, $10
-    db FOE | MONSTER, $60 | $01, $10
-    db FOE | GIANT, $40 | $07, $09
-    db FOE | LYNX, $40 | $07, $09
-    db OWN | DILLO, $40 | $07, $09
-    db FOE | MUNKS, $00 | $0c, $10
-    db FOE | DARBEK, $00 | $0c, $11
-    db FOE | MULE, $00 | $0a, $11
-    db FOE | HAWKEYE, $00 | $09, $0f
-    db FOE | MONSTER, $00 | $08, $11
-    db FOE | RABBIT, $00 | $09, $12
-    db FOE | HUNTER, $00 | $0b, $0f
-    db FOE | HUNTER, $60 | $01, $10
-    db FOE | SLAGGER, $60 | $01, $10
-    db FOE | MULE, $60 | $01, $10
-    db FOE | LYNX, $00 | $08, $10
-    db FOE | BISON, $00 | $0b, $12
-    db FOE | RHINO, $60 | $01, $10
-    db FOE | YAMA, $60 | $01, $10
-    db $ff
-
-MapA07Numbut::
-    map "o~ ~oMMMo ~~o ~M", \
-        "~U MoMo~~     oM", \
-        "   MoMo~   o  ~M", \
-        "   oMMo   MM   M", \
-        "~  ~Mo~  oMM~ ~M", \
-        "  MMMo~  MMMo oM", \
-        "  oMMM  ~MoMo oM", \
-        "   ooM  MoMo  oM", \
-        "  ooM~  MMM    M", \
-        "~  oMMf ~Mo~ o~M", \
-        "~~ MM   oMo  oMM", \
-        "~  Mo    MM   ~M", \
-        "~ MMM  ~oMM  ~oM", \
-        "  MMo  MMoo~  ~M", \
-        " oMM   MMoo   ~M", \
-        " oMM   MM~    oM", \
-        "  M   ~MM~ G  ~M", \
-        "     ~oMoM ~ ~~M", \
-        "oo~o~MMooMooo~oM", \
-        "ooo~oMMMMMMMMMMM", \
-        "MMMMMMMMMMMMMMMM", \
-        "M M  M MM MMM MM"
-    db OWN | BISON, $00 | $02, $0b
-    db OWN | BISON, $00 | $01, $0c
-    db OWN | LYNX, $00 | $01, $0a
-    db FOE | SLAGGER, $00 | $03, $10
-    db FOE | SLAGGER, $00 | $05, $0f
-    db FOE | SLAGGER, $00 | $0c, $0b
-    db FOE | SLAGGER, $00 | $0d, $0c
-    db FOE | LYNX, $00 | $0c, $0d
-    db FOE | LYNX, $00 | $0d, $0e
-    db FOE | ESTOL, $00 | $0c, $0f
-    db OWN | JAVI, $00 | $01, $00
-    db FOE | HUNTER, $00 | $0d, $10
-    db OWN | SEEKER, $00 | $01, $09
-    db FOE | SEEKER, $00 | $06, $0e
-    db FOE | SEEKER, $00 | $0d, $0d
-    db OWN | MULE, $20 | $06, $09
-    db OWN | YAMA, $20 | $06, $09
-    db FOE | RHINO, $00 | $0a, $0f
-    db FOE | MONSTER, $00 | $0b, $0d
-    db FOE | MUNKS, $00 | $04, $10
-    db FOE | MUNKS, $00 | $0b, $10
-    db FOE | DARBEK, $00 | $0b, $0c
-    db OWN | FALCO, $00 | $02, $02
-    db FOE | HUNTER, $00 | $0a, $12
-    db FOE | MUNKS, $00 | $09, $0c
-    db OWN | BISON, $00 | $06, $06
-    db FOE | MONSTER, $00 | $08, $03
-    db FOE | MONSTER, $00 | $07, $03
-    db OWN | RABBIT, $00 | $0b, $00
-    db OWN | MUNKS, $00 | $07, $06
-    db OWN | GRIZZLY, $00 | $01, $0d
-    db OWN | DARBEK, $00 | $02, $09
-    db OWN | DARBEK, $20 | $06, $09
-    db FOE | BISON, $00 | $04, $0f
-    db FOE | SLAGGER, $00 | $0d, $0a
-    db OWN | BISON, $00 | $0d, $02
-    db OWN | LENET, $00 | $0c, $02
-    db OWN | LENET, $00 | $07, $07
-    db OWN | SEEKER, $00 | $01, $03
-    db FOE | MUNKS, $00 | $06, $0c
-    db $ff
-
-MapA08Gustaf::
-    map "MMo Moo~MMMMMMoM", \
-        "MoM~  ~ ~o~o~MoM", \
-        "M~   ~    ~   MM", \
-        "MM G  o~ ~o  o~M", \
-        "Mo   ~o     ~~~M", \
-        "M~o     oM~    M", \
-        "o   ~M~    f  ~M", \
-        " ~~~ o ~oo~~ ~oM", \
-        "  Mo         ~~M", \
-        "~    ~ ~Mo~o ooM", \
-        "oo~ oM o  M~ ~~M", \
-        "o~ ~~   ~     oM", \
-        "o  f  ~o Mo ~ ~M", \
-        "~~   M~ M~ o ~~M", \
-        "o~~    ~   M  oM", \
-        "o  ~ ~ oM ~ ~o~M", \
-        "~ ~ oM       ~MM", \
-        "o M~   M  U  M~M", \
-        "oM  ~~ ~~   ~MoM", \
-        "MM o M o ~ ~M~oM", \
-        "MMMMMM~M M~MoMMM", \
-        "MMM MMMMMMM MMMM"
-    db OWN | RABBIT, $00 | $08, $10
-    db OWN | BISON, $00 | $0d, $0f
-    db OWN | DRAPER, $00 | $0a, $11
-    db FOE | RABBIT, $00 | $04, $04
-    db FOE | SLAGGER, $00 | $02, $05
-    db FOE | SLAGGER, $00 | $03, $03
-    db FOE | MONSTER, $00 | $03, $05
-    db OWN | BISON, $00 | $0b, $0f
-    db OWN | GRIZZLY, $40 | $03, $0c
-    db OWN | BISON, $40 | $03, $0c
-    db OWN | BISON, $40 | $03, $0c
-    db FOE | NASHORN, $20 | $0b, $06
-    db FOE | LYNX, $20 | $0b, $06
-    db FOE | MONSTER, $20 | $0b, $06
-    db FOE | MONSTER, $20 | $0b, $06
-    db FOE | SLAGGER, $20 | $0b, $06
-    db FOE | SLAGGER, $20 | $0b, $06
-    db FOE | RABBIT, $00 | $01, $04
-    db OWN | MUNKS, $00 | $08, $11
-    db OWN | ESTOL, $40 | $03, $0c
-    db OWN | RABBIT, $40 | $03, $0c
-    db OWN | RABBIT, $40 | $03, $0c
-    db FOE | DILLO, $20 | $0b, $06
-    db FOE | DRAPER, $00 | $04, $05
-    db FOE | MUNKS, $00 | $06, $04
-    db FOE | NASHORN, $00 | $05, $03
-    db FOE | MONSTER, $00 | $05, $05
-    db FOE | SLAGGER, $00 | $04, $02
-    db OWN | RABBIT, $00 | $07, $10
-    db OWN | LYNX, $40 | $03, $0c
-    db $ff
-
-MapA09Dardic::
-    map "#oo    MM~~ ~MM~MM~   ~~    ~#~~", \
-        "## U  MMM~~     M    ~~    f  ##", \
-        " #    MMMM f                 ##M", \
-        "       MMM    ~~       M MooooMM", \
-        "        MMMo oMMMM    MMMMMMoooo", \
-        " ~MM     ~ooooooM~     MM ooo oo", \
-        "~~M       ~~~   ~~~  # ##       ", \
-        "~     ## #~      MM~~~#+++++G   ", \
-        "~ f    # ##M  f   M ~+*oo       ", \
-        "     ~#~~###M      ++~##o    ooo", \
-        " M  ~M~M#M M#M~M G+M~M G~M M ooM"
-    db OWN | HAWKEYE, $00 | $03, $01
-    db OWN | DARBEK, $00 | $05, $01
-    db OWN | MUNKS, $00 | $04, $03
-    db OWN | SEEKER, $00 | $02, $03
-    db OWN | RABBIT, $00 | $06, $03
-    db OWN | RABBIT, $00 | $05, $03
-    db OWN | FALCO, $00 | $04, $05
-    db OWN | FALCO, $00 | $04, $06
-    db OWN | JAVI, $00 | $05, $05
-    db OWN | FALCO, $60 | $02, $08
-    db OWN | FALCO, $60 | $02, $08
-    db OWN | JAVI, $60 | $02, $08
-    db OWN | JAVI, $60 | $02, $08
-    db OWN | HAWKEYE, $60 | $02, $08
-    db OWN | SEEKER, $60 | $02, $08
-    db OWN | PELICAN, $60 | $02, $08
-    db OWN | DARBEK, $60 | $02, $08
-    db OWN | NASHORN, $60 | $02, $08
-    db OWN | FALCO, $40 | $0b, $02
-    db OWN | FALCO, $40 | $0b, $02
-    db OWN | HUNTER, $40 | $0b, $02
-    db OWN | GRIZZLY, $40 | $0b, $02
-    db OWN | BISON, $40 | $0b, $02
-    db OWN | BISON, $40 | $0b, $02
-    db FOE | HUNTER, $80 | $0e, $08
-    db FOE | HUNTER, $80 | $0e, $08
-    db FOE | MONSTER, $80 | $0e, $08
-    db FOE | MONSTER, $80 | $0e, $08
-    db FOE | RABBIT, $80 | $0e, $08
-    db FOE | LYNX, $80 | $0e, $08
-    db FOE | FALCO, $20 | $1b, $01
-    db FOE | HUNTER, $20 | $1b, $01
-    db FOE | HUNTER, $20 | $1b, $01
-    db FOE | PELICAN, $20 | $1b, $01
-    db FOE | MUNKS, $20 | $1b, $01
-    db FOE | SEEKER, $20 | $1b, $01
-    db FOE | NASHORN, $20 | $1b, $01
-    db FOE | HUNTER, $20 | $1b, $01
-    db FOE | HUNTER, $20 | $1b, $01
-    db FOE | HUNTER, $20 | $1b, $01
-    db FOE | PELICAN, $20 | $1b, $01
-    db FOE | RHINO, $20 | $1b, $01
-    db OWN | BISON, $00 | $07, $04
-    db FOE | RABBIT, $00 | $1d, $08
-    db FOE | RABBIT, $00 | $1c, $09
-    db FOE | SEEKER, $00 | $1b, $08
-    db FOE | SEEKER, $00 | $19, $08
-    db FOE | MUNKS, $00 | $1c, $07
-    db FOE | HUNTER, $00 | $19, $06
-    db FOE | HUNTER, $00 | $1a, $06
-    db FOE | HUNTER, $00 | $1a, $07
-    db FOE | DRAPER, $00 | $1b, $05
-    db FOE | HAWKEYE, $00 | $1d, $05
-    db FOE | SLAGGER, $00 | $1d, $06
-    db FOE | SLAGGER, $00 | $1d, $07
-    db $ff
-
-MapA10Keslle::
-    map "MMMM+   ooooMMMMMMMMM#~##~ +~~~~", \
-        "~~M++ G  MMMMMMMM MMoo#~~  u  ~o", \
-        "~ +      MMMMMM~~   o## ~++   oo", \
-        "  g    #MMM MMM~ #     ++  M    ", \
-        "  + ### MM f    ~##++++  MMMM   ", \
-        "  ++~*++++       +*~~~   MMM    ", \
-        "oo  +# ~~++++++++ ##oo  MMM  U  ", \
-        "oM~MMM# ~+~~~      #o~ MMMMM    ", \
-        "MMMMM##  +~oo  f  ~M~~~MM~M    o", \
-        "MMMMM~~  +  o     MMMMMMM~~~  oo", \
-        "MMMMM~~M G   M M  MMMMM~~M~M  oM"
-    db FOE | PELICAN, $40 | $02, $03
-    db FOE | MUNKS, $40 | $02, $03
-    db FOE | DILLO, $40 | $02, $03
-    db FOE | MONSTER, $40 | $02, $03
-    db FOE | MONSTER, $40 | $02, $03
-    db FOE | NASHORN, $40 | $02, $03
-    db FOE | LYNX, $40 | $02, $03
-    db OWN | GRIZZLY, $20 | $1b, $01
-    db OWN | BISON, $20 | $1b, $01
-    db OWN | LENET, $20 | $1b, $01
-    db OWN | LENET, $20 | $1b, $01
-    db OWN | NASHORN, $20 | $1b, $01
-    db OWN | PELICAN, $20 | $1b, $01
-    db OWN | YAMA, $20 | $1b, $01
-    db OWN | PELICAN, $00 | $19, $03
-    db OWN | MUNKS, $00 | $1c, $03
-    db OWN | DRAPER, $00 | $1d, $06
-    db OWN | SEEKER, $00 | $1b, $02
-    db OWN | SEEKER, $00 | $1a, $02
-    db OWN | RABBIT, $00 | $1d, $02
-    db OWN | LYNX, $00 | $1a, $01
-    db OWN | FALCO, $00 | $18, $01
-    db OWN | JAVI, $00 | $17, $03
-    db FOE | HAWKEYE, $00 | $00, $04
-    db FOE | SEEKER, $00 | $02, $04
-    db FOE | HUNTER, $00 | $06, $03
-    db FOE | HUNTER, $00 | $05, $03
-    db FOE | SLAGGER, $00 | $02, $02
-    db FOE | DRAPER, $00 | $03, $01
-    db FOE | RABBIT, $60 | $0b, $04
-    db FOE | RABBIT, $60 | $0b, $04
-    db FOE | SLAGGER, $60 | $0b, $04
-    db FOE | SLAGGER, $60 | $0b, $04
-    db OWN | GRIZZLY, $80 | $0f, $08
-    db OWN | BISON, $00 | $1a, $03
-    db FOE | RABBIT, $00 | $05, $02
-    db FOE | HUNTER, $40 | $02, $03
-    db FOE | HUNTER, $40 | $02, $03
-    db FOE | SEEKER, $00 | $03, $05
-    db FOE | SLAGGER, $00 | $03, $03
-    db FOE | MONSTER, $00 | $01, $03
-    db OWN | BISON, $80 | $0f, $08
-    db OWN | HAWKEYE, $80 | $0f, $08
-    db OWN | SEEKER, $80 | $0f, $08
-    db FOE | HUNTER, $40 | $02, $03
-    db FOE | PELICAN, $40 | $02, $03
-    db FOE | YAMA, $40 | $02, $03
-    db FOE | DARBEK, $00 | $09, $00
-    db OWN | JAVI, $80 | $0f, $08
-    db OWN | FALCO, $80 | $0f, $08
-    db FOE | BISON, $60 | $0b, $04
-    db FOE | MULE, $60 | $0b, $04
-    db FOE | RHINO, $60 | $0b, $04
-    db FOE | HUNTER, $60 | $0b, $04
-    db FOE | HUNTER, $60 | $0b, $04
     db $ff
