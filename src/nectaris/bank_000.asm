@@ -4157,17 +4157,17 @@ Call_000_1a2a:
     ld de, $8800
     ld bc, $00a0
     call Call_000_0a36
-    ld a, BANK(Units)
+    ld a, BANK(UnitsUnion)
     call SetROMBank
     ld a, [$db03]
     cp $00
     jr z, jr_000_1a52
 
-    ld hl, Units + $600
+    ld hl, UnitsUnion
     jr jr_000_1a55
 
 jr_000_1a52:
-    ld hl, Units
+    ld hl, UnitsGuicy
 
 jr_000_1a55:
     ld de, $9200
@@ -8142,9 +8142,9 @@ Call_000_368a:
     ld [$d79e], a
     call Call_000_09df
     call Call_000_0927
-    ld a, BANK(Font6)
+    ld a, BANK(WeaponDataTiles)
     call SetROMBank
-    ld hl, Font6
+    ld hl, WeaponDataTiles
     ld de, $8800
     ld bc, $0000
     call Call_000_0a36
@@ -8644,7 +8644,7 @@ Call_000_3aac:
     push af
     push bc
     push de
-    ld a, BANK(Font5)
+    ld a, BANK(UnitNameTiles)
     call SetROMBank
     ld a, [hl]
     and $1f
@@ -8662,7 +8662,7 @@ Call_000_3aac:
     rl d
     sla e
     rl d
-    ld hl, Font5 + $400
+    ld hl, UnitNameTiles
 
 Jump_000_3ad3:
     ld a, d
@@ -8693,7 +8693,7 @@ Call_000_3ad9:
 
 Call_000_3aee:
     push de
-    ld a, BANK(Units)
+    ld a, BANK(UnitsUnion)
     call SetROMBank
     ld a, [$d86f]
     ld b, a
@@ -8712,7 +8712,7 @@ Call_000_3aee:
     rl d
     sla e
     rl d
-    ld hl, Units
+    ld hl, UnitsGuicy
     ld a, d
     add h
     ld h, a
@@ -8988,9 +8988,9 @@ Call_000_3c96::
     call Call_000_0d07
     call Call_000_0927
     call Call_000_085d
-    ld a, BANK(Messages)
+    ld a, BANK(MessageTurn)
     call SetROMBank
-    ld hl, Messages
+    ld hl, MessageTurn
     ld de, $8000
     ld b, $28
     call Call_000_0a36
@@ -9045,32 +9045,32 @@ jr_000_3cf4:
     ld [$d86c], a
     call Call_000_0927
     call Call_000_085d
-    ld a, BANK(Messages)
+    ld a, BANK(MessageTurn)
     call SetROMBank
     ld a, [$d7a8]
     cp $0a
     jr nz, jr_000_3d47
 
     ld a, [$d7a4]
-    ld hl, Messages + $280
+    ld hl, MessagePlayer1
     cp $00
     jr nz, jr_000_3d5e
 
-    ld hl, Messages + $500
+    ld hl, MessageComputer
     jr jr_000_3d5e
 
 jr_000_3d47:
     ld a, [$d7a4]
-    ld hl, Messages + $280
+    ld hl, MessagePlayer1
     cp $00
     jr z, jr_000_3d5e
 
-    ld hl, Messages + $500
+    ld hl, MessageComputer
     ld a, [$d7a8]
     cp $14
     jr nz, jr_000_3d5e
 
-    ld hl, Messages + $3c0
+    ld hl, MessagePlayer2
 
 jr_000_3d5e:
     ld de, $8000
@@ -9227,14 +9227,14 @@ Call_000_3e3f:
     call Call_000_14b0
     call Call_000_0927
     call Call_000_085d
-    ld a, BANK(Messages)
+    ld a, BANK(MessageTurn)
     call SetROMBank
-    ld hl, Messages + $280
+    ld hl, MessagePlayer1
     ld a, [$d7a8]
     cp $0a
     jr nz, jr_000_3e68
 
-    ld hl, Messages + $500
+    ld hl, MessageComputer
 
 jr_000_3e68:
     ld de, $8000

@@ -12,8 +12,10 @@ INCLUDE "trap.inc"
 
 SECTION "ROM Bank $003", ROMX
 
-Units::
-    INCBIN "gfx/nectaris/units.2bpp"
+UnitsGuicy::
+    INCBIN "gfx/nectaris/units-guicy.2bpp"
+UnitsUnion::
+    INCBIN "gfx/nectaris/units-union.2bpp"
 
 BattleTileMap1::
     INCBIN "gfx/nectaris/battle.map", 40, 100
@@ -38,8 +40,16 @@ BattleTileData::
     ds 16, $ff  ; tile $25 must be blanked out
     INCBIN "gfx/nectaris/battle.2bpp", 2656, 96
 
-Messages::
-    INCBIN "gfx/nectaris/messages.2bpp"
+MessageTurn::
+    INCBIN "gfx/nectaris/message-turn.2bpp"
+MessageChange::
+    INCBIN "gfx/nectaris/message-change.2bpp"
+MessagePlayer1::
+    INCBIN "gfx/nectaris/message-player1.2bpp"
+MessagePlayer2::
+    INCBIN "gfx/nectaris/message-player2.2bpp"
+MessageComputer::
+    INCBIN "gfx/nectaris/message-computer.2bpp"
 
 ScreenTitleData:
 .map::
@@ -53,5 +63,5 @@ TileMapWeaponDataUnused::
     INCBIN "gfx/nectaris/weapondata.map", 20, 120
 TileMapWeaponData::
     INCBIN "gfx/nectaris/weapondata.map", 140
-Font6::
+WeaponDataTiles::
     INCBIN "gfx/nectaris/weapondata.2bpp"

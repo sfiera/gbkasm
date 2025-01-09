@@ -14,6 +14,7 @@ SECTION "ROM Bank $002", ROMX
 
 MapTiles::
     INCBIN "gfx/nectaris/maptiles.2bpp"
+
 Font1::
     INCBIN "gfx/nectaris/font1.2bpp"
 Font2::
@@ -22,5 +23,11 @@ Font3::
     INCBIN "gfx/nectaris/font3.2bpp"
 Font4::
     INCBIN "gfx/nectaris/font4.2bpp"
-Font5::
-    INCBIN "gfx/nectaris/font5.2bpp"
+
+    INCBIN "gfx/nectaris/unused.2bpp"
+
+UnitNameTiles::
+    INCBIN "gfx/nectaris/unitnames.2bpp"
+
+    ds 160, $00
+    ds 16, $ff
