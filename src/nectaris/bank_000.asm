@@ -4882,11 +4882,11 @@ jr_000_1fd0:
     jr nz, jr_000_200a
 
     call Call_000_11a2
-    ld hl, Menu1
+    ld hl, WindowMainMenuKiss
     cp $00
     jr z, jr_000_1fe4
 
-    ld hl, Menu3
+    ld hl, WindowMainMenuKissQuickStart
 
 jr_000_1fe4:
     call RunMenu
@@ -4914,11 +4914,11 @@ jr_000_1fe4:
 
 jr_000_200a:
     call Call_000_11a2
-    ld hl, Menu2
+    ld hl, WindowMainMenu
     cp $00
     jr z, jr_000_2017
 
-    ld hl, Menu4
+    ld hl, WindowMainMenuQuickStart
 
 jr_000_2017:
     call RunMenu
@@ -4946,7 +4946,7 @@ Jump_000_2038:
     ld [$d8df], a
 
 jr_000_203d:
-    ld hl, Menu5
+    ld hl, WindowContinue
     call RunMenu
     cp $00
     jp nz, Jump_000_1fcb
@@ -5025,7 +5025,7 @@ Jump_000_20b4:
     ld [$d8df], a
 
 jr_000_20b9:
-    ld hl, Menu6
+    ld hl, WindowNewGame
     call RunMenu
     cp $00
     jp nz, Jump_000_1fcb
@@ -5075,7 +5075,7 @@ Jump_000_2103:
     ld [$d8df], a
 
 jr_000_2108:
-    ld hl, Menu10
+    ld hl, WindowCampaign
     call RunMenu
     cp $00
     jp nz, Jump_000_1fcb
@@ -5118,7 +5118,7 @@ Jump_000_2145:
     ld [$d8df], a
 
 Jump_000_214a:
-    ld hl, Menu8
+    ld hl, WindowConstruction
     call RunMenu
     cp $00
     jp nz, Jump_000_1fcb
@@ -5212,7 +5212,7 @@ Jump_000_21c2:
     inc a
     ld [$d86e], a
     ld hl, $d000
-    ld hl, Menu14
+    ld hl, WindowTransferToPC
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -5234,7 +5234,7 @@ jr_000_221f:
 Call_000_2222::
     ld a, $0a
     call Call_000_0d07
-    ld hl, Menu15
+    ld hl, WindowSending
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -5266,7 +5266,7 @@ Call_000_2222::
 
     ld a, $0a
     call Call_000_0d07
-    ld hl, Menu17
+    ld hl, WindowCommSuccess
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -5281,7 +5281,7 @@ Call_000_2222::
 
 
 jr_000_2287:
-    ld hl, Menu18
+    ld hl, WindowCommFailed
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -5317,7 +5317,7 @@ Jump_000_22c3::
     cp $00
     jp nz, Jump_000_23de
 
-    ld hl, Menu14
+    ld hl, WindowTransferToPC
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -5337,7 +5337,7 @@ jr_000_22f1:
     call Call_000_0927
     ld a, $0a
     call Call_000_0d07
-    ld hl, Menu16
+    ld hl, WindowReceiving
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -5432,7 +5432,7 @@ jr_000_236a:
     add $06
     ld hl, $d000
     call Call_000_1158
-    ld hl, Menu17
+    ld hl, WindowCommSuccess
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -5449,7 +5449,7 @@ jr_000_236a:
 jr_000_23b6:
     ld a, $0d
     call Call_000_0d07
-    ld hl, Menu18
+    ld hl, WindowCommFailed
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -5468,7 +5468,7 @@ Jump_000_23d9:
     ld [$d8df], a
 
 Jump_000_23de:
-    ld hl, Menu7
+    ld hl, WindowKiss
     call RunMenu
     cp $00
     jp nz, Jump_000_1fcb
@@ -5519,7 +5519,7 @@ Jump_000_2408:
     add $06
     ld hl, $d000
     call Call_000_1131
-    ld hl, Menu13
+    ld hl, WindowTransferToGB
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -5538,7 +5538,7 @@ Jump_000_2408:
 jr_000_2464:
     ld a, $0a
     call Call_000_0d07
-    ld hl, Menu15
+    ld hl, WindowSending
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -5555,7 +5555,7 @@ jr_000_2464:
 
     ld a, $0a
     call Call_000_0d07
-    ld hl, Menu17
+    ld hl, WindowCommSuccess
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -5570,7 +5570,7 @@ jr_000_2464:
 
 
 jr_000_24b0:
-    ld hl, Menu18
+    ld hl, WindowCommFailed
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -5604,7 +5604,7 @@ Jump_000_24ce:
     cp $00
     jp nz, Jump_000_23de
 
-    ld hl, Menu13
+    ld hl, WindowTransferToGB
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -5623,7 +5623,7 @@ Jump_000_24ce:
 jr_000_251a:
     ld a, $0a
     call Call_000_0d07
-    ld hl, Menu16
+    ld hl, WindowReceiving
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -5669,7 +5669,7 @@ jr_000_251a:
     add $06
     ld hl, $d000
     call Call_000_1158
-    ld hl, Menu17
+    ld hl, WindowCommSuccess
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -5687,7 +5687,7 @@ Jump_000_25a5:
 jr_000_25a5:
     ld a, $0d
     call Call_000_0d07
-    ld hl, Menu18
+    ld hl, WindowCommFailed
     ld a, l
     ld [$d8e0], a
     ld a, h
@@ -5714,7 +5714,7 @@ Jump_000_25d2:
 
 Jump_000_25d7:
 jr_000_25d7:
-    ld hl, Menu9
+    ld hl, WindowQuickStart
     call RunMenu
     cp $00
     jp nz, Jump_000_1fcb
@@ -6332,7 +6332,7 @@ Jump_000_2a75:
     ld [$d8df], a
 
 jr_000_2ab2:
-    ld hl, Menu12
+    ld hl, WindowInGameNoSave
     call RunMenu
     cp $00
     jp nz, Jump_000_2b43
@@ -6369,7 +6369,7 @@ jr_000_2af3:
     ld [$d8df], a
 
 jr_000_2afb:
-    ld hl, Menu11
+    ld hl, WindowInGame
     call RunMenu
     cp $00
     jp nz, Jump_000_2b43

@@ -17,7 +17,7 @@ Chars::
     db " 0123456789=####################ABCDEFGHIJKLMNOPQRSTUVWXYZ[]    "
     db " ｧｨｩｪｫｬｭｮｯｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝｰﾟﾞ_    "
 
-Menu1::
+WindowMainMenuKiss::
     db $01, $04, $12, $09
     db $05, $04, "MAIN MENU", $ff
     db $04, $06, " CONTINUE", $ff
@@ -26,7 +26,7 @@ Menu1::
     db $04, $0c, " GB KISS", $ff
     db $ff
 
-Menu2::
+WindowMainMenu::
     db $01, $05, $12, $07
     db $05, $05, "MAIN MENU", $ff
     db $04, $07, " CONTINUE", $ff
@@ -34,7 +34,7 @@ Menu2::
     db $04, $0b, " CONSTRUCTION", $ff
     db $ff
 
-Menu3::
+WindowMainMenuKissQuickStart::
     db $01, $03, $12, $0b
     db $05, $03, "MAIN MENU", $ff
     db $04, $05, " CONTINUE", $ff
@@ -44,7 +44,7 @@ Menu3::
     db $04, $0d, " QUICK START", $ff
     db $ff
 
-Menu4::
+WindowMainMenuQuickStart::
     db $01, $04, $12, $09
     db $05, $04, "MAIN MENU", $ff
     db $04, $06, " CONTINUE", $ff
@@ -53,14 +53,14 @@ Menu4::
     db $04, $0c, " QUICK START", $ff
     db $ff
 
-Menu5::
+WindowContinue::
     db $01, $05, $12, $05
     db $06, $05, "CONTINUE", $ff
     db $04, $07, " LOAD DATA", $ff
     db $04, $09, " PASSWORD", $ff
     db $ff
 
-Menu6::
+WindowNewGame::
     db $01, $05, $12, $07
     db $04, $05, "PLAY NEWGAME", $ff
     db $04, $07, " STORY MAP", $ff
@@ -68,7 +68,7 @@ Menu6::
     db $04, $0b, " CAMPAIGN MAP", $ff
     db $ff
 
-Menu7::
+WindowKiss::
     db $01, $02, $12, $0b
     db $05, $02, " GB KISS ", $ff
     db $04, $04, " ﾃﾞｰﾀｦｵｸﾙ", $ff
@@ -78,7 +78,7 @@ Menu7::
     db $04, $0c, " KISS MENU", $ff
     db $ff
 
-Menu8::
+WindowConstruction::
     db $01, $04, $12, $07
     db $04, $04, "CONSTRUCTION", $ff
     db $04, $06, " NEW EDIT MAP", $ff
@@ -86,7 +86,7 @@ Menu8::
     db $04, $0a, " PLAY EDIT MAP", $ff
     db $ff
 
-Menu9::
+WindowQuickStart::
     db $01, $05, $12, $07
     db $04, $05, "QUICK START", $ff
     db $04, $07, " 1PLAY MODE", $ff
@@ -94,14 +94,14 @@ Menu9::
     db $04, $0b, " GUICY MODE", $ff
     db $ff
 
-Menu10::
+WindowCampaign::
     db $01, $05, $12, $05
     db $06, $05, "CAMPAIGN", $ff
     db $04, $07, " WINNERS", $ff
     db $04, $09, " SPWINNERS", $ff
     db $ff
 
-Menu11::
+WindowInGame::
     db $01, $03, $12, $07
     db $04, $03, $ff
     db $04, $05, " DATA SAVE", $ff
@@ -109,14 +109,14 @@ Menu11::
     db $04, $09, " RETURN GAME", $ff
     db $ff
 
-Menu12::
+WindowInGameNoSave::
     db $01, $05, $12, $05
     db $04, $03, $ff
     db $04, $07, " GIVE UP", $ff
     db $04, $09, " RETURN GAME", $ff
     db $ff
 
-Menu13::
+WindowTransferToGB::
     db $01, $05, $12, $07
     db $02, $03, " ﾂｳｼﾝｼﾞｭﾝﾋﾞﾁｭｳ ", $ff
     db $02, $07, " ｹﾞｰﾑﾎﾞｰｲﾄﾞｳｼｦ", $ff
@@ -124,7 +124,7 @@ Menu13::
     db $02, $0b, " ｵｼﾃｸﾀﾞｻｲ", $ff
     db $ff
 
-Menu14::
+WindowTransferToPC::
     db $01, $05, $12, $07
     db $02, $03, " ﾂｳｼﾝｼﾞｭﾝﾋﾞﾁｭｳ ", $ff
     db $02, $07, " GB KISS LINKﾆ", $ff
@@ -132,27 +132,27 @@ Menu14::
     db $02, $0b, " Aﾎﾞﾀﾝｦｵｼﾃｸﾀﾞｻｲ", $ff
     db $ff
 
-Menu15::
+WindowSending::
     db $01, $06, $12, $05
     db $02, $04, " ﾃﾞｰﾀｦ ｵｸｯﾃｲﾏｽ ", $ff
     db $02, $08, "ﾁｭｳｼｽﾙﾊﾞｱｲﾊ", $ff
     db $02, $0a, "Bﾎﾞﾀﾝｦ ｵｼﾃｸﾀﾞｻｲ", $ff
     db $ff
 
-Menu16::
+WindowReceiving::
     db $01, $06, $12, $05
     db $02, $04, " ﾃﾞｰﾀｦ ｳｹﾄｯﾃｲﾏｽ ", $ff
     db $02, $08, "ﾁｭｳｼｽﾙﾊﾞｱｲﾊ", $ff
     db $02, $0a, "Bﾎﾞﾀﾝｦ ｵｼﾃｸﾀﾞｻｲ", $ff
     db $ff
 
-Menu17::
+WindowCommSuccess::
     db $01, $06, $12, $03
     db $02, $06, $ff
     db $03, $08, "ﾂｳｼﾝｶﾞ ｵﾜﾘﾏｼﾀ", $ff
     db $ff
 
-Menu18::
+WindowCommFailed::
     db $00, $05, $14, $05
     db $02, $05, $ff
     db $01, $07, "ﾂｳｼﾝｦ ｼｯﾊﾟｲ ｼﾏｼﾀ", $ff
@@ -1502,7 +1502,7 @@ Call_007_4d17:
     ret
 
 
-Menu19::
+WindowPassword::
     db $01, $05, $12, $05
     db $03, $05, "INPUT PASSWORD", $ff
     db $02, $08, "PASS_WORD ______", $ff
@@ -1517,7 +1517,7 @@ Call_007_4d81::
     call Call_000_0d4b
     ld a, $04
     call Call_000_0cbf
-    ld hl, Menu19
+    ld hl, WindowPassword
     ld a, l
     ld [$d8e0], a
     ld a, h
