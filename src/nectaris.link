@@ -1,54 +1,59 @@
 ROM0
+    "ROM Bank $000"
 
 ROMX $01
+    "ROM Bank $001"
 
 ROMX $02
+    "ROM Bank $002"
 
 ROMX $03
+    "ROM Bank $003"
 
 ROMX $04
+    "ROM Bank $004"
 
 ROMX $05
+    "ROM Bank $005"
 
 ROMX $06
+    "ROM Bank $006"
 
 ROMX $07
+    "ROM Bank $007"
 
 ROMX $08
+    "ROM Bank $008"
 
 ROMX $09
+    "ROM Bank $009"
 
 ROMX $0a
+    "ROM Bank $00a"
 
 ROMX $0b
+    "ROM Bank $00b"
 
 ROMX $0c
+    "ROM Bank $00c"
 
 ROMX $0d
+    "ROM Bank $00d"
 
 ROMX $0e
+    "ROM Bank $00e"
 
 ROMX $0f
+    "ROM Bank $00f"
 
 ROMX $10
+    "ROM Bank $010"
 
 ROMX $11
+    "ROM Bank $011"
 
 ROMX $12
-
-ROMX $13
-
-ROMX $14
-
-ROMX $15
-
-ROMX $16
-
-ROMX $17
-
-ROMX $18
-
-ROMX $19
+    "ROM Bank $012"
 
 ROMX $1a
     org $4000
@@ -63,12 +68,13 @@ ROMX $1b
     "Kiss System 4"
 
 ROMX $1c
+    "ROM Bank $01c"
 
 ROMX $1d
-
-ROMX $1e
+    "ROM Bank $01d"
 
 ROMX $1f
+    "ROM Bank $01f"
 
 WRAM0
     org $c3c8

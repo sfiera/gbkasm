@@ -10,7 +10,7 @@ INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
-SECTION "ROM Bank $012", ROMX[$4000], BANK[$12]
+SECTION "ROM Bank $012", ROMX
 
 Font8::
     INCBIN "gfx/nectaris/font8.2bpp"

@@ -10,7 +10,7 @@ INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
-SECTION "ROM Bank $010", ROMX[$4000], BANK[$10]
+SECTION "ROM Bank $010", ROMX
 
 ScreenPrologue2Data:
 .map::

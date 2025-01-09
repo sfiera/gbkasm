@@ -10,4 +10,4 @@ INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
-SECTION "ROM Bank $01f", ROMX[$4000], BANK[$1f]
+SECTION "ROM Bank $01f", ROMX

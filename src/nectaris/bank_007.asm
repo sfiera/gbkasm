@@ -11,7 +11,7 @@ INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 INCLUDE "nectaris/text.inc"
 
-SECTION "ROM Bank $007", ROMX[$4000], BANK[$7]
+SECTION "ROM Bank $007", ROMX
 
 Chars::
     db " 0123456789=####################ABCDEFGHIJKLMNOPQRSTUVWXYZ[]    "

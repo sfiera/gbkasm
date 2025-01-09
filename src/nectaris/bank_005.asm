@@ -24,7 +24,7 @@ MACRO screen
     laddr \1.tiles
 ENDM
 
-SECTION "ROM Bank $005", ROMX[$4000], BANK[$5]
+SECTION "ROM Bank $005", ROMX
 
 ScreenTitle::
     screen ScreenTitleData

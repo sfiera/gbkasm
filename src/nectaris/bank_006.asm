@@ -12,7 +12,7 @@ INCLUDE "trap.inc"
 INCLUDE "nectaris/map.inc"
 INCLUDE "nectaris/units.inc"
 
-SECTION "ROM Bank $006", ROMX[$4000], BANK[$6]
+SECTION "ROM Bank $006", ROMX
 
 MapB01Revolt::
     map "MMMMMM~#MMM~~MM ", \

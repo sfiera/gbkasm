@@ -11,7 +11,7 @@ INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 INCLUDE "nectaris/units.inc"
 
-SECTION "ROM Bank $001", ROMX[$4000], BANK[$1]
+SECTION "ROM Bank $001", ROMX
 
 Call_001_4000::
     call Call_001_5616

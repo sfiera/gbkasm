@@ -12,7 +12,7 @@ INCLUDE "trap.inc"
 INCLUDE "nectaris/text.inc"
 INCLUDE "nectaris/units.inc"
 
-SECTION "ROM Bank $000", ROM0[$0]
+SECTION "ROM Bank $000", ROM0
 
 trap_0f_0000::
     jp Jump_000_07e5

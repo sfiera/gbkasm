@@ -37,7 +37,7 @@ DEF MASK_EN  EQU $17
 DEF OBJ_TRN  EQU $18
 DEF PAL_PRI  EQU $19
 
-SECTION "ROM Bank $00e", ROMX[$4000], BANK[$e]
+SECTION "ROM Bank $00e", ROMX
 
 Call_00e_4000::
     ld a, $00

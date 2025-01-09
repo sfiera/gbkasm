@@ -11,7 +11,7 @@ INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 INCLUDE "nectaris/text.inc"
 
-SECTION "ROM Bank $00f", ROMX[$4000], BANK[$f]
+SECTION "ROM Bank $00f", ROMX
 
 Call_00f_4000::
     ld a, $00
