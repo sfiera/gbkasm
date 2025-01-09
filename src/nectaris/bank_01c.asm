@@ -4005,7 +4005,7 @@ jr_01c_5277:
     ld bc, $c0e5
     and $a7
     add sp, $08
-    jp nc, Jump_000_04df
+    jp nc, $04df
 
     and $a7
     pop bc
@@ -4065,7 +4065,7 @@ jr_01c_5551:
     ld bc, $c0e5
     and $a7
     add sp, $08
-    jp nc, Jump_000_04df
+    jp nc, $04df
 
     and $a7
     pop bc
@@ -10364,7 +10364,7 @@ jr_01c_7712:
     ld bc, $00e5
     rst $18
     ld [bc], a
-    call nc, Call_000_04df
+    call nc, $04df
     and $a7
     ld hl, $30e6
     ld hl, $e6e0
@@ -10761,7 +10761,7 @@ jr_01c_790e:
     add sp, $08
     rst $18
     ld [bc], a
-    call nc, Call_000_04df
+    call nc, $04df
     and $d3
     ld hl, $e6d8
     ld d, h
@@ -10774,7 +10774,7 @@ jr_01c_790e:
     or c
     pushx @ + $20e6
     ld hl, $b1d8
-    call nc, Call_000_03df
+    call nc, $03df
     and $d3
     ld hl, $e6d8
     ld d, h

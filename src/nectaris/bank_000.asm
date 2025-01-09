@@ -10,6 +10,68 @@ INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
+CHARMAP "｡", $a1
+CHARMAP "､", $a4
+CHARMAP "･", $a5
+CHARMAP "ｦ", $a6
+CHARMAP "ｧ", $a7
+CHARMAP "ｨ", $a8
+CHARMAP "ｩ", $a9
+CHARMAP "ｪ", $aa
+CHARMAP "ｫ", $ab
+CHARMAP "ｬ", $ac
+CHARMAP "ｭ", $ad
+CHARMAP "ｮ", $ae
+CHARMAP "ｯ", $af
+CHARMAP "ｰ", $b0
+CHARMAP "ｱ", $b1
+CHARMAP "ｲ", $b2
+CHARMAP "ｳ", $b3
+CHARMAP "ｴ", $b4
+CHARMAP "ｵ", $b5
+CHARMAP "ｶ", $b6
+CHARMAP "ｷ", $b7
+CHARMAP "ｸ", $b8
+CHARMAP "ｹ", $b9
+CHARMAP "ｺ", $ba
+CHARMAP "ｻ", $bb
+CHARMAP "ｼ", $bc
+CHARMAP "ｽ", $bd
+CHARMAP "ｾ", $be
+CHARMAP "ｿ", $bf
+CHARMAP "ﾀ", $c0
+CHARMAP "ﾁ", $c1
+CHARMAP "ﾂ", $c2
+CHARMAP "ﾃ", $c3
+CHARMAP "ﾄ", $c4
+CHARMAP "ﾅ", $c5
+CHARMAP "ﾆ", $c6
+CHARMAP "ﾇ", $c7
+CHARMAP "ﾈ", $c8
+CHARMAP "ﾉ", $c9
+CHARMAP "ﾊ", $ca
+CHARMAP "ﾋ", $cb
+CHARMAP "ﾌ", $cc
+CHARMAP "ﾍ", $cd
+CHARMAP "ﾎ", $ce
+CHARMAP "ﾏ", $cf
+CHARMAP "ﾐ", $d0
+CHARMAP "ﾑ", $d1
+CHARMAP "ﾒ", $d2
+CHARMAP "ﾓ", $d3
+CHARMAP "ﾔ", $d4
+CHARMAP "ﾕ", $d5
+CHARMAP "ﾖ", $d6
+CHARMAP "ﾗ", $d7
+CHARMAP "ﾘ", $d8
+CHARMAP "ﾙ", $d9
+CHARMAP "ﾚ", $da
+CHARMAP "ﾛ", $db
+CHARMAP "ﾜ", $dc
+CHARMAP "ﾝ", $dd
+CHARMAP "ﾞ", $de
+CHARMAP "ﾟ", $df
+
 SECTION "ROM Bank $000", ROM0[$0]
 
 trap_0f_0000::
@@ -790,588 +852,51 @@ Jump_000_0320:
     jp Jump_000_1eb5
 
 
-    inc hl
-    inc hl
-    inc hl
-    inc hl
-    jr nc, jr_000_035a
+data_000_0323:
+    db "####0123456789%*################ "
+    db $a7, $a8, $a9, $aa, $ab, $ac, $ad, $ae, $af, $b1, $b2, $b3
+    db $b4, $b5, $b6, $b7, $b8, $b9, $ba, $bb, $bc, $bd, $be, $bf, $c0, $c1, $c2, $c3
+    db $c4, $c5, $c6, $c7, $c8, $c9, $ca, $cb, $cc, $cd, $ce, $cf, $d0, $d1, $d2, $d3
+    db $d4, $d5, $d6, $d7, $d8, $d9, $da, $db, $dc, $a6, $dd, $2d, $df, $de
+    db "    "
+    db " ABCDEFGHIJKLMNOPQRSTUVWXYZ      "
+
+data_000_03a3:
+    db $01, $01, $02, $01, $01, $01, $01, $01, $02, $02, $04, $01, $03, $03, $fe, $02
+    db $fe, $fe, $fe, $7f, $fe, $fe, $fe, $02, $01, $01, $01, $01, $fe, $fe, $fe, $fe
+    db $01, $01, $01, $01, $fe, $fe, $fe, $fe, $01, $01, $01, $01, $01, $01, $01, $01
+    db $01, $01, $01, $01, $01, $01, $01, $01, $fe, $fe, $fe, $fe, $fe, $fe, $fe, $fe
+
+data_000_03e3:
+    db $05, $00, $14, $1e, $00, $28, $00, $00, $23, $00, $23, $00, $00, $00, $00, $00
+
+data_000_03f3:
+    ;                                -AIR-  -GND-
+    ;  NAME            MOVE KIND DEF PWR R  PWR R  FLAG
+    db "M-77 ﾔﾏｱﾗｼ  ", 0,   0,   80, 0,  1, 0,  1, %10010000
+    db "FX-1 ﾌｧﾙｺ   ", 12,  4,   30, 90, 1, 0,  1, %01010010
+    db "AX-87ｼﾞｬﾋﾞｲ ", 10,  4,   30, 20, 1, 70, 1, %01010001
+    db "EF-88ﾊﾝﾀ-   ", 11,  4,   50, 70, 1, 70, 1, %01010011
+    db "T-79 ｸﾞﾘｽﾞﾘ-", 4,   0,   50, 0,  1, 70, 1, %00010001
+    db "PT-6 ｱﾙﾏｼﾞﾛ ", 4,   0,   60, 0,  1, 60, 1, %00010001
+    db "S-61 ﾊﾞｲｿﾝ  ", 6,   0,   40, 0,  1, 50, 1, %00010001
+    db "GS-81ｽﾗｯｶﾞ- ", 7,   0,   50, 0,  1, 50, 1, %00010001
+    db "GT-86ﾓﾝｽﾀ-  ", 5,   0,   50, 0,  1, 60, 1, %00010001
+    db "HMB-2ｷﾞｶﾞﾝﾄ ", 2,   0,   80, 40, 1, 90, 1, %00010001
+    db "TT-1 ﾚﾈｯﾄ   ", 5,   0,   30, 0,  1, 45, 1, %00010001
+    db "SG-4 ﾅｽﾎﾙﾝ  ", 4,   0,   30, 0,  1, 45, 5, %00011001
+    db "MR-22ｴｽﾄ-ﾙ  ", 4,   0,   30, 0,  1, 60, 4, %00011001
+    db "MB-5 ﾗﾋﾞｯﾄ  ", 8,   1,   20, 10, 1, 70, 1, %00010101
+    db "MB-4 ﾘﾝｸｽ   ", 6,   1,   20, 10, 1, 40, 2, %00011101
+    db "AAG-4ｼ-ｶ-   ", 6,   0,   30, 65, 1, 30, 1, %00010011
+    db "MM107ﾎ-ｸｱｲ  ", 5,   0,   30, 85, 5, 0,  1, %00011010
+    db "SS-80ﾓﾉｹﾛｽ  ", 0,   0,   20, 0,  1, 90, 6, %10011001
+    db "GX-77ﾑﾝｸｽ   ", 3,   3,   4,  10, 1, 10, 1, %10000001
+    db "GX-87ﾀﾞ-ﾍﾞｯｸ", 2,   3,   10, 10, 1, 40, 1, %10000001
+    db "CBX-1ﾄﾞﾚｲﾊﾟ-", 9,   2,   8,  10, 1, 10, 1, %10000000
+    db "NC-1 ﾐｭ-ﾙ   ", 6,   2,   10, 10, 1, 10, 1, %00100000
+    db "C-61 ﾍﾟﾘｶﾝ  ", 9,   4,   10, 0,  1, 0,  1, %01100001
 
-    ld [hl-], a
-    inc sp
-    inc [hl]
-    dec [hl]
-    ld [hl], $37
-    jr c, @+$3b
-
-    dec h
-    ld a, [hl+]
-    inc hl
-    inc hl
-    inc hl
-    inc hl
-    inc hl
-    inc hl
-    inc hl
-    inc hl
-    inc hl
-    inc hl
-    inc hl
-    inc hl
-    inc hl
-    inc hl
-    inc hl
-    inc hl
-    jr nz, jr_000_02ec
-
-    xor b
-    xor c
-    xor d
-    xor e
-    xor h
-    xor l
-    xor [hl]
-    xor a
-    or c
-    or d
-    or e
-    or h
-    or l
-    or [hl]
-    or a
-    cp b
-    cp c
-    cp d
-    cp e
-    cp h
-    cp l
-
-jr_000_035a:
-    cp [hl]
-    cp a
-    ret nz
-
-    pop bc
-    jp nz, $c4c3
-
-    push bc
-    add $c7
-    ret z
-
-    ret
-
-
-    jp z, $cccb
-
-    call $cfce
-    ret nc
-
-    pop de
-    jp nc, $d4d3
-
-    push de
-    sub $d7
-    ret c
-
-    reti
-
-
-    jp c, $dcdb
-
-    and [hl]
-    db $dd
-    dec l
-    rst $18
-    sbc $20
-    jr nz, jr_000_03a1
-
-    jr nz, jr_000_03a3
-
-    ld b, c
-    ld b, d
-    ld b, e
-    ld b, h
-    ld b, l
-    ld b, [hl]
-    ld b, a
-    ld c, b
-    ld c, c
-    ld c, d
-    ld c, e
-    ld c, h
-    ld c, l
-    ld c, [hl]
-    ld c, a
-    ld d, b
-    ld d, c
-    ld d, d
-    ld d, e
-    ld d, h
-    ld d, l
-    ld d, [hl]
-    ld d, a
-    ld e, b
-    ld e, c
-    ld e, d
-    jr nz, @+$22
-
-    jr nz, jr_000_03c1
-
-jr_000_03a1:
-    jr nz, jr_000_03c3
-
-jr_000_03a3:
-    ld bc, $0201
-    ld bc, $0101
-    ld bc, $0201
-    ld [bc], a
-    inc b
-    ld bc, $0303
-    cp $02
-    cp $fe
-    cp $7f
-    cp $fe
-    cp $02
-    ld bc, $0101
-    ld bc, $fefe
-
-jr_000_03c1:
-    cp $fe
-
-jr_000_03c3:
-    ld bc, $0101
-    ld bc, $fefe
-    cp $fe
-    ld bc, $0101
-    ld bc, $0101
-    ld bc, $0101
-    ld bc, $0101
-    ld bc, $0101
-    ld bc, $fefe
-    cp $fe
-
-Call_000_03df::
-    cp $fe
-    cp $fe
-    dec b
-    nop
-    inc d
-    ld e, $00
-    jr z, jr_000_03ea
-
-jr_000_03ea:
-    nop
-    inc hl
-    nop
-    inc hl
-    nop
-    nop
-    nop
-    nop
-    nop
-    ld c, l
-    dec l
-    scf
-    scf
-    jr nz, @-$2a
-
-    trap AwaitFrame
-    pushx @ + $20bc
-    jr nz, jr_000_0400
-
-jr_000_0400:
-    nop
-
-jr_000_0401:
-    ld d, b
-    nop
-    ld bc, $0100
-    sub b
-    ld b, [hl]
-    ld e, b
-    dec l
-    ld sp, $cc20
-    and a
-    reti
-
-
-    cp d
-    jr nz, jr_000_0432
-
-    jr nz, jr_000_0420
-
-    inc b
-    ld e, $5a
-    ld bc, $0100
-    ld d, d
-    ld b, c
-    ld e, b
-    dec l
-    jr c, @+$39
-
-jr_000_0420:
-    cp h
-    sbc $ac
-    set 3, [hl]
-    or d
-    jr nz, jr_000_0432
-
-    inc b
-    ld e, $14
-    ld bc, HeaderSGBFlag
-    ld d, c
-    ld b, l
-    ld b, [hl]
-    dec l
-
-jr_000_0432:
-    jr c, @+$3a
-
-    jp z, $c0dd
-
-    dec l
-    jr nz, jr_000_045a
-
-    jr nz, jr_000_0447
-
-    inc b
-    ld [hl-], a
-    ld b, [hl]
-    ld bc, HeaderSGBFlag
-    ld d, e
-    ld d, h
-    dec l
-    scf
-    add hl, sp
-
-jr_000_0447:
-    jr nz, jr_000_0401
-
-    sbc $d8
-    cp l
-    sbc $d8
-    dec l
-    inc b
-    nop
-    ld [hl-], a
-    nop
-    ld bc, HeaderSGBFlag
-    ld de, $5450
-    dec l
-
-jr_000_045a:
-    ld [hl], $20
-    or c
-    reti
-
-
-    trap $bc
-    sbc $db
-
-Jump_000_0462:
-    jr nz, @+$06
-
-    nop
-    inc a
-    nop
-    ld bc, $013c
-    ld de, $2d53
-    ld [hl], $31
-    jr nz, @-$34
-
-    sbc $b2
-    cp a
-    db $dd
-    jr nz, @+$22
-
-    ld b, $00
-    jr z, jr_000_047b
-
-jr_000_047b:
-    ld bc, $0132
-    ld de, $5347
-    dec l
-    jr c, jr_000_04b5
-
-    cp l
-    pushx @ + $b6af
-    sbc $2d
-    jr nz, @+$09
-
-    nop
-    ld [hl-], a
-    nop
-    ld bc, $0132
-    ld de, $5447
-    dec l
-    jr c, jr_000_04ce
-
-    db $d3
-    db $dd
-
-jr_000_049a:
-    cp l
-    ret nz
-
-    dec l
-    jr nz, @+$22
-
-    dec b
-    nop
-    ld [hl-], a
-    nop
-    ld bc, $013c
-    ld de, $4d48
-    ld b, d
-    dec l
-    ld [hl-], a
-    or a
-    sbc $b6
-    sbc $dd
-    call nz, Call_000_0220
-    nop
-
-jr_000_04b5:
-    ld d, b
-    jr z, jr_000_04b9
-
-    ld e, d
-
-jr_000_04b9:
-    ld bc, $5411
-    ld d, h
-    dec l
-    ld sp, $da20
-    ret z
-
-    xor a
-    call nz, $2020
-    jr nz, @+$07
-
-    nop
-    ld e, $00
-    ld bc, $012d
-
-jr_000_04ce:
-    ld de, $4753
-    dec l
-    inc [hl]
-    jr nz, jr_000_049a
-
-    cp l
-    adc $d9
-    db $dd
-    jr nz, jr_000_04fb
-
-    inc b
-    nop
-    ld e, $00
-
-Call_000_04df::
-Jump_000_04df::
-    ld bc, $052d
-    add hl, de
-    ld c, l
-    ld d, d
-    dec l
-    ld [hl-], a
-    ld [hl-], a
-    or h
-
-jr_000_04e9:
-    cp l
-    call nz, $d92d
-    jr nz, jr_000_050f
-
-    inc b
-    nop
-    ld e, $00
-    ld bc, $043c
-    add hl, de
-    ld c, l
-    ld b, d
-    dec l
-    dec [hl]
-
-jr_000_04fb:
-    jr nz, @-$27
-
-    set 3, [hl]
-    xor a
-    call nz, $2020
-    ld [$1401], sp
-    ld a, [bc]
-    ld bc, HeaderSGBFlag
-    dec d
-    ld c, l
-    ld b, d
-    dec l
-    inc [hl]
-
-jr_000_050f:
-    jr nz, jr_000_04e9
-
-    db $dd
-    cp b
-    cp l
-    jr nz, @+$22
-
-    jr nz, jr_000_051e
-
-    ld bc, $0a14
-    ld bc, $0228
-
-jr_000_051e:
-    dec e
-    ld b, c
-    ld b, c
-    ld b, a
-    dec l
-    inc [hl]
-    cp h
-    dec l
-    or [hl]
-    dec l
-    jr nz, jr_000_054a
-
-    jr nz, jr_000_0532
-
-    nop
-    ld e, $41
-    ld bc, $011e
-
-jr_000_0532:
-    inc de
-    ld c, l
-    ld c, l
-    ld sp, $3730
-    adc $2d
-    cp b
-    or c
-    or d
-    jr nz, jr_000_055f
-
-    dec b
-    nop
-    ld e, $55
-    dec b
-    nop
-    ld bc, $531a
-    ld d, e
-    dec l
-
-jr_000_054a:
-    jr c, jr_000_057c
-
-    db $d3
-    ret
-
-
-    cp c
-    db $db
-    cp l
-    jr nz, @+$22
-
-    nop
-    nop
-    inc d
-    nop
-    ld bc, $065a
-    sbc c
-    ld b, a
-    ld e, b
-    dec l
-    scf
-
-jr_000_055f:
-    scf
-    pop de
-    db $dd
-    cp b
-    cp l
-    jr nz, jr_000_0586
-
-    jr nz, jr_000_056b
-
-    inc bc
-    inc b
-    ld a, [bc]
-
-jr_000_056b:
-    ld bc, $010a
-    add c
-    ld b, a
-    ld e, b
-    dec l
-    jr c, @+$39
-
-    ret nz
-
-    sbc $2d
-    call $afde
-    cp b
-    ld [bc], a
-
-jr_000_057c:
-    inc bc
-    ld a, [bc]
-
-jr_000_057e:
-    ld a, [bc]
-    ld bc, $0128
-    add c
-    ld b, e
-    ld b, d
-    ld e, b
-
-jr_000_0586:
-    dec l
-    ld sp, $dec4
-    jp c, $cab2
-
-    rst $18
-    dec l
-    add hl, bc
-    ld [bc], a
-    ld [$010a], sp
-    ld a, [bc]
-    ld bc, $4e80
-    ld b, e
-    dec l
-    ld sp, $d020
-    xor l
-    dec l
-    reti
-
-
-    jr nz, @+$22
-
-    jr nz, jr_000_05aa
-
-    ld [bc], a
-    ld a, [bc]
-    ld a, [bc]
-    ld bc, $010a
-
-jr_000_05aa:
-    jr nz, @+$45
-
-    dec l
-    ld [hl], $31
-    jr nz, jr_000_057e
-
-    rst $18
-    ret c
-
-    or [hl]
-    db $dd
-    jr nz, jr_000_05d7
-
-    add hl, bc
-    inc b
-    ld a, [bc]
-    nop
-    ld bc, $0100
-    ld h, c
 
 SetROMBank:
     di
@@ -2244,7 +1769,7 @@ Call_000_09b7::
     sla a
     sla a
     call Call_000_088f
-    ld bc, $03f3
+    ld bc, data_000_03f3
     ld a, l
     add c
     ld l, a
