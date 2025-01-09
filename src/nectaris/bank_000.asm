@@ -9,6 +9,7 @@ INCLUDE "consts.inc"
 INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
+INCLUDE "nectaris/units.inc"
 
 CHARMAP "｡", $a1
 CHARMAP "､", $a4
@@ -861,41 +862,69 @@ data_000_0323:
     db "    "
     db " ABCDEFGHIJKLMNOPQRSTUVWXYZ      "
 
-data_000_03a3:
-    db $01, $01, $02, $01, $01, $01, $01, $01, $02, $02, $04, $01, $03, $03, $fe, $02
-    db $fe, $fe, $fe, $7f, $fe, $fe, $fe, $02, $01, $01, $01, $01, $fe, $fe, $fe, $fe
-    db $01, $01, $01, $01, $fe, $fe, $fe, $fe, $01, $01, $01, $01, $01, $01, $01, $01
-    db $01, $01, $01, $01, $01, $01, $01, $01, $fe, $fe, $fe, $fe, $fe, $fe, $fe, $fe
+TerrainCost:
+    ;  TREAD BUGGY WHEEL BOOTS
+    db 1,    1,    2,    1         ; open
+    db 1,    1,    1,    1         ; road
+    db 2,    2,    4,    1         ; hill
+    db 3,    3,    X,    2         ; desert
+    db X,    X,    X,    END_MOVE  ; valley
+    db X,    X,    X,    2         ; mountain
+    db 1,    1,    1,    1         ; bridge
+    db X,    X,    X,    X
+    db 1,    1,    1,    1         ; own base
+    db X,    X,    X,    X
+    db 1,    1,    1,    1         ; foe base
+    db 1,    1,    1,    1         ; own factory
+    db 1,    1,    1,    1         ; factory
+    db 1,    1,    1,    1         ; foe factory
+    db X,    X,    X,    X
+    db X,    X,    X,    X
 
-data_000_03e3:
-    db $05, $00, $14, $1e, $00, $28, $00, $00, $23, $00, $23, $00, $00, $00, $00, $00
+TerrainDefense:
+    db 5   ; open
+    db 0   ; road
+    db 20  ; hill
+    db 30  ; desert
+    db 0   ; valley
+    db 40  ; mountain
+    db 0   ; bridge
+    db 0
+    db 35  ; own base
+    db 0
+    db 35  ; foe base
+    db 0   ; own factory
+    db 0   ; factory
+    db 0   ; foe factory
+    db 0
+    db 0
 
-data_000_03f3:
-    ;                                -AIR-  -GND-
-    ;  NAME            MOVE KIND DEF PWR R  PWR R  FLAG
-    db "M-77 ﾔﾏｱﾗｼ  ", 0,   0,   80, 0,  1, 0,  1, %10010000
-    db "FX-1 ﾌｧﾙｺ   ", 12,  4,   30, 90, 1, 0,  1, %01010010
-    db "AX-87ｼﾞｬﾋﾞｲ ", 10,  4,   30, 20, 1, 70, 1, %01010001
-    db "EF-88ﾊﾝﾀ-   ", 11,  4,   50, 70, 1, 70, 1, %01010011
-    db "T-79 ｸﾞﾘｽﾞﾘ-", 4,   0,   50, 0,  1, 70, 1, %00010001
-    db "PT-6 ｱﾙﾏｼﾞﾛ ", 4,   0,   60, 0,  1, 60, 1, %00010001
-    db "S-61 ﾊﾞｲｿﾝ  ", 6,   0,   40, 0,  1, 50, 1, %00010001
-    db "GS-81ｽﾗｯｶﾞ- ", 7,   0,   50, 0,  1, 50, 1, %00010001
-    db "GT-86ﾓﾝｽﾀ-  ", 5,   0,   50, 0,  1, 60, 1, %00010001
-    db "HMB-2ｷﾞｶﾞﾝﾄ ", 2,   0,   80, 40, 1, 90, 1, %00010001
-    db "TT-1 ﾚﾈｯﾄ   ", 5,   0,   30, 0,  1, 45, 1, %00010001
-    db "SG-4 ﾅｽﾎﾙﾝ  ", 4,   0,   30, 0,  1, 45, 5, %00011001
-    db "MR-22ｴｽﾄ-ﾙ  ", 4,   0,   30, 0,  1, 60, 4, %00011001
-    db "MB-5 ﾗﾋﾞｯﾄ  ", 8,   1,   20, 10, 1, 70, 1, %00010101
-    db "MB-4 ﾘﾝｸｽ   ", 6,   1,   20, 10, 1, 40, 2, %00011101
-    db "AAG-4ｼ-ｶ-   ", 6,   0,   30, 65, 1, 30, 1, %00010011
-    db "MM107ﾎ-ｸｱｲ  ", 5,   0,   30, 85, 5, 0,  1, %00011010
-    db "SS-80ﾓﾉｹﾛｽ  ", 0,   0,   20, 0,  1, 90, 6, %10011001
-    db "GX-77ﾑﾝｸｽ   ", 3,   3,   4,  10, 1, 10, 1, %10000001
-    db "GX-87ﾀﾞ-ﾍﾞｯｸ", 2,   3,   10, 10, 1, 40, 1, %10000001
-    db "CBX-1ﾄﾞﾚｲﾊﾟ-", 9,   2,   8,  10, 1, 10, 1, %10000000
-    db "NC-1 ﾐｭ-ﾙ   ", 6,   2,   10, 10, 1, 10, 1, %00100000
-    db "C-61 ﾍﾟﾘｶﾝ  ", 9,   4,   10, 0,  1, 0,  1, %01100001
+UnitStats:
+    ;  NAME----------  -----MOVE-----  DEF -AIR-  -GND-  --FLAGS--
+    ;                  N   KIND            PWR R  PWR R
+    db "M-77 ﾔﾏｱﾗｼ  ", 0,  MOVE_TREAD, 80, 0,  1, 0,  1, %10010000
+    db "FX-1 ﾌｧﾙｺ   ", 12, MOVE_WINGS, 30, 90, 1, 0,  1, %01010010
+    db "AX-87ｼﾞｬﾋﾞｲ ", 10, MOVE_WINGS, 30, 20, 1, 70, 1, %01010001
+    db "EF-88ﾊﾝﾀ-   ", 11, MOVE_WINGS, 50, 70, 1, 70, 1, %01010011
+    db "T-79 ｸﾞﾘｽﾞﾘ-", 4,  MOVE_TREAD, 50, 0,  1, 70, 1, %00010001
+    db "PT-6 ｱﾙﾏｼﾞﾛ ", 4,  MOVE_TREAD, 60, 0,  1, 60, 1, %00010001
+    db "S-61 ﾊﾞｲｿﾝ  ", 6,  MOVE_TREAD, 40, 0,  1, 50, 1, %00010001
+    db "GS-81ｽﾗｯｶﾞ- ", 7,  MOVE_TREAD, 50, 0,  1, 50, 1, %00010001
+    db "GT-86ﾓﾝｽﾀ-  ", 5,  MOVE_TREAD, 50, 0,  1, 60, 1, %00010001
+    db "HMB-2ｷﾞｶﾞﾝﾄ ", 2,  MOVE_TREAD, 80, 40, 1, 90, 1, %00010001
+    db "TT-1 ﾚﾈｯﾄ   ", 5,  MOVE_TREAD, 30, 0,  1, 45, 1, %00010001
+    db "SG-4 ﾅｽﾎﾙﾝ  ", 4,  MOVE_TREAD, 30, 0,  1, 45, 5, %00011001
+    db "MR-22ｴｽﾄ-ﾙ  ", 4,  MOVE_TREAD, 30, 0,  1, 60, 4, %00011001
+    db "MB-5 ﾗﾋﾞｯﾄ  ", 8,  MOVE_BUGGY, 20, 10, 1, 70, 1, %00010101
+    db "MB-4 ﾘﾝｸｽ   ", 6,  MOVE_BUGGY, 20, 10, 1, 40, 2, %00011101
+    db "AAG-4ｼ-ｶ-   ", 6,  MOVE_TREAD, 30, 65, 1, 30, 1, %00010011
+    db "MM107ﾎ-ｸｱｲ  ", 5,  MOVE_TREAD, 30, 85, 5, 0,  1, %00011010
+    db "SS-80ﾓﾉｹﾛｽ  ", 0,  MOVE_TREAD, 20, 0,  1, 90, 6, %10011001
+    db "GX-77ﾑﾝｸｽ   ", 3,  MOVE_BOOTS, 4,  10, 1, 10, 1, %10000001
+    db "GX-87ﾀﾞ-ﾍﾞｯｸ", 2,  MOVE_BOOTS, 10, 10, 1, 40, 1, %10000001
+    db "CBX-1ﾄﾞﾚｲﾊﾟ-", 9,  MOVE_WHEEL, 8,  10, 1, 10, 1, %10000000
+    db "NC-1 ﾐｭ-ﾙ   ", 6,  MOVE_WHEEL, 10, 10, 1, 10, 1, %00100000
+    db "C-61 ﾍﾟﾘｶﾝ  ", 9,  MOVE_WINGS, 10, 0,  1, 0,  1, %01100001
 
 
 SetROMBank:
@@ -1769,7 +1798,7 @@ Call_000_09b7::
     sla a
     sla a
     call Call_000_088f
-    ld bc, data_000_03f3
+    ld bc, UnitStats
     ld a, l
     add c
     ld l, a

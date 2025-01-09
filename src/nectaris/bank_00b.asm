@@ -10,6 +10,7 @@ INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 INCLUDE "nectaris/map.inc"
+INCLUDE "nectaris/units.inc"
 
 SECTION "ROM Bank $00b", ROMX[$4000], BANK[$b]
 

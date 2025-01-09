@@ -1,48 +1,35 @@
 ; Disassembly of "Nectaris GB (Japan) (SGB Enhanced).gb"
 
-def OWN equ $00
-def FOE equ $80
+DEF OWN EQU $00
+DEF FOE EQU $80
 
-def FACTORY equ $20
-
-def YAMA equ $00
-def FALCO equ $01
-def JAVI equ $02
-def HUNTER equ $03
-def GRIZZLY equ $04
-def DILLO equ $05
-def BISON equ $06
-def SLAGGER equ $07
-def MONSTER equ $08
-def GIANT equ $09
-def LENET equ $0a
-def NASHORN equ $0b
-def ESTOL equ $0c
-def RABBIT equ $0d
-def LYNX equ $0e
-def SEEKER equ $0f
-def HAWKEYE equ $10
-def RHINO equ $11
-def MUNKS equ $12
-def DARBEK equ $13
-def DRAPER equ $14
-def MULE equ $15
-def PELICAN equ $16
+DEF TILE_OPEN EQU $00
+DEF TILE_ROAD EQU $01
+DEF TILE_HILL EQU $02
+DEF TILE_DSRT EQU $03
+DEF TILE_VLLY EQU $04
+DEF TILE_MNTN EQU $05
+DEF TILE_BRDG EQU $06
+DEF TILE_UBAS EQU $08
+DEF TILE_GBAS EQU $0a
+DEF TILE_UFAC EQU $0b
+DEF TILE_NFAC EQU $0c
+DEF TILE_GFAC EQU $0d
 
 NEWCHARMAP Map
 
-CHARMAP " ", $00  ; open
-CHARMAP "+", $01  ; road
-CHARMAP "o", $02  ; hill
-CHARMAP "~", $03  ; desert
-CHARMAP "#", $04  ; valley
-CHARMAP "M", $05  ; mountain
-CHARMAP "*", $06  ; bridge
-CHARMAP "8", $08  ; own base
-CHARMAP "P", $0a  ; foe base
-CHARMAP "b", $0b  ; own factory
-CHARMAP "F", $0c  ; factory
-CHARMAP "d", $0d  ; foe factory
+CHARMAP " ", TILE_OPEN
+CHARMAP "+", TILE_ROAD
+CHARMAP "o", TILE_HILL
+CHARMAP "~", TILE_DSRT
+CHARMAP "#", TILE_VLLY
+CHARMAP "M", TILE_MNTN
+CHARMAP "*", TILE_BRDG
+CHARMAP "8", TILE_UBAS
+CHARMAP "P", TILE_GBAS
+CHARMAP "b", TILE_UFAC
+CHARMAP "F", TILE_NFAC
+CHARMAP "d", TILE_GFAC
 
 CHARMAP "f", $0f
 CHARMAP "g", $77

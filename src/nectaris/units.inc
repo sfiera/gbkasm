@@ -1,0 +1,38 @@
+; Disassembly of "Nectaris GB (Japan) (SGB Enhanced).gb"
+; This file was created with:
+; mgbdis v2.0 - Game Boy ROM disassembler by Matt Currie and contributors.
+; https://github.com/mattcurrie/mgbdis
+
+DEF YAMA     EQU $00
+DEF FALCO    EQU $01
+DEF JAVI     EQU $02
+DEF HUNTER   EQU $03
+DEF GRIZZLY  EQU $04
+DEF DILLO    EQU $05
+DEF BISON    EQU $06
+DEF SLAGGER  EQU $07
+DEF MONSTER  EQU $08
+DEF GIANT    EQU $09
+DEF LENET    EQU $0a
+DEF NASHORN  EQU $0b
+DEF ESTOL    EQU $0c
+DEF RABBIT   EQU $0d
+DEF LYNX     EQU $0e
+DEF SEEKER   EQU $0f
+DEF HAWKEYE  EQU $10
+DEF RHINO    EQU $11
+DEF MUNKS    EQU $12
+DEF DARBEK   EQU $13
+DEF DRAPER   EQU $14
+DEF MULE     EQU $15
+DEF PELICAN  EQU $16
+
+DEF MOVE_TREAD  EQU 0
+DEF MOVE_BUGGY  EQU 1
+DEF MOVE_WHEEL  EQU 2
+DEF MOVE_BOOTS  EQU 3
+DEF MOVE_WINGS  EQU 4
+
+DEF CANNOT_MOVE  EQU $fe
+DEF X            EQU CANNOT_MOVE
+DEF END_MOVE     EQU $7f

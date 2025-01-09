@@ -9,6 +9,7 @@ INCLUDE "consts.inc"
 INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
+INCLUDE "nectaris/units.inc"
 
 SECTION "ROM Bank $001", ROMX[$4000], BANK[$1]
 
@@ -3484,7 +3485,7 @@ jr_001_554e:
 
 jr_001_554f:
     ld a, [$d9bd]
-    cp $04
+    cp MOVE_WINGS
     ld a, $01
     jr nc, jr_001_557a
 
@@ -3497,14 +3498,14 @@ jr_001_554f:
     ld h, a
     ld a, [$d9bd]
     add h
-    ld hl, $03a3
+    ld hl, TerrainCost
     call Call_000_088f
     ld a, [hl]
     pop hl
-    cp $fe
+    cp CANNOT_MOVE
     jr z, jr_001_554b
 
-    cp $7f
+    cp END_MOVE
     jr nz, jr_001_557a
 
     ld a, [$d9be]
