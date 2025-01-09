@@ -14,7 +14,7 @@ INCLUDE "nectaris/units.inc"
 
 SECTION "ROM Bank $008", ROMX[$4000], BANK[$8]
 
-map_08_4000::
+MapE01::
     db $10, $0b
     db "+~~+++++++++++M " ;map
     db "+ +  #  ~  ~  +M" ;map
@@ -44,7 +44,7 @@ map_08_4000::
     db OWN | LYNX, $40 | $08, $07
     db $ff
 
-map_08_40e0::
+MapE02::
     db $10, $0b
     db "~~~~++++++++++++" ;map
     db "~~~ +~     F   o" ;map
@@ -77,7 +77,7 @@ map_08_40e0::
     db FOE | BISON, $00 | $0b, $00
     db $ff
 
-map_08_41c9::
+MapE03::
     db $10, $0b
     db "M o    o M  M d " ;map
     db "MMP ~M    M  o M" ;map
@@ -106,7 +106,7 @@ map_08_41c9::
     db OWN | DILLO, $00 | $0e, $07
     db $ff
 
-map_08_42a6::
+MapE04::
     db $10, $0b
     db "MM+MMMM~~MMM +oo" ;map
     db "Mo++~~M~~MMM +o~" ;map
@@ -131,7 +131,7 @@ map_08_42a6::
     db OWN | LENET, $00 | $04, $06
     db $ff
 
-map_08_4377::
+MapE05::
     db $10, $0b
     db "M        8M MM  " ;map
     db "             M M" ;map
@@ -163,7 +163,7 @@ map_08_4377::
     db OWN | RABBIT, $20 | $00, $05
     db $ff
 
-map_08_445d::
+MapE06::
     db $10, $0b
     db "MMMMMM##~~~~~  M" ;map
     db "MMM   ~#~F~~~  M" ;map
@@ -193,7 +193,7 @@ map_08_445d::
     db FOE | ESTOL, $00 | $0e, $05
     db $ff
 
-map_08_453d::
+MapE07::
     db $10, $0b
     db " 8  MMMMMMMMMMMM" ;map
     db " M  MM  MMMMMMMM" ;map
@@ -225,7 +225,7 @@ map_08_453d::
     db OWN | DILLO, $00 | $05, $04
     db $ff
 
-map_08_4623::
+MapE08::
     db $10, $0b
     db "MMMMM o   ~~MMMM" ;map
     db "MMM     b ~~MMMM" ;map
@@ -258,7 +258,7 @@ map_08_4623::
     db FOE | MUNKS, $00 | $08, $09
     db $ff
 
-map_08_470c::
+MapE09::
     db $10, $0b
     db "ooo oooMoooo  MM" ;map
     db "oo 8   MMMo~~~MM" ;map
@@ -289,7 +289,7 @@ map_08_470c::
     db FOE | HUNTER, $00 | $0e, $09
     db $ff
 
-map_08_47ef::
+MapE10::
     db $10, $0b
     db "M MMMMMMoo oo~~ " ;map
     db "MM8~ MM~~oooF ~M" ;map
@@ -321,7 +321,7 @@ map_08_47ef::
     db FOE | RABBIT, $00 | $0b, $07
     db $ff
 
-map_08_48d5::
+MapE11::
     db $10, $16
     db "MMMMM  P ~~~MM ~" ;map
     db "MMM    + ~~~MMM " ;map
@@ -366,7 +366,7 @@ map_08_48d5::
     db OWN | SEEKER, $00 | $08, $0f
     db $ff
 
-map_08_4a71::
+MapE12::
     db $10, $16
     db "~~~    ~~~~~MM~ " ;map
     db "   8   o~~~~ M o" ;map
@@ -425,7 +425,7 @@ map_08_4a71::
     db OWN | JAVI, $40 | $01, $0f
     db $ff
 
-map_08_4c37::
+MapE13::
     db $10, $16
     db "~Moooo   ~~~~MMM" ;map
     db "~ Moo  P  ~~ MMM" ;map
@@ -477,7 +477,7 @@ map_08_4c37::
     db FOE | HUNTER, $00 | $03, $00
     db $ff
 
-map_08_4de8::
+MapE14::
     db $10, $16
     db " 8 MMMMMMMMMMMMM" ;map
     db " +    MMMMMMMMMM" ;map
@@ -528,7 +528,7 @@ map_08_4de8::
     db OWN | MUNKS, $00 | $04, $02
     db $ff
 
-map_08_4f96::
+MapE15::
     db $10, $16
     db "    MMMMM    8  " ;map
     db "MM MMMMMM    ~  " ;map
@@ -586,7 +586,7 @@ map_08_4f96::
     db OWN | BISON, $00 | $0d, $07
     db $ff
 
-map_08_5159::
+MapE16::
     db $10, $16
     db "    MMMMM       " ;map
     db " d   MMM    b   " ;map
@@ -653,7 +653,7 @@ map_08_5159::
     db FOE | RHINO, $00 | $0d, $12
     db $ff
 
-map_08_5337::
+MapE17::
     db $10, $16
     db "MMM  oo~~~~~ ~oo" ;map
     db "MMMM      ~   o " ;map
@@ -699,7 +699,7 @@ map_08_5337::
     db FOE | SLAGGER, $00 | $08, $02
     db $ff
 
-map_08_54d6::
+MapE18::
     db $10, $16
     db " b        MMMMMM" ;map
     db "       ~    MMMM" ;map
@@ -749,7 +749,7 @@ map_08_54d6::
     db OWN | DARBEK, $00 | $04, $11
     db $ff
 
-map_08_5681::
+MapE19::
     db $10, $16
     db "MMMMMM++    MMM " ;map
     db "MMMMMMMM++ P oM " ;map
@@ -796,7 +796,7 @@ map_08_5681::
     db OWN | NASHORN, $20 | $0c, $07
     db $ff
 
-map_08_5823::
+MapE20::
     db $10, $16
     db "MMM M         MM" ;map
     db "MM     + + F  MM" ;map
@@ -856,7 +856,7 @@ map_08_5823::
     db FOE | LYNX, $00 | $0c, $05
     db $ff
 
-map_08_59ec::
+MapE21::
     db $20, $0b
     db "oooo   oo~~~~~oo +++++++++  M MM" ;map
     db " ~o~    o ~~~~ P    ~oo~  ++  MM" ;map
@@ -901,7 +901,7 @@ map_08_59ec::
     db FOE | MUNKS, $40 | $18, $02
     db $ff
 
-map_08_5ba9::
+MapE22::
     db $20, $0b
     db "MMMMMMM~M~~~ooM    ~~MMMM F  ++M" ;map
     db "MMMMM    +++++o M ~  MMMMM ++   " ;map
@@ -947,7 +947,7 @@ map_08_5ba9::
     db FOE | MULE, $80 | $00, $07
     db $ff
 
-map_08_5d69::
+MapE23::
     db $20, $0b
     db "~~MMM   ~    M       MMMM MMMMM " ;map
     db "~ ~    +   ~MMMMF~   MMM  MMM   " ;map
@@ -995,7 +995,7 @@ map_08_5d69::
     db FOE | HAWKEYE, $80 | $10, $09
     db $ff
 
-map_08_5f2f::
+MapE24::
     db $20, $0b
     db "~~~#~ ####    ~~ M ~~ MMM~o oooo" ;map
     db "M  ~## ~~#  F MMMMMM~~   ~~     " ;map
@@ -1040,7 +1040,7 @@ map_08_5f2f::
     db OWN | BISON, $60 | $0c, $01
     db $ff
 
-map_08_60ec::
+MapE25::
     db $20, $0b
     db "MMooo MMM MMMMMM~~~~~ MMMoooMMMM" ;map
     db "ooooo~ MMM MMMMM +++d  ooooooMMM" ;map
@@ -1092,7 +1092,7 @@ map_08_60ec::
     db FOE | HUNTER, $20 | $14, $01
     db $ff
 
-map_08_62be::
+MapE26::
     db $20, $0b
     db "               F                " ;map
     db "             ~                  " ;map
@@ -1148,7 +1148,7 @@ map_08_62be::
     db FOE | HUNTER, $60 | $14, $05
     db $ff
 
-map_08_649c::
+MapE27::
     db $20, $0b
     db "          MMMMMMMMM       oooo  " ;map
     db "   b ~      MMMMM           oo  " ;map
@@ -1210,7 +1210,7 @@ map_08_649c::
     db FOE | DARBEK, $00 | $1a, $02
     db $ff
 
-map_08_668c::
+MapE28::
     db $20, $0b
     db "o       MMM~o ooooMMM~o~~~~MM MM" ;map
     db "oob   ~ MMM~~        ~~  ~~   M " ;map
@@ -1248,7 +1248,7 @@ map_08_668c::
     db OWN | DILLO, $40 | $0c, $05
     db $ff
 
-map_08_6834::
+MapE29::
     db $20, $0b
     db "MMMM ~~~~oooooooo  F  MMMMMMMMMM" ;map
     db "MMM         o          MMMM MMMM" ;map
@@ -1297,7 +1297,7 @@ map_08_6834::
     db FOE | MUNKS, $00 | $1c, $09
     db $ff
 
-map_08_69fd::
+MapE30::
     db $20, $0b
     db "MMMMMM 8  MM oooooo   # ~~#  MM " ;map
     db "MMMMM  +  MMM  oo        ~#   M " ;map
@@ -1337,7 +1337,7 @@ map_08_69fd::
     db FOE | SEEKER, $00 | $1d, $07
     db $ff
 
-map_08_6bab::
+MapE31::
     db $20, $16
     db "~ o  MMMMMMM o  MMMMMMMMMMM+ MMM" ;map
     db "M  ~ MMMMMM  oo MMMMMMM MMM+   M" ;map
@@ -1419,7 +1419,7 @@ map_08_6bab::
     db OWN | FALCO, $00 | $06, $02
     db $ff
 
-map_08_6f16::
+MapE32::
     db $20, $16
     db "MMMMM~~MMMMMMoooooooooooo ~#~+~ " ;map
     db "MMMMM~~~ ~MM~oo o    MooMM~~#+~ " ;map
@@ -1501,7 +1501,7 @@ map_08_6f16::
     db FOE | JAVI, $a0 | $1b, $0f
     db $ff
 
-map_08_7281::
+MapE33::
     db $20, $16
     db "oooo#+o+    ooo ~~~+ +ooooo~ooo " ;map
     db "oo +* +M++++ o ++++~+~+o#~~#ooo " ;map
@@ -1583,7 +1583,7 @@ map_08_7281::
     db FOE | DARBEK, $c0 | $1b, $11
     db $ff
 
-map_08_75ec::
+MapE34::
     db $20, $16
     db "MMMMMMM MMMMMMMMMMMMMMMMMMMMMMMM" ;map
     db "MMMMM  ~  MMMMMMMMMMMMMMMMMMMMMM" ;map
@@ -1664,7 +1664,7 @@ map_08_75ec::
     db OWN | DILLO, $20 | $06, $04
     db $ff
 
-map_08_7954::
+MapE35::
     db $20, $16
     db "MMMMMMMMM oMMMMMMMMMMMM MMMMMM  " ;map
     db "MMM   M oooMMMM M  MM    ~ MMMM " ;map
@@ -1730,7 +1730,7 @@ map_08_7954::
     db FOE | DARBEK, $00 | $10, $0f
     db $ff
 
-map_08_7c8f::
+MapE36::
     db $20, $16
     db "MMM  b  MMMMMM~    M       M    " ;map
     db "M       M M M        d      MMMM" ;map

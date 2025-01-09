@@ -14,7 +14,7 @@ INCLUDE "nectaris/units.inc"
 
 SECTION "ROM Bank $00b", ROMX[$4000], BANK[$b]
 
-map_0b_4000::
+MapA11Browny::
     db $20, $0b
     db "MMM   +~#~ooo  F  ~~+ MMMMM~oooo" ;map
     db "MMM   + ~ oo##     ++~MMM~M~o   " ;map
@@ -62,7 +62,7 @@ map_0b_4000::
     db FOE | GIANT, $00 | $18, $05
     db $ff
 
-map_0b_41c6::
+MapA12Bereto::
     db $20, $0b
     db "~~    ooo ~~~    F  MMMMMMM###oo" ;map
     db "~ 8                 MMM MMM~~#~~" ;map
@@ -112,7 +112,7 @@ map_0b_41c6::
     db FOE | DARBEK, $00 | $15, $00
     db $ff
 
-map_0b_4392::
+MapA13Grener::
     db $20, $16
     db "~ ~ ~~o~oMMMMMMMMMMMooo~o   ~~oM" ;map
     db "~~      o oooMMoooMo~ ~      ~~M" ;map
@@ -187,7 +187,7 @@ map_0b_4392::
     db OWN | GIANT, $40 | $0a, $07
     db $ff
 
-map_0b_46e8::
+MapA14Regert::
     db $20, $16
     db "  +~  ooMMM~MMMMMMMMMMMoo~ +~+ M" ;map
     db "o~+ 8 ~oooooooMMMMMMM~Moo++ + +M" ;map
@@ -264,7 +264,7 @@ map_0b_46e8::
     db OWN | PELICAN, $20 | $06, $0a
     db $ff
 
-map_0b_4a44::
+MapA15Salama::
     db $20, $16
     db "MMMMo~o~o~~~~MooMoMoMMMMM~~++M~M" ;map
     db "MMM~o     M~M ~~o~o ooo ~++  ~oM" ;map
@@ -331,7 +331,7 @@ map_0b_4a44::
     db OWN | PELICAN, $20 | $04, $04
     db $ff
 
-map_0b_4d82::
+MapA16Zonect::
     db $20, $16
     db "  Mo+~oM          ~~oo      o ~M" ;map
     db " MM~+~~oM    ~ + +  ~~       ~~M" ;map
@@ -412,7 +412,7 @@ map_0b_4d82::
     db OWN | SEEKER, $00 | $09, $0e
     db $ff
 
-map_0b_50ea::
+MapC01Nevets::
     db $10, $0b
     db "MoMMM~# ~ ~~~MMM" ;map
     db "ooo~M ##    ~~~~" ;map
@@ -444,7 +444,7 @@ map_0b_50ea::
     db FOE | RHINO, $00 | $09, $04
     db $ff
 
-map_0b_51d0::
+MapC02Lartsa::
     db $10, $0b
     db "M Moo ~   oMM   " ;map
     db "M8           ~ o" ;map
@@ -478,7 +478,7 @@ map_0b_51d0::
     db OWN | DARBEK, $00 | $02, $01
     db $ff
 
-map_0b_52bc::
+MapC03Elkceh::
     db $10, $0b
     db "MMMMM  # ~     ~" ;map
     db "MMMMM ##  M ~P  " ;map
@@ -520,7 +520,7 @@ map_0b_52bc::
     db FOE | BISON, $00 | $09, $05
     db $ff
 
-map_0b_53c0::
+MapC04Gnimer::
     db $10, $0b
     db "Mooo           ~" ;map
     db "M     F         " ;map
@@ -548,7 +548,7 @@ map_0b_53c0::
     db OWN | LENET, $00 | $04, $05
     db $ff
 
-map_0b_549a::
+MapC05Reyets::
     db $10, $16
     db "MMMoo   ~   ooMM" ;map
     db "Mo~    ~ o   ~MM" ;map
@@ -606,7 +606,7 @@ map_0b_549a::
     db FOE | SEEKER, $00 | $0b, $10
     db $ff
 
-map_0b_565d::
+MapC06Ehtlaw::
     db $10, $16
     db "~  ~          ~M" ;map
     db " 8        F  ~ M" ;map
@@ -676,7 +676,7 @@ map_0b_565d::
     db OWN | PELICAN, $40 | $07, $09
     db $ff
 
-map_0b_5844::
+MapC07Tubmun::
     db $10, $16
     db "o~ ~oMMMo ~~o ~M" ;map
     db "~8 MoMo~~     oM" ;map
@@ -729,7 +729,7 @@ map_0b_5844::
     db FOE | MUNKS, $00 | $0c, $12
     db $ff
 
-map_0b_59f8::
+MapC08Fatsug::
     db $10, $16
     db "MMo Moo~MMMMMMoM" ;map
     db "MoM~  ~ ~o~o~MoM" ;map
@@ -794,7 +794,7 @@ map_0b_59f8::
     db OWN | MUNKS, $00 | $0c, $0b
     db $ff
 
-map_0b_5bd0::
+MapC09Cidrad::
     db $20, $0b
     db "#oo    MM~~ ~MM~MM~   ~~    ~#~~" ;map
     db "## 8  MMM~~     M    ~~    F  ##" ;map
@@ -847,7 +847,7 @@ map_0b_5bd0::
     db FOE | LENET, $00 | $15, $04
     db $ff
 
-map_0b_5da5::
+MapC10Ellsek::
     db $20, $0b
     db "MMMM+   ooooMMMMMMMMM#~##~ +~~~~" ;map
     db "~~M++ P  MMMMMMMM MMoo#~~  b  ~o" ;map
@@ -908,7 +908,7 @@ map_0b_5da5::
     db FOE | YAMA, $00 | $11, $05
     db $ff
 
-map_0b_5f92::
+MapC11Ynworb::
     db $20, $0b
     db "MMM   +~#~ooo  F  ~~+ MMMMM~oooo" ;map
     db "MMM   + ~ oo##     ++~MMM~M~o   " ;map
@@ -950,7 +950,7 @@ map_0b_5f92::
     db OWN | BISON, $40 | $03, $02
     db $ff
 
-map_0b_6146::
+MapC12Otereb::
     db $20, $0b
     db "~~    ooo ~~~    F  MMMMMMM###oo" ;map
     db "~ 8                 MMM MMM~~#~~" ;map
@@ -990,7 +990,7 @@ map_0b_6146::
     db OWN | GRIZZLY, $00 | $02, $07
     db $ff
 
-map_0b_62f4::
+MapC13Renerg::
     db $20, $16
     db "~ ~ ~~o~oMMMMMMMMMMMooo~o   ~~oM" ;map
     db "~~      o oooMMoooMo~ ~      ~~M" ;map
@@ -1072,7 +1072,7 @@ map_0b_62f4::
     db OWN | DILLO, $00 | $15, $0b
     db $ff
 
-map_0b_665f::
+MapC14Treger::
     db $20, $16
     db "  +~  ooMMM~MMMMMMMMMMMoo~ +~+ M" ;map
     db "o~+ 8 ~oooooooMMMMMMM~Moo++ + +M" ;map
@@ -1147,7 +1147,7 @@ map_0b_665f::
     db OWN | SEEKER, $60 | $11, $0e
     db $ff
 
-map_0b_69b5::
+MapC15Amalas::
     db $20, $16
     db "MMMMo~o~o~~~~MooMoMoMMMMM~~++M~M" ;map
     db "MMM~o     M~M ~~o~o ooo ~++  ~oM" ;map
@@ -1220,7 +1220,7 @@ map_0b_69b5::
     db OWN | HAWKEYE, $40 | $0e, $06
     db $ff
 
-map_0b_6d05::
+MapC16Tcenoz::
     db $20, $16
     db "  Mo+~oM          ~~oo      o ~M" ;map
     db " MM~+~~oM    ~ + +  ~~       ~~M" ;map

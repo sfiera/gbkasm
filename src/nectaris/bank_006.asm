@@ -14,7 +14,7 @@ INCLUDE "nectaris/units.inc"
 
 SECTION "ROM Bank $006", ROMX[$4000], BANK[$6]
 
-map_06_4000::
+MapB01Revolt::
     db $10, $0b
     db "MMMMMM~#MMM~~MM "
     db "M  M  ~~# oooo  "
@@ -38,7 +38,7 @@ map_06_4000::
     db FOE | BISON, $00 | $0c, $04
     db $ff
 
-map_06_40ce::
+MapB02Icarus::
     db $10, $0b
     db "MMM++++++++++++ "
     db "M++ooMoooMo~~   "
@@ -67,7 +67,7 @@ map_06_40ce::
     db FOE | BISON, $00 | $0d, $06
     db $ff
 
-map_06_41ab::
+MapB03Cyrano::
     db $10, $0b
     db "#+++~oM  +  +   "
     db "##  ++ ++++~+P  "
@@ -94,7 +94,7 @@ map_06_41ab::
     db OWN | NASHORN, $20 | $0e, $04
     db $ff
 
-map_06_4282::
+MapB04Ramsey::
     db $10, $15
     db "MMM   M ~P  oo# "
     db "MMM ~~M       # "
@@ -138,7 +138,7 @@ map_06_4282::
     db OWN | GRIZZLY, $80 | $02, $0d
     db $ff
 
-map_06_440e::
+MapB05Newton::
     db $10, $15
     db "    M M   ~~~## "
     db "~M8       ### M "
@@ -182,7 +182,7 @@ map_06_440e::
     db OWN | MONSTER, $80 | $01, $10
     db $ff
 
-map_06_459a::
+MapB06Seneca::
     db $10, $15
     db "~~~~~~~+ + MM ~ "
     db "MM ++++ + +   ~ "
@@ -231,7 +231,7 @@ map_06_459a::
     db OWN | LYNX, $60 | $0c, $02
     db $ff
 
-map_06_4735::
+MapB07Sabine::
     db $20, $0b
     db "~~~~~MM ~~MMMM  +  ++  ooooooo x"
     db "~~~     ~~~~MMM + +  oooo ooo  x"
@@ -274,7 +274,7 @@ map_06_4735::
     db OWN | HAWKEYE, $80 | $1c, $06
     db $ff
 
-map_06_48ec::
+MapB08Aratus::
     db $20, $0b
     db "~~~~MMMMMMMMM ~~ MMMM MMM~~    x"
     db " 8 ~MMMMMMM F ~M MMMMM   ~~+P  x"
@@ -335,7 +335,7 @@ map_06_48ec::
     db OWN | MUNKS, $60 | $17, $02
     db $ff
 
-map_06_4ad9::
+MapB09Galois::
     db $20, $15
     db "ooo   + ~~MMMMM##~~MMMMMM MMMM x"
     db "ooo++++ ~~MMM #o MMMM    ~M MM x"
@@ -414,7 +414,7 @@ map_06_4ad9::
     db OWN | FALCO, $c0 | $1b, $11
     db $ff
 
-map_06_4e1e::
+MapB10Darwin::
     db $20, $15
     db "ooo o  MM M MM~~o oo MMMM MMM  x"
     db "o b~++++ +++M+++       +++M    x"
@@ -495,7 +495,7 @@ map_06_4e1e::
     db OWN | HAWKEYE, $e0 | $1c, $02
     db $ff
 
-map_06_5169::
+MapB11Pascal::
     db $20, $15
     db "MMMMMMMMMMMMMMMMMMMMMM  # #M#M x"
     db "MM o MMMM MMMMM   MMMMM MM#  M x"
@@ -574,7 +574,7 @@ map_06_5169::
     db OWN | RHINO, $c0 | $1c, $0f
     db $ff
 
-map_06_54ae::
+MapB12Halley::
     db $20, $15
     db "MM~+++++##    ~~~~~~~MM MMMMM  x"
     db "M +    8 # +++ o o~+++    M  + x"
@@ -654,7 +654,7 @@ map_06_54ae::
     db OWN | HAWKEYE, $a0 | $1b, $02
     db $ff
 
-map_06_57f6::
+MapB13Borman::
     db $20, $15
     db "MMMMMMMMM oMMMM MMMMMMM MMMMMM x"
     db "MMM   M ooooM  ~M  MM    ~ MMM x"
@@ -724,7 +724,7 @@ map_06_57f6::
     db OWN | YAMA, $a0 | $1a, $12
     db $ff
 
-map_06_5b20::
+MapB14Appolo::
     db $20, $15
     db "~~o       ~       ~~~~~ ooo oo x"
     db "~~ MMMMM MMM MF          M  oo x"
@@ -795,7 +795,7 @@ map_06_5b20::
     db OWN | GRIZZLY, $c0 | $1b, $06
     db $ff
 
-map_06_5e4d::
+MapB15Kaiser::
     db $20, $15
     db " MM+~#MMMM M   +~~~~~  # M##MM x"
     db "MM~F~~#MM  MM++M    ~  P MMMMM x"
@@ -874,7 +874,7 @@ map_06_5e4d::
     db OWN | NASHORN, $a0 | $1a, $0d
     db $ff
 
-map_06_6192::
+MapB16Nector::
     db $20, $15
     db "MM ~~MMMMM  ooo ooo   MMM   M  x"
     db "MMM~~MMMMMMooo P ooo MMMMM~~ + x"
@@ -955,7 +955,7 @@ map_06_6192::
     db OWN | FALCO, $a0 | $19, $12
     db $ff
 
-map_06_64dd::
+MapA01Steven::
     db $10, $0b
     db "MoMMM~# ~ ~~~MMM"
     db "ooo~M ##    ~~~~"
@@ -979,7 +979,7 @@ map_06_64dd::
     db FOE | BISON, $00 | $0b, $02
     db $ff
 
-map_06_65ab::
+MapA02Astral::
     db $10, $0b
     db "M Moo ~   oMM   "
     db "M8           ~ o"
@@ -1008,7 +1008,7 @@ map_06_65ab::
     db FOE | BISON, $00 | $0b, $03
     db $ff
 
-map_06_6688::
+MapA03Heckle::
     db $10, $0b
     db "MMMMM  # ~     ~"
     db "MMMMM ##  M ~P  "
@@ -1035,7 +1035,7 @@ map_06_6688::
     db OWN | BISON, $00 | $0c, $06
     db $ff
 
-map_06_675f::
+MapA04Reming::
     db $10, $0b
     db "Mooo           ~"
     db "M     F         "
@@ -1069,7 +1069,7 @@ map_06_675f::
     db FOE | DARBEK, $00 | $0c, $07
     db $ff
 
-map_06_684b::
+MapA05Steyer::
     db $10, $16
     db "MMMoo   ~   ooMM"
     db "Mo~    ~ o   ~MM"
@@ -1116,7 +1116,7 @@ map_06_684b::
     db OWN | RABBIT, $00 | $03, $03
     db $ff
 
-map_06_69ed::
+MapA06Walthe::
     db $10, $16
     db "~  ~          ~M"
     db " 8        F  ~ M"
@@ -1175,7 +1175,7 @@ map_06_69ed::
     db FOE | YAMA, $60 | $01, $10
     db $ff
 
-map_06_6bb3::
+MapA07Numbut::
     db $10, $16
     db "o~ ~oMMMo ~~o ~M"
     db "~8 MoMo~~     oM"
@@ -1241,7 +1241,7 @@ map_06_6bb3::
     db FOE | MUNKS, $00 | $06, $0c
     db $ff
 
-map_06_6d8e::
+MapA08Gustaf::
     db $10, $16
     db "MMo Moo~MMMMMMoM"
     db "MoM~  ~ ~o~o~MoM"
@@ -1297,7 +1297,7 @@ map_06_6d8e::
     db OWN | LYNX, $40 | $03, $0c
     db $ff
 
-map_06_6f4b::
+MapA09Dardic::
     db $20, $0b
     db "#oo    MM~~ ~MM~MM~   ~~    ~#~~"
     db "## 8  MMM~~     M    ~~    F  ##"
@@ -1367,7 +1367,7 @@ map_06_6f4b::
     db FOE | SLAGGER, $00 | $1d, $07
     db $ff
 
-map_06_7153::
+MapA10Keslle::
     db $20, $0b
     db "MMMM+   ooooMMMMMMMMM#~##~ +~~~~"
     db "~~M++ P  MMMMMMMM MMoo#~~  b  ~o"

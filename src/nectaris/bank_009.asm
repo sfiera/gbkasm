@@ -14,7 +14,7 @@ INCLUDE "nectaris/units.inc"
 
 SECTION "ROM Bank $009", ROMX[$4000], BANK[$9]
 
-map_09_4000::
+MapE37::
     db $20, $16
     db "ooooooMMMM     ooo  MMMMM  ooMMM" ;map
     db "o   ooMMMMF  M Moo    M  b    MM" ;map
@@ -94,7 +94,7 @@ map_09_4000::
     db OWN | BISON, $80 | $18, $12
     db $ff
 
-map_09_4365::
+MapE38::
     db $20, $16
     db "MMMMooo+~~MMMMMMMMM ~~~     ooo " ;map
     db "MMMMo  +~ MMM~ MMMM         ooo " ;map
@@ -165,7 +165,7 @@ map_09_4365::
     db FOE | DARBEK, $80 | $01, $10
     db $ff
 
-map_09_46af::
+MapE39::
     db $20, $16
     db "MMMMMMM oooooo  o  ~~~  MMMMMMM " ;map
     db "MMMMMM   ~  o     F~~~  MMMMMMM " ;map
@@ -247,7 +247,7 @@ map_09_46af::
     db FOE | RHINO, $00 | $15, $02
     db $ff
 
-map_09_4a1a::
+MapE40::
     db $20, $16
     db " M Mooo  oo MMMMMMM + MMMM~~o~~ " ;map
     db " MMMMM   MMMMMMMMM +++M MMMMF~~ " ;map
@@ -329,7 +329,7 @@ map_09_4a1a::
     db OWN | RABBIT, $a0 | $0e, $0c
     db $ff
 
-map_09_4d85::
+MapE42::
     db $10, $0b
     db "MM+MMMM~~MMM +oo" ;map
     db "Mo++~~M~~MMM +o~" ;map
@@ -354,7 +354,7 @@ map_09_4d85::
     db OWN | BISON, $00 | $04, $06
     db $ff
 
-map_09_4e56::
+MapE41::
     db $20, $0b
     db "          MMMMMMMMM       oooo  " ;map
     db "   b ~      MMMMM           oo  " ;map
@@ -414,7 +414,7 @@ map_09_4e56::
     db FOE | YAMA, $00 | $04, $05
     db $ff
 
-map_09_5040::
+MapE44::
     db $20, $16
     db "MMMMooo+~~MMMMMMMMM ~~~     ooo " ;map
     db "MMMMo  +~ MMM~ MMMM         ooo " ;map
@@ -496,7 +496,7 @@ map_09_5040::
     db FOE | ESTOL, $00 | $07, $10
     db $ff
 
-map_09_53ab::
+MapE43::
     db $20, $16
     db " M Mooo  oo MMMMMMM + MMMM~~o~~ " ;map
     db " MMMMM   MMMMMMMMM +++M MMMMF~~ " ;map

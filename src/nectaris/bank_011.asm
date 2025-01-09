@@ -14,7 +14,7 @@ INCLUDE "nectaris/units.inc"
 
 SECTION "ROM Bank $011", ROMX[$4000], BANK[$11]
 
-map_11_4000::
+MapD01Tlover::
     db $10, $0b
     db "MMMMMM~#MMM~~MM " ;map
     db "M  M  ~~# oooo  " ;map
@@ -46,7 +46,7 @@ map_11_4000::
     db FOE | PELICAN, $00 | $09, $01
     db $ff
 
-map_11_40e6::
+MapD02Suraci::
     db $10, $0b
     db "MMM++++++++++++ " ;map
     db "M++ooMoooMo~~   " ;map
@@ -81,7 +81,7 @@ map_11_40e6::
     db FOE | MULE, $00 | $0e, $06
     db $ff
 
-map_11_41d5::
+MapD03Onaryc::
     db $10, $0b
     db "#+++~oM  +  +   " ;map
     db "##  ++ ++++~+P  " ;map
@@ -124,7 +124,7 @@ map_11_41d5::
     db OWN | MUNKS, $20 | $0e, $04
     db $ff
 
-map_11_42dc::
+MapD04Yesmar::
     db $10, $15
     db "MMM   M ~P  oo# " ;map
     db "MMM ~~M       # " ;map
@@ -172,7 +172,7 @@ map_11_42dc::
     db OWN | MUNKS, $80 | $02, $0d
     db $ff
 
-map_11_4474::
+MapD05Notwen::
     db $10, $15
     db "    M M   ~~~## " ;map
     db "~M8       ### M " ;map
@@ -242,7 +242,7 @@ map_11_4474::
     db OWN | MUNKS, $80 | $01, $10
     db $ff
 
-map_11_464e::
+MapD06Acenes::
     db $10, $15
     db "~~~~~~~+ + MM ~ " ;map
     db "MM ++++ + +   ~ " ;map
@@ -299,7 +299,7 @@ map_11_464e::
     db FOE | LYNX, $60 | $0c, $02
     db $ff
 
-map_11_4801::
+MapD07Enibas::
     db $20, $0b
     db "~~~~~MM ~~MMMM  +  ++  ooooooo x" ;map
     db "~~~     ~~~~MMM + +  oooo ooo  x" ;map
@@ -364,7 +364,7 @@ map_11_4801::
     db OWN | RHINO, $80 | $1c, $06
     db $ff
 
-map_11_49fa::
+MapD08Sutara::
     db $20, $0b
     db "~~~~MMMMMMMMM ~~ MMMM MMM~~    x" ;map
     db " 8 ~MMMMMMM F ~M MMMMM   ~~+P  x" ;map
@@ -418,7 +418,7 @@ map_11_49fa::
     db OWN | HUNTER, $60 | $17, $02
     db $ff
 
-map_11_4bd2::
+MapD09Siolag::
     db $20, $15
     db "ooo   + ~~MMMMM##~~MMMMMM MMMM x" ;map
     db "ooo++++ ~~MMM #o MMMM    ~M MM x" ;map
@@ -496,7 +496,7 @@ map_11_4bd2::
     db OWN | SEEKER, $c0 | $1b, $11
     db $ff
 
-map_11_4f14::
+MapD10Niwrad::
     db $20, $15
     db "ooo o  MM M MM~~o oo MMMM MMM  x" ;map
     db "o b~++++ +++M+++       +++M    x" ;map
@@ -577,7 +577,7 @@ map_11_4f14::
     db OWN | SLAGGER, $e0 | $1c, $02
     db $ff
 
-map_11_525f::
+MapD11Lacsap::
     db $20, $15
     db "MMMMMMMMMMMMMMMMMMMMMM  # #M#M x" ;map
     db "MM o MMMM MMMMM   MMMMM MM#  M x" ;map
@@ -653,7 +653,7 @@ map_11_525f::
     db OWN | NASHORN, $80 | $1b, $07
     db $ff
 
-map_11_559b::
+MapD12Yellah::
     db $20, $15
     db "MM~+++++##    ~~~~~~~MM MMMMM  x" ;map
     db "M +    8 # +++ o o~+++    M  + x" ;map
@@ -734,7 +734,7 @@ map_11_559b::
     db OWN | PELICAN, $a0 | $1b, $02
     db $ff
 
-map_11_58e6::
+MapD13Namrob::
     db $20, $15
     db "MMMMMMMMM oMMMM MMMMMMM MMMMMM x" ;map
     db "MMM   M ooooM  ~M  MM    ~ MMM x" ;map
@@ -815,7 +815,7 @@ map_11_58e6::
     db OWN | DRAPER, $a0 | $1a, $12
     db $ff
 
-map_11_5c31::
+MapD14Oloppa::
     db $20, $15
     db "~~o       ~       ~~~~~ ooo oo x" ;map
     db "~~ MMMMM MMM MF          M  oo x" ;map
@@ -896,7 +896,7 @@ map_11_5c31::
     db OWN | ESTOL, $c0 | $1b, $06
     db $ff
 
-map_11_5f7c::
+MapD15Resiak::
     db $20, $15
     db " MM+~#MMMM M   +~~~~~  # M##MM x" ;map
     db "MM~F~~#MM  MM++M    ~  P MMMMM x" ;map
@@ -975,7 +975,7 @@ map_11_5f7c::
     db OWN | HUNTER, $a0 | $1a, $0d
     db $ff
 
-map_11_62c1::
+MapD16Rotcen::
     db $20, $15
     db "MM ~~MMMMM  ooo ooo   MMM   M  x" ;map
     db "MMM~~MMMMMMooo P ooo MMMMM~~ + x" ;map
