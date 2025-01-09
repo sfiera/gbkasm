@@ -9,68 +9,7 @@ INCLUDE "consts.inc"
 INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
-
-CHARMAP "｡", $a1
-CHARMAP "､", $a4
-CHARMAP "･", $a5
-CHARMAP "ｦ", $a6
-CHARMAP "ｧ", $a7
-CHARMAP "ｨ", $a8
-CHARMAP "ｩ", $a9
-CHARMAP "ｪ", $aa
-CHARMAP "ｫ", $ab
-CHARMAP "ｬ", $ac
-CHARMAP "ｭ", $ad
-CHARMAP "ｮ", $ae
-CHARMAP "ｯ", $af
-CHARMAP "ｰ", $b0
-CHARMAP "ｱ", $b1
-CHARMAP "ｲ", $b2
-CHARMAP "ｳ", $b3
-CHARMAP "ｴ", $b4
-CHARMAP "ｵ", $b5
-CHARMAP "ｶ", $b6
-CHARMAP "ｷ", $b7
-CHARMAP "ｸ", $b8
-CHARMAP "ｹ", $b9
-CHARMAP "ｺ", $ba
-CHARMAP "ｻ", $bb
-CHARMAP "ｼ", $bc
-CHARMAP "ｽ", $bd
-CHARMAP "ｾ", $be
-CHARMAP "ｿ", $bf
-CHARMAP "ﾀ", $c0
-CHARMAP "ﾁ", $c1
-CHARMAP "ﾂ", $c2
-CHARMAP "ﾃ", $c3
-CHARMAP "ﾄ", $c4
-CHARMAP "ﾅ", $c5
-CHARMAP "ﾆ", $c6
-CHARMAP "ﾇ", $c7
-CHARMAP "ﾈ", $c8
-CHARMAP "ﾉ", $c9
-CHARMAP "ﾊ", $ca
-CHARMAP "ﾋ", $cb
-CHARMAP "ﾌ", $cc
-CHARMAP "ﾍ", $cd
-CHARMAP "ﾎ", $ce
-CHARMAP "ﾏ", $cf
-CHARMAP "ﾐ", $d0
-CHARMAP "ﾑ", $d1
-CHARMAP "ﾒ", $d2
-CHARMAP "ﾓ", $d3
-CHARMAP "ﾔ", $d4
-CHARMAP "ﾕ", $d5
-CHARMAP "ﾖ", $d6
-CHARMAP "ﾗ", $d7
-CHARMAP "ﾘ", $d8
-CHARMAP "ﾙ", $d9
-CHARMAP "ﾚ", $da
-CHARMAP "ﾛ", $db
-CHARMAP "ﾜ", $dc
-CHARMAP "ﾝ", $dd
-CHARMAP "ﾞ", $de
-CHARMAP "ﾟ", $df
+INCLUDE "nectaris/text.inc"
 
 SECTION "ROM Bank $007", ROMX[$4000], BANK[$7]
 

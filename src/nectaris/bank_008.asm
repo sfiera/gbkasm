@@ -15,18 +15,17 @@ INCLUDE "nectaris/units.inc"
 SECTION "ROM Bank $008", ROMX[$4000], BANK[$8]
 
 MapE01::
-    db $10, $0b
-    db "+~~+++++++++++M " ;map
-    db "+ +  #  ~  ~  +M" ;map
-    db "+++  ~#F ~ ~ o+M" ;map
-    db "+   o~## oo   +M" ;map
-    db "+   Mo~~#o~ P ++" ;map
-    db "+  8  oo##~M  +o" ;map
-    db "++++ ~o ~ #   + " ;map
-    db "+~M+ o  F #M  + " ;map
-    db "+M~+ + +~+#+M+++" ;map
-    db "+MM++M+ + + + MM" ;map
-    db "+~MM ~M~   M~MM " ;map
+    map "+~~+++++++++++M ", \
+        "+ +  #  ~  ~  +M", \
+        "+++  ~#f ~ ~ o+M", \
+        "+   o~## oo   +M", \
+        "+   Mo~~#o~ G ++", \
+        "+  U  oo##~M  +o", \
+        "++++ ~o ~ #   + ", \
+        "+~M+ o  f #M  + ", \
+        "+M~+ + +~+#+M+++", \
+        "+MM++M+ + + + MM", \
+        "+~MM ~M~   M~MM "
     db OWN | MUNKS, $00 | $04, $07
     db OWN | BISON, $00 | $02, $08
     db OWN | RABBIT, $00 | $02, $05
@@ -45,18 +44,17 @@ MapE01::
     db $ff
 
 MapE02::
-    db $10, $0b
-    db "~~~~++++++++++++" ;map
-    db "~~~ +~     F   o" ;map
-    db "~~8 ++   ~   ~oo" ;map
-    db "~~    ++oo    oo" ;map
-    db "MM    M+     ooo" ;map
-    db "MMMM   o++    o " ;map
-    db "MMMMM oo  ++    " ;map
-    db "MMMMMMoooo +++++" ;map
-    db "MMMMMM M o +P   " ;map
-    db "MMMMMMMMMMo+    " ;map
-    db "MMMMMMM~MM M M M" ;map
+    map "~~~~++++++++++++", \
+        "~~~ +~     f   o", \
+        "~~U ++   ~   ~oo", \
+        "~~    ++oo    oo", \
+        "MM    M+     ooo", \
+        "MMMM   o++    o ", \
+        "MMMMM oo  ++    ", \
+        "MMMMMMoooo +++++", \
+        "MMMMMM M o +G   ", \
+        "MMMMMMMMMMo+    ", \
+        "MMMMMMM~MM M M M"
     db OWN | DARBEK, $20 | $0b, $01
     db FOE | BISON, $00 | $0c, $01
     db FOE | ESTOL, $00 | $0e, $01
@@ -78,18 +76,17 @@ MapE02::
     db $ff
 
 MapE03::
-    db $10, $0b
-    db "M o    o M  M d " ;map
-    db "MMP ~M    M  o M" ;map
-    db "MM   MM~  MM   M" ;map
-    db "MM MMM M   M M  " ;map
-    db "MM  Mo MMM    oo" ;map
-    db "M o oo MM  ~~~oo" ;map
-    db "  oo      ~~~~  " ;map
-    db "MMo  MMMM ~o~ 8 " ;map
-    db "MMb MMMM ~ oo  ~" ;map
-    db "MM  MMM oo   MMM" ;map
-    db "MMM MMM oM~~MMM " ;map
+    map "M o    o M  M g ", \
+        "MMG ~M    M  o M", \
+        "MM   MM~  MM   M", \
+        "MM MMM M   M M  ", \
+        "MM  Mo MMM    oo", \
+        "M o oo MM  ~~~oo", \
+        "  oo      ~~~~  ", \
+        "MMo  MMMM ~o~ U ", \
+        "MMu MMMM ~ oo  ~", \
+        "MM  MMM oo   MMM", \
+        "MMM MMM oM~~MMM "
     db OWN | DILLO, $40 | $02, $08
     db OWN | GRIZZLY, $40 | $02, $08
     db FOE | SLAGGER, $20 | $0e, $00
@@ -107,18 +104,17 @@ MapE03::
     db $ff
 
 MapE04::
-    db $10, $0b
-    db "MM+MMMM~~MMM +oo" ;map
-    db "Mo++~~M~~MMM +o~" ;map
-    db "    + ~  MMMM+ ~" ;map
-    db "o 8 +     M  +~~" ;map
-    db "oo ++M     oo+~~" ;map
-    db "oo+ ~M     ++ ~ " ;map
-    db "oo+~  M MM + P M" ;map
-    db "  +~~~MMM  +   M" ;map
-    db "  + ~~MMMMMM++~M" ;map
-    db "   M o  MMMM +~M" ;map
-    db "MMM M oMMoMMMMM " ;map
+    map "MM+MMMM~~MMM +oo", \
+        "Mo++~~M~~MMM +o~", \
+        "    + ~  MMMM+ ~", \
+        "o U +     M  +~~", \
+        "oo ++M     oo+~~", \
+        "oo+ ~M     ++ ~ ", \
+        "oo+~  M MM + G M", \
+        "  +~~~MMM  +   M", \
+        "  + ~~MMMMMM++~M", \
+        "   M o  MMMM +~M", \
+        "MMM M oMMoMMMMM "
     db OWN | BISON, $00 | $03, $01
     db FOE | BISON, $00 | $0d, $04
     db FOE | BISON, $00 | $0b, $07
@@ -132,18 +128,17 @@ MapE04::
     db $ff
 
 MapE05::
-    db $10, $0b
-    db "M        8M MM  " ;map
-    db "             M M" ;map
-    db "M  MMMMM M    M " ;map
-    db "   MMMMMMMMM    " ;map
-    db "   MMMMMMMMMMMMM" ;map
-    db "F   MMMMMMMMMMMM" ;map
-    db "      MMMMMMMMMM" ;map
-    db "M     M MMM   MM" ;map
-    db " M M M  M   P MM" ;map
-    db "MMMMMMMM MMMMMMM" ;map
-    db "M M M~MMMMMMM M " ;map
+    map "M        UM MM  ", \
+        "             M M", \
+        "M  MMMMM M    M ", \
+        "   MMMMMMMMM    ", \
+        "   MMMMMMMMMMMMM", \
+        "f   MMMMMMMMMMMM", \
+        "      MMMMMMMMMM", \
+        "M     M MMM   MM", \
+        " M M M  M   G MM", \
+        "MMMMMMMM MMMMMMM", \
+        "M M M~MMMMMMM M "
     db OWN | BISON, $00 | $04, $00
     db FOE | SLAGGER, $00 | $0d, $08
     db FOE | BISON, $00 | $06, $08
@@ -164,18 +159,17 @@ MapE05::
     db $ff
 
 MapE06::
-    db $10, $0b
-    db "MMMMMM##~~~~~  M" ;map
-    db "MMM   ~#~F~~~  M" ;map
-    db "M    ~ *++++~~  " ;map
-    db "  ~  ++#~   ++  " ;map
-    db "   ++~~# ~  ~~+ " ;map
-    db "~  +~~~~#~~~~ + " ;map
-    db "8  + ~~~##~~  + " ;map
-    db " +++ ~   M#+~+++" ;map
-    db "+  +~+ +~+*M+P ~" ;map
-    db "MMMM+ + +##    ~" ;map
-    db "MMMMMM ~ M   ~  " ;map
+    map "MMMMMM##~~~~~  M", \
+        "MMM   ~#~f~~~  M", \
+        "M    ~ *++++~~  ", \
+        "  ~  ++#~   ++  ", \
+        "   ++~~# ~  ~~+ ", \
+        "~  +~~~~#~~~~ + ", \
+        "U  + ~~~##~~  + ", \
+        " +++ ~   M#+~+++", \
+        "+  +~+ +~+*M+G ~", \
+        "MMMM+ + +##    ~", \
+        "MMMMMM ~ M   ~  "
     db OWN | MUNKS, $00 | $04, $05
     db OWN | MUNKS, $00 | $02, $07
     db OWN | RABBIT, $00 | $01, $04
@@ -194,18 +188,17 @@ MapE06::
     db $ff
 
 MapE07::
-    db $10, $0b
-    db " 8  MMMMMMMMMMMM" ;map
-    db " M  MM  MMMMMMMM" ;map
-    db "MMMM   o   MMMMM" ;map
-    db "MMMM    o MMMMMM" ;map
-    db "MMMMM  MM MMMMMM" ;map
-    db "MMMM o MMM  MMMM" ;map
-    db "MMMMMoo M o   MM" ;map
-    db "MMMM M M      MM" ;map
-    db "MMMMMMMMMMM P   " ;map
-    db "MMMMMMMMMMMM    " ;map
-    db "M MMMMMMMMMM ~ M" ;map
+    map " U  MMMMMMMMMMMM", \
+        " M  MM  MMMMMMMM", \
+        "MMMM   o   MMMMM", \
+        "MMMM    o MMMMMM", \
+        "MMMMM  MM MMMMMM", \
+        "MMMM o MMM  MMMM", \
+        "MMMMMoo M o   MM", \
+        "MMMM M M      MM", \
+        "MMMMMMMMMMM G   ", \
+        "MMMMMMMMMMMM    ", \
+        "M MMMMMMMMMM ~ M"
     db OWN | BISON, $00 | $03, $00
     db OWN | MUNKS, $00 | $01, $00
     db OWN | SEEKER, $00 | $05, $02
@@ -226,18 +219,17 @@ MapE07::
     db $ff
 
 MapE08::
-    db $10, $0b
-    db "MMMMM o   ~~MMMM" ;map
-    db "MMM     b ~~MMMM" ;map
-    db "MMMM  8    o MMM" ;map
-    db "MMMM   oo   MMMM" ;map
-    db "MMM     o  ~MMMM" ;map
-    db "M     ~~ ~~~  MM" ;map
-    db " o    ~~~~~o o  " ;map
-    db "M  d  ~~~~~     " ;map
-    db " P   ~~~~~~   F " ;map
-    db "   ~~~~~~~~     " ;map
-    db " M M~M~M   ~ ~ M" ;map
+    map "MMMMM o   ~~MMMM", \
+        "MMM     u ~~MMMM", \
+        "MMMM  U    o MMM", \
+        "MMMM   oo   MMMM", \
+        "MMM     o  ~MMMM", \
+        "M     ~~ ~~~  MM", \
+        " o    ~~~~~o o  ", \
+        "M  g  ~~~~~     ", \
+        " G   ~~~~~~   f ", \
+        "   ~~~~~~~~     ", \
+        " M M~M~M   ~ ~ M"
     db OWN | MUNKS, $00 | $04, $03
     db OWN | BISON, $00 | $06, $02
     db OWN | BISON, $00 | $05, $03
@@ -259,18 +251,17 @@ MapE08::
     db $ff
 
 MapE09::
-    db $10, $0b
-    db "ooo oooMoooo  MM" ;map
-    db "oo 8   MMMo~~~MM" ;map
-    db "o  + M MMM ~~~MM" ;map
-    db "   + MMMMMM ~MMM" ;map
-    db "MM +~MMMoo   MMM" ;map
-    db "M  +~MMoo      M" ;map
-    db " ++MM#   +++    " ;map
-    db " + M~~#++   +P  " ;map
-    db " + +~+*   MM   o" ;map
-    db "o++ +~##  MMMMoo" ;map
-    db "oMoM~ ~~ MM MMoM" ;map
+    map "ooo oooMoooo  MM", \
+        "oo U   MMMo~~~MM", \
+        "o  + M MMM ~~~MM", \
+        "   + MMMMMM ~MMM", \
+        "MM +~MMMoo   MMM", \
+        "M  +~MMoo      M", \
+        " ++MM#   +++    ", \
+        " + M~~#++   +G  ", \
+        " + +~+*   MM   o", \
+        "o++ +~##  MMMMoo", \
+        "oMoM~ ~~ MM MMoM"
     db FOE | NASHORN, $00 | $0c, $08
     db OWN | ESTOL, $00 | $03, $03
     db FOE | MONSTER, $00 | $0e, $06
@@ -290,18 +281,17 @@ MapE09::
     db $ff
 
 MapE10::
-    db $10, $0b
-    db "M MMMMMMoo oo~~ " ;map
-    db "MM8~ MM~~oooF ~M" ;map
-    db "MM    M ~~     M" ;map
-    db "MM     ~~~~~    " ;map
-    db "MMMM ~ ~~~~~~   " ;map
-    db "MMMM   ~~~~~~~~ " ;map
-    db "MMMM M  ~~~~~~  " ;map
-    db "MMMMMMMM o~~~   " ;map
-    db "MMMMMMMM  ~ P  ~" ;map
-    db "MMMMMMMooo   MMM" ;map
-    db "M~MMMMMMo ~MMMM " ;map
+    map "M MMMMMMoo oo~~ ", \
+        "MMU~ MM~~ooof ~M", \
+        "MM    M ~~     M", \
+        "MM     ~~~~~    ", \
+        "MMMM ~ ~~~~~~   ", \
+        "MMMM   ~~~~~~~~ ", \
+        "MMMM M  ~~~~~~  ", \
+        "MMMMMMMM o~~~   ", \
+        "MMMMMMMM  ~ G  ~", \
+        "MMMMMMMooo   MMM", \
+        "M~MMMMMMo ~MMMM "
     db FOE | DARBEK, $00 | $0e, $07
     db OWN | MUNKS, $00 | $05, $02
     db OWN | RABBIT, $00 | $04, $02
@@ -322,29 +312,28 @@ MapE10::
     db $ff
 
 MapE11::
-    db $10, $16
-    db "MMMMM  P ~~~MM ~" ;map
-    db "MMM    + ~~~MMM " ;map
-    db "M      +MM M    " ;map
-    db "     d +MMMMMM M" ;map
-    db " M M   +   MMM M" ;map
-    db " MMMM M+MMMMMMM " ;map
-    db "  MMMM +MMM M   " ;map
-    db "  MMMMM+       o" ;map
-    db "  M M  + + +F+ +" ;map
-    db "M      ++ +M+ + " ;map
-    db " M   M + MMM M  " ;map
-    db " MMMMMM+MMMMMMMM" ;map
-    db "  MMMM +MMMMMMMM" ;map
-    db "~MMMMMM+MMMMMMMM" ;map
-    db " MMMM  +  M  MMM" ;map
-    db "  MM b +~M      " ;map
-    db "MMMMM  + MMM    " ;map
-    db "MMM    8  M    M" ;map
-    db "M   M        MMM" ;map
-    db "            MMMM" ;map
-    db "            MMMM" ;map
-    db "   M M M   oMMMo" ;map
+    map "MMMMM  G ~~~MM ~", \
+        "MMM    + ~~~MMM ", \
+        "M      +MM M    ", \
+        "     g +MMMMMM M", \
+        " M M   +   MMM M", \
+        " MMMM M+MMMMMMM ", \
+        "  MMMM +MMM M   ", \
+        "  MMMMM+       o", \
+        "  M M  + + +f+ +", \
+        "M      ++ +M+ + ", \
+        " M   M + MMM M  ", \
+        " MMMMMM+MMMMMMMM", \
+        "  MMMM +MMMMMMMM", \
+        "~MMMMMM+MMMMMMMM", \
+        " MMMM  +  M  MMM", \
+        "  MM u +~M      ", \
+        "MMMMM  + MMM    ", \
+        "MMM    U  M    M", \
+        "M   M        MMM", \
+        "            MMMM", \
+        "            MMMM", \
+        "   M M M   oMMMo"
     db OWN | JAVI, $00 | $09, $0e
     db OWN | FALCO, $00 | $04, $0e
     db OWN | FALCO, $00 | $0a, $12
@@ -367,29 +356,28 @@ MapE11::
     db $ff
 
 MapE12::
-    db $10, $16
-    db "~~~    ~~~~~MM~ " ;map
-    db "   8   o~~~~ M o" ;map
-    db "       ~~~~~ M  " ;map
-    db "     ~~~o M   M " ;map
-    db "      ~~~~    MM" ;map
-    db "       ~~~~     " ;map
-    db "     o  ~~~~    " ;map
-    db "      M    F    " ;map
-    db " ~~~   oo    ~  " ;map
-    db "  ~    oo  o~~~ " ;map
-    db "MM   o ~   oo~~ " ;map
-    db "MMMM~~~~~       " ;map
-    db "MMMM ~~~~    ~~~" ;map
-    db "MMMMM~~~    ~~~~" ;map
-    db "~ MMMM     ~~~~~" ;map
-    db " F MMMMM    ~~  " ;map
-    db "   MM MMM P     " ;map
-    db "MMMMM  MMM      " ;map
-    db "MMMMMM MM   oo  " ;map
-    db "MMMMM ~MMM  o   " ;map
-    db "M MMM MMMMM     " ;map
-    db " MMMMMMMMMMM M M" ;map
+    map "~~~    ~~~~~MM~ ", \
+        "   U   o~~~~ M o", \
+        "       ~~~~~ M  ", \
+        "     ~~~o M   M ", \
+        "      ~~~~    MM", \
+        "       ~~~~     ", \
+        "     o  ~~~~    ", \
+        "      M    f    ", \
+        " ~~~   oo    ~  ", \
+        "  ~    oo  o~~~ ", \
+        "MM   o ~   oo~~ ", \
+        "MMMM~~~~~       ", \
+        "MMMM ~~~~    ~~~", \
+        "MMMMM~~~    ~~~~", \
+        "~ MMMM     ~~~~~", \
+        " f MMMMM    ~~  ", \
+        "   MM MMM G     ", \
+        "MMMMM  MMM      ", \
+        "MMMMMM MM   oo  ", \
+        "MMMMM ~MMM  o   ", \
+        "M MMM MMMMM     ", \
+        " MMMMMMMMMMM M M"
     db OWN | MUNKS, $00 | $04, $03
     db OWN | DARBEK, $00 | $03, $01
     db OWN | SEEKER, $00 | $02, $03
@@ -426,29 +414,28 @@ MapE12::
     db $ff
 
 MapE13::
-    db $10, $16
-    db "~Moooo   ~~~~MMM" ;map
-    db "~ Moo  P  ~~ MMM" ;map
-    db "##M~   +   ~~MMM" ;map
-    db "~~#~o  +   ~~~MM" ;map
-    db "  ##  + M   F~~M" ;map
-    db "  ~#  + M MM  ~M" ;map
-    db "   ~  +F MMM  ~ " ;map
-    db " ~~~  ++++MMM+ M" ;map
-    db " d ~ ++  ++++ MM" ;map
-    db "   ++oo  +~   MM" ;map
-    db "   +o o  +~   MM" ;map
-    db "   +oo b +      " ;map
-    db " ++#o     ++    " ;map
-    db "    #o    M+    " ;map
-    db "M  ~##o## M+   M" ;map
-    db "   ~~~#  M+  MMM" ;map
-    db "MM M~~    + ~MMM" ;map
-    db "MMMMM  8  +~~ MM" ;map
-    db "MMMMMoo    ~~~ M" ;map
-    db "M oooooooo ~~   " ;map
-    db " ooooooooooo~o  " ;map
-    db "oMo o o oMo~o oM" ;map
+    map "~Moooo   ~~~~MMM", \
+        "~ Moo  G  ~~ MMM", \
+        "##M~   +   ~~MMM", \
+        "~~#~o  +   ~~~MM", \
+        "  ##  + M   f~~M", \
+        "  ~#  + M MM  ~M", \
+        "   ~  +f MMM  ~ ", \
+        " ~~~  ++++MMM+ M", \
+        " g ~ ++  ++++ MM", \
+        "   ++oo  +~   MM", \
+        "   +o o  +~   MM", \
+        "   +oo u +      ", \
+        " ++#o     ++    ", \
+        "    #o    M+    ", \
+        "M  ~##o## M+   M", \
+        "   ~~~#  M+  MMM", \
+        "MM M~~    + ~MMM", \
+        "MMMMM  U  +~~ MM", \
+        "MMMMMoo    ~~~ M", \
+        "M oooooooo ~~   ", \
+        " ooooooooooo~o  ", \
+        "oMo o o oMo~o oM"
     db FOE | HUNTER, $20 | $01, $08
     db FOE | LENET, $20 | $01, $08
     db FOE | SLAGGER, $20 | $01, $08
@@ -478,29 +465,28 @@ MapE13::
     db $ff
 
 MapE14::
-    db $10, $16
-    db " 8 MMMMMMMMMMMMM" ;map
-    db " +    MMMMMMMMMM" ;map
-    db " + + +  MMMMMMMM" ;map
-    db "MM+~+M+ MMM   MM" ;map
-    db "MMMMo+++++++++MM" ;map
-    db "MMM  + MMM F +MM" ;map
-    db "   ++MMMMMMM + M" ;map
-    db " ++MMMMMMMM  +o " ;map
-    db "+F MMMMMMMM~~M+ " ;map
-    db "+o MMMMMMM~###+ " ;map
-    db "++ooMMMMM~M~~*+~" ;map
-    db " +ooMMMMM ~~+#~#" ;map
-    db "* ++  MMMM  +~#~" ;map
-    db "#M  ++ MMMMM+ ##" ;map
-    db "MMMM M+ MMM +   " ;map
-    db "MMMMM +  + +++ +" ;map
-    db "MMMMMMd + +   + " ;map
-    db "MMMMMM MMMMMP   " ;map
-    db "MMMMMMMMMMMM M  " ;map
-    db "MMMMM MMMMMMMMMM" ;map
-    db "MMMMMMMMMMMMMMMM" ;map
-    db "MMMMMMMMM M MMMM" ;map
+    map " U MMMMMMMMMMMMM", \
+        " +    MMMMMMMMMM", \
+        " + + +  MMMMMMMM", \
+        "MM+~+M+ MMM   MM", \
+        "MMMMo+++++++++MM", \
+        "MMM  + MMM f +MM", \
+        "   ++MMMMMMM + M", \
+        " ++MMMMMMMM  +o ", \
+        "+f MMMMMMMM~~M+ ", \
+        "+o MMMMMMM~###+ ", \
+        "++ooMMMMM~M~~*+~", \
+        " +ooMMMMM ~~+#~#", \
+        "* ++  MMMM  +~#~", \
+        "#M  ++ MMMMM+ ##", \
+        "MMMM M+ MMM +   ", \
+        "MMMMM +  + +++ +", \
+        "MMMMMMg + +   + ", \
+        "MMMMMM MMMMMG   ", \
+        "MMMMMMMMMMMM M  ", \
+        "MMMMM MMMMMMMMMM", \
+        "MMMMMMMMMMMMMMMM", \
+        "MMMMMMMMM M MMMM"
     db FOE | SLAGGER, $00 | $0c, $10
     db FOE | MONSTER, $00 | $0c, $11
     db FOE | ESTOL, $00 | $0b, $10
@@ -529,29 +515,28 @@ MapE14::
     db $ff
 
 MapE15::
-    db $10, $16
-    db "    MMMMM    8  " ;map
-    db "MM MMMMMM    ~  " ;map
-    db "MMMMMMM o    ~~~" ;map
-    db "MMMMMM      ~ ~~" ;map
-    db "MMMMMM  oo  b ~ " ;map
-    db "MMMMM   o       " ;map
-    db "MMMMMM    ~   ~~" ;map
-    db "MMMMM           " ;map
-    db "MMMMM ~~        " ;map
-    db "MMMMM~~~~       " ;map
-    db "MMMM  ~~~~~  ~~~" ;map
-    db "MMMMM  ~~~F  ~~~" ;map
-    db "MMM       ~ ~~~ " ;map
-    db "M           ~  M" ;map
-    db "     d oo    MMM" ;map
-    db "o       o   MMMM" ;map
-    db " ~       ~  MMM " ;map
-    db "   P      MMMMMM" ;map
-    db "MM       oMMMMMM" ;map
-    db "MMMM      MMMMMM" ;map
-    db "MMMMM ~   MMMMMM" ;map
-    db "M MMM~ M MM MMMM" ;map
+    map "    MMMMM    U  ", \
+        "MM MMMMMM    ~  ", \
+        "MMMMMMM o    ~~~", \
+        "MMMMMM      ~ ~~", \
+        "MMMMMM  oo  u ~ ", \
+        "MMMMM   o       ", \
+        "MMMMMM    ~   ~~", \
+        "MMMMM           ", \
+        "MMMMM ~~        ", \
+        "MMMMM~~~~       ", \
+        "MMMM  ~~~~~  ~~~", \
+        "MMMMM  ~~~f  ~~~", \
+        "MMM       ~ ~~~ ", \
+        "M           ~  M", \
+        "     g oo    MMM", \
+        "o       o   MMMM", \
+        " ~       ~  MMM ", \
+        "   G      MMMMMM", \
+        "MM       oMMMMMM", \
+        "MMMM      MMMMMM", \
+        "MMMMM ~   MMMMMM", \
+        "M MMM~ M MM MMMM"
     db FOE | HUNTER, $60 | $05, $0e
     db FOE | FALCO, $00 | $0d, $12
     db FOE | HUNTER, $40 | $0a, $0b
@@ -587,29 +572,28 @@ MapE15::
     db $ff
 
 MapE16::
-    db $10, $16
-    db "    MMMMM       " ;map
-    db " d   MMM    b   " ;map
-    db " +   MMMMM  +~~~" ;map
-    db " +  MMMMMMM +~~~" ;map
-    db "  + MMM MMM + ~M" ;map
-    db "  +  MMMM   + MM" ;map
-    db "  +  MMMM ~~+ MM" ;map
-    db "  + MMMMMM~~+  M" ;map
-    db "  ++MMMMMM ++  M" ;map
-    db "    + MMMM+  MMM" ;map
-    db "MM  + MMM +MMMMM" ;map
-    db "MMM+++    +MMMMM" ;map
-    db "M  + M++  + MMMM" ;map
-    db " M + MMM++++  MM" ;map
-    db "   + MMM    ++  " ;map
-    db "M +   MMMM   +  " ;map
-    db "  +  MMMMMMM +  " ;map
-    db "  +  MMMMMMM P  " ;map
-    db "  8  MMMMMMM    " ;map
-    db "      MMMMM     " ;map
-    db "      MMMMM     " ;map
-    db " M M MM MMMM M  " ;map
+    map "    MMMMM       ", \
+        " g   MMM    u   ", \
+        " +   MMMMM  +~~~", \
+        " +  MMMMMMM +~~~", \
+        "  + MMM MMM + ~M", \
+        "  +  MMMM   + MM", \
+        "  +  MMMM ~~+ MM", \
+        "  + MMMMMM~~+  M", \
+        "  ++MMMMMM ++  M", \
+        "    + MMMM+  MMM", \
+        "MM  + MMM +MMMMM", \
+        "MMM+++    +MMMMM", \
+        "M  + M++  + MMMM", \
+        " M + MMM++++  MM", \
+        "   + MMM    ++  ", \
+        "M +   MMMM   +  ", \
+        "  +  MMMMMMM +  ", \
+        "  +  MMMMMMM G  ", \
+        "  U  MMMMMMM    ", \
+        "      MMMMM     ", \
+        "      MMMMM     ", \
+        " M M MM MMMM M  "
     db FOE | SEEKER, $00 | $0c, $10
     db FOE | SEEKER, $00 | $0c, $12
     db OWN | HAWKEYE, $00 | $02, $12
@@ -654,29 +638,28 @@ MapE16::
     db $ff
 
 MapE17::
-    db $10, $16
-    db "MMM  oo~~~~~ ~oo" ;map
-    db "MMMM      ~   o " ;map
-    db "MMM  M  P    ~~~" ;map
-    db "             ~~~" ;map
-    db " d          ~M~~" ;map
-    db "         M   MM " ;map
-    db "       MM  o MMM" ;map
-    db "       MM oo  MM" ;map
-    db "    MM        MM" ;map
-    db "o   MMM         " ;map
-    db "oooo    F       " ;map
-    db "o ## ##~ ~~~  MM" ;map
-    db "MM~~#M ~~MM ~~MM" ;map
-    db "MM ~##M  MM ~~MM" ;map
-    db "M ~~~#M       ~o" ;map
-    db "M ~  MMM       o" ;map
-    db "M 8   M     b oo" ;map
-    db "M            ooo" ;map
-    db "MM         MMMMM" ;map
-    db "MMMMMM    MMMMMM" ;map
-    db "MMMMMM o oMMMMMM" ;map
-    db "MMMMMMMMo M~MMMM" ;map
+    map "MMM  oo~~~~~ ~oo", \
+        "MMMM      ~   o ", \
+        "MMM  M  G    ~~~", \
+        "             ~~~", \
+        " g          ~M~~", \
+        "         M   MM ", \
+        "       MM  o MMM", \
+        "       MM oo  MM", \
+        "    MM        MM", \
+        "o   MMM         ", \
+        "oooo    f       ", \
+        "o ## ##~ ~~~  MM", \
+        "MM~~#M ~~MM ~~MM", \
+        "MM ~##M  MM ~~MM", \
+        "M ~~~#M       ~o", \
+        "M ~  MMM       o", \
+        "M U   M     u oo", \
+        "M            ooo", \
+        "MM         MMMMM", \
+        "MMMMMM    MMMMMM", \
+        "MMMMMM o oMMMMMM", \
+        "MMMMMMMMo M~MMMM"
     db OWN | BISON, $20 | $0c, $10
     db OWN | BISON, $20 | $0c, $10
     db OWN | BISON, $20 | $0c, $10
@@ -700,29 +683,28 @@ MapE17::
     db $ff
 
 MapE18::
-    db $10, $16
-    db " b        MMMMMM" ;map
-    db "       ~    MMMM" ;map
-    db "      ~~    MMMM" ;map
-    db "MMMM  ~    P  MM" ;map
-    db "MMMMMMMM      MM" ;map
-    db "MMMMMMMMMM MMMMM" ;map
-    db "MMMMMMMMM  MMMMM" ;map
-    db "MMMMMMM M  MMMMM" ;map
-    db "MMMMM      MMMMM" ;map
-    db "MMM   ~~    MMMM" ;map
-    db "MM    ~       MM" ;map
-    db "MM        F   MM" ;map
-    db "MMM  MMM       M" ;map
-    db "MM   MMMMM   M M" ;map
-    db "M    MMMMMMMMMMM" ;map
-    db "    M MMMMMMMMMM" ;map
-    db "       MMMMMMMMM" ;map
-    db "M       MMMMMMMM" ;map
-    db " 8       MMMMMMM" ;map
-    db "     M M MMMMMMM" ;map
-    db "MMMMMMMMMMMMMMMM" ;map
-    db "MMMMMMM M MMMMMM" ;map
+    map " u        MMMMMM", \
+        "       ~    MMMM", \
+        "      ~~    MMMM", \
+        "MMMM  ~    G  MM", \
+        "MMMMMMMM      MM", \
+        "MMMMMMMMMM MMMMM", \
+        "MMMMMMMMM  MMMMM", \
+        "MMMMMMM M  MMMMM", \
+        "MMMMM      MMMMM", \
+        "MMM   ~~    MMMM", \
+        "MM    ~       MM", \
+        "MM        f   MM", \
+        "MMM  MMM       M", \
+        "MM   MMMMM   M M", \
+        "M    MMMMMMMMMMM", \
+        "    M MMMMMMMMMM", \
+        "       MMMMMMMMM", \
+        "M       MMMMMMMM", \
+        " U       MMMMMMM", \
+        "     M M MMMMMMM", \
+        "MMMMMMMMMMMMMMMM", \
+        "MMMMMMM M MMMMMM"
     db FOE | BISON, $00 | $09, $02
     db FOE | RABBIT, $00 | $0c, $04
     db OWN | BISON, $40 | $0a, $0b
@@ -750,29 +732,28 @@ MapE18::
     db $ff
 
 MapE19::
-    db $10, $16
-    db "MMMMMM++    MMM " ;map
-    db "MMMMMMMM++ P oM " ;map
-    db "MMMMMMMM  ++ +  " ;map
-    db "MMMMMMMMM  ++ + " ;map
-    db "MMMMMMMM   +~oo " ;map
-    db "MMMMMM M   + oo " ;map
-    db "MMMMMM  ##o+  o " ;map
-    db "  MMMo + # +F o " ;map
-    db "++   ++ +# + ~o " ;map
-    db " ++++M  ## + ~~ " ;map
-    db "~+~~ MMM  ~+F~~ " ;map
-    db " +~~~MMM   +~~~ " ;map
-    db "o+~~~MMMMM +~~~ " ;map
-    db " +~~MMMMMM +F~~ " ;map
-    db "~+ ~MMMMMMM+ o~ " ;map
-    db "o+  MMMMMM +    " ;map
-    db "+ ++  M  +o+F   " ;map
-    db "+8  +++++~++    " ;map
-    db "+    M    + ++~ " ;map
-    db "+MMMMMMM  +   + " ;map
-    db "+MMMMMMMMM+     " ;map
-    db "+MM MMM~M++o M M" ;map
+    map "MMMMMM++    MMM ", \
+        "MMMMMMMM++ G oM ", \
+        "MMMMMMMM  ++ +  ", \
+        "MMMMMMMMM  ++ + ", \
+        "MMMMMMMM   +~oo ", \
+        "MMMMMM M   + oo ", \
+        "MMMMMM  ##o+  o ", \
+        "  MMMo + # +f o ", \
+        "++   ++ +# + ~o ", \
+        " ++++M  ## + ~~ ", \
+        "~+~~ MMM  ~+f~~ ", \
+        " +~~~MMM   +~~~ ", \
+        "o+~~~MMMMM +~~~ ", \
+        " +~~MMMMMM +f~~ ", \
+        "~+ ~MMMMMMM+ o~ ", \
+        "o+  MMMMMM +    ", \
+        "+ ++  M  +o+f   ", \
+        "+U  +++++~++    ", \
+        "+    M    + ++~ ", \
+        "+MMMMMMM  +   + ", \
+        "+MMMMMMMMM+     ", \
+        "+MM MMM~M++o M M"
     db OWN | MUNKS, $00 | $03, $11
     db FOE | MUNKS, $00 | $0a, $03
     db FOE | LENET, $00 | $0c, $03
@@ -797,29 +778,28 @@ MapE19::
     db $ff
 
 MapE20::
-    db $10, $16
-    db "MMM M         MM" ;map
-    db "MM     + + F  MM" ;map
-    db "MM   ++M+ +  MMM" ;map
-    db "M~~~+MMMMM ~ MMM" ;map
-    db "M~~~+MMMMM ~~   " ;map
-    db "M ~~+~MMMMM~~~~~" ;map
-    db " d  +~~ MM    ~ " ;map
-    db "    +   MMMM    " ;map
-    db "o   + MM MMM    " ;map
-    db "oo  + MM MMM P  " ;map
-    db "oo  ++M  MMM    " ;map
-    db "MooM  ++  MMMMMM" ;map
-    db "MMMMMM~~+~MMMMMM" ;map
-    db "MMMMMMMM+~MMMMMM" ;map
-    db "MMMMMMM + MMM MM" ;map
-    db "MM  M  +++    MM" ;map
-    db "MM ++++M  +b  MM" ;map
-    db "M  8  MMM     MM" ;map
-    db " ~    MMMM   M M" ;map
-    db "oo~  M MMMMMMMMM" ;map
-    db "ooooMMMMMMMMMMMM" ;map
-    db "oMooMMMMMMM~MMMM" ;map
+    map "MMM M         MM", \
+        "MM     + + f  MM", \
+        "MM   ++M+ +  MMM", \
+        "M~~~+MMMMM ~ MMM", \
+        "M~~~+MMMMM ~~   ", \
+        "M ~~+~MMMMM~~~~~", \
+        " g  +~~ MM    ~ ", \
+        "    +   MMMM    ", \
+        "o   + MM MMM    ", \
+        "oo  + MM MMM G  ", \
+        "oo  ++M  MMM    ", \
+        "MooM  ++  MMMMMM", \
+        "MMMMMM~~+~MMMMMM", \
+        "MMMMMMMM+~MMMMMM", \
+        "MMMMMMM + MMM MM", \
+        "MM  M  +++    MM", \
+        "MM ++++M  +u  MM", \
+        "M  U  MMM     MM", \
+        " ~    MMMM   M M", \
+        "oo~  M MMMMMMMMM", \
+        "ooooMMMMMMMMMMMM", \
+        "oMooMMMMMMM~MMMM"
     db OWN | DRAPER, $00 | $03, $10
     db FOE | MULE, $20 | $0b, $01
     db FOE | RHINO, $20 | $0b, $01
@@ -857,18 +837,17 @@ MapE20::
     db $ff
 
 MapE21::
-    db $20, $0b
-    db "oooo   oo~~~~~oo +++++++++  M MM" ;map
-    db " ~o~    o ~~~~ P    ~oo~  ++  MM" ;map
-    db " ~~~ F    Mo~~~  MMM ~~~F   ++  " ;map
-    db "  ~      M M~M MMMMMMMoM   ~  ++" ;map
-    db "     o MMMMMMMMMMMMMMMMMMM~~~o  " ;map
-    db "++   ooMMMMMMMMMM MMMMMMMM ~~~ ~" ;map
-    db " o++  o  MMMMMM     MMM M ~o~~~ " ;map
-    db "M   ++ M MM    8    M    ~~~~~o " ;map
-    db "MMMM  ++ + + +       ~   o o~~oo" ;map
-    db "MMMMMM  + + + +    ~~~~~ooo   oo" ;map
-    db "MMMMM M  M   ~ M ~ M~+~~oMo o ~M" ;map
+    map "oooo   oo~~~~~oo +++++++++  M MM", \
+        " ~o~    o ~~~~ G    ~oo~  ++  MM", \
+        " ~~~ f    Mo~~~  MMM ~~~f   ++  ", \
+        "  ~      M M~M MMMMMMMoM   ~  ++", \
+        "     o MMMMMMMMMMMMMMMMMMM~~~o  ", \
+        "++   ooMMMMMMMMMM MMMMMMMM ~~~ ~", \
+        " o++  o  MMMMMM     MMM M ~o~~~ ", \
+        "M   ++ M MM    U    M    ~~~~~o ", \
+        "MMMM  ++ + + +       ~   o o~~oo", \
+        "MMMMMM  + + + +    ~~~~~ooo   oo", \
+        "MMMMM M  M   ~ M ~ M~+~~oMo o ~M"
     db OWN | DRAPER, $00 | $0d, $08
     db FOE | DRAPER, $00 | $0f, $01
     db FOE | MONSTER, $00 | $0e, $01
@@ -902,18 +881,17 @@ MapE21::
     db $ff
 
 MapE22::
-    db $20, $0b
-    db "MMMMMMM~M~~~ooM    ~~MMMM F  ++M" ;map
-    db "MMMMM    +++++o M ~  MMMMM ++   " ;map
-    db "M M    ++ ~ooo++++    MMMM+ 8  M" ;map
-    db "     ++ MM ooMMM  +  o M  +o MMM" ;map
-    db "P oo+   MMMooMMMMMd  ooMM~+ MMMM" ;map
-    db " ooo+MMMMM    MMMM M  o~  + MMMM" ;map
-    db "  o~+MMMMMb  MMMMMMMMM ~~++~MMMM" ;map
-    db "d o +MMMM  + MMMMMMMM  ++M MMMMM" ;map
-    db "+++++MMMMM+ ++ + +M+ ++Mo MMMMMM" ;map
-    db "MM MMMMMMMMM  +o+o+ + MMMMMMMMMM" ;map
-    db "MMMMM M MMM~MMoMo~oM MMoMMM MMM~" ;map
+    map "MMMMMMM~M~~~ooM    ~~MMMM f  ++M", \
+        "MMMMM    +++++o M ~  MMMMM ++   ", \
+        "M M    ++ ~ooo++++    MMMM+ U  M", \
+        "     ++ MM ooMMM  +  o M  +o MMM", \
+        "G oo+   MMMooMMMMMg  ooMM~+ MMMM", \
+        " ooo+MMMMM    MMMM M  o~  + MMMM", \
+        "  o~+MMMMMu  MMMMMMMMM ~~++~MMMM", \
+        "g o +MMMM  + MMMMMMMM  ++M MMMMM", \
+        "+++++MMMMM+ ++ + +M+ ++Mo MMMMMM", \
+        "MM MMMMMMMMM  +o+o+ + MMMMMMMMMM", \
+        "MMMMM M MMM~MMoMo~oM MMoMMM MMM~"
     db OWN | MUNKS, $00 | $1a, $02
     db OWN | BISON, $00 | $19, $03
     db OWN | SEEKER, $00 | $1b, $02
@@ -948,18 +926,17 @@ MapE22::
     db $ff
 
 MapE23::
-    db $20, $0b
-    db "~~MMM   ~    M       MMMM MMMMM " ;map
-    db "~ ~    +   ~MMMMF~   MMM  MMM   " ;map
-    db "  8  M M+  ~MMMMM~~~MMM~ +      " ;map
-    db "MM   MMM++    MM~~~ MMM +~   P  " ;map
-    db "MMMM    M+++  M ~   M  +++      " ;map
-    db "MMMMM    +  +#      ##+   +     " ;map
-    db "MMMMMMb  +  +~#      *+  d      " ;map
-    db "M MMMM M  + +~##    +#     M M M" ;map
-    db " ~~MMMMMMMM ++~#   ++ # MM MMMMM" ;map
-    db "~~~~M MMMMM     F     ##M   MMMM" ;map
-    db "~M~M    MM M M M   M M   M MMMMM" ;map
+    map "~~MMM   ~    M       MMMM MMMMM ", \
+        "~ ~    +   ~MMMMf~   MMM  MMM   ", \
+        "  U  M M+  ~MMMMM~~~MMM~ +      ", \
+        "MM   MMM++    MM~~~ MMM +~   G  ", \
+        "MMMM    M+++  M ~   M  +++      ", \
+        "MMMMM    +  +#      ##+   +     ", \
+        "MMMMMMu  +  +~#      *+  g      ", \
+        "M MMMM M  + +~##    +#     M M M", \
+        " ~~MMMMMMMM ++~#   ++ # MM MMMMM", \
+        "~~~~M MMMMM     f     ##M   MMMM", \
+        "~M~M    MM M M M   M M   M MMMMM"
     db OWN | FALCO, $40 | $06, $06
     db OWN | JAVI, $40 | $06, $06
     db OWN | HUNTER, $60 | $19, $06
@@ -996,18 +973,17 @@ MapE23::
     db $ff
 
 MapE24::
-    db $20, $0b
-    db "~~~#~ ####    ~~ M ~~ MMM~o oooo" ;map
-    db "M  ~## ~~#  F MMMMMM~~   ~~     " ;map
-    db "MM~~ # ~~#oo  MMMMMM ~~~~  P MMM" ;map
-    db "MM M~ ~~  #o  MMM MMMMM  +   MMM" ;map
-    db "MMMM  ~   #oo    ~  MMM +    MMM" ;map
-    db "MMM 8 ++++++o  o o o   ++  MMMMM" ;map
-    db "M         M ++ +oood ++    MMMMM" ;map
-    db "~~MMM  ob   ~~+~++   + M   MM oo" ;map
-    db "~~MMM~ ooooM~o~~~~+++ ~    o ooo" ;map
-    db "MM   ~~MMMMMMMoo ~~~~~  MMMM ooo" ;map
-    db "MM M~MM~MMMMM~o oM~M~M M MM o oM" ;map
+    map "~~~#~ ####    ~~ M ~~ MMM~o oooo", \
+        "M  ~## ~~#  f MMMMMM~~   ~~     ", \
+        "MM~~ # ~~#oo  MMMMMM ~~~~  G MMM", \
+        "MM M~ ~~  #o  MMM MMMMM  +   MMM", \
+        "MMMM  ~   #oo    ~  MMM +    MMM", \
+        "MMM U ++++++o  o o o   ++  MMMMM", \
+        "M         M ++ +ooog ++    MMMMM", \
+        "~~MMM  ou   ~~+~++   + M   MM oo", \
+        "~~MMM~ ooooM~o~~~~+++ ~    o ooo", \
+        "MM   ~~MMMMMMMoo ~~~~~  MMMM ooo", \
+        "MM M~MM~MMMMM~o oM~M~M M MM o oM"
     db OWN | BISON, $00 | $08, $04
     db OWN | DILLO, $00 | $09, $05
     db OWN | DILLO, $00 | $04, $05
@@ -1041,18 +1017,17 @@ MapE24::
     db $ff
 
 MapE25::
-    db $20, $0b
-    db "MMooo MMM MMMMMM~~~~~ MMMoooMMMM" ;map
-    db "ooooo~ MMM MMMMM +++d  ooooooMMM" ;map
-    db "oo~ ~~~ M ~~  M  M  ++  ~ oMMMMM" ;map
-    db "MMo  8 ~ ~~  ~ MMM M M+   oMM MM" ;map
-    db "MMM ~+~~        M M+++++  ooo  M" ;map
-    db "MM~~ + + + + + + ++  ~~~++oP   M" ;map
-    db "M ~~~~+ +M+ + + +  ~~~~ ~+~~  MM" ;map
-    db "MM~~~~~ MMMM  F M  ~MM M  +MMM  " ;map
-    db "oM  ~ ~ MMMM      ~ ~MMM F MMM  " ;map
-    db "ooMooo MMMMMM~~~ oooo M    oMMM " ;map
-    db "oMoMoMoMM MM M~M~ oMoM  o~o M  M" ;map
+    map "MMooo MMM MMMMMM~~~~~ MMMoooMMMM", \
+        "ooooo~ MMM MMMMM +++g  ooooooMMM", \
+        "oo~ ~~~ M ~~  M  M  ++  ~ oMMMMM", \
+        "MMo  U ~ ~~  ~ MMM M M+   oMM MM", \
+        "MMM ~+~~        M M+++++  ooo  M", \
+        "MM~~ + + + + + + ++  ~~~++oG   M", \
+        "M ~~~~+ +M+ + + +  ~~~~ ~+~~  MM", \
+        "MM~~~~~ MMMM  f M  ~MM M  +MMM  ", \
+        "oM  ~ ~ MMMM      ~ ~MMM f MMM  ", \
+        "ooMooo MMMMMM~~~ oooo M    oMMM ", \
+        "oMoMoMoMM MM M~M~ oMoM  o~o M  M"
     db FOE | MUNKS, $00 | $12, $02
     db OWN | MUNKS, $00 | $07, $05
     db OWN | RABBIT, $00 | $05, $03
@@ -1093,18 +1068,17 @@ MapE25::
     db $ff
 
 MapE26::
-    db $20, $0b
-    db "               F                " ;map
-    db "             ~                  " ;map
-    db "     M        ~       MM        " ;map
-    db "              ~~~               " ;map
-    db " 8     ~ b    ~~~            P  " ;map
-    db "       ~      ~~~   d           " ;map
-    db "              ~~~               " ;map
-    db "                ~               " ;map
-    db "MM              ~               " ;map
-    db "MMMMMM M  M   F ~  M            " ;map
-    db "MMM+MPM Mo o M M   M M   M M M  " ;map
+    map "               f                ", \
+        "             ~                  ", \
+        "     M        ~       MM        ", \
+        "              ~~~               ", \
+        " U     ~ u    ~~~            G  ", \
+        "       ~      ~~~   g           ", \
+        "              ~~~               ", \
+        "                ~               ", \
+        "MM              ~               ", \
+        "MMMMMM M  M   f ~  M            ", \
+        "MMM+MGM Mo o M M   M M   M M M  "
     db OWN | MUNKS, $00 | $06, $03
     db OWN | FALCO, $40 | $09, $04
     db FOE | SEEKER, $80 | $0e, $09
@@ -1149,18 +1123,17 @@ MapE26::
     db $ff
 
 MapE27::
-    db $20, $0b
-    db "          MMMMMMMMM       oooo  " ;map
-    db "   b ~      MMMMM           oo  " ;map
-    db " +  ~M    ~~MMMM ~~   MM        " ;map
-    db "+ ++       ~~MMMM~              " ;map
-    db " 8 ++  ~ F  ~MMM ~~          P  " ;map
-    db "    ++ ~      MM ~  F    +++++  " ;map
-    db "      ++++++ MMM    +   +     + " ;map
-    db "           ~~MMM +++++++++  oo  " ;map
-    db "MM         ~~~MMM~~       d o   " ;map
-    db "MMMMMM M  M ~MMM ~ M            " ;map
-    db "MMMMMMMMMM ~MMMMM  M M   M M M M" ;map
+    map "          MMMMMMMMM       oooo  ", \
+        "   u ~      MMMMM           oo  ", \
+        " +  ~M    ~~MMMM ~~   MM        ", \
+        "+ ++       ~~MMMM~              ", \
+        " U ++  ~ f  ~MMM ~~          G  ", \
+        "    ++ ~      MM ~  f    +++++  ", \
+        "      ++++++ MMM    +   +     + ", \
+        "           ~~MMM +++++++++  oo  ", \
+        "MM         ~~~MMM~~       g o   ", \
+        "MMMMMM M  M ~MMM ~ M            ", \
+        "MMMMMMMMMM ~MMMMM  M M   M M M M"
     db FOE | MUNKS, $00 | $1d, $04
     db OWN | FALCO, $00 | $05, $07
     db OWN | FALCO, $00 | $08, $02
@@ -1211,18 +1184,17 @@ MapE27::
     db $ff
 
 MapE28::
-    db $20, $0b
-    db "o       MMM~o ooooMMM~o~~~~MM MM" ;map
-    db "oob   ~ MMM~~        ~~  ~~   M " ;map
-    db "         M~~~       ~  M ~  P  o" ;map
-    db "MM           ~~~~M     MMM      " ;map
-    db "MM   MM    ~ ~~MMM     MMM      " ;map
-    db "MM   MM  M~~F~~MMM      MMM     " ;map
-    db "M        MMM MM M    F  MMMM d  " ;map
-    db "M 8      MMM ~M         MMM     " ;map
-    db "       o oM ~~~    M    MMMM   o" ;map
-    db "oo     ooooooo~~   MMM  M MMMMoo" ;map
-    db "oMoM MoM MoMoMoM + MM M  MM+MMoM" ;map
+    map "o       MMM~o ooooMMM~o~~~~MM MM", \
+        "oou   ~ MMM~~        ~~  ~~   M ", \
+        "         M~~~       ~  M ~  G  o", \
+        "MM           ~~~~M     MMM      ", \
+        "MM   MM    ~ ~~MMM     MMM      ", \
+        "MM   MM  M~~f~~MMM      MMM     ", \
+        "M        MMM MM M    f  MMMM g  ", \
+        "M U      MMM ~M         MMM     ", \
+        "       o oM ~~~    M    MMMM   o", \
+        "oo     ooooooo~~   MMM  M MMMMoo", \
+        "oMoM MoM MoMoMoM + MM M  MM+MMoM"
     db OWN | MULE, $20 | $02, $01
     db OWN | JAVI, $40 | $0c, $05
     db OWN | HAWKEYE, $00 | $04, $04
@@ -1249,18 +1221,17 @@ MapE28::
     db $ff
 
 MapE29::
-    db $20, $0b
-    db "MMMM ~~~~oooooooo  F  MMMMMMMMMM" ;map
-    db "MMM         o          MMMM MMMM" ;map
-    db "    M  8         M M MMMMM P  MM" ;map
-    db "    MM +   MMM  MMMMMMMMMM +  MM" ;map
-    db " b     +   MMM  MMMMMMMMM  +   o" ;map
-    db "       +    M   MMMMM~MMM  +   o" ;map
-    db " M     +         MM  ~~~   +  oo" ;map
-    db "MMMo o  +++++++++++++++++++  ooo" ;map
-    db "MMMMoooo     ~~~      d      MMM" ;map
-    db "M MMM oooooo~ ~~~~       ooo MMM" ;map
-    db " MMMM oMo oM M M~~ M M  o oooMM " ;map
+    map "MMMM ~~~~oooooooo  f  MMMMMMMMMM", \
+        "MMM         o          MMMM MMMM", \
+        "    M  U         M M MMMMM G  MM", \
+        "    MM +   MMM  MMMMMMMMMM +  MM", \
+        " u     +   MMM  MMMMMMMMM  +   o", \
+        "       +    M   MMMMM~MMM  +   o", \
+        " M     +         MM  ~~~   +  oo", \
+        "MMMo o  +++++++++++++++++++  ooo", \
+        "MMMMoooo     ~~~      g      MMM", \
+        "M MMM oooooo~ ~~~~       ooo MMM", \
+        " MMMM oMo oM M M~~ M M  o oooMM "
     db OWN | MUNKS, $00 | $06, $05
     db OWN | FALCO, $00 | $07, $00
     db FOE | ESTOL, $60 | $16, $08
@@ -1298,18 +1269,17 @@ MapE29::
     db $ff
 
 MapE30::
-    db $20, $0b
-    db "MMMMMM 8  MM oooooo   # ~~#  MM " ;map
-    db "MMMMM  +  MMM  oo        ~#   M " ;map
-    db "MMMMM  +  M  ~     M   M    d M " ;map
-    db "MMMMM ~~++~~~M   MMMMM MMM  +   " ;map
-    db "  MMMM~ ~ +~~MMMMMMMMM MM~~~+   " ;map
-    db " b  MMMMM + ~ MMMMM MMMMM~~~+   " ;map
-    db " +  MMM  ++   MMMM F~~M  ~~+P   " ;map
-    db " +  M  ++    MMMMM +~~   ++M    " ;map
-    db "+ ++ ++     MMMMM  +   ++MMMM   " ;map
-    db "oo  +  o    MMMM    +++  MMMMM  " ;map
-    db "oMoM MoM M MMMM MM M+M ~ MM M  M" ;map
+    map "MMMMMM U  MM oooooo   # ~~#  MM ", \
+        "MMMMM  +  MMM  oo        ~#   M ", \
+        "MMMMM  +  M  ~     M   M    g M ", \
+        "MMMMM ~~++~~~M   MMMMM MMM  +   ", \
+        "  MMMM~ ~ +~~MMMMMMMMM MM~~~+   ", \
+        " u  MMMMM + ~ MMMMM MMMMM~~~+   ", \
+        " +  MMM  ++   MMMM f~~M  ~~+G   ", \
+        " +  M  ++    MMMMM +~~   ++M    ", \
+        "+ ++ ++     MMMMM  +   ++MMMM   ", \
+        "oo  +  o    MMMM    +++  MMMMM  ", \
+        "oMoM MoM M MMMM MM M+M ~ MM M  M"
     db OWN | HAWKEYE, $00 | $06, $02
     db OWN | SEEKER, $00 | $08, $03
     db OWN | BISON, $00 | $07, $00
@@ -1338,29 +1308,28 @@ MapE30::
     db $ff
 
 MapE31::
-    db $20, $16
-    db "~ o  MMMMMMM o  MMMMMMMMMMM+ MMM" ;map
-    db "M  ~ MMMMMM  oo MMMMMMM MMM+   M" ;map
-    db "Mb  MMMMM    ~o   MMM      +P MM" ;map
-    db "    MMMMMMM ~F  M MMM d o  +  MM" ;map
-    db " +++MMMMMM     +  MMMMMM MMM++  " ;map
-    db "Moo+ MMMMM    ~ ++ MMMMMMMM~~+  " ;map
-    db " oo+ MMMMM   M   +  MMMMMMM ~+  " ;map
-    db "oo+MMMMMM    MMo +  ooMMM  ++~~ " ;map
-    db "o~+ MMMMM  MMMM~ ~~~ooooM~~F~~MM" ;map
-    db "  +~MMM    MMMMMo~~oooo oo+ ~~MM" ;map
-    db " o+~~~ ~    M o ~~~~oo## ++MMMMM" ;map
-    db " +++~+        F ~+~~~~ *+o MMMMM" ;map
-    db "+  M+ ++   ~##  + ~~~++#   MMMMM" ;map
-    db " ~MMMM  ++++ *+++++++  #~  MMMMM" ;map
-    db "~~MMMMM ~  ++#       ~~~~MMMMMMM" ;map
-    db "~8  M ~~   +oo   Mo  ~~  MMMMMMM" ;map
-    db "   ~ ~~~~  + ooMMMMMo ~MMMMMMMMM" ;map
-    db "++ ~~~~~~++ ++ MMMMM ~ MMMMMMMMM" ;map
-    db "~ ++~+~++   ~ ++MMMoo MMMMMMMMMM" ;map
-    db "    + +        +      MMMMMMMMMM" ;map
-    db "               +      MMMMMMMMMM" ;map
-    db " M o M M M M M M M ~ MM+MMMMM+MM" ;map
+    map "~ o  MMMMMMM o  MMMMMMMMMMM+ MMM", \
+        "M  ~ MMMMMM  oo MMMMMMM MMM+   M", \
+        "Mu  MMMMM    ~o   MMM      +G MM", \
+        "    MMMMMMM ~f  M MMM g o  +  MM", \
+        " +++MMMMMM     +  MMMMMM MMM++  ", \
+        "Moo+ MMMMM    ~ ++ MMMMMMMM~~+  ", \
+        " oo+ MMMMM   M   +  MMMMMMM ~+  ", \
+        "oo+MMMMMM    MMo +  ooMMM  ++~~ ", \
+        "o~+ MMMMM  MMMM~ ~~~ooooM~~f~~MM", \
+        "  +~MMM    MMMMMo~~oooo oo+ ~~MM", \
+        " o+~~~ ~    M o ~~~~oo## ++MMMMM", \
+        " +++~+        f ~+~~~~ *+o MMMMM", \
+        "+  M+ ++   ~##  + ~~~++#   MMMMM", \
+        " ~MMMM  ++++ *+++++++  #~  MMMMM", \
+        "~~MMMMM ~  ++#       ~~~~MMMMMMM", \
+        "~U  M ~~   +oo   Mo  ~~  MMMMMMM", \
+        "   ~ ~~~~  + ooMMMMMo ~MMMMMMMMM", \
+        "++ ~~~~~~++ ++ MMMMM ~ MMMMMMMMM", \
+        "~ ++~+~++   ~ ++MMMoo MMMMMMMMMM", \
+        "    + +        +      MMMMMMMMMM", \
+        "               +      MMMMMMMMMM", \
+        " M o M M M M M M M ~ MM+MMMMM+MM"
     db FOE | RHINO, $00 | $15, $02
     db FOE | RHINO, $00 | $17, $01
     db FOE | RHINO, $00 | $1a, $0b
@@ -1420,29 +1389,28 @@ MapE31::
     db $ff
 
 MapE32::
-    db $20, $16
-    db "MMMMM~~MMMMMMoooooooooooo ~#~+~ " ;map
-    db "MMMMM~~~ ~MM~oo o    MooMM~~#+~ " ;map
-    db "MMMM ~~ ~~~M oo   F  MMMMMM~#+  " ;map
-    db "MMM     ~~~~M oo        M    +  " ;map
-    db "ooo       ~~MMM~ ~     + + + +  " ;map
-    db "oo~~ ~ #      ~ ~ ~~~++ + + + + " ;map
-    db "oo~F ~~~##      ooo++MMM        " ;map
-    db "oo o~ ~###    d o +~~MMMM  ~P   " ;map
-    db " ooo      #+++++++++~MM  ~~~~MM " ;map
-    db "## oo    +*o~o MMM~ ++    ~ MMM " ;map
-    db "##oo   ++ ##oooMMMM + ++    MMM " ;map
-    db "o+ + + +   #~ oMMMMM+~##++  M M " ;map
-    db "+ + + + ++      MMM + ~#  ++    " ;map
-    db "ooo      +++  b  MM + ~~#   ++~ " ;map
-    db "o        +  ++  MMM +   #~ ~ ~+ " ;map
-    db "o      M +   ~++M MM+ ###~~F oo " ;map
-    db "o 8  MMMM+ ~~M  ++M +  #   ~~oo " ;map
-    db "++   MMM~+~~~MMM  +++ #MMM o~oo " ;map
-    db "oo++  MM + MMMM  o oooMMMMMMooo " ;map
-    db "ooo ++ ~M+ MMMM ooooooMMMMMMooo " ;map
-    db "      ++~+ MMMMMoooooMMMMMMM oo " ;map
-    db " ~ M   M+o MMMMMoMo oMM~MMMM ~oM" ;map
+    map "MMMMM~~MMMMMMoooooooooooo ~#~+~ ", \
+        "MMMMM~~~ ~MM~oo o    MooMM~~#+~ ", \
+        "MMMM ~~ ~~~M oo   f  MMMMMM~#+  ", \
+        "MMM     ~~~~M oo        M    +  ", \
+        "ooo       ~~MMM~ ~     + + + +  ", \
+        "oo~~ ~ #      ~ ~ ~~~++ + + + + ", \
+        "oo~f ~~~##      ooo++MMM        ", \
+        "oo o~ ~###    g o +~~MMMM  ~G   ", \
+        " ooo      #+++++++++~MM  ~~~~MM ", \
+        "## oo    +*o~o MMM~ ++    ~ MMM ", \
+        "##oo   ++ ##oooMMMM + ++    MMM ", \
+        "o+ + + +   #~ oMMMMM+~##++  M M ", \
+        "+ + + + ++      MMM + ~#  ++    ", \
+        "ooo      +++  u  MM + ~~#   ++~ ", \
+        "o        +  ++  MMM +   #~ ~ ~+ ", \
+        "o      M +   ~++M MM+ ###~~f oo ", \
+        "o U  MMMM+ ~~M  ++M +  #   ~~oo ", \
+        "++   MMM~+~~~MMM  +++ #MMM o~oo ", \
+        "oo++  MM + MMMM  o oooMMMMMMooo ", \
+        "ooo ++ ~M+ MMMM ooooooMMMMMMooo ", \
+        "      ++~+ MMMMMoooooMMMMMMM oo ", \
+        " ~ M   M+o MMMMMoMo oMM~MMMM ~oM"
     db FOE | GIANT, $00 | $19, $07
     db FOE | LYNX, $00 | $1b, $09
     db FOE | HUNTER, $00 | $1b, $0d
@@ -1502,29 +1470,28 @@ MapE32::
     db $ff
 
 MapE33::
-    db $20, $16
-    db "oooo#+o+    ooo ~~~+ +ooooo~ooo " ;map
-    db "oo +* +M++++ o ++++~+~+o#~~#ooo " ;map
-    db "o++ ## MMM +   +   ~~~+ ### o   " ;map
-    db "o+ ### MMMM+   +  ~~~~++ # M~   " ;map
-    db "o+    #  ++ +++ oM  ~~~+ # MM~~ " ;map
-    db " o++++#  + o M MMMMM~~M+      ~ " ;map
-    db "o~+   +++  ooMMMMMM   + +   ~ M " ;map
-    db " ~+ F +   oooMMMMM   ~+ +~P ~~M " ;map
-    db "~++~  +    MMMMMM ~+ ~+~+~~~~MM " ;map
-    db "~+~~~+++  MMMMMM F~~+ +~+~~MMoM " ;map
-    db "  +~+oo + MMMMMM  ~~+++~+  Mooo " ;map
-    db "  +++ooo+ MMMMMMMM  ~#  +     o " ;map
-    db "M~M o~o ++MMMMMMMMMM  #++   F o " ;map
-    db "MM M~MM~~~++  M MMMM  #+     Mo " ;map
-    db "MMMMM  ~~ +o++  MMMMMM +   MMMM " ;map
-    db "MMMM ++b ++MMMF MMMMMMM+  MMMMM " ;map
-    db "MM   +  ~MMMMMMMMMMMM  +  M MMM " ;map
-    db "M  ++   MMMMMMMMMMM~ ~+ ++ d MM " ;map
-    db "   8  ##MMMMMMMMMM~+~++   +  MM " ;map
-    db "       # MMMMMMMM   +        MM " ;map
-    db "       # MMMMMMM       MMM MMMM " ;map
-    db " M M  #~ MM M~MM   M MM MMMoM MM" ;map
+    map "oooo#+o+    ooo ~~~+ +ooooo~ooo ", \
+        "oo +* +M++++ o ++++~+~+o#~~#ooo ", \
+        "o++ ## MMM +   +   ~~~+ ### o   ", \
+        "o+ ### MMMM+   +  ~~~~++ # M~   ", \
+        "o+    #  ++ +++ oM  ~~~+ # MM~~ ", \
+        " o++++#  + o M MMMMM~~M+      ~ ", \
+        "o~+   +++  ooMMMMMM   + +   ~ M ", \
+        " ~+ f +   oooMMMMM   ~+ +~G ~~M ", \
+        "~++~  +    MMMMMM ~+ ~+~+~~~~MM ", \
+        "~+~~~+++  MMMMMM f~~+ +~+~~MMoM ", \
+        "  +~+oo + MMMMMM  ~~+++~+  Mooo ", \
+        "  +++ooo+ MMMMMMMM  ~#  +     o ", \
+        "M~M o~o ++MMMMMMMMMM  #++   f o ", \
+        "MM M~MM~~~++  M MMMM  #+     Mo ", \
+        "MMMMM  ~~ +o++  MMMMMM +   MMMM ", \
+        "MMMM ++u ++MMMf MMMMMMM+  MMMMM ", \
+        "MM   +  ~MMMMMMMMMMMM  +  M MMM ", \
+        "M  ++   MMMMMMMMMMM~ ~+ ++ g MM ", \
+        "   U  ##MMMMMMMMMM~+~++   +  MM ", \
+        "       # MMMMMMMM   +        MM ", \
+        "       # MMMMMMM       MMM MMMM ", \
+        " M M  #~ MM M~MM   M MM MMMoM MM"
     db OWN | FALCO, $a0 | $0e, $0f
     db OWN | JAVI, $a0 | $0e, $0f
     db OWN | DILLO, $a0 | $0e, $0f
@@ -1584,29 +1551,28 @@ MapE33::
     db $ff
 
 MapE34::
-    db $20, $16
-    db "MMMMMMM MMMMMMMMMMMMMMMMMMMMMMMM" ;map
-    db "MMMMM  ~  MMMMMMMMMMMMMMMMMMMMMM" ;map
-    db "MMM    ~~ MMMMM MMM   MMMMMMMMMM" ;map
-    db "MM  oo  ~MMMM        ~  MMM MMMM" ;map
-    db "MM  o b  MM  MMM   P ~~~     MMM" ;map
-    db "MM b         MMMMM   ~~~  d  MMM" ;map
-    db "MMM  oo o   M MMMM    ~      MMM" ;map
-    db "MM    o MMMMMMMMMMMM M     MMMMM" ;map
-    db "MMMM MM MMMMMMMMMMMMMMM MMMMMMMM" ;map
-    db "MMM  MMMMMMMMMMMMMMMMMM  MMMMMMM" ;map
-    db "MM oMMM   M  MMMMMMMMMM  MMMMMMM" ;map
-    db "MMM MMM~~~   MMMMMM M     MMMMMM" ;map
-    db "M      ~~~d   MMM  ~~~ o   oMMMM" ;map
-    db "MM      ~    M   ~~~~ oo     MMM" ;map
-    db "M    MMM o ~~MMM  ~~~~o oo8  MMM" ;map
-    db "M d  MMMMM ~~~MMMM  ~~ Mo  o MMM" ;map
-    db "MM M MMMMMM ~ MMMMMMMMMMMM   MMM" ;map
-    db "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" ;map
-    db "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" ;map
-    db "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" ;map
-    db "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM" ;map
-    db "MMM MMM MMMMMMMMM~MMMMM#MMMoMMMM" ;map
+    map "MMMMMMM MMMMMMMMMMMMMMMMMMMMMMMM", \
+        "MMMMM  ~  MMMMMMMMMMMMMMMMMMMMMM", \
+        "MMM    ~~ MMMMM MMM   MMMMMMMMMM", \
+        "MM  oo  ~MMMM        ~  MMM MMMM", \
+        "MM  o u  MM  MMM   G ~~~     MMM", \
+        "MM u         MMMMM   ~~~  g  MMM", \
+        "MMM  oo o   M MMMM    ~      MMM", \
+        "MM    o MMMMMMMMMMMM M     MMMMM", \
+        "MMMM MM MMMMMMMMMMMMMMM MMMMMMMM", \
+        "MMM  MMMMMMMMMMMMMMMMMM  MMMMMMM", \
+        "MM oMMM   M  MMMMMMMMMM  MMMMMMM", \
+        "MMM MMM~~~   MMMMMM M     MMMMMM", \
+        "M      ~~~g   MMM  ~~~ o   oMMMM", \
+        "MM      ~    M   ~~~~ oo     MMM", \
+        "M    MMM o ~~MMM  ~~~~o ooU  MMM", \
+        "M g  MMMMM ~~~MMMM  ~~ Mo  o MMM", \
+        "MM M MMMMMM ~ MMMMMMMMMMMM   MMM", \
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM", \
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM", \
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM", \
+        "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM", \
+        "MMM MMM MMMMMMMMM~MMMMM#MMMoMMMM"
     db OWN | YAMA, $00 | $0d, $0c
     db OWN | YAMA, $00 | $0f, $0d
     db OWN | YAMA, $00 | $17, $08
@@ -1665,29 +1631,28 @@ MapE34::
     db $ff
 
 MapE35::
-    db $20, $16
-    db "MMMMMMMMM oMMMMMMMMMMMM MMMMMM  " ;map
-    db "MMM   M oooMMMM M  MM    ~ MMMM " ;map
-    db "MMM 8   o ooMMM ~F~~    ~~~  MM " ;map
-    db "MMMM+  ~~~oMMMMM +~~~~  ~    MM " ;map
-    db "MMM ++ ~~~ MMMMM+ +  M       MM " ;map
-    db "M ~~  + ~~ MMMMMM +MM  M   ~MM~ " ;map
-    db "MM~~  +     MMMMM +M   MM o MMM " ;map
-    db "M ~   + ~  o MMMM + M    ~~  MM " ;map
-    db "M     +M  oo MMMMM+~M    ~~MMMM " ;map
-    db "MM    +MM   MMMMM~+~      ~MMMM " ;map
-    db "MMo   +   F MMMMM ++oo  ~  MM M " ;map
-    db "MMMM  +   + M MMM  +o ~~      M " ;map
-    db "MMM   +  +++  MMM  +  ~~~~      " ;map
-    db "MMM  ++++  M++  o o+~~  ~     M " ;map
-    db "MM  +~~M~  MM ++   +~~    ~~P   " ;map
-    db "M~~ +~~M        ++ +~+ + +~+ +  " ;map
-    db "M ~++ M      M   ~+M+d+ +~+~+ + " ;map
-    db "MM b         MMM~~      ~~~  ~~ " ;map
-    db "M      ~~~~~ MMMMM ~~~       ~~ " ;map
-    db "M ~   ~~~M~MMMMMMMM ~~~~   M~~~ " ;map
-    db "MMMM  ~~MMMMMMMMMMM ~~~MMMMMMMM " ;map
-    db "MMM M ~MMMM~MMMMM MM~MMMMMMMM MM" ;map
+    map "MMMMMMMMM oMMMMMMMMMMMM MMMMMM  ", \
+        "MMM   M oooMMMM M  MM    ~ MMMM ", \
+        "MMM U   o ooMMM ~f~~    ~~~  MM ", \
+        "MMMM+  ~~~oMMMMM +~~~~  ~    MM ", \
+        "MMM ++ ~~~ MMMMM+ +  M       MM ", \
+        "M ~~  + ~~ MMMMMM +MM  M   ~MM~ ", \
+        "MM~~  +     MMMMM +M   MM o MMM ", \
+        "M ~   + ~  o MMMM + M    ~~  MM ", \
+        "M     +M  oo MMMMM+~M    ~~MMMM ", \
+        "MM    +MM   MMMMM~+~      ~MMMM ", \
+        "MMo   +   f MMMMM ++oo  ~  MM M ", \
+        "MMMM  +   + M MMM  +o ~~      M ", \
+        "MMM   +  +++  MMM  +  ~~~~      ", \
+        "MMM  ++++  M++  o o+~~  ~     M ", \
+        "MM  +~~M~  MM ++   +~~    ~~G   ", \
+        "M~~ +~~M        ++ +~+ + +~+ +  ", \
+        "M ~++ M      M   ~+M+g+ +~+~+ + ", \
+        "MM u         MMM~~      ~~~  ~~ ", \
+        "M      ~~~~~ MMMMM ~~~       ~~ ", \
+        "M ~   ~~~M~MMMMMMMM ~~~~   M~~~ ", \
+        "MMMM  ~~MMMMMMMMMMM ~~~MMMMMMMM ", \
+        "MMM M ~MMMM~MMMMM MM~MMMMMMMM MM"
     db OWN | RABBIT, $00 | $04, $0f
     db OWN | LYNX, $00 | $02, $11
     db FOE | BISON, $00 | $06, $0c
@@ -1731,29 +1696,28 @@ MapE35::
     db $ff
 
 MapE36::
-    db $20, $16
-    db "MMM  b  MMMMMM~    M       M    " ;map
-    db "M       M M M        d      MMMM" ;map
-    db "     M          MM          MMMM" ;map
-    db "  ~~MMMM        MM      MM  MMMM" ;map
-    db "  ~~ MMM        MM   M  MM    M " ;map
-    db "  ~M~~M M  M    MM           d  " ;map
-    db "MMM ~      M             ~      " ;map
-    db "MMM  M    MMMM    M     ~~  M   " ;map
-    db "MM   MM    MMM         M    M   " ;map
-    db "MM    M     M   M      MM    M  " ;map
-    db "M     M       F   MM    M    MMM" ;map
-    db "         M M      MM     ~   MMM" ;map
-    db " MM MM   MMMMM    M     ~~    MM" ;map
-    db "    MM   MMMM~~    M   M~       " ;map
-    db "          MMM ~  M          P   " ;map
-    db "  8    M      ~M                " ;map
-    db "      MMM    F~~M     MM   M    " ;map
-    db "     MMMM~~   ~ MM    MM  M  M  " ;map
-    db "MMMMMMMM~~~MM   MM    MM   MMMMM" ;map
-    db "MMMMMMMM  M       M MMMM   MMMMM" ;map
-    db "MMMMMMMMMM         MMMMMMM MMMMM" ;map
-    db "M M MbM M MM M M #MMMMMPMMM MPMM" ;map
+    map "MMM  u  MMMMMM~    M       M    ", \
+        "M       M M M        g      MMMM", \
+        "     M          MM          MMMM", \
+        "  ~~MMMM        MM      MM  MMMM", \
+        "  ~~ MMM        MM   M  MM    M ", \
+        "  ~M~~M M  M    MM           g  ", \
+        "MMM ~      M             ~      ", \
+        "MMM  M    MMMM    M     ~~  M   ", \
+        "MM   MM    MMM         M    M   ", \
+        "MM    M     M   M      MM    M  ", \
+        "M     M       f   MM    M    MMM", \
+        "         M M      MM     ~   MMM", \
+        " MM MM   MMMMM    M     ~~    MM", \
+        "    MM   MMMM~~    M   M~       ", \
+        "          MMM ~  M          G   ", \
+        "  U    M      ~M                ", \
+        "      MMM    f~~M     MM   M    ", \
+        "     MMMM~~   ~ MM    MM  M  M  ", \
+        "MMMMMMMM~~~MM   MM    MM   MMMMM", \
+        "MMMMMMMM  M       M MMMM   MMMMM", \
+        "MMMMMMMMMM         MMMMMMM MMMMM", \
+        "M M MuM M MM M M #MMMMMGMMM MGMM"
     db FOE | MONSTER, $00 | $08, $0b
     db FOE | MONSTER, $00 | $09, $09
     db OWN | MUNKS, $00 | $0e, $0d
