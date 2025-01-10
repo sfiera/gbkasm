@@ -9,6 +9,7 @@ INCLUDE "consts.inc"
 INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
+INCLUDE "nectaris/map.inc"
 INCLUDE "nectaris/text.inc"
 INCLUDE "nectaris/units.inc"
 
@@ -2862,8 +2863,6 @@ Call_000_110e:
 
 Call_000_110f:
     ld a, BANK(Call_007_6bcf)
-
-Call_000_1111::
     call SetROMBank
     ld a, $02
     call Call_000_05c8
@@ -3747,53 +3746,53 @@ Call_000_174a:
     ret
 
 
-Call_000_1761:
+ReadIRData:
     call Call_000_1730
     ld e, l
     ld d, h
     ld c, $00
     trap IRRead
-    jr c, jr_000_1770
+    jr c, .jr_000_1770
 
     ld a, $00
-    jr z, jr_000_1772
+    jr z, .jr_000_1772
 
-jr_000_1770:
+.jr_000_1770
     ld a, $01
 
-jr_000_1772:
+.jr_000_1772
     call Call_000_174a
     ret
 
 
-Call_000_1776:
+CloseIRConn:
     call Call_000_1730
     trap IRClose
-    jr c, jr_000_1781
+    jr c, .jr_000_1781
 
     ld a, $00
-    jr z, jr_000_1783
+    jr z, .jr_000_1783
 
-jr_000_1781:
+.jr_000_1781
     ld a, $01
 
-jr_000_1783:
+.jr_000_1783
     call Call_000_174a
     ret
 
 
-Call_000_1787:
+ListenIR:
     call Call_000_1730
     trap IRListen
-    jr c, jr_000_1792
+    jr c, .jr_000_1792
 
     ld a, $00
-    jr jr_000_1794
+    jr .jr_000_1794
 
-jr_000_1792:
+.jr_000_1792
     ld a, $01
 
-jr_000_1794:
+.jr_000_1794
     call Call_000_174a
     ret
 
@@ -4805,13 +4804,13 @@ jr_000_1f24:
     bit 2, a
     jp z, Jump_000_1f4c
 
-    jp Jump_000_1f98
+    jp DoTitleScreen
 
 
 Jump_000_1f4c:
     call Call_000_110f
     cp $88
-    jr nz, jr_000_1f98
+    jr nz, DoTitleScreen
 
     ld a, $0c
     push af
@@ -4837,13 +4836,12 @@ Jump_000_1f4c:
     call Call_000_0abb
     call Call_000_1610
     cp $ff
-    jp z, Jump_000_1f98
+    jp z, DoTitleScreen
 
     jp Jump_000_28c9
 
 
-Jump_000_1f98:
-jr_000_1f98:
+DoTitleScreen:
     call Call_000_09df
     ld a, BANK(ScreenTitle)
     call SetROMBank
@@ -4853,17 +4851,20 @@ jr_000_1f98:
     call Call_000_0cbf
     call Call_000_09eb
 
-Jump_000_1fae:
+.loop
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
     bit 3, a
-    jp z, Jump_000_1fae
+    jp z, .loop
 
     ld a, $01
     call Call_000_0d07
 
-Jump_000_1fc0:
+    ; fall through
+
+
+ExitLevel:
     call Call_000_110e
     call Call_000_0de7
     ld a, $02
@@ -4962,7 +4963,7 @@ DoMenuContinue:
 DoLoadData:
     ld a, $00
     ld [$d8e8], a
-    ld a, $00
+    ld a, MAP_STORY
     ld [$d7a8], a
     call Call_000_0ec6
     cp $00
@@ -4978,45 +4979,43 @@ DoLoadData:
 DoPassword:
     call Call_000_0f56
     cp $00
-    jp z, Jump_000_2084
+    jp z, .matched
 
     ld a, $02
     call Call_000_0cbf
     jp DoMenuContinue
 
-
-Jump_000_2084:
+.matched
     ld a, [$d79a]
-    ld b, $00
-    cp $10
-    jr c, jr_000_20aa
+    ld b, MAP_STORY
+    cp MAP_END_A
+    jr c, .campaign
 
-    ld b, $01
-    cp $20
-    jr c, jr_000_20aa
+    ld b, MAP_LEGEND
+    cp MAP_END_B
+    jr c, .campaign
 
-    ld b, $02
-    cp $4c
-    jr c, jr_000_20a3
+    ld b, MAP_WINNER
+    cp MAP_END_E
+    jr c, .winner
 
-    ld b, $00
-    cp $5c
-    jr c, jr_000_20aa
+    ld b, MAP_STORY
+    cp MAP_END_C
+    jr c, .campaign
 
-    ld b, $01
-    jr jr_000_20aa
+    ld b, MAP_LEGEND
+    jr .campaign
 
-jr_000_20a3:
+.winner
     ld a, b
     ld [$d7a8], a
-    jp Jump_000_27de
+    jp EnterLevel
 
-
-jr_000_20aa:
+.campaign
     ld a, b
     ld [$d7a8], a
-    call Call_000_2715
-    jp Jump_000_27de
+    call ShowWorldMap
+    jp EnterLevel
 
 
 DoMenuPlayNewGame:
@@ -5046,23 +5045,23 @@ DoMenuPlayNewGame:
 
 
 DoStoryMap:
-    ld a, $00
+    ld a, MAP_STORY
     ld [$d7a8], a
-    ld a, $00
+    ld a, MAP_BEGIN_A
     ld [$d79a], a
-    call Call_000_2645
-    call Call_000_2715
-    jp Jump_000_27de
+    call ShowPrologue
+    call ShowWorldMap
+    jp EnterLevel
 
 
 DoLegendMap:
-    ld a, $01
+    ld a, MAP_LEGEND
     ld [$d7a8], a
-    ld a, $10
+    ld a, MAP_BEGIN_B
     ld [$d79a], a
-    call Call_000_2645
-    call Call_000_2715
-    jp Jump_000_27de
+    call ShowPrologue
+    call ShowWorldMap
+    jp EnterLevel
 
 
 DoCampaignMap:
@@ -5090,9 +5089,9 @@ DoWinners:
     cp $00
     jp nz, DoCampaignMap
 
-    ld a, $02
+    ld a, MAP_WINNER
     ld [$d7a8], a
-    jp Jump_000_27de
+    jp EnterLevel
 
 
 DoSPWinners:
@@ -5100,9 +5099,9 @@ DoSPWinners:
     cp $00
     jp nz, DoCampaignMap
 
-    ld a, $02
+    ld a, MAP_WINNER
     ld [$d7a8], a
-    jp Jump_000_27de
+    jp EnterLevel
 
 
 Jump_000_2142:
@@ -5137,7 +5136,7 @@ DoNewEditMap:
     cp $00
     jp nz, DoMenuConstruction.again
 
-    ld a, $04
+    ld a, MAP_EDIT
     ld [$d7a8], a
     jp Jump_000_2828
 
@@ -5145,13 +5144,13 @@ DoNewEditMap:
 DoLoadEditMap:
     ld a, $00
     ld [$d8e8], a
-    ld a, $04
+    ld a, MAP_EDIT
     ld [$d7a8], a
     call Call_000_0f0e
     cp $00
     jp nz, DoMenuConstruction.again
 
-    ld a, $04
+    ld a, MAP_EDIT
     ld [$d7a8], a
     ld a, [$d8e9]
     ld b, a
@@ -5164,13 +5163,13 @@ DoLoadEditMap:
 DoPlayEditMap:
     ld a, $00
     ld [$d8e8], a
-    ld a, $04
+    ld a, MAP_EDIT
     ld [$d7a8], a
     call Call_000_0f0e
     cp $00
     jp nz, DoMenuConstruction
 
-    ld a, $03
+    ld a, MAP_PLAYEDIT
     ld [$d7a8], a
     ld a, [$d8e9]
     ld b, a
@@ -5190,7 +5189,7 @@ DoSendDataToPC:
     call Call_000_0c3c
     ld a, $00
     ld [$d8e8], a
-    ld a, $04
+    ld a, MAP_EDIT
     ld [$d7a8], a
     call Call_000_0f0e
     push af
@@ -5217,17 +5216,15 @@ DoSendDataToPC:
     call Call_000_0c3c
     ld a, b
     cp $00
-    jr z, jr_000_221f
+    jr z, .jr_000_221f
 
     ld a, $0d
     call Call_000_0d07
     jp DoMenuGBKiss.again
 
 
-jr_000_221f:
+.jr_000_221f
     call Call_000_0927
-
-Call_000_2222::
     ld a, $0a
     call Call_000_0d07
     ld hl, WindowSending
@@ -5242,23 +5239,23 @@ Call_000_2222::
     call Call_000_085d
     call Call_000_085d
     ld hl, $d000
-    ld a, $54
+    ld a, "T"
     ld [hl+], a
-    ld a, $52
+    ld a, "R"
     ld [hl+], a
-    ld a, $41
+    ld a, "A"
     ld [hl+], a
-    ld a, $4e
+    ld a, "N"
     ld [hl+], a
-    ld a, $43
+    ld a, "C"
     ld [hl+], a
-    ld a, $45
+    ld a, "E"
     ld [hl+], a
     ld a, [$d86e]
     ld [hl], a
-    call Call_000_1787
+    call ListenIR
     cp $00
-    jr nz, jr_000_2287
+    jr nz, .failure
 
     ld a, $0a
     call Call_000_0d07
@@ -5276,7 +5273,7 @@ Call_000_2222::
     jp DoMenuGBKiss
 
 
-jr_000_2287:
+.failure
     ld hl, WindowCommFailed
     ld a, l
     ld [$d8e0], a
@@ -5301,10 +5298,8 @@ DoRecvDataFromPC:
     call Call_000_0c3c
     ld a, $01
     ld [$d8e8], a
-    ld a, $04
+    ld a, MAP_EDIT
     ld [$d7a8], a
-
-Jump_000_22c3::
     call Call_000_0f0e
     push af
     call Call_000_0de7
@@ -5322,14 +5317,14 @@ Jump_000_22c3::
     call Call_000_0c3c
     ld a, b
     cp $00
-    jr z, jr_000_22f1
+    jr z, .jr_000_22f1
 
     ld a, $0d
     call Call_000_0d07
     jp DoMenuGBKiss.again
 
 
-jr_000_22f1:
+.jr_000_22f1
     call Call_000_0927
     ld a, $0a
     call Call_000_0d07
@@ -5345,19 +5340,19 @@ jr_000_22f1:
     call Call_000_085d
     call Call_000_085d
     ld hl, $d000
-    ld a, $52
+    ld a, "R"
     ld [hl+], a
-    ld a, $45
+    ld a, "E"
     ld [hl+], a
-    ld a, $43
+    ld a, "C"
     ld [hl+], a
-    ld a, $45
+    ld a, "E"
     ld [hl+], a
-    ld a, $49
+    ld a, "I"
     ld [hl+], a
-    ld a, $56
+    ld a, "V"
     ld [hl+], a
-    ld a, $45
+    ld a, "E"
     ld [hl+], a
     ld a, [$d8e9]
     ld b, a
@@ -5366,47 +5361,47 @@ jr_000_22f1:
     add $06
     inc a
     ld [hl], a
-    call Call_000_1787
+    call ListenIR
     cp $00
-    jr nz, jr_000_23b6
+    jr nz, .failure
 
     ld hl, $d000
     ld a, [hl+]
-    cp $4e
-    jr nz, jr_000_23b6
+    cp "N"
+    jr nz, .failure
 
     ld a, [hl+]
-    cp $45
-    jr nz, jr_000_23b6
+    cp "E"
+    jr nz, .failure
 
     ld a, [hl+]
-    cp $43
-    jr nz, jr_000_23b6
+    cp "C"
+    jr nz, .failure
 
     ld a, [hl+]
-    cp $54
-    jr nz, jr_000_23b6
+    cp "T"
+    jr nz, .failure
 
     ld a, [hl+]
-    cp $41
-    jr nz, jr_000_23b6
+    cp "A"
+    jr nz, .failure
 
     ld a, [hl+]
-    cp $52
-    jr nz, jr_000_23b6
+    cp "R"
+    jr nz, .failure
 
     ld hl, $d000
     ld bc, $01fe
     ld d, $00
 
-jr_000_236a:
+.loop
     ld a, [hl+]
     add d
     ld d, a
     dec bc
     ld a, b
     or c
-    jr nz, jr_000_236a
+    jr nz, .loop
 
     ld a, d
     push af
@@ -5417,7 +5412,7 @@ jr_000_236a:
     ld b, a
     ld a, [hl]
     cp b
-    jr nz, jr_000_23b6
+    jr nz, .failure
 
     ld a, $0a
     call Call_000_0d07
@@ -5441,8 +5436,7 @@ jr_000_236a:
     call Call_000_0cbf
     jp DoMenuGBKiss.again
 
-
-jr_000_23b6:
+.failure
     ld a, $0d
     call Call_000_0d07
     ld hl, WindowCommFailed
@@ -5498,7 +5492,7 @@ DoSendDataToGB:
     call Call_000_0c3c
     ld a, $00
     ld [$d8e8], a
-    ld a, $04
+    ld a, MAP_EDIT
     ld [$d7a8], a
     call Call_000_0f0e
     push af
@@ -5524,14 +5518,14 @@ DoSendDataToGB:
     call Call_000_0c3c
     ld a, b
     cp $00
-    jr z, jr_000_2464
+    jr z, .jr_000_2464
 
     ld a, $0d
     call Call_000_0d07
     jp DoMenuGBKiss.again
 
 
-jr_000_2464:
+.jr_000_2464
     ld a, $0a
     call Call_000_0d07
     ld hl, WindowSending
@@ -5545,9 +5539,9 @@ jr_000_2464:
     call Call_000_085d
     call Call_000_085d
     call Call_000_085d
-    call Call_000_1787
+    call ListenIR
     cp $00
-    jr nz, jr_000_24b0
+    jr nz, .failure
 
     ld a, $0a
     call Call_000_0d07
@@ -5564,8 +5558,7 @@ jr_000_2464:
     call Call_000_0cbf
     jp DoMenuGBKiss
 
-
-jr_000_24b0:
+.failure
     ld hl, WindowCommFailed
     ld a, l
     ld [$d8e0], a
@@ -5590,7 +5583,7 @@ DoRecvDataFromGB:
     call Call_000_0c3c
     ld a, $01
     ld [$d8e8], a
-    ld a, $04
+    ld a, MAP_EDIT
     ld [$d7a8], a
     call Call_000_0f0e
     push af
@@ -5609,14 +5602,13 @@ DoRecvDataFromGB:
     call Call_000_0c3c
     ld a, b
     cp $00
-    jr z, jr_000_251a
+    jr z, .jr_000_251a
 
     ld a, $0d
     call Call_000_0d07
     jp DoMenuGBKiss.again
 
-
-jr_000_251a:
+.jr_000_251a
     ld a, $0a
     call Call_000_0d07
     ld hl, WindowReceiving
@@ -5631,7 +5623,7 @@ jr_000_251a:
     call Call_000_085d
     call Call_000_085d
     ld hl, $d000
-    call Call_000_1761
+    call ReadIRData
     cp $00
     jr nz, jr_000_25a5
 
@@ -5642,7 +5634,7 @@ jr_000_251a:
     jp nz, Jump_000_25a5
 
     ld hl, $d100
-    call Call_000_1761
+    call ReadIRData
     cp $00
     jr nz, jr_000_25a5
 
@@ -5652,7 +5644,7 @@ jr_000_251a:
     bit 1, a
     jp nz, Jump_000_25a5
 
-    call Call_000_1776
+    call CloseIRConn
     cp $00
     jp nz, Jump_000_25a5
 
@@ -5704,6 +5696,7 @@ DoKissMenu:
     trap AudioStop
     trap $61
 
+
 DoMenuQuickStart:
     ld a, $00
     ld [$d8df], a
@@ -5724,8 +5717,10 @@ DoMenuQuickStart:
     cp $02
     jp z, DoGuicyMode
 
+    ; This is unreachable due as the menu only has 3 entries.
+    ; It may be left in from an in-development version of the game.
     cp $03
-    jp z, DoUnknownMode
+    jp z, DoDemoMode
 
     jr .again
 
@@ -5735,17 +5730,17 @@ Do1PlayMode:
     cp $00
     jp nz, DoMenuQuickStart.again
 
-    ld b, $00
+    ld b, MAP_STORY
     ld a, [$d79a]
-    cp $10
+    cp MAP_END_A
     jr c, jr_000_260e
 
-    ld b, $01
+    ld b, MAP_LEGEND
 
 jr_000_260e:
     ld a, b
     ld [$d7a8], a
-    jp Jump_000_27de
+    jp EnterLevel
 
 
 Do2PlayMode:
@@ -5753,9 +5748,9 @@ Do2PlayMode:
     cp $00
     jp nz, DoMenuQuickStart.again
 
-    ld a, $14
+    ld a, MAP_2PLAY
     ld [$d7a8], a
-    jp Jump_000_27de
+    jp EnterLevel
 
 
 DoGuicyMode:
@@ -5763,22 +5758,22 @@ DoGuicyMode:
     cp $00
     jp nz, DoMenuQuickStart.again
 
-    ld a, $0a
+    ld a, MAP_GUICY
     ld [$d7a8], a
-    jp Jump_000_27de
+    jp EnterLevel
 
 
-DoUnknownMode:
+DoDemoMode:
     call Call_000_106b
     cp $00
     jp nz, DoMenuQuickStart.again
 
-    ld a, $1e
+    ld a, MAP_DEMO
     ld [$d7a8], a
-    jp Jump_000_27de
+    jp EnterLevel
 
 
-Call_000_2645:
+ShowPrologue:
     call Call_000_09df
     call Call_000_0d30
     call Call_000_0927
@@ -5793,7 +5788,7 @@ Call_000_2645:
     call Call_000_0c65
     ld a, b
     cp $02
-    jp nz, Jump_000_2711
+    jp nz, .skip
 
     call Call_000_09df
     ld a, BANK(ScreenPrologue2)
@@ -5805,7 +5800,7 @@ Call_000_2645:
     call Call_000_0c65
     ld a, b
     cp $02
-    jp nz, Jump_000_2711
+    jp nz, .skip
 
     call Call_000_09df
     ld a, BANK(ScreenPrologue3)
@@ -5817,7 +5812,7 @@ Call_000_2645:
     call Call_000_0c65
     ld a, b
     cp $02
-    jp nz, Jump_000_2711
+    jp nz, .skip
 
     call Call_000_09df
     ld a, BANK(ScreenPrologue4)
@@ -5829,7 +5824,7 @@ Call_000_2645:
     call Call_000_0c65
     ld a, b
     cp $02
-    jp nz, Jump_000_2711
+    jp nz, .skip
 
     call Call_000_09df
     ld a, BANK(ScreenPrologue5)
@@ -5841,7 +5836,7 @@ Call_000_2645:
     call Call_000_0c65
     ld a, b
     cp $02
-    jr nz, jr_000_2711
+    jr nz, .skip
 
     call Call_000_09df
     ld a, BANK(ScreenPrologue6)
@@ -5853,7 +5848,7 @@ Call_000_2645:
     call Call_000_0c65
     ld a, b
     cp $02
-    jr nz, jr_000_2711
+    jr nz, .skip
 
     call Call_000_09df
     ld a, BANK(ScreenPrologue7)
@@ -5865,15 +5860,14 @@ Call_000_2645:
     call Call_000_0c65
     ld a, b
     cp $02
-    jr nz, jr_000_2711
+    jr nz, .skip
 
-Jump_000_2711:
-jr_000_2711:
+.skip
     call Call_000_09df
     ret
 
 
-Call_000_2715:
+ShowWorldMap:
     call Call_000_09df
     call Call_000_0d30
     ld a, BANK(ScreenWorldMap)
@@ -5900,7 +5894,7 @@ jr_000_2736:
     ret
 
 
-Call_000_274b:
+ShowEpilogue:
     call Call_000_09df
     call Call_000_0d30
     call Call_000_0927
@@ -5957,7 +5951,7 @@ Call_000_274b:
     ret
 
 
-Jump_000_27de:
+EnterLevel:
     call Call_000_2899
     call Call_000_0927
     call Call_000_1244
@@ -6030,7 +6024,7 @@ Jump_000_2869:
     pop af
     call Call_000_10ae
     call Call_000_2899
-    ld a, $03
+    ld a, MAP_PLAYEDIT
     ld [$d7a8], a
     call Call_000_1224
     call Call_000_3493
@@ -6077,7 +6071,7 @@ Jump_000_28c9::
     call Call_000_0abb
     call Call_000_14b0
     ld a, [$d7a8]
-    cp $1e
+    cp MAP_DEMO
     jr nz, jr_000_28f4
 
     jp $4000
@@ -6085,10 +6079,10 @@ Jump_000_28c9::
 
 jr_000_28f4:
     ld a, [$d7a8]
-    cp $14
+    cp MAP_2PLAY
     jr z, jr_000_2919
 
-    cp $0a
+    cp MAP_GUICY
     jr z, jr_000_290c
 
     ld a, [$d7a4]
@@ -6305,8 +6299,8 @@ Jump_000_2a75:
     jp nz, Jump_000_2b64
 
     ld a, [$d7a8]
-    cp $0a
-    jr c, jr_000_2aca
+    cp MAP_GUICY
+    jr c, .normal
 
     call Call_000_0db5
     ld a, $08
@@ -6327,22 +6321,22 @@ Jump_000_2a75:
     ld a, $00
     ld [$d8df], a
 
-jr_000_2ab2:
+.againNoSave
     ld hl, WindowInGameNoSave
     call RunMenu
     cp $00
-    jp nz, Jump_000_2b43
+    jp nz, .returnGame
 
     ld a, [$d8df]
     cp $00
-    jr z, jr_000_2b3d
+    jr z, .giveUp
 
     cp $01
-    jr z, jr_000_2b43
+    jr z, .returnGame
 
-    jr jr_000_2ab2
+    jr .againNoSave
 
-jr_000_2aca:
+.normal
     call Call_000_0db5
     ld a, $08
     call Call_000_0d07
@@ -6359,38 +6353,38 @@ jr_000_2aca:
     ld a, $05
     call Call_000_0cbf
 
-jr_000_2af3:
+.jr_000_2af3
     call Call_000_0de7
     ld a, $00
     ld [$d8df], a
 
-jr_000_2afb:
+.againWithSave
     ld hl, WindowInGame
     call RunMenu
     cp $00
-    jp nz, Jump_000_2b43
+    jp nz, .returnGame
 
     ld a, [$d8df]
     cp $00
-    jr z, jr_000_2b1b
+    jr z, .dataSave
 
     cp $01
-    jr z, jr_000_2b3d
+    jr z, .giveUp
 
     cp $02
-    jr z, jr_000_2b43
+    jr z, .returnGame
 
     cp $03
-    jr z, jr_000_2b40
+    jr z, .skipLevel
 
-    jr jr_000_2afb
+    jr .againWithSave
 
-jr_000_2b1b:
+.dataSave
     ld a, $01
     ld [$d8e8], a
     call Call_000_0ec6
     cp $00
-    jr nz, jr_000_2af3
+    jr nz, .jr_000_2af3
 
     call Call_000_11f1
     ld a, [$d8e9]
@@ -6400,18 +6394,15 @@ jr_000_2b1b:
     call Call_000_108b
     call Call_000_0eee
     call Call_000_0c3c
-    jr jr_000_2b43
+    jr .returnGame
 
-jr_000_2b3d:
-    jp Jump_000_3370
+.giveUp
+    jp LoseLevel
 
+.skipLevel
+    jp WinLevel
 
-jr_000_2b40:
-    jp Jump_000_32dc
-
-
-Jump_000_2b43:
-jr_000_2b43:
+.returnGame:
     ld a, [$db04]
     ld [$d79f], a
     ld a, [$db05]
@@ -7480,15 +7471,15 @@ Jump_000_3272::
 
     ld b, a
     ld a, [$d7a8]
-    cp $0a
+    cp MAP_GUICY
     jr z, jr_000_3298
 
     ld a, b
     cp $03
-    jp z, Jump_000_3370
+    jp z, LoseLevel
 
     cp $04
-    jp z, Jump_000_32dc
+    jp z, WinLevel
 
     jp Jump_000_28c9
 
@@ -7496,56 +7487,55 @@ Jump_000_3272::
 jr_000_3298:
     ld a, b
     cp $03
-    jp z, Jump_000_32dc
+    jp z, WinLevel
 
     cp $04
-    jp z, Jump_000_3370
+    jp z, LoseLevel
 
     jp Jump_000_28c9
 
 
 jr_000_32a6:
     ld a, [$d7a8]
-    cp $0a
+    cp MAP_GUICY
     jr z, jr_000_32b7
 
     ld a, [$d7a4]
     bit 0, a
-    jr z, jr_000_32dc
+    jr z, WinLevel
 
-    jp Jump_000_3370
+    jp LoseLevel
 
 
 jr_000_32b7:
     ld a, [$d7a4]
     bit 0, a
-    jr nz, jr_000_32dc
+    jr nz, WinLevel
 
-    jp Jump_000_3370
+    jp LoseLevel
 
 
 jr_000_32c1:
     ld a, [$d7a8]
-    cp $0a
+    cp MAP_GUICY
     jr z, jr_000_32d2
 
     ld a, [$d7a4]
     bit 0, a
-    jr nz, jr_000_32dc
+    jr nz, WinLevel
 
-    jp Jump_000_3370
+    jp LoseLevel
 
 
 jr_000_32d2:
     ld a, [$d7a4]
     bit 0, a
-    jr z, jr_000_32dc
+    jr z, WinLevel
 
-    jp Jump_000_3370
+    jp LoseLevel
 
 
-Jump_000_32dc:
-jr_000_32dc:
+WinLevel:
     call Call_000_09df
     call Call_000_0d30
     call Call_000_0927
@@ -7565,65 +7555,66 @@ jr_000_32dc:
     ld a, $11
     call Call_000_0cbf
     call Call_000_1ab7
+
     ld a, [$d7a8]
-    cp $00
-    jr z, jr_000_331e
+    cp MAP_STORY
+    jr z, .story
 
-    cp $01
-    jp z, Jump_000_3348
+    cp MAP_LEGEND
+    jp z, .legend
 
-    jp Jump_000_1fc0
+    jp ExitLevel
 
 
-jr_000_331e:
+.story
     ld a, $11
     call Call_000_0cbf
     ld a, [$d79a]
     inc a
     ld [$d79a], a
-    cp 16  ; Completed A16 Zonect
-    jp z, .storyCampaignDone
+    cp MAP_END_A  ; Completed A16 Zonect
+    jp z, .storyDone
 
-    cp 92  ; Completed C16 Tcenoz
-    jp z, .storyCampaignDone
+    cp MAP_END_C  ; Completed C16 Tcenoz
+    jp z, .storyDone
 
-    call Call_000_2715
-    jp Jump_000_27de
+    call ShowWorldMap
+    jp EnterLevel
 
 
-.storyCampaignDone
-    ld a, $00
+.storyDone
+    ld a, MAP_STORY
     call RecordCompletion
-    call Call_000_274b
+    call ShowEpilogue
     call Call_000_1cf5
-    jp Jump_000_1fc0
+    jp ExitLevel
 
 
-Jump_000_3348:
+.legend
     ld a, $11
     call Call_000_0cbf
     ld a, [$d79a]
     inc a
     ld [$d79a], a
-    cp 32  ; Completed B16 Nector
-    jr z, .legendCampaignComplete
+    cp MAP_END_B  ; Completed B16 Nector
+    jr z, .legendDone
 
-    cp 108  ; Completed D16 Rotcen
-    jr z, .legendCampaignComplete
+    cp MAP_END_D  ; Completed D16 Rotcen
+    jr z, .legendDone
 
-    call Call_000_2715
-    jp Jump_000_27de
+    call ShowWorldMap
+    jp EnterLevel
 
 
-.legendCampaignComplete
-    ld a, $01
+.legendDone
+    ld a, MAP_LEGEND
     call RecordCompletion
-    call Call_000_274b
+    call ShowEpilogue
     call Call_000_1cf5
-    jp Jump_000_1fc0
+    jp ExitLevel
 
 
-Jump_000_3370:
+LoseLevel:
     call Call_000_09df
     call Call_000_0d30
     call Call_000_0927
@@ -7636,7 +7627,7 @@ Jump_000_3370:
     call Call_000_09eb
     ld a, $09
     call Call_000_0c65
-    jp Jump_000_1fc0
+    jp ExitLevel
 
 
 Call_000_3394:
@@ -7681,16 +7672,16 @@ Call_000_33d9:
     jr nz, jr_000_3425
 
     ld a, [$d79a]
-    cp $0f
+    cp MAP_END_A - 1
     jr z, jr_000_3413
 
-    cp $1f
+    cp MAP_END_B - 1
     jr z, jr_000_3413
 
-    cp $5b
+    cp MAP_END_C - 1
     jr z, jr_000_3413
 
-    cp $6b
+    cp MAP_END_D - 1
     jr z, jr_000_3413
 
     ld a, c
@@ -7728,19 +7719,16 @@ jr_000_341f:
 
 jr_000_3425:
     ld a, [$d79a]
-    cp $0f
+    cp MAP_END_A - 1
     jr z, jr_000_344a
 
-    cp $1f
+    cp MAP_END_B - 1
     jr z, jr_000_344a
 
-    cp $5b
+    cp MAP_END_C - 1
     jr z, jr_000_344a
 
-Jump_000_3434:
-    cp $6b
-
-Call_000_3436:
+    cp MAP_END_D - 1
     jr z, jr_000_344a
 
     ld a, b
@@ -8072,7 +8060,7 @@ Jump_000_360f:
 
 
 Jump_000_3612:
-    jp Jump_000_1fc0
+    jp ExitLevel
 
 
 Jump_000_3615:
@@ -8087,7 +8075,7 @@ Jump_000_3615:
     call Call_000_0de7
     ld a, $01
     ld [$d8e8], a
-    ld a, $04
+    ld a, MAP_EDIT
     ld [$d7a8], a
     call Call_000_0f0e
     cp $00
@@ -9043,7 +9031,7 @@ jr_000_3cf4:
     ld a, BANK(MessageTurn)
     call SetROMBank
     ld a, [$d7a8]
-    cp $0a
+    cp MAP_GUICY
     jr nz, jr_000_3d47
 
     ld a, [$d7a4]
@@ -9062,7 +9050,7 @@ jr_000_3d47:
 
     ld hl, MessageComputer
     ld a, [$d7a8]
-    cp $14
+    cp MAP_2PLAY
     jr nz, jr_000_3d5e
 
     ld hl, MessagePlayer2
@@ -9226,7 +9214,7 @@ Call_000_3e3f:
     call SetROMBank
     ld hl, MessagePlayer1
     ld a, [$d7a8]
-    cp $0a
+    cp MAP_GUICY
     jr nz, jr_000_3e68
 
     ld hl, MessageComputer

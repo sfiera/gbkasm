@@ -2376,13 +2376,13 @@ jr_01c_4c4c:
     xor d
     xor d
     xor d
-    call z, Call_000_1111
+    call z, $1111
     ld de, $1111
     ld de, $1111
     ld de, $1111
     ld de, $aaaa
     xor d
-    call z, Call_000_2222
+    call z, $2222
     ld [hl+], a
     ld [hl+], a
     ld [hl+], a

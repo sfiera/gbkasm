@@ -9,6 +9,7 @@ INCLUDE "consts.inc"
 INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
+INCLUDE "nectaris/map.inc"
 INCLUDE "nectaris/text.inc"
 
 SECTION "ROM Bank $007", ROMX
@@ -4587,7 +4588,7 @@ SetCampaignComplete::
     ei
     pop af
     ld b, "A"
-    cp $00
+    cp MAP_STORY
     jr z, .write
 
     ld b, "T"
@@ -4598,7 +4599,7 @@ SetCampaignComplete::
     ld a, b
     ld [hl], a
     push af
-    ld a, $00
+    ld a, MAP_STORY
     call Call_000_05c8
     ld [$4000], a
     ei
