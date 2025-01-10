@@ -2951,7 +2951,7 @@ Call_000_117d:
     ret
 
 
-Call_000_11a2:
+IsQuickStartEnabled:
     ld a, BANK(AreBothCampaignsComplete)
     call SetROMBank
     ld a, $02
@@ -4869,103 +4869,104 @@ Jump_000_1fc0:
     ld a, $02
     call Call_000_0cbf
 
-Jump_000_1fcb:
+
+DoMenuMain:
     ld a, $00
     ld [$d8df], a
 
-Jump_000_1fd0:
-jr_000_1fd0:
+.again
     ld a, [$d7b3]
     cp $00
-    jr nz, jr_000_200a
+    jr nz, .noKiss
 
-    call Call_000_11a2
+    call IsQuickStartEnabled
     ld hl, WindowMainMenuKiss
     cp $00
-    jr z, jr_000_1fe4
+    jr z, .runKissMenu
 
     ld hl, WindowMainMenuKissQuickStart
 
-jr_000_1fe4:
+.runKissMenu
     call RunMenu
     cp $00
-    jr nz, jr_000_1fd0
+    jr nz, DoMenuMain.again
 
     ld a, [$d8df]
     cp $00
-    jp z, Jump_000_2038
+    jp z, DoMenuContinue
 
     cp $01
-    jp z, Jump_000_20b4
+    jp z, DoMenuPlayNewGame
 
     cp $02
-    jp z, Jump_000_2145
+    jp z, DoMenuConstruction
 
     cp $03
-    jp z, Jump_000_23d9
+    jp z, DoMenuGBKiss
 
     cp $04
-    jp z, Jump_000_25d2
+    jp z, DoMenuQuickStart
 
-    jp Jump_000_1fd0
+    jp DoMenuMain.again
 
 
-jr_000_200a:
-    call Call_000_11a2
+.noKiss
+    call IsQuickStartEnabled
     ld hl, WindowMainMenu
     cp $00
-    jr z, jr_000_2017
+    jr z, .runNoKissMenu
 
     ld hl, WindowMainMenuQuickStart
 
-jr_000_2017:
+.runNoKissMenu
     call RunMenu
     cp $00
-    jr nz, jr_000_1fd0
+    jr nz, DoMenuMain.again
 
     ld a, [$d8df]
     cp $00
-    jp z, Jump_000_2038
+    jp z, DoMenuContinue
 
     cp $01
-    jp z, Jump_000_20b4
+    jp z, DoMenuPlayNewGame
 
     cp $02
-    jp z, Jump_000_2145
+    jp z, DoMenuConstruction
 
     cp $03
-    jp z, Jump_000_25d2
+    jp z, DoMenuQuickStart
 
-    jp Jump_000_1fd0
+    jp DoMenuMain.again
 
 
-Jump_000_2038:
+DoMenuContinue:
     ld a, $00
     ld [$d8df], a
 
-jr_000_203d:
+.again
     ld hl, WindowContinue
     call RunMenu
     cp $00
-    jp nz, Jump_000_1fcb
+    jp nz, DoMenuMain
 
     ld a, [$d8df]
     cp $00
-    jp z, Jump_000_2057
+    jp z, DoLoadData
 
     cp $01
-    jp z, Jump_000_2074
+    jp z, DoPassword
 
-    jr jr_000_203d
+    jr .again
 
-Jump_000_2057:
+
+DoLoadData:
     ld a, $00
     ld [$d8e8], a
     ld a, $00
     ld [$d7a8], a
     call Call_000_0ec6
     cp $00
-    jp nz, Jump_000_2038
+    jp nz, DoMenuContinue
 
     ld a, [$d8e9]
     ld b, a
@@ -4974,14 +4975,14 @@ Jump_000_2057:
     jp Jump_000_27fb
 
 
-Jump_000_2074:
+DoPassword:
     call Call_000_0f56
     cp $00
     jp z, Jump_000_2084
 
     ld a, $02
     call Call_000_0cbf
-    jp Jump_000_2038
+    jp DoMenuContinue
 
 
 Jump_000_2084:
@@ -5018,37 +5019,33 @@ jr_000_20aa:
     jp Jump_000_27de
 
 
-Jump_000_20b4:
+DoMenuPlayNewGame:
     ld a, $00
     ld [$d8df], a
 
-jr_000_20b9:
+.again
     ld hl, WindowNewGame
     call RunMenu
     cp $00
-    jp nz, Jump_000_1fcb
+    jp nz, DoMenuMain
 
     ld a, [$d8df]
     cp $00
-    jp z, Jump_000_20dd
+    jp z, DoStoryMap
 
     cp $01
-
-Call_000_20ce:
-    jp z, Jump_000_20f0
+    jp z, DoLegendMap
 
     cp $02
-
-Jump_000_20d3:
-    jp z, Jump_000_2103
+    jp z, DoCampaignMap
 
     cp $03
     jp z, Jump_000_2142
 
-Jump_000_20db:
-    jr jr_000_20b9
+    jr .again
 
-Jump_000_20dd:
+
+DoStoryMap:
     ld a, $00
     ld [$d7a8], a
     ld a, $00
@@ -5058,7 +5055,7 @@ Jump_000_20dd:
     jp Jump_000_27de
 
 
-Jump_000_20f0:
+DoLegendMap:
     ld a, $01
     ld [$d7a8], a
     ld a, $10
@@ -5068,39 +5065,40 @@ Jump_000_20f0:
     jp Jump_000_27de
 
 
-Jump_000_2103:
+DoCampaignMap:
     ld a, $00
     ld [$d8df], a
 
-jr_000_2108:
+.again
     ld hl, WindowCampaign
     call RunMenu
     cp $00
-    jp nz, Jump_000_1fcb
+    jp nz, DoMenuMain
 
     ld a, [$d8df]
     cp $00
-    jp z, Jump_000_2122
+    jp z, DoWinners
 
     cp $01
-    jp z, Jump_000_2132
+    jp z, DoSPWinners
 
-    jr jr_000_2108
+    jr .again
 
-Jump_000_2122:
+
+DoWinners:
     call Call_000_102b
     cp $00
-    jp nz, Jump_000_2103
+    jp nz, DoCampaignMap
 
     ld a, $02
     ld [$d7a8], a
     jp Jump_000_27de
 
 
-Jump_000_2132:
+DoSPWinners:
     call Call_000_104b
     cp $00
-    jp nz, Jump_000_2103
+    jp nz, DoCampaignMap
 
     ld a, $02
     ld [$d7a8], a
@@ -5111,47 +5109,47 @@ Jump_000_2142:
     jp Jump_000_2869
 
 
-Jump_000_2145:
+DoMenuConstruction:
     ld a, $00
     ld [$d8df], a
 
-Jump_000_214a:
+.again
     ld hl, WindowConstruction
     call RunMenu
     cp $00
-    jp nz, Jump_000_1fcb
+    jp nz, DoMenuMain
 
     ld a, [$d8df]
     cp $00
-    jp z, Jump_000_216a
+    jp z, DoNewEditMap
 
     cp $01
-    jp z, Jump_000_217a
+    jp z, DoLoadEditMap
 
     cp $02
-    jp z, Jump_000_219e
+    jp z, DoPlayEditMap
 
-    jp Jump_000_1fd0
+    jp DoMenuMain.again
 
 
-Jump_000_216a:
+DoNewEditMap:
     call Call_000_100b
     cp $00
-    jp nz, Jump_000_214a
+    jp nz, DoMenuConstruction.again
 
     ld a, $04
     ld [$d7a8], a
     jp Jump_000_2828
 
 
-Jump_000_217a:
+DoLoadEditMap:
     ld a, $00
     ld [$d8e8], a
     ld a, $04
     ld [$d7a8], a
     call Call_000_0f0e
     cp $00
-    jp nz, Jump_000_214a
+    jp nz, DoMenuConstruction.again
 
     ld a, $04
     ld [$d7a8], a
@@ -5163,14 +5161,14 @@ Jump_000_217a:
     jp Jump_000_2847
 
 
-Jump_000_219e:
+DoPlayEditMap:
     ld a, $00
     ld [$d8e8], a
     ld a, $04
     ld [$d7a8], a
     call Call_000_0f0e
     cp $00
-    jp nz, Jump_000_2145
+    jp nz, DoMenuConstruction
 
     ld a, $03
     ld [$d7a8], a
@@ -5182,7 +5180,7 @@ Jump_000_219e:
     jp Jump_000_2869
 
 
-Jump_000_21c2:
+DoSendDataToPC:
     ld a, $00
     ld [$d8e9], a
     ld [$d8ea], a
@@ -5200,7 +5198,7 @@ Jump_000_21c2:
     call Call_000_0927
     pop af
     cp $00
-    jp nz, Jump_000_23de
+    jp nz, DoMenuGBKiss.again
 
     ld a, [$d8e9]
     ld b, a
@@ -5223,7 +5221,7 @@ Jump_000_21c2:
 
     ld a, $0d
     call Call_000_0d07
-    jp Jump_000_23de
+    jp DoMenuGBKiss.again
 
 
 jr_000_221f:
@@ -5275,7 +5273,7 @@ Call_000_2222::
     ld [$db08], a
     ld a, $02
     call Call_000_0cbf
-    jp Jump_000_23d9
+    jp DoMenuGBKiss
 
 
 jr_000_2287:
@@ -5290,10 +5288,10 @@ jr_000_2287:
     ld [$db08], a
     ld a, $02
     call Call_000_0cbf
-    jp Jump_000_23d9
+    jp DoMenuGBKiss
 
 
-Jump_000_22a5:
+DoRecvDataFromPC:
     ld a, $00
     ld [$d8e9], a
     ld [$d8ea], a
@@ -5313,7 +5311,7 @@ Jump_000_22c3::
     call Call_000_0927
     pop af
     cp $00
-    jp nz, Jump_000_23de
+    jp nz, DoMenuGBKiss.again
 
     ld hl, WindowTransferToPC
     ld a, l
@@ -5328,7 +5326,7 @@ Jump_000_22c3::
 
     ld a, $0d
     call Call_000_0d07
-    jp Jump_000_23de
+    jp DoMenuGBKiss.again
 
 
 jr_000_22f1:
@@ -5441,7 +5439,7 @@ jr_000_236a:
     ld [$db08], a
     ld a, $02
     call Call_000_0cbf
-    jp Jump_000_23de
+    jp DoMenuGBKiss.again
 
 
 jr_000_23b6:
@@ -5458,39 +5456,39 @@ jr_000_23b6:
     ld [$db08], a
     ld a, $02
     call Call_000_0cbf
-    jp Jump_000_23de
+    jp DoMenuGBKiss.again
 
 
-Jump_000_23d9:
+DoMenuGBKiss:
     ld a, $00
     ld [$d8df], a
 
-Jump_000_23de:
+.again
     ld hl, WindowKiss
     call RunMenu
     cp $00
-    jp nz, Jump_000_1fcb
+    jp nz, DoMenuMain
 
     ld a, [$d8df]
     cp $00
-    jp z, Jump_000_2408
+    jp z, DoSendDataToGB
 
     cp $01
-    jp z, Jump_000_24ce
+    jp z, DoRecvDataFromGB
 
     cp $02
-    jp z, Jump_000_21c2
+    jp z, DoSendDataToPC
 
     cp $03
-    jp z, Jump_000_22a5
+    jp z, DoRecvDataFromPC
 
     cp $04
-    jp z, Jump_000_25c8
+    jp z, DoKissMenu
 
-    jp Jump_000_23de
+    jp DoMenuGBKiss.again
 
 
-Jump_000_2408:
+DoSendDataToGB:
     ld a, $00
     ld [$d8e9], a
     ld [$d8ea], a
@@ -5508,7 +5506,7 @@ Jump_000_2408:
     call Call_000_0927
     pop af
     cp $00
-    jp nz, Jump_000_23de
+    jp nz, DoMenuGBKiss.again
 
     ld a, [$d8e9]
     ld b, a
@@ -5530,7 +5528,7 @@ Jump_000_2408:
 
     ld a, $0d
     call Call_000_0d07
-    jp Jump_000_23de
+    jp DoMenuGBKiss.again
 
 
 jr_000_2464:
@@ -5564,7 +5562,7 @@ jr_000_2464:
     ld [$db08], a
     ld a, $02
     call Call_000_0cbf
-    jp Jump_000_23d9
+    jp DoMenuGBKiss
 
 
 jr_000_24b0:
@@ -5579,10 +5577,10 @@ jr_000_24b0:
     ld [$db08], a
     ld a, $02
     call Call_000_0cbf
-    jp Jump_000_23d9
+    jp DoMenuGBKiss
 
 
-Jump_000_24ce:
+DoRecvDataFromGB:
     ld a, $00
     ld [$d8e9], a
     ld [$d8ea], a
@@ -5600,7 +5598,7 @@ Jump_000_24ce:
     call Call_000_0927
     pop af
     cp $00
-    jp nz, Jump_000_23de
+    jp nz, DoMenuGBKiss.again
 
     ld hl, WindowTransferToGB
     ld a, l
@@ -5615,7 +5613,7 @@ Jump_000_24ce:
 
     ld a, $0d
     call Call_000_0d07
-    jp Jump_000_23de
+    jp DoMenuGBKiss.again
 
 
 jr_000_251a:
@@ -5678,7 +5676,7 @@ jr_000_251a:
     ld [$db08], a
     ld a, $02
     call Call_000_0cbf
-    jp Jump_000_23de
+    jp DoMenuGBKiss.again
 
 
 Jump_000_25a5:
@@ -5696,46 +5694,46 @@ jr_000_25a5:
     ld [$db08], a
     ld a, $02
     call Call_000_0cbf
-    jp Jump_000_23de
+    jp DoMenuGBKiss.again
 
 
-Jump_000_25c8:
+DoKissMenu:
     call Call_000_0ca4
     di
     trap $00
     trap AudioStop
     trap $61
 
-Jump_000_25d2:
+DoMenuQuickStart:
     ld a, $00
     ld [$d8df], a
 
-Jump_000_25d7:
-jr_000_25d7:
+.again
     ld hl, WindowQuickStart
     call RunMenu
     cp $00
-    jp nz, Jump_000_1fcb
+    jp nz, DoMenuMain
 
     ld a, [$d8df]
     cp $00
-    jp z, Jump_000_25fb
+    jp z, Do1PlayMode
 
     cp $01
-    jp z, Jump_000_2615
+    jp z, Do2PlayMode
 
     cp $02
-    jp z, Jump_000_2625
+    jp z, DoGuicyMode
 
     cp $03
-    jp z, Jump_000_2635
+    jp z, DoUnknownMode
 
-    jr jr_000_25d7
+    jr .again
 
-Jump_000_25fb:
+
+Do1PlayMode:
     call Call_000_106b
     cp $00
-    jp nz, Jump_000_25d7
+    jp nz, DoMenuQuickStart.again
 
     ld b, $00
     ld a, [$d79a]
@@ -5750,30 +5748,30 @@ jr_000_260e:
     jp Jump_000_27de
 
 
-Jump_000_2615:
+Do2PlayMode:
     call Call_000_106b
     cp $00
-    jp nz, Jump_000_25d7
+    jp nz, DoMenuQuickStart.again
 
     ld a, $14
     ld [$d7a8], a
     jp Jump_000_27de
 
 
-Jump_000_2625:
+DoGuicyMode:
     call Call_000_106b
     cp $00
-    jp nz, Jump_000_25d7
+    jp nz, DoMenuQuickStart.again
 
     ld a, $0a
     ld [$d7a8], a
     jp Jump_000_27de
 
 
-Jump_000_2635:
+DoUnknownMode:
     call Call_000_106b
     cp $00
-    jp nz, Jump_000_25d7
+    jp nz, DoMenuQuickStart.again
 
     ld a, $1e
     ld [$d7a8], a
