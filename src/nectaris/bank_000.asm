@@ -2952,13 +2952,13 @@ Call_000_117d:
 
 
 Call_000_11a2:
-    ld a, BANK(Call_007_6be8)
+    ld a, BANK(AreBothCampaignsComplete)
     call SetROMBank
     ld a, $02
     call Call_000_05c8
     ld [$4000], a
     ei
-    call Call_007_6be8
+    call AreBothCampaignsComplete
     push af
     ld a, $00
     call Call_000_05c8
@@ -2970,16 +2970,16 @@ Call_000_11a2:
     ret
 
 
-Call_000_11c4:
+RecordCompletion:
     push af
-    ld a, BANK(Call_007_6c0f)
+    ld a, BANK(SetCampaignComplete)
     call SetROMBank
     ld a, $02
     call Call_000_05c8
     ld [$4000], a
     ei
     pop af
-    call Call_007_6c0f
+    call SetCampaignComplete
 
 Jump_000_11d7::
     push af
@@ -7583,20 +7583,19 @@ jr_000_331e:
     ld a, [$d79a]
     inc a
     ld [$d79a], a
-    cp $10
-    jp z, Jump_000_333a
+    cp 16  ; Completed A16 Zonect
+    jp z, .storyCampaignDone
 
-    cp $5c
-    jp z, Jump_000_333a
+    cp 92  ; Completed C16 Tcenoz
+    jp z, .storyCampaignDone
 
-Jump_000_3334:
     call Call_000_2715
     jp Jump_000_27de
 
 
-Jump_000_333a:
+.storyCampaignDone
     ld a, $00
-    call Call_000_11c4
+    call RecordCompletion
     call Call_000_274b
     call Call_000_1cf5
     jp Jump_000_1fc0
@@ -7608,19 +7607,19 @@ Jump_000_3348:
     ld a, [$d79a]
     inc a
     ld [$d79a], a
-    cp $20
-    jr z, jr_000_3362
+    cp 32  ; Completed B16 Nector
+    jr z, .legendCampaignComplete
 
-    cp $6c
-    jr z, jr_000_3362
+    cp 108  ; Completed D16 Rotcen
+    jr z, .legendCampaignComplete
 
     call Call_000_2715
     jp Jump_000_27de
 
 
-jr_000_3362:
+.legendCampaignComplete
     ld a, $01
-    call Call_000_11c4
+    call RecordCompletion
     call Call_000_274b
     call Call_000_1cf5
     jp Jump_000_1fc0

@@ -179,6 +179,10 @@ ROMX $1d
 ROMX $1f
     "ROM Bank $01f"
 
+SRAM $02
+    org $be00
+    "Save Data"
+
 WRAM0
     org $c3c8
     "WRAM"

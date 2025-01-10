@@ -4550,24 +4550,25 @@ Call_007_6bcf::
     ret
 
 
-Call_007_6be8::
-    ld a, $02
+AreBothCampaignsComplete::
+    ld a, BANK(CampaignStatus)
     call Call_000_05c8
     ld [$4000], a
     ei
-    ld hl, $be00
+
+    ld hl, CampaignStatus
     ld b, $00
     ld a, [hl+]
-    cp $41
-    jr nz, jr_007_6c02
+    cp "A"
+    jr nz, .done
 
     ld a, [hl]
-    cp $54
-    jr nz, jr_007_6c02
+    cp "T"
+    jr nz, .done
 
     ld b, $01
 
-jr_007_6c02:
+.done
     ld a, b
     push af
     ld a, $00
@@ -4578,21 +4579,21 @@ jr_007_6c02:
     ret
 
 
-Call_007_6c0f::
+SetCampaignComplete::
     push af
-    ld a, $02
+    ld a, BANK(CampaignStatus)
     call Call_000_05c8
     ld [$4000], a
     ei
     pop af
-    ld b, $41
+    ld b, "A"
     cp $00
-    jr z, jr_007_6c22
+    jr z, .write
 
-    ld b, $54
+    ld b, "T"
 
-jr_007_6c22:
-    ld hl, $be00
+.write
+    ld hl, CampaignStatus
     call AddAToHL
     ld a, b
     ld [hl], a
@@ -4603,3 +4604,9 @@ jr_007_6c22:
     ei
     pop af
     ret
+
+
+SECTION "Save Data", SRAM
+
+CampaignStatus::
+    ds 2

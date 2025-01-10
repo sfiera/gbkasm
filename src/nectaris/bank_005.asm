@@ -203,6 +203,7 @@ Passwords::
     db "REGERT", -1, -1
     db "SALAMA", -1, -1
     db "ZONECT", -1, -1
+
     db "REVOLT", -1, -1
     db "ICARUS", -1, -1
     db "CYRANO", -1, -1
@@ -281,6 +282,7 @@ Passwords::
     db "TREGER", -1, -1
     db "AMALAS", -1, -1
     db "TCENOZ", -1, -1
+
     db "TLOVER", -1, -1
     db "SURACI", -1, -1
     db "ONARYC", -1, -1
