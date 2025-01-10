@@ -328,7 +328,7 @@ Call_007_4598:
     ld a, [$d8df]
     sla a
     ld hl, $d8bf
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl+]
     sla a
     sla a
@@ -1640,7 +1640,7 @@ Jump_007_4e44:
 
     ld hl, $d901
     ld a, [$d900]
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     cp $20
     jp z, Jump_007_4dad
@@ -1686,7 +1686,7 @@ Jump_007_4e98:
     call Call_000_0d07
     ld a, [$d900]
     ld hl, $d901
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     cp $20
     jr nz, jr_007_4eb0
@@ -1730,7 +1730,7 @@ Jump_007_4ed3:
     call Call_000_0d07
     ld a, [$d900]
     ld hl, $d901
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     cp $20
     jr nz, jr_007_4eeb
@@ -2667,7 +2667,7 @@ jr_007_6047:
     ld [hl+], a
     pop hl
     ld a, $40
-    call Call_000_088f
+    call AddAToHL
     ld c, e
 
 jr_007_6055:
@@ -2688,7 +2688,7 @@ jr_007_605e:
     ld [hl+], a
     pop hl
     ld a, $40
-    call Call_000_088f
+    call AddAToHL
     dec c
     jr nz, jr_007_6055
 
@@ -2730,7 +2730,7 @@ jr_007_608c:
     ld [hl+], a
     pop hl
     ld a, $40
-    call Call_000_088f
+    call AddAToHL
     ld c, e
 
 jr_007_609a:
@@ -2751,7 +2751,7 @@ jr_007_60a3:
     ld [hl+], a
     pop hl
     ld a, $40
-    call Call_000_088f
+    call AddAToHL
     dec c
     jr nz, jr_007_609a
 
@@ -2792,7 +2792,7 @@ jr_007_60d1:
     ld [hl+], a
     pop hl
     ld a, $40
-    call Call_000_088f
+    call AddAToHL
     ld c, e
 
 jr_007_60df:
@@ -2813,7 +2813,7 @@ jr_007_60e8:
     ld [hl+], a
     pop hl
     ld a, $40
-    call Call_000_088f
+    call AddAToHL
     dec c
     jr nz, jr_007_60df
 
@@ -4593,7 +4593,7 @@ Call_007_6c0f::
 
 jr_007_6c22:
     ld hl, $be00
-    call Call_000_088f
+    call AddAToHL
     ld a, b
     ld [hl], a
     push af

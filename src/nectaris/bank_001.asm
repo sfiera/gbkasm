@@ -153,12 +153,12 @@ Jump_001_4078:
     cp $11
     jp z, Jump_001_412f
 
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    and $90
-    cp $80
+    and UNIT_ABCD
+    cp UNIT_INFANTRY
     jp nz, Jump_001_4170
 
     jr jr_001_412f
@@ -177,11 +177,11 @@ Jump_001_410a:
     cp $11
     jp z, Jump_001_412f
 
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    bit 6, a
+    bit UNIT_IS_AIR_F, a
     jr nz, jr_001_4170
 
 Jump_001_412f:
@@ -250,12 +250,12 @@ jr_001_418d:
     call Call_000_099b
     ld a, [hl]
     and $1f
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    and $90
-    cp $80
+    and UNIT_ABCD
+    cp UNIT_INFANTRY
     jp nz, Jump_001_4242
 
     call Call_000_1878
@@ -403,12 +403,12 @@ Jump_001_4275:
     call Call_000_099b
     ld a, [hl]
     and $3f
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld d, $00
     ld a, [hl]
-    and $40
+    and UNIT_IS_AIR
     jr nz, jr_001_42bc
 
     ld a, b
@@ -553,12 +553,12 @@ Jump_001_432d:
     cp $11
     jp z, Jump_001_43db
 
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    and $90
-    cp $80
+    and UNIT_ABCD
+    cp UNIT_INFANTRY
     jp nz, Jump_001_441f
 
     jr jr_001_43db
@@ -577,11 +577,11 @@ Jump_001_43b6:
     cp $11
     jp z, Jump_001_43db
 
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    bit 6, a
+    bit UNIT_IS_AIR_F, a
     jr nz, jr_001_441f
 
 Jump_001_43db:
@@ -1075,9 +1075,9 @@ jr_001_4667:
 jr_001_4684:
     ld a, [hl]
     and $1f
-    call Call_000_09b7
-    ld a, $0d
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_SHIFT_KIND
+    call AddAToHL
     ld a, [hl]
     ld [$d9bd], a
     dec hl
@@ -1139,7 +1139,7 @@ jr_001_46f4:
     push af
     add b
     ld hl, data_001_46d4
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     ld b, a
     ld a, [$da0d]
@@ -1147,7 +1147,7 @@ jr_001_46f4:
     ld [$da0d], a
     pop af
     ld hl, data_001_46e0
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     ld b, a
     ld a, [$da0c]
@@ -1174,7 +1174,7 @@ Call_001_4719:
     ld [$d99f], a
     ld a, [$d9a1]
     ld hl, data_001_55f9
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     ld [$d9b4], a
     ld a, $00
@@ -1545,20 +1545,20 @@ jr_001_492d:
     ld a, [hl]
     and $1f
     ld [$d9a1], a
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    bit 4, a
+    bit UNIT_4_F, a
     jp z, Jump_001_492a
 
     ld b, a
     ld a, [$d9a5]
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    bit 6, a
+    bit UNIT_IS_AIR_F, a
     jr nz, jr_001_4975
 
     ld a, b
@@ -1590,13 +1590,13 @@ Jump_001_497e:
     dec hl
     dec hl
     ld a, [$d9a1]
-    call Call_000_09b7
+    call GetUnit
     push hl
-    ld a, $13
-    call Call_000_088f
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
     pop hl
-    bit 3, a
+    bit UNIT_HAS_INDIR_F, a
     jr nz, jr_001_4a1c
 
     ld a, [$da11]
@@ -1611,7 +1611,7 @@ Jump_001_497e:
     dec a
     push af
     ld a, $0c
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     ld b, a
     pop af
@@ -1682,18 +1682,18 @@ jr_001_4a1c:
 
     ld a, [$d9a5]
     and $1f
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    bit 6, a
+    bit UNIT_IS_AIR_F, a
     jr nz, jr_001_4a59
 
     ld a, [$d9a1]
     and $1f
-    call Call_000_09b7
-    ld a, $12
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_GND_RANGE
+    call AddAToHL
     ld a, [hl]
     jr jr_001_4a5c
 
@@ -1713,27 +1713,27 @@ jr_001_4a5c:
 Jump_001_4a66:
     ld a, [$d9a5]
     and $1f
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    bit 6, a
+    bit UNIT_IS_AIR_F, a
     jr nz, jr_001_4a88
 
     ld a, [$d9a1]
     and $1f
-    call Call_000_09b7
-    ld a, $11
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_GND_POWER
+    call AddAToHL
     ld a, [hl]
     jr jr_001_4a96
 
 jr_001_4a88:
     ld a, [$d9a1]
     and $1f
-    call Call_000_09b7
-    ld a, $11
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_GND_POWER
+    call AddAToHL
     ld a, [hl]
 
 jr_001_4a96:
@@ -1768,11 +1768,11 @@ jr_001_4ab6:
     ld b, $05
     ld a, [$d9a1]
     and $1f
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    and $08
+    and UNIT_HAS_INDIR
     cp $00
     jr z, jr_001_4ad5
 
@@ -2138,7 +2138,7 @@ Jump_001_4cff:
     ld [$da39], a
     ld a, [$da3b]
     ld hl, data_001_5610
-    call Call_000_088f
+    call AddAToHL
     pop af
     push af
     ld de, $da14
@@ -2165,7 +2165,7 @@ Jump_001_4d3a:
     dec a
     ld c, a
     ld hl, $da14
-    call Call_000_088f
+    call AddAToHL
 
 jr_001_4d51:
     ld a, b
@@ -2474,11 +2474,11 @@ jr_001_4efa:
 
 jr_001_4f13:
     ld a, [$d9a1]
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    and $20
+    and UNIT_CAN_CARRY
     cp $00
     jr z, jr_001_4f28
 
@@ -2527,12 +2527,12 @@ jr_001_4f53:
     call Call_000_099b
     ld a, [hl]
     and $1f
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
     pop hl
-    and $40
+    and UNIT_IS_AIR
     cp $00
     jr z, jr_001_4f81
 
@@ -2665,7 +2665,7 @@ jr_001_4f81:
 
     ld a, c
     ld hl, $d928
-    call Call_000_088f
+    call AddAToHL
     ld a, [$d99d]
     ld de, $d928
     call Call_000_08a1
@@ -2673,7 +2673,7 @@ jr_001_4f81:
     ld [hl], a
     ld a, c
     ld hl, $d960
-    call Call_000_088f
+    call AddAToHL
     ld a, [$d99d]
     ld de, $d960
     call Call_000_08a1
@@ -2688,7 +2688,7 @@ Jump_001_5090:
 jr_001_5090:
     ld a, [$d99d]
     ld hl, $d960
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     and $08
     cp $00
@@ -2866,7 +2866,7 @@ Jump_001_51ac:
     ld [$da47], a
     ld a, [$d99d]
     ld hl, $d928
-    call Call_000_088f
+    call AddAToHL
     ld a, [$d9a2]
     ld de, $d928
     call Call_000_08a1
@@ -3173,7 +3173,7 @@ jr_001_53b5:
 
     push hl
     ld a, $60
-    call Call_000_088f
+    call AddAToHL
     call Call_001_5530
     pop hl
     cp $00
@@ -3220,7 +3220,7 @@ jr_001_53e3:
 
     push hl
     ld a, $5d
-    call Call_000_088f
+    call AddAToHL
     call Call_001_5530
     pop hl
     cp $00
@@ -3264,7 +3264,7 @@ jr_001_5434:
 
     push hl
     ld a, $63
-    call Call_000_088f
+    call AddAToHL
     call Call_001_5530
     pop hl
     cp $00
@@ -3404,7 +3404,7 @@ jr_001_54e8:
 
     pop hl
     ld a, $60
-    call Call_000_088f
+    call AddAToHL
     inc c
     ld a, [$db10]
     inc a
@@ -3499,7 +3499,7 @@ jr_001_554f:
     ld a, [$d9bd]
     add h
     ld hl, TerrainCost
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     pop hl
     cp CANNOT_MOVE
@@ -3763,7 +3763,7 @@ jr_001_56be:
     ld a, $ff
     ld [hl], a
     ld a, $08
-    call Call_000_088f
+    call AddAToHL
     dec b
     jr nz, jr_001_56be
 
@@ -3785,13 +3785,13 @@ Jump_001_56ce:
     push hl
     ld a, [hl]
     and $1f
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
     pop hl
-    and $90
-    cp $80
+    and UNIT_ABCD
+    cp UNIT_INFANTRY
     jr z, jr_001_56f9
 
 Jump_001_56f6:
@@ -4002,7 +4002,7 @@ jr_001_5806:
 
 Jump_001_5812:
     ld a, $06
-    call Call_000_088f
+    call AddAToHL
     inc c
     ld a, c
     cp $38
@@ -4089,7 +4089,7 @@ jr_001_588a:
     ld c, a
     ld a, [de]
     ld hl, $d960
-    call Call_000_088f
+    call AddAToHL
     ld a, c
     sla a
     sla a
@@ -4099,7 +4099,7 @@ jr_001_588a:
     ld [hl], a
     ld a, [de]
     ld hl, $d928
-    call Call_000_088f
+    call AddAToHL
     ld a, $01
     ld [hl], a
     ld a, [de]
@@ -4110,7 +4110,7 @@ jr_001_588a:
     jr z, jr_001_58b7
 
     ld hl, $d928
-    call Call_000_088f
+    call AddAToHL
     ld a, $08
     ld [hl], a
 
@@ -4139,12 +4139,12 @@ Jump_001_58cb:
     ld a, [hl]
     push hl
     and $1f
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
     pop hl
-    and $40
+    and UNIT_IS_AIR
     cp $00
     jr z, jr_001_58f8
 
@@ -4213,14 +4213,14 @@ jr_001_5918:
     ld [$d99f], a
     pop af
     push hl
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
     ld b, a
     pop hl
-    and $90
-    cp $80
+    and UNIT_ABCD
+    cp UNIT_INFANTRY
     jp z, Jump_001_5c7b
 
     ld a, [hl]
@@ -4285,7 +4285,7 @@ jr_001_59c1:
     ld b, a
     sla a
     add b
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     pop hl
     cp $00
@@ -4377,9 +4377,9 @@ jr_001_5a4f:
     ld a, [hl]
     push hl
     and $1f
-    call Call_000_09b7
-    ld a, $12
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_GND_RANGE
+    call AddAToHL
     ld a, [hl]
     cp $02
     jr nc, jr_001_5a6d
@@ -4479,9 +4479,9 @@ jr_001_5af4:
     ld c, a
     call Call_001_45c2
     ld a, [$d9a1]
-    call Call_000_09b7
-    ld a, $0c
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_SHIFT_RANGE
+    call AddAToHL
     ld a, [hl]
     add $04
     push af
@@ -4590,12 +4590,12 @@ jr_001_5bb7:
     call Call_000_099b
     ld a, [hl]
     and $1f
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    and $90
-    cp $80
+    and UNIT_ABCD
+    cp UNIT_INFANTRY
     jr z, jr_001_5c36
 
     inc c
@@ -4643,12 +4643,12 @@ jr_001_5bec:
     call Call_000_099b
     ld a, [hl]
     and $1f
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    and $90
-    cp $80
+    and UNIT_ABCD
+    cp UNIT_INFANTRY
     jr z, jr_001_5c36
 
 Jump_001_5c2d:
@@ -4685,12 +4685,12 @@ Jump_001_5c3b:
     call Call_000_099b
     ld a, [hl]
     and $1f
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    and $90
-    cp $80
+    and UNIT_ABCD
+    cp UNIT_INFANTRY
     jr nz, jr_001_5c73
 
     ld a, $30
@@ -4933,11 +4933,11 @@ Call_001_5dbb:
     call Call_000_099b
     ld a, [hl]
     and $1f
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    bit 1, a
+    bit UNIT_ANTI_AIR_F, a
     jr nz, jr_001_5dd4
 
     ld a, $00
@@ -4990,11 +4990,11 @@ Call_001_5de4:
     call Call_000_099b
     ld a, [hl]
     and $1f
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    and $40
+    and UNIT_IS_AIR
     push af
     ld a, [$da03]
     ld c, a
@@ -5101,9 +5101,9 @@ Jump_001_5e85:
     ld a, [hl]
     and $1f
     push hl
-    call Call_000_09b7
-    ld a, $0c
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_SHIFT_RANGE
+    call AddAToHL
     ld a, [hl]
     ld d, a
     pop hl
@@ -5117,9 +5117,9 @@ jr_001_5ecf:
     ld a, [hl]
     and $1f
     push hl
-    call Call_000_09b7
-    ld a, $0e
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_DEF
+    call AddAToHL
     ld a, [hl]
     ld e, a
     pop hl
@@ -5139,7 +5139,7 @@ jr_001_5ecf:
 
 jr_001_5eef:
     ld a, e
-    call Call_000_088f
+    call AddAToHL
     dec d
     jr nz, jr_001_5eef
 
@@ -5208,7 +5208,7 @@ jr_001_5f4b:
     jp z, Jump_001_5f72
 
     ld hl, $d928
-    call Call_000_088f
+    call AddAToHL
     ld a, $02
     ld [hl], a
     ld a, $01
@@ -5256,7 +5256,7 @@ jr_001_5f98:
 
 jr_001_5fa2:
     ld a, $06
-    call Call_000_088f
+    call AddAToHL
     inc c
     ld a, c
     cp $38
@@ -5424,7 +5424,7 @@ jr_001_6064:
 
     pop hl
     ld a, $60
-    call Call_000_088f
+    call AddAToHL
     inc c
     ld a, [$d79c]
     dec a
@@ -5730,13 +5730,13 @@ jr_001_6210:
     push hl
     ld a, [hl]
     and $1f
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
     pop hl
-    and $90
-    cp $80
+    and UNIT_ABCD
+    cp UNIT_INFANTRY
     jr z, jr_001_6259
 
 jr_001_6245:
@@ -5850,16 +5850,16 @@ Call_001_62d9:
     ld a, [$d99f]
     ld [$da0d], a
     ld a, [$d9a1]
-    call Call_000_09b7
-    ld a, $0c
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_SHIFT_RANGE
+    call AddAToHL
     ld a, [hl]
     dec a
     cp $08
     jp nc, Jump_001_63a0
 
     ld hl, data_001_62d1
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     ld [$da60], a
     call Call_001_525e
@@ -5897,13 +5897,13 @@ Jump_001_631b:
     push hl
     ld a, [hl]
     and $1f
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
     pop hl
     ld b, a
-    and $20
+    and UNIT_CAN_CARRY
     cp $00
     jp z, Jump_001_6394
 
@@ -5922,11 +5922,11 @@ Jump_001_631b:
     jp nz, Jump_001_6380
 
     ld a, c
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    and $80
+    and UNIT_INFANTRY
     cp $00
     jp nz, Jump_001_63af
 
@@ -5935,11 +5935,11 @@ Jump_001_631b:
 
 Jump_001_6380:
     ld a, c
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    and $40
+    and UNIT_IS_AIR
     cp $00
     jp z, Jump_001_63af
 
@@ -6019,12 +6019,12 @@ jr_001_63da:
     ld a, [hl]
     and $1f
     push hl
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
     pop hl
-    and $20
+    and UNIT_CAN_CARRY
     cp $00
     jp z, Jump_001_643e
 
@@ -6125,13 +6125,13 @@ jr_001_6487:
     push hl
     ld a, [hl]
     and $1f
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
     pop hl
-    and $90
-    cp $80
+    and UNIT_ABCD
+    cp UNIT_INFANTRY
     jr z, jr_001_64ce
 
     ld a, c
@@ -6329,11 +6329,11 @@ Jump_001_65ab:
     call Call_000_099b
     ld a, [hl]
     and $1f
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    and $40
+    and UNIT_IS_AIR
     cp $00
     jr nz, jr_001_661d
 
@@ -6400,14 +6400,14 @@ Jump_001_6665:
 
 Call_001_6666:
     ld a, [$d9a1]
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    bit 4, a
+    bit UNIT_4_F, a
     jr z, jr_001_667a
 
-    bit 3, a
+    bit UNIT_HAS_INDIR_F, a
     jr nz, jr_001_669e
 
 jr_001_667a:
@@ -6516,12 +6516,12 @@ Jump_001_66d8:
     push hl
     ld a, [hl]
     and $3f
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
     pop hl
-    and $40
+    and UNIT_IS_AIR
     ld b, a
     ld a, [$da03]
     cp b
@@ -6533,7 +6533,7 @@ jr_001_6719:
     ld b, a
     ld a, c
     ld hl, $d928
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     pop hl
     sub b
@@ -6720,7 +6720,7 @@ jr_001_6855:
 jr_001_6864:
     ld a, c
     ld hl, $da14
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     inc c
     push bc
@@ -6830,7 +6830,7 @@ Jump_001_68fe:
 Jump_001_6934:
     ld a, c
     ld hl, $da14
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     push bc
     call Call_001_46e6
@@ -6892,18 +6892,18 @@ Jump_001_696a:
     ld [$da47], a
     ld a, [$d9a7]
     ld hl, $d928
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     or $08
     ld b, a
     ld a, [$da01]
     ld hl, $d928
-    call Call_000_088f
+    call AddAToHL
     ld a, b
     ld [hl], a
     ld a, [$d9a7]
     ld hl, $d928
-    call Call_000_088f
+    call AddAToHL
     ld a, $08
     ld [hl], a
     ld a, $00
@@ -7048,9 +7048,9 @@ Call_001_6a9c:
     call Call_000_099b
     ld a, [hl]
     and $1f
-    call Call_000_09b7
-    ld a, $0c
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_SHIFT_RANGE
+    call AddAToHL
     ld a, [hl]
     cp $00
     jp z, Jump_001_6bc9
@@ -7079,7 +7079,7 @@ jr_001_6aed:
 Jump_001_6afa:
     ld a, [$da38]
     ld hl, data_001_6a96
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     call Call_001_6bd8
     cp $00
@@ -7090,7 +7090,7 @@ Jump_001_6afa:
 
     ld a, [$da38]
     ld hl, data_001_6a99
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     call Call_001_6bd8
     cp $00
@@ -7107,7 +7107,7 @@ Jump_001_6afa:
 jr_001_6b2d:
     ld a, [$da38]
     ld hl, data_001_6a99
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     call Call_001_6bd8
     cp $00
@@ -7413,9 +7413,9 @@ jr_001_6cfb:
     ld [$d9a2], a
     ld a, [hl]
     and $1f
-    call Call_000_09b7
-    ld a, $0c
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_SHIFT_RANGE
+    call AddAToHL
     ld a, [hl]
     cp $00
     jr nz, jr_001_6d3c
@@ -7613,7 +7613,7 @@ Jump_001_6e3d:
 jr_001_6e41:
     ld b, a
     ld hl, data_001_6e21
-    call Call_000_088f
+    call AddAToHL
 
 jr_001_6e48:
     ld a, [hl]
@@ -7621,17 +7621,17 @@ jr_001_6e48:
     ld [$da69], a
     ld a, b
     ld hl, data_001_6e25
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     ld [$da6a], a
     ld a, b
     ld hl, data_001_6e29
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     ld [$da68], a
     ld a, b
     ld hl, data_001_6e2d
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     ld [$da40], a
     ld a, $ff
@@ -7721,12 +7721,12 @@ jr_001_6ed8:
     dec hl
     push hl
     ld a, [$d9a5]
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
     pop hl
-    and $40
+    and UNIT_IS_AIR
     ld b, $00
     cp $00
     jr z, jr_001_6f0b
@@ -7786,9 +7786,9 @@ Jump_001_6f2c:
 
     push hl
     ld a, b
-    call Call_000_09b7
-    ld a, $11
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_GND_POWER
+    call AddAToHL
     ld a, [hl]
     pop hl
     cp $00
@@ -7799,9 +7799,9 @@ Jump_001_6f2c:
 jr_001_6f78:
     push hl
     ld a, b
-    call Call_000_09b7
-    ld a, $0f
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_AIR_POWER
+    call AddAToHL
     ld a, [hl]
     pop hl
     cp $00
@@ -7827,9 +7827,9 @@ jr_001_6f89:
 
     push hl
     ld a, [$d9a1]
-    call Call_000_09b7
-    ld a, $12
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_GND_RANGE
+    call AddAToHL
     ld a, [hl]
     pop hl
     jr jr_001_6fc5
@@ -7837,9 +7837,9 @@ jr_001_6f89:
 jr_001_6fb7:
     push hl
     ld a, [$d9a1]
-    call Call_000_09b7
-    ld a, $10
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_AIR_RANGE
+    call AddAToHL
     ld a, [hl]
     pop hl
 
@@ -7948,9 +7948,9 @@ Call_001_7055:
     dec a
     push af
     ld a, [$d9a1]
-    call Call_000_09b7
-    ld a, $0c
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_SHIFT_RANGE
+    call AddAToHL
     ld a, [hl]
     ld b, a
     pop af
@@ -8178,17 +8178,17 @@ Call_001_71d3:
     jr c, jr_001_7253
 
     ld a, [$d9a5]
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    and $40
+    and UNIT_IS_AIR
     jr nz, jr_001_7209
 
     ld a, [$d9a1]
-    call Call_000_09b7
-    ld a, $12
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_GND_RANGE
+    call AddAToHL
     ld a, [hl]
     ld b, a
     dec hl
@@ -8201,9 +8201,9 @@ Call_001_71d3:
 
 jr_001_7209:
     ld a, [$d9a1]
-    call Call_000_09b7
-    ld a, $10
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_AIR_RANGE
+    call AddAToHL
     ld a, [hl]
     ld b, a
     dec hl
@@ -8326,13 +8326,13 @@ Jump_001_729d:
     ld a, [hl]
     and $1f
     push hl
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
     pop hl
-    and $90
-    cp $80
+    and UNIT_ABCD
+    cp UNIT_INFANTRY
     jr nz, jr_001_7311
 
     inc hl
@@ -8378,7 +8378,7 @@ jr_001_7311:
     ld a, [$da9f]
     sla a
     ld hl, $daa2
-    call Call_000_088f
+    call AddAToHL
     ld a, [$daa1]
     ld de, $d918
     call Call_000_08a1
@@ -8408,7 +8408,7 @@ Jump_001_7356:
     ld a, [$da9f]
     sla a
     ld hl, $daa2
-    call Call_000_088f
+    call AddAToHL
     ld a, $ff
     ld [hl], a
     ld [$da41], a
@@ -8458,7 +8458,7 @@ Jump_001_7398:
     push hl
     ld a, c
     ld hl, $d928
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     pop hl
     cp $00
@@ -8507,7 +8507,7 @@ jr_001_73e2:
     ld a, c
     sla a
     ld hl, $daa2
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     cp $ff
     jr z, jr_001_7430
@@ -8584,9 +8584,9 @@ jr_001_743a:
 
     ld a, b
     and $1f
-    call Call_000_09b7
-    ld a, $0c
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_SHIFT_RANGE
+    call AddAToHL
     ld a, [hl]
     push af
     ld a, [$dab3]
@@ -8827,15 +8827,15 @@ Jump_001_75c2:
     ld a, [hl]
     and $1f
     push hl
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
     pop hl
-    bit 0, a
+    bit UNIT_0_F, a
     jr z, jr_001_762b
 
-    bit 3, a
+    bit UNIT_HAS_INDIR_F, a
     jr z, jr_001_762b
 
     ld a, c
@@ -9327,7 +9327,7 @@ jr_001_792b:
     ld [de], a
     ld a, [$d99d]
     ld hl, $d928
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     or $08
     ld [hl], a
@@ -9445,7 +9445,7 @@ jr_001_79dc:
     ld [$da44], a
     ld a, [$d99d]
     ld hl, $d928
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     or $08
     ld [hl], a
@@ -9516,7 +9516,7 @@ jr_001_7a4e:
 
     ld a, b
     ld hl, $d928
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     cp $80
     jr c, jr_001_7a6c
@@ -9602,11 +9602,11 @@ jr_001_7ab0:
     dec hl
     ld a, [hl]
     and $1f
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    and $20
+    and UNIT_CAN_CARRY
     cp $00
     jr z, jr_001_7b2f
 
@@ -9618,11 +9618,11 @@ jr_001_7ab0:
     jr nz, jr_001_7b18
 
     ld a, b
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    and $80
+    and UNIT_INFANTRY
     cp $00
     jr z, jr_001_7b2f
 
@@ -9632,11 +9632,11 @@ jr_001_7ab0:
 
 jr_001_7b18:
     ld a, b
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    and $40
+    and UNIT_IS_AIR
     cp $00
     jr nz, jr_001_7b2f
 
@@ -9667,9 +9667,9 @@ jr_001_7b47:
 
 
     ld a, [$d9a1]
-    call Call_000_09b7
-    ld a, $0c
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_SHIFT_RANGE
+    call AddAToHL
     ld a, [hl]
     cp $00
     jr z, jr_001_7b69
@@ -9792,7 +9792,7 @@ Jump_001_7c1a:
     jr z, jr_001_7c58
 
     ld hl, $d928
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     cp $80
     jr nc, jr_001_7c48
@@ -9806,11 +9806,11 @@ Jump_001_7c1a:
 
     ld a, [hl]
     and $1f
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    and $20
+    and UNIT_CAN_CARRY
     cp $00
     jr nz, jr_001_7c4d
 
@@ -9881,11 +9881,11 @@ Jump_001_7c6e:
     dec hl
     ld a, [hl]
     and $1f
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    and $20
+    and UNIT_CAN_CARRY
     cp $00
     jr z, jr_001_7cec
 
@@ -9895,11 +9895,11 @@ Jump_001_7c6e:
     jr nz, jr_001_7cd7
 
     ld a, [$d9a1]
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    and $80
+    and UNIT_INFANTRY
     cp $00
     jr z, jr_001_7cec
 
@@ -9908,11 +9908,11 @@ Jump_001_7c6e:
 
 jr_001_7cd7:
     ld a, [$d9a1]
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    and $40
+    and UNIT_IS_AIR
     cp $00
     jr nz, jr_001_7cec
 
@@ -9943,7 +9943,7 @@ Jump_001_7d0a:
     jr z, jr_001_7d7b
 
     ld hl, $d928
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     or $80
     ld [hl], a
@@ -9952,7 +9952,7 @@ Jump_001_7d0a:
 Jump_001_7d1b:
     ld a, [$d99d]
     ld hl, $d928
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     or $08
     ld [hl], a
@@ -9975,7 +9975,7 @@ Jump_001_7d1b:
 Jump_001_7d52:
     ld a, [$d99d]
     ld hl, $d928
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     or $80
     ld [hl], a
@@ -10054,7 +10054,7 @@ Jump_001_7d98:
 
 jr_001_7dbf:
     ld a, $06
-    call Call_000_088f
+    call AddAToHL
     inc b
     ld a, b
     cp $38

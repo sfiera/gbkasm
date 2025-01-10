@@ -839,31 +839,31 @@ TerrainDefense:
     db 0
 
 UnitStats:
-    ;  NAME----------  -----MOVE-----  DEF -AIR-  -GND-  --FLAGS--
-    ;                  N   KIND            PWR R  PWR R
-    db "M-77 ﾔﾏｱﾗｼ  ", 0,  MOVE_TREAD, 80, 0,  1, 0,  1, %10010000
-    db "FX-1 ﾌｧﾙｺ   ", 12, MOVE_WINGS, 30, 90, 1, 0,  1, %01010010
-    db "AX-87ｼﾞｬﾋﾞｲ ", 10, MOVE_WINGS, 30, 20, 1, 70, 1, %01010001
-    db "EF-88ﾊﾝﾀ-   ", 11, MOVE_WINGS, 50, 70, 1, 70, 1, %01010011
-    db "T-79 ｸﾞﾘｽﾞﾘ-", 4,  MOVE_TREAD, 50, 0,  1, 70, 1, %00010001
-    db "PT-6 ｱﾙﾏｼﾞﾛ ", 4,  MOVE_TREAD, 60, 0,  1, 60, 1, %00010001
-    db "S-61 ﾊﾞｲｿﾝ  ", 6,  MOVE_TREAD, 40, 0,  1, 50, 1, %00010001
-    db "GS-81ｽﾗｯｶﾞ- ", 7,  MOVE_TREAD, 50, 0,  1, 50, 1, %00010001
-    db "GT-86ﾓﾝｽﾀ-  ", 5,  MOVE_TREAD, 50, 0,  1, 60, 1, %00010001
-    db "HMB-2ｷﾞｶﾞﾝﾄ ", 2,  MOVE_TREAD, 80, 40, 1, 90, 1, %00010001
-    db "TT-1 ﾚﾈｯﾄ   ", 5,  MOVE_TREAD, 30, 0,  1, 45, 1, %00010001
-    db "SG-4 ﾅｽﾎﾙﾝ  ", 4,  MOVE_TREAD, 30, 0,  1, 45, 5, %00011001
-    db "MR-22ｴｽﾄ-ﾙ  ", 4,  MOVE_TREAD, 30, 0,  1, 60, 4, %00011001
-    db "MB-5 ﾗﾋﾞｯﾄ  ", 8,  MOVE_BUGGY, 20, 10, 1, 70, 1, %00010101
-    db "MB-4 ﾘﾝｸｽ   ", 6,  MOVE_BUGGY, 20, 10, 1, 40, 2, %00011101
-    db "AAG-4ｼ-ｶ-   ", 6,  MOVE_TREAD, 30, 65, 1, 30, 1, %00010011
-    db "MM107ﾎ-ｸｱｲ  ", 5,  MOVE_TREAD, 30, 85, 5, 0,  1, %00011010
-    db "SS-80ﾓﾉｹﾛｽ  ", 0,  MOVE_TREAD, 20, 0,  1, 90, 6, %10011001
-    db "GX-77ﾑﾝｸｽ   ", 3,  MOVE_BOOTS, 4,  10, 1, 10, 1, %10000001
-    db "GX-87ﾀﾞ-ﾍﾞｯｸ", 2,  MOVE_BOOTS, 10, 10, 1, 40, 1, %10000001
-    db "CBX-1ﾄﾞﾚｲﾊﾟ-", 9,  MOVE_WHEEL, 8,  10, 1, 10, 1, %10000000
-    db "NC-1 ﾐｭ-ﾙ   ", 6,  MOVE_WHEEL, 10, 10, 1, 10, 1, %00100000
-    db "C-61 ﾍﾟﾘｶﾝ  ", 9,  MOVE_WINGS, 10, 0,  1, 0,  1, %01100001
+    ;  UNIT--------------  SHIFT---------  DEF -AIR-  -GND-  --FLAGS--
+    ;  CODE     NAME       R   KIND            PWR R  PWR R
+    db "M-77 ", "ﾔﾏｱﾗｼ  ", 0,  MOVE_TREAD, 80, 0,  1, 0,  1, UNIT_IMMOBILE
+    db "FX-1 ", "ﾌｧﾙｺ   ", 12, MOVE_WINGS, 30, 90, 1, 0,  1, UNIT_REGULAR | UNIT_IS_AIR | UNIT_ANTI_AIR
+    db "AX-87", "ｼﾞｬﾋﾞｲ ", 10, MOVE_WINGS, 30, 20, 1, 70, 1, UNIT_REGULAR | UNIT_IS_AIR | UNIT_0
+    db "EF-88", "ﾊﾝﾀ-   ", 11, MOVE_WINGS, 50, 70, 1, 70, 1, UNIT_REGULAR | UNIT_IS_AIR | UNIT_ANTI_AIR | UNIT_0
+    db "T-79 ", "ｸﾞﾘｽﾞﾘ-", 4,  MOVE_TREAD, 50, 0,  1, 70, 1, UNIT_REGULAR | UNIT_0
+    db "PT-6 ", "ｱﾙﾏｼﾞﾛ ", 4,  MOVE_TREAD, 60, 0,  1, 60, 1, UNIT_REGULAR | UNIT_0
+    db "S-61 ", "ﾊﾞｲｿﾝ  ", 6,  MOVE_TREAD, 40, 0,  1, 50, 1, UNIT_REGULAR | UNIT_0
+    db "GS-81", "ｽﾗｯｶﾞ- ", 7,  MOVE_TREAD, 50, 0,  1, 50, 1, UNIT_REGULAR | UNIT_0
+    db "GT-86", "ﾓﾝｽﾀ-  ", 5,  MOVE_TREAD, 50, 0,  1, 60, 1, UNIT_REGULAR | UNIT_0
+    db "HMB-2", "ｷﾞｶﾞﾝﾄ ", 2,  MOVE_TREAD, 80, 40, 1, 90, 1, UNIT_REGULAR | UNIT_0
+    db "TT-1 ", "ﾚﾈｯﾄ   ", 5,  MOVE_TREAD, 30, 0,  1, 45, 1, UNIT_REGULAR | UNIT_0
+    db "SG-4 ", "ﾅｽﾎﾙﾝ  ", 4,  MOVE_TREAD, 30, 0,  1, 45, 5, UNIT_REGULAR | UNIT_HAS_INDIR | UNIT_0
+    db "MR-22", "ｴｽﾄ-ﾙ  ", 4,  MOVE_TREAD, 30, 0,  1, 60, 4, UNIT_REGULAR | UNIT_HAS_INDIR | UNIT_0
+    db "MB-5 ", "ﾗﾋﾞｯﾄ  ", 8,  MOVE_BUGGY, 20, 10, 1, 70, 1, UNIT_REGULAR | UNIT_IS_MOBILE | UNIT_0
+    db "MB-4 ", "ﾘﾝｸｽ   ", 6,  MOVE_BUGGY, 20, 10, 1, 40, 2, UNIT_REGULAR | UNIT_HAS_INDIR | UNIT_IS_MOBILE | UNIT_0
+    db "AAG-4", "ｼ-ｶ-   ", 6,  MOVE_TREAD, 30, 65, 1, 30, 1, UNIT_REGULAR | UNIT_ANTI_AIR | UNIT_0
+    db "MM107", "ﾎ-ｸｱｲ  ", 5,  MOVE_TREAD, 30, 85, 5, 0,  1, UNIT_REGULAR | UNIT_HAS_INDIR | UNIT_ANTI_AIR
+    db "SS-80", "ﾓﾉｹﾛｽ  ", 0,  MOVE_TREAD, 20, 0,  1, 90, 6, UNIT_IMMOBILE | UNIT_HAS_INDIR | UNIT_0
+    db "GX-77", "ﾑﾝｸｽ   ", 3,  MOVE_BOOTS, 4,  10, 1, 10, 1, UNIT_INFANTRY | UNIT_0
+    db "GX-87", "ﾀﾞ-ﾍﾞｯｸ", 2,  MOVE_BOOTS, 10, 10, 1, 40, 1, UNIT_INFANTRY | UNIT_0
+    db "CBX-1", "ﾄﾞﾚｲﾊﾟ-", 9,  MOVE_WHEEL, 8,  10, 1, 10, 1, UNIT_INFANTRY
+    db "NC-1 ", "ﾐｭ-ﾙ   ", 6,  MOVE_WHEEL, 10, 10, 1, 10, 1, UNIT_TRANSPORT | UNIT_CAN_CARRY
+    db "C-61 ", "ﾍﾟﾘｶﾝ  ", 9,  MOVE_WINGS, 10, 0,  1, 0,  1, UNIT_TRANSPORT | UNIT_CAN_CARRY | UNIT_IS_AIR | UNIT_0
 
 
 SetROMBank:
@@ -990,7 +990,7 @@ Jump_000_0668:
     sla a
     add b
     ld hl, $d6d7
-    call Call_000_088f
+    call AddAToHL
     ld a, l
     ld [$d797], a
     ld a, h
@@ -1179,7 +1179,7 @@ Call_000_0764:
     sla a
     add b
     ld hl, $d6d7
-    call Call_000_088f
+    call AddAToHL
     pop bc
     ld a, c
     ld [hl+], a
@@ -1454,7 +1454,7 @@ Call_000_0885:
     ld [$d6d3], a
     jr jr_000_0874
 
-Call_000_088f::
+AddAToHL::
     add l
     ld l, a
     ld a, h
@@ -1588,7 +1588,7 @@ Call_000_08ff::
     ld hl, $c100
     sla a
     sla a
-    call Call_000_088f
+    call AddAToHL
     ld a, e
     ld [hl+], a
     ld a, d
@@ -1654,7 +1654,7 @@ Call_000_093f::
     sla l
     rl h
     ld a, b
-    call Call_000_088f
+    call AddAToHL
     ld bc, $c1a0
     ld a, c
     add l
@@ -1680,7 +1680,7 @@ Call_000_0969::
     sla l
     rl h
     ld a, b
-    call Call_000_088f
+    call AddAToHL
     push hl
     pop bc
     sla l
@@ -1710,7 +1710,7 @@ Call_000_099b::
     sla l
     rl h
     sla a
-    call Call_000_088f
+    call AddAToHL
     ld bc, $d572
     ld a, l
     add c
@@ -1722,7 +1722,8 @@ Call_000_099b::
     ret
 
 
-Call_000_09b7::
+; hl = UnitStats[a]
+GetUnit::
     push bc
     and $1f
     ld l, a
@@ -1737,7 +1738,7 @@ Call_000_09b7::
     rl h
     sla a
     sla a
-    call Call_000_088f
+    call AddAToHL
     ld bc, UnitStats
     ld a, l
     add c
@@ -1827,7 +1828,7 @@ jr_000_0a44:
     ld bc, $0040
     call Call_000_0764
     ld a, $40
-    call Call_000_088f
+    call AddAToHL
     ld a, $40
     call Call_000_08a1
     pop bc
@@ -1838,7 +1839,7 @@ jr_000_0a44:
     ld bc, $0040
     call Call_000_0764
     ld a, $40
-    call Call_000_088f
+    call AddAToHL
     ld a, $40
     call Call_000_08a1
     pop bc
@@ -1864,7 +1865,7 @@ jr_000_0a87:
     ld bc, $0010
     call Call_000_0764
     ld a, $10
-    call Call_000_088f
+    call AddAToHL
     ld a, $10
     call Call_000_08a1
 
@@ -1872,7 +1873,7 @@ jr_000_0a97:
     ld bc, $0010
     call Call_000_0764
     ld a, $10
-    call Call_000_088f
+    call AddAToHL
     ld a, $10
     call Call_000_08a1
 
@@ -1880,7 +1881,7 @@ jr_000_0aa7:
     ld bc, $0010
     call Call_000_0764
     ld a, $10
-    call Call_000_088f
+    call AddAToHL
     ld a, $10
     call Call_000_08a1
 
@@ -1898,7 +1899,7 @@ Call_000_0ac2:
 Jump_000_0ac2:
     ld hl, $c1a0
     ld a, [$d79d]
-    call Call_000_088f
+    call AddAToHL
     ld b, $00
     ld a, [$d79e]
     ld c, a
@@ -2047,7 +2048,7 @@ jr_000_0b70:
     inc a
     ld [hl], a
     ld a, $3f
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     ld d, a
     ld a, [$d873]
@@ -2072,7 +2073,7 @@ jr_000_0b70:
     ld a, c
     ld [hl], a
     ld a, $3f
-    call Call_000_088f
+    call AddAToHL
     ld a, d
     ld [hl+], a
     ld a, e
@@ -2120,7 +2121,7 @@ jr_000_0c02:
     pop de
     pop hl
     ld a, $14
-    call Call_000_088f
+    call AddAToHL
     ld a, $40
     call Call_000_08a1
     dec c
@@ -2367,12 +2368,12 @@ Call_000_0d85::
     call Call_000_08a1
     pop af
     ld hl, $0d79
-    call Call_000_088f
+    call AddAToHL
     bit 0, b
     jr z, jr_000_0d9e
 
     ld a, $06
-    call Call_000_088f
+    call AddAToHL
 
 jr_000_0d9e:
     ld a, [de]
@@ -2670,7 +2671,7 @@ jr_000_0fa9:
 jr_000_0fb8:
     pop hl
     ld a, $08
-    call Call_000_088f
+    call AddAToHL
     inc b
     ld a, b
     cp $6c
@@ -3129,7 +3130,7 @@ jr_000_12b2:
 
     pop hl
     ld a, $60
-    call Call_000_088f
+    call AddAToHL
     dec b
     jr nz, jr_000_12ad
 
@@ -4122,7 +4123,7 @@ jr_000_19f4:
     pop de
     pop hl
     ld a, $28
-    call Call_000_088f
+    call AddAToHL
     ld a, $40
     call Call_000_08a1
     dec c
@@ -6177,7 +6178,7 @@ jr_000_2927:
 
     ld a, [$d87b]
     ld hl, $d87e
-    call Call_000_088f
+    call AddAToHL
     ld a, [hl]
     ld [$d7b5], a
     call Call_000_1954
@@ -6594,9 +6595,9 @@ jr_000_2c26:
 jr_000_2c82:
     ld a, [hl]
     and $1f
-    call Call_000_09b7
-    ld a, $0c
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_SHIFT_RANGE
+    call AddAToHL
     ld a, [hl]
     inc a
     ld [$d877], a
@@ -6783,12 +6784,12 @@ jr_000_2dd3:
     call Call_000_099b
     ld a, [hl]
     and $1f
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    and $90
-    cp $80
+    and UNIT_ABCD
+    cp UNIT_INFANTRY
     jp nz, Jump_000_2c26
 
     call Call_000_1878
@@ -6928,12 +6929,12 @@ Jump_000_2ead:
     call Call_000_099b
     ld a, [hl]
     and $1f
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld a, [hl]
-    and $90
-    cp $80
+    and UNIT_ABCD
+    cp UNIT_INFANTRY
     jp z, Jump_000_3272
 
 jr_000_2ef1:
@@ -7111,9 +7112,9 @@ Jump_000_2fa8:
 jr_000_3006:
     ld a, [hl]
     and $1f
-    call Call_000_09b7
-    ld a, $0c
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_SHIFT_RANGE
+    call AddAToHL
     ld a, [hl]
     inc a
     ld [$d877], a
@@ -7320,12 +7321,12 @@ jr_000_3138:
     call Call_000_099b
     ld a, [hl]
     and $3f
-    call Call_000_09b7
-    ld a, $13
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_FLAGS
+    call AddAToHL
     ld d, $00
     ld a, [hl]
-    and $40
+    and UNIT_IS_AIR
     jr nz, jr_000_3186
 
     ld a, b
@@ -7807,9 +7808,9 @@ Call_000_346f::
     call Call_000_099b
     ld a, [hl]
     and $1f
-    call Call_000_09b7
-    ld a, $0f
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_AIR_POWER
+    call AddAToHL
     ld a, [hl]
     cp $00
     jr z, jr_000_3487
@@ -7837,7 +7838,7 @@ Call_000_3493:
     ld a, [$d7a5]
     sla a
     ld hl, $d7c5
-    call Call_000_088f
+    call AddAToHL
     push hl
     ld a, $00
     call Call_000_1450
@@ -8189,7 +8190,7 @@ Jump_000_36c0::
     inc a
     push af
     ld a, $3f
-    call Call_000_088f
+    call AddAToHL
     pop af
     ld [hl+], a
     inc a
@@ -8214,9 +8215,9 @@ Jump_000_36c0::
     call Call_000_099b
     ld a, [hl]
     and $1f
-    call Call_000_09b7
-    ld a, $0c
-    call Call_000_088f
+    call GetUnit
+    ld a, UNIT_SHIFT_RANGE
+    call AddAToHL
     ld a, [hl+]
     push hl
     ld e, a
@@ -8558,7 +8559,7 @@ Call_000_39bc:
 
 jr_000_3a07:
     ld a, $78
-    call Call_000_088f
+    call AddAToHL
     dec b
     jr nz, jr_000_3a07
 
@@ -8594,7 +8595,7 @@ jr_000_3a0f:
 
 jr_000_3a3e:
     ld a, $78
-    call Call_000_088f
+    call AddAToHL
     dec b
     jr nz, jr_000_3a3e
 
@@ -8751,7 +8752,7 @@ jr_000_3b44:
     pop de
     pop bc
     ld a, $28
-    call Call_000_088f
+    call AddAToHL
     ld a, $40
     call Call_000_08a1
     dec c
@@ -8877,7 +8878,7 @@ Call_000_3c0d:
     inc a
     push af
     ld a, $3f
-    call Call_000_088f
+    call AddAToHL
     pop af
     ld [hl+], a
     inc a
@@ -8914,7 +8915,7 @@ Call_000_3c3c:
     inc de
     ld [hl], a
     ld a, $3d
-    call Call_000_088f
+    call AddAToHL
     ld a, [de]
     inc de
     ld [hl+], a
@@ -9025,7 +9026,7 @@ jr_000_3cf4:
     ld a, [$d7a5]
     sla a
     ld hl, $d7c5
-    call Call_000_088f
+    call AddAToHL
     push hl
     ld a, $00
     call Call_000_1450
