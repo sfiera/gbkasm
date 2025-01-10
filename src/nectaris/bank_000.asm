@@ -1770,55 +1770,55 @@ Call_000_09f9::
     ld a, [$d799]
     push af
     ld a, [$d872]
-    call Call_000_0a0e
+    call LoadFont
     pop af
     ld [$d799], a
     ld [$2000], a
     ret
 
 
-Call_000_0a0e:
+LoadFont:
     push af
     ld a, BANK(Font1)
     call SetROMBank
     ld hl, Font1
     pop af
     cp $00
-    jr z, jr_000_0a2d
+    jr z, .load
 
     ld hl, Font2
     cp $01
-    jr z, jr_000_0a2d
+    jr z, .load
 
     ld hl, Font3
     cp $02
-    jr z, jr_000_0a2d
+    jr z, .load
 
     ld hl, Font4
 
-jr_000_0a2d:
+.load
     ld de, $8000
-    ld b, $80
-    call Call_000_0a36
+    ld b, 128
+    call LoadTiles
     ret
 
 
-Call_000_0a36:
+; Copy (b * 16) bytes from hl to de (?)
+; If b == 0, treat as 256 (?)
+LoadTiles:
     ld a, b
     push af
     cp $00
-    jr nz, jr_000_0a40
+    jr nz, .jr_000_0a40
 
     ld b, $40
-    jr jr_000_0a44
+    jr .next
 
-jr_000_0a40:
+.jr_000_0a40
     srl b
     srl b
 
-Call_000_0a44:
-Jump_000_0a44:
-jr_000_0a44:
+.next
     call Call_000_075c
     push bc
     ld bc, $0040
@@ -1829,7 +1829,7 @@ jr_000_0a44:
     call AddAToDE
     pop bc
     dec b
-    jp z, Jump_000_0a73
+    jp z, .Jump_000_0a73
 
     push bc
     ld bc, $0040
@@ -1840,24 +1840,24 @@ jr_000_0a44:
     call AddAToDE
     pop bc
     dec b
-    jp nz, Jump_000_0a44
+    jp nz, .next
 
-Jump_000_0a73:
+.Jump_000_0a73
     call Call_000_075c
     pop af
     and $03
     cp $01
-    jr z, jr_000_0aa7
+    jr z, .jr_000_0aa7
 
     cp $02
-    jr z, jr_000_0a97
+    jr z, .jr_000_0a97
 
     cp $03
-    jr z, jr_000_0a87
+    jr z, .jr_000_0a87
 
-    jr jr_000_0ab7
+    jr .jr_000_0ab7
 
-jr_000_0a87:
+.jr_000_0a87
     ld bc, $0010
     call Call_000_0764
     ld a, $10
@@ -1865,7 +1865,7 @@ jr_000_0a87:
     ld a, $10
     call AddAToDE
 
-jr_000_0a97:
+.jr_000_0a97
     ld bc, $0010
     call Call_000_0764
     ld a, $10
@@ -1873,7 +1873,7 @@ jr_000_0a97:
     ld a, $10
     call AddAToDE
 
-jr_000_0aa7:
+.jr_000_0aa7
     ld bc, $0010
     call Call_000_0764
     ld a, $10
@@ -1881,7 +1881,7 @@ jr_000_0aa7:
     ld a, $10
     call AddAToDE
 
-jr_000_0ab7:
+.jr_000_0ab7
     call Call_000_075c
     ret
 
@@ -2101,7 +2101,7 @@ Call_000_0bcf:
     ld [$d799], a
     ld de, $8800
     ld b, $00
-    call Call_000_0a36
+    call LoadTiles
     pop hl
     pop af
     ld [$2000], a
@@ -2441,7 +2441,7 @@ Call_000_0de7::
     ld hl, Font7
     ld de, $8800
     ld b, $00
-    call Call_000_0a36
+    call LoadTiles
     ld a, $01
     call Call_000_09f9
     ld a, $01
@@ -4151,7 +4151,7 @@ Call_000_1a2a:
     ld hl, FactoryTileData
     ld de, $8800
     ld bc, $00a0
-    call Call_000_0a36
+    call LoadTiles
     ld a, BANK(UnitsUnion)
     call SetROMBank
     ld a, [$db03]
@@ -4167,7 +4167,7 @@ jr_000_1a52:
 jr_000_1a55:
     ld de, $9200
     ld bc, $0060
-    call Call_000_0a36
+    call LoadTiles
     ld a, $01
     call Call_000_09f9
     ret
@@ -4474,7 +4474,7 @@ Call_000_1c9e::
     ld hl, Font8
     ld de, $8800
     ld b, $00
-    call Call_000_0a36
+    call LoadTiles
     ld a, $01
     call Call_000_09f9
     ld a, $01
@@ -7635,7 +7635,7 @@ Call_000_3394:
     ld hl, MapTiles
     ld de, $8800
     ld bc, $0000
-    call Call_000_0a36
+    call LoadTiles
     ld a, BANK(Call_001_5fae)
     call SetROMBank
     call Call_000_12f0
@@ -8128,7 +8128,7 @@ Call_000_368a:
     ld hl, WeaponDataTiles
     ld de, $8800
     ld bc, $0000
-    call Call_000_0a36
+    call LoadTiles
     ld a, BANK(TileMapWeaponData)
     call SetROMBank
     ld hl, TileMapWeaponData
@@ -8504,7 +8504,7 @@ Call_000_39bc:
     ld hl, BattleTileData
     ld de, $8800
     ld bc, $0000
-    call Call_000_0a36
+    call LoadTiles
     ld a, BANK(BattleTileMap4)
     call SetROMBank
     ld hl, BattleTileMap4
@@ -8644,19 +8644,15 @@ Call_000_3aac:
     sla e
     rl d
     ld hl, UnitNameTiles
-
-Jump_000_3ad3:
     ld a, d
     add h
     ld h, a
     ld a, e
     add l
     ld l, a
-
-Call_000_3ad9:
     pop de
-    ld b, $05
-    call Call_000_0a36
+    ld b, 5
+    call LoadTiles
     pop bc
     call Call_000_093f
     pop af
@@ -8674,7 +8670,7 @@ Call_000_3ad9:
 
 Call_000_3aee:
     push de
-    ld a, BANK(UnitsUnion)
+    ld a, BANK(UnitsGuicy)
     call SetROMBank
     ld a, [$d86f]
     ld b, a
@@ -8701,8 +8697,8 @@ Call_000_3aee:
     add l
     ld l, a
     pop de
-    ld b, $04
-    call Call_000_0a36
+    ld b, 4
+    call LoadTiles
     ret
 
 
@@ -8973,8 +8969,8 @@ Call_000_3c96::
     call SetROMBank
     ld hl, MessageTurn
     ld de, $8000
-    ld b, $28
-    call Call_000_0a36
+    ld b, 40
+    call LoadTiles
     ld a, $01
     call SetROMBank
     ld a, $20
@@ -9055,8 +9051,8 @@ jr_000_3d47:
 
 jr_000_3d5e:
     ld de, $8000
-    ld b, $14
-    call Call_000_0a36
+    ld b, 20
+    call LoadTiles
     ld a, $01
     call SetROMBank
     ld a, $30
@@ -9219,8 +9215,8 @@ Call_000_3e3f:
 
 jr_000_3e68:
     ld de, $8000
-    ld b, $14
-    call Call_000_0a36
+    ld b, 20
+    call LoadTiles
     ld a, $01
     call SetROMBank
     ld a, $30
