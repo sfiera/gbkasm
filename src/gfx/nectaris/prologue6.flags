@@ -1,3 +1,4 @@
 --unique-tiles
 --tilemap src/gfx/nectaris/prologue6.map
 --base-tiles 128
+--colors embedded
