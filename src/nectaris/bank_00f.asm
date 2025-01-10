@@ -116,7 +116,7 @@ jr_00f_40af:
     jr z, jr_00f_40c1
 
     ld a, $3e
-    call Call_000_0896
+    call SubAFromHL
     jr jr_00f_40c6
 
 jr_00f_40c1:
@@ -136,7 +136,7 @@ jr_00f_40c6:
     call AddAToHL
     pop de
     ld a, $60
-    call Call_000_08a1
+    call AddAToDE
     pop af
     dec a
     jp nz, Jump_00f_40a9
@@ -631,7 +631,7 @@ Call_00f_4333::
     jr z, jr_00f_4389
 
 jr_00f_4383:
-    call Call_000_08ba
+    call AddDEToHL
     dec b
     jr nz, jr_00f_4383
 
@@ -640,7 +640,7 @@ jr_00f_4389:
     ld e, a
     ld a, [$da71]
     ld d, a
-    call Call_000_08b3
+    call SubDEFromHL
     ld de, $0000
     ld a, [$da88]
     cp $01
@@ -649,12 +649,12 @@ jr_00f_4389:
     ld de, $0032
 
 jr_00f_43a1:
-    call Call_000_08ba
+    call AddDEToHL
     ld bc, $0000
     ld de, $0064
 
 jr_00f_43aa:
-    call Call_000_08b3
+    call SubDEFromHL
     jr c, jr_00f_43b2
 
     inc bc
@@ -679,7 +679,7 @@ jr_00f_43b9:
     jr z, jr_00f_43d2
 
 jr_00f_43cc:
-    call Call_000_08ba
+    call AddDEToHL
     dec b
     jr nz, jr_00f_43cc
 
@@ -688,7 +688,7 @@ jr_00f_43d2:
     ld e, a
     ld a, [$da6f]
     ld d, a
-    call Call_000_08b3
+    call SubDEFromHL
     ld de, $0000
     ld a, [$da89]
     cp $01
@@ -697,12 +697,12 @@ jr_00f_43d2:
     ld de, $0032
 
 jr_00f_43ea:
-    call Call_000_08ba
+    call AddDEToHL
     ld bc, $0000
     ld de, $0064
 
 jr_00f_43f3:
-    call Call_000_08b3
+    call SubDEFromHL
     jr c, jr_00f_43fb
 
     inc bc
@@ -917,7 +917,7 @@ jr_00f_4516:
     ld de, data_00f_44ba
     ld a, c
     sla a
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     ld l, a
     inc de
@@ -927,7 +927,7 @@ jr_00f_4516:
     ld e, a
     ld a, [$da6f]
     ld d, a
-    call Call_000_08ba
+    call AddDEToHL
     ld a, l
     ld [$d9a8], a
     ld a, h
@@ -936,7 +936,7 @@ jr_00f_4516:
     ld e, a
     ld a, [$da71]
     ld d, a
-    call Call_000_08b3
+    call SubDEFromHL
     ld a, l
     ld [$d9a8], a
     ld a, h
@@ -1244,7 +1244,7 @@ jr_00f_4711:
     ld h, a
 
 jr_00f_475f:
-    call Call_000_08ba
+    call AddDEToHL
     dec c
     jr nz, jr_00f_475f
 
@@ -1285,7 +1285,7 @@ jr_00f_4783:
     ld de, $0002
 
 jr_00f_479c:
-    call Call_000_08ba
+    call AddDEToHL
     dec b
     jr nz, jr_00f_479c
 
@@ -1299,7 +1299,7 @@ jr_00f_47a2:
     ld bc, $0000
 
 jr_00f_47af:
-    call Call_000_08b3
+    call SubDEFromHL
     jr c, jr_00f_47b7
 
     inc bc
@@ -1378,7 +1378,7 @@ jr_00f_47dc:
     ld h, a
 
 jr_00f_4826:
-    call Call_000_08ba
+    call AddDEToHL
     dec c
     jr nz, jr_00f_4826
 
@@ -1419,7 +1419,7 @@ jr_00f_484a:
     ld de, $0002
 
 jr_00f_4863:
-    call Call_000_08ba
+    call AddDEToHL
     dec b
     jr nz, jr_00f_4863
 
@@ -1433,7 +1433,7 @@ jr_00f_4869:
     ld bc, $0000
 
 jr_00f_4876:
-    call Call_000_08b3
+    call SubDEFromHL
     jr c, jr_00f_487e
 
     inc bc
@@ -1489,7 +1489,7 @@ jr_00f_48c3:
     ld e, a
     ld a, [$da97]
     ld d, a
-    call Call_000_08ba
+    call AddDEToHL
     ld a, h
     cp $00
     jr nz, jr_00f_48e0
@@ -1511,12 +1511,12 @@ jr_00f_48e3:
     ld e, a
     ld a, [$da8d]
     ld d, a
-    call Call_000_08ba
+    call AddDEToHL
     ld a, [$da98]
     ld e, a
     ld a, [$da99]
     ld d, a
-    call Call_000_08ba
+    call AddDEToHL
     ld a, [$da9e]
     cp $3f
     jr nz, jr_00f_490d
@@ -1548,7 +1548,7 @@ jr_00f_491a:
     jr z, jr_00f_492f
 
 jr_00f_4929:
-    call Call_000_08ba
+    call AddDEToHL
     dec c
     jr nz, jr_00f_4929
 
@@ -1557,7 +1557,7 @@ jr_00f_492f:
 
 jr_00f_4932:
     ld de, $0064
-    call Call_000_08b3
+    call SubDEFromHL
     jr c, jr_00f_493d
 
     inc bc
@@ -1584,7 +1584,7 @@ jr_00f_493d:
     jr z, jr_00f_4964
 
 jr_00f_495e:
-    call Call_000_08ba
+    call AddDEToHL
     dec b
     jr nz, jr_00f_495e
 
@@ -1593,7 +1593,7 @@ jr_00f_4964:
     ld de, $000a
 
 jr_00f_496a:
-    call Call_000_08b3
+    call SubDEFromHL
     jr c, jr_00f_4972
 
     inc bc
@@ -1627,7 +1627,7 @@ jr_00f_4991:
     ld e, a
     ld a, [$da8b]
     ld d, a
-    call Call_000_08ba
+    call AddDEToHL
     ld a, h
     cp $00
     jr nz, jr_00f_49ae
@@ -1678,7 +1678,7 @@ jr_00f_49d2:
     jr z, jr_00f_49e9
 
 jr_00f_49e3:
-    call Call_000_08ba
+    call AddDEToHL
     dec c
     jr nz, jr_00f_49e3
 
@@ -1687,7 +1687,7 @@ jr_00f_49e9:
     ld de, $0064
 
 jr_00f_49ef:
-    call Call_000_08b3
+    call SubDEFromHL
     jr c, jr_00f_49f7
 
     inc bc
@@ -1714,7 +1714,7 @@ jr_00f_49f7:
     jr z, jr_00f_4a1e
 
 jr_00f_4a18:
-    call Call_000_08ba
+    call AddDEToHL
     dec b
     jr nz, jr_00f_4a18
 
@@ -1723,7 +1723,7 @@ jr_00f_4a1e:
     ld de, $000a
 
 jr_00f_4a24:
-    call Call_000_08b3
+    call SubDEFromHL
     jr c, jr_00f_4a2c
 
     inc bc
@@ -1751,7 +1751,7 @@ Jump_00f_4a36:
     jr z, jr_00f_4a51
 
 jr_00f_4a4b:
-    call Call_000_08ba
+    call AddDEToHL
     dec b
     jr nz, jr_00f_4a4b
 
@@ -1773,7 +1773,7 @@ jr_00f_4a51:
     jr z, jr_00f_4a74
 
 jr_00f_4a6e:
-    call Call_000_08ba
+    call AddDEToHL
     dec b
     jr nz, jr_00f_4a6e
 
@@ -2212,7 +2212,7 @@ jr_00f_4c87:
     inc a
     push af
     ld a, $3f
-    call Call_000_08a1
+    call AddAToDE
     pop af
     ld [de], a
     inc de
@@ -2294,7 +2294,7 @@ jr_00f_4ce6:
     inc a
     push af
     ld a, $3f
-    call Call_000_08a1
+    call AddAToDE
     pop af
     ld [de], a
     pop bc
@@ -3653,7 +3653,7 @@ jr_00f_54e7:
 
     push hl
     ld a, $60
-    call Call_000_0896
+    call SubAFromHL
     call Call_00f_558a
     pop hl
 
@@ -3722,7 +3722,7 @@ jr_00f_553d:
 
     push hl
     ld a, $63
-    call Call_000_0896
+    call SubAFromHL
     call Call_00f_558a
     pop hl
 
@@ -3736,7 +3736,7 @@ jr_00f_5551:
 
     push hl
     ld a, $5d
-    call Call_000_0896
+    call SubAFromHL
     call Call_00f_558a
     pop hl
 
@@ -6065,8 +6065,8 @@ Call_00f_6323::
     ld a, [hl]
     ld l, a
     ld h, $00
-    call Call_000_08c1
-    call Call_000_08ea
+    call MulHLByDE
+    call DivHLBy10
     ld e, l
     ld d, h
     ld a, [$d86f]
@@ -6077,7 +6077,7 @@ Call_00f_6323::
     ld l, a
     ld a, [$da97]
     ld h, a
-    call Call_000_08ba
+    call AddDEToHL
     ld e, l
     ld d, h
 
@@ -6085,7 +6085,7 @@ jr_00f_635d:
     ld a, [$da88]
     ld l, a
     ld h, $00
-    call Call_000_08c1
+    call MulHLByDE
     ld a, l
     ld [$d852], a
     ld a, h
@@ -6103,8 +6103,8 @@ jr_00f_635d:
     ld a, [hl]
     ld l, a
     ld h, $00
-    call Call_000_08c1
-    call Call_000_08ea
+    call MulHLByDE
+    call DivHLBy10
     ld e, l
     ld d, h
     ld a, [$d86f]
@@ -6127,7 +6127,7 @@ jr_00f_63a3:
     ld l, a
     ld a, [$da99]
     ld h, a
-    call Call_000_08ba
+    call AddDEToHL
     ld e, l
     ld d, h
 
@@ -6151,7 +6151,7 @@ jr_00f_63b7:
     ld bc, $0000
 
 jr_00f_63da:
-    call Call_000_08b3
+    call SubDEFromHL
     jr c, jr_00f_63e2
 
     inc bc
@@ -6161,8 +6161,8 @@ jr_00f_63e2:
     ld h, b
     ld l, c
     pop de
-    call Call_000_08c1
-    call Call_000_08ea
+    call MulHLByDE
+    call DivHLBy10
     ld e, l
     ld d, h
     jr jr_00f_640b
@@ -6170,17 +6170,17 @@ jr_00f_63e2:
 Jump_00f_63ef:
     ld h, d
     ld l, e
-    ld a, $32
+    ld a, 50
     call AddAToHL
-    call Call_000_08d5
+    call DivHLBy100
     push de
     ld a, [$da8c]
     ld e, a
     ld a, [$da8d]
     ld d, a
-    call Call_000_08c1
+    call MulHLByDE
     pop de
-    call Call_000_08ba
+    call AddDEToHL
     ld d, h
     ld e, l
 
@@ -6188,7 +6188,7 @@ jr_00f_640b:
     ld a, [$da89]
     ld l, a
     ld h, $00
-    call Call_000_08c1
+    call MulHLByDE
     ld e, l
     ld d, h
     push de
@@ -6209,8 +6209,8 @@ jr_00f_640b:
     ld a, [hl]
     ld l, a
     ld h, $00
-    call Call_000_08c1
-    call Call_000_08ea
+    call MulHLByDE
+    call DivHLBy10
     ld e, l
     ld d, h
     ld a, [$d86f]
@@ -6228,7 +6228,7 @@ jr_00f_6453:
     ld a, [$da89]
     ld l, a
     ld h, $00
-    call Call_000_08c1
+    call MulHLByDE
     ld a, l
     ld [$d854], a
     ld a, h
@@ -6245,8 +6245,8 @@ jr_00f_6453:
     ld a, [hl]
     ld l, a
     ld h, $00
-    call Call_000_08c1
-    call Call_000_08ea
+    call MulHLByDE
+    call DivHLBy10
     ld e, l
     ld d, h
     ld a, [$d86f]
@@ -6268,7 +6268,7 @@ jr_00f_6453:
     ld bc, $0000
 
 jr_00f_64a7:
-    call Call_000_08b3
+    call SubDEFromHL
     jr c, jr_00f_64af
 
     inc bc
@@ -6278,8 +6278,8 @@ jr_00f_64af:
     ld h, b
     ld l, c
     pop de
-    call Call_000_08c1
-    call Call_000_08ea
+    call MulHLByDE
+    call DivHLBy10
     ld e, l
     ld d, h
     jr jr_00f_64d8
@@ -6287,17 +6287,17 @@ jr_00f_64af:
 jr_00f_64bc:
     ld h, d
     ld l, e
-    ld a, $32
+    ld a, 50
     call AddAToHL
-    call Call_000_08d5
+    call DivHLBy100
     push de
     ld a, [$da8a]
     ld e, a
     ld a, [$da8b]
     ld d, a
-    call Call_000_08c1
+    call MulHLByDE
     pop de
-    call Call_000_08ba
+    call AddDEToHL
     ld d, h
     ld e, l
 
@@ -6305,7 +6305,7 @@ jr_00f_64d8:
     ld a, [$da88]
     ld l, a
     ld h, $00
-    call Call_000_08c1
+    call MulHLByDE
     ld e, l
     ld d, h
     ld a, l

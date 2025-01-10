@@ -495,7 +495,7 @@ Jump_001_432d:
     pop hl
     ld a, [hl+]
     ld de, $dac0
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     ld [$d99d], a
     ld [$d7b5], a
@@ -1425,7 +1425,7 @@ jr_001_4891:
 
 jr_001_4892:
     ld a, $06
-    call Call_000_0896
+    call SubAFromHL
     dec c
     ld a, c
     cp $ff
@@ -1756,7 +1756,7 @@ jr_001_4a96:
     jr z, jr_001_4ab6
 
 jr_001_4ab0:
-    call Call_000_08ba
+    call AddDEToHL
     dec c
     jr nz, jr_001_4ab0
 
@@ -1813,7 +1813,7 @@ jr_001_4afc:
     ld c, a
     call Call_000_099b
     ld a, $06
-    call Call_000_0896
+    call SubAFromHL
     dec c
     ld a, c
     cp $ff
@@ -2142,7 +2142,7 @@ Jump_001_4cff:
     pop af
     push af
     ld de, $da14
-    call Call_000_08a1
+    call AddAToDE
     ld a, [hl]
     ld [de], a
     pop af
@@ -2584,7 +2584,7 @@ jr_001_4f81:
     ld a, b
     and $1f
     ld de, data_001_55f9
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     ld [$d9b4], a
     ld a, $00
@@ -2668,7 +2668,7 @@ jr_001_4f81:
     call AddAToHL
     ld a, [$d99d]
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     ld [hl], a
     ld a, c
@@ -2676,7 +2676,7 @@ jr_001_4f81:
     call AddAToHL
     ld a, [$d99d]
     ld de, $d960
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     ld [hl], a
 
@@ -2869,7 +2869,7 @@ Jump_001_51ac:
     call AddAToHL
     ld a, [$d9a2]
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, [hl]
     or $08
     ld [de], a
@@ -2903,12 +2903,12 @@ jr_001_5210:
 jr_001_5223:
     ld a, b
     ld de, $da41
-    call Call_000_08a1
+    call AddAToDE
     ld a, $ff
     ld [de], a
     ld a, [$d99d]
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     or $08
     ld [de], a
@@ -2917,7 +2917,7 @@ jr_001_5223:
 Jump_001_523c:
     ld a, [$d99d]
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     or $80
     ld [de], a
@@ -2926,7 +2926,7 @@ Jump_001_523c:
 Jump_001_524b:
     ld a, [$d99d]
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     or $80
     ld [de], a
@@ -3146,7 +3146,7 @@ jr_001_5394:
 
     push hl
     ld a, $60
-    call Call_000_0896
+    call SubAFromHL
     call Call_001_5530
     pop hl
     cp $00
@@ -3320,7 +3320,7 @@ Jump_001_5479:
 
     push hl
     ld a, $63
-    call Call_000_0896
+    call SubAFromHL
     call Call_001_5530
     pop hl
     cp $00
@@ -3357,7 +3357,7 @@ jr_001_54ad:
 
     push hl
     ld a, $5d
-    call Call_000_0896
+    call SubAFromHL
     call Call_001_5530
     pop hl
     cp $00
@@ -3716,7 +3716,7 @@ jr_001_567b:
     ld a, c
     ld [de], a
     ld a, $05
-    call Call_000_08a1
+    call AddAToDE
 
 jr_001_5690:
     pop hl
@@ -3777,7 +3777,7 @@ Jump_001_56ce:
 
     ld de, $d928
     ld a, c
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     cp $00
     jr nz, jr_001_56f6
@@ -3864,7 +3864,7 @@ jr_001_5737:
 
 jr_001_5758:
     ld a, $08
-    call Call_000_08a1
+    call AddAToDE
     inc b
     ld a, b
     cp $08
@@ -3881,7 +3881,7 @@ jr_001_5763:
     ld [$d9b2], a
     ld de, data_001_55f9
     ld a, [$d9a1]
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     ld [$d9b4], a
     ld a, $00
@@ -3994,7 +3994,7 @@ jr_001_5804:
 
 jr_001_5806:
     ld a, $08
-    call Call_000_08a1
+    call AddAToDE
     inc b
     ld a, b
     cp $08
@@ -4054,7 +4054,7 @@ jr_001_584e:
 
 jr_001_5856:
     ld a, $08
-    call Call_000_08a1
+    call AddAToDE
     inc c
     ld a, c
     cp $08
@@ -4069,7 +4069,7 @@ jr_001_5856:
     sla a
     sla a
     ld de, $d9c0
-    call Call_000_08a1
+    call AddAToDE
     inc de
     inc de
     ld a, $00
@@ -4161,7 +4161,7 @@ Jump_001_58cb:
 
 jr_001_58f8:
     ld a, $06
-    call Call_000_0896
+    call SubAFromHL
     dec c
     ld a, c
     cp $ff
@@ -4300,7 +4300,7 @@ jr_001_59c1:
 
 jr_001_59e3:
     ld de, data_001_58bb
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     push bc
     push hl
@@ -4344,7 +4344,7 @@ jr_001_5a1f:
     jr nz, jr_001_59c1
 
     ld de, $0060
-    call Call_000_08ba
+    call AddDEToHL
     ld a, [$da39]
     inc a
     ld [$da39], a
@@ -4582,7 +4582,7 @@ jr_001_5b8e:
 jr_001_5bb7:
     ld a, c
     ld de, $dac0
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     cp $ff
     jr z, jr_001_5bdb
@@ -4849,7 +4849,7 @@ Jump_001_5d47:
 jr_001_5d47:
     ld a, [$dafc]
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     ld b, a
     ld a, [$da83]
@@ -4919,7 +4919,7 @@ jr_001_5d94:
     ld a, [hl]
     and $3f
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, $ff
     ld [de], a
 
@@ -5007,7 +5007,7 @@ jr_001_5e22:
     call Call_001_5e3c
     ld a, b
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     cp $01
     jr nz, jr_001_5e38
@@ -5196,7 +5196,7 @@ jr_001_5f4b:
     ld a, [$d99d]
     ld c, a
     ld a, $06
-    call Call_000_0896
+    call SubAFromHL
     dec c
     ld a, c
     cp $ff
@@ -5250,7 +5250,7 @@ jr_001_5f78:
 jr_001_5f98:
     ld a, c
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, $08
     ld [de], a
 
@@ -5299,7 +5299,7 @@ jr_001_5fbc:
     dec a
     sla a
     ld de, $d918
-    call Call_000_08a1
+    call AddAToDE
     ld a, [hl+]
     and $1f
     ld [de], a
@@ -5463,7 +5463,7 @@ Jump_001_608e:
 
     ld a, c
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     and $7f
     ld [de], a
@@ -5472,14 +5472,14 @@ Jump_001_608e:
 jr_001_60ae:
     ld a, c
     ld de, $d960
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     and $7f
     ld [de], a
 
 jr_001_60b9:
     ld a, $06
-    call Call_000_0896
+    call SubAFromHL
     dec c
     ld a, c
     cp $ff
@@ -5520,14 +5520,14 @@ jr_001_60d3:
 
     ld a, c
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     cp $02
     jr z, jr_001_6109
 
 jr_001_60fb:
     ld a, $06
-    call Call_000_0896
+    call SubAFromHL
     dec c
     ld a, c
     cp $ff
@@ -5588,7 +5588,7 @@ jr_001_6144:
     ld [$da44], a
     ld a, [$d99d]
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     or $08
     ld [de], a
@@ -5597,7 +5597,7 @@ jr_001_6144:
 jr_001_616d:
     ld a, [$d99d]
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, $03
     ld [de], a
 
@@ -5633,14 +5633,14 @@ jr_001_6194:
 
     ld a, c
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     cp $01
     jr z, jr_001_61bb
 
 jr_001_61a7:
     ld a, $06
-    call Call_000_0896
+    call SubAFromHL
     dec c
     ld a, c
     cp $ff
@@ -5658,7 +5658,7 @@ jr_001_61bb:
     call Call_001_4719
     ld a, [$d99d]
     ld de, $d960
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     and $07
     cp $07
@@ -5666,7 +5666,7 @@ jr_001_61bb:
 
     sla a
     ld de, $d918
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     ld [$d9a3], a
     inc de
@@ -5687,7 +5687,7 @@ jr_001_61e7:
 jr_001_61f2:
     ld a, b
     ld de, $d914
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     ld [$d9a3], a
     inc de
@@ -5710,7 +5710,7 @@ jr_001_6210:
 
     ld a, c
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     cp $00
     jr nz, jr_001_6245
@@ -5741,7 +5741,7 @@ jr_001_6210:
 
 jr_001_6245:
     ld a, $06
-    call Call_000_0896
+    call SubAFromHL
     dec c
     ld a, c
     cp $ff
@@ -6011,7 +6011,7 @@ jr_001_63da:
 
     ld a, c
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     cp $00
     jp nz, Jump_001_643e
@@ -6051,7 +6051,7 @@ jr_001_63da:
 Jump_001_643e:
 jr_001_643e:
     ld a, $06
-    call Call_000_0896
+    call SubAFromHL
     dec c
     ld a, c
     cp $ff
@@ -6136,7 +6136,7 @@ jr_001_6487:
 
     ld a, c
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     cp $00
     jr z, jr_001_64df
@@ -6144,7 +6144,7 @@ jr_001_6487:
 Jump_001_64ce:
 jr_001_64ce:
     ld a, $06
-    call Call_000_0896
+    call SubAFromHL
     dec c
     ld a, c
     cp $ff
@@ -6206,7 +6206,7 @@ jr_001_6502:
 
 jr_001_6520:
     ld a, $06
-    call Call_000_0896
+    call SubAFromHL
     dec c
     ld a, c
     cp $ff
@@ -6339,7 +6339,7 @@ Jump_001_65ab:
 
     ld a, b
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     push af
     ld a, [$da06]
@@ -6385,7 +6385,7 @@ jr_001_661d:
 Jump_001_6653:
     ld a, [$d9a7]
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     or $80
     ld [de], a
@@ -6651,14 +6651,14 @@ jr_001_67b2:
 
     ld a, [$d9a2]
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     ld [$da06], a
 
 Jump_001_67f1:
 jr_001_67f1:
     ld a, $06
-    call Call_000_0896
+    call SubAFromHL
     dec c
     ld a, c
     cp $ff
@@ -6934,7 +6934,7 @@ jr_001_69f1:
     ld [$da44], a
     ld a, [$d9a7]
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     or $08
     ld [de], a
@@ -7330,7 +7330,7 @@ Jump_001_6c63:
 
     ld a, c
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     cp $00
     jr z, jr_001_6caa
@@ -7338,7 +7338,7 @@ Jump_001_6c63:
 Jump_001_6c95:
 jr_001_6c95:
     ld a, $06
-    call Call_000_0896
+    call SubAFromHL
     dec c
     ld a, c
     cp $ff
@@ -7643,7 +7643,7 @@ Jump_001_6e7a:
 
     ld a, c
     ld de, $d960
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     cp $00
     jr nz, jr_001_6ebf
@@ -7665,7 +7665,7 @@ Jump_001_6e7a:
 
     ld a, c
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     push af
     ld a, [$da83]
@@ -7680,7 +7680,7 @@ Jump_001_6e7a:
 
 jr_001_6ebf:
     ld a, $06
-    call Call_000_0896
+    call SubAFromHL
     dec c
     ld a, c
     cp $ff
@@ -7760,7 +7760,7 @@ Jump_001_6f2c:
 
     ld a, c
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     ld b, a
     ld a, [$da68]
@@ -7849,7 +7849,7 @@ Jump_001_6fd2:
     ld c, a
     call Call_000_099b
     ld a, $06
-    call Call_000_0896
+    call SubAFromHL
     dec c
     ld a, c
     cp $ff
@@ -7861,7 +7861,7 @@ Jump_001_6fd2:
 
     ld a, [$d9a2]
     ld de, $d960
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     or $80
     ld [de], a
@@ -7872,7 +7872,7 @@ jr_001_6ffc:
     ld a, [$da6b]
     ld [$d99d], a
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     or $08
     ld [de], a
@@ -8248,7 +8248,7 @@ Jump_001_7261:
     ld a, [$daa1]
     ld c, a
     ld de, $d918
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     cp $ff
     jp z, Jump_001_7356
@@ -8341,7 +8341,7 @@ Jump_001_729d:
     call Call_001_450a
     ld a, [$daa1]
     ld de, $d918
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     ld b, a
     inc de
@@ -8359,7 +8359,7 @@ jr_001_7311:
     ld a, [$d99d]
     ld c, a
     ld a, $06
-    call Call_000_0896
+    call SubAFromHL
     dec c
     ld a, c
     cp $ff
@@ -8371,7 +8371,7 @@ jr_001_7311:
     call AddAToHL
     ld a, [$daa1]
     ld de, $d918
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     ld [hl+], a
     inc de
@@ -8461,7 +8461,7 @@ Jump_001_7398:
 Jump_001_73b0:
 jr_001_73b0:
     ld a, $06
-    call Call_000_0896
+    call SubAFromHL
     dec c
     ld a, c
     cp $ff
@@ -8613,7 +8613,7 @@ jr_001_7460:
     inc hl
     ld a, [hl]
     dec a
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     push af
     ld a, [$d9a8]
@@ -8753,7 +8753,7 @@ jr_001_7580:
     ld [$da44], a
     ld a, [$d99d]
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     or $08
     ld [de], a
@@ -8763,7 +8763,7 @@ Jump_001_75a5:
 jr_001_75a5:
     ld a, [$d99d]
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     or $80
     ld [de], a
@@ -8855,7 +8855,7 @@ Jump_001_75c2:
 
 jr_001_762b:
     ld a, $06
-    call Call_000_0896
+    call SubAFromHL
     dec c
     ld a, c
     cp $ff
@@ -8894,7 +8894,7 @@ Jump_001_7650:
 
     ld a, c
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     and $07
     cp $01
@@ -8924,7 +8924,7 @@ Jump_001_7650:
 
     ld a, c
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     or $80
     ld [de], a
@@ -8933,7 +8933,7 @@ Jump_001_7650:
 jr_001_76a0:
     ld a, c
     ld de, $d960
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     srl a
     srl a
@@ -8952,7 +8952,7 @@ jr_001_76a0:
 
 jr_001_76c0:
     ld a, $06
-    call Call_000_0896
+    call SubAFromHL
     dec c
     ld a, c
     cp $ff
@@ -9019,7 +9019,7 @@ Jump_001_76f4:
 
     ld a, c
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     cp $00
     jr nz, jr_001_775d
@@ -9059,7 +9059,7 @@ Jump_001_76f4:
 
 jr_001_775d:
     ld a, $06
-    call Call_000_0896
+    call SubAFromHL
     dec c
     ld a, c
     cp $ff
@@ -9272,7 +9272,7 @@ jr_001_7893:
 
     ld a, [$daba]
     ld de, $d928
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     or $80
     ld [de], a
@@ -9450,7 +9450,7 @@ Jump_001_7a0a:
     ld a, [$d99b]
     sla a
     ld de, $d918
-    call Call_000_08a1
+    call AddAToDE
     ld a, [de]
     cp $ff
     jp z, Jump_001_7d70

@@ -3583,7 +3583,7 @@ jr_01c_5277:
     ret nc
 
     ld bc, $40e5
-    call nc, Call_000_08e8
+    call nc, $08e8
     rst $18
     ld a, [bc]
     and $67
@@ -5890,7 +5890,7 @@ jr_01c_5f8c:
     push hl
     add b
     and $37
-    call nc, Call_000_08e8
+    call nc, $08e8
     db $e4
     cp $d0
     ld [bc], a

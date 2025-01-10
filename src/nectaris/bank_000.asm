@@ -1461,7 +1461,7 @@ AddAToHL::
     ret
 
 
-Call_000_0896::
+SubAFromHL::
     push bc
     ld b, a
     ld a, l
@@ -1474,7 +1474,7 @@ Call_000_0896::
     ret
 
 
-Call_000_08a1::
+AddAToDE::
     add e
     ld e, a
     ld a, d
@@ -1483,6 +1483,7 @@ Call_000_08a1::
     ret
 
 
+SubAFromDE::
     push bc
     ld b, a
     ld a, e
@@ -1495,7 +1496,7 @@ Call_000_08a1::
     ret
 
 
-Call_000_08b3::
+SubDEFromHL::
     ld a, l
     sub e
     ld l, a
@@ -1505,7 +1506,7 @@ Call_000_08b3::
     ret
 
 
-Call_000_08ba::
+AddDEToHL::
     ld a, e
     add l
     ld l, a
@@ -1515,65 +1516,62 @@ Call_000_08ba::
     ret
 
 
-Call_000_08c1::
+MulHLByDE::
     push bc
     ld b, h
     ld c, l
-    ld hl, $0000
+    ld hl, 0
     ld a, b
     or c
-    jr z, jr_000_08d3
+    jr z, .done
 
-jr_000_08cb:
-    call Call_000_08ba
+.loop
+    call AddDEToHL
     dec bc
     ld a, b
     or c
-    jr nz, jr_000_08cb
+    jr nz, .loop
 
-jr_000_08d3:
+.done
     pop bc
     ret
 
 
-Call_000_08d5::
+DivHLBy100::
     push bc
     push de
-    ld bc, $0000
-    ld de, $0064
+    ld bc, 0
+    ld de, 100
 
-jr_000_08dd:
-    call Call_000_08b3
-    jr c, jr_000_08e5
+.loop
+    call SubDEFromHL
+    jr c, .done
 
     inc bc
-    jr jr_000_08dd
+    jr .loop
 
-jr_000_08e5:
+.done
     ld h, b
     ld l, c
     pop de
-
-Call_000_08e8::
-Jump_000_08e8::
     pop bc
     ret
 
 
-Call_000_08ea::
+DivHLBy10::
     push bc
     push de
-    ld bc, $0000
-    ld de, $000a
+    ld bc, 0
+    ld de, 10
 
-jr_000_08f2:
-    call Call_000_08b3
-    jr c, jr_000_08fa
+.loop
+    call SubDEFromHL
+    jr c, .done
 
     inc bc
-    jr jr_000_08f2
+    jr .loop
 
-jr_000_08fa:
+.done
     ld h, b
     ld l, c
     pop de
@@ -1828,7 +1826,7 @@ jr_000_0a44:
     ld a, $40
     call AddAToHL
     ld a, $40
-    call Call_000_08a1
+    call AddAToDE
     pop bc
     dec b
     jp z, Jump_000_0a73
@@ -1839,7 +1837,7 @@ jr_000_0a44:
     ld a, $40
     call AddAToHL
     ld a, $40
-    call Call_000_08a1
+    call AddAToDE
     pop bc
     dec b
     jp nz, Jump_000_0a44
@@ -1865,7 +1863,7 @@ jr_000_0a87:
     ld a, $10
     call AddAToHL
     ld a, $10
-    call Call_000_08a1
+    call AddAToDE
 
 jr_000_0a97:
     ld bc, $0010
@@ -1873,7 +1871,7 @@ jr_000_0a97:
     ld a, $10
     call AddAToHL
     ld a, $10
-    call Call_000_08a1
+    call AddAToDE
 
 jr_000_0aa7:
     ld bc, $0010
@@ -1881,7 +1879,7 @@ jr_000_0aa7:
     ld a, $10
     call AddAToHL
     ld a, $10
-    call Call_000_08a1
+    call AddAToDE
 
 jr_000_0ab7:
     call Call_000_075c
@@ -2121,7 +2119,7 @@ jr_000_0c02:
     ld a, $14
     call AddAToHL
     ld a, $40
-    call Call_000_08a1
+    call AddAToDE
     dec c
     jr nz, jr_000_0c02
 
@@ -2363,7 +2361,7 @@ Call_000_0d85::
     push hl
     push af
     ld de, $0d73
-    call Call_000_08a1
+    call AddAToDE
     pop af
     ld hl, $0d79
     call AddAToHL
@@ -3012,7 +3010,7 @@ Call_000_11f1:
     sla e
     rl d
     ld hl, Passwords
-    call Call_000_08ba
+    call AddDEToHL
     ld de, $d7a9
     ld b, $06
 
@@ -3085,9 +3083,9 @@ jr_000_126c:
     ld d, $00
     sla e
     rl d
-    call Call_000_08ba
+    call AddDEToHL
     ld de, Maps
-    call Call_000_08ba
+    call AddDEToHL
     ld a, BANK(Maps)
     call SetROMBank
     ld a, [hl+]
@@ -4121,7 +4119,7 @@ jr_000_19f4:
     ld a, $28
     call AddAToHL
     ld a, $40
-    call Call_000_08a1
+    call AddAToDE
     dec c
     jr nz, jr_000_19f0
 
@@ -5407,7 +5405,7 @@ DoRecvDataFromPC:
     push af
     ld hl, $d000
     ld de, $01ff
-    call Call_000_08ba
+    call AddDEToHL
     pop af
     ld b, a
     ld a, [hl]
@@ -8145,7 +8143,7 @@ Jump_000_36c0::
     call Call_000_083e
     pop de
     ld a, $40
-    call Call_000_08a1
+    call AddAToDE
     dec b
     jr nz, jr_000_36bf
 
@@ -8736,7 +8734,7 @@ jr_000_3b44:
     ld a, $28
     call AddAToHL
     ld a, $40
-    call Call_000_08a1
+    call AddAToDE
     dec c
     jr nz, ShowTileMap
 
@@ -8756,7 +8754,7 @@ jr_000_3b55:
     pop de
     pop bc
     ld a, $40
-    call Call_000_08a1
+    call AddAToDE
     dec c
     jr nz, jr_000_3b55
 
@@ -8878,7 +8876,7 @@ Call_000_3c1f:
     sla a
     add $42
     ld de, BattleTileMap1
-    call Call_000_08a1
+    call AddAToDE
     ld a, BANK(BattleTileMap1)
     call SetROMBank
     dec hl

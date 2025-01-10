@@ -2047,7 +2047,7 @@ jr_007_50dd:
     sla e
     rl d
     ld hl, MapList.campaign
-    call Call_000_08ba
+    call AddDEToHL
     ld a, b
     add $05
     ld c, a
@@ -2351,7 +2351,7 @@ jr_007_52e3:
     sla e
     rl d
     ld hl, MapList.story
-    call Call_000_08ba
+    call AddDEToHL
     ld a, b
     add $05
     ld c, a
@@ -3212,7 +3212,7 @@ jr_007_6345:
     sla e
     rl d
     ld hl, EditMapList.maps
-    call Call_000_08ba
+    call AddDEToHL
     ld a, b
     add $05
     ld c, a
@@ -3519,7 +3519,7 @@ jr_007_6554:
     sla e
     rl d
     ld hl, WinnersMapList.maps
-    call Call_000_08ba
+    call AddDEToHL
     ld a, b
     add $05
     ld c, a
@@ -3765,7 +3765,7 @@ jr_007_66fb:
     sla e
     rl d
     ld hl, SPWinnersMapList.maps
-    call Call_000_08ba
+    call AddDEToHL
     ld a, b
     add $05
     ld c, a
@@ -4070,7 +4070,7 @@ jr_007_6906:
     sla e
     rl d
     ld hl, QuickStart.maps
-    call Call_000_08ba
+    call AddDEToHL
     ld a, b
     add $05
     ld c, a
@@ -4116,7 +4116,7 @@ Call_007_6958::
     ld d, a
     ld e, $00
     ld hl, $a000
-    call Call_000_08ba
+    call AddDEToHL
     push hl
     pop de
     push de
@@ -4214,7 +4214,7 @@ jr_007_69d5:
     call Call_007_6b27
     push af
     ld hl, $01ff
-    call Call_000_08ba
+    call AddDEToHL
     pop af
     ld [hl], a
     ld a, $00
@@ -4235,13 +4235,13 @@ Call_007_6a12::
     ld d, a
     ld e, $00
     ld hl, $a000
-    call Call_000_08ba
+    call AddDEToHL
     push hl
     pop de
     call Call_007_6b27
     ld b, a
     ld hl, $01ff
-    call Call_000_08ba
+    call AddDEToHL
     ld a, [hl]
     cp b
     jr z, jr_007_6a44
@@ -4351,13 +4351,13 @@ Call_007_6ac0::
     ld d, a
     ld e, $00
     ld hl, $a000
-    call Call_000_08ba
+    call AddDEToHL
     push hl
     pop de
     call Call_007_6b27
     ld b, a
     ld hl, $01ff
-    call Call_000_08ba
+    call AddDEToHL
     ld a, [hl]
     cp b
     jr z, jr_007_6afe
@@ -4448,7 +4448,7 @@ Call_007_6b3a::
     ld e, $00
     push hl
     ld hl, $a000
-    call Call_000_08ba
+    call AddDEToHL
     ld e, l
     ld d, h
     pop hl
@@ -4482,7 +4482,7 @@ Call_007_6b69::
     ld e, $00
     push hl
     ld hl, $a000
-    call Call_000_08ba
+    call AddDEToHL
     ld e, l
     ld d, h
     pop hl

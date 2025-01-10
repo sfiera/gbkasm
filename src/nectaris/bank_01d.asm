@@ -4963,7 +4963,7 @@ jr_01d_5947:
     ret nz
 
     and $b0
-    jp nc, Jump_000_08e8
+    jp nc, $08e8
 
     add l
     ld a, c
@@ -5263,7 +5263,7 @@ jr_01d_5947:
     push hl
     ld b, b
     and $70
-    call nc, Call_000_08e8
+    call nc, $08e8
     ld [$d000], a
     ld bc, $9273
     or e
@@ -5393,7 +5393,7 @@ jr_01d_5bc4:
 
     ld bc, $40e5
     and $a4
-    jp nc, Jump_000_08e8
+    jp nc, $08e8
 
     and $a4
     or h
