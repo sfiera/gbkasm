@@ -4108,7 +4108,7 @@ Call_007_6958::
     push af
     ld a, $02
     call Call_000_05c8
-    ld [Chars], a
+    ld [$4000], a
     ei
     pop af
     sla a
@@ -4218,7 +4218,7 @@ jr_007_69d5:
     ld [hl], a
     ld a, $00
     call Call_000_05c8
-    ld [Chars], a
+    ld [$4000], a
     ei
     ret
 
@@ -4227,7 +4227,7 @@ Call_007_6a12::
     push af
     ld a, $02
     call Call_000_05c8
-    ld [Chars], a
+    ld [$4000], a
     ei
     pop af
     sla a
@@ -4247,7 +4247,7 @@ Call_007_6a12::
 
     ld a, $00
     call Call_000_05c8
-    ld [Chars], a
+    ld [$4000], a
     ei
     ld a, $01
     ret
@@ -4333,7 +4333,7 @@ jr_007_6a86:
     call Call_000_0823
     ld a, $00
     call Call_000_05c8
-    ld [Chars], a
+    ld [$4000], a
     ei
     ld a, $00
     ret
@@ -4343,7 +4343,7 @@ Call_007_6ac0::
     push af
     ld a, $02
     call Call_000_05c8
-    ld [Chars], a
+    ld [$4000], a
     ei
     pop af
     sla a
@@ -4363,7 +4363,7 @@ Call_007_6ac0::
 
     ld a, $00
     call Call_000_05c8
-    ld [Chars], a
+    ld [$4000], a
     ei
     ld a, $01
     ret
@@ -4372,7 +4372,7 @@ Call_007_6ac0::
 jr_007_6af2:
     ld a, $00
     call Call_000_05c8
-    ld [Chars], a
+    ld [$4000], a
     ei
     ld a, $ff
     ret
@@ -4408,7 +4408,7 @@ jr_007_6b10:
 
     ld a, $00
     call Call_000_05c8
-    ld [Chars], a
+    ld [$4000], a
     ei
     ld a, $00
     ret
@@ -4439,7 +4439,7 @@ Call_007_6b3a::
     push af
     ld a, $02
     call Call_000_05c8
-    ld [Chars], a
+    ld [$4000], a
     ei
     pop af
     sla a
@@ -4464,7 +4464,7 @@ jr_007_6b57:
 
     ld a, $00
     call Call_000_05c8
-    ld [Chars], a
+    ld [$4000], a
     ei
     ret
 
@@ -4473,7 +4473,7 @@ Call_007_6b69::
     push af
     ld a, $02
     call Call_000_05c8
-    ld [Chars], a
+    ld [$4000], a
     ei
     pop af
     sla a
@@ -4498,7 +4498,7 @@ jr_007_6b86:
 
     ld a, $00
     call Call_000_05c8
-    ld [Chars], a
+    ld [$4000], a
     ei
     ret
 
@@ -4508,28 +4508,28 @@ Call_007_6b98::
     call Call_007_6958
     ld a, $02
     call Call_000_05c8
-    ld [Chars], a
+    ld [$4000], a
     ei
     ld hl, $a000
     ld a, $88
     ld [hl], a
     ld a, $00
     call Call_000_05c8
-    ld [Chars], a
+    ld [$4000], a
     ei
     ret
 
 
     ld a, $02
     call Call_000_05c8
-    ld [Chars], a
+    ld [$4000], a
     ei
     ld hl, $a000
     ld a, $00
     ld [hl], a
     ld a, $00
     call Call_000_05c8
-    ld [Chars], a
+    ld [$4000], a
     ei
     ret
 
@@ -4537,14 +4537,14 @@ Call_007_6b98::
 Call_007_6bcf::
     ld a, $02
     call Call_000_05c8
-    ld [Chars], a
+    ld [$4000], a
     ei
     ld hl, $a000
     ld a, [hl]
     push af
     ld a, $00
     call Call_000_05c8
-    ld [Chars], a
+    ld [$4000], a
     ei
     pop af
     ret
@@ -4553,7 +4553,7 @@ Call_007_6bcf::
 Call_007_6be8::
     ld a, $02
     call Call_000_05c8
-    ld [Chars], a
+    ld [$4000], a
     ei
     ld hl, $be00
     ld b, $00
@@ -4572,7 +4572,7 @@ jr_007_6c02:
     push af
     ld a, $00
     call Call_000_05c8
-    ld [Chars], a
+    ld [$4000], a
     ei
     pop af
     ret
@@ -4582,7 +4582,7 @@ Call_007_6c0f::
     push af
     ld a, $02
     call Call_000_05c8
-    ld [Chars], a
+    ld [$4000], a
     ei
     pop af
     ld b, $41
@@ -4599,7 +4599,7 @@ jr_007_6c22:
     push af
     ld a, $00
     call Call_000_05c8
-    ld [Chars], a
+    ld [$4000], a
     ei
     pop af
     ret
