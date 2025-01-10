@@ -7573,26 +7573,16 @@ Jump_001_6e12:
 
 
 data_001_6e21:
-    ld bc, $0001
-    nop
+    db $01, $01, $00, $00
 
 data_001_6e25:
-    inc d
-    jr nz, jr_001_6e48
-
-    nop
+    db $14, $20, $20, $00
 
 data_001_6e29:
-    nop
-    inc bc
-    nop
-    nop
+    db $00, $03, $00, $00
 
 data_001_6e2d:
-    nop
-    nop
-    db $10
-    ld a, [bc]
+    db $00, $00, $10, $0a
 
 Jump_001_6e31:
     ld a, $03
@@ -8417,12 +8407,7 @@ Jump_001_7356:
 
 
 data_001_736b:
-    db $10
-    db $10
-    ld bc, $0000
-    nop
-    nop
-    nop
+    db $10, $10, $01, $00, $00, $00, $00, $00
 
 Jump_001_7373:
     ld hl, $d6bc

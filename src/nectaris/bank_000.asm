@@ -792,14 +792,11 @@ Jump_000_0320:
     jp Jump_000_1eb5
 
 
-data_000_0323:
-    db "####0123456789%*################ "
-    db $a7, $a8, $a9, $aa, $ab, $ac, $ad, $ae, $af, $b1, $b2, $b3
-    db $b4, $b5, $b6, $b7, $b8, $b9, $ba, $bb, $bc, $bd, $be, $bf, $c0, $c1, $c2, $c3
-    db $c4, $c5, $c6, $c7, $c8, $c9, $ca, $cb, $cc, $cd, $ce, $cf, $d0, $d1, $d2, $d3
-    db $d4, $d5, $d6, $d7, $d8, $d9, $da, $db, $dc, $a6, $dd, $2d, $df, $de
-    db "    "
-    db " ABCDEFGHIJKLMNOPQRSTUVWXYZ      "
+data_000_0323::
+    db "####0123456789%*################"
+    db " ｧｨｩｪｫｬｭｮｯｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆ"
+    db "ﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝ-ﾟﾞ     "
+    db "ABCDEFGHIJKLMNOPQRSTUVWXYZ      "
 
 TerrainCost::
     ;  TREAD BUGGY WHEEL BOOTS

@@ -2669,7 +2669,7 @@ jr_00f_4ee0:
     ld [$d7c2], a
     push bc
     ld b, $00
-    ld hl, $0323
+    ld hl, data_000_0323
 
 jr_00f_4ef9:
     ld a, [hl+]
