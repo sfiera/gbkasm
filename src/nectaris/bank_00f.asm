@@ -1879,7 +1879,7 @@ jr_00f_4afc:
     call Call_000_0969
     ld a, [hl]
     and $0f
-    ld hl, $03e3
+    ld hl, TerrainDefense
     call AddAToHL
     ld a, [hl]
     ld c, a
@@ -5820,7 +5820,7 @@ Call_00f_61b5::
 
 Call_00f_6201::
     ld a, [$d830]
-    ld hl, $03e3
+    ld hl, TerrainDefense
     call AddAToHL
     ld a, [hl]
     ld e, a
@@ -5830,7 +5830,7 @@ Call_00f_6201::
     call Call_000_093f
     call Call_00f_624a
     ld a, [$d831]
-    ld hl, $03e3
+    ld hl, TerrainDefense
     call AddAToHL
     ld a, [hl]
     ld e, a
@@ -8802,7 +8802,7 @@ jr_00f_7866:
     ld c, $1b
     call Call_000_091a
     ld a, [$d7bd]
-    ld hl, $03e3
+    ld hl, TerrainDefense
     call AddAToHL
     ld a, [hl]
     ld c, a
@@ -8925,7 +8925,7 @@ jr_00f_790e:
     sla a
     sla a
     call AddAToHL
-    ld bc, $03f3
+    ld bc, UnitStats
     ld a, l
     add c
     ld l, a
