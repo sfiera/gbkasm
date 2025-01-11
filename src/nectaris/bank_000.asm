@@ -515,13 +515,11 @@ traps0::
     dw trap_021c
     dw trap_021c
     dw trap_021c
+    dw TrapAudioGetCount
+    dw trap_1b_026a
 
-    jr jr_000_0218
 
-    ld l, d
-    ld [bc], a
-
-jr_000_0218:
+TrapAudioGetCount::
     ld de, $0000
     ret
 
@@ -531,15 +529,14 @@ trap_021c:
     ret
 
 
+Jump_000_021c:
     push af
     push bc
-
-Call_000_0220:
     push de
     push hl
     ldh a, [$99]
     bit 2, a
-    call nz, Call_000_0232
+    call nz, TrapAudioUnknownJump
     pop hl
     pop de
     pop bc
@@ -547,36 +544,44 @@ Call_000_0220:
     reti
 
 
-    ld l, $00
+TrapAudioStopJump::
+    ld l, LOW(AudioTraps.stop)
     jr JumpToAudioBank
 
-Call_000_0232:
-    ld l, $03
+TrapAudioUnknownJump::
+    ld l, LOW(AudioTraps.unknown)
     jr JumpToAudioBank
 
+TrapAudioPlayMusicJump::
     xor a
-    ld l, $06
+    ld l, LOW(AudioTraps.playMusic)
     jr JumpToAudioBank
 
-    ld l, $09
+TrapAudioPlaySoundJump::
+    ld l, LOW(AudioTraps.playSound)
     jr JumpToAudioBank
 
-    ld l, $0c
+TrapAudioSilenceJump::
+    ld l, LOW(AudioTraps.silence)
     jr JumpToAudioBank
 
-    ld l, $0f
+TrapAudioGetMusicJump::
+    ld l, LOW(AudioTraps.getMusic)
     jr JumpToAudioBank
 
-    ld l, $12
+TrapAudioGetSoundJump::
+    ld l, LOW(AudioTraps.getSound)
     jr JumpToAudioBank
 
-    ld l, $15
+TrapAudioPauseJump::
+    ld l, LOW(AudioTraps.pause)
     jr JumpToAudioBank
 
-    ld l, $18
+TrapAudioSetVolumeJump::
+    ld l, LOW(AudioTraps.setVolume)
 
 JumpToAudioBank:
-    ld h, $40
+    ld h, HIGH(AudioTraps)
     push af
     call Call_000_025c
     pop hl
@@ -590,7 +595,7 @@ Call_000_025c:
     ldh a, [$80]
     ld hl, sp+$07
     ld [hl], a
-    ld a, $1c
+    ld a, BANK(AudioTraps)
 
 jr_000_0265:
     call RST_20
@@ -598,11 +603,11 @@ jr_000_0265:
     ret
 
 
+trap_1b_026a:
     ld a, d
     cp $80
     jr c, jr_000_0292
 
-Jump_000_026f::
     cp $a0
     jp c, Jump_000_0314
 

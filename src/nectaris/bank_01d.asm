@@ -9371,7 +9371,7 @@ Call_01d_6e1a:
     sbc l
     ld l, a
     ld [bc], a
-    jp Jump_000_026f
+    jp $026f
 
 
     rst $20

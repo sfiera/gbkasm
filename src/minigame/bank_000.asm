@@ -354,6 +354,7 @@ Jump_000_021c:
     pop af
     reti
 
+
 TrapAudioStopJump::
     ld l, LOW(AudioTraps.stop)
     jr JumpToAudioBank
@@ -411,6 +412,7 @@ jr_000_0263:
     call RST_20
     pop af
     ret
+
 
 trap_1b_0268::
     ld a, d
