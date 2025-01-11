@@ -331,12 +331,12 @@ traps0::
     dw TrapAudioSilenceJump    ; trap $15 (bank 4)
     dw TrapAudioGetMusicJump   ; trap $16 (bank 4)
     dw TrapAudioGetSoundJump   ; trap $17 (bank 4)
-    dw TrapAudioSetVolumeJump  ; trap $18 (bank 4)
-    dw TrapAudioGetCountJump   ; trap $19 (bank 4)
-    dw trap_1a_0218            ; trap $1a
+    dw TrapAudioPauseJump      ; trap $18 (bank 4)
+    dw TrapAudioSetVolumeJump  ; trap $19 (bank 4)
+    dw TrapAudioGetCount       ; trap $1a
     dw trap_1b_0268            ; trap $1b
 
-trap_1a_0218::
+TrapAudioGetCount::
     ld de, $0038
     ret
 
@@ -383,12 +383,12 @@ TrapAudioGetSoundJump::
     ld l, LOW(AudioTraps.getSound)
     jr JumpToAudioBank
 
-TrapAudioSetVolumeJump::
-    ld l, LOW(AudioTraps.setVolume)
+TrapAudioPauseJump::
+    ld l, LOW(AudioTraps.pause)
     jr JumpToAudioBank
 
-TrapAudioGetCountJump::
-    ld l, LOW(AudioTraps.getCount)
+TrapAudioSetVolumeJump::
+    ld l, LOW(AudioTraps.setVolume)
 
 JumpToAudioBank:
     ld h, HIGH(AudioTraps)

@@ -548,34 +548,34 @@ Call_000_0220:
 
 
     ld l, $00
-    jr jr_000_0251
+    jr JumpToAudioBank
 
 Call_000_0232:
     ld l, $03
-    jr jr_000_0251
+    jr JumpToAudioBank
 
     xor a
     ld l, $06
-    jr jr_000_0251
+    jr JumpToAudioBank
 
     ld l, $09
-    jr jr_000_0251
+    jr JumpToAudioBank
 
     ld l, $0c
-    jr jr_000_0251
+    jr JumpToAudioBank
 
     ld l, $0f
-    jr jr_000_0251
+    jr JumpToAudioBank
 
     ld l, $12
-    jr jr_000_0251
+    jr JumpToAudioBank
 
     ld l, $15
-    jr jr_000_0251
+    jr JumpToAudioBank
 
     ld l, $18
 
-jr_000_0251:
+JumpToAudioBank:
     ld h, $40
     push af
     call Call_000_025c
@@ -958,9 +958,9 @@ Call_000_05e3::
     cp $00
     jr z, .jr_000_064c
 
-    ld a, BANK(Call_01c_4003)
+    ld a, BANK(AudioTraps.unknown)
     ld [$2000], a
-    call Call_01c_4003
+    call AudioTraps.unknown
 
 .jr_000_064c
     pop af
@@ -2225,12 +2225,12 @@ jr_000_0c8b:
     ret
 
 
-SilenceAudio:
+StopAudio:
     ld a, [$d799]
     push af
-    ld a, BANK(Call_01c_4000)
+    ld a, BANK(AudioTraps.stop)
     call SetROMBank
-    call Call_01c_4000
+    call AudioTraps.stop
     pop af
     ld [$2000], a
     ld a, $01
@@ -2259,9 +2259,9 @@ PlayMusic::
 
     inc a
     ld [$db0c], a
-    ld a, BANK(Call_01c_4012)
+    ld a, BANK(AudioTraps.getSound)
     call SetROMBank
-    call Call_01c_4012
+    call AudioTraps.getSound
     cp $01
     jr z, .wait
 
@@ -2269,13 +2269,13 @@ PlayMusic::
     cp $00
     jr z, .jr_000_0cef
 
-    call SetVolume
+    call PauseAudio
 
 .jr_000_0cef
-    ld a, BANK(Call_01c_4006)
+    ld a, BANK(AudioTraps.playMusic)
     call SetROMBank
     ld a, [$db08]
-    call Call_01c_4006
+    call AudioTraps.playMusic
     ld a, $01
     ld [$db09], a
     pop af
@@ -2294,10 +2294,10 @@ PlaySound::
     ld [$db0c], a
     ld a, [$d799]
     push af
-    ld a, BANK(Call_01c_4009)
+    ld a, BANK(AudioTraps.playSound)
     call SetROMBank
     ld a, [$db0a]
-    call Call_01c_4009
+    call AudioTraps.playSound
     ld a, $00
     ld [$db0b], a
     pop af
@@ -2306,16 +2306,16 @@ PlaySound::
     ret
 
 
-SetVolume:
+PauseAudio:
     ld a, [$d799]
     push af
     ld a, [$db09]
     cp $00
     jr z, .jr_000_0d43
 
-    ld a, BANK(Call_01c_4015)
+    ld a, BANK(AudioTraps.pause)
     call SetROMBank
-    call Call_01c_4015
+    call AudioTraps.pause
 
 .jr_000_0d43
     pop af
@@ -2327,9 +2327,9 @@ SetVolume:
 Call_000_0d4b::
     ld a, [$d799]
     push af
-    ld a, BANK(Call_01c_401b)
+    ld a, BANK(AudioTraps.unknown2)
     call SetROMBank
-    call Call_01c_401b
+    call AudioTraps.unknown2
     pop af
     ld [$2000], a
     ld [$d799], a
@@ -2339,9 +2339,9 @@ Call_000_0d4b::
 Call_000_0d5f:
     ld a, [$d799]
     push af
-    ld a, BANK(Call_01c_401e)
+    ld a, BANK(AudioTraps.unknown3)
     call SetROMBank
-    call Call_01c_401e
+    call AudioTraps.unknown3
     pop af
     ld [$2000], a
     ld [$d799], a
@@ -3979,7 +3979,7 @@ Call_000_18d8:
     call Call_000_09eb
     ld a, $08
     call Call_000_0c65
-    call SetVolume
+    call PauseAudio
     call Call_000_1224
     call Call_000_33d9
     ret
@@ -4790,7 +4790,7 @@ jr_000_1ec4:
 jr_000_1f24:
     call Call_000_0808
     call Call_000_0874
-    call SilenceAudio
+    call StopAudio
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
@@ -5235,7 +5235,7 @@ DoSendDataToPC:
     ld a, h
     ld [$d8e1], a
     call Call_000_0e66
-    call SetVolume
+    call PauseAudio
     call Call_000_085d
     call Call_000_085d
     call Call_000_085d
@@ -5336,7 +5336,7 @@ DoRecvDataFromPC:
     ld a, h
     ld [$d8e1], a
     call Call_000_0e66
-    call SetVolume
+    call PauseAudio
     call Call_000_085d
     call Call_000_085d
     call Call_000_085d
@@ -5536,7 +5536,7 @@ DoSendDataToGB:
     ld a, h
     ld [$d8e1], a
     call Call_000_0e66
-    call SetVolume
+    call PauseAudio
     call Call_000_085d
     call Call_000_085d
     call Call_000_085d
@@ -5619,7 +5619,7 @@ DoRecvDataFromGB:
     ld a, h
     ld [$d8e1], a
     call Call_000_0e66
-    call SetVolume
+    call PauseAudio
     call Call_000_085d
     call Call_000_085d
     call Call_000_085d
@@ -5692,7 +5692,7 @@ jr_000_25a5:
 
 
 DoKissMenu:
-    call SilenceAudio
+    call StopAudio
     di
     trap $00
     trap AudioStop
@@ -5777,7 +5777,7 @@ DoDemoMode:
 
 ShowPrologue:
     call Call_000_09df
-    call SetVolume
+    call PauseAudio
     call Call_000_0927
     ld a, BANK(ScreenPrologue1)
     call SetROMBank
@@ -5871,7 +5871,7 @@ ShowPrologue:
 
 ShowWorldMap:
     call Call_000_09df
-    call SetVolume
+    call PauseAudio
     ld a, BANK(ScreenWorldMap)
     call SetROMBank
     ld hl, ScreenWorldMap
@@ -5898,7 +5898,7 @@ jr_000_2736:
 
 ShowEpilogue:
     call Call_000_09df
-    call SetVolume
+    call PauseAudio
     call Call_000_0927
     ld a, BANK(ScreenEpilogue1)
     call SetROMBank
@@ -5949,7 +5949,7 @@ ShowEpilogue:
     call Call_000_09eb
     ld a, $0b
     call Call_000_0c65
-    call SetVolume
+    call PauseAudio
     ret
 
 
@@ -7539,7 +7539,7 @@ jr_000_32d2:
 
 WinLevel:
     call Call_000_09df
-    call SetVolume
+    call PauseAudio
     call Call_000_0927
     ld a, BANK(ScreenWin)
     call SetROMBank
@@ -7618,7 +7618,7 @@ WinLevel:
 
 LoseLevel:
     call Call_000_09df
-    call SetVolume
+    call PauseAudio
     call Call_000_0927
     ld a, BANK(ScreenGameOver)
     call SetROMBank
@@ -8961,8 +8961,8 @@ jr_000_3c88:
 
 Call_000_3c96::
     di
-    call SetVolume
-    call SilenceAudio
+    call PauseAudio
+    call StopAudio
     ei
     call Call_000_0db5
     ld a, $0f

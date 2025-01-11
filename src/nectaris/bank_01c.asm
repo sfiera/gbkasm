@@ -12,60 +12,32 @@ INCLUDE "trap.inc"
 
 SECTION "ROM Bank $01c", ROMX
 
-; AudioStop
-Call_01c_4000::
-    jp Jump_01c_4088
+AudioTraps::
+.stop::
+    jp TrapAudioStop
+.unknown::
+    jp TrapAudioUnknown
+.playMusic::
+    jp TrapAudioPlayMusic
+.playSound::
+    jp TrapAudioPlaySound
+.silence::
+    jp TrapAudioSilence
+.getMusic::
+    jp TrapAudioGetMusic
+.getSound::
+    jp TrapAudioGetSound
+.pause::
+    jp TrapAudioPause
+.setVolume::
+    jp TrapAudioSetVolume
+.unknown2::
+    jp TrapAudioUnknown2
+.unknown3::
+    jp TrapAudioUnknown3
 
 
-; AudioUnknown
-Call_01c_4003::
-    jp Jump_01c_40f4
-
-
-; AudioPlayMusic
-Call_01c_4006::
-    jp Jump_01c_4021
-
-
-; AudioPlaySound
-Call_01c_4009::
-    jp Jump_01c_4038
-
-
-; AudioSilence
-Call_01c_400c::
-    jp Jump_01c_4059
-
-
-; AudioGetMusic
-Call_01c_400f::
-    jp Jump_01c_405d
-
-
-; AudioGetSound
-Call_01c_4012::
-    jp Jump_01c_4067
-
-
-; AudioSetVolume
-Call_01c_4015::
-    jp Jump_01c_4071
-
-
-; AudioGetCount
-Call_01c_4018::
-    jp Jump_01c_407a
-
-
-Call_01c_401b::
-    jp Jump_01c_49b9
-
-
-Call_01c_401e::
-    jp Jump_01c_49c3
-
-
-Jump_01c_4021:
+TrapAudioPlayMusic:
     push hl
     ld hl, $511a
     cp [hl]
@@ -83,7 +55,7 @@ jr_01c_4036:
     ret
 
 
-Jump_01c_4038:
+TrapAudioPlaySound:
     push bc
     push hl
     ld b, $00
@@ -113,12 +85,12 @@ jr_01c_4056:
     ret
 
 
-Jump_01c_4059:
+TrapAudioSilence:
     ld [$df00], a
     ret
 
 
-Jump_01c_405d:
+TrapAudioGetMusic:
     ld a, [$de90]
     cp $80
     ld a, $01
@@ -128,7 +100,7 @@ Jump_01c_405d:
     ret
 
 
-Jump_01c_4067:
+TrapAudioGetSound:
     ld a, [$de92]
     cp $80
     ld a, $01
@@ -138,14 +110,14 @@ Jump_01c_4067:
     ret
 
 
-Jump_01c_4071:
+TrapAudioPause:
     ld a, [$df02]
     xor $01
     ld [$df02], a
     ret
 
 
-Jump_01c_407a:
+TrapAudioSetVolume:
     push bc
     push af
     and $07
@@ -158,7 +130,7 @@ Jump_01c_407a:
     ret
 
 
-Jump_01c_4088:
+TrapAudioStop:
     xor a
     ldh [rNR52], a
     ld a, $80
@@ -222,7 +194,7 @@ jr_01c_40ed:
     ret
 
 
-Jump_01c_40f4:
+TrapAudioUnknown:
     call Call_01c_42af
     call Call_01c_4127
     ld hl, $6c03
@@ -1895,14 +1867,14 @@ Call_01c_49a6:
     ret
 
 
-Jump_01c_49b9:
+TrapAudioUnknown2:
     call Call_01c_4975
     call Call_01c_49cd
     call Call_01c_4156
     ret
 
 
-Jump_01c_49c3:
+TrapAudioUnknown3:
     call Call_01c_4975
     call Call_01c_4156
     call Call_01c_4af2

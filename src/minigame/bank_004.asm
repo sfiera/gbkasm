@@ -34,10 +34,10 @@ AudioTraps{SUFFIX}::
     jp TrapAudioGetMusic   ; from trap $16
 .getSound::
     jp TrapAudioGetSound   ; from trap $17
+.pause::
+    jp TrapAudioPause      ; from trap $18
 .setVolume::
-    jp TrapAudioSetVolume  ; from trap $18
-.getCount::
-    jp TrapAudioGetCount   ; from trap $19
+    jp TrapAudioSetVolume  ; from trap $19
 
 
 TrapAudioPlayMusic{SUFFIX}:
@@ -105,14 +105,14 @@ TrapAudioGetSound{SUFFIX}:
     ret
 
 
-TrapAudioSetVolume{SUFFIX}:
+TrapAudioPause{SUFFIX}:
     ld a, [$c093]
     xor $01
     ld [$c093], a
     ret
 
 
-TrapAudioGetCount{SUFFIX}:
+TrapAudioSetVolume{SUFFIX}:
     push bc
     push af
     and $07
