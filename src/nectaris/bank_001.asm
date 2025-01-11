@@ -187,7 +187,7 @@ Jump_001_410a:
 Jump_001_412f:
 jr_001_412f:
     ld a, $08
-    call Call_000_0d07
+    call PlaySound
     ld a, b
     call Call_000_099b
     ld a, [hl]
@@ -587,7 +587,7 @@ Jump_001_43b6:
 Jump_001_43db:
 jr_001_43db:
     ld a, $08
-    call Call_000_0d07
+    call PlaySound
     ld a, b
     call Call_000_099b
     ld a, [hl]

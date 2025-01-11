@@ -5208,7 +5208,7 @@ jr_01d_5947:
     pushx @ + $7223
     push hl
     nop
-    call nc, Call_000_0cea
+    call nc, $0cea
     and $b5
     inc h
     ld bc, $a5e6
@@ -5220,7 +5220,7 @@ jr_01d_5947:
     pushx @ + $7322
     jp nz, Jump_000_00e5
 
-    call nc, Call_000_0cea
+    call nc, $0cea
     and $b5
     ld [hl], h
     ld bc, $a5e6

@@ -897,21 +897,22 @@ jr_000_05dc:
     ret
 
 
+Call_000_05e3:
     push af
     push bc
     push de
     push hl
     ld a, [$d7a6]
     cp $00
-    jr nz, jr_000_05f8
+    jr nz, .jr_000_05f8
 
     ld a, [$d6d4]
     cp $00
-    jr nz, jr_000_05f8
+    jr nz, .jr_000_05f8
 
     call $fff5
 
-jr_000_05f8:
+.jr_000_05f8
     ld a, $01
     ldh [$92], a
     ld a, [$d6d2]
@@ -921,45 +922,45 @@ jr_000_05f8:
     inc a
     ld [$db1a], a
     cp $3c
-    jr nz, jr_000_061e
+    jr nz, .jr_000_061e
 
     ld a, $00
     ld [$db1a], a
     ld a, [$db19]
     cp $00
-    jr z, jr_000_061e
+    jr z, .jr_000_061e
 
     dec a
     ld [$db19], a
 
-jr_000_061e:
+.jr_000_061e
     ld a, [$d799]
     push af
     ld a, $1c
     ld [$2000], a
     ld a, [$db0b]
     cp $02
-    jr nc, jr_000_0634
+    jr nc, .jr_000_0634
 
     inc a
     ld [$db0b], a
-    jr jr_000_063d
+    jr .jr_000_063d
 
-jr_000_0634:
+.jr_000_0634
     ld a, [$d799]
     ld [$2000], a
     call Call_000_065d
 
-jr_000_063d:
+.jr_000_063d
     ld a, [$d86d]
     cp $00
-    jr z, jr_000_064c
+    jr z, .jr_000_064c
 
     ld a, BANK(Call_01c_4003)
     ld [$2000], a
     call Call_01c_4003
 
-jr_000_064c:
+.jr_000_064c
     pop af
     ld [$2000], a
     ld [$d799], a
@@ -970,6 +971,7 @@ jr_000_064c:
     pop bc
     pop af
     reti
+.end
 
 
 Call_000_065d:
@@ -2222,7 +2224,7 @@ jr_000_0c8b:
     ret
 
 
-Call_000_0ca4:
+SilenceAudio:
     ld a, [$d799]
     push af
     ld a, BANK(Call_01c_4000)
@@ -2237,7 +2239,7 @@ Call_000_0ca4:
     ret
 
 
-Call_000_0cbf::
+PlayMusic::
     push af
     ld a, [$db08]
     ld b, a
@@ -2249,10 +2251,10 @@ Call_000_0cbf::
     ld a, [$d799]
     push af
 
-jr_000_0cce:
+.wait
     ld a, [$db0c]
     cp $00
-    jr nz, jr_000_0cce
+    jr nz, .wait
 
     inc a
     ld [$db0c], a
@@ -2260,17 +2262,15 @@ jr_000_0cce:
     call SetROMBank
     call Call_01c_4012
     cp $01
-    jr z, jr_000_0cce
+    jr z, .wait
 
     ld a, [$db09]
     cp $00
+    jr z, .jr_000_0cef
 
-Call_000_0cea::
-    jr z, jr_000_0cef
+    call SetVolume
 
-    call Call_000_0d30
-
-jr_000_0cef:
+.jr_000_0cef
     ld a, BANK(Call_01c_4006)
     call SetROMBank
     ld a, [$db08]
@@ -2283,13 +2283,12 @@ jr_000_0cef:
     ret
 
 
-Call_000_0d07::
+PlaySound::
     ld [$db0a], a
     ld a, [$db0c]
     cp $00
     ret nz
 
-Jump_000_0d10::
     inc a
     ld [$db0c], a
     ld a, [$d799]
@@ -2306,18 +2305,18 @@ Jump_000_0d10::
     ret
 
 
-Call_000_0d30:
+SetVolume:
     ld a, [$d799]
     push af
     ld a, [$db09]
     cp $00
-    jr z, jr_000_0d43
+    jr z, .jr_000_0d43
 
     ld a, BANK(Call_01c_4015)
     call SetROMBank
     call Call_01c_4015
 
-jr_000_0d43:
+.jr_000_0d43
     pop af
     ld [$2000], a
     ld [$d799], a
@@ -2348,32 +2347,27 @@ Call_000_0d5f:
     ret
 
 
-    nop
-    ld bc, $0001
-    rst $38
-    rst $38
-    rst $38
-    rst $38
-    nop
-    ld bc, $ff00
-    rst $38
-    nop
-    ld bc, $0101
-    nop
+data_000_0d73:
+    db $00, $01, $01, $00, $ff, $ff
+data_000_0d79:
+    db $ff, $ff, $00, $01, $00, $ff
+data_000_0d7f:
+    db $ff, $00, $01, $01, $01, $00
+
 
 Call_000_0d85::
     push de
     push hl
     push af
-    ld de, $0d73
+    ld de, data_000_0d73
     call AddAToDE
     pop af
-    ld hl, $0d79
+    ld hl, data_000_0d79
     call AddAToHL
     bit 0, b
     jr z, jr_000_0d9e
 
-    ld a, $06
+    ld a, data_000_0d7f - data_000_0d79
     call AddAToHL
 
 jr_000_0d9e:
@@ -3735,7 +3729,7 @@ Call_000_1730:
 Call_000_174a:
     push af
     ld hl, $c006
-    ld de, $05e3
+    ld de, Call_000_05e3
     ld a, $c3
     ld [hl+], a
     ld a, e
@@ -3980,11 +3974,11 @@ Call_000_18d8:
     ld hl, ScreenFactoryTaken
     call Call_000_0bcf
     ld a, $0f
-    call Call_000_0cbf
+    call PlayMusic
     call Call_000_09eb
     ld a, $08
     call Call_000_0c65
-    call Call_000_0d30
+    call SetVolume
     call Call_000_1224
     call Call_000_33d9
     ret
@@ -4750,7 +4744,7 @@ jr_000_1ec4:
     ld [hl+], a
     ld a, d
     ld [hl+], a
-    ld de, $05e3
+    ld de, Call_000_05e3
     ld a, $c3
     ld [hl+], a
     ld a, e
@@ -4791,7 +4785,7 @@ Jump_000_1ee6:
 jr_000_1f24:
     call Call_000_0808
     call Call_000_0874
-    call Call_000_0ca4
+    call SilenceAudio
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
@@ -4851,7 +4845,7 @@ DoTitleScreen:
     ld hl, ScreenTitle
     call Call_000_0bcf
     ld a, $01
-    call Call_000_0cbf
+    call PlayMusic
     call Call_000_09eb
 
 .loop
@@ -4862,7 +4856,7 @@ DoTitleScreen:
     jp z, .loop
 
     ld a, $01
-    call Call_000_0d07
+    call PlaySound
 
     ; fall through
 
@@ -4871,7 +4865,7 @@ ExitLevel:
     call Call_000_110e
     call Call_000_0de7
     ld a, $02
-    call Call_000_0cbf
+    call PlayMusic
 
 
 DoMenuMain:
@@ -4985,7 +4979,7 @@ DoPassword:
     jp z, .matched
 
     ld a, $02
-    call Call_000_0cbf
+    call PlayMusic
     jp DoMenuContinue
 
 .matched
@@ -5222,21 +5216,21 @@ DoSendDataToPC:
     jr z, .jr_000_221f
 
     ld a, $0d
-    call Call_000_0d07
+    call PlaySound
     jp DoMenuGBKiss.again
 
 
 .jr_000_221f
     call Call_000_0927
     ld a, $0a
-    call Call_000_0d07
+    call PlaySound
     ld hl, WindowSending
     ld a, l
     ld [$d8e0], a
     ld a, h
     ld [$d8e1], a
     call Call_000_0e66
-    call Call_000_0d30
+    call SetVolume
     call Call_000_085d
     call Call_000_085d
     call Call_000_085d
@@ -5261,7 +5255,7 @@ DoSendDataToPC:
     jr nz, .failure
 
     ld a, $0a
-    call Call_000_0d07
+    call PlaySound
     ld hl, WindowCommSuccess
     ld a, l
     ld [$d8e0], a
@@ -5272,7 +5266,7 @@ DoSendDataToPC:
     ld a, $ff
     ld [$db08], a
     ld a, $02
-    call Call_000_0cbf
+    call PlayMusic
     jp DoMenuGBKiss
 
 
@@ -5287,7 +5281,7 @@ DoSendDataToPC:
     ld a, $ff
     ld [$db08], a
     ld a, $02
-    call Call_000_0cbf
+    call PlayMusic
     jp DoMenuGBKiss
 
 
@@ -5323,21 +5317,21 @@ DoRecvDataFromPC:
     jr z, .jr_000_22f1
 
     ld a, $0d
-    call Call_000_0d07
+    call PlaySound
     jp DoMenuGBKiss.again
 
 
 .jr_000_22f1
     call Call_000_0927
     ld a, $0a
-    call Call_000_0d07
+    call PlaySound
     ld hl, WindowReceiving
     ld a, l
     ld [$d8e0], a
     ld a, h
     ld [$d8e1], a
     call Call_000_0e66
-    call Call_000_0d30
+    call SetVolume
     call Call_000_085d
     call Call_000_085d
     call Call_000_085d
@@ -5418,7 +5412,7 @@ DoRecvDataFromPC:
     jr nz, .failure
 
     ld a, $0a
-    call Call_000_0d07
+    call PlaySound
     ld a, [$d8e9]
     ld b, a
     ld a, [$d8ea]
@@ -5436,12 +5430,12 @@ DoRecvDataFromPC:
     ld a, $ff
     ld [$db08], a
     ld a, $02
-    call Call_000_0cbf
+    call PlayMusic
     jp DoMenuGBKiss.again
 
 .failure
     ld a, $0d
-    call Call_000_0d07
+    call PlaySound
     ld hl, WindowCommFailed
     ld a, l
     ld [$d8e0], a
@@ -5452,7 +5446,7 @@ DoRecvDataFromPC:
     ld a, $ff
     ld [$db08], a
     ld a, $02
-    call Call_000_0cbf
+    call PlayMusic
     jp DoMenuGBKiss.again
 
 
@@ -5524,20 +5518,20 @@ DoSendDataToGB:
     jr z, .jr_000_2464
 
     ld a, $0d
-    call Call_000_0d07
+    call PlaySound
     jp DoMenuGBKiss.again
 
 
 .jr_000_2464
     ld a, $0a
-    call Call_000_0d07
+    call PlaySound
     ld hl, WindowSending
     ld a, l
     ld [$d8e0], a
     ld a, h
     ld [$d8e1], a
     call Call_000_0e66
-    call Call_000_0d30
+    call SetVolume
     call Call_000_085d
     call Call_000_085d
     call Call_000_085d
@@ -5547,7 +5541,7 @@ DoSendDataToGB:
     jr nz, .failure
 
     ld a, $0a
-    call Call_000_0d07
+    call PlaySound
     ld hl, WindowCommSuccess
     ld a, l
     ld [$d8e0], a
@@ -5558,7 +5552,7 @@ DoSendDataToGB:
     ld a, $ff
     ld [$db08], a
     ld a, $02
-    call Call_000_0cbf
+    call PlayMusic
     jp DoMenuGBKiss
 
 .failure
@@ -5572,7 +5566,7 @@ DoSendDataToGB:
     ld a, $ff
     ld [$db08], a
     ld a, $02
-    call Call_000_0cbf
+    call PlayMusic
     jp DoMenuGBKiss
 
 
@@ -5608,19 +5602,19 @@ DoRecvDataFromGB:
     jr z, .jr_000_251a
 
     ld a, $0d
-    call Call_000_0d07
+    call PlaySound
     jp DoMenuGBKiss.again
 
 .jr_000_251a
     ld a, $0a
-    call Call_000_0d07
+    call PlaySound
     ld hl, WindowReceiving
     ld a, l
     ld [$d8e0], a
     ld a, h
     ld [$d8e1], a
     call Call_000_0e66
-    call Call_000_0d30
+    call SetVolume
     call Call_000_085d
     call Call_000_085d
     call Call_000_085d
@@ -5652,7 +5646,7 @@ DoRecvDataFromGB:
     jp nz, Jump_000_25a5
 
     ld a, $0a
-    call Call_000_0d07
+    call PlaySound
     ld a, [$d8e9]
     ld b, a
     ld a, [$d8ea]
@@ -5670,14 +5664,14 @@ DoRecvDataFromGB:
     ld a, $ff
     ld [$db08], a
     ld a, $02
-    call Call_000_0cbf
+    call PlayMusic
     jp DoMenuGBKiss.again
 
 
 Jump_000_25a5:
 jr_000_25a5:
     ld a, $0d
-    call Call_000_0d07
+    call PlaySound
     ld hl, WindowCommFailed
     ld a, l
     ld [$d8e0], a
@@ -5688,12 +5682,12 @@ jr_000_25a5:
     ld a, $ff
     ld [$db08], a
     ld a, $02
-    call Call_000_0cbf
+    call PlayMusic
     jp DoMenuGBKiss.again
 
 
 DoKissMenu:
-    call Call_000_0ca4
+    call SilenceAudio
     di
     trap $00
     trap AudioStop
@@ -5778,14 +5772,14 @@ DoDemoMode:
 
 ShowPrologue:
     call Call_000_09df
-    call Call_000_0d30
+    call SetVolume
     call Call_000_0927
     ld a, BANK(ScreenPrologue1)
     call SetROMBank
     ld hl, ScreenPrologue1
     call Call_000_0bcf
     ld a, $03
-    call Call_000_0cbf
+    call PlayMusic
     call Call_000_09eb
     ld a, $06
     call Call_000_0c65
@@ -5872,13 +5866,13 @@ ShowPrologue:
 
 ShowWorldMap:
     call Call_000_09df
-    call Call_000_0d30
+    call SetVolume
     ld a, BANK(ScreenWorldMap)
     call SetROMBank
     ld hl, ScreenWorldMap
     call Call_000_0bcf
     ld a, $06
-    call Call_000_0cbf
+    call PlayMusic
     call Call_000_0927
     ld a, $03
     call Call_000_09f9
@@ -5893,20 +5887,20 @@ jr_000_2736:
     jr z, jr_000_2736
 
     ld a, $08
-    call Call_000_0d07
+    call PlaySound
     ret
 
 
 ShowEpilogue:
     call Call_000_09df
-    call Call_000_0d30
+    call SetVolume
     call Call_000_0927
     ld a, BANK(ScreenEpilogue1)
     call SetROMBank
     ld hl, ScreenEpilogue1
     call Call_000_0bcf
     ld a, $12
-    call Call_000_0cbf
+    call PlayMusic
     call Call_000_09eb
     ld a, $0a
     call Call_000_0c65
@@ -5950,7 +5944,7 @@ ShowEpilogue:
     call Call_000_09eb
     ld a, $0b
     call Call_000_0c65
-    call Call_000_0d30
+    call SetVolume
     ret
 
 
@@ -5997,7 +5991,7 @@ Jump_000_2828:
     call Call_000_2899
     call Call_000_1224
     ld a, $05
-    call Call_000_0cbf
+    call PlayMusic
     jp Jump_000_34af
 
 
@@ -6013,7 +6007,7 @@ Jump_000_2847:
     call Call_000_2899
     call Call_000_1224
     ld a, $05
-    call Call_000_0cbf
+    call PlayMusic
     jp Jump_000_34af
 
 
@@ -6149,7 +6143,7 @@ jr_000_2927:
     jp z, Jump_000_2a3b
 
     ld a, $08
-    call Call_000_0d07
+    call PlaySound
     call Call_000_17f8
     cp $00
     jp nz, Jump_000_2927
@@ -6188,7 +6182,7 @@ jr_000_2927:
     jr nz, jr_000_29c4
 
     ld a, $0d
-    call Call_000_0d07
+    call PlaySound
     call Call_000_1630
     jp Jump_000_28c9
 
@@ -6211,7 +6205,7 @@ jr_000_29c4:
     jp z, Jump_000_2a14
 
     ld a, $08
-    call Call_000_0d07
+    call PlaySound
 
 Jump_000_29e7:
     call Call_000_085d
@@ -6236,7 +6230,7 @@ Jump_000_29e7:
 
 Jump_000_2a14:
     ld a, $0e
-    call Call_000_0d07
+    call PlaySound
 
 Jump_000_2a19:
     call Call_000_085d
@@ -6253,7 +6247,7 @@ Jump_000_2a29:
     jr nz, jr_000_2a38
 
     ld a, $0d
-    call Call_000_0d07
+    call PlaySound
     call Call_000_1630
     jp Jump_000_28c9
 
@@ -6307,7 +6301,7 @@ Jump_000_2a75:
 
     call Call_000_0db5
     ld a, $08
-    call Call_000_0d07
+    call PlaySound
     call Call_000_0d4b
     ld a, [$d79f]
     ld [$db04], a
@@ -6320,7 +6314,7 @@ Jump_000_2a75:
     push bc
     call Call_000_0de7
     ld a, $05
-    call Call_000_0cbf
+    call PlayMusic
     ld a, $00
     ld [$d8df], a
 
@@ -6342,7 +6336,7 @@ Jump_000_2a75:
 .normal
     call Call_000_0db5
     ld a, $08
-    call Call_000_0d07
+    call PlaySound
     call Call_000_0d4b
     ld a, [$d79f]
     ld [$db04], a
@@ -6354,7 +6348,7 @@ Jump_000_2a75:
     ld [$db07], a
     push bc
     ld a, $05
-    call Call_000_0cbf
+    call PlayMusic
 
 .jr_000_2af3
     call Call_000_0de7
@@ -6429,7 +6423,7 @@ Jump_000_2b64:
 
     ld [$d7b5], a
     ld a, $08
-    call Call_000_0d07
+    call PlaySound
     call Call_000_0d4b
     call Call_000_368a
     call Call_000_0d5f
@@ -6458,7 +6452,7 @@ Jump_000_2b88:
 
 Jump_000_2ba0:
     ld a, $08
-    call Call_000_0d07
+    call PlaySound
     jp Jump_000_28c9
 
 
@@ -6525,7 +6519,7 @@ Jump_000_2c04:
     jp nc, Jump_000_2c26
 
     ld a, $08
-    call Call_000_0d07
+    call PlaySound
     call Call_000_1630
     jp Jump_000_28c9
 
@@ -6563,7 +6557,7 @@ jr_000_2c26:
     jr nz, jr_000_2c9f
 
     ld a, $08
-    call Call_000_0d07
+    call PlaySound
     ld a, [$d876]
     cp $01
     jp z, Jump_000_2db1
@@ -6612,7 +6606,7 @@ jr_000_2c9f:
     jp nz, Jump_000_2d84
 
     ld a, $08
-    call Call_000_0d07
+    call PlaySound
     ld a, [$d7b5]
     call Call_000_099b
     inc hl
@@ -6678,7 +6672,7 @@ Jump_000_2d2c:
     ld a, $00
     ld [$d879], a
     ld a, $0e
-    call Call_000_0d07
+    call PlaySound
     ld a, [$d7b5]
     call Call_000_099b
     inc hl
@@ -6699,7 +6693,7 @@ Jump_000_2d42:
     jp nz, Jump_000_2d42
 
     ld a, $0d
-    call Call_000_0d07
+    call PlaySound
     ld a, [$d7b5]
     call Call_000_099b
     inc hl
@@ -6742,13 +6736,13 @@ jr_000_2d84:
 
 Jump_000_2da9:
     ld a, $0e
-    call Call_000_0d07
+    call PlaySound
     jp Jump_000_2c26
 
 
 Jump_000_2db1:
     ld a, $08
-    call Call_000_0d07
+    call PlaySound
     ld a, [$d79f]
     ld b, a
     ld a, [$d7a0]
@@ -7025,7 +7019,7 @@ Jump_000_2f85:
     jr nz, jr_000_2fa5
 
     ld a, $0d
-    call Call_000_0d07
+    call PlaySound
     call Call_000_1630
     ld a, [$d876]
     cp $00
@@ -7131,7 +7125,7 @@ Jump_000_3033:
     jr nz, jr_000_3042
 
     ld a, $0d
-    call Call_000_0d07
+    call PlaySound
     jp Jump_000_323b
 
 
@@ -7195,7 +7189,7 @@ Jump_000_30aa:
     ld a, $03
 
 Jump_000_30ac:
-    call Call_000_0d07
+    call PlaySound
     call Call_000_0db5
     call Call_000_16d0
 
@@ -7211,7 +7205,7 @@ Jump_000_30b5:
 
 Jump_000_30c5:
     ld a, $03
-    call Call_000_0d07
+    call PlaySound
     call Call_000_0db5
     call Call_000_16d0
 
@@ -7227,7 +7221,7 @@ Jump_000_30d0:
 
 Jump_000_30e0:
     ld a, $03
-    call Call_000_0d07
+    call PlaySound
     call Call_000_0db5
     call Call_000_16f0
 
@@ -7243,7 +7237,7 @@ Jump_000_30eb:
 
 Jump_000_30fb:
     ld a, $03
-    call Call_000_0d07
+    call PlaySound
     call Call_000_0db5
     call Call_000_16f0
 
@@ -7263,7 +7257,7 @@ Jump_000_3116:
     jp nz, Jump_000_3126
 
     ld a, $0e
-    call Call_000_0d07
+    call PlaySound
     jp Jump_000_3074
 
 
@@ -7276,7 +7270,7 @@ Jump_000_3126:
 
 Call_000_3130:
     ld a, $0b
-    call Call_000_0d07
+    call PlaySound
     jp Jump_000_320a
 
 
@@ -7304,7 +7298,7 @@ jr_000_3138:
     jp z, Jump_000_3074
 
     ld a, $08
-    call Call_000_0d07
+    call PlaySound
     call Call_000_346f
     ld a, [$d7c4]
     call Call_000_099b
@@ -7406,7 +7400,7 @@ jr_000_320a:
 
 Jump_000_3217:
     ld a, $0d
-    call Call_000_0d07
+    call PlaySound
     ld a, [$d7b5]
     call Call_000_099b
     inc hl
@@ -7449,7 +7443,7 @@ Jump_000_3250:
 
     ld [$d7b5], a
     ld a, $08
-    call Call_000_0d07
+    call PlaySound
     call Call_000_0d4b
     call Call_000_368a
     call Call_000_0d5f
@@ -7540,14 +7534,14 @@ jr_000_32d2:
 
 WinLevel:
     call Call_000_09df
-    call Call_000_0d30
+    call SetVolume
     call Call_000_0927
     ld a, BANK(ScreenWin)
     call SetROMBank
     ld hl, ScreenWin
     call Call_000_0bcf
     ld a, $0f
-    call Call_000_0cbf
+    call PlayMusic
     call Call_000_09eb
     ld a, $09
     call Call_000_0c65
@@ -7556,7 +7550,7 @@ WinLevel:
     ld [$d7a5], a
     call Call_000_3493
     ld a, $11
-    call Call_000_0cbf
+    call PlayMusic
     call Call_000_1ab7
 
     ld a, [$d7a8]
@@ -7571,7 +7565,7 @@ WinLevel:
 
 .story
     ld a, $11
-    call Call_000_0cbf
+    call PlayMusic
     ld a, [$d79a]
     inc a
     ld [$d79a], a
@@ -7595,7 +7589,7 @@ WinLevel:
 
 .legend
     ld a, $11
-    call Call_000_0cbf
+    call PlayMusic
     ld a, [$d79a]
     inc a
     ld [$d79a], a
@@ -7619,14 +7613,14 @@ WinLevel:
 
 LoseLevel:
     call Call_000_09df
-    call Call_000_0d30
+    call SetVolume
     call Call_000_0927
     ld a, BANK(ScreenGameOver)
     call SetROMBank
     ld hl, ScreenGameOver
     call Call_000_0bcf
     ld a, $10
-    call Call_000_0cbf
+    call PlayMusic
     call Call_000_09eb
     ld a, $09
     call Call_000_0c65
@@ -7698,25 +7692,25 @@ Call_000_33d9:
     jr nc, jr_000_341f
 
     ld a, $07
-    call Call_000_0cbf
+    call PlayMusic
     ret
 
 
 jr_000_3413:
     ld a, $08
-    call Call_000_0cbf
+    call PlayMusic
     ret
 
 
 jr_000_3419:
     ld a, $0a
-    call Call_000_0cbf
+    call PlayMusic
     ret
 
 
 jr_000_341f:
     ld a, $09
-    call Call_000_0cbf
+    call PlayMusic
     ret
 
 
@@ -7747,25 +7741,25 @@ Jump_000_3439:
     jr nc, jr_000_3456
 
     ld a, $0b
-    call Call_000_0cbf
+    call PlayMusic
     ret
 
 
 jr_000_344a:
     ld a, $0c
-    call Call_000_0cbf
+    call PlayMusic
     ret
 
 
 jr_000_3450:
     ld a, $0e
-    call Call_000_0cbf
+    call PlayMusic
     ret
 
 
 jr_000_3456:
     ld a, $0d
-    call Call_000_0cbf
+    call PlayMusic
     ret
 
 
@@ -7961,7 +7955,7 @@ jr_000_354f:
     ld a, $08
     ld [hl], a
     ld a, $08
-    call Call_000_0d07
+    call PlaySound
     call Call_000_0927
     call Call_000_12f0
     call Call_000_1430
@@ -7979,7 +7973,7 @@ jr_000_357d:
 
 Jump_000_358c:
     ld a, $0e
-    call Call_000_0d07
+    call PlaySound
 
 jr_000_3591:
     call Call_000_085d
@@ -8004,7 +7998,7 @@ Jump_000_35a0:
     ld [hl+], a
     ld [hl], a
     ld a, $08
-    call Call_000_0d07
+    call PlaySound
     call Call_000_0927
     call Call_000_0db5
     call Call_000_12f0
@@ -8023,7 +8017,7 @@ jr_000_35c3:
 
 jr_000_35d2:
     ld a, $0e
-    call Call_000_0d07
+    call PlaySound
 
 jr_000_35d7:
     call Call_000_085d
@@ -8107,7 +8101,7 @@ Jump_000_3652:
 
 Jump_000_3670:
     ld a, $08
-    call Call_000_0d07
+    call PlaySound
     call Call_000_0db5
     call Call_000_1d15
     call Call_000_14b0
@@ -8322,7 +8316,7 @@ jr_000_37a0:
     call Call_000_14f0
     call Call_000_0abb
     ld a, $05
-    call Call_000_0cbf
+    call PlayMusic
     call Call_000_09eb
     call Call_000_0c3c
     call Call_000_0927
@@ -8411,7 +8405,7 @@ Call_000_3828::
     call Call_000_0927
     call Call_000_1bfe
     ld a, $16
-    call Call_000_0d07
+    call PlaySound
     call Call_000_39b3
     call Call_000_39b3
     call Call_000_39b3
@@ -8435,7 +8429,7 @@ Call_000_3828::
 
 jr_000_391d:
     ld a, $13
-    call Call_000_0d07
+    call PlaySound
 
 jr_000_3922:
     call Call_000_1b1e
@@ -8962,12 +8956,12 @@ jr_000_3c88:
 
 Call_000_3c96::
     di
-    call Call_000_0d30
-    call Call_000_0ca4
+    call SetVolume
+    call SilenceAudio
     ei
     call Call_000_0db5
     ld a, $0f
-    call Call_000_0d07
+    call PlaySound
     call Call_000_0927
     call Call_000_085d
     ld a, BANK(MessageTurn)
@@ -9252,7 +9246,7 @@ Jump_000_3e96:
     jr nz, jr_000_3ec4
 
     ld a, $0d
-    call Call_000_0d07
+    call PlaySound
     ld a, [$d7b5]
     call Call_000_099b
     ld a, [hl]
@@ -9284,7 +9278,7 @@ jr_000_3ec4:
     jp nz, Jump_000_3f56
 
     ld a, $08
-    call Call_000_0d07
+    call PlaySound
     call Call_000_345c
     cp $ff
     jp z, Jump_000_3f56
@@ -9346,7 +9340,7 @@ Jump_000_3f00:
 
 Jump_000_3f56:
     ld a, $0e
-    call Call_000_0d07
+    call PlaySound
     jp Jump_000_3ec4
 
 
@@ -9355,7 +9349,7 @@ Jump_000_3f5e:
     jr nz, jr_000_3f77
 
     ld a, $0d
-    call Call_000_0d07
+    call PlaySound
     ld a, [$d7b5]
     call Call_000_099b
     ld a, [hl]

@@ -12,38 +12,47 @@ INCLUDE "trap.inc"
 
 SECTION "ROM Bank $01c", ROMX
 
+; AudioStop
 Call_01c_4000::
     jp Jump_01c_4088
 
 
+; AudioUnknown
 Call_01c_4003::
     jp Jump_01c_40f4
 
 
+; AudioPlayMusic
 Call_01c_4006::
     jp Jump_01c_4021
 
 
+; AudioPlaySound
 Call_01c_4009::
     jp Jump_01c_4038
 
 
+; AudioSilence
 Call_01c_400c::
     jp Jump_01c_4059
 
 
+; AudioGetMusic
 Call_01c_400f::
     jp Jump_01c_405d
 
 
+; AudioGetSound
 Call_01c_4012::
     jp Jump_01c_4067
 
 
+; AudioSetVolume
 Call_01c_4015::
     jp Jump_01c_4071
 
 
+; AudioGetCount
 Call_01c_4018::
     jp Jump_01c_407a
 
