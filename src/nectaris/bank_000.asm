@@ -1028,10 +1028,10 @@ Jump_000_0668:
     cp $11
     ret nc
 
-    call Call_000_082c
-    call Call_000_082c
-    call Call_000_082c
-    call Call_000_082c
+    call Memcpy16
+    call Memcpy16
+    call Memcpy16
+    call Memcpy16
     ld a, c
     sub $40
     ld c, a
@@ -1046,10 +1046,10 @@ jr_000_06c2:
     cp $19
     ret nc
 
-    call Call_000_083e
-    call Call_000_083e
-    call Call_000_083e
-    call Call_000_083e
+    call Memcpy10
+    call Memcpy10
+    call Memcpy10
+    call Memcpy10
     ld a, c
     sub $28
     ld c, a
@@ -1064,8 +1064,8 @@ jr_000_06e0:
     cp $21
     ret nc
 
-    call Call_000_082c
-    call Call_000_082c
+    call Memcpy16
+    call Memcpy16
     ld a, c
     sub $20
     ld c, a
@@ -1080,8 +1080,8 @@ jr_000_06f8:
     cp $2d
     ret nc
 
-    call Call_000_083e
-    call Call_000_083e
+    call Memcpy10
+    call Memcpy10
     ld a, c
     sub $14
     ld c, a
@@ -1349,7 +1349,8 @@ jr_000_0823:
     ret
 
 
-Call_000_082c:
+; for range(16): *(de++) = *(hl++)
+Memcpy16:
     ld a, [hl+]
     ld [de], a
     inc de
@@ -1369,7 +1370,11 @@ Call_000_082c:
     ld [de], a
     inc de
 
-Call_000_083e:
+    ; fall through
+
+
+; for range(10): *(de++) = *(hl++)
+Memcpy10:
     ld a, [hl+]
     ld [de], a
     inc de
@@ -2107,13 +2112,13 @@ Call_000_0bcf:
     ld [$2000], a
     ld [$d799], a
     ld de, $c1a0
-    ld c, $16
+    ld c, 22
 
-jr_000_0c02:
+.jr_000_0c02
     push hl
     push de
-    call Call_000_083e
-    call Call_000_083e
+    call Memcpy10
+    call Memcpy10
     pop de
     pop hl
     ld a, $14
@@ -2121,7 +2126,7 @@ jr_000_0c02:
     ld a, $40
     call AddAToDE
     dec c
-    jr nz, jr_000_0c02
+    jr nz, .jr_000_0c02
 
     ld a, [$d79d]
     ld b, a
@@ -8139,8 +8144,8 @@ jr_000_36bf:
     push de
 
 Jump_000_36c0::
-    call Call_000_083e
-    call Call_000_083e
+    call Memcpy10
+    call Memcpy10
     pop de
     ld a, $40
     call AddAToDE
@@ -8716,12 +8721,12 @@ ShowTileMap:
     push bc
     push de
     push hl
-    call Call_000_083e
+    call Memcpy10
     ld a, b
     cp $0a
     jr z, jr_000_3b44
 
-    call Call_000_083e
+    call Memcpy10
 
 jr_000_3b44:
     pop hl
