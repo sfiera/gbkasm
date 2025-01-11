@@ -168,7 +168,7 @@ Call_007_44a5::
     ld [$d8e0], a
     ld a, h
     ld [$d8e1], a
-    call Call_000_0e66
+    call ShowWindow
     call Call_007_4598
 
 Jump_007_44bb:
@@ -1523,7 +1523,7 @@ Call_007_4d81::
     ld [$d8e0], a
     ld a, h
     ld [$d8e1], a
-    call Call_000_0e66
+    call ShowWindow
 
 jr_007_4d97:
     call Call_000_0abb

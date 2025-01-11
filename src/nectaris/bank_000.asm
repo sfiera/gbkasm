@@ -2486,7 +2486,7 @@ RunMenu:
     ret
 
 
-Call_000_0e66::
+ShowWindow::
     ld [$d872], a
     ld a, [$d799]
     push af
@@ -5219,7 +5219,7 @@ DoSendDataToPC:
     ld [$d8e0], a
     ld a, h
     ld [$d8e1], a
-    call Call_000_0e66
+    call ShowWindow
     call Call_000_0c3c
     ld a, b
     cp $00
@@ -5239,7 +5239,7 @@ DoSendDataToPC:
     ld [$d8e0], a
     ld a, h
     ld [$d8e1], a
-    call Call_000_0e66
+    call ShowWindow
     call PauseAudio
     call Call_000_085d
     call Call_000_085d
@@ -5271,7 +5271,7 @@ DoSendDataToPC:
     ld [$d8e0], a
     ld a, h
     ld [$d8e1], a
-    call Call_000_0e66
+    call ShowWindow
     call Call_000_0c3c
     ld a, $ff
     ld [$db08], a
@@ -5286,7 +5286,7 @@ DoSendDataToPC:
     ld [$d8e0], a
     ld a, h
     ld [$d8e1], a
-    call Call_000_0e66
+    call ShowWindow
     call Call_000_0c3c
     ld a, $ff
     ld [$db08], a
@@ -5320,7 +5320,7 @@ DoRecvDataFromPC:
     ld [$d8e0], a
     ld a, h
     ld [$d8e1], a
-    call Call_000_0e66
+    call ShowWindow
     call Call_000_0c3c
     ld a, b
     cp $00
@@ -5340,7 +5340,7 @@ DoRecvDataFromPC:
     ld [$d8e0], a
     ld a, h
     ld [$d8e1], a
-    call Call_000_0e66
+    call ShowWindow
     call PauseAudio
     call Call_000_085d
     call Call_000_085d
@@ -5435,7 +5435,7 @@ DoRecvDataFromPC:
     ld [$d8e0], a
     ld a, h
     ld [$d8e1], a
-    call Call_000_0e66
+    call ShowWindow
     call Call_000_0c3c
     ld a, $ff
     ld [$db08], a
@@ -5451,7 +5451,7 @@ DoRecvDataFromPC:
     ld [$d8e0], a
     ld a, h
     ld [$d8e1], a
-    call Call_000_0e66
+    call ShowWindow
     call Call_000_0c3c
     ld a, $ff
     ld [$db08], a
@@ -5521,7 +5521,7 @@ DoSendDataToGB:
     ld [$d8e0], a
     ld a, h
     ld [$d8e1], a
-    call Call_000_0e66
+    call ShowWindow
     call Call_000_0c3c
     ld a, b
     cp $00
@@ -5540,7 +5540,7 @@ DoSendDataToGB:
     ld [$d8e0], a
     ld a, h
     ld [$d8e1], a
-    call Call_000_0e66
+    call ShowWindow
     call PauseAudio
     call Call_000_085d
     call Call_000_085d
@@ -5557,7 +5557,7 @@ DoSendDataToGB:
     ld [$d8e0], a
     ld a, h
     ld [$d8e1], a
-    call Call_000_0e66
+    call ShowWindow
     call Call_000_0c3c
     ld a, $ff
     ld [$db08], a
@@ -5571,7 +5571,7 @@ DoSendDataToGB:
     ld [$d8e0], a
     ld a, h
     ld [$d8e1], a
-    call Call_000_0e66
+    call ShowWindow
     call Call_000_0c3c
     ld a, $ff
     ld [$db08], a
@@ -5605,7 +5605,7 @@ DoRecvDataFromGB:
     ld [$d8e0], a
     ld a, h
     ld [$d8e1], a
-    call Call_000_0e66
+    call ShowWindow
     call Call_000_0c3c
     ld a, b
     cp $00
@@ -5623,7 +5623,7 @@ DoRecvDataFromGB:
     ld [$d8e0], a
     ld a, h
     ld [$d8e1], a
-    call Call_000_0e66
+    call ShowWindow
     call PauseAudio
     call Call_000_085d
     call Call_000_085d
@@ -5669,7 +5669,7 @@ DoRecvDataFromGB:
     ld [$d8e0], a
     ld a, h
     ld [$d8e1], a
-    call Call_000_0e66
+    call ShowWindow
     call Call_000_0c3c
     ld a, $ff
     ld [$db08], a
@@ -5687,7 +5687,7 @@ jr_000_25a5:
     ld [$d8e0], a
     ld a, h
     ld [$d8e1], a
-    call Call_000_0e66
+    call ShowWindow
     call Call_000_0c3c
     ld a, $ff
     ld [$db08], a
