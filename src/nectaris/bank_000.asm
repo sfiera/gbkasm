@@ -13,6 +13,8 @@ INCLUDE "nectaris/map.inc"
 INCLUDE "nectaris/text.inc"
 INCLUDE "nectaris/units.inc"
 
+DEF JP_U16 EQU $c3
+
 SECTION "ROM Bank $000", ROM0
 
 trap_0f_0000::
@@ -96,7 +98,7 @@ RST_38::
     db $01
 
 VBlankInterrupt::
-    jp $c006
+    jp WRAMVBlankInterrupt
 
 
     nop
@@ -114,7 +116,7 @@ LCDCInterrupt::
     nop
 
 TimerOverflowInterrupt::
-    jp $c000
+    jp WRAMTimerOverflowInterrupt
 
 
 Call_000_0053::
@@ -128,7 +130,7 @@ Jump_000_0053::
     db $01
 
 SerialTransferCompleteInterrupt::
-    jp $c003
+    jp WRAMSerialTransferInterrupt
 
 
     nop
@@ -897,7 +899,7 @@ jr_000_05dc:
     ret
 
 
-Call_000_05e3:
+Call_000_05e3::
     push af
     push bc
     push de
@@ -971,7 +973,6 @@ Call_000_05e3:
     pop bc
     pop af
     reti
-.end
 
 
 Call_000_065d:
@@ -3710,9 +3711,9 @@ Call_000_1710::
 Call_000_1730:
     di
     push hl
-    ld hl, $c006
-    ld de, $0048
-    ld a, $c3
+    ld hl, WRAMVBlankInterrupt
+    ld de, LCDCInterrupt
+    ld a, JP_U16
     ld [hl+], a
     ld a, e
     ld [hl+], a
@@ -3728,9 +3729,9 @@ Call_000_1730:
 
 Call_000_174a:
     push af
-    ld hl, $c006
+    ld hl, WRAMVBlankInterrupt
     ld de, Call_000_05e3
-    ld a, $c3
+    ld a, JP_U16
     ld [hl+], a
     ld a, e
     ld [hl+], a
@@ -4730,29 +4731,33 @@ Jump_000_1ebf:
 jr_000_1ec4:
     ld a, $00
     ld [$d86d], a
-    ld hl, $c000
-    ld de, $0048
-    ld a, $c3
-    ld [hl+], a
-    ld a, e
-    ld [hl+], a
-    ld a, d
-    ld [hl+], a
-    ld a, $c3
-    ld [hl+], a
-    ld a, e
-    ld [hl+], a
-    ld a, d
-    ld [hl+], a
-    ld de, Call_000_05e3
-    ld a, $c3
-    ld [hl+], a
-    ld a, e
-    ld [hl+], a
-    ld a, d
+    ld hl, WRAMTimerOverflowInterrupt
 
-Jump_000_1ee6:
+    ld de, LCDCInterrupt
+    ld a, JP_U16
     ld [hl+], a
+    ld a, e
+    ld [hl+], a
+    ld a, d
+    ld [hl+], a
+
+    ; hl = WRAMSerialTransferInterrupt
+    ld a, JP_U16
+    ld [hl+], a
+    ld a, e
+    ld [hl+], a
+    ld a, d
+    ld [hl+], a
+
+    ; hl = WRAMVBlankInterrupt
+    ld de, Call_000_05e3
+    ld a, JP_U16
+    ld [hl+], a
+    ld a, e
+    ld [hl+], a
+    ld a, d
+    ld [hl+], a
+
     ldh a, [rLCDC]
     and $7f
     ldh [rLCDC], a
@@ -9386,3 +9391,13 @@ Call_000_3f8e:
     ldh [$80], a
     ld [$2000], a
     ret
+
+
+SECTION "WRAM Interrupts", WRAM0
+
+WRAMTimerOverflowInterrupt:
+    ds 3
+WRAMSerialTransferInterrupt:
+    ds 3
+WRAMVBlankInterrupt:
+    ds 3

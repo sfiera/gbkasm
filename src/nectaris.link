@@ -184,6 +184,8 @@ SRAM $02
     "Save Data"
 
 WRAM0
+    org $c000
+    "WRAM Interrupts"
     org $c3c8
     "WRAM"
 

@@ -12,32 +12,40 @@ INCLUDE "trap.inc"
 INCLUDE "nectaris/text.inc"
 INCLUDE "nectaris/units.inc"
 
+DEF JP_U16 EQU $c3
+
 SECTION "ROM Bank $00f", ROMX
 
 Call_00f_4000::
     ld a, $00
     ld [$d86d], a
-    ld hl, $c000
-    ld de, $0048
-    ld a, $c3
+
+    ld hl, WRAMTimerOverflowInterrupt
+    ld de, LCDCInterrupt
+    ld a, JP_U16
     ld [hl+], a
     ld a, e
     ld [hl+], a
     ld a, d
     ld [hl+], a
-    ld a, $c3
+
+    ; hl = WRAMSerialTransferInterrupt
+    ld a, JP_U16
     ld [hl+], a
     ld a, e
     ld [hl+], a
     ld a, d
     ld [hl+], a
-    ld de, $05e3
-    ld a, $c3
+
+    ; hl = WRAMVBlankInterrupt
+    ld de, Call_000_05e3
+    ld a, JP_U16
     ld [hl+], a
     ld a, e
     ld [hl+], a
     ld a, d
     ld [hl+], a
+
     call Call_000_07cd
     ld a, $0a
     ld [$0000], a
