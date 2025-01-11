@@ -63,9 +63,9 @@ Call_00f_4000::
     ldh [rSCY], a
     ld a, $01
     ldh [rIE], a
-    ld a, $1b
+    ld a, %00011011
     ldh [rBGP], a
-    ld a, $6f
+    ld a, %01101111
     ldh [rOBP0], a
     ldh [rOBP1], a
     ld a, $00
@@ -5297,7 +5297,7 @@ Call_00f_5f0b::
     ld a, $00
     ld [$d82d], a
     call Call_00f_5f88
-    call Call_000_09eb
+    call SetStdPalette
 
 Jump_00f_5f16:
 jr_00f_5f16:
@@ -7831,7 +7831,7 @@ Call_00f_729a::
     ld a, $00
     ld [$d79d], a
     ld [$d79e], a
-    call Call_000_09df
+    call SetWhitePalette
     call Call_000_1878
     call Call_000_1858
     ld a, $00
@@ -7870,7 +7870,7 @@ jr_00f_72f5:
     call Call_000_0abb
     call Call_000_085d
     call Call_000_085d
-    call Call_000_09eb
+    call SetStdPalette
     ld a, $00
     ld [$d87b], a
     ld a, [$db04]

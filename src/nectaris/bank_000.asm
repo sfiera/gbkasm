@@ -1759,20 +1759,20 @@ GetUnit::
     ret
 
 
-Call_000_09df::
+SetWhitePalette::
     call Call_000_085d
-    ld a, $ff
+    ld a, %11111111
     ldh [rBGP], a
     ldh [rOBP0], a
     ldh [rOBP1], a
     ret
 
 
-Call_000_09eb::
+SetStdPalette::
     call Call_000_085d
-    ld a, $1b
+    ld a, %00011011
     ldh [rBGP], a
-    ld a, $2f
+    ld a, %00101111
     ldh [rOBP0], a
     ldh [rOBP1], a
     ret
@@ -2090,7 +2090,7 @@ jr_000_0b70:
     ret
 
 
-Call_000_0bcf:
+ShowScreen:
     ld a, $00
     ld [$d878], a
     ld [$d879], a
@@ -2437,7 +2437,7 @@ Call_000_0de7::
     ld a, $07
     call SetROMBank
     ld a, [$d872]
-    call Call_000_09df
+    call SetWhitePalette
     ld a, $00
     ld [$d79d], a
     ld [$d79e], a
@@ -2457,7 +2457,7 @@ Call_000_0de7::
     call Call_000_085d
     call Call_000_0abb
     call Call_000_085d
-    call Call_000_09eb
+    call SetStdPalette
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -3973,15 +3973,15 @@ Call_000_18d8:
     ld a, [$d910]
     or b
     ld [hl], a
-    call Call_000_09df
+    call SetWhitePalette
     call Call_000_0927
     ld a, BANK(ScreenFactoryTaken)
     call SetROMBank
     ld hl, ScreenFactoryTaken
-    call Call_000_0bcf
+    call ShowScreen
     ld a, $0f
     call PlayMusic
-    call Call_000_09eb
+    call SetStdPalette
     ld a, $08
     call Call_000_0c65
     call PauseAudio
@@ -4149,7 +4149,7 @@ Call_000_1a0a::
 
 
 Call_000_1a2a:
-    call Call_000_09df
+    call SetWhitePalette
     call Call_000_0927
     ld a, BANK(FactoryTileData)
     call SetROMBank
@@ -4222,13 +4222,13 @@ Call_000_1a97::
 
 
 Call_000_1ab7:
-    call Call_000_09df
+    call SetWhitePalette
     ld a, $00
     call Call_000_09f9
     ld a, BANK(ScreenResults)
     call SetROMBank
     ld hl, ScreenResults
-    call Call_000_0bcf
+    call ShowScreen
     ld a, [$d799]
     push af
     ld a, BANK(Call_00f_5f0b)
@@ -4470,7 +4470,7 @@ Call_000_1c9e::
     ld a, $07
     call SetROMBank
     ld a, [$d872]
-    call Call_000_09df
+    call SetWhitePalette
     ld a, $00
     ld [$d79d], a
     ld [$d79e], a
@@ -4490,7 +4490,7 @@ Call_000_1c9e::
     call Call_000_085d
     call Call_000_0abb
     call Call_000_085d
-    call Call_000_09eb
+    call SetStdPalette
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -4849,14 +4849,14 @@ Jump_000_1f4c:
 
 
 DoTitleScreen:
-    call Call_000_09df
+    call SetWhitePalette
     ld a, BANK(ScreenTitle)
     call SetROMBank
     ld hl, ScreenTitle
-    call Call_000_0bcf
+    call ShowScreen
     ld a, $01
     call PlayMusic
-    call Call_000_09eb
+    call SetStdPalette
 
 .loop
     call Call_000_085d
@@ -5781,88 +5781,88 @@ DoDemoMode:
 
 
 ShowPrologue:
-    call Call_000_09df
+    call SetWhitePalette
     call PauseAudio
     call Call_000_0927
     ld a, BANK(ScreenPrologue1)
     call SetROMBank
     ld hl, ScreenPrologue1
-    call Call_000_0bcf
+    call ShowScreen
     ld a, $03
     call PlayMusic
-    call Call_000_09eb
+    call SetStdPalette
     ld a, $06
     call Call_000_0c65
     ld a, b
     cp $02
     jp nz, .skip
 
-    call Call_000_09df
+    call SetWhitePalette
     ld a, BANK(ScreenPrologue2)
     call SetROMBank
     ld hl, ScreenPrologue2
-    call Call_000_0bcf
-    call Call_000_09eb
+    call ShowScreen
+    call SetStdPalette
     ld a, $08
     call Call_000_0c65
     ld a, b
     cp $02
     jp nz, .skip
 
-    call Call_000_09df
+    call SetWhitePalette
     ld a, BANK(ScreenPrologue3)
     call SetROMBank
     ld hl, ScreenPrologue3
-    call Call_000_0bcf
-    call Call_000_09eb
+    call ShowScreen
+    call SetStdPalette
     ld a, $06
     call Call_000_0c65
     ld a, b
     cp $02
     jp nz, .skip
 
-    call Call_000_09df
+    call SetWhitePalette
     ld a, BANK(ScreenPrologue4)
     call SetROMBank
     ld hl, ScreenPrologue4
-    call Call_000_0bcf
-    call Call_000_09eb
+    call ShowScreen
+    call SetStdPalette
     ld a, $08
     call Call_000_0c65
     ld a, b
     cp $02
     jp nz, .skip
 
-    call Call_000_09df
+    call SetWhitePalette
     ld a, BANK(ScreenPrologue5)
     call SetROMBank
     ld hl, ScreenPrologue5
-    call Call_000_0bcf
-    call Call_000_09eb
+    call ShowScreen
+    call SetStdPalette
     ld a, $06
     call Call_000_0c65
     ld a, b
     cp $02
     jr nz, .skip
 
-    call Call_000_09df
+    call SetWhitePalette
     ld a, BANK(ScreenPrologue6)
     call SetROMBank
     ld hl, ScreenPrologue6
-    call Call_000_0bcf
-    call Call_000_09eb
+    call ShowScreen
+    call SetStdPalette
     ld a, $08
     call Call_000_0c65
     ld a, b
     cp $02
     jr nz, .skip
 
-    call Call_000_09df
+    call SetWhitePalette
     ld a, BANK(ScreenPrologue7)
     call SetROMBank
     ld hl, ScreenPrologue7
-    call Call_000_0bcf
-    call Call_000_09eb
+    call ShowScreen
+    call SetStdPalette
     ld a, $08
     call Call_000_0c65
     ld a, b
@@ -5870,23 +5870,23 @@ ShowPrologue:
     jr nz, .skip
 
 .skip
-    call Call_000_09df
+    call SetWhitePalette
     ret
 
 
 ShowWorldMap:
-    call Call_000_09df
+    call SetWhitePalette
     call PauseAudio
     ld a, BANK(ScreenWorldMap)
     call SetROMBank
     ld hl, ScreenWorldMap
-    call Call_000_0bcf
+    call ShowScreen
     ld a, $06
     call PlayMusic
     call Call_000_0927
     ld a, $03
     call Call_000_09f9
-    call Call_000_09eb
+    call SetStdPalette
 
 jr_000_2736:
     call Call_000_17d8
@@ -5902,56 +5902,56 @@ jr_000_2736:
 
 
 ShowEpilogue:
-    call Call_000_09df
+    call SetWhitePalette
     call PauseAudio
     call Call_000_0927
     ld a, BANK(ScreenEpilogue1)
     call SetROMBank
     ld hl, ScreenEpilogue1
-    call Call_000_0bcf
+    call ShowScreen
     ld a, $12
     call PlayMusic
-    call Call_000_09eb
+    call SetStdPalette
     ld a, $0a
     call Call_000_0c65
-    call Call_000_09df
+    call SetWhitePalette
     ld a, BANK(ScreenEpilogue2)
     call SetROMBank
     ld hl, ScreenEpilogue2
-    call Call_000_0bcf
-    call Call_000_09eb
+    call ShowScreen
+    call SetStdPalette
     ld a, $0b
     call Call_000_0c65
-    call Call_000_09df
+    call SetWhitePalette
     ld a, BANK(ScreenEpilogue3)
     call SetROMBank
     ld hl, ScreenEpilogue3
-    call Call_000_0bcf
-    call Call_000_09eb
+    call ShowScreen
+    call SetStdPalette
     ld a, $0b
     call Call_000_0c65
-    call Call_000_09df
+    call SetWhitePalette
     ld a, BANK(ScreenEpilogue4)
     call SetROMBank
     ld hl, ScreenEpilogue4
-    call Call_000_0bcf
-    call Call_000_09eb
+    call ShowScreen
+    call SetStdPalette
     ld a, $0b
     call Call_000_0c65
-    call Call_000_09df
+    call SetWhitePalette
     ld a, BANK(ScreenEpilogue5)
     call SetROMBank
     ld hl, ScreenEpilogue5
-    call Call_000_0bcf
-    call Call_000_09eb
+    call ShowScreen
+    call SetStdPalette
     ld a, $0b
     call Call_000_0c65
-    call Call_000_09df
+    call SetWhitePalette
     ld a, BANK(ScreenEpilogue6)
     call SetROMBank
     ld hl, ScreenEpilogue6
-    call Call_000_0bcf
-    call Call_000_09eb
+    call ShowScreen
+    call SetStdPalette
     ld a, $0b
     call Call_000_0c65
     call PauseAudio
@@ -7543,16 +7543,16 @@ jr_000_32d2:
 
 
 WinLevel:
-    call Call_000_09df
+    call SetWhitePalette
     call PauseAudio
     call Call_000_0927
     ld a, BANK(ScreenWin)
     call SetROMBank
     ld hl, ScreenWin
-    call Call_000_0bcf
+    call ShowScreen
     ld a, $0f
     call PlayMusic
-    call Call_000_09eb
+    call SetStdPalette
     ld a, $09
     call Call_000_0c65
     ld a, [$d7a5]
@@ -7622,23 +7622,23 @@ WinLevel:
 
 
 LoseLevel:
-    call Call_000_09df
+    call SetWhitePalette
     call PauseAudio
     call Call_000_0927
     ld a, BANK(ScreenGameOver)
     call SetROMBank
     ld hl, ScreenGameOver
-    call Call_000_0bcf
+    call ShowScreen
     ld a, $10
     call PlayMusic
-    call Call_000_09eb
+    call SetStdPalette
     ld a, $09
     call Call_000_0c65
     jp ExitLevel
 
 
 Call_000_3394:
-    call Call_000_09df
+    call SetWhitePalette
     ld a, BANK(MapTiles)
     call SetROMBank
     ld hl, MapTiles
@@ -7661,7 +7661,7 @@ Call_000_3394:
     call Call_000_085d
     call Call_000_085d
     call Call_000_085d
-    call Call_000_09eb
+    call SetStdPalette
     ret
 
 
@@ -8130,7 +8130,7 @@ Call_000_368a:
     ld a, $00
     ld [$d79d], a
     ld [$d79e], a
-    call Call_000_09df
+    call SetWhitePalette
     call Call_000_0927
     ld a, BANK(WeaponDataTiles)
     call SetROMBank
@@ -8327,7 +8327,7 @@ jr_000_37a0:
     call Call_000_0abb
     ld a, $05
     call PlayMusic
-    call Call_000_09eb
+    call SetStdPalette
     call Call_000_0c3c
     call Call_000_0927
     pop bc
@@ -8349,7 +8349,7 @@ Call_000_3828::
     ld a, $00
     ld [$d79d], a
     ld [$d79e], a
-    call Call_000_09df
+    call SetWhitePalette
     call Call_000_39bc
     ld a, BANK(BattleTileMap6)
     call SetROMBank
@@ -8363,7 +8363,7 @@ Call_000_3828::
     call Call_000_1b5e
     call Call_000_0abb
     call Call_000_1c5e
-    call Call_000_09eb
+    call SetStdPalette
     call Call_000_39b3
     call Call_000_0927
     ld a, BANK(BattleTileMap6)
@@ -8378,7 +8378,7 @@ Call_000_3828::
     call Call_000_1b5e
     call Call_000_0abb
     call Call_000_1c5e
-    call Call_000_09eb
+    call SetStdPalette
     call Call_000_39b3
     call Call_000_0927
     ld a, BANK(BattleTileMap7)

@@ -47,7 +47,7 @@ Call_00e_4000::
 
     ld a, $01
     ld [$d7b3], a
-    ld a, $e4
+    ld a, %11100100
     ldh [rBGP], a
     ld hl, $8000
     xor a
@@ -363,7 +363,7 @@ jr_00e_41e6:
     dec c
     jr nz, jr_00e_41e4
 
-    ld a, $e4
+    ld a, %11100100
     ldh [rBGP], a
     call Call_00e_41b1
     ld bc, $0005
