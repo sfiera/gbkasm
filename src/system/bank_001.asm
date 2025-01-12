@@ -178,7 +178,7 @@ MenuSort:
     call Call_001_4990
     pop de
     ld e, a
-    call Call_001_4235
+    call MoveFile
     push de
     jr nz, .done
 
@@ -295,7 +295,7 @@ jr_001_421d:
 jr_001_4224:
     pop de
     push de
-    call Call_001_4235
+    call MoveFile
     call DeleteSelectedFile
 
 jr_001_422c:
@@ -305,20 +305,23 @@ Jump_001_422d:
 jr_001_422d:
     inc e
     ld a, e
-    cp $78
+    cp 120
     jp c, Jump_001_41ab
 
     ret
 
 
-Call_001_4235:
+; Swap positions of files at indexes d and e
+MoveFile:
     add sp, -$08
+
     ld hl, sp+$00
     push de
     ld d, $fe
     ld bc, $0004
     trap CRAMRead
     pop de
+
     ld hl, sp+$04
     push de
     ld e, d
@@ -326,12 +329,14 @@ Call_001_4235:
     ld bc, $0004
     trap CRAMRead
     pop de
+
     ld hl, sp+$04
     push de
     ld d, $fe
     ld bc, $0004
     trap CRAMWrite
     pop de
+
     ld hl, sp+$00
     push de
     ld e, d
@@ -339,6 +344,7 @@ Call_001_4235:
     ld bc, $0004
     trap CRAMWrite
     pop de
+
     ld hl, sp+$00
     ld a, [hl+]
     or [hl]
