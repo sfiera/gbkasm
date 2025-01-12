@@ -1059,7 +1059,7 @@ jr_000_0525:
     ld de, $0000
     ld hl, $c654
     ld bc, $0002
-    trap $e5
+    trap CRAMWrite
 
 jr_000_053a:
     ld a, $20
@@ -1277,7 +1277,7 @@ Jump_000_0755:
     ld de, $0000
     ld hl, $c654
     ld bc, $0002
-    trap $e5
+    trap CRAMWrite
     jp Jump_000_0543
 
 

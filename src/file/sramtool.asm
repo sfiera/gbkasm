@@ -325,7 +325,7 @@ call_03d7:
     ld a, b
     sbc $00
     ld b, a
-    trap $e5
+    trap CRAMWrite
     ret
 
 

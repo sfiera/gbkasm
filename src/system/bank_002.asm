@@ -114,7 +114,7 @@ traps2::
     dw trap_e2_454a         ; trap $e2
     dw trap_e3_4566         ; trap $e3
     dw TrapFileRead         ; trap $e4
-    dw trap_e5_45ca         ; trap $e5
+    dw TrapCRAMWrite        ; trap $e5
     dw trap_e6_45da         ; trap $e6
     dw trap_e7_47b7         ; trap $e7
     dw TrapFileNext         ; trap $e8
@@ -961,7 +961,7 @@ LocateIndexRegionOffset:
     ret
 
 
-trap_e5_45ca::
+TrapCRAMWrite::
     ldh a, [hRAMBank]
     push af
     push hl
@@ -2178,7 +2178,7 @@ jr_002_4adf:
     ld a, b
     adc h
     ld h, a
-    call trap_e5_45ca
+    call TrapCRAMWrite
     pop bc
     pop hl
     pop de
@@ -2225,7 +2225,7 @@ jr_002_4b4d:
     ld hl, sp+$02
     pop de
     ld bc, $002e
-    call trap_e5_45ca
+    call TrapCRAMWrite
     add sp, $2e
 
 jr_002_4b5c:
@@ -2555,7 +2555,7 @@ trap_ec_4ca9::
     pop hl
     push bc
     ldh [$97], a
-    call trap_e5_45ca
+    call TrapCRAMWrite
     pop bc
     pop hl
     ret

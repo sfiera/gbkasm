@@ -330,14 +330,14 @@ Call_001_4235:
     push de
     ld d, $fe
     ld bc, $0004
-    trap $e5
+    trap CRAMWrite
     pop de
     ld hl, sp+$00
     push de
     ld e, d
     ld d, $fe
     ld bc, $0004
-    trap $e5
+    trap CRAMWrite
     pop de
     ld hl, sp+$00
     ld a, [hl+]
@@ -1218,7 +1218,7 @@ SelectFile:
     ld hl, $ffc0
     ld de, $ff44
     ld bc, $0001
-    trap $e5
+    trap CRAMWrite
     ldh a, [$c2]
     ld c, a
     ldh a, [$c0]
@@ -3565,7 +3565,7 @@ jr_001_679e:
     ld hl, $c600
     ld de, $ff46
     ld bc, $003a
-    trap $e5
+    trap CRAMWrite
 
 jr_001_67b3:
     trap $01
@@ -3943,7 +3943,7 @@ jr_001_6e36:
     push hl
     ld hl, sp+$00
     ld bc, $0004
-    trap $e5
+    trap CRAMWrite
     pop hl
     pop bc
     pop de
@@ -4662,7 +4662,7 @@ trap_6f_7138::
     ld hl, sp+$00
     ld de, $ff3c
     ld bc, $0004
-    trap $e5
+    trap CRAMWrite
     pop hl
     pop de
     ret
