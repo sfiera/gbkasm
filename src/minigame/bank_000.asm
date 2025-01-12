@@ -202,7 +202,7 @@ TrapExitToMenu::
     ld a, [Config0]
     ldh [hROMBank], a
     ld [rROMBank], a
-    jp jsys_4100
+    jp KissMenu
 
 
 TrapMemCopy::
@@ -558,7 +558,7 @@ Jump_000_0300:
     jp Jump_000_03f8
 
 
-Jump_000_0303::
+ExitKissMenu::
     jp Jump_000_0402
 
 

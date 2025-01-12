@@ -32,7 +32,7 @@ RST_08::
 
 
 Config0::
-    db BANK(jsys_4100)
+    db BANK(KissMenu)
 Config1::
     db BANK(traps1)
 Config2::
@@ -342,7 +342,7 @@ trap_01_0150:
     ld a, [$000b]
     ldh [$80], a
     ld [$2000], a
-    jp jsys_4100
+    jp KissMenu
 
 
 trap_02_015b:
@@ -754,7 +754,7 @@ trap_09_02fd:
     jp Jump_000_030a
 
 
-Jump_000_0303::
+ExitKissMenu::
     jp Jump_000_030e
 
 

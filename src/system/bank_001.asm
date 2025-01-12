@@ -97,15 +97,18 @@ traps1::
     dw TrapIRWriteSRAM      ; $7e
     dw TrapIRWrite          ; $7f
 
-jsys_4100::
+KissMenu::
     ld sp, $e000
-    ld hl, jsys_4100
+    ld hl, KissMenu
     trap $6f
     xor a
     ldh [$b7], a
     call Call_001_498a
+    ; fall through
 
-Jump_001_410e:
+
+; Get the current file, show info, then run the menu
+UpdateKissMenu:
     call Call_001_4b33
     ld hl, $ffc0
     ld de, $ff44
@@ -118,46 +121,46 @@ Jump_001_410e:
     ldh [$c1], a
 
 jr_001_4125:
-    call Call_001_47eb
-    jp c, Jump_000_0303
+    call SelectFile
+    jp c, ExitKissMenu
 
-    and $01
-    jp z, Jump_001_42a6
+    and BTN_A
+    jp z, MenuQuickRecv
 
     call Call_001_490e
     ldh a, [$8a]
-    bit 2, a
-    jp nz, Jump_001_4290
+    bit BTN_SEL_F, a
+    jp nz, MenuSend
 
-Jump_001_413a:
+ContinueActionMenu:
     call Call_001_4acb
-    and $02
-    jr nz, Jump_001_4154
+    and BTN_B
+    jr nz, MenuBack
 
     ld h, a
     ld l, c
     trap JumpViaTable
     db $06
-    dw Jump_001_4159 - @
-    dw Jump_001_441d - @
-    dw Jump_001_4164 - @
-    dw Jump_001_4290 - @
-    dw Jump_001_42b6 - @
-    dw Jump_001_43be - @
-    dw Jump_001_4154 - @
+    dw MenuRun - @
+    dw MenuInfo - @
+    dw MenuSort - @
+    dw MenuSend - @
+    dw MenuRecv - @
+    dw MenuErase - @
+    dw MenuBack - @
 
-Jump_001_4154:
+MenuBack:
     call Call_001_4b36
     jr jr_001_4125
 
-Jump_001_4159:
+MenuRun:
     ld hl, $c500
     trap $6d
     ld hl, data_01_4fb1
-    jp Jump_001_43b4
+    jp ShowError
 
 
-Jump_001_4164:
+MenuSort:
     ldh a, [$c0]
     ldh [$c2], a
     ldh a, [$c1]
@@ -165,42 +168,42 @@ Jump_001_4164:
     call Call_001_4990
     push af
 
-jr_sys_4170:
-    call Call_001_47eb
-    jr c, jr_001_419b
+.again
+    call SelectFile
+    jr c, .done
 
-    bit 0, a
-    jr z, jr_sys_4170
+    bit BTN_A_F, a
+    jr z, .again
 
     call Call_001_4990
     pop de
     ld e, a
     call Call_001_4235
     push de
-    jr nz, jr_001_419b
+    jr nz, .done
 
     ld a, d
     cp e
-    jr nz, jr_001_419b
+    jr nz, .done
 
     ld hl, data_01_4fc1
     call DrawTplStr
     ld de, $0b10
-    call Call_001_43e2
-    jr nz, jr_001_419b
+    call ConfirmYesNo
+    jr nz, .done
 
     pop de
     call Call_001_41a9
     push af
 
-jr_001_419b:
+.done
     pop af
     ld a, $ff
     ldh [$c2], a
-    jp Jump_001_410e
+    jp UpdateKissMenu
 
 
-Call_001_41a3:
+DeleteSelectedFile:
     ld hl, $c500
     trap FileDelete
     ret
@@ -293,7 +296,7 @@ jr_001_4224:
     pop de
     push de
     call Call_001_4235
-    call Call_001_41a3
+    call DeleteSelectedFile
 
 jr_001_422c:
     pop de
@@ -352,7 +355,9 @@ Call_001_426d:
     ret
 
 
-Call_001_4278:
+; nz → file exists and is not special
+; Kiss Mail cannot be transferred or deleted
+DoesNonSpecialFileExist:
     ld hl, $c500
     ld a, [hl+]
     or [hl]
@@ -364,36 +369,37 @@ Call_001_4278:
     ret
 
 
-Jump_001_4283:
+CannotSendFile:
     ld hl, data_01_4f76
     call DrawTplStr
     ld a, $b4
     trap AwaitButton
-    jp Jump_001_413a
+    jp ContinueActionMenu
 
-Jump_001_4290:
-    call Call_001_4278
-    jp z, Jump_001_4283
+
+MenuSend:
+    call DoesNonSpecialFileExist
+    jp z, CannotSendFile
 
     call Call_001_4632
-    jp c, Jump_001_410e
+    jp c, UpdateKissMenu
 
     ld hl, $c500
     ld c, $01
     trap $8f
-    jp Jump_001_410e
+    jp UpdateKissMenu
 
 
-Jump_001_42a6:
+MenuQuickRecv:
     ld hl, data_01_4ca0
     call ShowTransferScreen
     call Call_001_4b5e
     xor a
     call Call_001_42f5
-    jp Jump_001_410e
+    jp UpdateKissMenu
 
 
-Jump_001_42b6:
+MenuRecv:
     ld hl, $c500
     ld a, [hl+]
     or [hl]
@@ -402,14 +408,14 @@ Jump_001_42b6:
     ld hl, data_01_4f85
     call DrawTplStr
     ld de, $0710
-    call Call_001_43e2
+    call ConfirmYesNo
     jp nz, Jump_001_43d4
 
     ld a, [$c502]
     cp $ff
-    jp z, Jump_001_43b1
+    jp z, CannotDeleteFile
 
-    call Call_001_41a3
+    call DeleteSelectedFile
 
 jr_001_42d7:
     ld hl, data_01_4cbe
@@ -423,7 +429,7 @@ jr_001_42d7:
     call Call_001_42f5
     jp nz, Jump_001_4491
 
-    jp Jump_001_410e
+    jp UpdateKissMenu
 
 
 Call_001_42f5:
@@ -494,7 +500,7 @@ Call_001_435f:
     ld a, [$ce00]
     push af
     cp $05
-    call z, Call_001_41a3
+    call z, DeleteSelectedFile
     trap $db
     pop af
     ret
@@ -555,42 +561,42 @@ jr_001_43ac:
     ret
 
 
-Jump_001_43b1:
-jr_001_43b1:
+CannotDeleteFile:
     ld hl, data_01_4f66
 
-Jump_001_43b4:
+ShowError:
     call DrawTplStr
     ld a, $b4
     trap AwaitButton
-    jp Jump_001_413a
+    jp ContinueActionMenu
 
 
-Jump_001_43be:
-    call Call_001_4278
-    jr z, jr_001_43b1
+MenuErase:
+    call DoesNonSpecialFileExist
+    jr z, CannotDeleteFile
 
     call Call_001_43f1
     ld hl, data_01_4f0f
-    call Call_001_43dc
-    jr nz, jr_001_43d4
+    call DrawTplAndAskYesNo
+    jr nz, Jump_001_43d4
 
-    call Call_001_41a3
-    jp Jump_001_410e
+    call DeleteSelectedFile
+    jp UpdateKissMenu
 
 
 Jump_001_43d4:
-jr_001_43d4:
     ldh a, [$c1]
     call Call_001_4a36
-    jp Jump_001_413a
+    jp ContinueActionMenu
 
 
-Call_001_43dc:
+DrawTplAndAskYesNo:
     call DrawTplStr
     ld de, $0710
+    ; fall through
 
-Call_001_43e2:
+
+ConfirmYesNo:
     ld a, $01
     ld bc, $2308
     ld hl, $0302
@@ -626,7 +632,7 @@ data_01_440d::
     dk "エリアのあきができます»\0"
 
 
-Jump_001_441d:
+MenuInfo:
     ld a, $c4
     ld h, $04
     ld bc, $0301
@@ -678,12 +684,12 @@ jr_001_4489:
     jr z, jr_001_4489
 
 Jump_001_4491:
-    call Call_001_4997
+    call DrawMenu
     call Call_001_479d
     ld a, h
     call Call_001_4a36
     call Call_001_490e
-    jp Jump_001_413a
+    jp ContinueActionMenu
 
 
 Call_001_44a1:
@@ -943,7 +949,7 @@ jr_001_4672:
     ld hl, data_01_4dc6
     call DrawTplStr
     ld de, $0c10
-    call Call_001_43e2
+    call ConfirmYesNo
     jp nz, Jump_001_4737
 
     call Call_001_438a
@@ -1207,8 +1213,8 @@ data_01_47da::
     db  0, 32, $10, 0
     db 16, 32, $12, 0
 
-Call_001_47eb:
-Jump_001_47eb:
+
+SelectFile:
     ld hl, $ffc0
     ld de, $ff44
     ld bc, $0001
@@ -1217,231 +1223,231 @@ Jump_001_47eb:
     ld c, a
     ldh a, [$c0]
     cp c
-    jr nz, jr_001_480c
+    jr nz, .jr_001_480c
 
     ldh a, [$c3]
     call Call_001_47b9
     ld hl, data_01_47da
     ld a, $1c
     trap $60
-    jr jr_001_4811
+    jr .jr_001_4811
 
-jr_001_480c:
+.jr_001_480c
     ld bc, $041c
     trap $c4
 
-jr_001_4811:
+.jr_001_4811
     call Call_001_479d
 
-Jump_001_4814:
-jr_001_4814:
+.next
     call Call_001_4fec
     push af
     ld a, h
     ldh [$c1], a
     pop af
     or a
-    bit 0, a
+    bit BTN_A_F, a
     ret nz
 
-    bit 3, a
+    bit BTN_STA_F, a
     ret nz
 
-    bit 1, a
+    bit BTN_B_F, a
     scf
     ret nz
 
     ld l, a
     ldh a, [$8a]
-    bit 4, l
-    jr nz, jr_sys_4877
+    bit BTN_RT_F, l
+    jr nz, .right
 
-    bit 6, l
-    jp nz, Jump_001_48d7
+    bit BTN_UP_F, l
+    jp nz, .up
 
-    bit 7, l
-    jp nz, Jump_001_48f2
+    bit BTN_DN_F, l
+    jp nz, .down
 
-    bit 5, l
-    jr z, jr_001_4814
+    bit BTN_LT_F, l
+    jr z, .next
 
-    ld l, $e2
-    bit 2, a
-    jr nz, jr_001_48af
+.left
+    ld l, -30
+    bit BTN_SEL_F, a
+    jr nz, .moveBy30
 
     ld a, b
     or a
-    jr z, jr_001_484f
+    jr z, .jr_001_484f
 
     dec b
     dec h
     ld a, d
-    sub $28
+    sub 40
     ld d, a
-    jp Jump_001_4814
+    jp .next
 
 
-jr_001_484f:
+.jr_001_484f
     ld a, c
     or a
-    jr z, jr_001_485e
+    jr z, .jr_001_485e
 
-    ld b, $02
-    ld c, $00
+    ld b, 2
+    ld c, 0
     dec h
     ld de, $5c3c
-    jp Jump_001_4814
+    jp .next
 
 
-jr_001_485e:
-    ld l, $05
+.jr_001_485e
+    ld l, 5
 
-Jump_001_4860:
+.Jump_001_4860
     ldh a, [$c0]
     or a
-    jp z, Jump_001_4814
+    jp z, .next
 
     ldh a, [$c1]
     add l
     ldh [$c1], a
     ldh a, [$c0]
-    sub $06
-    jr nc, jr_001_4872
+    sub 6
+    jr nc, .jr_001_4872
 
     xor a
 
-jr_001_4872:
+.jr_001_4872
     ldh [$c0], a
-    jp Jump_001_47eb
+    jp SelectFile
 
 
-jr_sys_4877:
-    ld l, $1e
-    bit 2, a
-    jr nz, jr_001_48af
+.right
+    ld l, 30
+    bit BTN_SEL_F, a
+    jr nz, .moveBy30
 
     ld a, b
-    cp $02
-    jr z, jr_001_488b
+    cp 2
+    jr z, .jr_001_488b
 
     inc h
     inc b
     ld a, d
-    add $28
+    add 40
     ld d, a
-    jp Jump_001_4814
+    jp .next
 
 
-jr_001_488b:
+.jr_001_488b
     ld a, c
     or a
-    jr nz, jr_001_489a
+    jr nz, .jr_001_489a
 
-    ld b, $00
-    ld c, $01
+    ld b, 0
+    ld c, 1
     inc h
     ld de, $0c5c
-    jp Jump_001_4814
+    jp .next
 
 
-jr_001_489a:
-    ld l, $05
+.jr_001_489a
+    ld l, 5
 
-Jump_001_489c:
+.Jump_001_489c
     ldh a, [$c0]
-    add $06
-    cp $78
-    jp nc, Jump_001_47eb
+    add 6
+    cp 120
+    jp nc, SelectFile
 
     ldh [$c0], a
     ldh a, [$c1]
     sub l
     ldh [$c1], a
-    jp Jump_001_47eb
+    jp SelectFile
 
 
-jr_001_48af:
+.moveBy30
     push hl
     ldh a, [$c0]
     ld e, a
-    ld d, $00
-    ld hl, $001e
+    ld d, 0
+    ld hl, 30
     push hl
     trap MathDiv16
     pop de
     trap MathMul16
     ld a, l
     pop hl
-    jr jr_001_48c4
+    jr .jr_001_48c4
 
-jr_001_48c2:
+.jr_001_48c2
     ldh a, [$c0]
 
-jr_001_48c4:
+.jr_001_48c4
     add l
-    cp $c4
-    jr nc, jr_001_48d0
+    cp -60
+    jr nc, .underflow
 
-    cp $78
-    jr c, jr_001_48d2
+    cp 120
+    jr c, .moveBy30Done
 
     xor a
-    jr jr_001_48d2
+    jr .moveBy30Done
 
-jr_001_48d0:
-    sub $88
+.underflow
+    sub -120
 
-jr_001_48d2:
+.moveBy30Done
     ldh [$c0], a
-    jp Jump_001_47eb
+    jp SelectFile
 
 
-Jump_001_48d7:
-    ld l, $fa
-    bit 2, a
-    jr nz, jr_001_48c2
+.up
+    ld l, -6
+    bit BTN_SEL_F, a
+    jr nz, .jr_001_48c2
 
     ld a, c
     or a
-    jr nz, jr_001_48e6
+    jr nz, .jr_001_48e6
 
-    ld l, $03
-    jp Jump_001_4860
+    ld l, 3
+    jp .Jump_001_4860
 
 
-jr_001_48e6:
+.jr_001_48e6
     dec c
     ld a, h
-    sub $03
+    sub 3
     ld h, a
     ld a, e
-    sub $20
+    sub 32
     ld e, a
-    jp Jump_001_4814
+    jp .next
 
 
-Jump_001_48f2:
-    ld l, $06
-    bit 2, a
-    jr nz, jr_001_48c2
+.down
+    ld l, 6
+    bit BTN_SEL_F, a
+    jr nz, .jr_001_48c2
 
     ld a, c
-    cp $01
-    jr nz, jr_001_4902
+    cp 1
+    jr nz, .jr_001_4902
 
-    ld l, $03
-    jp Jump_001_489c
+    ld l, 3
+    jp .Jump_001_489c
 
 
-jr_001_4902:
+.jr_001_4902
     ld a, h
-    add $03
+    add 3
     ld h, a
     inc c
     ld a, e
-    add $20
+    add 32
     ld e, a
-    jp Jump_001_4814
+    jp .next
 
 
 Call_001_490e:
@@ -1547,7 +1553,7 @@ Call_001_4990:
     ret
 
 
-Call_001_4997:
+DrawMenu:
     ld a, $a4
     ld h, $04
     ld bc, $0101
@@ -1580,7 +1586,7 @@ Call_001_4997:
     ld de, $010f
     ld bc, $0e02
     trap $59
-    ld de, data_01_5d33
+    ld de, MenuActionTileData
     ld bc, $c400
     trap ExtractInit
     ld de, $8000
@@ -1815,7 +1821,7 @@ jr_001_4b1f:
 
 
 Call_001_4b33:
-    call Call_001_4997
+    call DrawMenu
 
 Call_001_4b36:
     ld hl, data_01_4f3b
@@ -2460,7 +2466,7 @@ TransferMessageBoxTileMap::
     db $03, $04, $cc, $cf, $d2, $d5, $d8, $db, $de, $e1, $e4, $e7, $ea, $ed, $f0, $f3, $f6, $f9, $04, $11
     db $1e, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $20
 
-data_01_5d33::
+MenuActionTileData::
     INCBIN "frag/system/actions.hz"
 
 Jump_001_5e9d::
