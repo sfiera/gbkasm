@@ -184,7 +184,7 @@ jr_sys_4170:
     jr nz, jr_001_419b
 
     ld hl, data_01_4fc1
-    call Call_001_4bd2
+    call DrawTplStr
     ld de, $0b10
     call Call_001_43e2
     jr nz, jr_001_419b
@@ -366,7 +366,7 @@ Call_001_4278:
 
 Jump_001_4283:
     ld hl, data_01_4f76
-    call Call_001_4bd2
+    call DrawTplStr
     ld a, $b4
     trap AwaitButton
     jp Jump_001_413a
@@ -386,7 +386,7 @@ Jump_001_4290:
 
 Jump_001_42a6:
     ld hl, data_01_4ca0
-    call Call_001_5033
+    call ShowTransferScreen
     call Call_001_4b5e
     xor a
     call Call_001_42f5
@@ -400,7 +400,7 @@ Jump_001_42b6:
     jr z, jr_001_42d7
 
     ld hl, data_01_4f85
-    call Call_001_4bd2
+    call DrawTplStr
     ld de, $0710
     call Call_001_43e2
     jp nz, Jump_001_43d4
@@ -413,7 +413,7 @@ Jump_001_42b6:
 
 jr_001_42d7:
     ld hl, data_01_4cbe
-    call Call_001_5033
+    call ShowTransferScreen
     call Call_001_4b5e
     call Call_001_501f
     jp nz, Jump_001_4491
@@ -444,7 +444,7 @@ Call_001_42f5:
     cp $01
     jr nz, jr_001_433d
 
-    ld de, data_01_5a8f
+    ld de, TransferringTileMap
     ld hl, data_01_4d06
     call Call_001_508f
     call Call_001_435f
@@ -456,13 +456,13 @@ Call_001_42f5:
     ld hl, $c500
     ld c, $ff
     trap $8f
-    ld de, data_01_5b4f
+    ld de, TransferDoneTileMap
     ld hl, data_01_4d1e
     xor a
     jr jr_001_434f
 
 jr_001_433d:
-    ld de, data_01_5c0f
+    ld de, TransferErrorTileMap
     ld hl, data_01_4d5f
     ld a, [$ce00]
     cp $04
@@ -560,7 +560,7 @@ jr_001_43b1:
     ld hl, data_01_4f66
 
 Jump_001_43b4:
-    call Call_001_4bd2
+    call DrawTplStr
     ld a, $b4
     trap AwaitButton
     jp Jump_001_413a
@@ -587,7 +587,7 @@ jr_001_43d4:
 
 
 Call_001_43dc:
-    call Call_001_4bd2
+    call DrawTplStr
     ld de, $0710
 
 Call_001_43e2:
@@ -932,7 +932,7 @@ Call_001_4632:
 
 jr_001_4672:
     ld hl, data_01_4cd8
-    ld de, data_01_5a8f
+    ld de, TransferringTileMap
     call Call_001_508f
     call Call_001_426d
     call Call_001_43a8
@@ -941,7 +941,7 @@ jr_001_4672:
 
     push bc
     ld hl, data_01_4dc6
-    call Call_001_4bd2
+    call DrawTplStr
     ld de, $0c10
     call Call_001_43e2
     jp nz, Jump_001_4737
@@ -1045,7 +1045,7 @@ jr_001_4721:
     ld a, $02
     call Call_001_4376
     ld hl, data_01_4cef
-    ld de, data_01_5b4f
+    ld de, TransferDoneTileMap
     xor a
     call Call_001_4752
     xor a
@@ -1071,7 +1071,7 @@ jr_001_4741:
     pop hl
 
 jr_001_4749:
-    ld de, data_01_5c0f
+    ld de, TransferErrorTileMap
     pop af
     call Call_001_4752
     scf
@@ -1819,7 +1819,7 @@ Call_001_4b33:
 
 Call_001_4b36:
     ld hl, data_01_4f3b
-    call Call_001_4bd2
+    call DrawTplStr
     ld hl, $090e
     trap $bd
     xor a
@@ -1879,6 +1879,17 @@ jr_sys_4b85:
     ret
 
 
+DEF TPL_EXTSTR EQU $fc
+DEF TPL_FD EQU $fd
+DEF TPL_FE EQU $fe
+DEF TPL_END EQU $ff
+
+MACRO extstr
+    db TPL_EXTSTR
+    dw Str\1
+ENDM
+
+
 Call_001_4b88:
     push bc
     push de
@@ -1891,7 +1902,7 @@ Call_001_4b88:
     ld a, [hl+]
     ld h, [hl]
     ld l, a
-    call Call_001_4bd2
+    call DrawTplStr
     pop hl
     pop de
     pop bc
@@ -1910,16 +1921,16 @@ Call_001_4b9d:
 jr_001_4ba5:
     push hl
     ld hl, data_01_4c15
-    call Call_001_4bd2
+    call DrawTplStr
     ld a, $10
     call Call_001_4b9d
     ld a, " "
     trap DrawChar
     trap DrawString
     pop hl
-    jr jr_001_4be1
+    jr DrawTplStr.next
 
-jr_001_4bba:
+DrawExtStr:
     ld a, [hl+]
     push hl
     ld h, [hl]
@@ -1927,56 +1938,54 @@ jr_001_4bba:
     trap DrawString
     pop hl
     inc hl
-    jr jr_001_4be1
+    jr DrawTplStr.next
+
 
 jr_001_4bc4:
     push hl
     ld hl, data_01_4c02
-    call Call_001_4bd2
+    call DrawTplStr
     pop hl
-    jr jr_001_4bd2
+    jr DrawTplStr
+
 
 jr_001_4bce:
     ld a, $0e
     trap DrawCtrlChar
+    ; fall through
 
-Call_001_4bd2:
-jr_001_4bd2:
+
+DrawTplStr:
     ld a, [hl+]
-    cp $ff
+    cp TPL_END
     ret z
 
-    cp $fe
+    cp TPL_FE
     jr z, jr_001_4bc4
 
-    cp $fd
+    cp TPL_FD
     jr z, jr_001_4ba5
 
     call Call_001_4b9d
 
-jr_001_4be1:
+.next
     ld a, [hl+]
     or a
     jr z, jr_001_4bce
 
-    cp $fc
-    jr z, jr_001_4bba
+    cp TPL_EXTSTR
+    jr z, DrawExtStr
 
     sub $e0
-    jr c, jr_001_4bf1
+    jr c, .drawInlineStr
 
     trap $c8
-    jr jr_001_4be1
+    jr .next
 
-jr_001_4bf1:
+.drawInlineStr
     dec hl
     trap DrawString
-    jr jr_001_4be1
-
-MACRO extstr
-    db $fc
-    dw Str\1
-ENDM
+    jr .next
 
 data_01_4bf6::
     dw data_01_4e28
@@ -1992,12 +2001,14 @@ data_01_4c02::
     extstr File
     dh "は\0"
     db $ee, $00, $08
-    db $ee, $00, $ff
+    db $ee, $00
+    db TPL_END
 
 data_01_4c15::
     db $08
     dk "«　　　せんたくしている\0"
-    db $ee, $00, $ff
+    db $ee, $00
+    db TPL_END
 
 StrFile:
     dh "ファイル«\0"
@@ -2023,7 +2034,8 @@ data_01_4ca0::
     dk "\0"
     dk $10, "Ｂ\0"
     extstr ButtonOshite
-    db $f0, $00, $ff
+    db $f0, $00
+    db TPL_END
 
 data_01_4cbe::
     db $08
@@ -2033,7 +2045,7 @@ data_01_4cbe::
     db $10, "Ａ\0"
     extstr ButtonOshite
     db $f0, $00
-    db $ff
+    db TPL_END
 
 data_01_4cd8::
     db $00
@@ -2044,7 +2056,7 @@ data_01_4cd8::
     db $f0, $00
     db $10
     db $f0, $00
-    db $ff
+    db TPL_END
 
 data_01_4cef::
     db $00
@@ -2055,7 +2067,7 @@ data_01_4cef::
     db $f0, $00
     db $10
     db $f0, $00
-    db $ff
+    db TPL_END
 
 data_01_4d06::
     db $00
@@ -2066,7 +2078,7 @@ data_01_4d06::
     db $f0, $00
     db $10
     db $f0, $00
-    db $ff
+    db TPL_END
 
 data_01_4d1e::
     db $00
@@ -2077,7 +2089,7 @@ data_01_4d1e::
     db $f0, $00
     db $10
     db $f0, $00
-    db $ff
+    db TPL_END
 
 data_01_4d36::
     db $00
@@ -2089,7 +2101,8 @@ data_01_4d36::
     extstr AreaTarimasen
     db $f0, $00
     dk $10, "かくほして　もらってください\0"
-    db $f0, $00, $ff
+    db $f0, $00
+    db TPL_END
 
 data_01_4d5f::
     db $00
@@ -2100,7 +2113,7 @@ data_01_4d5f::
     db $10
     dk "もういちどやりなおしてください　\0"
     dk "\0"
-    db $ff
+    db TPL_END
 
 data_01_4d8d::
     db $00
@@ -2114,7 +2127,7 @@ data_01_4d8d::
     db $10
     dk "じゅしんじょうたいでありません　\0"
     dk "\0"
-    db $ff
+    db TPL_END
 
 data_01_4dc6::
     db $00
@@ -2127,12 +2140,12 @@ data_01_4dc6::
     dk $10, "うわがきしますか？\0"
     extstr HaiIie
     db $f0, $00
-    db $ff
+    db TPL_END
 
 data_01_4dfa::
     db $10
     db $f0, $00
-    db $ff
+    db TPL_END
 
 data_01_4dfe::
     db $00
@@ -2147,15 +2160,14 @@ data_01_4dfe::
     extstr AreaKakuho
     dh "してください\0"
     dh "\0"
-    db $ff
+    db TPL_END
 
 data_01_4e28:
-    db $00, $e3
-    dk "＜　スタート　＞\0"
-    db $ee, $00, $fd
+    db $00, $e3, "＜　スタート　＞\0", $ee, $00
+    db TPL_FD
     dh "をじっこうします　»\0"
     dk "\0"
-    db $ff
+    db TPL_END
 
 data_01_4e44:
     db $00
@@ -2163,10 +2175,10 @@ data_01_4e44:
     extstr File
     dh "　じょうほう＞　\0"
     dk "\0"
-    db $fd
+    db TPL_FD
     dh "のじょうほうです　\0"
     dk "\0"
-    db $ff
+    db TPL_END
 
 data_01_4e65:
     db $00
@@ -2180,7 +2192,8 @@ data_01_4e65:
     dh "と　\0"
     dk "\0"
     dk $10, "«　　ばしょをいれかえます\0"
-    db $ee, $00, $ff
+    db $ee, $00
+    db TPL_END
 
 data_01_4e9b:
     db $00
@@ -2188,10 +2201,10 @@ data_01_4e9b:
     extstr File
     dh "そうしん　＞　\0"
     dh "\0"
-    db $fd
+    db TPL_FD
     dh "をそうしんします　\0"
     dk "\0"
-    db $ff
+    db TPL_END
 
 data_01_4eb9:
     db $00
@@ -2205,7 +2218,7 @@ data_01_4eb9:
     extstr File
     dh "を　うけとります　\0"
     dk "\0"
-    db $ff
+    db TPL_END
 
 data_01_4eef:
     db $00
@@ -2213,10 +2226,10 @@ data_01_4eef:
     extstr File
     dh "さくじょ　＞　\0"
     dk "\0"
-    db $fd
+    db TPL_FD
     dh "をさくじょします　\0"
     dk "\0"
-    db $ff
+    db TPL_END
 
 data_01_4f0f::
     db $00
@@ -2226,7 +2239,8 @@ data_01_4f0f::
     db $ee, $00, $10
     db $e4
     extstr HaiIie
-    db $ee, $00, $ff
+    db $ee, $00
+    db TPL_END
 
 StrSpaceYorishiiDesuKau:
     dk "　"
@@ -2244,19 +2258,21 @@ data_01_4f3b::
     extstr File
     dh "　　　こ\0"
     dk "\0"
-    db $ff
+    db TPL_END
 
 data_01_4f66::
-    db $fe, $10, $e2
+    db TPL_FE, $10, $e2
     dk "さくじょ\0"
     extstr Dekimasen
-    db $ee, $00, $ff
+    db $ee, $00
+    db TPL_END
 
 data_01_4f76::
-    db $fe, $10, $e2
+    db TPL_FE, $10, $e2
     dk "そうしん\0"
     extstr Dekimasen
-    db $ee, $00, $ff
+    db $ee, $00
+    db TPL_END
 
 data_01_4f85::
     db $00
@@ -2268,13 +2284,15 @@ data_01_4f85::
     db $ee, $00, $10
     db $e4
     extstr HaiIie
-    db $ee, $00, $ff
+    db $ee, $00
+    db TPL_END
 
 data_01_4fb1::
-    db $fe, $10, $e2
+    db TPL_FE, $10, $e2
     dk "じっこう\0"
     extstr Dekimasen
-    db $ee, $00, $ff
+    db $ee, $00
+    db TPL_END
 
 data_01_4fc1::
     db $00
@@ -2287,7 +2305,8 @@ data_01_4fc1::
     db $10
     extstr YoroshiiDesuKa
     extstr HaiIie
-    db $00, $ff
+    db "\0"
+    db TPL_END
 
 Call_001_4fec:
     push bc
@@ -2327,7 +2346,7 @@ jr_001_5013:
 
 Call_001_5019:
     ld hl, data_01_4cbe
-    call Call_001_5033
+    call ShowTransferScreen
 
 Call_001_501f:
 jr_001_501f:
@@ -2341,12 +2360,12 @@ jr_001_501f:
 
     push af
     ld hl, data_01_4ca0
-    call Call_001_4bd2
+    call DrawTplStr
     pop af
     ret
 
 
-Call_001_5033:
+ShowTransferScreen:
     push hl
     ld a, $a4
     ld h, $00
@@ -2362,8 +2381,7 @@ Call_001_5033:
     ld de, $0310
     trap $c9
 
-
-    ld de, data_01_50b2
+    ld de, TransferTileSet
     ld bc, $c400
     trap ExtractInit
     ld de, $9000
@@ -2377,12 +2395,12 @@ Call_001_5033:
     ld e, $00
     trap MemSet
     ld hl, $99a0
-    ld de, data_01_5ccf
+    ld de, TransferMessageBoxTileMap
     ld b, $05
     ld c, $14
     call Call_001_509b
     pop hl
-    ld de, data_01_59cf
+    ld de, TransferPrepTileMap
     call Call_001_508f
     ld a, $01
     trap LCDEnable
@@ -2391,7 +2409,7 @@ Call_001_5033:
 
 Call_001_508f:
     push de
-    call Call_001_4bd2
+    call DrawTplStr
     pop de
     ld hl, $9802
     ld b, $0c
@@ -2420,22 +2438,22 @@ jr_001_509b:
     ret
 
 
-data_01_50b2::
+TransferTileSet::
     INCBIN "frag/system/transfer.hz"
 
-data_01_59cf:
+TransferPrepTileMap:
     INCBIN "gfx/system/transfer.map", 0, 192
 
-data_01_5a8f::
+TransferringTileMap::
     INCBIN "gfx/system/transfer.map", 192, 192
 
-data_01_5b4f::
+TransferDoneTileMap::
     INCBIN "gfx/system/transfer.map", 384, 192
 
-data_01_5c0f::
+TransferErrorTileMap::
     INCBIN "gfx/system/transfer.map", 576, 192
 
-data_01_5ccf::
+TransferMessageBoxTileMap::
     db $00, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $02
     db $03, $04, $ca, $cd, $d0, $d3, $d6, $d9, $dc, $df, $e2, $e5, $e8, $eb, $ee, $f1, $f4, $f7, $04, $11
     db $03, $04, $cb, $ce, $d1, $d4, $d7, $da, $dd, $e0, $e3, $e6, $e9, $ec, $ef, $f2, $f5, $f8, $04, $11
