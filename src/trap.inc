@@ -87,7 +87,7 @@ DEF InputButtons      EQU $d8
 DEF AwaitButton       EQU $dc
 
 DEF KissClearAll      EQU $e0
-DEF FileRead          EQU $e4
+DEF CRAMRead          EQU $e4
 DEF CRAMWrite         EQU $e5  ; [de, de+bc) → [GBtoSRAM(hl), GBtoSRAM(hl+bc))
 DEF FileNext          EQU $e8
 DEF FileWrite         EQU $e9

@@ -113,7 +113,7 @@ traps2::
     dw trap_e1_4456         ; trap $e1
     dw trap_e2_454a         ; trap $e2
     dw trap_e3_4566         ; trap $e3
-    dw TrapFileRead         ; trap $e4
+    dw TrapCRAMRead         ; trap $e4
     dw TrapCRAMWrite        ; trap $e5
     dw trap_e6_45da         ; trap $e6
     dw trap_e7_47b7         ; trap $e7
@@ -881,7 +881,7 @@ trap_e3_4566::
     jp RestoreRAMBankAndLock
 
 
-TrapFileRead::
+TrapCRAMRead::
     ldh a, [hRAMBank]
     push af
     push hl
@@ -2210,7 +2210,7 @@ jr_002_4adf:
     ld de, $ff46
     ld bc, $000a
     push bc
-    call TrapFileRead
+    call TrapCRAMRead
     pop bc
     pop hl
     add hl, bc
@@ -2407,7 +2407,7 @@ trap_f0_4bed::
     ld hl, sp+$06
     ld de, $ff46
     ld bc, $000a
-    call TrapFileRead
+    call TrapCRAMRead
     pop hl
     push hl
     ld a, [hl+]
@@ -2542,7 +2542,7 @@ trap_eb_4c9a::
     pop hl
     push bc
     ldh [$97], a
-    call TrapFileRead
+    call TrapCRAMRead
     pop bc
     pop hl
     ret

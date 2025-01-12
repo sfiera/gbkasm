@@ -144,7 +144,7 @@ call_0188:
     ld de, $525f
     ld hl, sp+$00
     ld bc, $0004
-    trap FileRead
+    trap CRAMRead
     pop de
     pop hl
     xor a

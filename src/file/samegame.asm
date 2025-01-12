@@ -192,7 +192,7 @@ ShowHiScore:
     ld hl, $cc40
     ld de, $ff46
     ld bc, $000a
-    trap FileRead
+    trap CRAMRead
     pop de
     pop hl
     ld a, $0a

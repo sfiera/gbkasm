@@ -1038,7 +1038,7 @@ Jump_000_0500:
     ld de, $0000
     ld hl, $c654
     ld bc, $0002
-    trap FileRead
+    trap CRAMRead
     ld a, [$c654]
     cp $02
     jr c, jr_000_0525

@@ -1261,7 +1261,7 @@ call_0b27:
     push hl
     ld de, $ff46
     ld bc, $000a
-    trap FileRead
+    trap CRAMRead
     pop hl
     ldx de, data_0b75
     ld b, $0a

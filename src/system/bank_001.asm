@@ -113,7 +113,7 @@ UpdateKissMenu:
     ld hl, $ffc0
     ld de, $ff44
     ld bc, $0001
-    trap FileRead
+    trap CRAMRead
     ld a, $ff
     ldh [$c2], a
     xor a
@@ -317,14 +317,14 @@ Call_001_4235:
     push de
     ld d, $fe
     ld bc, $0004
-    trap FileRead
+    trap CRAMRead
     pop de
     ld hl, sp+$04
     push de
     ld e, d
     ld d, $fe
     ld bc, $0004
-    trap FileRead
+    trap CRAMRead
     pop de
     ld hl, sp+$04
     push de
@@ -656,7 +656,7 @@ MenuInfo:
     ld hl, $c400
     ld de, $ff46
     ld bc, $000a
-    trap FileRead
+    trap CRAMRead
     xor a
     ld [$c40a], a
     ld hl, $c400
@@ -669,7 +669,7 @@ MenuInfo:
     ld hl, sp+$00
     ld de, $ff40
     ld bc, $0004
-    trap FileRead
+    trap CRAMRead
     pop de
     pop bc
     ld hl, $c400
@@ -3444,7 +3444,7 @@ Call_001_66e1:
     ld bc, $003a
     push hl
     push bc
-    trap FileRead
+    trap CRAMRead
     pop bc
     pop hl
     ret
@@ -3967,7 +3967,7 @@ trap_71_6e63::
     ; Read (e)th index entry to scratch space.
     ld d, $fe
     ld bc, $0004
-    trap FileRead
+    trap CRAMRead
 
     ; Pop saved hl and index entry. After this:
     ; * bc contains original value of hl.
@@ -4834,7 +4834,7 @@ trap_6e_71e6::
     ld de, $ff45
     ld bc, $0001
     ld hl, sp+$00
-    trap FileRead
+    trap CRAMRead
     pop hl
     bit 0, l
     ret z
@@ -4850,7 +4850,7 @@ trap_6e_71e6::
     ld hl, sp+$00
     ld de, $ff3c
     ld bc, $0004
-    trap FileRead
+    trap CRAMRead
     pop de
     pop bc
     ld a, d

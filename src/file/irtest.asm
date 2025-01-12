@@ -38,7 +38,7 @@ Main:
     ld hl, VarLocalName
     ld de, $ff46  ; $ff → profile; $46 → player name
     ld bc, NAME_LEN
-    trap FileRead
+    trap CRAMRead
 
     xor a
     trap DrawInit

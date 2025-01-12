@@ -466,7 +466,7 @@ CalcFileCRC::
     ld d, h
     ld e, l
     ld hl, VarTmp
-    trap FileRead
+    trap CRAMRead
     pop de
     pop bc
 
@@ -495,7 +495,7 @@ CalcFileCRC::
     ld d, h
     ld e, l
     ld hl, VarTmp
-    trap FileRead
+    trap CRAMRead
     pop de
     pop bc
 
