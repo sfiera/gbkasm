@@ -117,7 +117,7 @@ Call_001_6627::
     ret
 
 
-Call_001_6651::
+Call_001_6651:
     ld hl, $c600
     ld bc, $0099
     ld e, $20
@@ -125,7 +125,7 @@ Call_001_6651::
     ret
 
 
-trap_51_665c::
+trap_51_665c:
     ld l, e
     ld h, d
     push hl
@@ -366,7 +366,7 @@ Call_001_67b5:
     ret
 
 
-data_01_67c2::
+data_01_67c2:
     dk $04, $01, "このカートリッジにあなたの\0"
     dh $04, $02, "じょうほうをとうろくします\0"
     dh $02, $04, "なまえ:\0"
@@ -374,7 +374,7 @@ data_01_67c2::
     dh $03, $06, "メモ:\0"
     db $ff
 
-data_01_67fe::
+data_01_67fe:
     db $04, $00, $0a
     db $05, $0a, $0c
     db $06, $16, $0c
@@ -382,16 +382,16 @@ data_01_67fe::
     db $08, $2e, $0c
     db $ff
 
-data_01_680e::
+data_01_680e:
     dk $03, $0a, "このじょうほうでいいですか？\0"
     db $ff
 
-data_01_6824::
+data_01_6824:
     dk $01, $0e, "このじょうほうをかえると,すべての\0"
     dh $01, $0f, "ファイルがきえますが、いいですか？\0"
     db $ff
 
-data_01_6855::
+data_01_6855:
     dh "はい　\0"
     dh "いいえ\0"
 
@@ -450,7 +450,7 @@ jr_001_688b:
 
 SECTION "Kiss System 2", ROMX
 
-trap_60_6d2f::
+trap_60_6d2f:
     ld b, [hl]
     inc hl
     push hl
@@ -482,13 +482,13 @@ jr_001_6d3b:
 
     push hl
 
-Jump_001_6d4f::
+Jump_001_6d4f:
     pop hl
     ldh a, [$a1]
     ret
 
 
-TrapExtractInit::
+TrapExtractInit:
     ld hl, VarExtractAddr
     ld [hl], e
     inc hl
@@ -517,7 +517,7 @@ jr_001_6d6d:
     ret
 
 
-TrapExtractData::
+TrapExtractData:
     push hl
     push de
 
@@ -627,7 +627,7 @@ jr_001_6dde:
     ld a, [hl+]
     jr jr_001_6dd0
 
-trap_64_6de4::
+trap_64_6de4:
     trap $ed
     ret nc
 
@@ -693,7 +693,7 @@ jr_001_6e2b:
     ret
 
 
-trap_65_6e2e::
+trap_65_6e2e:
     trap KissClearAll
     ld hl, $4000
     ld de, $fe00
@@ -738,7 +738,7 @@ jr_001_6e36:
     ret
 
 
-trap_71_6e63::
+trap_71_6e63:
     ; Create 4 bytes of scratch space on the stack.
     ; Save hl and set it to the scratch space addr.
     add sp, -$04
@@ -773,7 +773,7 @@ trap_71_6e63::
     ret
 
 
-.noFile::
+.noFile:
     ld l, c
     ld h, b
     xor a
@@ -789,7 +789,7 @@ jr_001_6e86:
     ld b, a
     jr nz, jr_001_6e8e
 
-trap_70_6e8b::
+trap_70_6e8b:
     ld c, $00
     ld b, c
 
@@ -997,7 +997,7 @@ jr_001_6f62:
     jp hl
 
 
-trap_66_6f66::
+trap_66_6f66:
     push bc
 
 jr_001_6f67:
@@ -1024,7 +1024,7 @@ jr_001_6f72:
     ret
 
 
-trap_67_6f7a::
+trap_67_6f7a:
     ld a, [de]
     cp [hl]
     jr nz, jr_sys_6f89
@@ -1049,7 +1049,7 @@ jr_sys_6f89:
     ret
 
 
-trap_68_6f8f::
+trap_68_6f8f:
     ld d, h
     ld e, l
     ld hl, $0000
@@ -1063,7 +1063,7 @@ jr_001_6f94:
     inc hl
     jr jr_001_6f94
 
-TrapDrawString::
+TrapDrawString:
 .next
     ldh a, [hDrawMode]
     ld e, a
@@ -1118,7 +1118,7 @@ TrapDrawString::
     trap DrawCtrlChar
     jr .next
 
-TrapDrawStringList::
+TrapDrawStringList:
     ld a, [hl]
     or a
     ret z
@@ -1134,7 +1134,7 @@ TrapDrawStringList::
     inc e
     jr TrapDrawStringList
 
-TrapFileSearch::
+TrapFileSearch:
     xor a
     ld b, a
     ld [hl+], a
@@ -1315,7 +1315,7 @@ jr_001_70af:
     ret
 
 
-trap_6d_70ba::
+trap_6d_70ba:
     ld a, [hl+]
     or [hl]
     dec hl
@@ -1433,7 +1433,7 @@ Call_001_7129:
     ret
 
 
-trap_6f_7138::
+trap_6f_7138:
     ldh a, [hROMBank]
     ld e, a
     ldh a, [hRAMBank]
@@ -1449,7 +1449,7 @@ trap_6f_7138::
     ret
 
 
-trap_6c_714d::
+trap_6c_714d:
     ld a, [hl+]
     or [hl]
     jr z, jr_001_7158
@@ -1607,7 +1607,7 @@ jr_001_71d4:
     ret
 
 
-trap_6e_71e6::
+trap_6e_71e6:
     trap $e1
     ret c
 
@@ -1648,7 +1648,7 @@ trap_6e_71e6::
     ret
 
 
-trap_61_7222::
+trap_61_7222:
     call DoKissTitleScreen
 
 jr_001_7225:
@@ -1684,7 +1684,7 @@ DoKissTitleScreen:
     ret
 
 
-trap_50_7260::
+trap_50_7260:
     ld d, a
     push hl
     ld hl, data_01_72d2
@@ -1803,11 +1803,11 @@ Call_001_72cf:
     ret
 
 
-data_01_72d2::
+data_01_72d2:
     db $00, $c7, $b2, $50, $00, $38, $33, $5d, $00, $8f, $e7, $72, $10, $06, $28, $40
     db $10, $09, $70, $7f, $ff
 
-gfxGBKissLogo::
+gfxGBKissLogo:
     INCBIN "frag/system/logo.hz"
 
 TrapJumpViaTable::
@@ -1912,7 +1912,7 @@ jr_001_7726:
     ld b, $41
     jr jr_001_7753
 
-trap_52_7730::
+trap_52_7730:
     ld a, d
     xor h
     rla
@@ -1960,10 +1960,10 @@ jr_001_7753:
     ret
 
 
-data_01_7762::
+data_01_7762:
     db $10, $60, $80, $90, $01, $11, $40, $50, $20, $30
 
-TrapDrawLayout::
+TrapDrawLayout:
     ld a, [hl+]
     bit 7, a
     ret nz
@@ -1977,7 +1977,7 @@ TrapDrawLayout::
     trap DrawString
     jr TrapDrawLayout
 
-TrapInputCursorMenu::
+TrapInputCursorMenu:
     add sp, -$0a
     ld hl, sp+$00
     ld [hl+], a
@@ -2023,7 +2023,7 @@ jr_001_77a2:
     ld e, [hl]
     jr jr_001_77f9
 
-trap_5e_77ae::
+trap_5e_77ae:
     push hl
     push de
     push hl
@@ -2107,7 +2107,7 @@ jr_001_77f9:
     jp hl
 
 
-code_01_780e::
+code_01_780e:
     jr nc, jr_001_7813
 
     ld hl, sp+$00
@@ -2167,7 +2167,7 @@ jr_001_783d:
     ret
 
 
-trap_53_784d::
+trap_53_784d:
     ld hl, $ffab
     xor a
     ld [hl+], a
@@ -2186,7 +2186,7 @@ jr_001_785a:
     ret
 
 
-trap_54_7863::
+trap_54_7863:
     ld a, d
     ldh [$aa], a
     push de
@@ -2273,7 +2273,7 @@ jr_001_787d:
     ret
 
 
-trap_56_78f0::
+trap_56_78f0:
     push hl
     push de
     push bc
@@ -2340,7 +2340,7 @@ jr_001_7914:
     ret
 
 
-trap_55_793f::
+trap_55_793f:
     push hl
     ld hl, $ffa2
     ld [hl], d
@@ -2911,17 +2911,17 @@ Call_001_7bd2:
     ret
 
 
-kbdTable::
+kbdTable:
     dw kbdHiragana
     dw kbdKatakana
     dw kbdNumeric
     dw kbdAlpha
     dw kbdMemo
 
-kbdMemo::
+kbdMemo:
     dp $05
 
-kbdNumeric::
+kbdNumeric:
     dp $05
     dp "01234 56789 "
     dp " ()<> ｢｣[]@ "
@@ -2929,7 +2929,7 @@ kbdNumeric::
     dp ",.¥$= :;^&| "
     dp "¯\\_ A BCDEF "
 
-kbdAlpha::
+kbdAlpha:
     dp $06
     dp "ABCDE FGHIJ "
     dp "KLMNO PQRST "
@@ -2938,7 +2938,7 @@ kbdAlpha::
     dp "klmno pqrst "
     dp "uvwxy z-'() "
 
-kbdHiragana::
+kbdHiragana:
     dp $09
     dp "あいうえお　かきくけこ　"
     dp "さしすせそ　たちつてと　"
@@ -2950,7 +2950,7 @@ kbdHiragana::
     dp "ぱぴぷぺぽ　ぁぃぅぇぉ　"
     dp "ゃゅょっ　　ー、。！？　"
 
-kbdKatakana::
+kbdKatakana:
     dp $09
     dp "アイウエオ　カキクケコ　"
     dp "サシスセソ　タチツテト　"
@@ -2962,7 +2962,7 @@ kbdKatakana::
     dp "パピプペポ　ァィゥェォ　"
     dp "ャュョッ　　ー、。！？　"
 
-trap_5a_7d47::
+trap_5a_7d47:
     push bc
 
 jr_001_7d48:
@@ -2988,7 +2988,7 @@ jr_001_7d5e:
     ret
 
 
-trap_5b_7d60::
+trap_5b_7d60:
     push hl
 
 jr_001_7d61:
@@ -3065,7 +3065,7 @@ jr_001_7d90:
     ret
 
 
-TrapTileLoadText::
+TrapTileLoadText:
     push de
     push bc
     ld b, e
@@ -3097,7 +3097,7 @@ Call_001_7dc0:
     ret
 
 
-trap_4b_7dcc::
+trap_4b_7dcc:
     ld b, d
     ld hl, $c3e0
     push hl
@@ -3123,7 +3123,7 @@ trap_4b_7dcc::
     ret
 
 
-trap_57_7df1::
+trap_57_7df1:
     ld h, e
     xor a
     srl h
@@ -3140,7 +3140,7 @@ trap_57_7df1::
     ret
 
 
-TrapDrawBox::
+TrapDrawBox:
     call trap_57_7df1
     ld a, $79
     ld de, $7778
@@ -3193,7 +3193,7 @@ DrawRow:
     ret
 
 
-trap_59_7e43::
+trap_59_7e43:
     push af
     push hl
     add sp, -$20
@@ -3239,7 +3239,7 @@ jr_001_7e55:
     ret
 
 
-trap_4d_7e77::
+trap_4d_7e77:
     push hl
     push de
     push bc
@@ -3268,7 +3268,7 @@ jr_001_7e8b:
     ret
 
 
-trap_4f_7e90::
+trap_4f_7e90:
     push hl
     push bc
     ld c, $00
@@ -3377,7 +3377,7 @@ jr_001_7efc:
     ld a, $df
     jr jr_001_7ea4
 
-trap_4e_7f04::
+trap_4e_7f04:
     push bc
     ld c, $00
 
@@ -3422,7 +3422,7 @@ Call_001_7f24:
     ld c, $04
     ld hl, data_01_7fb0
 
-TrapTileLoad::
+TrapTileLoad:
     ld a, e
     push af
     push hl
@@ -3480,11 +3480,11 @@ jr_001_7f52:
     ret
 
 
-data_01_7f70::
+data_01_7f70:
     INCBIN "gfx/system/page.2bpp"
 
-data_01_7fb0::
+data_01_7fb0:
     INCBIN "gfx/system/pencil.2bpp"
 
-data_01_7ff0::
+data_01_7ff0:
     INCBIN "gfx/system/reticle.2bpp"

@@ -142,7 +142,7 @@ traps2::
     dw trap_fe_4e7d         ; trap $fe
     dw trap_ff_4e36         ; trap $ff
 
-trap_bc_4100::
+trap_bc_4100:
     ld d, a
     push hl
     ld hl, data_02_4171
@@ -252,14 +252,14 @@ jr_002_4167:
     ret
 
 
-data_02_4171::
+data_02_4171:
     db $08, $00, $8e, $6f, $10, $0c, $8e, $77, $10, $78, $58, $78, $ff
 
-trap_none_2::
+trap_none_2:
     ret
 
 
-TrapTimerSet::
+TrapTimerSet:
     ldh a, [rLCDC]
     bit 7, a
     ret z
@@ -284,7 +284,7 @@ jr_002_4184:
     ret
 
 
-trap_cc_419f::
+trap_cc_419f:
     push bc
     push de
     push hl
@@ -303,7 +303,7 @@ jr_002_41aa:
     ret
 
 
-trap_f8_41b0::
+trap_f8_41b0:
     cp $2d
     scf
     ret z
@@ -401,16 +401,16 @@ jr_002_4227:
     ret
 
 
-data_02_4231::
+data_02_4231:
     db $8a, $df, $fe, $ca, $74, $20, $01, $35, $8a, $df, $fe, $ca, $74, $20, $01, $35
 
-data_02_4241::
+data_02_4241:
     db $74, $9e, $44, $94, $44, $9e, $44, $a8, $54, $94, $54, $9e, $54, $a8, $64, $94
 
-data_02_4251::
+data_02_4251:
     db $64, $9e, $64, $a8, $74, $94, $74, $a8
 
-trap_f9_4259::
+trap_f9_4259:
     push bc
     push hl
     call Call_002_426e
@@ -451,7 +451,7 @@ jr_002_427a:
     inc hl
     jr jr_002_427a
 
-data_02_4283::
+data_02_4283:
     dk "Ｅ", $32, $36
     dk "Ｆ", $32, $37
     dk "Ｇ", $32, $38
@@ -498,7 +498,7 @@ data_02_4283::
     dk "８", $38, $30
     dk "９", $39, $30
 
-data_02_430a::
+data_02_430a:
     dk "ア", $31, $31
     dk "イ", $31, $32
     dk "ウ", $31, $33
@@ -601,7 +601,7 @@ data_02_430a::
     dk "０", $30, $30
     db $00
 
-TrapKissClearAll::
+TrapKissClearAll:
     ldh a, [hRAMBank]
     push af
     call KissClearAllProc
@@ -631,7 +631,7 @@ UnlockCRAM:
     ret
 
 
-trap_e1_4456::
+trap_e1_4456:
     ldh a, [hRAMBank]
     push af
     call Call_002_447b
@@ -774,7 +774,7 @@ jr_002_44e7:
     ret
 
 
-KissClearAllProc::
+KissClearAllProc:
     call LocateOwnerRegion
     call UnlockCRAM
     push hl
@@ -837,7 +837,7 @@ CreateRegion:
     ret
 
 
-SimpleMemSet::
+SimpleMemSet:
     ld [hl+], a
     dec b
     jr nz, SimpleMemSet
@@ -845,7 +845,7 @@ SimpleMemSet::
     ret
 
 
-trap_e2_454a::
+trap_e2_454a:
     ldh a, [hRAMBank]
     push af
     call Call_002_4556
@@ -868,7 +868,7 @@ Call_002_4556:
     ret
 
 
-trap_e3_4566::
+trap_e3_4566:
     ldh a, [hRAMBank]
     push af
     push hl
@@ -881,7 +881,7 @@ trap_e3_4566::
     jp RestoreRAMBankAndLock
 
 
-TrapCRAMRead::
+TrapCRAMRead:
     ldh a, [hRAMBank]
     push af
     push hl
@@ -896,7 +896,7 @@ TrapCRAMRead::
 ; $0000-$7fff: selects RAM bank for de and puts mapped address in hl
 ; $fe00-$feff: select index RAM bank and return something
 ; $ff00-$ffff: select owner RAM bank and return (addr + e)
-TrapAddrGBToCRAM::
+TrapAddrGBToCRAM:
     ld a, d
     cp $ff
     jr z, LocateOwnerRegionOffset
@@ -961,7 +961,7 @@ LocateIndexRegionOffset:
     ret
 
 
-TrapCRAMWrite::
+TrapCRAMWrite:
     ldh a, [hRAMBank]
     push af
     push hl
@@ -972,7 +972,7 @@ TrapCRAMWrite::
     jp RestoreRAMBankAndLock
 
 
-trap_e6_45da::
+trap_e6_45da:
     ld a, h
     or l
     jr nz, jr_002_45e1
@@ -1408,7 +1408,7 @@ Call_002_47af:
     ret
 
 
-trap_e7_47b7::
+trap_e7_47b7:
     ld a, h
     or l
     jp z, Jump_002_46f4
@@ -1593,7 +1593,7 @@ Call_002_4877:
     ret
 
 
-trap_f2_4881::
+trap_f2_4881:
     push hl
     call Call_002_4889
     ld e, l
@@ -1686,7 +1686,7 @@ Call_002_48dc:
     ret
 
 
-TrapFileDelete::
+TrapFileDelete:
     call Call_002_48dc
     ret c
 
@@ -1737,7 +1737,7 @@ jr_002_491e:
     jp RestoreRAMBankAndLock
 
 
-trap_f1_4926::
+trap_f1_4926:
     or a
     ldh a, [hRAMBank]
     push af
@@ -1796,7 +1796,7 @@ jr_002_495d:
     jp RestoreRAMBank
 
 
-trap_8f_496e::
+trap_8f_496e:
     push hl
     ld a, [hl+]
     ld e, a
@@ -1891,7 +1891,7 @@ jr_002_49dc:
     ret
 
 
-TrapFileNext::
+TrapFileNext:
     ld c, l
     ld b, h
     ld a, [hl+]
@@ -1980,7 +1980,7 @@ jr_002_4a36:
     jp RestoreRAMBank
 
 
-trap_fc_4a3c::
+trap_fc_4a3c:
     ld a, e
     ldh [$97], a
     ldh a, [hRAMBank]
@@ -2037,7 +2037,7 @@ FileCopyHeader:
 
     push bc
 
-.copyVariablePart::
+.copyVariablePart:
     ld a, [de]
     inc de
     ld [hl+], a
@@ -2046,7 +2046,7 @@ FileCopyHeader:
 
     pop bc
 
-.noVariablePart::
+.noVariablePart:
     pop hl
     call GetBodyOffset
     pop hl
@@ -2060,7 +2060,7 @@ GetBodyOffset:
 
     ld e, d
 
-.hasHistory::
+.hasHistory:
     ld a, $05
     add c
     ld c, a
@@ -2078,7 +2078,7 @@ GetBodyOffset:
     ret
 
 
-TrapFileWrite::
+TrapFileWrite:
     ld a, c
     cp $ff
     jr nz, jr_002_4aa8
@@ -2284,7 +2284,7 @@ jr_002_4b7e:
     jp RestoreRAMBankAndLock
 
 
-trap_ea_4b98::
+trap_ea_4b98:
     push hl
     inc hl
     inc hl
@@ -2384,7 +2384,7 @@ jr_002_4be3:
     dec hl
     jr jr_002_4bca
 
-trap_f0_4bed::
+trap_f0_4bed:
     add sp, -$0a
     push hl
     push de
@@ -2535,7 +2535,7 @@ Call_002_4c8b:
     jp trap_ec_4ca9
 
 
-trap_eb_4c9a::
+trap_eb_4c9a:
     push hl
     push de
     call Call_002_4cb8
@@ -2548,7 +2548,7 @@ trap_eb_4c9a::
     ret
 
 
-trap_ec_4ca9::
+trap_ec_4ca9:
     push hl
     push de
     call Call_002_4cb8
@@ -2623,7 +2623,7 @@ jr_002_4ce2:
     ret
 
 
-trap_ed_4cf1::
+trap_ed_4cf1:
     push de
     push hl
     ld a, [hl+]
@@ -2872,7 +2872,7 @@ Call_002_4dee:
 jr_002_4df5:
     halt
 
-trap_fd_4df6::
+trap_fd_4df6:
     ldh a, [$89]
     ld b, a
     ld a, $c8
@@ -2932,7 +2932,7 @@ Call_002_4e16:
 jr_002_4e35:
     halt
 
-trap_ff_4e36::
+trap_ff_4e36:
     ldh a, [$88]
     ld b, a
     ldh a, [$87]
@@ -2994,7 +2994,7 @@ jr_002_4e50:
     ret
 
 
-trap_fe_4e7d::
+trap_fe_4e7d:
     ld a, b
     or a
 
@@ -3042,7 +3042,7 @@ jr_002_4eab:
     pop af
     call Call_002_4eb8
 
-TrapAwaitBlit::
+TrapAwaitBlit:
     ei
     halt
     ldh a, [$89]
@@ -3324,7 +3324,7 @@ data_02_4f08:
     ret
 
 
-data_02_4fcf::
+data_02_4fcf:
     ld a, [hl+]
     ld [de], a
     inc de
@@ -3524,7 +3524,7 @@ data_02_4fcf::
     ret
 
 
-data_02_5096::
+data_02_5096:
     ld [hl+], a
     ld [hl+], a
     ld [hl+], a
@@ -3660,7 +3660,7 @@ data_02_5096::
     ret
 
 
-data_02_511d::
+data_02_511d:
     ld a, [de]
     inc e
     ld [hl+], a
@@ -3860,7 +3860,7 @@ data_02_511d::
     ret
 
 
-Call_02_51e4::
+Call_02_51e4:
     ldh a, [$88]
     ld l, a
     ldh a, [$87]
@@ -4000,7 +4000,7 @@ jr_002_5263:
 
 SECTION "Kiss System 4", ROMX
 
-trap_a1_53c1::
+trap_a1_53c1:
     call Call_002_53c8
     ret c
 
@@ -4048,7 +4048,7 @@ Call_002_53df:
     ret
 
 
-trap_a2_53f1::
+trap_a2_53f1:
     ld e, l
     ld d, h
 
@@ -4201,7 +4201,7 @@ jr_002_5471:
     inc de
     jr jr_002_5459
 
-TrapStrConvInt::
+TrapStrConvInt:
     ld [hl], $20
     inc hl
     ld a, l
@@ -4279,7 +4279,7 @@ jr_002_54cb:
     ret
 
 
-trap_a0_54d8::
+trap_a0_54d8:
     ld [hl], $20
     inc hl
     ld a, l
@@ -4425,7 +4425,7 @@ jr_002_556f:
     ret
 
 
-TrapStrConvHex::
+TrapStrConvHex:
     ld a, l
     ld l, e
     ld e, a
@@ -4476,7 +4476,7 @@ jr_002_55cf:
     ret
 
 
-trap_a5_55d2::
+trap_a5_55d2:
     push hl
     ld a, d
     or a
@@ -4493,7 +4493,7 @@ jr_002_55d9:
     ret
 
 
-TrapMemSet::
+TrapMemSet:
     ld a, b
     or c
     ret z
@@ -4604,7 +4604,7 @@ jr_002_5637:
     ld de, data_02_5096
     add e
 
-data_02_5653::
+data_02_5653:
     ld [hl], a
     ld a, $00
     adc d
@@ -4652,7 +4652,7 @@ Call_002_566e:
     ret
 
 
-trap_ba_5681::
+trap_ba_5681:
     push bc
     push de
     push hl
@@ -4718,7 +4718,7 @@ jr_002_56bc:
     ret
 
 
-trap_c5_56c4::
+trap_c5_56c4:
     push bc
     push hl
     push de
@@ -4799,7 +4799,7 @@ Jump_002_5715:
     ret
 
 
-trap_c7_571c::
+trap_c7_571c:
     call trap_c6_5730
     jr c, jr_002_572d
 
@@ -4822,7 +4822,7 @@ jr_002_572d:
     ret
 
 
-trap_c6_5730::
+trap_c6_5730:
     cp $ff
     jr nz, jr_002_5736
 
@@ -4849,7 +4849,7 @@ jr_002_5736:
     ret
 
 
-TrapDrawInit::
+TrapDrawInit:
     push af
     push bc
     push de
@@ -4886,7 +4886,7 @@ TrapDrawInit::
 
     ld a, $07
 
-TrapLCDEnable::
+TrapLCDEnable:
     or $80
     ldh [$86], a
     ldh [rLCDC], a
@@ -5040,7 +5040,7 @@ Call_002_5850:
     jp TrapMemSet
 
 
-trap_ca_5859::
+trap_ca_5859:
     ld a, h
     or a
     jr z, jr_002_589c
@@ -5097,7 +5097,7 @@ jr_002_58a8:
 Call_002_58c1:
     ld bc, $2800
 
-trap_c4_58c4::
+trap_c4_58c4:
     ld a, c
     ldh [$a1], a
     call trap_c6_5730
@@ -5114,7 +5114,7 @@ jr_002_58cb:
     ret
 
 
-TrapLCDDisable::
+TrapLCDDisable:
     ldh a, [rLCDC]
     and $80
     ret z
@@ -5147,7 +5147,7 @@ jr_002_58f4:
     ret
 
 
-TrapDrawBaseAddr::
+TrapDrawBaseAddr:
     ld a, l
     ld [VarDrawBaseAddr], a
     ld a, h
@@ -5155,7 +5155,7 @@ TrapDrawBaseAddr::
     ret
 
 
-TrapDrawAt::
+TrapDrawAt:
     ldh a, [hDrawMode]
     bit DrawMode_Bit3, a
     jr nz, jr_002_590e
@@ -5175,7 +5175,7 @@ jr_002_590e:
     add l
     ld l, a
 
-trap_bd_5914::
+trap_bd_5914:
     ld a, h
     ldh [hDraw90], a
     ld a, l
@@ -5183,7 +5183,7 @@ trap_bd_5914::
     ret
 
 
-trap_c8_591b::
+trap_c8_591b:
     push bc
     ld c, a
     ldh a, [hDrawMode]
@@ -5215,7 +5215,7 @@ jr_002_5937:
     ret
 
 
-TrapDrawChar::
+TrapDrawChar:
     push bc
     push de
     push hl
@@ -5282,7 +5282,7 @@ Call_002_597f:
     call trap_ba_5681
     pop hl
 
-trap_be_5988::
+trap_be_5988:
     push hl
     ldh a, [hDraw90]
     ld h, a
@@ -5337,7 +5337,7 @@ jr_002_59b3:
     ret
 
 
-trap_cd_59c1::
+trap_cd_59c1:
     push af
     push bc
     push de
@@ -5383,7 +5383,7 @@ GetPenAddress:
     ret
 
 
-TrapDrawCtrlChar::
+TrapDrawCtrlChar:
     push bc
     push de
     push hl
@@ -5404,7 +5404,7 @@ TrapDrawCtrlChar::
 ;   0/1   0     \x01-\x06  a      hPenX
 ;   0/1   0     \x08-\x0c  a      hPenX
 ;   0/1   0     \x0d-\x0f  a      hDrawMode
-CtrlChar::
+CtrlChar:
     ld hl, hDrawMode
     bit DrawMode_Bit7, [hl]
     jr z, .noBit7
@@ -5420,17 +5420,17 @@ CtrlChar::
     ret
 
 
-.noBit7::
+.noBit7:
     cp $07
     jr z, CtrlChar.done
 
-.noBit3::
+.noBit3:
     ld de, CtrlCharTable
     ld bc, hPenX
     cp $10
     jr nc, CtrlChar.done
 
-.useTable::
+.useTable:
     sub $01
     jr c, CtrlChar.done
 
@@ -5454,11 +5454,11 @@ CtrlChar::
     ld hl, hDrawMode
 
 .done
-NoEffect::
+NoEffect:
     ret
 
 
-CtrlCharTable::
+CtrlCharTable:
     dw MovePenForward.inc       ; \x01: pen.x++
     dw MovePenBack              ; \x02: pen.x--
     dw MovePenForward.vt        ; \x03: pen.y++
@@ -5475,7 +5475,7 @@ CtrlCharTable::
     dw CtrlCharTableB.hiragana  ; \x0e: mode=hiragana
     dw CtrlCharTableB.katakana  ; \x0f: mode=katakana
 
-CtrlCharTableB::
+CtrlCharTableB:
     dw Ctrl01     ; \x01
     dw Ctrl02     ; \x02
     dw Ctrl03     ; \x03
@@ -5501,79 +5501,79 @@ CtrlCharTableB::
     dw .bg3       ; \x17: bg=#000
 
 
-.clr3::
+.clr3:
     ld hl, hDrawMode
     res DrawMode_Bit3, [hl]
     ret
 
-.set3::
+.set3:
     ld hl, hDrawMode
     set DrawMode_Bit3, [hl]
     ret
 
-.hiragana::
+.hiragana:
     res 2, [hl]
     ret
 
-.katakana::
+.katakana:
     set 2, [hl]
     ret
 
-.fg0::
+.fg0:
     ld a, [hl]
     and ~$03
     ld [hl], a
     ret
 
-.fg1::
+.fg1:
     ld a, [hl]
     and ~$03
     or $01
     ld [hl], a
     ret
 
-.fg2::
+.fg2:
     ld a, [hl]
     and ~$03
     or $02
     ld [hl], a
     ret
 
-.fg3::
+.fg3:
     ld a, [hl]
     and ~$03
     or $03
     ld [hl], a
     ret
 
-.bg0::
+.bg0:
     ld a, [hl]
     and ~$30
     ld [hl], a
     ret
 
-.bg1::
+.bg1:
     ld a, [hl]
     and ~$30
     or $10
     ld [hl], a
     ret
 
-.bg2::
+.bg2:
     ld a, [hl]
     and ~$30
     or $20
     ld [hl], a
     ret
 
-.bg3::
+.bg3:
     ld a, [hl]
     and ~$30
     or $30
     ld [hl], a
     ret
 
-Ctrl05::
+Ctrl05:
     push bc
     push de
     ld e, " "
@@ -5590,7 +5590,7 @@ Ctrl05::
     pop bc
     ret
 
-CtrlTab::
+CtrlTab:
     push bc
     push de
     ld e, " "
@@ -5615,12 +5615,12 @@ CtrlTab::
     pop bc
     ret
 
-CtrlBackspace::
+CtrlBackspace:
     call MovePenBack
     ld a, " "
     jp Call_002_5958
 
-CtrlClearScreen::
+CtrlClearScreen:
     push bc
     push de
     ld a, [VarDrawBaseAddr]
@@ -5630,7 +5630,7 @@ CtrlClearScreen::
     ld e, " "
     ld d, SCRN_Y_B
 
-.nextLine::
+.nextLine:
     push de
     push hl
     ld bc, SCRN_X_B
@@ -5646,28 +5646,28 @@ CtrlClearScreen::
     pop bc
     ld hl, hPenX
 
-ResetPen::
+ResetPen:
     xor a
     ld [hl+], a
     ld [hl], a
     ret
 
 
-MovePenForward::
+MovePenForward:
     ld hl, hPenX
 
-.inc::
+.inc:
     inc [hl]
     ld a, [hl]
 
-.checkNewLine::
+.checkNewLine:
     cp SCRN_X_B
     ret c
 
-.cr::
+.cr:
     ld [hl], $00
 
-.vt::
+.vt:
     inc hl
     inc [hl]
     ld a, [hl]
@@ -5678,7 +5678,7 @@ MovePenForward::
     ret
 
 
-MovePenBack::
+MovePenBack:
     ld a, [hl]
     dec [hl]
     or a
@@ -5693,14 +5693,14 @@ MovePenBack::
 
     ld [hl], SCRN_Y_B - 1
 
-.jr_5b5b::
+.jr_5b5b:
     dec hl
 
-.jr_5b5c::
+.jr_5b5c:
     ret
 
 
-MovePenUp::
+MovePenUp:
     inc hl
     ld a, [hl]
     or a
@@ -5710,26 +5710,26 @@ MovePenUp::
     ret
 
 
-Ctrl08::
+Ctrl08:
     call Ctrl02
     ld a, " "
     jp Call_002_5958
 
 
-Call_002_5b6b::
+Call_002_5b6b:
     ld hl, hDraw90
 
-Ctrl01::
+Ctrl01:
     inc [hl]
     ld a, [$c3b9]
     dec a
     cp [hl]
     ret nc
 
-Ctrl0D::
+Ctrl0D:
     ld [hl], $00
 
-Ctrl03::
+Ctrl03:
     inc hl
     ld a, [hl]
     add $09
@@ -5737,7 +5737,7 @@ Ctrl03::
     ret
 
 
-Ctrl02::
+Ctrl02:
     ld a, [hl]
     dec [hl]
     or a
@@ -5747,7 +5747,7 @@ Ctrl02::
     dec a
     ld [hl], a
 
-Ctrl04::
+Ctrl04:
     inc hl
     ld a, [hl]
     sub $09
@@ -5757,7 +5757,7 @@ Ctrl04::
     ret
 
 
-trap_a7_5b8d::
+trap_a7_5b8d:
     ldh a, [hDrawMode]
     bit DrawMode_Bit6, a
     jr nz, jr_002_5bb4
@@ -5963,7 +5963,7 @@ jr_002_5c51:
     ret
 
 
-trap_c9_5c54::
+trap_c9_5c54:
     ld hl, $c3b5
     ld [hl+], a
     ld [hl], d
@@ -6276,7 +6276,7 @@ jr_002_5dc1:
     jp TrapMemSet
 
 
-trap_c0_5de2::
+trap_c0_5de2:
     push hl
     ld l, e
     ld h, d
@@ -6310,7 +6310,7 @@ jr_002_5deb:
     ret
 
 
-trap_c1_5e08::
+trap_c1_5e08:
     push hl
     ld l, e
     ld h, d
@@ -6344,7 +6344,7 @@ jr_002_5e13:
     ret
 
 
-TrapInputHiliteMenu::
+TrapInputHiliteMenu:
     push hl
     push af
     push bc
@@ -6749,7 +6749,7 @@ jr_002_5fbd:
     ret
 
 
-trap_b0_5ff2::
+trap_b0_5ff2:
     di
     ld de, code_02_6036
     ld hl, REGION_END
@@ -6784,7 +6784,7 @@ trap_b0_5ff2::
     ret
 
 
-code_02_6036::
+code_02_6036:
     jp Jump_000_0053
 
 
@@ -6794,7 +6794,7 @@ code_02_6036::
     nop
     nop
 
-code_02_603c::
+code_02_603c:
     push af
     ldh a, [hROMBank]
     push af
@@ -6822,7 +6822,7 @@ DMASprites:
 .end
 
 
-trap_b6_605c::
+trap_b6_605c:
     ld a, l
     and h
     ld l, a
@@ -6901,7 +6901,7 @@ Call_002_60b4:
     jp Jump_002_61cc
 
 
-TrapAwaitFrame::
+TrapAwaitFrame:
     xor a
     ldh [$82], a
     ei
@@ -6916,7 +6916,7 @@ jr_002_60c9:
     ret
 
 
-TrapAwaitButton::
+TrapAwaitButton:
     push bc
     ld b, a
 
@@ -6934,7 +6934,7 @@ jr_002_60e0:
     ret
 
 
-trap_db_60e2::
+trap_db_60e2:
     push bc
     push de
     push hl
@@ -7048,7 +7048,7 @@ jr_002_6157:
     ret
 
 
-trap_da_6178::
+trap_da_6178:
     push bc
     push de
     ldh a, [$99]
@@ -7064,7 +7064,7 @@ trap_da_6178::
     ret
 
 
-TrapInputButtons::
+TrapInputButtons:
     push hl
     call trap_da_6178
     bit 3, a
@@ -7109,7 +7109,7 @@ jr_002_61bd:
     ret
 
 
-trap_b2_61c0::
+trap_b2_61c0:
     di
 
 jr_002_61c1:
@@ -7164,7 +7164,7 @@ jr_002_61ef:
     ret
 
 
-trap_d9_6209::
+trap_d9_6209:
     call Call_002_62c8
     ld b, l
     ld c, l
@@ -7772,7 +7772,7 @@ Call_002_64cf:
     ret
 
 
-data_02_64d7::
+data_02_64d7:
     dk "７８９／", $1c
     dk "４５６＊", $1d
     dk "１２３－", $1e
@@ -8424,7 +8424,7 @@ jr_002_69ec:
     ret
 
 
-trap_c2_69ee::
+trap_c2_69ee:
     ld a, h
     cp d
     jr c, jr_002_69f4
@@ -9791,32 +9791,32 @@ jr_002_6f8d:
     ret
 
 
-image_02_6f8e::
+image_02_6f8e:
     INCBIN "gfx/system/font.1bpp"
 
-image_02_778e::
+image_02_778e:
     INCBIN "gfx/system/borders.2bpp"
 
 data_02_784e:
     db $01, $81, $40, $41, $42, $43, $44, $45, $ff, $00
 
-gfxLetterIcon::
+gfxLetterIcon:
     INCBIN "gfx/iconsend/letter.2bpp"
-gfxMailIcon::
+gfxMailIcon:
     INCBIN "gfx/iconsend/mail.2bpp"
-gfxFlyIcon::
+gfxFlyIcon:
     INCBIN "gfx/iconsend/hikou0.2bpp"
-gfxPuzzleIcon::
+gfxPuzzleIcon:
     INCBIN "gfx/iconsend/puzzle0.2bpp"
-gfxSwordIcon::
+gfxSwordIcon:
     INCBIN "gfx/iconsend/ken0.2bpp"
-gfxCardIcon::
+gfxCardIcon:
     INCBIN "gfx/iconsend/card0.2bpp"
-gfxMapIcon::
+gfxMapIcon:
     INCBIN "gfx/iconsend/map.2bpp"
-gfxHouseIcon::
+gfxHouseIcon:
     INCBIN "gfx/iconsend/ie2.2bpp"
-gfxEmptyIcon::
+gfxEmptyIcon:
     INCBIN "gfx/system/empty.2bpp"
-gfxHatchIcon::
+gfxHatchIcon:
     INCBIN "gfx/iconsend/simula1.2bpp"
