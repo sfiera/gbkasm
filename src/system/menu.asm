@@ -136,7 +136,7 @@ Call_001_41a9:
 Jump_001_41ab:
     ld a, e
     cp d
-    jp z, Jump_001_422d
+    jp z, .Jump_001_422d
 
     push de
     ld hl, $c500
@@ -145,18 +145,18 @@ Jump_001_41ab:
     ld hl, $c500
     ld a, [hl+]
     or [hl]
-    jr z, jr_001_422d
+    jr z, .Jump_001_422d
 
     inc hl
     ld a, [hl]
     cp $ff
-    jr z, jr_001_422d
+    jr z, .Jump_001_422d
 
     push de
     call Call_001_426d
     trap FileSearch
     pop de
-    jr c, jr_001_422d
+    jr c, .Jump_001_422d
 
     push de
     call Call_001_478a
@@ -167,63 +167,62 @@ Jump_001_41ab:
     ld [$c70a], a
     ld hl, $c700
     trap FileWrite
-    jr c, jr_001_422c
+    jr c, .jr_001_422c
 
     ld a, [$c509]
     bit 0, a
-    jr z, jr_001_41f1
+    jr z, .jr_001_41f1
 
     call Call_001_4929
     ld hl, $c700
     call Call_001_492c
 
-jr_001_41f1:
+.jr_001_41f1
     ld hl, $c500
     ld de, $c400
     ld bc, $0100
     trap $eb
     ld a, b
     or c
-    jr z, jr_001_420a
+    jr z, .jr_001_420a
 
     ld hl, $c700
     ld de, $c400
     trap $ec
-    jr jr_001_41f1
+    jr .jr_001_41f1
 
-jr_001_420a:
+.jr_001_420a
     ld de, $c702
     ld hl, $c502
     ld b, $03
 
-jr_001_4212:
+.jr_001_4212
     ld a, [de]
     cp [hl]
-    jr c, jr_001_421d
+    jr c, .jr_001_421d
 
-    jr nz, jr_001_4224
+    jr nz, .jr_001_4224
 
     dec de
     dec hl
     dec b
-    jr nz, jr_001_4212
+    jr nz, .jr_001_4212
 
-jr_001_421d:
+.jr_001_421d
     ld hl, $c700
     trap FileDelete
-    jr jr_001_422c
+    jr .jr_001_422c
 
-jr_001_4224:
+.jr_001_4224
     pop de
     push de
     call MoveFile
     call DeleteSelectedFile
 
-jr_001_422c:
+.jr_001_422c
     pop de
 
-Jump_001_422d:
-jr_001_422d:
+.Jump_001_422d
     inc e
     ld a, e
     cp 120
@@ -413,10 +412,9 @@ RecvFile:
 
 
 Call_001_4358:
-jr_001_4358:
     trap $da
     and $02
-    jr nz, jr_001_4358
+    jr nz, Call_001_4358
 
     ret
 
@@ -439,7 +437,7 @@ RecvConn:
     ret
 
 
-Call_001_4370:
+BlitIRRead:
     trap AwaitBlit
     trap IRRead
     jr jr_001_43ac
@@ -456,13 +454,13 @@ SendStatus:
     jr jr_001_43ac
 
 
-Call_001_4384:
+BlitIRClose:
     trap AwaitBlit
     trap IRClose
     jr jr_001_43ac
 
 
-Call_001_438a:
+BlitIR06:
     ld hl, $c700
     trap AwaitBlit
     trap IR06
@@ -472,27 +470,28 @@ Call_001_438a:
 Call_001_4393:
     ld de, $c600
 
-Jump_001_4396:
+BlitIR08:
     trap AwaitBlit
     trap IR0A
     jr jr_001_43ac
 
 
-Call_001_439c:
+BlitIR04:
     trap AwaitBlit
     trap IR04
     jr jr_001_43ac
 
 
-Call_001_43a2:
+BlitIRFileWrite:
     trap AwaitBlit
     trap IRFileWrite
     jr jr_001_43ac
 
 
-Call_001_43a8:
+BlitIRFileSearch:
     trap AwaitBlit
     trap IRFileSearch
+    ; fall through
 
 
 jr_001_43ac:
@@ -504,6 +503,8 @@ jr_001_43ac:
 
 CannotDeleteFile:
     ld hl, data_01_4f66
+    ; fall through
+
 
 ShowError:
     call DrawTplStr
@@ -860,7 +861,7 @@ SendFile:
     ld hl, $ce00
     ld de, $ce00
     ld c, $10
-    call Call_001_4370
+    call BlitIRRead
     ld a, $03
     jp c, .Jump_001_471b
 
@@ -882,14 +883,14 @@ SendFile:
     push af
     ld a, XFER_STARTED
     call SendStatus
-    call Call_001_4384
+    call BlitIRClose
 
 .jr_001_4672
     ld hl, data_01_4cd8
     ld de, TransferringTileMap
     call UpdateTransferScreen
     call Call_001_426d
-    call Call_001_43a8
+    call BlitIRFileSearch
     pop bc
     jp c, .Jump_001_469a
 
@@ -900,7 +901,7 @@ SendFile:
     call ConfirmYesNo
     jp nz, .Jump_001_4737
 
-    call Call_001_438a
+    call BlitIR06
     jr .jr_001_4672
 
 .Jump_001_469a
@@ -916,7 +917,7 @@ SendFile:
     ld a, $ff
     ld [$c70a], a
     ld hl, $c700
-    call Call_001_43a2
+    call BlitIRFileWrite
     jr nc, .jr_001_46c2
 
     cp $ff
@@ -934,7 +935,7 @@ SendFile:
     ld hl, $ce00
     ld c, $02
     push hl
-    call Call_001_4370
+    call BlitIRRead
     pop hl
     pop bc
     ld a, [hl+]
@@ -960,7 +961,7 @@ SendFile:
     push bc
     ld de, $ffd2
     ld b, $00
-    call Call_001_439c
+    call BlitIR04
     pop bc
     jr c, .jr_001_4719
 
@@ -981,7 +982,7 @@ SendFile:
     call Call_001_4393
     jr nc, .jr_001_4700
 
-    call Call_001_438a
+    call BlitIR06
 
 .jr_001_4719
     ld a, $05
@@ -1036,7 +1037,7 @@ Call_001_4752:
     pop af
     jr c, jr_001_475c
 
-    call Call_001_4384
+    call BlitIRClose
 
 Call_001_475c:
 jr_001_475c:
@@ -1046,10 +1047,12 @@ jr_001_475c:
     trap AwaitButton
     ret
 
+
 Call_001_4764:
     ld a, $01
     trap $cc
     ret
+
 
 Call_001_4769:
     ld hl, $c509
@@ -1059,22 +1062,22 @@ Call_001_4769:
     ld b, $00
     bit 0, a
     ld a, $fe
-    jr z, jr_001_4779
+    jr z, .jr_001_4779
 
     sub $2e
 
-jr_001_4779:
+.jr_001_4779
     sub [hl]
     ld e, a
     ld a, $ff
     sbc b
     ld d, a
-    call Call_001_439c
+    call BlitIR04
     pop de
     ret c
 
     ld bc, $0001
-    jp Jump_001_4396
+    jp BlitIR08
 
 
 Call_001_478a:
@@ -1103,7 +1106,7 @@ Call_001_479d:
     ldh a, [$c0]
     ld e, a
 
-jr_001_47a6:
+.jr_001_47a6
     push bc
     push de
     push hl
@@ -1112,13 +1115,13 @@ jr_001_47a6:
     pop de
     pop bc
     call Call_001_4965
-    jr nc, jr_001_47b7
+    jr nc, .jr_001_47b7
 
     inc e
     inc h
-    jr jr_001_47a6
+    jr .jr_001_47a6
 
-jr_001_47b7:
+.jr_001_47b7
     ldh a, [$c1]
 
 Call_001_47b9:
@@ -1126,25 +1129,25 @@ Call_001_47b9:
     ld h, a
     ld bc, $0000
     cp $03
-    jr c, jr_001_47ca
+    jr c, .jr_001_47ca
 
     ld c, $01
     ld e, $5c
     sub $03
 
-jr_001_47ca:
+.jr_001_47ca
     or a
     ret z
 
     dec a
-    jr z, jr_001_47d4
+    jr z, .jr_001_47d4
 
     inc b
     ld a, d
     add $28
     ld d, a
 
-jr_001_47d4:
+.jr_001_47d4
     inc b
     ld a, d
     add $28
@@ -1425,7 +1428,7 @@ Call_001_492c:
 Call_001_4934:
     ld a, [$c502]
     cp $ff
-    jr z, jr_001_494a
+    jr z, .jr_001_494a
 
     call Call_001_4929
     ld hl, $c500
@@ -1435,7 +1438,7 @@ Call_001_4934:
     ret
 
 
-jr_001_494a:
+.jr_001_494a
     ld hl, $c500
     ld e, [hl]
     inc hl
@@ -1597,7 +1600,7 @@ Call_001_4a36:
     push hl
     ld a, [hl+]
     or [hl]
-    jr z, jr_001_4a7c
+    jr z, .jr_001_4a7c
 
     ld de, $0008
     add hl, de
@@ -1608,22 +1611,22 @@ Call_001_4a36:
     inc hl
     inc hl
     bit 4, b
-    jr z, jr_001_4a6b
+    jr z, .jr_001_4a6b
 
     sub $60
     bit 3, b
-    jr z, jr_001_4a6b
+    jr z, .jr_001_4a6b
 
     sub $60
 
-jr_001_4a6b:
+.jr_001_4a6b
     dec a
     cp $10
-    jr c, jr_001_4a72
+    jr c, .jr_001_4a72
 
     ld a, $10
 
-jr_001_4a72:
+.jr_001_4a72
     ld c, a
     ld b, $00
     ld e, l
@@ -1631,7 +1634,7 @@ jr_001_4a72:
     ld hl, $c400
     trap MemCopy
 
-jr_001_4a7c:
+.jr_001_4a7c
     ld hl, $c400
     trap DrawString
     ld a, $0e
@@ -1643,7 +1646,7 @@ jr_001_4a7c:
     pop hl
     ld a, [hl+]
     or [hl]
-    jr z, jr_001_4aa3
+    jr z, .jr_001_4aa3
 
     push af
     push hl
@@ -1656,17 +1659,17 @@ jr_001_4a7c:
     pop hl
     pop af
 
-jr_001_4aa3:
+.jr_001_4aa3
     ld bc, $0007
     add hl, bc
     ld e, [hl]
     inc e
     or a
-    jr nz, jr_001_4aad
+    jr nz, .jr_001_4aad
 
     ld e, a
 
-jr_001_4aad:
+.jr_001_4aad
     call Call_001_4b45
     ld hl, data_01_4ac2
     trap DrawString
@@ -1685,31 +1688,31 @@ jr_001_4aad:
 data_01_4ac2:
     dk "エリア  No.\0"
 
+
 Call_001_4acb:
-Jump_001_4acb:
     ld de, $8c14
     ld hl, $0a14
     ld c, $00
 
-Jump_001_4ad3:
+.Jump_001_4ad3
     ld a, c
     call Call_001_4b88
 
-jr_001_4ad7:
+.jr_001_4ad7
     push bc
     ld b, $10
     call Call_001_4a2a
     call Call_001_44a1
-    jr nz, jr_001_4aec
+    jr nz, .jr_001_4aec
 
     call Call_001_4a28
     call Call_001_44a1
     pop bc
-    jr z, jr_001_4ad7
+    jr z, .jr_001_4ad7
 
     push bc
 
-jr_001_4aec:
+.jr_001_4aec
     push af
     call Call_001_4a28
     pop af
@@ -1719,14 +1722,14 @@ jr_001_4aec:
     ret nz
 
     bit 6, b
-    jr nz, jr_001_4b1f
+    jr nz, .jr_001_4b1f
 
     bit 7, b
-    jr z, jr_001_4ad7
+    jr z, .jr_001_4ad7
 
     ld a, c
     cp $05
-    jp z, Jump_001_4acb
+    jp z, Call_001_4acb
 
     inc c
     ld a, e
@@ -1738,20 +1741,20 @@ jr_001_4aec:
     ld a, l
     add $06
     ld l, a
-    jp Jump_001_4ad3
+    jp .Jump_001_4ad3
 
 
-jr_001_4b14:
+.jr_001_4b14
     ld c, $05
     ld de, $8c8c
     ld hl, $1932
-    jp Jump_001_4ad3
+    jp .Jump_001_4ad3
 
 
-jr_001_4b1f:
+.jr_001_4b1f
     ld a, c
     or a
-    jr z, jr_001_4b14
+    jr z, .jr_001_4b14
 
     dec c
     ld a, e
@@ -1763,7 +1766,7 @@ jr_001_4b1f:
     ld a, l
     sub $06
     ld l, a
-    jp Jump_001_4ad3
+    jp .Jump_001_4ad3
 
 
 Call_001_4b33:
@@ -1804,14 +1807,14 @@ Call_001_4b5e:
     ld hl, $0000
     trap $bd
     call Call_001_4b52
-    jr nc, jr_001_4b6d
+    jr nc, .jr_001_4b6d
 
     ld a, $10
     trap $c8
     ret
 
 
-jr_001_4b6d:
+.jr_001_4b6d
     ld e, a
     ld d, $00
     push af
@@ -1820,13 +1823,13 @@ jr_001_4b6d:
     pop af
     ld hl, StrJushinAreaAitemasen
     or a
-    jr z, jr_sys_4b85
+    jr z, .jr_sys_4b85
 
     ld hl, $c404
     trap DrawString
     ld hl, StrAreaMadeJushin
 
-jr_sys_4b85:
+.jr_sys_4b85
     trap DrawString
     ret
 
@@ -2267,7 +2270,7 @@ Call_001_4fec:
     ld a, h
     call Call_001_4a36
 
-jr_001_4ff3:
+.jr_001_4ff3
     ld h, $00
     push de
     push hl
@@ -2276,18 +2279,18 @@ jr_001_4ff3:
     ld bc, $0502
     trap $c5
     call Call_001_44a1
-    jr nz, jr_001_5013
+    jr nz, .jr_001_5013
 
     ld bc, $0a00
     trap $c4
     call Call_001_44a1
-    jr nz, jr_001_5013
+    jr nz, .jr_001_5013
 
     pop hl
     pop de
-    jr jr_001_4ff3
+    jr .jr_001_4ff3
 
-jr_001_5013:
+.jr_001_5013
     pop hl
     pop de
     pop hl
@@ -2367,9 +2370,10 @@ UpdateTransferScreen:
     ld hl, $9802
     ld b, $0c
     ld c, $10
+    ; fall through
+
 
 Call_001_509b:
-jr_001_509b:
     push bc
     push hl
     push de
@@ -2386,7 +2390,7 @@ jr_001_509b:
     add hl, bc
     pop bc
     dec b
-    jr nz, jr_001_509b
+    jr nz, Call_001_509b
 
     ret
 
