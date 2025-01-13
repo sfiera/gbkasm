@@ -32,6 +32,7 @@ ROMX $01
     org $4000
     "Kiss Mail Stub"
     "Kiss System 1"
+    "Kiss Menu"
     "Kiss Mail Code"
     "Kiss System 1B"
     "ROM Infrared"

@@ -771,7 +771,7 @@ jr_001_64ec:
 Call_001_6501:
     trap LCDDisable
     call Call_001_66dc
-    ld de, data_01_4028 + $50
+    ld de, ArrowIcon
     ld hl, $9700
     ld bc, $0010
     trap MemCopy
