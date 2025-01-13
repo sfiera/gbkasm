@@ -825,7 +825,7 @@ TerrainCost::
     db X,    X,    X,    X
     db X,    X,    X,    X
 
-TerrainDefense:
+TerrainDefense::
     db 5   ; open
     db 0   ; road
     db 20  ; hill
@@ -843,7 +843,7 @@ TerrainDefense:
     db 0
     db 0
 
-UnitStats:
+UnitStats::
     ;  UNIT--------------  SHIFT---------  DEF -AIR-  -GND-  --FLAGS--
     ;  CODE     NAME       R   KIND            PWR R  PWR R
     db "M-77 ", "ﾔﾏｱﾗｼ  ", 0,  MOVE_TREAD, 80, 0,  1, 0,  1, UNIT_IMMOBILE
@@ -9400,9 +9400,9 @@ Call_000_3f8e:
 
 SECTION "WRAM Interrupts", WRAM0
 
-WRAMTimerOverflowInterrupt:
+WRAMTimerOverflowInterrupt::
     ds 3
-WRAMSerialTransferInterrupt:
+WRAMSerialTransferInterrupt::
     ds 3
-WRAMVBlankInterrupt:
+WRAMVBlankInterrupt::
     ds 3
