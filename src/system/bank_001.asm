@@ -10,6 +10,12 @@ INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
+DEF XFER_STARTED EQU $01
+DEF XFER_SUCCESS EQU $02
+DEF XFER_FAILURE EQU $03
+DEF XFER_NOSPACE EQU $04
+DEF XFER_IGNORE EQU $05
+
 SECTION "Kiss System 1", ROMX
 
 KissMailRegionHeader:
@@ -29,7 +35,7 @@ KissMailFileHeader:
 .end
 
 KissMailMain:
-    jp Jump_001_5e9d
+    jp KissMailStart
 
 data_01_4018:
     db "\0\0"
@@ -387,7 +393,7 @@ MenuSend:
     call DoesNonSpecialFileExist
     jp z, CannotSendFile
 
-    call Call_001_4632
+    call SendFile
     jp c, UpdateKissMenu
 
     ld hl, $c500
@@ -401,7 +407,7 @@ MenuQuickRecv:
     call ShowTransferScreen
     call Call_001_4b5e
     xor a
-    call Call_001_42f5
+    call RecvFile
     jp UpdateKissMenu
 
 
@@ -409,7 +415,7 @@ MenuRecv:
     ld hl, $c500
     ld a, [hl+]
     or [hl]
-    jr z, jr_001_42d7
+    jr z, .empty
 
     ld hl, data_01_4f85
     call DrawTplStr
@@ -423,22 +429,22 @@ MenuRecv:
 
     call DeleteSelectedFile
 
-jr_001_42d7:
+.empty
     ld hl, data_01_4cbe
     call ShowTransferScreen
     call Call_001_4b5e
-    call Call_001_501f
+    call WaitForUserToStartTransfer
     jp nz, Jump_001_4491
 
     call Call_001_4b5e
     call Call_001_4990
-    call Call_001_42f5
+    call RecvFile
     jp nz, Jump_001_4491
 
     jp UpdateKissMenu
 
 
-Call_001_42f5:
+RecvFile:
     ld [$ce0f], a
     ld hl, $ce00
     ld de, data_01_4018
@@ -450,20 +456,20 @@ Call_001_42f5:
     ld [$c500], a
     ld [$c501], a
     call Call_001_4764
-    call Call_001_435f
-    jr c, jr_001_433d
+    call RecvConn
+    jr c, .error
 
-    cp $01
-    jr nz, jr_001_433d
+    cp XFER_STARTED
+    jr nz, .error
 
     ld de, TransferringTileMap
     ld hl, data_01_4d06
-    call Call_001_508f
-    call Call_001_435f
-    jr c, jr_001_433d
+    call UpdateTransferScreen
+    call RecvConn
+    jr c, .error
 
-    cp $02
-    jr nz, jr_001_433d
+    cp XFER_SUCCESS
+    jr nz, .error
 
     ld hl, $c500
     ld c, $ff
@@ -471,21 +477,21 @@ Call_001_42f5:
     ld de, TransferDoneTileMap
     ld hl, data_01_4d1e
     xor a
-    jr jr_001_434f
+    jr .done
 
-jr_001_433d:
+.error
     ld de, TransferErrorTileMap
     ld hl, data_01_4d5f
     ld a, [$ce00]
-    cp $04
-    jr nz, jr_001_434f
+    cp XFER_NOSPACE
+    jr nz, .done
 
     ld hl, data_01_4dfe
     or $01
 
-jr_001_434f:
+.done
     push af
-    call Call_001_508f
+    call UpdateTransferScreen
     call Call_001_475c
     pop af
     ret
@@ -500,12 +506,18 @@ jr_001_4358:
     ret
 
 
-Call_001_435f:
+; Results:
+; a == 1 → connection established
+; a == 2 → received successfully
+; a == 3 → general error
+; a == 4 → insufficient space
+; a == 5 →
+RecvConn:
     trap AwaitBlit
     trap IRListen
     ld a, [$ce00]
     push af
-    cp $05
+    cp XFER_IGNORE
     call z, DeleteSelectedFile
     trap $db
     pop af
@@ -517,7 +529,8 @@ Call_001_4370:
     trap IRRead
     jr jr_001_43ac
 
-Call_001_4376:
+
+SendStatus:
     ld hl, $ce00
     ld [hl], a
     ld d, h
@@ -527,16 +540,19 @@ Call_001_4376:
     trap IRWrite
     jr jr_001_43ac
 
+
 Call_001_4384:
     trap AwaitBlit
     trap IRClose
     jr jr_001_43ac
+
 
 Call_001_438a:
     ld hl, $c700
     trap AwaitBlit
     trap IR06
     jr jr_001_43ac
+
 
 Call_001_4393:
     ld de, $c600
@@ -546,19 +562,23 @@ Jump_001_4396:
     trap IR0A
     jr jr_001_43ac
 
+
 Call_001_439c:
     trap AwaitBlit
     trap IR04
     jr jr_001_43ac
+
 
 Call_001_43a2:
     trap AwaitBlit
     trap IRFileWrite
     jr jr_001_43ac
 
+
 Call_001_43a8:
     trap AwaitBlit
     trap IRFileSearch
+
 
 jr_001_43ac:
     push af
@@ -686,7 +706,7 @@ MenuInfo:
 jr_001_4489:
     trap AwaitFrame
     trap InputButtons
-    and $03
+    and BTN_AB
     jr z, jr_001_4489
 
 Jump_001_4491:
@@ -909,7 +929,7 @@ jr_001_461f:
     ret
 
 
-Call_001_4632:
+SendFile:
     call Call_001_5019
     scf
     ret nz
@@ -920,7 +940,7 @@ Call_001_4632:
     ld c, $10
     call Call_001_4370
     ld a, $03
-    jp c, Jump_001_471b
+    jp c, .Jump_001_471b
 
     ld hl, data_01_401a
     ld de, $ce02
@@ -930,44 +950,44 @@ Call_001_4632:
     or l
     ld hl, data_01_4d8d
     ld a, $06
-    jp nz, Jump_001_4741
+    jp nz, .Jump_001_4741
 
     ld a, [$ce00]
     or a
-    jp nz, Jump_001_4741
+    jp nz, .Jump_001_4741
 
     ld a, [$ce0f]
     push af
-    ld a, $01
-    call Call_001_4376
+    ld a, XFER_STARTED
+    call SendStatus
     call Call_001_4384
 
-jr_001_4672:
+.jr_001_4672
     ld hl, data_01_4cd8
     ld de, TransferringTileMap
-    call Call_001_508f
+    call UpdateTransferScreen
     call Call_001_426d
     call Call_001_43a8
     pop bc
-    jp c, Jump_001_469a
+    jp c, .Jump_001_469a
 
     push bc
     ld hl, data_01_4dc6
     call DrawTplStr
     ld de, $0c10
     call ConfirmYesNo
-    jp nz, Jump_001_4737
+    jp nz, .Jump_001_4737
 
     call Call_001_438a
-    jr jr_001_4672
+    jr .jr_001_4672
 
-Jump_001_469a:
+.Jump_001_469a
     cp $ff
-    jp z, Jump_001_471b
+    jp z, .Jump_001_471b
 
     push bc
-    ld a, $05
-    call Call_001_4376
+    ld a, XFER_IGNORE
+    call SendStatus
     call Call_001_478a
     pop af
     ld c, a
@@ -975,16 +995,16 @@ Jump_001_469a:
     ld [$c70a], a
     ld hl, $c700
     call Call_001_43a2
-    jr nc, jr_001_46c2
+    jr nc, .jr_001_46c2
 
     cp $ff
-    jr z, jr_001_4719
+    jr z, .jr_001_4719
 
     ld hl, data_01_4d36
     ld a, $04
-    jr jr_001_4740
+    jr .jr_001_4740
 
-jr_001_46c2:
+.jr_001_46c2
     push hl
     ld hl, sp+$00
     ld d, h
@@ -997,65 +1017,64 @@ jr_001_46c2:
     pop bc
     ld a, [hl+]
     cp c
-    jr nz, jr_001_4719
+    jr nz, .jr_001_4719
 
     ld a, [hl]
     cp b
-    jr nz, jr_001_4719
+    jr nz, .jr_001_4719
 
     ld a, [$c509]
     bit 0, a
-    jr z, jr_001_4700
+    jr z, .jr_001_4700
 
     ld hl, $c500
     ld de, $c600
     trap $f0
-    jr c, jr_001_4721
+    jr c, .jr_001_4721
     ld a, b
     or c
-    jr z, jr_001_4721
+    jr z, .jr_001_4721
 
     push bc
     ld de, $ffd2
     ld b, $00
     call Call_001_439c
     pop bc
-    jr c, jr_001_4719
+    jr c, .jr_001_4719
 
     call Call_001_4393
-    jr c, jr_001_4719
+    jr c, .jr_001_4719
 
-jr_001_4700:
+.jr_001_4700
     ld hl, $c500
     ld de, $c600
     ld bc, $0100
     trap $eb
-    jr c, jr_001_4721
+    jr c, .jr_001_4721
 
-data_01_470d::
     ld a, b
     or c
-    jr z, jr_001_4721
+    jr z, .jr_001_4721
 
     call Call_001_4393
-    jr nc, jr_001_4700
+    jr nc, .jr_001_4700
 
     call Call_001_438a
 
-jr_001_4719:
+.jr_001_4719
     ld a, $05
 
-Jump_001_471b:
+.Jump_001_471b
     ld hl, data_01_4d5f
     scf
-    jr jr_001_4741
+    jr .Jump_001_4741
 
-jr_001_4721:
+.jr_001_4721
     call Call_001_4769
-    jr c, jr_001_4719
+    jr c, .jr_001_4719
 
-    ld a, $02
-    call Call_001_4376
+    ld a, XFER_SUCCESS
+    call SendStatus
     ld hl, data_01_4cef
     ld de, TransferDoneTileMap
     xor a
@@ -1064,25 +1083,24 @@ jr_001_4721:
     ret
 
 
-Jump_001_4737:
+.Jump_001_4737
     call Call_001_4358
     ld hl, data_01_4dfa
     ld a, $07
     pop bc
 
-jr_001_4740:
+.jr_001_4740
     or a
 
-Jump_001_4741:
-jr_001_4741:
+.Jump_001_4741
     push af
-    jr c, jr_001_4749
+    jr c, .error
 
     push hl
-    call Call_001_4376
+    call SendStatus
     pop hl
 
-jr_001_4749:
+.error
     ld de, TransferErrorTileMap
     pop af
     call Call_001_4752
@@ -1092,7 +1110,7 @@ jr_001_4749:
 
 Call_001_4752:
     push af
-    call Call_001_508f
+    call UpdateTransferScreen
     pop af
     jr c, jr_001_475c
 
@@ -2359,15 +2377,16 @@ jr_001_5013:
 Call_001_5019:
     ld hl, data_01_4cbe
     call ShowTransferScreen
+    ; fall through
 
-Call_001_501f:
-jr_001_501f:
+
+WaitForUserToStartTransfer:
     trap AwaitFrame
     trap InputButtons
-    and $03
-    jr z, jr_001_501f
+    and BTN_AB
+    jr z, WaitForUserToStartTransfer
 
-    and $02
+    and BTN_B
     ret nz
 
     push af
@@ -2413,13 +2432,13 @@ ShowTransferScreen:
     call Call_001_509b
     pop hl
     ld de, TransferPrepTileMap
-    call Call_001_508f
+    call UpdateTransferScreen
     ld a, $01
     trap LCDEnable
     ret
 
 
-Call_001_508f:
+UpdateTransferScreen:
     push de
     call DrawTplStr
     pop de
@@ -2475,51 +2494,57 @@ TransferMessageBoxTileMap::
 MenuActionTileData::
     INCBIN "frag/system/actions.hz"
 
-Jump_001_5e9d::
+
+KissMailStart::
     ld a, $20
     trap DrawInit
     call Call_001_6627
     call Call_001_64d3
+    ; fall through
 
-Jump_001_5ea7:
+
+KissMailContinue:
     call Call_001_657f
     ld a, $01
     call Call_001_66c2
-    ld de, data_01_470d
+    ld de, $470d
     ld hl, $c699
     trap $54
     ld a, $03
     trap LCDEnable
+    ; fall through
 
-jr_001_5ebb:
+
+KissMailHandle:
     trap AwaitFrame
     trap InputButtons
     ld c, a
-    and $06
-    jp nz, Jump_001_5f61
+    and BTN_B | BTN_SEL
+    jp nz, DoKissMailMenu
 
     ld a, c
-    and $09
-    jr nz, jr_001_5ef2
+    and BTN_A | BTN_STA
+    jr nz, KissMailEditLine
 
-    bit 6, c
-    jr nz, jr_001_5ed7
+    bit BTN_UP_F, c
+    jr nz, .up
 
-    bit 7, c
-    jr nz, jr_001_5edf
+    bit BTN_DN_F, c
+    jr nz, .down
 
     call Call_001_5f2d
-    jr jr_001_5ebb
+    jr KissMailHandle
 
-jr_001_5ed7:
+.up
     call Call_001_5ee7
     call Call_001_5f21
-    jr jr_001_5ebb
+    jr KissMailHandle
 
-jr_001_5edf:
+.down
     call Call_001_5ee7
     call Call_001_5f15
-    jr jr_001_5ebb
+    jr KissMailHandle
+
 
 Call_001_5ee7:
     xor a
@@ -2530,37 +2555,38 @@ Call_001_5ee7:
     ret
 
 
-jr_001_5ef2:
+KissMailEditLine:
     xor a
     call Call_001_66c2
     call Call_001_6181
     trap $55
-    jr c, jr_001_5f0e
+    jr c, .done
 
     ld a, $01
     ldh [$c2], a
     ldh a, [$8a]
-    bit 2, a
-    jp nz, Jump_001_5f61
+    bit BTN_SEL_F, a
+    jp nz, DoKissMailMenu
 
     call Call_001_5f15
     xor a
     ldh [$c1], a
 
-jr_001_5f0e:
+.done
     ld a, $01
     call Call_001_66c2
-    jr jr_001_5ebb
+    jr KissMailHandle
+
 
 Call_001_5f15:
     ldh a, [$c0]
     inc a
     cp $09
-    jr c, jr_001_5f1e
+    jr c, .jr_001_5f1e
 
     ld a, $01
 
-jr_001_5f1e:
+.jr_001_5f1e
     ldh [$c0], a
     ret
 
@@ -2569,11 +2595,11 @@ Call_001_5f21:
     ldh a, [$c0]
     dec a
     bit 7, a
-    jr z, jr_001_5f2a
+    jr z, .jr_001_5f2a
 
     ld a, $08
 
-jr_001_5f2a:
+.jr_001_5f2a
     ldh [$c0], a
     ret
 
@@ -2625,29 +2651,28 @@ jr_001_5f60:
     ret
 
 
-Jump_001_5f61:
+DoKissMailMenu:
     call Call_001_5ee7
     call Call_001_6501
 
-Jump_001_5f67:
-jr_001_5f67:
+.again
     xor a
-    ld de, data_01_5f82
+    ld de, KissMailMenu
     trap InputCursorMenu
-    jp c, Jump_001_5ea7
+    jp c, KissMailContinue
 
     ld l, a
     ld h, $00
     trap JumpViaTable
     db $06
-    dw Jump_001_5ea7 - @
-    dw Jump_001_601f - @
-    dw Jump_001_6071 - @
-    dw Jump_001_60ba - @
-    dw Jump_001_5fb7 - @
-    dw Jump_001_5fa4 - @
+    dw KissMailContinue - @
+    dw KissMailSave - @
+    dw KissMailSend - @
+    dw KissMailRecv - @
+    dw KissMailPager - @
+    dw KissMailExit - @
 
-data_01_5f82::
+KissMailMenu::
     db $06
     db $04, $05
     db $70, $7f
@@ -2674,23 +2699,27 @@ Call_001_5f89:
     ret
 
 
-Jump_001_5fa4:
+KissMailExit:
     ldh a, [$c2]
     or a
-    jr z, jr_001_5fb5
+    jr z, .exit
 
     ld a, $08
     call Call_001_5f89
     call Call_001_6169
-    jr nc, jr_001_5fb5
+    jr nc, .exit
 
-    jr jr_001_5f67
+    jr DoKissMailMenu.again
 
-Jump_001_5fb5:
-jr_001_5fb5:
-    trap $01
+.exit
+    ; fall through
 
-Jump_001_5fb7:
+
+Exit:
+    trap ExitToMenu
+
+
+KissMailPager:
     call Call_001_657f
     ldh a, [$c0]
     push af
@@ -2704,19 +2733,19 @@ Jump_001_5fb7:
 jr_001_5fca:
     trap AwaitFrame
     trap InputButtons
-    bit 6, a
+    bit BTN_UP_F, a
     jr nz, jr_001_5fed
 
-    bit 7, a
+    bit BTN_DN_F, a
     jr nz, jr_001_5ffa
 
-    bit 0, a
+    bit BTN_A_F, a
     jr nz, jr_sys_6002
 
-    bit 4, a
+    bit BTN_RT_F, a
     jr nz, jr_sys_6002
 
-    and $06
+    and BTN_B | BTN_SEL
     jr nz, jr_001_5fe7
 
 jr_001_5fe2:
@@ -2726,7 +2755,7 @@ jr_001_5fe2:
 jr_001_5fe7:
     pop af
     ldh [$c0], a
-    jp Jump_001_5f61
+    jp DoKissMailMenu
 
 
 jr_001_5fed:
@@ -2760,7 +2789,7 @@ jr_sys_6002:
     jr jr_001_5fca
 
 
-Jump_001_601f:
+KissMailSave:
     ldh a, [$c0]
     push af
     xor a
@@ -2775,7 +2804,7 @@ jr_001_6025:
     call Call_001_5f89
     call Call_001_6173
     pop af
-    jp Jump_001_5ea7
+    jp KissMailContinue
 
 
 jr_001_6037:
@@ -2814,17 +2843,17 @@ jr_001_6065:
 jr_001_606b:
     pop af
     ldh [$c0], a
-    jp Jump_001_5f67
+    jp DoKissMailMenu.again
 
 
-Jump_001_6071:
+KissMailSend:
     call Call_001_657f
     ld a, $0c
     call Call_001_5f89
     ld a, $03
     trap LCDEnable
     call Call_001_6169
-    jp c, Jump_001_5f61
+    jp c, DoKissMailMenu
 
     ld a, $0d
     call Call_001_5f89
@@ -2851,7 +2880,7 @@ jr_001_60a7:
     xor a
     trap $cc
     call Call_001_6173
-    jp Jump_001_5f61
+    jp DoKissMailMenu
 
 
 jr_001_60b0:
@@ -2863,7 +2892,7 @@ jr_001_60b5:
     jr jr_001_60a7
 
 
-Jump_001_60ba:
+KissMailRecv:
     ldh a, [$c2]
     or a
     jr z, jr_001_60c9
@@ -2906,7 +2935,7 @@ jr_001_6100:
     call Call_001_6173
 
 jr_001_6103:
-    jp Jump_001_5f67
+    jp DoKissMailMenu.again
 
 
 jr_001_6106:
@@ -3001,7 +3030,7 @@ Call_001_6173:
 jr_001_6173:
     trap AwaitFrame
     trap InputButtons
-    and $03
+    and BTN_AB
     jr z, jr_001_6173
 
     or a
@@ -3194,7 +3223,7 @@ jr_001_64ec:
     ld a, $13
     call Call_001_5f89
     call Call_001_6169
-    jp c, Jump_001_5fb5
+    jp c, Exit
 
     trap LCDDisable
     ret
@@ -3514,7 +3543,7 @@ jr_001_6731:
     jr c, jr_001_67b3
 
 jr_001_6757:
-    ld de, data_01_470d
+    ld de, $470d
     ld hl, $c699
     trap $54
 
@@ -3574,7 +3603,7 @@ jr_001_679e:
     trap CRAMWrite
 
 jr_001_67b3:
-    trap $01
+    trap ExitToMenu
 
 Call_001_67b5:
     ld d, $06
@@ -3654,18 +3683,18 @@ jr_001_688b:
     trap InputButtons
     ld b, a
     ld a, $03
-    bit 4, b
+    bit BTN_RT_F, b
     jr nz, jr_001_6861
 
     swap a
-    bit 5, b
+    bit BTN_LT_F, b
     jr nz, jr_001_6861
 
     scf
-    bit 1, b
+    bit BTN_B_F, b
     ret nz
 
-    bit 0, b
+    bit BTN_A_F, b
     jr z, jr_001_688b
 
     ldh a, [hDraw90]
@@ -4877,7 +4906,7 @@ trap_61_7222::
     call Call_001_7227
 
 jr_001_7225:
-    trap $01
+    trap ExitToMenu
 
 Call_001_7227:
     trap AudioStop
@@ -5602,17 +5631,17 @@ jr_001_7969:
     trap AwaitFrame
     trap InputButtons
     ld b, a
-    and $0c
+    and BTN_SEL | BTN_STA
     jr nz, jr_001_7988
 
     ldh a, [$ab]
     cp $0c
     jr z, jr_001_7980
 
-    bit 0, b
+    bit BTN_A_F, b
     jr nz, jr_001_7993
 
-    bit 1, b
+    bit BTN_B_F, b
     jr nz, jr_001_79c5
 
 Jump_001_7980:
