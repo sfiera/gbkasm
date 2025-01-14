@@ -59,7 +59,7 @@ KissMailHandle:
     trap InputButtons
     ld c, a
     and BTN_B | BTN_SEL
-    jp nz, DoKissMailMenu
+    jp nz, SetUpAndDoKissMailMenu
 
     ld a, c
     and BTN_A | BTN_STA
@@ -105,7 +105,7 @@ KissMailEditLine:
     ldh [$c2], a
     ldh a, [$8a]
     bit BTN_SEL_F, a
-    jp nz, DoKissMailMenu
+    jp nz, SetUpAndDoKissMailMenu
 
     call Call_001_5f15
     xor a
@@ -155,15 +155,15 @@ Call_001_5f2d:
     call Call_001_6181
     ld c, $11
     pop af
-    jr z, jr_001_5f44
+    jr z, .jr_001_5f44
 
     trap TileLoadText
-    jr jr_001_5f60
+    jr .jr_001_5f60
 
-jr_001_5f44:
+.jr_001_5f44
     ld b, e
 
-jr_001_5f45:
+.jr_001_5f45
     push hl
     push de
     push bc
@@ -184,17 +184,19 @@ jr_001_5f45:
     add d
     ld d, a
     dec c
-    jr nz, jr_001_5f45
+    jr nz, .jr_001_5f45
 
-jr_001_5f60:
+.jr_001_5f60
     ret
 
 
-DoKissMailMenu:
+SetUpAndDoKissMailMenu:
     call Call_001_5ee7
     call Call_001_6501
+    ; fall through
 
-.again
+
+DoKissMailMenu:
     xor a
     ld de, KissMailMenu
     trap InputCursorMenu
@@ -211,11 +213,13 @@ DoKissMailMenu:
     dw KissMailPager - @
     dw KissMailExit - @
 
+
 KissMailMenu:
     db $06
     db $04, $05
     db $70, $7f
     dw Call_001_5f89 - @
+
 
 Call_001_5f89:
     push af
@@ -248,7 +252,7 @@ KissMailExit:
     call Call_001_6169
     jr nc, .exit
 
-    jr DoKissMailMenu.again
+    jr DoKissMailMenu
 
 .exit
     ; fall through
@@ -269,51 +273,51 @@ KissMailPager:
     ld a, $03
     trap LCDEnable
 
-jr_001_5fca:
+.next
     trap AwaitFrame
     trap InputButtons
     bit BTN_UP_F, a
-    jr nz, jr_001_5fed
+    jr nz, .up
 
     bit BTN_DN_F, a
-    jr nz, jr_001_5ffa
+    jr nz, .down
 
     bit BTN_A_F, a
-    jr nz, jr_sys_6002
+    jr nz, .action
 
     bit BTN_RT_F, a
-    jr nz, jr_sys_6002
+    jr nz, .action
 
     and BTN_B | BTN_SEL
-    jr nz, jr_001_5fe7
+    jr nz, .menu
 
-jr_001_5fe2:
+.jr_001_5fe2
     call Call_001_5f2d
-    jr jr_001_5fca
+    jr .next
 
-jr_001_5fe7:
+.menu
     pop af
     ldh [$c0], a
-    jp DoKissMailMenu
+    jp SetUpAndDoKissMailMenu
 
 
-jr_001_5fed:
+.up
     call Call_001_5ee7
 
-jr_001_5ff0:
+.jr_001_5ff0
     call Call_001_5f21
     ldh a, [$c0]
     or a
-    jr z, jr_001_5ff0
+    jr z, .jr_001_5ff0
 
-    jr jr_001_5fe2
+    jr .jr_001_5fe2
 
-jr_001_5ffa:
+.down
     call Call_001_5ee7
     call Call_001_5f15
-    jr jr_001_5fe2
+    jr .jr_001_5fe2
 
-jr_sys_6002:
+.action
     call Call_001_5ee7
     trap AudioStop
     ld hl, $0400
@@ -325,7 +329,7 @@ jr_sys_6002:
     trap $b6
     trap AudioStop
     trap $db
-    jr jr_001_5fca
+    jr .next
 
 
 KissMailSave:
@@ -334,10 +338,10 @@ KissMailSave:
     xor a
     ldh [$c0], a
 
-jr_001_6025:
+.jr_001_6025
     call Call_001_614f
     or a
-    jr nz, jr_001_6037
+    jr nz, .jr_001_6037
 
     ld a, $09
     call Call_001_5f89
@@ -345,8 +349,7 @@ jr_001_6025:
     pop af
     jp KissMailContinue
 
-
-jr_001_6037:
+.jr_001_6037
     inc a
     ld c, a
     ld de, $c6df
@@ -355,34 +358,34 @@ jr_001_6037:
     ld hl, $c500
     ld c, $00
     trap FileSearch
-    jr c, jr_001_6059
+    jr c, .jr_001_6059
 
     ld a, $0a
     call Call_001_5f89
     call Call_001_6169
-    jr c, jr_001_606b
+    jr c, .jr_001_606b
 
     ld hl, $c500
     trap FileDelete
-    jr jr_001_6025
+    jr .jr_001_6025
 
-jr_001_6059:
+.jr_001_6059
     call Call_001_66ab
     ld a, $06
-    jr c, jr_001_6065
+    jr c, .jr_001_6065
 
     xor a
     ldh [$c2], a
     ld a, $0b
 
-jr_001_6065:
+.jr_001_6065
     call Call_001_5f89
     call Call_001_6173
 
-jr_001_606b:
+.jr_001_606b
     pop af
     ldh [$c0], a
-    jp DoKissMailMenu.again
+    jp DoKissMailMenu
 
 
 KissMailSend:
@@ -392,7 +395,7 @@ KissMailSend:
     ld a, $03
     trap LCDEnable
     call Call_001_6169
-    jp c, DoKissMailMenu
+    jp c, SetUpAndDoKissMailMenu
 
     ld a, $0d
     call Call_001_5f89
@@ -400,48 +403,48 @@ KissMailSend:
     trap $cc
     trap AwaitBlit
     call Call_001_611d
-    jr c, jr_001_60b0
+    jr c, .jr_001_60b0
 
     ld hl, $c600
     ld e, l
     ld d, h
     ld c, $99
     trap IRWrite
-    jr c, jr_001_60b5
+    jr c, .jr_001_60b5
 
     trap IRClose
-    jr c, jr_001_60b5
+    jr c, .jr_001_60b5
 
     ld a, $0e
     call Call_001_5f89
 
-jr_001_60a7:
+.jr_001_60a7
     xor a
     trap $cc
     call Call_001_6173
-    jp DoKissMailMenu
+    jp SetUpAndDoKissMailMenu
 
 
-jr_001_60b0:
+.jr_001_60b0
     call Call_001_6114
-    jr jr_001_60a7
+    jr .jr_001_60a7
 
-jr_001_60b5:
+.jr_001_60b5
     call Call_001_6112
-    jr jr_001_60a7
+    jr .jr_001_60a7
 
 
 KissMailRecv:
     ldh a, [$c2]
     or a
-    jr z, jr_001_60c9
+    jr z, .jr_001_60c9
 
     ld a, $12
     call Call_001_5f89
     call Call_001_6169
-    jr c, jr_001_6103
+    jr c, .jr_001_6103
 
-jr_001_60c9:
+.jr_001_60c9
     ld a, $11
     call Call_001_5f89
     trap AwaitBlit
@@ -456,10 +459,10 @@ jr_001_60c9:
     xor a
     trap $cc
     pop af
-    jr c, jr_001_610d
+    jr c, .jr_001_610d
     ld a, [$c6d5]
     or a
-    jr z, jr_001_6106
+    jr z, .jr_001_6106
 
     xor a
     ldh [$c0], a
@@ -470,32 +473,34 @@ jr_001_60c9:
     ld a, $01
     ldh [$c2], a
 
-jr_001_6100:
+.jr_001_6100
     call Call_001_6173
 
-jr_001_6103:
-    jp DoKissMailMenu.again
+.jr_001_6103
+    jp DoKissMailMenu
 
 
-jr_001_6106:
+.jr_001_6106
     ld a, $0f
     call Call_001_5f89
-    jr jr_001_6100
+    jr .jr_001_6100
 
-jr_001_610d:
+.jr_001_610d
     call Call_001_6112
-    jr jr_001_6100
+    jr .jr_001_6100
+
 
 Call_001_6112:
     ld a, $10
+    ; fall through
 
 Call_001_6114:
     call Call_001_5f89
 
-jr_001_6117:
+.jr_001_6117
     trap InputButtons
     or a
-    jr nz, jr_001_6117
+    jr nz, .jr_001_6117
 
     ret
 
@@ -505,14 +510,14 @@ Call_001_611d:
     ld de, $c400
     ld bc, $000a
     trap IRRead
-    jr c, jr_001_6146
+    jr c, .jr_001_6146
 
     ld hl, $c400
     ld de, data_01_661d
     ld bc, $000a
     trap $67
     or a
-    jr nz, jr_001_6149
+    jr nz, .jr_001_6149
 
     inc a
     ld hl, $c400
@@ -522,12 +527,11 @@ Call_001_611d:
     trap IRWrite
     ret nc
 
-jr_001_6146:
+.jr_001_6146
     ld a, $10
     ret
 
-
-jr_001_6149:
+.jr_001_6149
     trap IRClose
     ld a, $0f
     scf
@@ -540,16 +544,16 @@ Call_001_614f:
     push de
     inc c
     dec c
-    jr z, jr_001_6160
+    jr z, .jr_001_6160
 
-jr_001_615a:
+.jr_001_615a
     ld a, [hl+]
     ld [de], a
     inc de
     dec c
-    jr nz, jr_001_615a
+    jr nz, .jr_001_615a
 
-jr_001_6160:
+.jr_001_6160
     xor a
     ld [de], a
     pop de
@@ -564,13 +568,14 @@ Call_001_6169:
     ld e, $01
     ld hl, data_01_64c5
     trap $5a
+    ; fall through
+
 
 Call_001_6173:
-jr_001_6173:
     trap AwaitFrame
     trap InputButtons
     and BTN_AB
-    jr z, jr_001_6173
+    jr z, Call_001_6173
 
     or a
     bit 1, a
@@ -584,11 +589,11 @@ Call_001_6181:
     ld b, $11
     ldh a, [$c0]
     or a
-    jr nz, jr_001_618a
+    jr nz, .jr_001_618a
 
     ld b, $0c
 
-jr_001_618a:
+.jr_001_618a
     ld e, a
     add a
     add a
@@ -733,9 +738,11 @@ data_01_61a1:
     dh $01, $0f, "それでもいいですか？\0"
     db $ff
 
+
 data_01_64c5:
     dh $01, $10, "はい:A いいえ:B\0"
     db $ff
+
 
 Call_001_64d3:
     ld hl, $c500
@@ -746,7 +753,7 @@ Call_001_64d3:
     ld hl, $00d2
     trap $e6
     bit 7, h
-    jr nz, jr_001_64ec
+    jr nz, .jr_001_64ec
 
     trap $e7
     xor a
@@ -755,7 +762,7 @@ Call_001_64d3:
     dec b
     ret nz
 
-jr_001_64ec:
+.jr_001_64ec
     call Call_001_66dc
     ld a, $03
     trap LCDEnable
@@ -804,6 +811,7 @@ data_01_6535:
     dh $05, $0a, "KISSメニューにもどる»\0"
     db $ff
 
+
 Call_001_657f:
     trap LCDDisable
     call Call_001_66dc
@@ -831,13 +839,13 @@ Call_001_657f:
     ldh [$c0], a
     ld c, $09
 
-jr_001_65b7:
+.jr_001_65b7
     push bc
     call Call_001_5ee7
     call Call_001_5f15
     pop bc
     dec c
-    jr nz, jr_001_65b7
+    jr nz, .jr_001_65b7
 
     pop af
     ldh [$c0], a
@@ -860,13 +868,13 @@ Call_001_65db:
     ld hl, $9800
     ld bc, $0400
 
-jr_001_65e1:
+.jr_001_65e1
     ld a, $7f
     ld [hl+], a
     dec bc
     ld a, b
     or c
-    jr nz, jr_001_65e1
+    jr nz, .jr_001_65e1
 
     ld de, $0101
     ld bc, $1303
@@ -886,6 +894,7 @@ data_01_6607:
     dk $06, $00, "KISS MAIL\0"
     dh $02, $02, "タイトル:\0"
     db $ff
+
 
 data_01_661d:
     dk $00, "KISS-MAIL"
