@@ -10,6 +10,27 @@ INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
+DEF LAYOUT_CONTINUE_HELP      EQU $00
+DEF LAYOUT_SAVE_HELP          EQU $01
+DEF LAYOUT_SEND_HELP          EQU $02
+DEF LAYOUT_RECV_HELP          EQU $03
+DEF LAYOUT_PAGER_HELP         EQU $04
+DEF LAYOUT_EXIT_HELP          EQU $05
+DEF LAYOUT_NO_SPACE_ERROR     EQU $06
+DEF LAYOUT_PAGER_EDIT_HELP    EQU $07
+DEF LAYOUT_NOT_SAVED_CONFIRM  EQU $08
+DEF LAYOUT_NO_TITLE_ERROR     EQU $09
+DEF LAYOUT_OVERWRITE_CONFIRM  EQU $0a
+DEF LAYOUT_SAVE_DONE          EQU $0b
+DEF LAYOUT_SEND_CONFIRM       EQU $0c
+DEF LAYOUT_SENDING            EQU $0d
+DEF LAYOUT_XFER_DONE          EQU $0e
+DEF LAYOUT_XFER_FAIL          EQU $0f
+DEF LAYOUT_XFER_CANCEL        EQU $10
+DEF LAYOUT_RECEIVING          EQU $11
+DEF LAYOUT_ERASE_CONFIRM      EQU $12
+DEF LAYOUT_NO_SPACE_CONFIRM   EQU $13
+
 SECTION "Kiss Mail Stub", ROMX
 
 KissMailRegionHeader:
@@ -218,17 +239,17 @@ KissMailMenu:
     db $06
     db $04, $05
     db $70, $7f
-    dw Call_001_5f89 - @
+    dw ShowMailLayout - @
 
 
-Call_001_5f89:
+ShowMailLayout:
     push af
     call Call_001_652c
     pop af
     add a
     ld c, a
     ld b, $00
-    ld hl, data_01_61a1
+    ld hl, MailLayouts
     add hl, bc
     ld a, [hl+]
     ld h, [hl]
@@ -247,8 +268,8 @@ KissMailExit:
     or a
     jr z, .exit
 
-    ld a, $08
-    call Call_001_5f89
+    ld a, LAYOUT_NOT_SAVED_CONFIRM
+    call ShowMailLayout
     call Call_001_6169
     jr nc, .exit
 
@@ -268,8 +289,8 @@ KissMailPager:
     push af
     ld a, $01
     ldh [$c0], a
-    ld a, $07
-    call Call_001_5f89
+    ld a, LAYOUT_PAGER_EDIT_HELP
+    call ShowMailLayout
     ld a, $03
     trap LCDEnable
 
@@ -343,8 +364,8 @@ KissMailSave:
     or a
     jr nz, .jr_001_6037
 
-    ld a, $09
-    call Call_001_5f89
+    ld a, LAYOUT_NO_TITLE_ERROR
+    call ShowMailLayout
     call Call_001_6173
     pop af
     jp KissMailContinue
@@ -360,8 +381,8 @@ KissMailSave:
     trap FileSearch
     jr c, .jr_001_6059
 
-    ld a, $0a
-    call Call_001_5f89
+    ld a, LAYOUT_OVERWRITE_CONFIRM
+    call ShowMailLayout
     call Call_001_6169
     jr c, .jr_001_606b
 
@@ -371,15 +392,15 @@ KissMailSave:
 
 .jr_001_6059
     call Call_001_66ab
-    ld a, $06
+    ld a, LAYOUT_NO_SPACE_ERROR
     jr c, .jr_001_6065
 
     xor a
     ldh [$c2], a
-    ld a, $0b
+    ld a, LAYOUT_SAVE_DONE
 
 .jr_001_6065
-    call Call_001_5f89
+    call ShowMailLayout
     call Call_001_6173
 
 .jr_001_606b
@@ -390,15 +411,15 @@ KissMailSave:
 
 KissMailSend:
     call Call_001_657f
-    ld a, $0c
-    call Call_001_5f89
+    ld a, LAYOUT_SEND_CONFIRM
+    call ShowMailLayout
     ld a, $03
     trap LCDEnable
     call Call_001_6169
     jp c, SetUpAndDoKissMailMenu
 
-    ld a, $0d
-    call Call_001_5f89
+    ld a, LAYOUT_SENDING
+    call ShowMailLayout
     ld a, $01
     trap $cc
     trap AwaitBlit
@@ -415,8 +436,8 @@ KissMailSend:
     trap IRClose
     jr c, .jr_001_60b5
 
-    ld a, $0e
-    call Call_001_5f89
+    ld a, LAYOUT_XFER_DONE
+    call ShowMailLayout
 
 .jr_001_60a7
     xor a
@@ -439,16 +460,16 @@ KissMailRecv:
     or a
     jr z, .jr_001_60c9
 
-    ld a, $12
-    call Call_001_5f89
+    ld a, LAYOUT_ERASE_CONFIRM
+    call ShowMailLayout
     call Call_001_6169
     jr c, .jr_001_6103
 
 .jr_001_60c9
-    ld a, $11
-    call Call_001_5f89
+    ld a, LAYOUT_RECEIVING
+    call ShowMailLayout
     trap AwaitBlit
-    ld de, data_01_661d
+    ld de, IRIdentifier
     ld hl, $c6d5
     ld bc, $000a
     trap MemCopy
@@ -468,8 +489,8 @@ KissMailRecv:
     ldh [$c0], a
     call Call_001_5ee7
     call Call_001_5f15
-    ld a, $0e
-    call Call_001_5f89
+    ld a, LAYOUT_XFER_DONE
+    call ShowMailLayout
     ld a, $01
     ldh [$c2], a
 
@@ -479,10 +500,9 @@ KissMailRecv:
 .jr_001_6103
     jp DoKissMailMenu
 
-
 .jr_001_6106
-    ld a, $0f
-    call Call_001_5f89
+    ld a, LAYOUT_XFER_FAIL
+    call ShowMailLayout
     jr .jr_001_6100
 
 .jr_001_610d
@@ -491,11 +511,11 @@ KissMailRecv:
 
 
 Call_001_6112:
-    ld a, $10
+    ld a, LAYOUT_XFER_CANCEL
     ; fall through
 
 Call_001_6114:
-    call Call_001_5f89
+    call ShowMailLayout
 
 .jr_001_6117
     trap InputButtons
@@ -513,9 +533,9 @@ Call_001_611d:
     jr c, .jr_001_6146
 
     ld hl, $c400
-    ld de, data_01_661d
+    ld de, IRIdentifier
     ld bc, $000a
-    trap $67
+    trap $67  ; strcmp?
     or a
     jr nz, .jr_001_6149
 
@@ -566,7 +586,7 @@ Call_001_6169:
     ldh a, [$c4]
     ld d, a
     ld e, $01
-    ld hl, data_01_64c5
+    ld hl, LayoutYesNo
     trap $5a
     ; fall through
 
@@ -613,133 +633,133 @@ Call_001_6181:
     ret
 
 
-data_01_61a1:
-    dw .61c9
-    dw .61de
-    dw .61f4
-    dw .6216
-    dw .6239
-    dw .6252
-    dw .626f
-    dw .629c
-    dw .62c9
-    dw .62ef
-    dw .632d
-    dw .635e
-    dw .6373
-    dw .6399
-    dw .63b5
-    dw .63d1
-    dw .640b
-    dw .643c
-    dw .6465
-    dw .6490
+MailLayouts:
+    dw .continueHelp
+    dw .saveHelp
+    dw .sendHelp
+    dw .recvHelp
+    dw .pagerHelp
+    dw .exitHelp
+    dw .noSpaceError
+    dw .pagerEditHelp
+    dw .notSavedConfirm
+    dw .noTitleError
+    dw .overwriteConfirm
+    dw .saveDone
+    dw .sendConfirm
+    dw .sending
+    dw .xferDone
+    dw .xferFail
+    dw .xferCancel
+    dw .receiving
+    dw .eraseConfirm
+    dw .noSpaceConfirm
 
-.61c9
+.continueHelp
     dk $01, $0e, "へんしゅうがめんにもどります\0"
     db $ff
 
-.61de
+.saveHelp
     dk $01, $0e, "いまのぶんしょうをほぞんします\0"
     db $ff
 
-.61f4
+.sendHelp
     dk $01, $0e, "ほかのゲームボーイにぶんしょうを\0"
     dh $01, $0f, "おくります\0"
     db $ff
 
-.6216
+.recvHelp
     dk $01, $0e, "ほかのゲームボーイからぶんしょうを\0"
     dh $01, $0f, "もらいます\0"
     db $ff
 
-.6239
+.pagerHelp
     dh $01, $0e, "ポケベルにぶんしょうをおくります\0"
     db $ff
 
-.6252
+.exitHelp
     dk $01, $0e, "「ＫＩＳＳ　ＭＡＩＬ」を\0"
     dh $01, $0f, "しゅうりょうします\0"
     db $ff
 
-.626f
+.noSpaceError
     dk $01, $0e, "あきようりょうがたりなくてセーブ\0"
     dk $01, $0f, "できませんでした\0"
     dh $01, $10, "ＯＫ：Ａ\0"
     db $ff
 
-.629c
+.pagerEditHelp
     dh $01, $0e, "»Ａボタンをおすと１ぎょうごとに\0"
     dh $01, $0f, "はっしんします\0"
     dh $01, $10, "しゅうりょう：Ｂ\0"
     db $ff
 
-.62c9
+.notSavedConfirm
     dh $01, $0e, "セーブされていませんが\0"
     dh $01, $0f, "しゅうりょうしてもいいですか？\0"
     db $ff
 
-.62ef
+.noTitleError
     dh $01, $0e, "タイトルがにゅうりょくされていません\0"
     dh $01, $0f, "にゅうりょくしたあとでもういちど\0"
     dh $01, $10, "セーブしてください\0"
     db $ff
 
-.632d
+.overwriteConfirm
     dk $01, $0e, "おなじなまえのぶんしょうがあります\0"
     dh $01, $0f, "うわがきしてほぞんしてもいいですか？\0"
     db $ff
 
-.635e
+.saveDone
     dh $01, $0e, "セーブしました\0"
     dh $01, $0f, "ＯＫ：Ａ\0"
     db $ff
 
-.6373
+.sendConfirm
     dk $01, $0e, "このぶんしょうをそうしんします\0"
     dh $01, $0f, "じゅんびはいいですか？\0"
     db $ff
 
-.6399
+.sending
     dk $01, $0e, "つうしんちゅうです\0"
     dh $01, $0f, "ちゅうだんする：Ｂ\0"
     db $ff
 
-.63b5
+.xferDone
     dk $01, $0e, "つうしんがしゅうりょうしました\0"
     dh $01, $0f, "ＯＫ：Ａ\0"
     db $ff
 
-.63d1
+.xferFail
     dk $01, $0e, "「ＫＩＳＳ　ＭＡＩＬ」どうしでないと\0"
     dh $01, $0f, "つうしんできません\0"
     dh $01, $10, "もういちどやりなおしてください\0"
     db $ff
 
-.640b
+.xferCancel
     dk $01, $0e, "つうしんがちゅうだんされました\0"
     dh $01, $0f, "もういちどやりなおしてください\0"
     dh $01, $10, "ＯＫ：Ａ\0"
     db $ff
 
-.643c
+.receiving
     dk $01, $0e, "じゅしんたいきちゅうです\0"
     dh $01, $0f, "あいてのそうしんをかいししてください\0"
     db $ff
 
-.6465
+.eraseConfirm
     dk $01, $0e, "へんしゅうちゅうのぶんしょうが\0"
     dh $01, $0f, "きえてしまいますが、いいですか？\0"
     db $ff
 
-.6490
+.noSpaceConfirm
     dk $06, $00, "ＫＩＳＳ　ＭＡＩＬ\0"
     dh $01, $0e, "セーブできるようりょうがたりません\0"
     dh $01, $0f, "それでもいいですか？\0"
     db $ff
 
 
-data_01_64c5:
+LayoutYesNo:
     dh $01, $10, "はい:A いいえ:B\0"
     db $ff
 
@@ -766,8 +786,8 @@ Call_001_64d3:
     call Call_001_66dc
     ld a, $03
     trap LCDEnable
-    ld a, $13
-    call Call_001_5f89
+    ld a, LAYOUT_NO_SPACE_CONFIRM
+    call ShowMailLayout
     call Call_001_6169
     jp c, Exit
 
@@ -786,7 +806,7 @@ Call_001_6501:
     ld de, $0204
     ld bc, $1109
     trap DrawBox
-    ld hl, data_01_6535
+    ld hl, LayoutMenu
     ld de, $9101
     trap $5a
     call Call_001_652c
@@ -802,7 +822,7 @@ Call_001_652c::
     ret
 
 
-data_01_6535:
+LayoutMenu:
     dk $05, $05, "つづける\0"
     dh $05, $06, "セーブする\0"
     dh $05, $07, "そうしんする\0"
@@ -884,17 +904,17 @@ Call_001_65db:
     ld de, $0702
     ld bc, $0c01
     trap $59
-    ld hl, data_01_6607
+    ld hl, LayoutEditor
     ld de, $2001
     trap $5a
     ret
 
 
-data_01_6607:
+LayoutEditor:
     dk $06, $00, "KISS MAIL\0"
     dh $02, $02, "タイトル:\0"
     db $ff
 
 
-data_01_661d:
+IRIdentifier:
     dk $00, "KISS-MAIL"
