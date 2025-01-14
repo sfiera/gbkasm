@@ -1011,7 +1011,7 @@ call_08e9:
     trap $51
     ld de, $420d
     ld hl, $c600
-    trap $54
+    trap KbdInit
     ldx hl, data_092e
     ld de, $8001
     trap $5a
@@ -1029,9 +1029,9 @@ call_08e9:
     ld b, $05
     ld hl, $cc9e
     ld a, b
-    trap $4d
+    trap StrTrim
     ld c, a
-    trap $55
+    trap KbdEdit
     ret
 
 

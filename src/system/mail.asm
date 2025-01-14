@@ -10,6 +10,10 @@ INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
+DEF TITLE_LEN   EQU 12
+DEF BODY_LEN    EQU 17
+DEF LINE_COUNT  EQU 9
+
 DEF LAYOUT_CONTINUE_HELP      EQU $00
 DEF LAYOUT_SAVE_HELP          EQU $01
 DEF LAYOUT_SEND_HELP          EQU $02
@@ -64,12 +68,12 @@ KissMailStart:
 
 
 KissMailContinue:
-    call Call_001_657f
-    ld a, $01
-    call Call_001_66c2
+    call DrawMailWindow
+    ld a, 1
+    call LoadPageTiles
     ld de, $470d
     ld hl, $c699
-    trap $54
+    trap KbdInit
     ld a, $03
     trap LCDEnable
     ; fall through
@@ -92,34 +96,34 @@ KissMailHandle:
     bit BTN_DN_F, c
     jr nz, .down
 
-    call Call_001_5f2d
+    call UpdateMailUnderline
     jr KissMailHandle
 
 .up
-    call Call_001_5ee7
-    call Call_001_5f21
+    call RedrawMailLine
+    call PrevMailLine
     jr KissMailHandle
 
 .down
-    call Call_001_5ee7
-    call Call_001_5f15
+    call RedrawMailLine
+    call NextMailLine
     jr KissMailHandle
 
 
-Call_001_5ee7:
+RedrawMailLine:
     xor a
     ldh [$c1], a
-    call Call_001_6181
-    ld c, $11
+    call GetMailLineMetrics
+    ld c, BODY_LEN
     trap TileLoadText
     ret
 
 
 KissMailEditLine:
     xor a
-    call Call_001_66c2
-    call Call_001_6181
-    trap $55
+    call LoadPageTiles
+    call GetMailLineMetrics
+    trap KbdEdit
     jr c, .done
 
     ld a, $01
@@ -128,43 +132,43 @@ KissMailEditLine:
     bit BTN_SEL_F, a
     jp nz, SetUpAndDoKissMailMenu
 
-    call Call_001_5f15
+    call NextMailLine
     xor a
     ldh [$c1], a
 
 .done
-    ld a, $01
-    call Call_001_66c2
+    ld a, 1
+    call LoadPageTiles
     jr KissMailHandle
 
 
-Call_001_5f15:
+NextMailLine:
     ldh a, [$c0]
     inc a
-    cp $09
-    jr c, .jr_001_5f1e
+    cp LINE_COUNT
+    jr c, .noWrap
 
-    ld a, $01
+    ld a, 1
 
-.jr_001_5f1e
+.noWrap
     ldh [$c0], a
     ret
 
 
-Call_001_5f21:
+PrevMailLine:
     ldh a, [$c0]
     dec a
     bit 7, a
-    jr z, .jr_001_5f2a
+    jr z, .noWrap
 
-    ld a, $08
+    ld a, LINE_COUNT - 1
 
-.jr_001_5f2a
+.noWrap
     ldh [$c0], a
     ret
 
 
-Call_001_5f2d:
+UpdateMailUnderline:
     ld hl, $ffc1
     ld a, [hl]
     inc [hl]
@@ -173,18 +177,18 @@ Call_001_5f2d:
 
     bit 4, [hl]
     push af
-    call Call_001_6181
-    ld c, $11
+    call GetMailLineMetrics
+    ld c, BODY_LEN
     pop af
-    jr z, .jr_001_5f44
+    jr z, .underline
 
     trap TileLoadText
     jr .done
 
-.jr_001_5f44
+.underline
     ld b, e
 
-.jr_001_5f45
+.next
     push hl
     push de
     push bc
@@ -200,20 +204,21 @@ Call_001_5f2d:
     pop bc
     pop de
     pop hl
+
     inc hl
     ld a, b
     add d
     ld d, a
     dec c
-    jr nz, .jr_001_5f45
+    jr nz, .next
 
 .done
     ret
 
 
 SetUpAndDoKissMailMenu:
-    call Call_001_5ee7
-    call Call_001_6501
+    call RedrawMailLine
+    call DrawMailMenu
     ; fall through
 
 
@@ -244,7 +249,7 @@ KissMailMenu:
 
 ShowMailLayout:
     push af
-    call Call_001_652c
+    call DrawHelpBox
     pop af
     add a
     ld c, a
@@ -284,7 +289,7 @@ Exit:
 
 
 KissMailPager:
-    call Call_001_657f
+    call DrawMailWindow
     ldh a, [$c0]
     push af
     ld a, $01
@@ -312,8 +317,8 @@ KissMailPager:
     and BTN_B | BTN_SEL
     jr nz, .menu
 
-.jr_001_5fe2
-    call Call_001_5f2d
+.update
+    call UpdateMailUnderline
     jr .next
 
 .menu
@@ -321,31 +326,32 @@ KissMailPager:
     ldh [$c0], a
     jp SetUpAndDoKissMailMenu
 
-
 .up
-    call Call_001_5ee7
+    call RedrawMailLine
 
-.jr_001_5ff0
-    call Call_001_5f21
+.upAgain
+    ; In pager mode, the title line is skipped.
+    ; So if the line became 0, then go up again.
+    call PrevMailLine
     ldh a, [$c0]
     or a
-    jr z, .jr_001_5ff0
+    jr z, .upAgain
 
-    jr .jr_001_5fe2
+    jr .update
 
 .down
-    call Call_001_5ee7
-    call Call_001_5f15
-    jr .jr_001_5fe2
+    call RedrawMailLine
+    call NextMailLine
+    jr .update
 
 .action
-    call Call_001_5ee7
+    call RedrawMailLine
     trap AudioStop
     ld hl, $0400
     trap $b6
     call Call_001_614f
     trap $70
-    call Call_001_5f15
+    call NextMailLine
     ld hl, $0404
     trap $b6
     trap AudioStop
@@ -410,7 +416,7 @@ KissMailSave:
 
 
 KissMailSend:
-    call Call_001_657f
+    call DrawMailWindow
     ld a, LAYOUT_SEND_CONFIRM
     call ShowMailLayout
     ld a, $03
@@ -487,8 +493,8 @@ KissMailRecv:
 
     xor a
     ldh [$c0], a
-    call Call_001_5ee7
-    call Call_001_5f15
+    call RedrawMailLine
+    call NextMailLine
     ld a, LAYOUT_XFER_DONE
     call ShowMailLayout
     ld a, $01
@@ -536,7 +542,7 @@ SendMail:
     ld hl, $c400
     ld de, IRIdentifier
     ld bc, IRIdentifier.end - IRIdentifier
-    trap $67  ; strcmp?
+    trap MemCmp
     or a
     jr nz, .mismatch
 
@@ -560,7 +566,7 @@ SendMail:
 
 
 Call_001_614f:
-    call Call_001_6181
+    call GetMailLineMetrics
     ld de, $c708
     push de
     inc c
@@ -606,15 +612,22 @@ AwaitAB:
     ret
 
 
-Call_001_6181:
-    ld b, $11
+; Sets:
+;   hl: address of current line in memory
+;   d: tile index of first tile in line (e.g. $91 for $8910)
+;   e: 1
+;   c: insertion point of line (i.e. 1 after last non-space)
+;
+; These values are suitable for calling trap KbdEdit
+GetMailLineMetrics:
+    ld b, BODY_LEN
     ldh a, [$c0]
     or a
-    jr nz, .jr_001_618a
+    jr nz, .calc
 
-    ld b, $0c
+    ld b, TITLE_LEN
 
-.jr_001_618a
+.calc
     ld e, a
     add a
     add a
@@ -625,11 +638,12 @@ Call_001_6181:
     ld d, $00
     ld hl, $c600
     add hl, de
+
     add $80
     ld d, a
     ld e, $01
     ld a, b
-    trap $4d
+    trap StrTrim
     ld c, a
     ret
 
@@ -796,27 +810,27 @@ Call_001_64d3:
     ret
 
 
-Call_001_6501:
+DrawMailMenu:
     trap LCDDisable
     call Call_001_66dc
     ld de, ArrowIcon
     ld hl, $9700
     ld bc, $0010
     trap MemCopy
-    call Call_001_65db
+    call DrawMailHeader
     ld de, $0204
     ld bc, $1109
     trap DrawBox
     ld hl, LayoutMenu
     ld de, $9101
     trap $5a
-    call Call_001_652c
+    call DrawHelpBox
     ld a, $03
     trap LCDEnable
     ret
 
 
-Call_001_652c::
+DrawHelpBox::
     ld de, $000d
     ld bc, $1405
     trap DrawBox
@@ -833,22 +847,25 @@ LayoutMenu:
     db $ff
 
 
-Call_001_657f:
+DrawMailWindow:
     trap LCDDisable
     call Call_001_66dc
     ld a, $e4
     ldh [$9d], a
-    call Call_001_65c6
-    call Call_001_65db
+    call KissClearScreen
+    call DrawMailHeader
+
+    ; Draw text entry box and change the upper corners to T tiles
     ld de, $0103
     ld bc, $130a
     trap DrawBox
     ld a, $73
     ld de, $0103
-    trap $cd
+    trap DrawTile
     inc a
     ld d, $13
-    trap $cd
+    trap DrawTile
+
     ld a, $91
     ld hl, $0111
     ld de, $0204
@@ -858,22 +875,22 @@ Call_001_657f:
     push af
     xor a
     ldh [$c0], a
-    ld c, $09
+    ld c, LINE_COUNT
 
-.jr_001_65b7
+.next
     push bc
-    call Call_001_5ee7
-    call Call_001_5f15
+    call RedrawMailLine
+    call NextMailLine
     pop bc
     dec c
-    jr nz, .jr_001_65b7
+    jr nz, .next
 
     pop af
     ldh [$c0], a
     ret
 
 
-Call_001_65c6::
+KissClearScreen::
     ld hl, $8800
     ld bc, $0f30
     ld e, $00
@@ -885,7 +902,7 @@ Call_001_65c6::
     ret
 
 
-Call_001_65db:
+DrawMailHeader:
     ld hl, $9800
     ld bc, $0400
 

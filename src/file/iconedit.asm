@@ -650,7 +650,7 @@ EnterFileName:
     callx LoadIconTiles
     ld de, $420d
     ld hl, VarC700
-    trap $54
+    trap KbdInit
     ld a, MSG_ENTER_FILE_NAME
     callx ShowTopMsg
     ld de, $0107

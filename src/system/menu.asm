@@ -868,7 +868,7 @@ SendFile:
     ld hl, data_01_401a
     ld de, $ce02
     ld bc, $000d
-    trap $67
+    trap MemCmp
     ld a, h
     or l
     ld hl, data_01_4d8d

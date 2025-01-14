@@ -20,6 +20,10 @@ DEF AudioSetVolume    EQU $19
 DEF AudioGetCount     EQU $1a
 
 DEF TileLoad          EQU $4c
+DEF StrTrim           EQU $4d
+
+DEF KbdInit           EQU $54
+DEF KbdEdit           EQU $55
 
 DEF DrawBox           EQU $58  ; origin = (d, e), size = (b, c)
 DEF DrawLayout        EQU $5c
@@ -28,6 +32,8 @@ DEF InputCursorMenu   EQU $5f
 
 DEF ExtractInit       EQU $62
 DEF ExtractData       EQU $63
+
+DEF MemCmp            EQU $67
 
 DEF DrawString        EQU $69
 DEF DrawStringList    EQU $6a
@@ -78,6 +84,7 @@ DEF DrawBaseAddr      EQU $b7
 DEF DrawAt            EQU $b8
 DEF DrawCtrlChar      EQU $b9
 DEF DrawChar          EQU $bb
+DEF DrawTile          EQU $cd
 DEF InputHiliteMenu   EQU $bf
 
 DEF AwaitBlit         EQU $c3

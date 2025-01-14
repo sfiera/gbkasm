@@ -1966,7 +1966,7 @@ jr_000_0cdc:
     ld bc, $0010
 
 jx_0cdf:
-    trap $67
+    trap MemCmp
     ld a, l
     or $00
     jr nz, jr_000_0ce9

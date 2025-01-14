@@ -90,7 +90,7 @@ traps2::
     dw trap_ca_5859         ; trap $ca
     dw TrapTimerSet         ; trap $cb
     dw trap_cc_419f         ; trap $cc
-    dw trap_cd_59c1         ; trap $cd
+    dw TrapDrawTile         ; trap $cd
     dw trap_none_2          ; trap $ce
     dw trap_none_2          ; trap $cf
     dw trap_none_2          ; trap $d0
@@ -2443,7 +2443,7 @@ jr_002_4c2c:
     push bc
     push de
     ld bc, $000a
-    trap $67
+    trap MemCmp
     ld a, h
     or l
     pop de
@@ -5337,7 +5337,7 @@ jr_002_59b3:
     ret
 
 
-trap_cd_59c1:
+TrapDrawTile:
     push af
     push bc
     push de

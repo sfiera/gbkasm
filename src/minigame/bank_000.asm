@@ -1215,7 +1215,7 @@ Jump_000_06b9::
     ldh [$ae], a
     ld de, $900d
     ld hl, $0000
-    trap $54
+    trap KbdInit
     ld a, $80
     ld de, $0606
     ld bc, $0801
@@ -1231,7 +1231,7 @@ Jump_000_06b9::
     ld b, $08
     ld hl, $c656
     ld c, $00
-    trap $55
+    trap KbdEdit
     jp c, Jump_000_0543
 
     ld hl, strPasswords
@@ -1243,7 +1243,7 @@ jr_000_072f:
     ld de, $c656
     ld bc, $0008
     push bc
-    trap $67
+    trap MemCmp
     pop bc
     ld a, h
     or l
@@ -2132,7 +2132,7 @@ jr_000_0c9b:
     pop hl
     ld de, $c802
     ld bc, $000d
-    trap $67
+    trap MemCmp
     ld a, h
     or l
     ld a, $06

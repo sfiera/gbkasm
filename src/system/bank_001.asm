@@ -42,15 +42,15 @@ ArrowIcon::
 traps1::
     dw trap_4b_7dcc         ; $4b
     dw TrapTileLoad         ; $4c
-    dw trap_4d_7e77         ; $4d
+    dw TrapStrTrim         ; $4d
     dw trap_4e_7f04         ; $4e
     dw trap_4f_7e90         ; $4f
     dw trap_50_7260         ; $50
     dw trap_51_665c         ; $51
     dw trap_52_7730         ; $52
     dw trap_53_784d         ; $53
-    dw trap_54_7863         ; $54
-    dw trap_55_793f         ; $55
+    dw TrapKbdInit          ; $54
+    dw TrapKbdEdit          ; $55
     dw trap_56_78f0         ; $56
     dw trap_57_7df1         ; $57
     dw TrapDrawBox          ; $58
@@ -68,7 +68,7 @@ traps1::
     dw trap_64_6de4         ; $64
     dw trap_65_6e2e         ; $65
     dw trap_66_6f66         ; $66
-    dw trap_67_6f7a         ; $67
+    dw TrapMemCmp           ; $67
     dw trap_68_6f8f         ; $68
     dw TrapDrawString       ; $69
     dw TrapDrawStringList   ; $6a
@@ -139,12 +139,12 @@ trap_51_665c:
     inc hl
     ld c, $30
 
-jr_001_666d:
+.jr_001_666d
     ld a, [de]
     dec de
     ld [hl-], a
     dec c
-    jr nz, jr_001_666d
+    jr nz, .jr_001_666d
 
     ld a, $20
     ld [hl-], a
@@ -164,15 +164,15 @@ Jump_001_6678::
     inc hl
     ld a, [hl]
     bit 4, b
-    jr z, jr_001_6699
+    jr z, .jr_001_6699
 
     sub $60
     bit 3, b
-    jr z, jr_001_6699
+    jr z, .jr_001_6699
 
     sub $60
 
-jr_001_6699:
+.jr_001_6699
     ld c, a
     ld b, $00
     ld hl, $c50c
@@ -199,7 +199,7 @@ Call_001_66ab::
     ret
 
 
-Call_001_66c2::
+LoadPageTiles::
     push af
     ld a, $30
     ld hl, $0102
@@ -209,7 +209,7 @@ Call_001_66c2::
     pop af
     ld e, a
     ld d, $30
-    ld hl, data_01_7f70
+    ld hl, PageIcon
     ld c, $04
     trap TileLoad
     ret
@@ -234,7 +234,7 @@ Call_001_66e1:
 InitKissUser::
     ld a, $20
     trap DrawInit
-    call Call_001_65c6
+    call KissClearScreen
     call Call_001_6627
     call Call_001_66dc
     ld de, $0000
@@ -280,7 +280,7 @@ jr_001_6731:
     or a
     jr nz, jr_001_6757
 
-    call Call_001_652c
+    call DrawHelpBox
     ld hl, data_01_6824
     ld de, $b001
     trap $5a
@@ -291,7 +291,7 @@ jr_001_6731:
 jr_001_6757:
     ld de, $470d
     ld hl, $c699
-    trap $54
+    trap KbdInit
 
 jr_001_675f:
     ld hl, data_01_67fe
@@ -308,9 +308,9 @@ jr_001_6762:
     ld d, c
     ld e, $01
     ld a, b
-    trap $4d
+    trap StrTrim
     ld c, a
-    trap $55
+    trap KbdEdit
     pop hl
     jr jr_001_6762
 
@@ -1024,7 +1024,7 @@ jr_001_6f72:
     ret
 
 
-trap_67_6f7a:
+TrapMemCmp:
     ld a, [de]
     cp [hl]
     jr nz, jr_sys_6f89
@@ -1034,7 +1034,7 @@ trap_67_6f7a:
     dec bc
     ld a, b
     or c
-    jr nz, trap_67_6f7a
+    jr nz, TrapMemCmp
 
     ld hl, $0000
     ret
@@ -1238,7 +1238,7 @@ jr_001_704d:
     jr nz, jr_001_7057
 
     ld b, $00
-    call trap_67_6f7a
+    call TrapMemCmp
     ld a, h
     or l
 
@@ -2186,7 +2186,7 @@ jr_001_785a:
     ret
 
 
-trap_54_7863:
+TrapKbdInit:
     ld a, d
     ldh [$aa], a
     push de
@@ -2198,23 +2198,25 @@ trap_54_7863:
     ld [hl], d
     ld a, e
     or d
-    jr nz, jr_001_787d
+    jr nz, .jr_001_787d
 
     ld de, $ffae
     ld a, [de]
     cp $04
-    jr nz, jr_001_787d
+    jr nz, .jr_001_787d
 
     xor a
     ld [de], a
 
-jr_001_787d:
+.jr_001_787d
     pop de
+
     push de
     ld d, $01
     ld bc, $1305
     trap DrawBox
     pop de
+
     push de
     ld a, d
     inc e
@@ -2223,38 +2225,44 @@ jr_001_787d:
     ld bc, $0c03
     trap $59
     pop de
+
     push de
     inc e
     inc e
     ld bc, $0001
     ld d, $00
     ld a, $7f
-    trap $cd
-    trap $cd
-    trap $cd
+    trap DrawTile
+    trap DrawTile
+    trap DrawTile
     pop de
+
+    ; Draw divider line between keys and keyboard chooser.
     push de
     ld bc, $0001
     ld d, $0e
     ld a, $7e
-    trap $cd
+    trap DrawTile
     ld a, $75
-    trap $cd
-    trap $cd
-    trap $cd
+    trap DrawTile
+    trap DrawTile
+    trap DrawTile
     ld a, $7d
-    trap $cd
+    trap DrawTile
     pop de
+
+    ; Draw tiles for pencil icon.
     push de
     inc e
     inc e
     ld a, d
     add $24
     ld d, $0f
-    ld hl, HeaderLogo
+    ld hl, $0104
     ld bc, $0401
     trap $59
     pop de
+
     push de
     ld a, d
     add $28
@@ -2263,8 +2271,9 @@ jr_001_787d:
     ld bc, $0202
     trap $59
     xor a
-    call Call_001_7f24
+    call LoadPencilTiles
     pop de
+
     call Call_001_7b0e
     ld de, data_01_7ff0
     ld hl, $87f0
@@ -2316,11 +2325,11 @@ jr_001_7914:
     inc hl
     ld d, [hl]
     ld hl, sp+$00
-    trap $55
+    trap KbdEdit
     ld hl, sp+$3d
     ld a, [hl]
     ld hl, sp+$00
-    call trap_4d_7e77
+    call TrapStrTrim
     ld c, a
     ld b, $00
     add hl, bc
@@ -2340,7 +2349,7 @@ jr_001_7914:
     ret
 
 
-trap_55_793f:
+TrapKbdEdit:
     push hl
     ld hl, $ffa2
     ld [hl], d
@@ -2373,7 +2382,7 @@ jr_sys_795e:
 
     ldh [$a2], a
     ld a, $01
-    call Call_001_7f24
+    call LoadPencilTiles
 
 jr_001_7969:
     trap AwaitFrame
@@ -2401,7 +2410,7 @@ jr_001_7980:
 jr_001_7988:
     call Call_001_7a85
     xor a
-    call Call_001_7f24
+    call LoadPencilTiles
     ldh a, [$a5]
     or a
     ret
@@ -3239,7 +3248,7 @@ jr_001_7e55:
     ret
 
 
-trap_4d_7e77:
+TrapStrTrim:
     push hl
     push de
     push bc
@@ -3251,16 +3260,16 @@ trap_4d_7e77:
     dec hl
     inc c
 
-jr_001_7e82:
+.jr_001_7e82
     scf
     dec c
-    jr z, jr_001_7e8b
+    jr z, .jr_001_7e8b
 
     ld a, [hl-]
     cp $20
-    jr z, jr_001_7e82
+    jr z, .jr_001_7e82
 
-jr_001_7e8b:
+.jr_001_7e8b
     ld a, c
     pop bc
     pop de
@@ -3414,13 +3423,15 @@ jr_001_7f21:
     ret
 
 
-Call_001_7f24:
+LoadPencilTiles:
     ld e, a
     ldh a, [$aa]
     add $28
     ld d, a
     ld c, $04
-    ld hl, data_01_7fb0
+    ld hl, PencilIcon
+    ; fall through
+
 
 TrapTileLoad:
     ld a, e
@@ -3480,10 +3491,10 @@ jr_001_7f52:
     ret
 
 
-data_01_7f70:
+PageIcon:
     INCBIN "gfx/system/page.2bpp"
 
-data_01_7fb0:
+PencilIcon:
     INCBIN "gfx/system/pencil.2bpp"
 
 data_01_7ff0:

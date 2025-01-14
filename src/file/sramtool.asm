@@ -187,7 +187,7 @@ call_030d:
     ldx hl, data_0295
     ld de, $c702
     ld bc, $000d
-    trap $67
+    trap MemCmp
     ld a, h
     or l
     jr nz, jr_02ff
@@ -201,7 +201,7 @@ call_030d:
     ld hl, $0014
     ld de, $c700
     ld bc, $0004
-    trap $67
+    trap MemCmp
     ld a, h
     or l
     jr nz, jr_0306
