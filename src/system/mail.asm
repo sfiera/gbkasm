@@ -179,7 +179,7 @@ Call_001_5f2d:
     jr z, .jr_001_5f44
 
     trap TileLoadText
-    jr .jr_001_5f60
+    jr .done
 
 .jr_001_5f44
     ld b, e
@@ -207,7 +207,7 @@ Call_001_5f2d:
     dec c
     jr nz, .jr_001_5f45
 
-.jr_001_5f60
+.done
     ret
 
 
@@ -270,7 +270,7 @@ KissMailExit:
 
     ld a, LAYOUT_NOT_SAVED_CONFIRM
     call ShowMailLayout
-    call Call_001_6169
+    call PromptAB
     jr nc, .exit
 
     jr DoKissMailMenu
@@ -359,18 +359,18 @@ KissMailSave:
     xor a
     ldh [$c0], a
 
-.jr_001_6025
+.retry
     call Call_001_614f
     or a
-    jr nz, .jr_001_6037
+    jr nz, .hasTitle
 
     ld a, LAYOUT_NO_TITLE_ERROR
     call ShowMailLayout
-    call Call_001_6173
+    call AwaitAB
     pop af
     jp KissMailContinue
 
-.jr_001_6037
+.hasTitle
     inc a
     ld c, a
     ld de, $c6df
@@ -379,31 +379,31 @@ KissMailSave:
     ld hl, $c500
     ld c, $00
     trap FileSearch
-    jr c, .jr_001_6059
+    jr c, .noSpace
 
     ld a, LAYOUT_OVERWRITE_CONFIRM
     call ShowMailLayout
-    call Call_001_6169
-    jr c, .jr_001_606b
+    call PromptAB
+    jr c, .done
 
     ld hl, $c500
     trap FileDelete
-    jr .jr_001_6025
+    jr .retry
 
-.jr_001_6059
+.noSpace
     call Call_001_66ab
     ld a, LAYOUT_NO_SPACE_ERROR
-    jr c, .jr_001_6065
+    jr c, .wait
 
     xor a
     ldh [$c2], a
     ld a, LAYOUT_SAVE_DONE
 
-.jr_001_6065
+.wait
     call ShowMailLayout
-    call Call_001_6173
+    call AwaitAB
 
-.jr_001_606b
+.done
     pop af
     ldh [$c0], a
     jp DoKissMailMenu
@@ -415,7 +415,7 @@ KissMailSend:
     call ShowMailLayout
     ld a, $03
     trap LCDEnable
-    call Call_001_6169
+    call PromptAB
     jp c, SetUpAndDoKissMailMenu
 
     ld a, LAYOUT_SENDING
@@ -423,55 +423,55 @@ KissMailSend:
     ld a, $01
     trap $cc
     trap AwaitBlit
-    call Call_001_611d
-    jr c, .jr_001_60b0
+    call SendMail
+    jr c, .prompt
 
     ld hl, $c600
     ld e, l
     ld d, h
     ld c, $99
     trap IRWrite
-    jr c, .jr_001_60b5
+    jr c, .cancel
 
     trap IRClose
-    jr c, .jr_001_60b5
+    jr c, .cancel
 
     ld a, LAYOUT_XFER_DONE
     call ShowMailLayout
 
-.jr_001_60a7
+.wait
     xor a
     trap $cc
-    call Call_001_6173
+    call AwaitAB
     jp SetUpAndDoKissMailMenu
 
 
-.jr_001_60b0
-    call Call_001_6114
-    jr .jr_001_60a7
+.prompt
+    call PromptAny
+    jr .wait
 
-.jr_001_60b5
-    call Call_001_6112
-    jr .jr_001_60a7
+.cancel
+    call ShowCancel
+    jr .wait
 
 
 KissMailRecv:
     ldh a, [$c2]
     or a
-    jr z, .jr_001_60c9
+    jr z, .ready
 
     ld a, LAYOUT_ERASE_CONFIRM
     call ShowMailLayout
-    call Call_001_6169
-    jr c, .jr_001_6103
+    call PromptAB
+    jr c, .done
 
-.jr_001_60c9
+.ready
     ld a, LAYOUT_RECEIVING
     call ShowMailLayout
     trap AwaitBlit
     ld de, IRIdentifier
     ld hl, $c6d5
-    ld bc, $000a
+    ld bc, IRIdentifier.end - IRIdentifier
     trap MemCopy
     ld a, $01
     trap $cc
@@ -480,10 +480,10 @@ KissMailRecv:
     xor a
     trap $cc
     pop af
-    jr c, .jr_001_610d
+    jr c, .cancel
     ld a, [$c6d5]
     or a
-    jr z, .jr_001_6106
+    jr z, .error
 
     xor a
     ldh [$c0], a
@@ -494,50 +494,51 @@ KissMailRecv:
     ld a, $01
     ldh [$c2], a
 
-.jr_001_6100
-    call Call_001_6173
+.wait
+    call AwaitAB
 
-.jr_001_6103
+.done
     jp DoKissMailMenu
 
-.jr_001_6106
+.error
     ld a, LAYOUT_XFER_FAIL
     call ShowMailLayout
-    jr .jr_001_6100
+    jr .wait
 
-.jr_001_610d
-    call Call_001_6112
-    jr .jr_001_6100
+.cancel
+    call ShowCancel
+    jr .wait
 
 
-Call_001_6112:
+ShowCancel:
     ld a, LAYOUT_XFER_CANCEL
     ; fall through
 
-Call_001_6114:
+
+PromptAny:
     call ShowMailLayout
 
-.jr_001_6117
+.wait
     trap InputButtons
     or a
-    jr nz, .jr_001_6117
+    jr nz, .wait
 
     ret
 
 
-Call_001_611d:
+SendMail:
     ld hl, $c6d5
     ld de, $c400
     ld bc, $000a
     trap IRRead
-    jr c, .jr_001_6146
+    jr c, .cancel
 
     ld hl, $c400
     ld de, IRIdentifier
-    ld bc, $000a
+    ld bc, IRIdentifier.end - IRIdentifier
     trap $67  ; strcmp?
     or a
-    jr nz, .jr_001_6149
+    jr nz, .mismatch
 
     inc a
     ld hl, $c400
@@ -547,11 +548,11 @@ Call_001_611d:
     trap IRWrite
     ret nc
 
-.jr_001_6146
+.cancel
     ld a, $10
     ret
 
-.jr_001_6149
+.mismatch
     trap IRClose
     ld a, $0f
     scf
@@ -582,7 +583,7 @@ Call_001_614f:
     ret
 
 
-Call_001_6169:
+PromptAB:
     ldh a, [$c4]
     ld d, a
     ld e, $01
@@ -591,11 +592,11 @@ Call_001_6169:
     ; fall through
 
 
-Call_001_6173:
+AwaitAB:
     trap AwaitFrame
     trap InputButtons
     and BTN_AB
-    jr z, Call_001_6173
+    jr z, AwaitAB
 
     or a
     bit 1, a
@@ -773,7 +774,7 @@ Call_001_64d3:
     ld hl, $00d2
     trap $e6
     bit 7, h
-    jr nz, .jr_001_64ec
+    jr nz, .noSpace
 
     trap $e7
     xor a
@@ -782,13 +783,13 @@ Call_001_64d3:
     dec b
     ret nz
 
-.jr_001_64ec
+.noSpace
     call Call_001_66dc
     ld a, $03
     trap LCDEnable
     ld a, LAYOUT_NO_SPACE_CONFIRM
     call ShowMailLayout
-    call Call_001_6169
+    call PromptAB
     jp c, Exit
 
     trap LCDDisable
@@ -888,13 +889,13 @@ Call_001_65db:
     ld hl, $9800
     ld bc, $0400
 
-.jr_001_65e1
+.next
     ld a, $7f
     ld [hl+], a
     dec bc
     ld a, b
     or c
-    jr nz, .jr_001_65e1
+    jr nz, .next
 
     ld de, $0101
     ld bc, $1303
@@ -918,3 +919,4 @@ LayoutEditor:
 
 IRIdentifier:
     dk $00, "KISS-MAIL"
+.end
