@@ -9,6 +9,7 @@ INCLUDE "consts.inc"
 INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
+INCLUDE "nectaris/audio.inc"
 INCLUDE "nectaris/units.inc"
 
 SECTION "ROM Bank $001", ROMX
@@ -186,7 +187,7 @@ Jump_001_410a:
 
 Jump_001_412f:
 jr_001_412f:
-    ld a, $08
+    ld a, SND_ACTION_OPEN
     call PlaySound
     ld a, b
     call Call_000_099b
@@ -586,7 +587,7 @@ Jump_001_43b6:
 
 Jump_001_43db:
 jr_001_43db:
-    ld a, $08
+    ld a, SND_ACTION_OPEN
     call PlaySound
     ld a, b
     call Call_000_099b

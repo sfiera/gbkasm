@@ -9,6 +9,7 @@ INCLUDE "consts.inc"
 INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
+INCLUDE "nectaris/audio.inc"
 INCLUDE "nectaris/map.inc"
 INCLUDE "nectaris/text.inc"
 INCLUDE "nectaris/units.inc"
@@ -3979,7 +3980,7 @@ Call_000_18d8:
     call SetROMBank
     ld hl, ScreenFactoryTaken
     call ShowScreen
-    ld a, $0f
+    ld a, MUSIC_VICTORY
     call PlayMusic
     call SetStdPalette
     ld a, $08
@@ -4854,7 +4855,7 @@ DoTitleScreen:
     call SetROMBank
     ld hl, ScreenTitle
     call ShowScreen
-    ld a, $01
+    ld a, MUSIC_TITLE
     call PlayMusic
     call SetStdPalette
 
@@ -4865,7 +4866,7 @@ DoTitleScreen:
     bit 3, a
     jp z, .loop
 
-    ld a, $01
+    ld a, SND_TITLE
     call PlaySound
 
     ; fall through
@@ -4874,7 +4875,7 @@ DoTitleScreen:
 ExitLevel:
     call Call_000_110e
     call Call_000_0de7
-    ld a, $02
+    ld a, MUSIC_MAIN_MENU
     call PlayMusic
 
 
@@ -4988,7 +4989,7 @@ DoPassword:
     cp $00
     jp z, .matched
 
-    ld a, $02
+    ld a, MUSIC_MAIN_MENU
     call PlayMusic
     jp DoMenuContinue
 
@@ -5225,14 +5226,14 @@ DoSendDataToPC:
     cp $00
     jr z, .jr_000_221f
 
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
     jp DoMenuGBKiss.again
 
 
 .jr_000_221f
     call Call_000_0927
-    ld a, $0a
+    ld a, SND_MENU_ACCEPT
     call PlaySound
     ld hl, WindowSending
     ld a, l
@@ -5264,7 +5265,7 @@ DoSendDataToPC:
     cp $00
     jr nz, .failure
 
-    ld a, $0a
+    ld a, SND_MENU_ACCEPT
     call PlaySound
     ld hl, WindowCommSuccess
     ld a, l
@@ -5275,7 +5276,7 @@ DoSendDataToPC:
     call Call_000_0c3c
     ld a, $ff
     ld [$db08], a
-    ld a, $02
+    ld a, MUSIC_MAIN_MENU
     call PlayMusic
     jp DoMenuGBKiss
 
@@ -5290,7 +5291,7 @@ DoSendDataToPC:
     call Call_000_0c3c
     ld a, $ff
     ld [$db08], a
-    ld a, $02
+    ld a, MUSIC_MAIN_MENU
     call PlayMusic
     jp DoMenuGBKiss
 
@@ -5326,14 +5327,14 @@ DoRecvDataFromPC:
     cp $00
     jr z, .jr_000_22f1
 
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
     jp DoMenuGBKiss.again
 
 
 .jr_000_22f1
     call Call_000_0927
-    ld a, $0a
+    ld a, SND_MENU_ACCEPT
     call PlaySound
     ld hl, WindowReceiving
     ld a, l
@@ -5421,7 +5422,7 @@ DoRecvDataFromPC:
     cp b
     jr nz, .failure
 
-    ld a, $0a
+    ld a, SND_MENU_ACCEPT
     call PlaySound
     ld a, [$d8e9]
     ld b, a
@@ -5439,12 +5440,12 @@ DoRecvDataFromPC:
     call Call_000_0c3c
     ld a, $ff
     ld [$db08], a
-    ld a, $02
+    ld a, MUSIC_MAIN_MENU
     call PlayMusic
     jp DoMenuGBKiss.again
 
 .failure
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
     ld hl, WindowCommFailed
     ld a, l
@@ -5455,7 +5456,7 @@ DoRecvDataFromPC:
     call Call_000_0c3c
     ld a, $ff
     ld [$db08], a
-    ld a, $02
+    ld a, MUSIC_MAIN_MENU
     call PlayMusic
     jp DoMenuGBKiss.again
 
@@ -5527,13 +5528,13 @@ DoSendDataToGB:
     cp $00
     jr z, .jr_000_2464
 
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
     jp DoMenuGBKiss.again
 
 
 .jr_000_2464
-    ld a, $0a
+    ld a, SND_MENU_ACCEPT
     call PlaySound
     ld hl, WindowSending
     ld a, l
@@ -5550,7 +5551,7 @@ DoSendDataToGB:
     cp $00
     jr nz, .failure
 
-    ld a, $0a
+    ld a, SND_MENU_ACCEPT
     call PlaySound
     ld hl, WindowCommSuccess
     ld a, l
@@ -5561,7 +5562,7 @@ DoSendDataToGB:
     call Call_000_0c3c
     ld a, $ff
     ld [$db08], a
-    ld a, $02
+    ld a, MUSIC_MAIN_MENU
     call PlayMusic
     jp DoMenuGBKiss
 
@@ -5575,7 +5576,7 @@ DoSendDataToGB:
     call Call_000_0c3c
     ld a, $ff
     ld [$db08], a
-    ld a, $02
+    ld a, MUSIC_MAIN_MENU
     call PlayMusic
     jp DoMenuGBKiss
 
@@ -5611,12 +5612,12 @@ DoRecvDataFromGB:
     cp $00
     jr z, .jr_000_251a
 
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
     jp DoMenuGBKiss.again
 
 .jr_000_251a
-    ld a, $0a
+    ld a, SND_MENU_ACCEPT
     call PlaySound
     ld hl, WindowReceiving
     ld a, l
@@ -5655,7 +5656,7 @@ DoRecvDataFromGB:
     cp $00
     jp nz, Jump_000_25a5
 
-    ld a, $0a
+    ld a, SND_MENU_ACCEPT
     call PlaySound
     ld a, [$d8e9]
     ld b, a
@@ -5673,14 +5674,14 @@ DoRecvDataFromGB:
     call Call_000_0c3c
     ld a, $ff
     ld [$db08], a
-    ld a, $02
+    ld a, MUSIC_MAIN_MENU
     call PlayMusic
     jp DoMenuGBKiss.again
 
 
 Jump_000_25a5:
 jr_000_25a5:
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
     ld hl, WindowCommFailed
     ld a, l
@@ -5691,7 +5692,7 @@ jr_000_25a5:
     call Call_000_0c3c
     ld a, $ff
     ld [$db08], a
-    ld a, $02
+    ld a, MUSIC_MAIN_MENU
     call PlayMusic
     jp DoMenuGBKiss.again
 
@@ -5788,7 +5789,7 @@ ShowPrologue:
     call SetROMBank
     ld hl, ScreenPrologue1
     call ShowScreen
-    ld a, $03
+    ld a, MUSIC_PROLOGUE
     call PlayMusic
     call SetStdPalette
     ld a, $06
@@ -5881,7 +5882,7 @@ ShowWorldMap:
     call SetROMBank
     ld hl, ScreenWorldMap
     call ShowScreen
-    ld a, $06
+    ld a, MUSIC_WORLD_MAP
     call PlayMusic
     call Call_000_0927
     ld a, $03
@@ -5896,7 +5897,7 @@ jr_000_2736:
     bit 0, a
     jr z, jr_000_2736
 
-    ld a, $08
+    ld a, SND_ACTION_OPEN
     call PlaySound
     ret
 
@@ -5909,7 +5910,7 @@ ShowEpilogue:
     call SetROMBank
     ld hl, ScreenEpilogue1
     call ShowScreen
-    ld a, $12
+    ld a, MUSIC_EPILOGUE
     call PlayMusic
     call SetStdPalette
     ld a, $0a
@@ -6000,7 +6001,7 @@ Jump_000_2828:
     call Call_000_080f
     call Call_000_2899
     call Call_000_1224
-    ld a, $05
+    ld a, MUSIC_PAUSE
     call PlayMusic
     jp Jump_000_34af
 
@@ -6016,7 +6017,7 @@ Jump_000_2847:
     call Call_000_10ae
     call Call_000_2899
     call Call_000_1224
-    ld a, $05
+    ld a, MUSIC_PAUSE
     call PlayMusic
     jp Jump_000_34af
 
@@ -6152,7 +6153,7 @@ jr_000_2927:
     cp $ff
     jp z, Jump_000_2a3b
 
-    ld a, $08
+    ld a, SND_ACTION_OPEN
     call PlaySound
     call Call_000_17f8
     cp $00
@@ -6191,7 +6192,7 @@ jr_000_2927:
     cp $00
     jr nz, jr_000_29c4
 
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
     call Call_000_1630
     jp Jump_000_28c9
@@ -6214,7 +6215,7 @@ jr_000_29c4:
     bit 5, a
     jp z, Jump_000_2a14
 
-    ld a, $08
+    ld a, SND_ACTION_OPEN
     call PlaySound
 
 Jump_000_29e7:
@@ -6239,7 +6240,7 @@ Jump_000_29e7:
 
 
 Jump_000_2a14:
-    ld a, $0e
+    ld a, SND_PASS_MISMATCH
     call PlaySound
 
 Jump_000_2a19:
@@ -6256,7 +6257,7 @@ Jump_000_2a29:
     cp $01
     jr nz, jr_000_2a38
 
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
     call Call_000_1630
     jp Jump_000_28c9
@@ -6310,7 +6311,7 @@ Jump_000_2a75:
     jr c, .normal
 
     call Call_000_0db5
-    ld a, $08
+    ld a, SND_ACTION_OPEN
     call PlaySound
     call Call_000_0d4b
     ld a, [$d79f]
@@ -6323,7 +6324,7 @@ Jump_000_2a75:
     ld [$db07], a
     push bc
     call Call_000_0de7
-    ld a, $05
+    ld a, MUSIC_PAUSE
     call PlayMusic
     ld a, $00
     ld [$d8df], a
@@ -6345,7 +6346,7 @@ Jump_000_2a75:
 
 .normal
     call Call_000_0db5
-    ld a, $08
+    ld a, SND_ACTION_OPEN
     call PlaySound
     call Call_000_0d4b
     ld a, [$d79f]
@@ -6357,7 +6358,7 @@ Jump_000_2a75:
     ld a, [$d79e]
     ld [$db07], a
     push bc
-    ld a, $05
+    ld a, MUSIC_PAUSE
     call PlayMusic
 
 .jr_000_2af3
@@ -6432,7 +6433,7 @@ Jump_000_2b64:
     jp z, Jump_000_28c9
 
     ld [$d7b5], a
-    ld a, $08
+    ld a, SND_ACTION_OPEN
     call PlaySound
     call Call_000_0d4b
     call Call_000_368a
@@ -6461,7 +6462,7 @@ Jump_000_2b88:
     jr jr_000_2ba8
 
 Jump_000_2ba0:
-    ld a, $08
+    ld a, SND_ACTION_OPEN
     call PlaySound
     jp Jump_000_28c9
 
@@ -6528,7 +6529,7 @@ Jump_000_2c04:
     cp $01
     jp nc, Jump_000_2c26
 
-    ld a, $08
+    ld a, SND_ACTION_OPEN
     call PlaySound
     call Call_000_1630
     jp Jump_000_28c9
@@ -6566,7 +6567,7 @@ jr_000_2c26:
     cp c
     jr nz, jr_000_2c9f
 
-    ld a, $08
+    ld a, SND_ACTION_OPEN
     call PlaySound
     ld a, [$d876]
     cp $01
@@ -6615,7 +6616,7 @@ jr_000_2c9f:
     cp $ff
     jp nz, Jump_000_2d84
 
-    ld a, $08
+    ld a, SND_ACTION_OPEN
     call PlaySound
     ld a, [$d7b5]
     call Call_000_099b
@@ -6681,7 +6682,7 @@ Jump_000_2d14:
 Jump_000_2d2c:
     ld a, $00
     ld [$d879], a
-    ld a, $0e
+    ld a, SND_PASS_MISMATCH
     call PlaySound
     ld a, [$d7b5]
     call Call_000_099b
@@ -6702,7 +6703,7 @@ Jump_000_2d42:
     bit 1, a
     jp nz, Jump_000_2d42
 
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
     ld a, [$d7b5]
     call Call_000_099b
@@ -6745,13 +6746,13 @@ jr_000_2d84:
 
 
 Jump_000_2da9:
-    ld a, $0e
+    ld a, SND_PASS_MISMATCH
     call PlaySound
     jp Jump_000_2c26
 
 
 Jump_000_2db1:
-    ld a, $08
+    ld a, SND_ACTION_OPEN
     call PlaySound
     ld a, [$d79f]
     ld b, a
@@ -7028,7 +7029,7 @@ Jump_000_2f85:
     cp $01
     jr nz, jr_000_2fa5
 
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
     call Call_000_1630
     ld a, [$d876]
@@ -7134,7 +7135,7 @@ Jump_000_3033:
     cp $00
     jr nz, jr_000_3042
 
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
     jp Jump_000_323b
 
@@ -7196,9 +7197,7 @@ jr_000_3074:
     jr jr_000_3074
 
 Jump_000_30aa:
-    ld a, $03
-
-Jump_000_30ac:
+    ld a, SND_MENU_NAV
     call PlaySound
     call Call_000_0db5
     call Call_000_16d0
@@ -7214,7 +7213,7 @@ Jump_000_30b5:
 
 
 Jump_000_30c5:
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
     call Call_000_0db5
     call Call_000_16d0
@@ -7230,7 +7229,7 @@ Jump_000_30d0:
 
 
 Jump_000_30e0:
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
     call Call_000_0db5
     call Call_000_16f0
@@ -7246,7 +7245,7 @@ Jump_000_30eb:
 
 
 Jump_000_30fb:
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
     call Call_000_0db5
     call Call_000_16f0
@@ -7266,7 +7265,7 @@ Jump_000_3116:
     cp $ff
     jp nz, Jump_000_3126
 
-    ld a, $0e
+    ld a, SND_PASS_MISMATCH
     call PlaySound
     jp Jump_000_3074
 
@@ -7277,9 +7276,7 @@ Jump_000_3126:
     ld a, [$d7c3]
     cp b
     jr nz, jr_000_3138
-
-Call_000_3130:
-    ld a, $0b
+    ld a, SND_0B
     call PlaySound
     jp Jump_000_320a
 
@@ -7307,7 +7304,7 @@ jr_000_3138:
     cp d
     jp z, Jump_000_3074
 
-    ld a, $08
+    ld a, SND_ACTION_OPEN
     call PlaySound
     call Call_000_346f
     ld a, [$d7c4]
@@ -7409,7 +7406,7 @@ jr_000_320a:
 
 
 Jump_000_3217:
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
     ld a, [$d7b5]
     call Call_000_099b
@@ -7452,7 +7449,7 @@ Jump_000_3250:
     jp z, Jump_000_28c9
 
     ld [$d7b5], a
-    ld a, $08
+    ld a, SND_ACTION_OPEN
     call PlaySound
     call Call_000_0d4b
     call Call_000_368a
@@ -7550,7 +7547,7 @@ WinLevel:
     call SetROMBank
     ld hl, ScreenWin
     call ShowScreen
-    ld a, $0f
+    ld a, MUSIC_VICTORY
     call PlayMusic
     call SetStdPalette
     ld a, $09
@@ -7559,7 +7556,7 @@ WinLevel:
     inc a
     ld [$d7a5], a
     call Call_000_3493
-    ld a, $11
+    ld a, MUSIC_RESULTS
     call PlayMusic
     call Call_000_1ab7
 
@@ -7574,7 +7571,7 @@ WinLevel:
 
 
 .story
-    ld a, $11
+    ld a, MUSIC_RESULTS
     call PlayMusic
     ld a, [$d79a]
     inc a
@@ -7598,7 +7595,7 @@ WinLevel:
 
 
 .legend
-    ld a, $11
+    ld a, MUSIC_RESULTS
     call PlayMusic
     ld a, [$d79a]
     inc a
@@ -7629,7 +7626,7 @@ LoseLevel:
     call SetROMBank
     ld hl, ScreenGameOver
     call ShowScreen
-    ld a, $10
+    ld a, MUSIC_DEFEAT
     call PlayMusic
     call SetStdPalette
     ld a, $09
@@ -7701,25 +7698,25 @@ Call_000_33d9:
     cp c
     jr nc, jr_000_341f
 
-    ld a, $07
+    ld a, MUSIC_P1_A
     call PlayMusic
     ret
 
 
 jr_000_3413:
-    ld a, $08
+    ld a, MUSIC_P1_B
     call PlayMusic
     ret
 
 
 jr_000_3419:
-    ld a, $0a
+    ld a, MUSIC_P1_D
     call PlayMusic
     ret
 
 
 jr_000_341f:
-    ld a, $09
+    ld a, MUSIC_P1_C
     call PlayMusic
     ret
 
@@ -7750,25 +7747,25 @@ Jump_000_3439:
     cp b
     jr nc, jr_000_3456
 
-    ld a, $0b
+    ld a, MUSIC_P2_A
     call PlayMusic
     ret
 
 
 jr_000_344a:
-    ld a, $0c
+    ld a, MUSIC_P2_B
     call PlayMusic
     ret
 
 
 jr_000_3450:
-    ld a, $0e
+    ld a, MUSIC_P2_D
     call PlayMusic
     ret
 
 
 jr_000_3456:
-    ld a, $0d
+    ld a, MUSIC_P2_C
     call PlayMusic
     ret
 
@@ -7964,7 +7961,7 @@ jr_000_354f:
     ld [hl+], a
     ld a, $08
     ld [hl], a
-    ld a, $08
+    ld a, SND_ACTION_OPEN
     call PlaySound
     call Call_000_0927
     call Call_000_12f0
@@ -7982,7 +7979,7 @@ jr_000_357d:
 
 
 Jump_000_358c:
-    ld a, $0e
+    ld a, SND_PASS_MISMATCH
     call PlaySound
 
 jr_000_3591:
@@ -8007,7 +8004,7 @@ Jump_000_35a0:
     ld [hl+], a
     ld [hl+], a
     ld [hl], a
-    ld a, $08
+    ld a, SND_ACTION_OPEN
     call PlaySound
     call Call_000_0927
     call Call_000_0db5
@@ -8026,7 +8023,7 @@ jr_000_35c3:
 
 
 jr_000_35d2:
-    ld a, $0e
+    ld a, SND_PASS_MISMATCH
     call PlaySound
 
 jr_000_35d7:
@@ -8110,7 +8107,7 @@ Jump_000_3652:
 
 
 Jump_000_3670:
-    ld a, $08
+    ld a, SND_ACTION_OPEN
     call PlaySound
     call Call_000_0db5
     call Call_000_1d15
@@ -8325,7 +8322,7 @@ jr_000_37a0:
     ld b, $06
     call Call_000_14f0
     call Call_000_0abb
-    ld a, $05
+    ld a, MUSIC_PAUSE
     call PlayMusic
     call SetStdPalette
     call Call_000_0c3c
@@ -8414,7 +8411,7 @@ Call_000_3828::
     call Call_000_39b3
     call Call_000_0927
     call Call_000_1bfe
-    ld a, $16
+    ld a, SND_WEAPON_FIRE
     call PlaySound
     call Call_000_39b3
     call Call_000_39b3
@@ -8438,7 +8435,7 @@ Call_000_3828::
     jr jr_000_3922
 
 jr_000_391d:
-    ld a, $13
+    ld a, SND_WEAPON_HIT
     call PlaySound
 
 jr_000_3922:
@@ -8970,7 +8967,7 @@ Call_000_3c96::
     call StopAudio
     ei
     call Call_000_0db5
-    ld a, $0f
+    ld a, SND_TURN_CHANGE
     call PlaySound
     call Call_000_0927
     call Call_000_085d
@@ -9255,7 +9252,7 @@ Jump_000_3e96:
     cp $00
     jr nz, jr_000_3ec4
 
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
     ld a, [$d7b5]
     call Call_000_099b
@@ -9287,7 +9284,7 @@ jr_000_3ec4:
     cp $ff
     jp nz, Jump_000_3f56
 
-    ld a, $08
+    ld a, SND_ACTION_OPEN
     call PlaySound
     call Call_000_345c
     cp $ff
@@ -9349,7 +9346,7 @@ Jump_000_3f00:
 
 
 Jump_000_3f56:
-    ld a, $0e
+    ld a, SND_PASS_MISMATCH
     call PlaySound
     jp Jump_000_3ec4
 
@@ -9358,7 +9355,7 @@ Jump_000_3f5e:
     cp $01
     jr nz, jr_000_3f77
 
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
     ld a, [$d7b5]
     call Call_000_099b

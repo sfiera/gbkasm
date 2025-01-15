@@ -9,6 +9,7 @@ INCLUDE "consts.inc"
 INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
+INCLUDE "nectaris/audio.inc"
 INCLUDE "nectaris/map.inc"
 INCLUDE "nectaris/text.inc"
 
@@ -193,7 +194,7 @@ jr_007_44bb:
     jr jr_007_44bb
 
 Jump_007_44df:
-    ld a, $0a
+    ld a, SND_MENU_ACCEPT
     call PlaySound
 
 Jump_007_44e4:
@@ -208,7 +209,7 @@ Jump_007_44e4:
 
 
 Jump_007_44f4:
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
 
 Jump_007_44f9:
@@ -229,7 +230,7 @@ Jump_007_4509:
 
     dec a
     ld [$d8df], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
 
 jr_007_4519:
@@ -252,7 +253,7 @@ Jump_007_4528:
 
     inc a
     ld [$d8df], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
 
 jr_007_453c:
@@ -389,7 +390,7 @@ Jump_007_45f3:
     cp $00
     jr z, jr_007_462a
 
-    ld a, $0a
+    ld a, SND_MENU_ACCEPT
     call PlaySound
     ld a, [$d8e9]
     ld b, a
@@ -418,7 +419,7 @@ jr_007_462a:
     cp $00
     jp nz, Jump_007_45ca
 
-    ld a, $0a
+    ld a, SND_MENU_ACCEPT
     call PlaySound
 
 Jump_007_4640:
@@ -428,7 +429,7 @@ jr_007_4640:
 
 
 Jump_007_4643:
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
 
 Jump_007_4648:
@@ -458,7 +459,7 @@ Jump_007_4658:
 
     ld a, [$d7a8]
     push af
-    ld a, $0a
+    ld a, SND_MENU_ACCEPT
     call PlaySound
     ld a, [$d8e9]
     ld b, a
@@ -499,7 +500,7 @@ Jump_007_46b3:
     cp $01
     jp nz, Jump_007_46b3
 
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
     call Call_000_0de7
     call Call_000_0eee
@@ -507,7 +508,7 @@ Jump_007_46b3:
 
 
 Jump_007_46d3:
-    ld a, $0e
+    ld a, SND_PASS_MISMATCH
     call PlaySound
     jp Jump_007_45ca
 
@@ -526,14 +527,14 @@ Jump_007_46db:
     call Call_000_0eee
     ld a, $02
     ld [$d8e9], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
     jr jr_007_4707
 
 jr_007_46fe:
     dec a
     ld [$d8e9], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
 
 jr_007_4707:
@@ -560,14 +561,14 @@ Jump_007_4716:
     call Call_000_0eee
     ld a, $00
     ld [$d8e9], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
     jr jr_007_4742
 
 jr_007_4739:
     inc a
     ld [$d8e9], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
 
 jr_007_4742:
@@ -898,7 +899,7 @@ jr_007_4979:
 
 Jump_007_4993:
 jr_007_4993:
-    ld a, $0a
+    ld a, SND_MENU_ACCEPT
     call PlaySound
 
 Jump_007_4998:
@@ -913,7 +914,7 @@ Jump_007_4998:
 
 
 Jump_007_49a8:
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
 
 Jump_007_49ad:
@@ -977,7 +978,7 @@ Jump_007_49fd:
     cp $00
     jr z, jr_007_4a36
 
-    ld a, $0a
+    ld a, SND_MENU_ACCEPT
     call PlaySound
     ld a, [$d8e9]
     ld b, a
@@ -1016,7 +1017,7 @@ jr_007_4a36:
     cp $02
     jr c, jr_007_4a71
 
-    ld a, $0e
+    ld a, SND_PASS_MISMATCH
     call PlaySound
     jp Jump_007_49d4
 
@@ -1028,13 +1029,13 @@ jr_007_4a5f:
     cp b
     jr z, jr_007_4a71
 
-    ld a, $0e
+    ld a, SND_PASS_MISMATCH
     call PlaySound
     jp Jump_007_49d4
 
 
 jr_007_4a71:
-    ld a, $0a
+    ld a, SND_MENU_ACCEPT
     call PlaySound
 
 Jump_007_4a76:
@@ -1044,7 +1045,7 @@ jr_007_4a76:
 
 
 Jump_007_4a79:
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
 
 Jump_007_4a7e:
@@ -1097,7 +1098,7 @@ jr_007_4aba:
 jr_007_4ac7:
     ld a, [$d7a8]
     push af
-    ld a, $0a
+    ld a, SND_MENU_ACCEPT
     call PlaySound
     ld a, [$d8e9]
     ld b, a
@@ -1140,7 +1141,7 @@ Jump_007_4b0d:
     cp $01
     jp nz, Jump_007_4b0d
 
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
     call Call_000_0de7
     call Call_000_0f36
@@ -1148,7 +1149,7 @@ Jump_007_4b0d:
 
 
 Jump_007_4b2d:
-    ld a, $0e
+    ld a, SND_PASS_MISMATCH
     call PlaySound
 
 Jump_007_4b32:
@@ -1175,14 +1176,14 @@ Jump_007_4b42:
     call Call_000_0f36
     ld a, $02
     ld [$d8e9], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
     jr jr_007_4b6e
 
 jr_007_4b65:
     dec a
     ld [$d8e9], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
 
 jr_007_4b6e:
@@ -1209,14 +1210,14 @@ Jump_007_4b7d:
     call Call_000_0f36
     ld a, $00
     ld [$d8e9], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
     jr jr_007_4ba9
 
 jr_007_4ba0:
     inc a
     ld [$d8e9], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
 
 jr_007_4ba9:
@@ -1516,7 +1517,7 @@ StrBlankSpace::
 
 Call_007_4d81::
     call Call_000_0d4b
-    ld a, $04
+    ld a, MUSIC_PASSWORD
     call PlayMusic
     ld hl, WindowPassword
     ld a, l
@@ -1577,7 +1578,7 @@ Jump_007_4ddb:
     cp $00
     jr z, jr_007_4e16
 
-    ld a, $0e
+    ld a, SND_PASS_MISMATCH
     call PlaySound
     ld b, $05
     ld c, $0d
@@ -1594,7 +1595,7 @@ Jump_007_4df5:
     jp nz, Jump_007_4df5
 
     call Call_000_0c3c
-    ld a, $05
+    ld a, SND_PASS_LETTER
     call PlaySound
     pop bc
     ld hl, StrBlankSpace
@@ -1605,7 +1606,7 @@ Jump_007_4df5:
 jr_007_4e16:
     ld a, b
     ld [$d79a], a
-    ld a, $06
+    ld a, SND_PASS_MATCH
     call PlaySound
 
 Jump_007_4e1f:
@@ -1620,7 +1621,7 @@ Jump_007_4e1f:
 
 
 Jump_007_4e2f:
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
 
 Jump_007_4e34:
@@ -1649,7 +1650,7 @@ Jump_007_4e44:
     ld a, [$d900]
     inc a
     ld [$d900], a
-    ld a, $05
+    ld a, SND_PASS_LETTER
     call PlaySound
 
 Jump_007_4e67:
@@ -1669,7 +1670,7 @@ Jump_007_4e77:
 
     dec a
     ld [$d900], a
-    ld a, $05
+    ld a, SND_PASS_LETTER
     call PlaySound
 
 Jump_007_4e88:
@@ -1683,7 +1684,7 @@ Jump_007_4e88:
 
 
 Jump_007_4e98:
-    ld a, $05
+    ld a, SND_PASS_LETTER
     call PlaySound
     ld a, [$d900]
     ld hl, $d901
@@ -1727,7 +1728,7 @@ jr_007_4ec4:
 
 
 Jump_007_4ed3:
-    ld a, $05
+    ld a, SND_PASS_LETTER
     call PlaySound
     ld a, [$d900]
     ld hl, $d901
@@ -1837,7 +1838,7 @@ Jump_007_4f78:
     add b
     add $20
     ld [$d79a], a
-    ld a, $0a
+    ld a, SND_MENU_ACCEPT
     call PlaySound
 
 Jump_007_4f8a:
@@ -1852,7 +1853,7 @@ Jump_007_4f8a:
 
 
 Jump_007_4f9a:
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
 
 Jump_007_4f9f:
@@ -1867,7 +1868,7 @@ Jump_007_4f9f:
 
 
 Jump_007_4faf:
-    ld a, $0a
+    ld a, SND_MENU_ACCEPT
     call PlaySound
 
 jr_007_4fb4:
@@ -1902,7 +1903,7 @@ Jump_007_4fe3:
     cp $01
     jp nz, Jump_007_4fe3
 
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
     call Call_000_0de7
     call Call_007_50c3
@@ -1917,7 +1918,7 @@ Jump_007_5003:
     add $0b
     ld [$d90a], a
     call Call_007_50c3
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
 
 Jump_007_5018:
@@ -1938,7 +1939,7 @@ Jump_007_5028:
     sub $0b
     ld [$d90a], a
     call Call_007_50c3
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
 
 Jump_007_503d:
@@ -1958,7 +1959,7 @@ Jump_007_504d:
 
     dec a
     ld [$d909], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
     jr jr_007_5079
 
@@ -1972,7 +1973,7 @@ jr_007_505f:
     call Call_007_50c3
     ld a, $0a
     ld [$d909], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
 
 jr_007_5079:
@@ -1992,7 +1993,7 @@ Jump_007_5088:
 
     inc a
     ld [$d909], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
     jr jr_007_50b4
 
@@ -2006,7 +2007,7 @@ jr_007_509a:
     call Call_007_50c3
     ld a, $00
     ld [$d909], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
 
 jr_007_50b4:
@@ -2119,7 +2120,7 @@ Jump_007_5163:
     ld a, [$d90a]
     add b
     ld [$d79a], a
-    ld a, $0a
+    ld a, SND_MENU_ACCEPT
     call PlaySound
 
 Jump_007_5173:
@@ -2134,7 +2135,7 @@ Jump_007_5173:
 
 
 Jump_007_5183:
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
 
 Jump_007_5188:
@@ -2149,7 +2150,7 @@ Jump_007_5188:
 
 
 Jump_007_5198:
-    ld a, $0a
+    ld a, SND_MENU_ACCEPT
     call PlaySound
 
 jr_007_519d:
@@ -2183,7 +2184,7 @@ Jump_007_51ca:
     cp $01
     jp nz, Jump_007_51ca
 
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
     call Call_000_0de7
     call Call_007_52c9
@@ -2211,7 +2212,7 @@ Jump_007_51ea:
 
 Jump_007_520d:
 jr_007_520d:
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
 
 Jump_007_5212:
@@ -2232,7 +2233,7 @@ Jump_007_5222:
     sub $0b
     ld [$d90a], a
     call Call_007_52c9
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
 
 Jump_007_5237:
@@ -2252,7 +2253,7 @@ Jump_007_5247:
 
     dec a
     ld [$d909], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
     jr jr_007_5273
 
@@ -2266,7 +2267,7 @@ jr_007_5259:
     call Call_007_52c9
     ld a, $0a
     ld [$d909], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
 
 jr_007_5273:
@@ -2293,7 +2294,7 @@ Jump_007_5282:
     ld a, [$d909]
     inc a
     ld [$d909], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
     jr jr_007_52ba
 
@@ -2307,7 +2308,7 @@ jr_007_52a0:
     call Call_007_52c9
     ld a, $00
     ld [$d909], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
 
 jr_007_52ba:
@@ -2975,7 +2976,7 @@ Jump_007_61b5:
     add b
     add $20
     ld [$d79a], a
-    ld a, $0a
+    ld a, SND_MENU_ACCEPT
     call PlaySound
 
 Jump_007_61c7:
@@ -2990,7 +2991,7 @@ Jump_007_61c7:
 
 
 Jump_007_61d7:
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
 
 Jump_007_61dc:
@@ -3005,7 +3006,7 @@ Jump_007_61dc:
 
 
 Jump_007_61ec:
-    ld a, $0a
+    ld a, SND_MENU_ACCEPT
     call PlaySound
 
 jr_007_61f1:
@@ -3044,7 +3045,7 @@ Jump_007_622b:
     cp $01
     jp nz, Jump_007_622b
 
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
     call Call_000_0de7
     call Call_007_632b
@@ -3072,7 +3073,7 @@ Jump_007_624b:
 
 Jump_007_626f:
 jr_007_626f:
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
 
 Jump_007_6274:
@@ -3093,7 +3094,7 @@ Jump_007_6284:
     sub $0b
     ld [$d90a], a
     call Call_007_632b
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
 
 Jump_007_6299:
@@ -3113,7 +3114,7 @@ Jump_007_62a9:
 
     dec a
     ld [$d909], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
     jr jr_007_62d5
 
@@ -3127,7 +3128,7 @@ jr_007_62bb:
     call Call_007_632b
     ld a, $0a
     ld [$d909], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
 
 jr_007_62d5:
@@ -3154,7 +3155,7 @@ Jump_007_62e4:
     ld a, [$d909]
     inc a
     ld [$d909], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
     jr jr_007_631c
 
@@ -3168,7 +3169,7 @@ jr_007_6302:
     call Call_007_632b
     ld a, $00
     ld [$d909], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
 
 jr_007_631c:
@@ -3286,7 +3287,7 @@ Jump_007_63cf:
     add b
     add $20
     ld [$d79a], a
-    ld a, $0a
+    ld a, SND_MENU_ACCEPT
     call PlaySound
 
 Jump_007_63e1:
@@ -3301,7 +3302,7 @@ Jump_007_63e1:
 
 
 Jump_007_63f1:
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
 
 Jump_007_63f6:
@@ -3316,7 +3317,7 @@ Jump_007_63f6:
 
 
 Jump_007_6406:
-    ld a, $0a
+    ld a, SND_MENU_ACCEPT
     call PlaySound
 
 jr_007_640b:
@@ -3351,7 +3352,7 @@ Jump_007_643a:
     cp $01
     jp nz, Jump_007_643a
 
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
     call Call_000_0de7
     call Call_007_653a
@@ -3379,7 +3380,7 @@ Jump_007_645a:
 
 Jump_007_647e:
 jr_007_647e:
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
 
 Jump_007_6483:
@@ -3400,7 +3401,7 @@ Jump_007_6493:
     sub $0b
     ld [$d90a], a
     call Call_007_653a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
 
 Jump_007_64a8:
@@ -3420,7 +3421,7 @@ Jump_007_64b8:
 
     dec a
     ld [$d909], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
     jr jr_007_64e4
 
@@ -3434,7 +3435,7 @@ jr_007_64ca:
     call Call_007_653a
     ld a, $0a
     ld [$d909], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
 
 jr_007_64e4:
@@ -3461,7 +3462,7 @@ Jump_007_64f3:
     ld a, [$d909]
     inc a
     ld [$d909], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
     jr jr_007_652b
 
@@ -3475,7 +3476,7 @@ jr_007_6511:
     call Call_007_653a
     ld a, $00
     ld [$d909], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
 
 jr_007_652b:
@@ -3587,7 +3588,7 @@ Jump_007_65d4:
     add b
     add $48
     ld [$d79a], a
-    ld a, $0a
+    ld a, SND_MENU_ACCEPT
     call PlaySound
 
 Jump_007_65e6:
@@ -3602,7 +3603,7 @@ Jump_007_65e6:
 
 
 Jump_007_65f6:
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
 
 Jump_007_65fb:
@@ -3617,7 +3618,7 @@ Jump_007_65fb:
 
 
 Jump_007_660b:
-    ld a, $0a
+    ld a, SND_MENU_ACCEPT
     call PlaySound
 
 jr_007_6610:
@@ -3652,7 +3653,7 @@ Jump_007_663f:
     cp $01
     jp nz, Jump_007_663f
 
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
     call Call_000_0de7
     call Call_007_66e1
@@ -3666,7 +3667,7 @@ Jump_007_665f:
 
     dec a
     ld [$d909], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
     jr jr_007_668b
 
@@ -3680,7 +3681,7 @@ jr_007_6671:
     call Call_007_66e1
     ld a, $0a
     ld [$d909], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
 
 jr_007_668b:
@@ -3707,7 +3708,7 @@ Jump_007_669a:
     ld a, [$d909]
     inc a
     ld [$d909], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
     jr jr_007_66d2
 
@@ -3721,7 +3722,7 @@ jr_007_66b8:
     call Call_007_66e1
     ld a, $00
     ld [$d909], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
 
 jr_007_66d2:
@@ -3838,7 +3839,7 @@ Jump_007_6785:
     ld a, [$d90a]
     add b
     ld [$d79a], a
-    ld a, $0a
+    ld a, SND_MENU_ACCEPT
     call PlaySound
 
 Jump_007_6795:
@@ -3853,7 +3854,7 @@ Jump_007_6795:
 
 
 Jump_007_67a5:
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
 
 Jump_007_67aa:
@@ -3868,7 +3869,7 @@ Jump_007_67aa:
 
 
 Jump_007_67ba:
-    ld a, $0a
+    ld a, SND_MENU_ACCEPT
     call PlaySound
 
 jr_007_67bf:
@@ -3902,7 +3903,7 @@ Jump_007_67ec:
     cp $01
     jp nz, Jump_007_67ec
 
-    ld a, $0d
+    ld a, SND_MENU_CANCEL
     call PlaySound
     call Call_000_0de7
     call Call_007_68ec
@@ -3930,7 +3931,7 @@ Jump_007_680c:
 
 Jump_007_6830:
 jr_007_6830:
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
 
 Jump_007_6835:
@@ -3951,7 +3952,7 @@ Jump_007_6845:
     sub $0b
     ld [$d90a], a
     call Call_007_68ec
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
 
 Jump_007_685a:
@@ -3971,7 +3972,7 @@ Jump_007_686a:
 
     dec a
     ld [$d909], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
     jr jr_007_6896
 
@@ -3985,7 +3986,7 @@ jr_007_687c:
     call Call_007_68ec
     ld a, $0a
     ld [$d909], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
 
 jr_007_6896:
@@ -4012,7 +4013,7 @@ Jump_007_68a5:
     ld a, [$d909]
     inc a
     ld [$d909], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
     jr jr_007_68dd
 
@@ -4026,7 +4027,7 @@ jr_007_68c3:
     call Call_007_68ec
     ld a, $00
     ld [$d909], a
-    ld a, $03
+    ld a, SND_MENU_NAV
     call PlaySound
 
 jr_007_68dd:
