@@ -1,5 +1,12 @@
 ROM0
+    "RST $00"
+    "RST $08"
+    "GBKiss Config"
+    "RST $10"
+    "GBKiss Metadata"
     "ROM Bank $000"
+    "Game Boy Metadata"
+    "ROM Bank $000-B"
 
 ROMX $01
     "ROM Bank $001"

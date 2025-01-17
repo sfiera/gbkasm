@@ -16,7 +16,7 @@ INCLUDE "nectaris/units.inc"
 
 DEF JP_U16 EQU $c3
 
-SECTION "ROM Bank $000", ROM0
+SECTION "RST $00", ROM0
 
 trap_0f_0000::
     jp Jump_000_07e5
@@ -28,36 +28,19 @@ trap_0f_0000::
     ld c, e
     nop
 
+SECTION "RST $08", ROM0
+
 RST_08::
     jp Jump_000_0068
 
 
-Config0::
-    db BANK(KissMenu)
-Config1::
-    db BANK(traps1)
-Config2::
-    db ((traps1 - $4000) / 2) - 1
-Config3::
-    db BANK(traps1)
-Config4::
-    db BANK(traps2)
-
+SECTION "RST $10", ROM0
 
 RST_10::
     jp Jump_000_00c9
 
 
-    nop
-
-KissCartridgeCode::
-    db $03
-
-KissIndexBank::
-    db $01
-
-KissIndexAddr::
-    db $80, $bf
+SECTION "ROM Bank $000", ROM0
 
 RST_18::
     nop
@@ -300,44 +283,7 @@ Boot::
     jp trap_10_02e7
 
 
-HeaderLogo::
-    db $ce, $ed, $66, $66, $cc, $0d, $00, $0b, $03, $73, $00, $83, $00, $0c, $00, $0d
-    db $00, $08, $11, $1f, $88, $89, $00, $0e, $dc, $cc, $6e, $e6, $dd, $dd, $d9, $99
-    db $bb, $bb, $67, $63, $6e, $0e, $ec, $cc, $dd, $dc, $99, $9f, $bb, $b9, $33, $3e
-
-HeaderTitle::
-    db "NECTARIS GB", $00, $00, $00, $00, $00
-
-HeaderNewLicenseeCode::
-    db $31, $38
-
-HeaderSGBFlag::
-    db $03
-
-HeaderCartridgeType::
-    db $ff
-
-HeaderROMSize::
-    db $04
-
-HeaderRAMSize::
-    db $03
-
-HeaderDestinationCode::
-    db $00
-
-HeaderOldLicenseeCode::
-    db $33
-
-HeaderMaskROMVersion::
-    db $00
-
-HeaderComplementCheck::
-    db $40
-
-HeaderGlobalChecksum::
-    db $d2, $51
-
+SECTION "ROM Bank $000-B", ROM0
 
 trap_01_0150:
     ld a, [$000b]
