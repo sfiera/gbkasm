@@ -403,8 +403,6 @@ trap_noop:
     nop
     nop
     nop
-
-Jump_000_01c3:
     nop
     nop
     nop
@@ -2719,16 +2717,14 @@ Call_000_104b:
     ret
 
 
-Call_000_106b:
+SelectLevelJump:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, BANK(Call_007_6747)
-
-Jump_000_1074::
+    ld a, BANK(SelectLevel)
     call SetROMBank
     ld a, [$d872]
-    call Call_007_6747
+    call SelectLevel
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -5680,7 +5676,7 @@ DoMenuQuickStart:
 
 
 Do1PlayMode:
-    call Call_000_106b
+    call SelectLevelJump
     cp $00
     jp nz, DoMenuQuickStart.again
 
@@ -5698,7 +5694,7 @@ jr_000_260e:
 
 
 Do2PlayMode:
-    call Call_000_106b
+    call SelectLevelJump
     cp $00
     jp nz, DoMenuQuickStart.again
 
@@ -5708,7 +5704,7 @@ Do2PlayMode:
 
 
 DoGuicyMode:
-    call Call_000_106b
+    call SelectLevelJump
     cp $00
     jp nz, DoMenuQuickStart.again
 
@@ -5718,7 +5714,7 @@ DoGuicyMode:
 
 
 DoDemoMode:
-    call Call_000_106b
+    call SelectLevelJump
     cp $00
     jp nz, DoMenuQuickStart.again
 

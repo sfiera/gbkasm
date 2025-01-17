@@ -3797,43 +3797,43 @@ Call_007_6731:
     ret
 
 
-Call_007_6747::
+SelectLevel::
     ld a, $00
     ld [$d909], a
     ld [$d90a], a
     call Call_007_68ec
 
 Jump_007_6752:
-jr_007_6752:
+.jr_007_6752
     call Call_007_693c
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
     bit 0, a
-    jp nz, Jump_007_6785
+    jp nz, .Jump_007_6785
 
     bit 1, a
-    jp nz, Jump_007_67a5
+    jp nz, .Jump_007_67a5
 
     bit 2, a
-    jp nz, Jump_007_67ba
+    jp nz, .Jump_007_67ba
 
     bit 4, a
-    jp nz, Jump_007_680c
+    jp nz, .Jump_007_680c
 
     bit 5, a
-    jp nz, Jump_007_6845
+    jp nz, .Jump_007_6845
 
     bit 6, a
-    jp nz, Jump_007_686a
+    jp nz, .Jump_007_686a
 
     bit 7, a
-    jp nz, Jump_007_68a5
+    jp nz, .Jump_007_68a5
 
     call Call_000_085d
-    jr jr_007_6752
+    jr .jr_007_6752
 
-Jump_007_6785:
+.Jump_007_6785
     ld a, [$d909]
     ld b, a
     ld a, [$d90a]
@@ -3842,42 +3842,42 @@ Jump_007_6785:
     ld a, SND_MENU_ACCEPT
     call PlaySound
 
-Jump_007_6795:
+.Jump_007_6795
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
     bit 0, a
-    jp nz, Jump_007_6795
+    jp nz, .Jump_007_6795
 
     ld a, $00
     ret
 
 
-Jump_007_67a5:
+.Jump_007_67a5
     ld a, SND_MENU_CANCEL
     call PlaySound
 
-Jump_007_67aa:
+.Jump_007_67aa
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
     bit 1, a
-    jp nz, Jump_007_67aa
+    jp nz, .Jump_007_67aa
 
     ld a, $ff
     ret
 
 
-Jump_007_67ba:
+.Jump_007_67ba
     ld a, SND_MENU_ACCEPT
     call PlaySound
 
-jr_007_67bf:
+.jr_007_67bf
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
     bit 2, a
-    jr nz, jr_007_67bf
+    jr nz, .jr_007_67bf
 
     ld a, [$d909]
     ld b, a
@@ -3893,15 +3893,15 @@ jr_007_67bf:
     ld [$d7a0], a
     call Call_000_1224
 
-Jump_007_67ec:
+.Jump_007_67ec
     ld a, $00
     ld [$d7a1], a
     call Call_000_1610
     cp $00
-    jp z, Jump_007_6785
+    jp z, .Jump_007_6785
 
     cp $01
-    jp nz, Jump_007_67ec
+    jp nz, .Jump_007_67ec
 
     ld a, SND_MENU_CANCEL
     call PlaySound
@@ -3910,7 +3910,7 @@ Jump_007_67ec:
     jp Jump_007_6752
 
 
-Jump_007_680c:
+.Jump_007_680c
     ld a, [$d90a]
     cp $16
     jp nc, Jump_007_6752
@@ -3920,31 +3920,31 @@ Jump_007_680c:
     call Call_007_68ec
     ld a, [$d90a]
     cp $16
-    jp c, Jump_007_6830
+    jp c, .Jump_007_6830
 
     ld a, [$d909]
     cp $09
-    jr c, jr_007_6830
+    jr c, .jr_007_6830
 
     ld a, $09
     ld [$d909], a
 
-Jump_007_6830:
-jr_007_6830:
+.Jump_007_6830
+.jr_007_6830
     ld a, SND_MENU_NAV
     call PlaySound
 
-Jump_007_6835:
+.Jump_007_6835
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
     bit 4, a
-    jp nz, Jump_007_6835
+    jp nz, .Jump_007_6835
 
     jp Jump_007_6752
 
 
-Jump_007_6845:
+.Jump_007_6845
     ld a, [$d90a]
     cp $00
     jp z, Jump_007_6752
@@ -3955,28 +3955,28 @@ Jump_007_6845:
     ld a, SND_MENU_NAV
     call PlaySound
 
-Jump_007_685a:
+.Jump_007_685a
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
     bit 5, a
-    jp nz, Jump_007_685a
+    jp nz, .Jump_007_685a
 
     jp Jump_007_6752
 
 
-Jump_007_686a:
+.Jump_007_686a
     ld a, [$d909]
     cp $00
-    jr z, jr_007_687c
+    jr z, .jr_007_687c
 
     dec a
     ld [$d909], a
     ld a, SND_MENU_NAV
     call PlaySound
-    jr jr_007_6896
+    jr .jr_007_6896
 
-jr_007_687c:
+.jr_007_687c
     ld a, [$d90a]
     cp $00
     jp z, Jump_007_6752
@@ -3989,35 +3989,35 @@ jr_007_687c:
     ld a, SND_MENU_NAV
     call PlaySound
 
-jr_007_6896:
+.jr_007_6896
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
     bit 6, a
-    jr nz, jr_007_6896
+    jr nz, .jr_007_6896
 
     jp Jump_007_6752
 
 
-Jump_007_68a5:
+.Jump_007_68a5
     ld a, [$d909]
     cp $0a
-    jr z, jr_007_68c3
+    jr z, .jr_007_68c3
 
     ld b, a
     ld a, [$d90a]
     add b
     cp $1f
-    jr nc, jr_007_68dd
+    jr nc, .jr_007_68dd
 
     ld a, [$d909]
     inc a
     ld [$d909], a
     ld a, SND_MENU_NAV
     call PlaySound
-    jr jr_007_68dd
+    jr .jr_007_68dd
 
-jr_007_68c3:
+.jr_007_68c3
     ld a, [$d90a]
     cp $16
     jp z, Jump_007_6752
@@ -4030,12 +4030,12 @@ jr_007_68c3:
     ld a, SND_MENU_NAV
     call PlaySound
 
-jr_007_68dd:
+.jr_007_68dd
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
     bit 7, a
-    jr nz, jr_007_68dd
+    jr nz, .jr_007_68dd
 
     jp Jump_007_6752
 
