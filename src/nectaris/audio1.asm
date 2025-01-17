@@ -10,7 +10,7 @@ INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
-SECTION "ROM Bank $01c", ROMX
+SECTION "Audio 1", ROMX
 
 AudioTraps::
 .stop::

@@ -181,10 +181,10 @@ ROMX $1b
     "Kiss System 4"
 
 ROMX $1c
-    "ROM Bank $01c"
+    "Audio 1"
 
 ROMX $1d
-    "ROM Bank $01d"
+    "Audio 2"
 
 ROMX $1f
     "ROM Bank $01f"
