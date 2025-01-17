@@ -2439,12 +2439,12 @@ MusicTable:
     db BANK(data_01c_51a4)
     db BANK(data_01c_51ad)
     db BANK(data_01c_51b6)
-    db $1d
-    db $1d
-    db $1d
-    db $1d
-    db $1d
-    db $1d
+    db BANK(data_01d_5155)
+    db BANK(data_01d_515e)
+    db BANK(data_01d_5167)
+    db BANK(data_01d_5170)
+    db BANK(data_01d_5179)
+    db BANK(data_01d_5182)
 .addrs
     dw data_01c_5154
     dw data_01c_5155
@@ -2466,86 +2466,86 @@ MusicTable:
     dw 0
     dw 0
 
-data_01c_5154:
+data_01c_5154::
     db $00
 
-data_01c_5155:
+data_01c_5155::
     db $0f
     dw data_01c_51ef
     dw data_01c_525e
     dw data_01c_5346
     dw data_01c_53c9
 
-data_01c_515e:
+data_01c_515e::
     db $0f
     dw data_01c_53e6
     dw data_01c_540c
     dw data_01c_5489
     dw data_01c_54c9
 
-data_01c_5167:
+data_01c_5167::
     db $0f
     dw data_01c_54dd
     dw data_01c_5661
     dw data_01c_57c1
     dw data_01c_58c9
 
-data_01c_5170:
+data_01c_5170::
     db $0f
     dw data_01c_598a
     dw data_01c_59d9
     dw data_01c_5a11
     dw data_01c_5a7c
 
-data_01c_5179:
+data_01c_5179::
     db $0f
     dw data_01c_5a97
     dw data_01c_5b8e
     dw data_01c_5c42
     dw data_01c_5cbb
 
-data_01c_5182:
+data_01c_5182::
     db $07
     dw data_01c_5ce5
     dw data_01c_5d1f
     dw data_01c_5d56
 
-data_01c_5189:
+data_01c_5189::
     db $0f
     dw data_01c_5d86
     dw data_01c_5f8f
     dw data_01c_619d
     dw data_01c_61f9
 
-data_01c_5192:
+data_01c_5192::
     db $0f
     dw data_01c_628e
     dw data_01c_64ab
     dw data_01c_664b
     dw data_01c_67a5
 
-data_01c_519b:
+data_01c_519b::
     db $0f
     dw data_01c_6881
     dw data_01c_6a4e
     dw data_01c_6bff
     dw data_01c_6d56
 
-data_01c_51a4:
+data_01c_51a4::
     db $0f
     dw data_01c_6e4f
     dw data_01c_703b
     dw data_01c_7336
     dw data_01c_74bd
 
-data_01c_51ad:
+data_01c_51ad::
     db $0f
     dw data_01c_754a
     dw data_01c_761d
     dw data_01c_76c2
     dw data_01c_7709
 
-data_01c_51b6:
+data_01c_51b6::
     db $0f
     dw data_01c_7760
     dw data_01c_7943
