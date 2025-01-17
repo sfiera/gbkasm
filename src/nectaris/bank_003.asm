@@ -51,11 +51,7 @@ MessagePlayer2::
 MessageComputer::
     INCBIN "gfx/nectaris/message-computer.2bpp"
 
-ScreenTitleData:
-.map::
-    INCBIN "gfx/nectaris/title.map", 20
-.tiles::
-    INCBIN "gfx/nectaris/title.2bpp"
+SECTION "ROM Bank $003-B", ROMX
 
 TileMapWeaponDataUnused::
     ; This part of the source image ensures that all ASCII is in the tileset.

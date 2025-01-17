@@ -12,18 +12,6 @@ INCLUDE "trap.inc"
 
 SECTION "ROM Bank $004", ROMX
 
-ScreenGameOverData:
-.map::
-    INCBIN "gfx/nectaris/gameover.map", 20
-.tiles::
-    INCBIN "gfx/nectaris/gameover.2bpp"
-
-ScreenWorldMapData:
-.map::
-    INCBIN "gfx/nectaris/worldmap.map", 20
-.tiles::
-    INCBIN "gfx/nectaris/worldmap.2bpp"
-
 FactoryTileMap1::
     INCBIN "gfx/nectaris/factory.map", 40, 80
 FactoryTileMap2::

@@ -19,58 +19,7 @@ MACRO laddr
     dbw BANK(\1), \1
 ENDM
 
-MACRO screen
-    laddr \1.map
-    laddr \1.tiles
-ENDM
-
-SECTION "ROM Bank $005", ROMX
-
-ScreenTitle::
-    screen ScreenTitleData
-ScreenWin::
-    screen ScreenWinData
-
-ScreenWinData:
-.map
-    INCBIN "gfx/nectaris/win.map", 20
-.tiles
-    INCBIN "gfx/nectaris/win.2bpp"
-
-ScreenGameOver::
-    screen ScreenGameOverData
-ScreenWorldMap::
-    screen ScreenWorldMapData
-ScreenPrologue1::
-    screen ScreenPrologue1Data
-ScreenPrologue3::
-    screen ScreenPrologue3Data
-ScreenPrologue5::
-    screen ScreenPrologue5Data
-ScreenResults::
-    screen ScreenResultsData
-ScreenEpilogue1::
-    screen ScreenEpilogue1Data
-ScreenEpilogue2::
-    screen ScreenEpilogue2Data
-ScreenEpilogue3::
-    screen ScreenEpilogue3Data
-ScreenEpilogue4::
-    screen ScreenEpilogue4Data
-ScreenEpilogue5::
-    screen ScreenEpilogue5Data
-ScreenPrologue2::
-    screen ScreenPrologue2Data
-ScreenPrologue4::
-    screen ScreenPrologue4Data
-ScreenPrologue6::
-    screen ScreenPrologue6Data
-ScreenPrologue7::
-    screen ScreenPrologue7Data
-ScreenEpilogue6::
-    screen ScreenEpilogue6Data
-ScreenFactoryTaken::
-    screen ScreenFactoryTakenData
+SECTION "Map List", ROMX
 
 Maps::
     laddr MapA01Steven

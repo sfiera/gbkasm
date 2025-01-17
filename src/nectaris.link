@@ -9,12 +9,18 @@ ROMX $02
 
 ROMX $03
     "ROM Bank $003"
+    "Screen Data 1"
+    "ROM Bank $003-B"
 
 ROMX $04
+    "Screen Data 2"
     "ROM Bank $004"
 
 ROMX $05
-    "ROM Bank $005"
+    "Screens 1"
+    "Screen Data 3"
+    "Screens 2"
+    "Map List"
 
 ROMX $06
     "Map B01 Revolt"
@@ -96,7 +102,7 @@ ROMX $09
     "Map E43"
 
 ROMX $0a
-    "ROM Bank $00a"
+    "Screen Data 4"
 
 ROMX $0b
     "Map A11 Browny"
@@ -123,10 +129,10 @@ ROMX $0b
     "Map C16 Tcenoz"
 
 ROMX $0c
-    "ROM Bank $00c"
+    "Screen Data 5"
 
 ROMX $0d
-    "ROM Bank $00d"
+    "Screen Data 6"
 
 ROMX $0e
     "ROM Bank $00e"
@@ -135,7 +141,7 @@ ROMX $0f
     "ROM Bank $00f"
 
 ROMX $10
-    "ROM Bank $010"
+    "Screen Data 7"
 
 ROMX $11
     "Map D01 Tlover"
