@@ -9395,6 +9395,9 @@ Call_000_3f8e:
     ret
 
 
+SECTION "ROM Bank $01f", ROMX
+
+
 SECTION "WRAM Interrupts", WRAM0
 
 WRAMTimerOverflowInterrupt::
