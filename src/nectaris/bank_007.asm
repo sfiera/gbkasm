@@ -178,16 +178,16 @@ jr_007_44bb:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 0, a
+    bit BTN_A_F, a
     jp nz, Jump_007_44df
 
-    bit 1, a
+    bit BTN_B_F, a
     jp nz, Jump_007_44f4
 
-    bit 6, a
+    bit BTN_UP_F, a
     jp nz, Jump_007_4509
 
-    bit 7, a
+    bit BTN_DN_F, a
     jp nz, Jump_007_4528
 
     call Call_000_085d
@@ -201,7 +201,7 @@ Jump_007_44e4:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 0, a
+    bit BTN_A_F, a
     jp nz, Jump_007_44e4
 
     ld a, $00
@@ -216,7 +216,7 @@ Jump_007_44f9:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 1, a
+    bit BTN_B_F, a
     jp nz, Jump_007_44f9
 
     ld a, $ff
@@ -237,7 +237,7 @@ jr_007_4519:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 6, a
+    bit BTN_UP_F, a
     jr nz, jr_007_4519
 
     jp Jump_007_44bb
@@ -260,7 +260,7 @@ jr_007_453c:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 7, a
+    bit BTN_DN_F, a
     jr nz, jr_007_453c
 
     jp Jump_007_44bb
@@ -361,19 +361,19 @@ jr_007_45ca:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 0, a
+    bit BTN_A_F, a
     jp nz, Jump_007_45f3
 
-    bit 1, a
+    bit BTN_B_F, a
     jp nz, Jump_007_4643
 
-    bit 2, a
+    bit BTN_SEL_F, a
     jp nz, Jump_007_4658
 
-    bit 6, a
+    bit BTN_UP_F, a
     jp nz, Jump_007_46db
 
-    bit 7, a
+    bit BTN_DN_F, a
     jp nz, Jump_007_4716
 
     call Call_000_085d
@@ -383,7 +383,7 @@ Jump_007_45f3:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 0, a
+    bit BTN_A_F, a
     jp nz, Jump_007_45f3
 
     ld a, [$d8e8]
@@ -436,7 +436,7 @@ Jump_007_4648:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 1, a
+    bit BTN_B_F, a
     jp nz, Jump_007_4648
 
     ld a, $ff
@@ -541,7 +541,7 @@ jr_007_4707:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 6, a
+    bit BTN_UP_F, a
     jr nz, jr_007_4707
 
     jp Jump_007_45ca
@@ -575,7 +575,7 @@ jr_007_4742:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 7, a
+    bit BTN_DN_F, a
     jr nz, jr_007_4742
 
     jp Jump_007_45ca
@@ -888,10 +888,10 @@ jr_007_4979:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 0, a
+    bit BTN_A_F, a
     jp nz, Jump_007_4993
 
-    bit 1, a
+    bit BTN_B_F, a
     jp nz, Jump_007_49a8
 
     call Call_000_085d
@@ -906,7 +906,7 @@ Jump_007_4998:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 0, a
+    bit BTN_A_F, a
     jp nz, Jump_007_4998
 
     ld a, $00
@@ -921,7 +921,7 @@ Jump_007_49ad:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 1, a
+    bit BTN_B_F, a
     jp nz, Jump_007_49ad
 
     ld a, $ff
@@ -949,19 +949,19 @@ jr_007_49d4:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 0, a
+    bit BTN_A_F, a
     jp nz, Jump_007_49fd
 
-    bit 1, a
+    bit BTN_B_F, a
     jp nz, Jump_007_4a79
 
-    bit 2, a
+    bit BTN_SEL_F, a
     jp nz, Jump_007_4a8e
 
-    bit 6, a
+    bit BTN_UP_F, a
     jp nz, Jump_007_4b42
 
-    bit 7, a
+    bit BTN_DN_F, a
     jp nz, Jump_007_4b7d
 
     call Call_000_085d
@@ -971,7 +971,7 @@ Jump_007_49fd:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 0, a
+    bit BTN_A_F, a
     jp nz, Jump_007_49fd
 
     ld a, [$d8e8]
@@ -1052,7 +1052,7 @@ Jump_007_4a7e:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 1, a
+    bit BTN_B_F, a
     jp nz, Jump_007_4a7e
 
     ld a, $ff
@@ -1156,7 +1156,7 @@ Jump_007_4b32:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 2, a
+    bit BTN_SEL_F, a
     jp nz, Jump_007_4b32
 
     jp Jump_007_49d4
@@ -1190,7 +1190,7 @@ jr_007_4b6e:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 6, a
+    bit BTN_UP_F, a
     jr nz, jr_007_4b6e
 
     jp Jump_007_49d4
@@ -1224,7 +1224,7 @@ jr_007_4ba9:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 7, a
+    bit BTN_DN_F, a
     jr nz, jr_007_4ba9
 
     jp Jump_007_49d4
@@ -1552,22 +1552,22 @@ jr_007_4dad:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 0, a
+    bit BTN_A_F, a
     jp nz, Jump_007_4ddb
 
-    bit 1, a
+    bit BTN_B_F, a
     jp nz, Jump_007_4e2f
 
-    bit 4, a
+    bit BTN_RT_F, a
     jp nz, Jump_007_4e44
 
-    bit 5, a
+    bit BTN_LT_F, a
     jp nz, Jump_007_4e77
 
-    bit 6, a
+    bit BTN_UP_F, a
     jp nz, Jump_007_4e98
 
-    bit 7, a
+    bit BTN_DN_F, a
     jp nz, Jump_007_4ed3
 
     call Call_000_085d
@@ -1591,7 +1591,7 @@ Jump_007_4df5:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 0, a
+    bit BTN_A_F, a
     jp nz, Jump_007_4df5
 
     call Call_000_0c3c
@@ -1613,7 +1613,7 @@ Jump_007_4e1f:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 0, a
+    bit BTN_A_F, a
     jp nz, Jump_007_4e1f
 
     ld a, $00
@@ -1628,7 +1628,7 @@ Jump_007_4e34:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 1, a
+    bit BTN_B_F, a
     jp nz, Jump_007_4e34
 
     ld a, $ff
@@ -1657,7 +1657,7 @@ Jump_007_4e67:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 4, a
+    bit BTN_RT_F, a
     jp nz, Jump_007_4e67
 
     jp Jump_007_4dad
@@ -1677,7 +1677,7 @@ Jump_007_4e88:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 5, a
+    bit BTN_LT_F, a
     jp nz, Jump_007_4e88
 
     jp Jump_007_4dad
@@ -1721,7 +1721,7 @@ jr_007_4ec4:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 6, a
+    bit BTN_UP_F, a
     jr nz, jr_007_4ec4
 
     jp Jump_007_4dad
@@ -1765,7 +1765,7 @@ jr_007_4eff:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 7, a
+    bit BTN_DN_F, a
     jr nz, jr_007_4eff
 
     jp Jump_007_4dad
@@ -1807,25 +1807,25 @@ jr_007_4f45:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 0, a
+    bit BTN_A_F, a
     jp nz, Jump_007_4f78
 
-    bit 1, a
+    bit BTN_B_F, a
     jp nz, Jump_007_4f9a
 
-    bit 2, a
+    bit BTN_SEL_F, a
     jp nz, Jump_007_4faf
 
-    bit 4, a
+    bit BTN_RT_F, a
     jp nz, Jump_007_5003
 
-    bit 5, a
+    bit BTN_LT_F, a
     jp nz, Jump_007_5028
 
-    bit 6, a
+    bit BTN_UP_F, a
     jp nz, Jump_007_504d
 
-    bit 7, a
+    bit BTN_DN_F, a
     jp nz, Jump_007_5088
 
     call Call_000_085d
@@ -1845,7 +1845,7 @@ Jump_007_4f8a:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 0, a
+    bit BTN_A_F, a
     jp nz, Jump_007_4f8a
 
     ld a, $00
@@ -1860,7 +1860,7 @@ Jump_007_4f9f:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 1, a
+    bit BTN_B_F, a
     jp nz, Jump_007_4f9f
 
     ld a, $ff
@@ -1875,7 +1875,7 @@ jr_007_4fb4:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 2, a
+    bit BTN_SEL_F, a
     jr nz, jr_007_4fb4
 
     ld a, [$d909]
@@ -1925,7 +1925,7 @@ Jump_007_5018:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 4, a
+    bit BTN_RT_F, a
     jp nz, Jump_007_5018
 
     jp Jump_007_4f45
@@ -1946,7 +1946,7 @@ Jump_007_503d:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 5, a
+    bit BTN_LT_F, a
     jp nz, Jump_007_503d
 
     jp Jump_007_4f45
@@ -1980,7 +1980,7 @@ jr_007_5079:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 6, a
+    bit BTN_UP_F, a
     jr nz, jr_007_5079
 
     jp Jump_007_4f45
@@ -2014,7 +2014,7 @@ jr_007_50b4:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 7, a
+    bit BTN_DN_F, a
     jr nz, jr_007_50b4
 
     jp Jump_007_4f45
@@ -2090,25 +2090,25 @@ jr_007_5130:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 0, a
+    bit BTN_A_F, a
     jp nz, Jump_007_5163
 
-    bit 1, a
+    bit BTN_B_F, a
     jp nz, Jump_007_5183
 
-    bit 2, a
+    bit BTN_SEL_F, a
     jp nz, Jump_007_5198
 
-    bit 4, a
+    bit BTN_RT_F, a
     jp nz, Jump_007_51ea
 
-    bit 5, a
+    bit BTN_LT_F, a
     jp nz, Jump_007_5222
 
-    bit 6, a
+    bit BTN_UP_F, a
     jp nz, Jump_007_5247
 
-    bit 7, a
+    bit BTN_DN_F, a
     jp nz, Jump_007_5282
 
     call Call_000_085d
@@ -2127,7 +2127,7 @@ Jump_007_5173:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 0, a
+    bit BTN_A_F, a
     jp nz, Jump_007_5173
 
     ld a, $00
@@ -2142,7 +2142,7 @@ Jump_007_5188:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 1, a
+    bit BTN_B_F, a
     jp nz, Jump_007_5188
 
     ld a, $ff
@@ -2157,7 +2157,7 @@ jr_007_519d:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 2, a
+    bit BTN_SEL_F, a
     jr nz, jr_007_519d
 
     ld a, [$d909]
@@ -2219,7 +2219,7 @@ Jump_007_5212:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 4, a
+    bit BTN_RT_F, a
     jp nz, Jump_007_5212
 
     jp Jump_007_5130
@@ -2240,7 +2240,7 @@ Jump_007_5237:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 5, a
+    bit BTN_LT_F, a
     jp nz, Jump_007_5237
 
     jp Jump_007_5130
@@ -2274,7 +2274,7 @@ jr_007_5273:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 6, a
+    bit BTN_UP_F, a
     jr nz, jr_007_5273
 
     jp Jump_007_5130
@@ -2315,7 +2315,7 @@ jr_007_52ba:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 7, a
+    bit BTN_DN_F, a
     jr nz, jr_007_52ba
 
     jp Jump_007_5130
@@ -2945,25 +2945,25 @@ jr_007_6182:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 0, a
+    bit BTN_A_F, a
     jp nz, Jump_007_61b5
 
-    bit 1, a
+    bit BTN_B_F, a
     jp nz, Jump_007_61d7
 
-    bit 2, a
+    bit BTN_SEL_F, a
     jp nz, Jump_007_61ec
 
-    bit 4, a
+    bit BTN_RT_F, a
     jp nz, Jump_007_624b
 
-    bit 5, a
+    bit BTN_LT_F, a
     jp nz, Jump_007_6284
 
-    bit 6, a
+    bit BTN_UP_F, a
     jp nz, Jump_007_62a9
 
-    bit 7, a
+    bit BTN_DN_F, a
     jp nz, Jump_007_62e4
 
     call Call_000_085d
@@ -2983,7 +2983,7 @@ Jump_007_61c7:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 0, a
+    bit BTN_A_F, a
     jp nz, Jump_007_61c7
 
     ld a, $00
@@ -2998,7 +2998,7 @@ Jump_007_61dc:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 1, a
+    bit BTN_B_F, a
     jp nz, Jump_007_61dc
 
     ld a, $ff
@@ -3013,7 +3013,7 @@ jr_007_61f1:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 2, a
+    bit BTN_SEL_F, a
     jr nz, jr_007_61f1
 
     ld a, [$d909]
@@ -3080,7 +3080,7 @@ Jump_007_6274:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 4, a
+    bit BTN_RT_F, a
     jp nz, Jump_007_6274
 
     jp Jump_007_6182
@@ -3101,7 +3101,7 @@ Jump_007_6299:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 5, a
+    bit BTN_LT_F, a
     jp nz, Jump_007_6299
 
     jp Jump_007_6182
@@ -3135,7 +3135,7 @@ jr_007_62d5:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 6, a
+    bit BTN_UP_F, a
     jr nz, jr_007_62d5
 
     jp Jump_007_6182
@@ -3176,7 +3176,7 @@ jr_007_631c:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 7, a
+    bit BTN_DN_F, a
     jr nz, jr_007_631c
 
     jp Jump_007_6182
@@ -3256,25 +3256,25 @@ jr_007_639c:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 0, a
+    bit BTN_A_F, a
     jp nz, Jump_007_63cf
 
-    bit 1, a
+    bit BTN_B_F, a
     jp nz, Jump_007_63f1
 
-    bit 2, a
+    bit BTN_SEL_F, a
     jp nz, Jump_007_6406
 
-    bit 4, a
+    bit BTN_RT_F, a
     jp nz, Jump_007_645a
 
-    bit 5, a
+    bit BTN_LT_F, a
     jp nz, Jump_007_6493
 
-    bit 6, a
+    bit BTN_UP_F, a
     jp nz, Jump_007_64b8
 
-    bit 7, a
+    bit BTN_DN_F, a
     jp nz, Jump_007_64f3
 
     call Call_000_085d
@@ -3294,7 +3294,7 @@ Jump_007_63e1:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 0, a
+    bit BTN_A_F, a
     jp nz, Jump_007_63e1
 
     ld a, $00
@@ -3309,7 +3309,7 @@ Jump_007_63f6:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 1, a
+    bit BTN_B_F, a
     jp nz, Jump_007_63f6
 
     ld a, $ff
@@ -3324,7 +3324,7 @@ jr_007_640b:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 2, a
+    bit BTN_SEL_F, a
     jr nz, jr_007_640b
 
     ld a, [$d909]
@@ -3387,7 +3387,7 @@ Jump_007_6483:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 4, a
+    bit BTN_RT_F, a
     jp nz, Jump_007_6483
 
     jp Jump_007_639c
@@ -3408,7 +3408,7 @@ Jump_007_64a8:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 5, a
+    bit BTN_LT_F, a
     jp nz, Jump_007_64a8
 
     jp Jump_007_639c
@@ -3442,7 +3442,7 @@ jr_007_64e4:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 6, a
+    bit BTN_UP_F, a
     jr nz, jr_007_64e4
 
     jp Jump_007_639c
@@ -3483,7 +3483,7 @@ jr_007_652b:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 7, a
+    bit BTN_DN_F, a
     jr nz, jr_007_652b
 
     jp Jump_007_639c
@@ -3563,19 +3563,19 @@ jr_007_65ab:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 0, a
+    bit BTN_A_F, a
     jp nz, Jump_007_65d4
 
-    bit 1, a
+    bit BTN_B_F, a
     jp nz, Jump_007_65f6
 
-    bit 2, a
+    bit BTN_SEL_F, a
     jp nz, Jump_007_660b
 
-    bit 6, a
+    bit BTN_UP_F, a
     jp nz, Jump_007_665f
 
-    bit 7, a
+    bit BTN_DN_F, a
     jp nz, Jump_007_669a
 
     call Call_000_085d
@@ -3595,7 +3595,7 @@ Jump_007_65e6:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 0, a
+    bit BTN_A_F, a
     jp nz, Jump_007_65e6
 
     ld a, $00
@@ -3610,7 +3610,7 @@ Jump_007_65fb:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 1, a
+    bit BTN_B_F, a
     jp nz, Jump_007_65fb
 
     ld a, $ff
@@ -3625,7 +3625,7 @@ jr_007_6610:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 2, a
+    bit BTN_SEL_F, a
     jr nz, jr_007_6610
 
     ld a, [$d909]
@@ -3688,7 +3688,7 @@ jr_007_668b:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 6, a
+    bit BTN_UP_F, a
     jr nz, jr_007_668b
 
     jp Jump_007_65ab
@@ -3729,7 +3729,7 @@ jr_007_66d2:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 7, a
+    bit BTN_DN_F, a
     jr nz, jr_007_66d2
 
     jp Jump_007_65ab
@@ -3809,25 +3809,25 @@ Jump_007_6752:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 0, a
+    bit BTN_A_F, a
     jp nz, .Jump_007_6785
 
-    bit 1, a
+    bit BTN_B_F, a
     jp nz, .Jump_007_67a5
 
-    bit 2, a
+    bit BTN_SEL_F, a
     jp nz, .Jump_007_67ba
 
-    bit 4, a
+    bit BTN_RT_F, a
     jp nz, .Jump_007_680c
 
-    bit 5, a
+    bit BTN_LT_F, a
     jp nz, .Jump_007_6845
 
-    bit 6, a
+    bit BTN_UP_F, a
     jp nz, .Jump_007_686a
 
-    bit 7, a
+    bit BTN_DN_F, a
     jp nz, .Jump_007_68a5
 
     call Call_000_085d
@@ -3846,7 +3846,7 @@ Jump_007_6752:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 0, a
+    bit BTN_A_F, a
     jp nz, .Jump_007_6795
 
     ld a, $00
@@ -3861,7 +3861,7 @@ Jump_007_6752:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 1, a
+    bit BTN_B_F, a
     jp nz, .Jump_007_67aa
 
     ld a, $ff
@@ -3876,7 +3876,7 @@ Jump_007_6752:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 2, a
+    bit BTN_SEL_F, a
     jr nz, .jr_007_67bf
 
     ld a, [$d909]
@@ -3938,7 +3938,7 @@ Jump_007_6752:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 4, a
+    bit BTN_RT_F, a
     jp nz, .Jump_007_6835
 
     jp Jump_007_6752
@@ -3959,7 +3959,7 @@ Jump_007_6752:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 5, a
+    bit BTN_LT_F, a
     jp nz, .Jump_007_685a
 
     jp Jump_007_6752
@@ -3993,7 +3993,7 @@ Jump_007_6752:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 6, a
+    bit BTN_UP_F, a
     jr nz, .jr_007_6896
 
     jp Jump_007_6752
@@ -4034,7 +4034,7 @@ Jump_007_6752:
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
-    bit 7, a
+    bit BTN_DN_F, a
     jr nz, .jr_007_68dd
 
     jp Jump_007_6752
