@@ -5,16 +5,16 @@ ROMX $01
     "ROM Bank $001"
 
 ROMX $02
-    "ROM Bank $002"
+    "Tiles 1"
 
 ROMX $03
-    "ROM Bank $003"
+    "Tiles 2"
     "Screen Data 1"
-    "ROM Bank $003-B"
+    "Tiles 3"
 
 ROMX $04
     "Screen Data 2"
-    "ROM Bank $004"
+    "Tiles 4"
 
 ROMX $05
     "Screens 1"
@@ -162,7 +162,7 @@ ROMX $11
     "Map D16 Rotcen"
 
 ROMX $12
-    "ROM Bank $012"
+    "Tiles 5"
 
 ROMX $1a
     org $4000

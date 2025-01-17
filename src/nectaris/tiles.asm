@@ -10,7 +10,29 @@ INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
-SECTION "ROM Bank $003", ROMX
+SECTION "Tiles 1", ROMX
+
+MapTiles::
+    INCBIN "gfx/nectaris/maptiles.2bpp"
+
+Font1::
+    INCBIN "gfx/nectaris/font1.2bpp"
+Font2::
+    INCBIN "gfx/nectaris/font2.2bpp"
+Font3::
+    INCBIN "gfx/nectaris/font3.2bpp"
+Font4::
+    INCBIN "gfx/nectaris/font4.2bpp"
+
+    INCBIN "gfx/nectaris/unused.2bpp"
+
+UnitNameTiles::
+    INCBIN "gfx/nectaris/unitnames.2bpp"
+
+    ds 160, $00
+    ds 16, $ff
+
+SECTION "Tiles 2", ROMX
 
 UnitsGuicy::
     INCBIN "gfx/nectaris/units-guicy.2bpp"
@@ -51,7 +73,7 @@ MessagePlayer2::
 MessageComputer::
     INCBIN "gfx/nectaris/message-computer.2bpp"
 
-SECTION "ROM Bank $003-B", ROMX
+SECTION "Tiles 3", ROMX
 
 TileMapWeaponDataUnused::
     ; This part of the source image ensures that all ASCII is in the tileset.
@@ -61,3 +83,24 @@ TileMapWeaponData::
     INCBIN "gfx/nectaris/weapondata.map", 140
 WeaponDataTiles::
     INCBIN "gfx/nectaris/weapondata.2bpp"
+
+SECTION "Tiles 4", ROMX
+
+FactoryTileMap1::
+    INCBIN "gfx/nectaris/factory.map", 40, 80
+FactoryTileMap2::
+    INCBIN "gfx/nectaris/factory.map", 120, 20
+FactoryTileMap3::
+    INCBIN "gfx/nectaris/factory.map", 140, 480
+FactoryTileMap4::
+    INCBIN "gfx/nectaris/factory.map", 620, 220
+FactoryTileData::
+    INCBIN "gfx/nectaris/factory.2bpp"
+
+Font7::
+    INCBIN "gfx/nectaris/font7.2bpp"
+
+SECTION "Tiles 5", ROMX
+
+Font8::
+    INCBIN "gfx/nectaris/font8.2bpp"
