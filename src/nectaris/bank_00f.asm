@@ -10,6 +10,7 @@ INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 INCLUDE "nectaris/audio.inc"
+INCLUDE "nectaris/map.inc"
 INCLUDE "nectaris/text.inc"
 INCLUDE "nectaris/units.inc"
 
@@ -5114,37 +5115,37 @@ Jump_00f_5ddc:
     ret
 
 
-data_00f_5ddf:
+FlagLocations:
     db $0b, $0b, $09, $0a, $07, $0a, $05, $09, $03, $09, $06, $07, $08, $07, $0a, $06
     db $0c, $06, $0d, $07, $0f, $07, $0f, $05, $0e, $04, $0d, $03, $0b, $02, $09, $01
 
-Call_00f_5dff::
+DrawFlags::
     ld a, [$d86f]
     inc a
     ld [$d86f], a
     ld a, [$d79a]
     ld [$d871], a
-    cp $20
-    jr c, jr_00f_5e12
+    cp MAP_END_B
+    jr c, .basic  ; not advanced
 
-    sub $4c
+    sub MAP_BEGIN_C
 
-jr_00f_5e12:
+.basic
     ld [$d871], a
-    cp $10
-    jr c, jr_00f_5e1e
+    cp MAP_END_A
+    jr c, .story  ; not legend
 
-    sub $10
+    sub MAP_BEGIN_B
     ld [$d871], a
 
-jr_00f_5e1e:
+.story
     ld b, $00
 
-Jump_00f_5e20:
+.next
     push bc
     ld a, b
     sla a
-    ld hl, data_00f_5ddf
+    ld hl, FlagLocations
     call AddAToHL
     ld a, [hl+]
     sla a
@@ -5187,7 +5188,7 @@ Jump_00f_5e20:
     ld c, a
     ld a, b
     cp c
-    jp c, Jump_00f_5e20
+    jp c, .next
 
     call Call_000_11e8
     ld hl, $d7a9

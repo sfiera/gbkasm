@@ -3833,14 +3833,14 @@ Call_000_17b8:
     ret
 
 
-Call_000_17d8:
+DrawFlagsJump:
     ld [$d872], a
     ld a, [$d799]
     push af
-    ld a, BANK(Call_00f_5dff)
+    ld a, BANK(DrawFlags)
     call SetROMBank
     ld a, [$d872]
-    call Call_00f_5dff
+    call DrawFlags
     ld [$d872], a
     pop af
     ld [$d799], a
@@ -5890,7 +5890,7 @@ ShowWorldMap:
     call SetStdPalette
 
 jr_000_2736:
-    call Call_000_17d8
+    call DrawFlagsJump
     call Call_000_085d
     call Call_000_079c
     ldh a, [$8c]
