@@ -97,130 +97,12 @@ traps1::
 
 SECTION "Kiss System 1B", ROMX
 
-Call_001_6627::
-    call Call_001_6651
-    ld de, $c500
-    ld hl, $c400
-    ld bc, $0100
-    trap MemCopy
-    ld de, $c699
-    call trap_51_665c
-    call Call_001_6651
-    ld de, $c400
-    ld hl, $c500
-    ld bc, $0100
-    trap MemCopy
-    xor a
-    ldh [$c0], a
-    ldh [$c1], a
-    ldh [$c2], a
-    ret
-
-
-Call_001_6651:
-    ld hl, $c600
-    ld bc, $0099
-    ld e, $20
-    trap MemSet
-    ret
-
-
-trap_51_665c:
-    ld l, e
-    ld h, d
-    push hl
-    call Call_001_66e1
-    pop hl
-    ld de, $0039
-    add hl, de
-    ld e, l
-    ld d, h
-    inc hl
-    inc hl
-    ld c, $30
-
-.jr_001_666d
-    ld a, [de]
-    dec de
-    ld [hl-], a
-    dec c
-    jr nz, .jr_001_666d
-
-    ld a, $20
-    ld [hl-], a
-    ld [hl], a
-    ret
-
-
-Jump_001_6678::
-    call Call_001_6651
-    ld hl, $c500
-    ld de, $c611
-    ld bc, $0088
-    trap $eb
-    ld hl, $c509
-    ld b, [hl]
-    inc hl
-    inc hl
-    ld a, [hl]
-    bit 4, b
-    jr z, .jr_001_6699
-
-    sub $60
-    bit 3, b
-    jr z, .jr_001_6699
-
-    sub $60
-
-.jr_001_6699
-    ld c, a
-    ld b, $00
-    ld hl, $c50c
-    add hl, bc
-    ld [hl], $00
-    ld hl, $c50d
-    ld de, $c600
-    trap $4e
-    ret
-
-
-Call_001_66ab::
-    xor a
-    ld [$c50a], a
-    ld bc, $01ff
-    ld de, $0088
-    trap FileWrite
-    ret c
-
-    ld de, $c611
-    ld bc, $0088
-    trap $ec
-    or a
-    ret
-
-
-LoadPageTiles::
-    push af
-    ld a, $30
-    ld hl, $0102
-    ld de, $0003
-    ld bc, $0202
-    trap $59
-    pop af
-    ld e, a
-    ld d, $30
-    ld hl, PageIcon
-    ld c, $04
-    trap TileLoad
-    ret
-
-
 Call_001_66dc::
     ld h, $04
     trap $ca
     ret
 
-Call_001_66e1:
+Call_001_66e1::
     ld de, $ff46
     ld bc, $003a
     push hl
@@ -3491,7 +3373,7 @@ jr_001_7f52:
     ret
 
 
-PageIcon:
+PageIcon::
     INCBIN "gfx/system/page.2bpp"
 
 PencilIcon:
