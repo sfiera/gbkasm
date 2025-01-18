@@ -690,7 +690,7 @@ AddFile:
     trap FileSearch
     pop de
     pop bc
-    jr c, jr_000_03ae
+    jr c, .jr_000_03ae
 
     push bc
     push de
@@ -700,21 +700,21 @@ AddFile:
     ld hl, $c500
     trap FileSearch
 
-jr_000_03ae:
+.jr_000_03ae
     pop hl
     pop bc
     pop de
     ccf
     ret c
 
-    ld a, $2e
-    bit 0, b
-    jr nz, jr_000_03ba
+    ld a, FILE_HIST_SIZE
+    bit FILE_HIST_F, b
+    jr nz, .jr_000_03ba
 
     xor a
 
-jr_000_03ba:
-    add $05
+.jr_000_03ba
+    add FILE_TYPE_OFFSET
     add c
     ld c, a
     push bc
@@ -740,7 +740,7 @@ jr_000_03ba:
     pop bc
     ret c
 
-    bit 0, b
+    bit FILE_HIST_F, b
     ret z
 
     push bc
@@ -750,13 +750,13 @@ jr_000_03ba:
     ld hl, $c500
     trap $ea
     pop de
-    ld hl, $002e
+    ld hl, FILE_HIST_SIZE
     add hl, de
     ld e, l
     ld d, h
     pop bc
     ld a, c
-    sub $2e
+    sub FILE_HIST_SIZE
     ld c, a
     xor a
     ret
@@ -1739,6 +1739,7 @@ jr_000_0a4b:
     ld b, d
     jr jr_000_0a21
 
+
 Call_000_0a5c:
     ld e, [hl]
     inc hl
@@ -1772,14 +1773,14 @@ Call_000_0a5c:
     pop hl
     pop bc
     pop de
-    ld a, $2e
-    bit 0, b
-    jr nz, jr_000_0a8a
+    ld a, FILE_HIST_SIZE
+    bit FILE_HIST_F, b
+    jr nz, .jr_000_0a8a
 
     xor a
 
-jr_000_0a8a:
-    add $05
+.jr_000_0a8a
+    add FILE_TYPE_OFFSET
     add c
     ld c, a
     push bc
@@ -1805,7 +1806,7 @@ jr_000_0a8a:
     pop bc
     jr c, jr_000_0ad1
 
-    bit 0, b
+    bit FILE_HIST_F, b
     ret z
 
     push bc
@@ -1815,13 +1816,13 @@ jr_000_0a8a:
     ld hl, $c500
     trap $ea
     pop de
-    ld hl, $002e
+    ld hl, FILE_HIST_SIZE
     add hl, de
     ld e, l
     ld d, h
     pop bc
     ld a, c
-    sub $2e
+    sub FILE_HIST_SIZE
     ld c, a
     xor a
     ret
@@ -1956,14 +1957,14 @@ Call_000_0b32:
     cp $ff
     jp z, Jump_000_0bee
 
-    ld a, $2e
-    bit 0, b
-    jr nz, jr_000_0b68
+    ld a, FILE_HIST_SIZE
+    bit FILE_HIST_F, b
+    jr nz, .jr_000_0b68
 
     xor a
 
-jr_000_0b68:
-    add $05
+.jr_000_0b68
+    add FILE_TYPE_OFFSET
     add c
     ld c, a
     push bc
@@ -2024,7 +2025,7 @@ jr_000_0b9f:
     jr nz, jr_000_0be6
 
     xor a
-    bit 0, b
+    bit FILE_HIST_F, b
     ret z
 
     push bc
@@ -2034,13 +2035,13 @@ jr_000_0b9f:
     ld hl, $c700
     call Call_000_0d2b
     pop de
-    ld hl, $002e
+    ld hl, FILE_HIST_SIZE
     add hl, de
     ld e, l
     ld d, h
     pop bc
     ld a, c
-    sub $2e
+    sub FILE_HIST_SIZE
     ld c, a
     xor a
     ret
@@ -2074,13 +2075,13 @@ Call_000_0bf2:
     push hl
     inc hl
     ld b, $00
-    bit 0, a
+    bit FILE_HIST_F, a
     ld a, $fe
-    jr z, jr_000_0c02
+    jr z, .jr_000_0c02
 
-    sub $2e
+    sub FILE_HIST_SIZE
 
-jr_000_0c02:
+.jr_000_0c02
     sub [hl]
     ld e, a
     ld a, $ff
