@@ -10,9 +10,12 @@ INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
-DEF TITLE_LEN   EQU 12
-DEF BODY_LEN    EQU 17
-DEF LINE_COUNT  EQU 9
+DEF TITLE_SIZE  EQU 12
+DEF LINE_SIZE   EQU 17
+DEF LINE_COUNT  EQU 8
+DEF BODY_SIZE   EQU LINE_COUNT * LINE_SIZE
+DEF EDIT_COUNT  EQU LINE_COUNT + 1
+DEF EDIT_SIZE   EQU EDIT_COUNT * LINE_SIZE
 
 DEF LAYOUT_CONTINUE_HELP      EQU $00
 DEF LAYOUT_SAVE_HELP          EQU $01
@@ -62,8 +65,8 @@ SECTION "Kiss Mail Code", ROMX
 KissMailStart:
     ld a, $20
     trap DrawInit
-    call Call_001_6627
-    call Call_001_64d3
+    call InitMail
+    call CheckMail
     ; fall through
 
 
@@ -72,7 +75,7 @@ KissMailContinue:
     ld a, 1
     call LoadPageTiles
     ld de, $470d
-    ld hl, $c699
+    ld hl, MailEditLine
     trap KbdInit
     ld a, $03
     trap LCDEnable
@@ -114,7 +117,7 @@ RedrawMailLine:
     xor a
     ldh [$c1], a
     call GetMailLineMetrics
-    ld c, BODY_LEN
+    ld c, LINE_SIZE
     trap TileLoadText
     ret
 
@@ -145,7 +148,7 @@ KissMailEditLine:
 NextMailLine:
     ldh a, [$c0]
     inc a
-    cp LINE_COUNT
+    cp EDIT_COUNT
     jr c, .noWrap
 
     ld a, 1
@@ -161,7 +164,7 @@ PrevMailLine:
     bit 7, a
     jr z, .noWrap
 
-    ld a, LINE_COUNT - 1
+    ld a, LINE_COUNT
 
 .noWrap
     ldh [$c0], a
@@ -178,7 +181,7 @@ UpdateMailUnderline:
     bit 4, [hl]
     push af
     call GetMailLineMetrics
-    ld c, BODY_LEN
+    ld c, LINE_SIZE
     pop af
     jr z, .underline
 
@@ -349,7 +352,7 @@ KissMailPager:
     trap AudioStop
     ld hl, $0400
     trap $b6
-    call Call_001_614f
+    call TrimMailLine
     trap $70
     call NextMailLine
     ld hl, $0404
@@ -366,7 +369,7 @@ KissMailSave:
     ldh [$c0], a
 
 .retry
-    call Call_001_614f
+    call TrimMailLine
     or a
     jr nz, .hasTitle
 
@@ -397,7 +400,7 @@ KissMailSave:
     jr .retry
 
 .noSpace
-    call Call_001_66ab
+    call WriteMail
     ld a, LAYOUT_NO_SPACE_ERROR
     jr c, .wait
 
@@ -432,10 +435,10 @@ KissMailSend:
     call SendMail
     jr c, .prompt
 
-    ld hl, $c600
+    ld hl, MailMessage
     ld e, l
     ld d, h
-    ld c, $99
+    ld c, EDIT_SIZE
     trap IRWrite
     jr c, .cancel
 
@@ -565,7 +568,9 @@ SendMail:
     ret
 
 
-Call_001_614f:
+; Copies a trimmed version of the current line to $c6e0,
+; with all trailing spaces removed and length in a.
+TrimMailLine:
     call GetMailLineMetrics
     ld de, $c708
     push de
@@ -605,7 +610,7 @@ AwaitAB:
     jr z, AwaitAB
 
     or a
-    bit 1, a
+    bit BTN_B_F, a
     ret z
 
     scf
@@ -620,12 +625,12 @@ AwaitAB:
 ;
 ; These values are suitable for calling trap KbdEdit
 GetMailLineMetrics:
-    ld b, BODY_LEN
+    ld b, LINE_SIZE
     ldh a, [$c0]
     or a
     jr nz, .calc
 
-    ld b, TITLE_LEN
+    ld b, TITLE_SIZE
 
 .calc
     ld e, a
@@ -636,7 +641,7 @@ GetMailLineMetrics:
     add e
     ld e, a
     ld d, $00
-    ld hl, $c600
+    ld hl, MailMessage
     add hl, de
 
     add $80
@@ -779,11 +784,13 @@ LayoutYesNo:
     db $ff
 
 
-Call_001_64d3:
+; Was a file opened? If so, read it.
+; Is there space for a new mail file? If not, warn user.
+CheckMail:
     ld hl, $c500
     ld a, [hl+]
     or [hl]
-    jp nz, Jump_001_6678
+    jp nz, ReadMail
 
     ld hl, $00d2
     trap $e6
@@ -875,7 +882,7 @@ DrawMailWindow:
     push af
     xor a
     ldh [$c0], a
-    ld c, LINE_COUNT
+    ld c, EDIT_COUNT
 
 .next
     push bc
@@ -939,15 +946,15 @@ IRIdentifier:
 .end
 
 
-Call_001_6627::
-    call Call_001_6651
+InitMail::
+    call ClearMail
     ld de, $c500
     ld hl, $c400
     ld bc, $0100
     trap MemCopy
-    ld de, $c699
+    ld de, MailEditLine
     call trap_51_665c
-    call Call_001_6651
+    call ClearMail
     ld de, $c400
     ld hl, $c500
     ld bc, $0100
@@ -959,10 +966,10 @@ Call_001_6627::
     ret
 
 
-Call_001_6651:
-    ld hl, $c600
-    ld bc, $0099
-    ld e, $20
+ClearMail:
+    ld hl, MailMessage
+    ld bc, EDIT_SIZE
+    ld e, " "
     trap MemSet
     ret
 
@@ -988,54 +995,54 @@ trap_51_665c::
     dec c
     jr nz, .jr_001_666d
 
-    ld a, $20
+    ld a, " "
     ld [hl-], a
     ld [hl], a
     ret
 
 
-Jump_001_6678:
-    call Call_001_6651
+ReadMail:
+    call ClearMail
     ld hl, $c500
-    ld de, $c611
-    ld bc, $0088
+    ld de, MailMessage.body
+    ld bc, BODY_SIZE
     trap $eb
     ld hl, $c509
     ld b, [hl]
     inc hl
     inc hl
     ld a, [hl]
-    bit 4, b
-    jr z, .jr_001_6699
+    bit FILE_ICON_F, b
+    jr z, .readHere
 
-    sub $60
-    bit 3, b
-    jr z, .jr_001_6699
+    sub FILE_ICON_SIZE_1BPP
+    bit FILE_2BPP_F, b
+    jr z, .readHere
 
-    sub $60
+    sub FILE_ICON_SIZE_1BPP
 
-.jr_001_6699
+.readHere
     ld c, a
     ld b, $00
     ld hl, $c50c
     add hl, bc
     ld [hl], $00
     ld hl, $c50d
-    ld de, $c600
+    ld de, MailMessage
     trap $4e
     ret
 
 
-Call_001_66ab:
+WriteMail:
     xor a
     ld [$c50a], a
     ld bc, $01ff
-    ld de, $0088
+    ld de, BODY_SIZE
     trap FileWrite
     ret c
 
-    ld de, $c611
-    ld bc, $0088
+    ld de, MailMessage.body
+    ld bc, BODY_SIZE
     trap $ec
     or a
     ret
@@ -1055,3 +1062,16 @@ LoadPageTiles:
     ld c, $04
     trap TileLoad
     ret
+
+
+SECTION "Kiss Mail Memory", WRAM0[$c600]
+
+MailMessage:
+.title
+    ds LINE_SIZE
+.body
+    ds BODY_SIZE
+.end
+
+MailEditLine:
+    ds LINE_SIZE

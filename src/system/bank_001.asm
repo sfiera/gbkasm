@@ -117,7 +117,7 @@ InitKissUser::
     ld a, $20
     trap DrawInit
     call KissClearScreen
-    call Call_001_6627
+    call InitMail
     call Call_001_66dc
     ld de, $0000
     ld bc, $140d

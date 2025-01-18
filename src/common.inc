@@ -14,8 +14,10 @@ def FILE_DATA  equ %00000000  ; non-executable
 def FILE_A008  equ %00000010  ; must be installed to base addr $A008
 def FILE_HIST  equ %00000001  ; extra $2E bytes after title/icon
 
-DEF FILE_TYPE_OFFSET EQU 5
-DEF FILE_HIST_SIZE EQU 2 + 11 + 11 + 11 + 11
+DEF FILE_TYPE_OFFSET     EQU 5
+DEF FILE_HIST_SIZE       EQU 2 + 11 + 11 + 11 + 11
+DEF FILE_ICON_SIZE_2BPP  EQU $c0
+DEF FILE_ICON_SIZE_1BPP  EQU $60
 
 DEF BTN_A_F    EQU 0
 DEF BTN_B_F    EQU 1
