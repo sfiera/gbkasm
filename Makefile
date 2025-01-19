@@ -8,10 +8,8 @@ MINIGAME_ASM = $(wildcard src/minigame/*.asm)
 NECTARIS_ASM = $(wildcard src/nectaris/*.asm)
 GBF_ASM = $(wildcard src/file/*.asm)
 FRAG_ASM = $(wildcard src/frag/*/*.asm)
-PNGH = $(wildcard src/gfx/*/*.h.png)
-PNGV = $(wildcard src/gfx/*/*.v.png)
-PNGF = $(wildcard src/gfx/*/*.f.png)
-GFX = $(PNGH:%.h.png=%) $(PNGV:%.v.png=%) $(PNGF:%.f.png=%)
+PNG = $(wildcard src/gfx/*/*.png)
+GFX = $(PNGF:%.png=%.2bpp)
 HZ = $(FRAG_ASM:%.asm=%.hz)
 
 SYSTEM_OBJ = $(SYSTEM_ASM:%.asm=%.o)
@@ -72,17 +70,11 @@ else
 	$(RGBLINK) -x -o $@ $<
 endif
 
-%.2bpp: %.2bpp.h.png
-	$(RGBGFX) -d2 -o $@ $<
-
-%.2bpp: %.2bpp.v.png
-	$(RGBGFX) --columns -d2 -o $@ $<
-
-%.2bpp %.map: %.2bpp.f.png %.flags
+%.2bpp %.map: %.png %.flags
 	$(RGBGFX) @$*.flags -d2 -o $*.2bpp $<
 
-%.1bpp: %.1bpp.h.png
-	$(RGBGFX) -d1 -o $@ $<
+%.1bpp %.map: %.png %.flags
+	$(RGBGFX) @$*.flags -d1 -o $*.1bpp $<
 
 %.hz: %.frag
 	tools/compress.py $@ $<
