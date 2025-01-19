@@ -7,18 +7,10 @@ SYSTEM_ASM = $(wildcard src/system/*.asm)
 MINIGAME_ASM = $(wildcard src/minigame/*.asm)
 NECTARIS_ASM = $(wildcard src/nectaris/*.asm)
 GBF_ASM = $(wildcard src/file/*.asm)
-FRAG_ASM = $(wildcard src/frag/*/*.asm)
-PNG = $(wildcard src/gfx/*/*.png)
-GFX = $(PNGF:%.png=%.2bpp)
-HZ = $(FRAG_ASM:%.asm=%.hz)
 
 SYSTEM_OBJ = $(SYSTEM_ASM:%.asm=%.o)
 MINIGAME_OBJ = $(MINIGAME_ASM:%.asm=%.o)
 NECTARIS_OBJ = $(NECTARIS_ASM:%.asm=%.o)
-GBF_OBJ = $(GBF_ASM:%.asm=%.o)
-FRAG_OBJ = $(FRAG_ASM:%.asm=%.o)
-ASM = $(SYSTEM_ASM) $(MINIGAME_ASM) $(NECTARIS_ASM) $(GBF_ASM) $(FRAG_ASM)
-OBJ = $(SYSTEM_OBJ) $(MINIGAME_OBJ) $(NECTARIS_OBJ) $(GBF_OBJ) $(FRAG_OBJ)
 GBF = $(GBF_ASM:src/file/%.asm=%.gbf)
 
 RGBASM  ?= rgbasm
@@ -37,7 +29,7 @@ endif
 .PHONY: all
 all: compare
 
-$(OBJ): %.o: %.asm
+%.o: %.asm
 	$(RGBASM) $(RGBASMFLAGS) -M $*.d -o $@ $<
 
 $(MINIGAME): %.gb: $(MINIGAME_LINK) $(MINIGAME_OBJ) $(SYSTEM_OBJ)
@@ -99,4 +91,4 @@ define NL
 
 
 endef
-$(eval $(subst #,$(NL),$(shell python3 tools/deps.py $(OBJ) | tr "\n" "#")))
+$(eval $(subst #,$(NL),$(shell python3 tools/deps.py | tr "\n" "#")))
