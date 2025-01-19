@@ -30,7 +30,7 @@ endif
 all: compare
 
 %.o: %.asm
-	$(RGBASM) $(RGBASMFLAGS) -M $*.d -o $@ $<
+	$(RGBASM) $(RGBASMFLAGS) -o $@ $<
 
 $(MINIGAME): %.gb: $(MINIGAME_LINK) $(MINIGAME_OBJ) $(SYSTEM_OBJ)
 ifeq ($(DEBUG),1)
@@ -79,7 +79,6 @@ clean:
 	       -name '*.?bpp' -or \
 	       -name '*.hz' -or \
 	       -name '*.o' -or \
-	       -name '*.d' -or \
 	       -name '*.sym' -or \
 	       -name '*.map' | xargs rm -f
 
