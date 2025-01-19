@@ -258,7 +258,7 @@ StrXor:
 
 
 BtnXor:
-    ld a, MathXor16
+    ld a, Trap_MathXor16
     ld hl, StrXor
 
 BtnOperator:
@@ -327,7 +327,7 @@ data_cb59:
 
 
 BtnOr:
-    ld a, MathOr16
+    ld a, Trap_MathOr16
     ld hl, StrOr
     jp BtnOperator
 
@@ -337,7 +337,7 @@ StrOr:
 
 
 BtnAnd:
-    ld a, MathAnd16
+    ld a, Trap_MathAnd16
     ld hl, StrAnd
     jp BtnOperator
 
@@ -347,7 +347,7 @@ StrAnd:
 
 
 BtnShiftLeft:
-    ld a, MathSla16
+    ld a, Trap_MathSla16
     ld hl, StrShiftLeft
     jp BtnOperator
 
@@ -445,7 +445,7 @@ Btn9:
 
 
 BtnShiftRight:
-    ld a, MathSrl16
+    ld a, Trap_MathSrl16
     ld hl, StrShiftRight
     jp BtnOperator
 
@@ -475,7 +475,7 @@ Btn6:
 
 
 BtnMultiply:
-    ld a, MathMul16
+    ld a, Trap_MathMul16
     ld hl, StrMultiply
     jp BtnOperator
 
@@ -505,7 +505,7 @@ Btn3:
 
 
 BtnDivide:
-    ld a, MathDiv16
+    ld a, Trap_MathDiv16
     ld hl, StrDivide
     jp BtnOperator
 
@@ -525,7 +525,7 @@ Btn0:
 
 
 BtnAdd:
-    ld a, MathAdd16
+    ld a, Trap_MathAdd16
     ld hl, StrAdd
     jp BtnOperator
 
@@ -535,7 +535,7 @@ StrAdd:
 
 
 BtnSubtract:
-    ld a, MathSub16
+    ld a, Trap_MathSub16
     ld hl, StrSubtract
     jp BtnOperator
 

@@ -2,102 +2,106 @@
 
 MACRO trap
     rst $08
-    db \1
+    IF STRSUB("\1", 1, 1) == "$"
+        db \1
+    ELSE
+        db Trap_\1
+    ENDC
 ENDM
 
-DEF ExitToMenu        EQU $01
-DEF MemCopy           EQU $02  ; [de, de+bc) → [hl, hl+bc)
-DEF JumpViaTable      EQU $06
+DEF Trap_ExitToMenu        EQU $01
+DEF Trap_MemCopy           EQU $02  ; [de, de+bc) → [hl, hl+bc)
+DEF Trap_JumpViaTable      EQU $06
 
-DEF AudioStop         EQU $11
-DEF AudioPlayMusic    EQU $13
-DEF AudioPlaySound    EQU $14
-DEF AudioSilence      EQU $15
-DEF AudioGetMusic     EQU $16
-DEF AudioGetSound     EQU $17
-DEF AudioPause        EQU $18
-DEF AudioSetVolume    EQU $19
-DEF AudioGetCount     EQU $1a
+DEF Trap_AudioStop         EQU $11
+DEF Trap_AudioPlayMusic    EQU $13
+DEF Trap_AudioPlaySound    EQU $14
+DEF Trap_AudioSilence      EQU $15
+DEF Trap_AudioGetMusic     EQU $16
+DEF Trap_AudioGetSound     EQU $17
+DEF Trap_AudioPause        EQU $18
+DEF Trap_AudioSetVolume    EQU $19
+DEF Trap_AudioGetCount     EQU $1a
 
-DEF TileLoad          EQU $4c
-DEF StrTrim           EQU $4d
+DEF Trap_TileLoad          EQU $4c
+DEF Trap_StrTrim           EQU $4d
 
-DEF KbdInit           EQU $54
-DEF KbdEdit           EQU $55
+DEF Trap_KbdInit           EQU $54
+DEF Trap_KbdEdit           EQU $55
 
-DEF DrawBox           EQU $58  ; origin = (d, e), size = (b, c)
-DEF DrawLayout        EQU $5c
-DEF TileLoadText      EQU $5d
-DEF InputCursorMenu   EQU $5f
+DEF Trap_DrawBox           EQU $58  ; origin = (d, e), size = (b, c)
+DEF Trap_DrawLayout        EQU $5c
+DEF Trap_TileLoadText      EQU $5d
+DEF Trap_InputCursorMenu   EQU $5f
 
-DEF ExtractInit       EQU $62
-DEF ExtractData       EQU $63
+DEF Trap_ExtractInit       EQU $62
+DEF Trap_ExtractData       EQU $63
 
-DEF MemCmp            EQU $67
+DEF Trap_MemCmp            EQU $67
 
-DEF DrawString        EQU $69
-DEF DrawStringList    EQU $6a
-DEF FileSearch        EQU $6b
+DEF Trap_DrawString        EQU $69
+DEF Trap_DrawStringList    EQU $6a
+DEF Trap_FileSearch        EQU $6b
 
-DEF FileGetHeader     EQU $71
+DEF Trap_FileGetHeader     EQU $71
 
-DEF IRListen          EQU $72
-DEF IRClose           EQU $73
-DEF IRFileSearch      EQU $75
-DEF IRFileWrite       EQU $76
-DEF IR04              EQU $77
-DEF IRFileNext        EQU $78
-DEF IR06              EQU $79
-DEF IR07              EQU $7a
-DEF IRReadSRAM        EQU $7b
-DEF IRRead            EQU $7c
-DEF IR0A              EQU $7d
-DEF IRWriteSRAM       EQU $7e
-DEF IRWrite           EQU $7f
+DEF Trap_IRListen          EQU $72
+DEF Trap_IRClose           EQU $73
+DEF Trap_IRFileSearch      EQU $75
+DEF Trap_IRFileWrite       EQU $76
+DEF Trap_IR04              EQU $77
+DEF Trap_IRFileNext        EQU $78
+DEF Trap_IR06              EQU $79
+DEF Trap_IR07              EQU $7a
+DEF Trap_IRReadSRAM        EQU $7b
+DEF Trap_IRRead            EQU $7c
+DEF Trap_IR0A              EQU $7d
+DEF Trap_IRWriteSRAM       EQU $7e
+DEF Trap_IRWrite           EQU $7f
 
-DEF MathXor16         EQU $80  ; hl ^= de
-DEF MathOr16          EQU $81  ; hl |= de
-DEF MathAnd16         EQU $82  ; hl &= de
-DEF MathCpl16         EQU $83  ; hl = ~hl
-DEF MathCmp16         EQU $84  ; cmp(hl, de)
-DEF MathSrl16         EQU $85  ; hl >>= de
-DEF MathSla16         EQU $86  ; hl <<= de
-DEF MathAdd16         EQU $87  ; hl += de
-DEF MathSub16         EQU $88  ; hl -= de
-DEF MathMul16         EQU $89  ; hl *= de
-DEF MathDiv16         EQU $8a  ; hl /= de
-DEF MathNeg16         EQU $8b  ; hl = -hl
-DEF MathAbs16         EQU $8c  ; hl = abs(hl)
+DEF Trap_MathXor16         EQU $80  ; hl ^= de
+DEF Trap_MathOr16          EQU $81  ; hl |= de
+DEF Trap_MathAnd16         EQU $82  ; hl &= de
+DEF Trap_MathCpl16         EQU $83  ; hl = ~hl
+DEF Trap_MathCmp16         EQU $84  ; cmp(hl, de)
+DEF Trap_MathSrl16         EQU $85  ; hl >>= de
+DEF Trap_MathSla16         EQU $86  ; hl <<= de
+DEF Trap_MathAdd16         EQU $87  ; hl += de
+DEF Trap_MathSub16         EQU $88  ; hl -= de
+DEF Trap_MathMul16         EQU $89  ; hl *= de
+DEF Trap_MathDiv16         EQU $8a  ; hl /= de
+DEF Trap_MathNeg16         EQU $8b  ; hl = -hl
+DEF Trap_MathAbs16         EQU $8c  ; hl = abs(hl)
 
-DEF RandInit          EQU $8d
-DEF RandNext          EQU $8e
+DEF Trap_RandInit          EQU $8d
+DEF Trap_RandNext          EQU $8e
 
-DEF StrConvInt        EQU $a3
-DEF StrConvHex        EQU $a4
-DEF MemSet            EQU $a6  ; e → [hl, hl+bc)
+DEF Trap_StrConvInt        EQU $a3
+DEF Trap_StrConvHex        EQU $a4
+DEF Trap_MemSet            EQU $a6  ; e → [hl, hl+bc)
 
-DEF AwaitFrame        EQU $b1
-DEF DrawInit          EQU $b3
-DEF LCDEnable         EQU $b4  ; a|$80 → LCDC; $00 → BGP/OBP1/OBP2
-DEF LCDDisable        EQU $b5  ; safe LCDC &= $7f
-DEF DrawBaseAddr      EQU $b7
-DEF DrawAt            EQU $b8
-DEF DrawCtrlChar      EQU $b9
-DEF DrawChar          EQU $bb
-DEF DrawTile          EQU $cd
-DEF InputHiliteMenu   EQU $bf
+DEF Trap_AwaitFrame        EQU $b1
+DEF Trap_DrawInit          EQU $b3
+DEF Trap_LCDEnable         EQU $b4  ; a|$80 → LCDC; $00 → BGP/OBP1/OBP2
+DEF Trap_LCDDisable        EQU $b5  ; safe LCDC &= $7f
+DEF Trap_DrawBaseAddr      EQU $b7
+DEF Trap_DrawAt            EQU $b8
+DEF Trap_DrawCtrlChar      EQU $b9
+DEF Trap_DrawChar          EQU $bb
+DEF Trap_DrawTile          EQU $cd
+DEF Trap_InputHiliteMenu   EQU $bf
 
-DEF AwaitBlit         EQU $c3
-DEF TimerSet          EQU $cb  ; h → TAC; l → TMA; TACF_START? → IEF_TIMER?
+DEF Trap_AwaitBlit         EQU $c3
+DEF Trap_TimerSet          EQU $cb  ; h → TAC; l → TMA; TACF_START? → IEF_TIMER?
 
-DEF InputButtons      EQU $d8
-DEF AwaitButton       EQU $dc
+DEF Trap_InputButtons      EQU $d8
+DEF Trap_AwaitButton       EQU $dc
 
-DEF KissClearAll      EQU $e0
-DEF CRAMRead          EQU $e4
-DEF CRAMWrite         EQU $e5  ; [de, de+bc) → [GBtoSRAM(hl), GBtoSRAM(hl+bc))
-DEF FileNext          EQU $e8
-DEF FileWrite         EQU $e9
-DEF FileDelete        EQU $ef
+DEF Trap_KissClearAll      EQU $e0
+DEF Trap_CRAMRead          EQU $e4
+DEF Trap_CRAMWrite         EQU $e5  ; [de, de+bc) → [GBtoSRAM(hl), GBtoSRAM(hl+bc))
+DEF Trap_FileNext          EQU $e8
+DEF Trap_FileWrite         EQU $e9
+DEF Trap_FileDelete        EQU $ef
 
-DEF AddrGBToCRAM      EQU $fb
+DEF Trap_AddrGBToCRAM      EQU $fb

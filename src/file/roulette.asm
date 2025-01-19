@@ -7,7 +7,11 @@ INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
 MACRO wtrap
-    ld a, \1
+    IF STRSUB("\1", 1, 1) == "$"
+        ld a, \1
+    ELSE
+        ld a, Trap_\1
+    ENDC
     call code_c600
 ENDM
 
