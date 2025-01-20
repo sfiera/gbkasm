@@ -40,21 +40,21 @@ UnitsUnion::
     INCBIN "gfx/nectaris/units-union.2bpp"
 
 BattleTileMap1::
-    INCBIN "gfx/nectaris/battle.map", 40, 100
+    INCBIN "gfx/nectaris/battle.tilemap", 40, 100
 BattleTileMap2::
-    INCBIN "gfx/nectaris/battle.map", 140, 10
+    INCBIN "gfx/nectaris/battle.tilemap", 140, 10
 BattleTileMap3::
-    INCBIN "gfx/nectaris/battle.map", 150, 10
+    INCBIN "gfx/nectaris/battle.tilemap", 150, 10
 BattleTileMap4::
-    INCBIN "gfx/nectaris/battle.map", 160, 160
+    INCBIN "gfx/nectaris/battle.tilemap", 160, 160
 BattleTileMap5::
-    INCBIN "gfx/nectaris/battle.map", 320, 160
+    INCBIN "gfx/nectaris/battle.tilemap", 320, 160
 BattleTileMap6::
-    INCBIN "gfx/nectaris/battle.map", 480, 160
+    INCBIN "gfx/nectaris/battle.tilemap", 480, 160
 BattleTileMap7::
-    INCBIN "gfx/nectaris/battle.map", 640, 160
+    INCBIN "gfx/nectaris/battle.tilemap", 640, 160
 BattleTileMap8::
-    INCBIN "gfx/nectaris/battle.map", 800
+    INCBIN "gfx/nectaris/battle.tilemap", 800
 BattleTileData::
     INCBIN "gfx/nectaris/battle.2bpp", 0, 304
     ds 32, $ff  ; tiles $94 and $95 must be blanked out
@@ -78,22 +78,22 @@ SECTION "Tiles 3", ROMX
 TileMapWeaponDataUnused::
     ; This part of the source image ensures that all ASCII is in the tileset.
     ; It is never itself displayed within the game.
-    INCBIN "gfx/nectaris/weapondata.map", 20, 120
+    INCBIN "gfx/nectaris/weapondata.tilemap", 20, 120
 TileMapWeaponData::
-    INCBIN "gfx/nectaris/weapondata.map", 140
+    INCBIN "gfx/nectaris/weapondata.tilemap", 140
 WeaponDataTiles::
     INCBIN "gfx/nectaris/weapondata.2bpp"
 
 SECTION "Tiles 4", ROMX
 
 FactoryTileMap1::
-    INCBIN "gfx/nectaris/factory.map", 40, 80
+    INCBIN "gfx/nectaris/factory.tilemap", 40, 80
 FactoryTileMap2::
-    INCBIN "gfx/nectaris/factory.map", 120, 20
+    INCBIN "gfx/nectaris/factory.tilemap", 120, 20
 FactoryTileMap3::
-    INCBIN "gfx/nectaris/factory.map", 140, 480
+    INCBIN "gfx/nectaris/factory.tilemap", 140, 480
 FactoryTileMap4::
-    INCBIN "gfx/nectaris/factory.map", 620, 220
+    INCBIN "gfx/nectaris/factory.tilemap", 620, 220
 FactoryTileData::
     INCBIN "gfx/nectaris/factory.2bpp"
 

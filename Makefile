@@ -62,10 +62,10 @@ else
 	$(RGBLINK) -x -o $@ $<
 endif
 
-%.2bpp %.map: %.png %.flags
+%.2bpp %.tilemap: %.png %.flags
 	$(RGBGFX) @$*.flags -d2 -o $*.2bpp $<
 
-%.1bpp %.map: %.png %.flags
+%.1bpp %.tilemap: %.png %.flags
 	$(RGBGFX) @$*.flags -d1 -o $*.1bpp $<
 
 %.hz: %.frag
@@ -77,6 +77,7 @@ clean:
 	       -name '*.gbf' -or \
 	       -name '*.frag' -or \
 	       -name '*.?bpp' -or \
+	       -name '*.tilemap' -or \
 	       -name '*.hz' -or \
 	       -name '*.o' -or \
 	       -name '*.sym' -or \

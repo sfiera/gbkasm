@@ -72,7 +72,7 @@ SECTION "Screen Data 1", ROMX
 
 ScreenTitleData:
 .map
-    INCBIN "gfx/nectaris/title.map", 20
+    INCBIN "gfx/nectaris/title.tilemap", 20
 .tiles
     INCBIN "gfx/nectaris/title.2bpp"
 
@@ -80,13 +80,13 @@ SECTION "Screen Data 2", ROMX
 
 ScreenGameOverData:
 .map
-    INCBIN "gfx/nectaris/gameover.map", 20
+    INCBIN "gfx/nectaris/gameover.tilemap", 20
 .tiles
     INCBIN "gfx/nectaris/gameover.2bpp"
 
 ScreenWorldMapData:
 .map
-    INCBIN "gfx/nectaris/worldmap.map", 20
+    INCBIN "gfx/nectaris/worldmap.tilemap", 20
 .tiles
     INCBIN "gfx/nectaris/worldmap.2bpp"
 
@@ -94,7 +94,7 @@ SECTION "Screen Data 3", ROMX
 
 ScreenWinData:
 .map
-    INCBIN "gfx/nectaris/win.map", 20
+    INCBIN "gfx/nectaris/win.tilemap", 20
 .tiles
     INCBIN "gfx/nectaris/win.2bpp"
 
@@ -102,7 +102,7 @@ SECTION "Screen Data 4", ROMX
 
 ScreenFactoryTakenData:
 .map
-    INCBIN "gfx/nectaris/factorytaken.map", 20
+    INCBIN "gfx/nectaris/factorytaken.tilemap", 20
 .tiles
     INCBIN "gfx/nectaris/factorytaken.2bpp"
 
@@ -110,13 +110,13 @@ SECTION "Screen Data 5", ROMX
 
 ScreenPrologue1Data:
 .map
-    INCBIN "gfx/nectaris/prologue1.map", 20
+    INCBIN "gfx/nectaris/prologue1.tilemap", 20
 .tiles
     INCBIN "gfx/nectaris/prologue1.2bpp"
 
 ScreenPrologue3Data:
 .map
-    INCBIN "gfx/nectaris/prologue3.map", 20
+    INCBIN "gfx/nectaris/prologue3.tilemap", 20
 .tiles
     INCBIN "gfx/nectaris/prologue3.2bpp"
 
@@ -125,13 +125,13 @@ ScreenPrologue3Data:
 
 ScreenPrologue5Data:
 .map
-    INCBIN "gfx/nectaris/prologue5.map", 20
+    INCBIN "gfx/nectaris/prologue5.tilemap", 20
 .tiles
     INCBIN "gfx/nectaris/prologue5.2bpp"
 
 ScreenResultsData:
 .map
-    INCBIN "gfx/nectaris/results.map", 20
+    INCBIN "gfx/nectaris/results.tilemap", 20
 .tiles
     INCBIN "gfx/nectaris/results.2bpp"
 
@@ -139,31 +139,31 @@ SECTION "Screen Data 6", ROMX
 
 ScreenEpilogue1Data:
 .map
-    INCBIN "gfx/nectaris/epilogue1.map", 20
+    INCBIN "gfx/nectaris/epilogue1.tilemap", 20
 .tiles
     INCBIN "gfx/nectaris/epilogue1.2bpp"
 
 ScreenEpilogue2Data:
 .map
-    INCBIN "gfx/nectaris/epilogue2.map", 20
+    INCBIN "gfx/nectaris/epilogue2.tilemap", 20
 .tiles
     INCBIN "gfx/nectaris/epilogue2.2bpp"
 
 ScreenEpilogue3Data:
 .map
-    INCBIN "gfx/nectaris/epilogue3.map", 20
+    INCBIN "gfx/nectaris/epilogue3.tilemap", 20
 .tiles
     INCBIN "gfx/nectaris/epilogue3.2bpp"
 
 ScreenEpilogue4Data:
 .map
-    INCBIN "gfx/nectaris/epilogue4.map", 20
+    INCBIN "gfx/nectaris/epilogue4.tilemap", 20
 .tiles
     INCBIN "gfx/nectaris/epilogue4.2bpp"
 
 ScreenEpilogue5Data:
 .map
-    INCBIN "gfx/nectaris/epilogue5.map", 20
+    INCBIN "gfx/nectaris/epilogue5.tilemap", 20
 .tiles
     INCBIN "gfx/nectaris/epilogue5.2bpp"
 
@@ -171,30 +171,30 @@ SECTION "Screen Data 7", ROMX
 
 ScreenPrologue2Data:
 .map
-    INCBIN "gfx/nectaris/prologue2.map", 20
+    INCBIN "gfx/nectaris/prologue2.tilemap", 20
 .tiles
     INCBIN "gfx/nectaris/prologue2.2bpp"
 
 ScreenPrologue4Data:
 .map
-    INCBIN "gfx/nectaris/prologue4.map", 20
+    INCBIN "gfx/nectaris/prologue4.tilemap", 20
 .tiles
     INCBIN "gfx/nectaris/prologue4.2bpp"
 
 ScreenPrologue6Data:
 .map
-    INCBIN "gfx/nectaris/prologue6.map", 20
+    INCBIN "gfx/nectaris/prologue6.tilemap", 20
 .tiles
     INCBIN "gfx/nectaris/prologue6.2bpp"
 
 ScreenPrologue7Data:
 .map
-    INCBIN "gfx/nectaris/prologue7.map", 20
+    INCBIN "gfx/nectaris/prologue7.tilemap", 20
 .tiles
     INCBIN "gfx/nectaris/prologue7.2bpp"
 
 ScreenEpilogue6Data:
 .map
-    INCBIN "gfx/nectaris/epilogue6.map", 20
+    INCBIN "gfx/nectaris/epilogue6.tilemap", 20
 .tiles
     INCBIN "gfx/nectaris/epilogue6.2bpp"
