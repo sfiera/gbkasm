@@ -33,34 +33,18 @@ all: compare
 	$(RGBASM) $(RGBASMFLAGS) -o $@ $<
 
 $(MINIGAME): %.gb: $(MINIGAME_LINK) $(MINIGAME_OBJ) $(SYSTEM_OBJ)
-ifeq ($(DEBUG),1)
 	$(RGBLINK) -n $*.sym -m $*.map -o $@ -l $(MINIGAME_LINK) $(MINIGAME_OBJ) $(SYSTEM_OBJ)
-else
-	$(RGBLINK) -o $@ -l $(MINIGAME_LINK) $(MINIGAME_OBJ) $(SYSTEM_OBJ)
-endif
 	$(RGBFIX) -v -p 255 $@
 
 $(NECTARIS): %.gb: $(NECTARIS_LINK) $(NECTARIS_OBJ) $(SYSTEM_OBJ)
-ifeq ($(DEBUG),1)
 	$(RGBLINK) -n $*.sym -m $*.map -o $@ -l $(NECTARIS_LINK) $(NECTARIS_OBJ) $(SYSTEM_OBJ)
-else
-	$(RGBLINK) -o $@ -l $(NECTARIS_LINK) $(NECTARIS_OBJ) $(SYSTEM_OBJ)
-endif
 	$(RGBFIX) -v -p 255 $@
 
 %.gbf: src/file/%.o
-ifeq ($(DEBUG),1)
 	$(RGBLINK) -n $*.sym -x -o $@ $<
-else
-	$(RGBLINK) -x -o $@ $<
-endif
 
 %.frag: %.o
-ifeq ($(DEBUG),1)
 	$(RGBLINK) -n $*.sym -x -o $@ $<
-else
-	$(RGBLINK) -x -o $@ $<
-endif
 
 %.2bpp %.tilemap: %.png %.flags
 	$(RGBGFX) @$*.flags -d2 -o $*.2bpp $<
