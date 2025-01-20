@@ -1,16 +1,6 @@
 MINIGAME = minigame.gb
-MINIGAME_LINK = $(MINIGAME:%.gb=src/%.link)
 NECTARIS = nectaris.gb
-NECTARIS_LINK = $(NECTARIS:%.gb=src/%.link)
-
-SYSTEM_ASM = $(wildcard src/system/*.asm)
-MINIGAME_ASM = $(wildcard src/minigame/*.asm)
-NECTARIS_ASM = $(wildcard src/nectaris/*.asm)
 GBF_ASM = $(wildcard src/file/*.asm)
-
-SYSTEM_OBJ = $(SYSTEM_ASM:%.asm=%.o)
-MINIGAME_OBJ = $(MINIGAME_ASM:%.asm=%.o)
-NECTARIS_OBJ = $(NECTARIS_ASM:%.asm=%.o)
 GBF = $(GBF_ASM:src/file/%.asm=%.gbf)
 
 RGBASM  ?= rgbasm
@@ -32,12 +22,8 @@ all: compare
 %.o: %.asm
 	$(RGBASM) $(RGBASMFLAGS) -o $@ $<
 
-$(MINIGAME): %.gb: $(MINIGAME_LINK) $(MINIGAME_OBJ) $(SYSTEM_OBJ)
-	$(RGBLINK) -n $*.sym -m $*.map -o $@ -l $(MINIGAME_LINK) $(MINIGAME_OBJ) $(SYSTEM_OBJ)
-	$(RGBFIX) -v -p 255 $@
-
-$(NECTARIS): %.gb: $(NECTARIS_LINK) $(NECTARIS_OBJ) $(SYSTEM_OBJ)
-	$(RGBLINK) -n $*.sym -m $*.map -o $@ -l $(NECTARIS_LINK) $(NECTARIS_OBJ) $(SYSTEM_OBJ)
+%.gb: src/%.link
+	$(RGBLINK) -n $*.sym -m $*.map -o $@ -l $+
 	$(RGBFIX) -v -p 255 $@
 
 %.gbf: src/file/%.o

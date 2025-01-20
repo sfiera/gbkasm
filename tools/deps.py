@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import glob
 import os
 import re
 import sys
@@ -41,7 +42,22 @@ def asm_deps(path):
     print()
 
 
+def link_deps(path):
+    name, _ = os.path.splitext(path)
+    name = os.path.basename(name)
+    rom = path_for(name + ".gb")
+    print("%s:" % rom, end=" ")
+    srcs = glob.glob("src/system/*.asm")
+    srcs += glob.glob(f"src/{name}/*.asm")
+    for src in srcs:
+        name, _ = os.path.splitext(src)
+        obj = path_for(name + ".o")
+        print(obj, end=" ")
+    print()
+
+
 extensions[".asm"] = asm_deps
+extensions[".link"] = link_deps
 
 
 def path_for(target):
