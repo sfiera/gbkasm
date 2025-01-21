@@ -37,7 +37,7 @@ all: compare
 	$(RGBLINK) -n $*.sym -m $*.map -o $@ -l $+
 	$(RGBFIX) -v -p 255 $@
 
-%.gbf: src/file/%.o
+%.gbf:
 	$(RGBLINK) -n $*.sym -x -o $@ $<
 
 %.frag: %.o

@@ -33,6 +33,7 @@ def asm_deps(path):
     name, ext = os.path.splitext(path)
     obj = path_for(name + ".o")
     asm = path_for(name + ".asm")
+    gbf = os.path.basename(name) + ".gbf"
     print("%s: %s" % (obj, asm), end=" ")
     with open(path) as f:
         for line in f.readlines():
@@ -41,6 +42,7 @@ def asm_deps(path):
                 continue
             print(path_for(os.path.join("src", m[1])), end=" ")
     print()
+    print("%s: %s" % (gbf, obj))
 
 
 def link_deps(path):
