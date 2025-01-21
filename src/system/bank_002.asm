@@ -10,7 +10,7 @@ INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
-SECTION "Kiss System 3", ROMX
+SECTION "system/bank_002: Kiss System 3", ROMX
 
 traps2::
     dw TrapMathXor16        ; trap $80
@@ -3998,7 +3998,7 @@ jr_002_5263:
     ret
 
 
-SECTION "Kiss System 4", ROMX
+SECTION "system/bank_002: Kiss System 4", ROMX
 
 trap_a1_53c1:
     call Call_002_53c8

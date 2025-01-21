@@ -16,7 +16,7 @@ INCLUDE "nectaris/units.inc"
 
 DEF JP_U16 EQU $c3
 
-SECTION "ROM Bank $00f", ROMX
+SECTION "nectaris/bank_00f: ROM Bank $00f", ROMX
 
 Call_00f_4000::
     ld a, $00

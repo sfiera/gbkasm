@@ -24,14 +24,14 @@ MACRO screen
     laddr \1.tiles
 ENDM
 
-SECTION "Screens 1", ROMX
+SECTION "nectaris/screens: Screens 1", ROMX
 
 ScreenTitle::
     screen ScreenTitleData
 ScreenWin::
     screen ScreenWinData
 
-SECTION "Screens 2", ROMX
+SECTION "nectaris/screens: Screens 2", ROMX
 
 ScreenGameOver::
     screen ScreenGameOverData
@@ -68,7 +68,7 @@ ScreenEpilogue6::
 ScreenFactoryTaken::
     screen ScreenFactoryTakenData
 
-SECTION "Screen Data 1", ROMX
+SECTION "nectaris/screens: Screen Data 1", ROMX
 
 ScreenTitleData:
 .map
@@ -76,7 +76,7 @@ ScreenTitleData:
 .tiles
     INCBIN "gfx/nectaris/title.2bpp"
 
-SECTION "Screen Data 2", ROMX
+SECTION "nectaris/screens: Screen Data 2", ROMX
 
 ScreenGameOverData:
 .map
@@ -90,7 +90,7 @@ ScreenWorldMapData:
 .tiles
     INCBIN "gfx/nectaris/worldmap.2bpp"
 
-SECTION "Screen Data 3", ROMX
+SECTION "nectaris/screens: Screen Data 3", ROMX
 
 ScreenWinData:
 .map
@@ -98,7 +98,7 @@ ScreenWinData:
 .tiles
     INCBIN "gfx/nectaris/win.2bpp"
 
-SECTION "Screen Data 4", ROMX
+SECTION "nectaris/screens: Screen Data 4", ROMX
 
 ScreenFactoryTakenData:
 .map
@@ -106,7 +106,7 @@ ScreenFactoryTakenData:
 .tiles
     INCBIN "gfx/nectaris/factorytaken.2bpp"
 
-SECTION "Screen Data 5", ROMX
+SECTION "nectaris/screens: Screen Data 5", ROMX
 
 ScreenPrologue1Data:
 .map
@@ -135,7 +135,7 @@ ScreenResultsData:
 .tiles
     INCBIN "gfx/nectaris/results.2bpp"
 
-SECTION "Screen Data 6", ROMX
+SECTION "nectaris/screens: Screen Data 6", ROMX
 
 ScreenEpilogue1Data:
 .map
@@ -167,7 +167,7 @@ ScreenEpilogue5Data:
 .tiles
     INCBIN "gfx/nectaris/epilogue5.2bpp"
 
-SECTION "Screen Data 7", ROMX
+SECTION "nectaris/screens: Screen Data 7", ROMX
 
 ScreenPrologue2Data:
 .map

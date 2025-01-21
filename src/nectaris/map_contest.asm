@@ -12,7 +12,7 @@ INCLUDE "trap.inc"
 INCLUDE "nectaris/map.inc"
 INCLUDE "nectaris/units.inc"
 
-SECTION "Map E01", ROMX
+SECTION "nectaris/map_contest: Map E01", ROMX
 
 MapE01::
     map "+~~+++++++++++M ", \
@@ -43,7 +43,7 @@ MapE01::
     db OWN | LYNX, $40 | $08, $07
     db $ff
 
-SECTION "Map E02", ROMX
+SECTION "nectaris/map_contest: Map E02", ROMX
 
 MapE02::
     map "~~~~++++++++++++", \
@@ -77,7 +77,7 @@ MapE02::
     db FOE | BISON, $00 | $0b, $00
     db $ff
 
-SECTION "Map E03", ROMX
+SECTION "nectaris/map_contest: Map E03", ROMX
 
 MapE03::
     map "M o    o M  M g ", \
@@ -107,7 +107,7 @@ MapE03::
     db OWN | DILLO, $00 | $0e, $07
     db $ff
 
-SECTION "Map E04", ROMX
+SECTION "nectaris/map_contest: Map E04", ROMX
 
 MapE04::
     map "MM+MMMM~~MMM +oo", \
@@ -133,7 +133,7 @@ MapE04::
     db OWN | LENET, $00 | $04, $06
     db $ff
 
-SECTION "Map E05", ROMX
+SECTION "nectaris/map_contest: Map E05", ROMX
 
 MapE05::
     map "M        UM MM  ", \
@@ -166,7 +166,7 @@ MapE05::
     db OWN | RABBIT, $20 | $00, $05
     db $ff
 
-SECTION "Map E06", ROMX
+SECTION "nectaris/map_contest: Map E06", ROMX
 
 MapE06::
     map "MMMMMM##~~~~~  M", \
@@ -197,7 +197,7 @@ MapE06::
     db FOE | ESTOL, $00 | $0e, $05
     db $ff
 
-SECTION "Map E07", ROMX
+SECTION "nectaris/map_contest: Map E07", ROMX
 
 MapE07::
     map " U  MMMMMMMMMMMM", \
@@ -230,7 +230,7 @@ MapE07::
     db OWN | DILLO, $00 | $05, $04
     db $ff
 
-SECTION "Map E08", ROMX
+SECTION "nectaris/map_contest: Map E08", ROMX
 
 MapE08::
     map "MMMMM o   ~~MMMM", \
@@ -264,7 +264,7 @@ MapE08::
     db FOE | MUNKS, $00 | $08, $09
     db $ff
 
-SECTION "Map E09", ROMX
+SECTION "nectaris/map_contest: Map E09", ROMX
 
 MapE09::
     map "ooo oooMoooo  MM", \
@@ -296,7 +296,7 @@ MapE09::
     db FOE | HUNTER, $00 | $0e, $09
     db $ff
 
-SECTION "Map E10", ROMX
+SECTION "nectaris/map_contest: Map E10", ROMX
 
 MapE10::
     map "M MMMMMMoo oo~~ ", \
@@ -329,7 +329,7 @@ MapE10::
     db FOE | RABBIT, $00 | $0b, $07
     db $ff
 
-SECTION "Map E11", ROMX
+SECTION "nectaris/map_contest: Map E11", ROMX
 
 MapE11::
     map "MMMMM  G ~~~MM ~", \
@@ -375,7 +375,7 @@ MapE11::
     db OWN | SEEKER, $00 | $08, $0f
     db $ff
 
-SECTION "Map E12", ROMX
+SECTION "nectaris/map_contest: Map E12", ROMX
 
 MapE12::
     map "~~~    ~~~~~MM~ ", \
@@ -435,7 +435,7 @@ MapE12::
     db OWN | JAVI, $40 | $01, $0f
     db $ff
 
-SECTION "Map E13", ROMX
+SECTION "nectaris/map_contest: Map E13", ROMX
 
 MapE13::
     map "~Moooo   ~~~~MMM", \
@@ -488,7 +488,7 @@ MapE13::
     db FOE | HUNTER, $00 | $03, $00
     db $ff
 
-SECTION "Map E14", ROMX
+SECTION "nectaris/map_contest: Map E14", ROMX
 
 MapE14::
     map " U MMMMMMMMMMMMM", \
@@ -540,7 +540,7 @@ MapE14::
     db OWN | MUNKS, $00 | $04, $02
     db $ff
 
-SECTION "Map E15", ROMX
+SECTION "nectaris/map_contest: Map E15", ROMX
 
 MapE15::
     map "    MMMMM    U  ", \
@@ -599,7 +599,7 @@ MapE15::
     db OWN | BISON, $00 | $0d, $07
     db $ff
 
-SECTION "Map E16", ROMX
+SECTION "nectaris/map_contest: Map E16", ROMX
 
 MapE16::
     map "    MMMMM       ", \
@@ -667,7 +667,7 @@ MapE16::
     db FOE | RHINO, $00 | $0d, $12
     db $ff
 
-SECTION "Map E17", ROMX
+SECTION "nectaris/map_contest: Map E17", ROMX
 
 MapE17::
     map "MMM  oo~~~~~ ~oo", \
@@ -714,7 +714,7 @@ MapE17::
     db FOE | SLAGGER, $00 | $08, $02
     db $ff
 
-SECTION "Map E18", ROMX
+SECTION "nectaris/map_contest: Map E18", ROMX
 
 MapE18::
     map " u        MMMMMM", \
@@ -765,7 +765,7 @@ MapE18::
     db OWN | DARBEK, $00 | $04, $11
     db $ff
 
-SECTION "Map E19", ROMX
+SECTION "nectaris/map_contest: Map E19", ROMX
 
 MapE19::
     map "MMMMMM++    MMM ", \
@@ -813,7 +813,7 @@ MapE19::
     db OWN | NASHORN, $20 | $0c, $07
     db $ff
 
-SECTION "Map E20", ROMX
+SECTION "nectaris/map_contest: Map E20", ROMX
 
 MapE20::
     map "MMM M         MM", \
@@ -874,7 +874,7 @@ MapE20::
     db FOE | LYNX, $00 | $0c, $05
     db $ff
 
-SECTION "Map E21", ROMX
+SECTION "nectaris/map_contest: Map E21", ROMX
 
 MapE21::
     map "oooo   oo~~~~~oo +++++++++  M MM", \
@@ -920,7 +920,7 @@ MapE21::
     db FOE | MUNKS, $40 | $18, $02
     db $ff
 
-SECTION "Map E22", ROMX
+SECTION "nectaris/map_contest: Map E22", ROMX
 
 MapE22::
     map "MMMMMMM~M~~~ooM    ~~MMMM f  ++M", \
@@ -967,7 +967,7 @@ MapE22::
     db FOE | MULE, $80 | $00, $07
     db $ff
 
-SECTION "Map E23", ROMX
+SECTION "nectaris/map_contest: Map E23", ROMX
 
 MapE23::
     map "~~MMM   ~    M       MMMM MMMMM ", \
@@ -1016,7 +1016,7 @@ MapE23::
     db FOE | HAWKEYE, $80 | $10, $09
     db $ff
 
-SECTION "Map E24", ROMX
+SECTION "nectaris/map_contest: Map E24", ROMX
 
 MapE24::
     map "~~~#~ ####    ~~ M ~~ MMM~o oooo", \
@@ -1062,7 +1062,7 @@ MapE24::
     db OWN | BISON, $60 | $0c, $01
     db $ff
 
-SECTION "Map E25", ROMX
+SECTION "nectaris/map_contest: Map E25", ROMX
 
 MapE25::
     map "MMooo MMM MMMMMM~~~~~ MMMoooMMMM", \
@@ -1115,7 +1115,7 @@ MapE25::
     db FOE | HUNTER, $20 | $14, $01
     db $ff
 
-SECTION "Map E26", ROMX
+SECTION "nectaris/map_contest: Map E26", ROMX
 
 MapE26::
     map "               f                ", \
@@ -1172,7 +1172,7 @@ MapE26::
     db FOE | HUNTER, $60 | $14, $05
     db $ff
 
-SECTION "Map E27", ROMX
+SECTION "nectaris/map_contest: Map E27", ROMX
 
 MapE27::
     map "          MMMMMMMMM       oooo  ", \
@@ -1235,7 +1235,7 @@ MapE27::
     db FOE | DARBEK, $00 | $1a, $02
     db $ff
 
-SECTION "Map E28", ROMX
+SECTION "nectaris/map_contest: Map E28", ROMX
 
 MapE28::
     map "o       MMM~o ooooMMM~o~~~~MM MM", \
@@ -1274,7 +1274,7 @@ MapE28::
     db OWN | DILLO, $40 | $0c, $05
     db $ff
 
-SECTION "Map E29", ROMX
+SECTION "nectaris/map_contest: Map E29", ROMX
 
 MapE29::
     map "MMMM ~~~~oooooooo  f  MMMMMMMMMM", \
@@ -1324,7 +1324,7 @@ MapE29::
     db FOE | MUNKS, $00 | $1c, $09
     db $ff
 
-SECTION "Map E30", ROMX
+SECTION "nectaris/map_contest: Map E30", ROMX
 
 MapE30::
     map "MMMMMM U  MM oooooo   # ~~#  MM ", \
@@ -1365,7 +1365,7 @@ MapE30::
     db FOE | SEEKER, $00 | $1d, $07
     db $ff
 
-SECTION "Map E31", ROMX
+SECTION "nectaris/map_contest: Map E31", ROMX
 
 MapE31::
     map "~ o  MMMMMMM o  MMMMMMMMMMM+ MMM", \
@@ -1448,7 +1448,7 @@ MapE31::
     db OWN | FALCO, $00 | $06, $02
     db $ff
 
-SECTION "Map E32", ROMX
+SECTION "nectaris/map_contest: Map E32", ROMX
 
 MapE32::
     map "MMMMM~~MMMMMMoooooooooooo ~#~+~ ", \
@@ -1531,7 +1531,7 @@ MapE32::
     db FOE | JAVI, $a0 | $1b, $0f
     db $ff
 
-SECTION "Map E33", ROMX
+SECTION "nectaris/map_contest: Map E33", ROMX
 
 MapE33::
     map "oooo#+o+    ooo ~~~+ +ooooo~ooo ", \
@@ -1614,7 +1614,7 @@ MapE33::
     db FOE | DARBEK, $c0 | $1b, $11
     db $ff
 
-SECTION "Map E34", ROMX
+SECTION "nectaris/map_contest: Map E34", ROMX
 
 MapE34::
     map "MMMMMMM MMMMMMMMMMMMMMMMMMMMMMMM", \
@@ -1696,7 +1696,7 @@ MapE34::
     db OWN | DILLO, $20 | $06, $04
     db $ff
 
-SECTION "Map E35", ROMX
+SECTION "nectaris/map_contest: Map E35", ROMX
 
 MapE35::
     map "MMMMMMMMM oMMMMMMMMMMMM MMMMMM  ", \
@@ -1763,7 +1763,7 @@ MapE35::
     db FOE | DARBEK, $00 | $10, $0f
     db $ff
 
-SECTION "Map E36", ROMX
+SECTION "nectaris/map_contest: Map E36", ROMX
 
 MapE36::
     map "MMM  u  MMMMMM~    M       M    ", \
@@ -1846,7 +1846,7 @@ MapE36::
     db FOE | JAVI, $60 | $1d, $05
     db $ff
 
-SECTION "Map E37", ROMX
+SECTION "nectaris/map_contest: Map E37", ROMX
 
 MapE37::
     map "ooooooMMMM     ooo  MMMMM  ooMMM", \
@@ -1927,7 +1927,7 @@ MapE37::
     db OWN | BISON, $80 | $18, $12
     db $ff
 
-SECTION "Map E38", ROMX
+SECTION "nectaris/map_contest: Map E38", ROMX
 
 MapE38::
     map "MMMMooo+~~MMMMMMMMM ~~~     ooo ", \
@@ -1999,7 +1999,7 @@ MapE38::
     db FOE | DARBEK, $80 | $01, $10
     db $ff
 
-SECTION "Map E39", ROMX
+SECTION "nectaris/map_contest: Map E39", ROMX
 
 MapE39::
     map "MMMMMMM oooooo  o  ~~~  MMMMMMM ", \
@@ -2082,7 +2082,7 @@ MapE39::
     db FOE | RHINO, $00 | $15, $02
     db $ff
 
-SECTION "Map E40", ROMX
+SECTION "nectaris/map_contest: Map E40", ROMX
 
 MapE40::
     map " M Mooo  oo MMMMMMM + MMMM~~o~~ ", \
@@ -2165,7 +2165,7 @@ MapE40::
     db OWN | RABBIT, $a0 | $0e, $0c
     db $ff
 
-SECTION "Map E41", ROMX
+SECTION "nectaris/map_contest: Map E41", ROMX
 
 MapE41::
     map "          MMMMMMMMM       oooo  ", \
@@ -2226,7 +2226,7 @@ MapE41::
     db FOE | YAMA, $00 | $04, $05
     db $ff
 
-SECTION "Map E42", ROMX
+SECTION "nectaris/map_contest: Map E42", ROMX
 
 MapE42::
     map "MM+MMMM~~MMM +oo", \
@@ -2252,7 +2252,7 @@ MapE42::
     db OWN | BISON, $00 | $04, $06
     db $ff
 
-SECTION "Map E43", ROMX
+SECTION "nectaris/map_contest: Map E43", ROMX
 
 MapE43::
     map " M Mooo  oo MMMMMMM + MMMM~~o~~ ", \
@@ -2311,7 +2311,7 @@ MapE43::
     db OWN | GIANT, $80 | $11, $08
     db $ff
 
-SECTION "Map E44", ROMX
+SECTION "nectaris/map_contest: Map E44", ROMX
 
 MapE44::
     map "MMMMooo+~~MMMMMMMMM ~~~     ooo ", \

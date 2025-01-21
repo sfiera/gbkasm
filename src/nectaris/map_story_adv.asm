@@ -12,7 +12,7 @@ INCLUDE "trap.inc"
 INCLUDE "nectaris/map.inc"
 INCLUDE "nectaris/units.inc"
 
-SECTION "Map C01 Nevets", ROMX
+SECTION "nectaris/map_story_adv: Map C01 Nevets", ROMX
 
 MapC01Nevets::
     map "MoMMM~# ~ ~~~MMM", \
@@ -45,7 +45,7 @@ MapC01Nevets::
     db FOE | RHINO, $00 | $09, $04
     db $ff
 
-SECTION "Map C02 Lartsa", ROMX
+SECTION "nectaris/map_story_adv: Map C02 Lartsa", ROMX
 
 MapC02Lartsa::
     map "M Moo ~   oMM   ", \
@@ -80,7 +80,7 @@ MapC02Lartsa::
     db OWN | DARBEK, $00 | $02, $01
     db $ff
 
-SECTION "Map C03 Elkceh", ROMX
+SECTION "nectaris/map_story_adv: Map C03 Elkceh", ROMX
 
 MapC03Elkceh::
     map "MMMMM  # ~     ~", \
@@ -123,7 +123,7 @@ MapC03Elkceh::
     db FOE | BISON, $00 | $09, $05
     db $ff
 
-SECTION "Map C04 Gnimer", ROMX
+SECTION "nectaris/map_story_adv: Map C04 Gnimer", ROMX
 
 MapC04Gnimer::
     map "Mooo           ~", \
@@ -152,7 +152,7 @@ MapC04Gnimer::
     db OWN | LENET, $00 | $04, $05
     db $ff
 
-SECTION "Map C05 Reyets", ROMX
+SECTION "nectaris/map_story_adv: Map C05 Reyets", ROMX
 
 MapC05Reyets::
     map "MMMoo   ~   ooMM", \
@@ -211,7 +211,7 @@ MapC05Reyets::
     db FOE | SEEKER, $00 | $0b, $10
     db $ff
 
-SECTION "Map C06 Ehtlaw", ROMX
+SECTION "nectaris/map_story_adv: Map C06 Ehtlaw", ROMX
 
 MapC06Ehtlaw::
     map "~  ~          ~M", \
@@ -282,7 +282,7 @@ MapC06Ehtlaw::
     db OWN | PELICAN, $40 | $07, $09
     db $ff
 
-SECTION "Map C07 Tubmun", ROMX
+SECTION "nectaris/map_story_adv: Map C07 Tubmun", ROMX
 
 MapC07Tubmun::
     map "o~ ~oMMMo ~~o ~M", \
@@ -336,7 +336,7 @@ MapC07Tubmun::
     db FOE | MUNKS, $00 | $0c, $12
     db $ff
 
-SECTION "Map C08 Fatsug", ROMX
+SECTION "nectaris/map_story_adv: Map C08 Fatsug", ROMX
 
 MapC08Fatsug::
     map "MMo Moo~MMMMMMoM", \
@@ -402,7 +402,7 @@ MapC08Fatsug::
     db OWN | MUNKS, $00 | $0c, $0b
     db $ff
 
-SECTION "Map C09 Cidrad", ROMX
+SECTION "nectaris/map_story_adv: Map C09 Cidrad", ROMX
 
 MapC09Cidrad::
     map "#oo    MM~~ ~MM~MM~   ~~    ~#~~", \
@@ -456,7 +456,7 @@ MapC09Cidrad::
     db FOE | LENET, $00 | $15, $04
     db $ff
 
-SECTION "Map C10 Ellsek", ROMX
+SECTION "nectaris/map_story_adv: Map C10 Ellsek", ROMX
 
 MapC10Ellsek::
     map "MMMM+   ooooMMMMMMMMM#~##~ +~~~~", \
@@ -518,7 +518,7 @@ MapC10Ellsek::
     db FOE | YAMA, $00 | $11, $05
     db $ff
 
-SECTION "Map C11 Ynworb", ROMX
+SECTION "nectaris/map_story_adv: Map C11 Ynworb", ROMX
 
 MapC11Ynworb::
     map "MMM   +~#~ooo  f  ~~+ MMMMM~oooo", \
@@ -561,7 +561,7 @@ MapC11Ynworb::
     db OWN | BISON, $40 | $03, $02
     db $ff
 
-SECTION "Map C12 Otereb", ROMX
+SECTION "nectaris/map_story_adv: Map C12 Otereb", ROMX
 
 MapC12Otereb::
     map "~~    ooo ~~~    f  MMMMMMM###oo", \
@@ -602,7 +602,7 @@ MapC12Otereb::
     db OWN | GRIZZLY, $00 | $02, $07
     db $ff
 
-SECTION "Map C13 Renerg", ROMX
+SECTION "nectaris/map_story_adv: Map C13 Renerg", ROMX
 
 MapC13Renerg::
     map "~ ~ ~~o~oMMMMMMMMMMMooo~o   ~~oM", \
@@ -685,7 +685,7 @@ MapC13Renerg::
     db OWN | DILLO, $00 | $15, $0b
     db $ff
 
-SECTION "Map C14 Treger", ROMX
+SECTION "nectaris/map_story_adv: Map C14 Treger", ROMX
 
 MapC14Treger::
     map "  +~  ooMMM~MMMMMMMMMMMoo~ +~+ M", \
@@ -761,7 +761,7 @@ MapC14Treger::
     db OWN | SEEKER, $60 | $11, $0e
     db $ff
 
-SECTION "Map C15 Amalas", ROMX
+SECTION "nectaris/map_story_adv: Map C15 Amalas", ROMX
 
 MapC15Amalas::
     map "MMMMo~o~o~~~~MooMoMoMMMMM~~++M~M", \
@@ -835,7 +835,7 @@ MapC15Amalas::
     db OWN | HAWKEYE, $40 | $0e, $06
     db $ff
 
-SECTION "Map C16 Tcenoz", ROMX
+SECTION "nectaris/map_story_adv: Map C16 Tcenoz", ROMX
 
 MapC16Tcenoz::
     map "  Mo+~oM          ~~oo      o ~M", \

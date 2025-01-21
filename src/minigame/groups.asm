@@ -20,7 +20,7 @@ MACRO TableBlank
     ds 4, $00
 ENDM
 
-SECTION "CARAVAN index", ROMX
+SECTION "minigame/groups: CARAVAN index", ROMX
 
 FileCollection1::
     TableEntry .mogutteNanbo
@@ -54,7 +54,7 @@ FileShot:
     INCBIN "../shot.gbf"
 
 
-SECTION "CARAVAN supplement", ROMX
+SECTION "minigame/groups: CARAVAN supplement", ROMX
 
 FileRandomSelection:
 .count::
@@ -73,7 +73,7 @@ FileDrive:
 FileSameGame:
     INCBIN "../samegame.gbf"
 
-SECTION "KISSMON index", ROMX
+SECTION "minigame/groups: KISSMON index", ROMX
 
 FileCollection2::
     TableEntry .kissMon
@@ -107,7 +107,7 @@ FileBakechuRelay:
     INCBIN "../baketu.gbf"
 
 
-SECTION "KISSMON supplement", ROMX
+SECTION "minigame/groups: KISSMON supplement", ROMX
 
 FileKissMon:
     INCBIN "../kissmon.gbf"
@@ -118,7 +118,7 @@ FileWatchAndTimer:
 FileCalculator:
     INCBIN "../dentaku.gbf"
 
-SECTION "CANNON index", ROMX
+SECTION "minigame/groups: CANNON index", ROMX
 
 FileCollection3::
     TableEntry .iconSend
@@ -149,7 +149,7 @@ FilePoker:
     INCBIN "../poker.gbf"
 
 
-SECTION "CANNON supplement", ROMX
+SECTION "minigame/groups: CANNON supplement", ROMX
 
 FileIconSend:
     INCBIN "../iconsend.gbf"
@@ -163,7 +163,7 @@ FilePuzzleGame:
 FileSlot:
     INCBIN "../slot.gbf"
 
-SECTION "BINARY index", ROMX
+SECTION "minigame/groups: BINARY index", ROMX
 
 FileCollection4::
     TableEntry .worm
@@ -190,7 +190,7 @@ FileBlackjack:
     INCBIN "../bj.gbf"
 
 
-SECTION "BINARY supplement", ROMX
+SECTION "minigame/groups: BINARY supplement", ROMX
 
 FileWorm:
     INCBIN "../worm.gbf"
@@ -198,7 +198,7 @@ FileWorm:
 FileBinary:
     INCBIN "../bland.gbf"
 
-SECTION "GAMEDATA index", ROMX
+SECTION "minigame/groups: GAMEDATA index", ROMX
 
 FileCollection5::
     TableEntry .koura1
@@ -235,7 +235,7 @@ FileSezaki:
 FileNum0Data:
     INCBIN "../sw_data.gbf"
 
-SECTION "KISSTOOL index", ROMX
+SECTION "minigame/groups: KISSTOOL index", ROMX
 
 FileCollection6::
     TableEntry .sramGetAndClear

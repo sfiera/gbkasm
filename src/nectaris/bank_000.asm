@@ -16,7 +16,7 @@ INCLUDE "nectaris/units.inc"
 
 DEF JP_U16 EQU $c3
 
-SECTION "RST $00", ROM0
+SECTION "nectaris/bank_000: RST $00", ROM0
 
 trap_0f_0000::
     jp Jump_000_07e5
@@ -28,19 +28,19 @@ trap_0f_0000::
     ld c, e
     nop
 
-SECTION "RST $08", ROM0
+SECTION "nectaris/bank_000: RST $08", ROM0
 
 RST_08::
     jp Jump_000_0068
 
 
-SECTION "RST $10", ROM0
+SECTION "nectaris/bank_000: RST $10", ROM0
 
 RST_10::
     jp Jump_000_00c9
 
 
-SECTION "ROM Bank $000", ROM0
+SECTION "nectaris/bank_000: ROM Bank $000", ROM0
 
 RST_18::
     nop
@@ -283,7 +283,7 @@ Boot::
     jp trap_10_02e7
 
 
-SECTION "ROM Bank $000-B", ROM0
+SECTION "nectaris/bank_000: ROM Bank $000-B", ROM0
 
 trap_01_0150:
     ld a, [$000b]
@@ -9337,10 +9337,10 @@ Call_000_3f8e:
     ret
 
 
-SECTION "ROM Bank $01f", ROMX
+SECTION "nectaris/bank_000: ROM Bank $01f", ROMX
 
 
-SECTION "WRAM Interrupts", WRAM0
+SECTION "nectaris/bank_000: WRAM Interrupts", WRAM0
 
 WRAMTimerOverflowInterrupt::
     ds 3

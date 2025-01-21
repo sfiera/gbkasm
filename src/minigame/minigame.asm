@@ -10,7 +10,7 @@ INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
-SECTION "Game Boy Metadata", ROM0
+SECTION "minigame/minigame: Game Boy Metadata", ROM0
 
 HeaderLogo::
     NINTENDO_LOGO
@@ -49,7 +49,7 @@ HeaderGlobalChecksum::
     db $75, $09
 
 
-SECTION "GBKiss Config", ROM0
+SECTION "minigame/minigame: GBKiss Config", ROM0
 
 Config0::
     db BANK(KissMenu)
@@ -63,7 +63,7 @@ Config4::
     db BANK(traps2)
 
 
-SECTION "GBKiss Metadata", ROM0
+SECTION "minigame/minigame: GBKiss Metadata", ROM0
 
     db $00
 KissCartridgeCode::

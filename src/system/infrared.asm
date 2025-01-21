@@ -10,7 +10,7 @@ INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
-SECTION "ROM Infrared", ROMX
+SECTION "system/infrared: ROM Infrared", ROMX
 
 SetSRAMBank:
     ldh [hRAMBank], a

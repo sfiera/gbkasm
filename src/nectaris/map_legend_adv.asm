@@ -12,7 +12,7 @@ INCLUDE "trap.inc"
 INCLUDE "nectaris/map.inc"
 INCLUDE "nectaris/units.inc"
 
-SECTION "Map D01 Tlover", ROMX
+SECTION "nectaris/map_legend_adv: Map D01 Tlover", ROMX
 
 MapD01Tlover::
     map "MMMMMM~#MMM~~MM ", \
@@ -45,7 +45,7 @@ MapD01Tlover::
     db FOE | PELICAN, $00 | $09, $01
     db $ff
 
-SECTION "Map D02 Suraci", ROMX
+SECTION "nectaris/map_legend_adv: Map D02 Suraci", ROMX
 
 MapD02Suraci::
     map "MMM++++++++++++ ", \
@@ -81,7 +81,7 @@ MapD02Suraci::
     db FOE | MULE, $00 | $0e, $06
     db $ff
 
-SECTION "Map D03 Onaryc", ROMX
+SECTION "nectaris/map_legend_adv: Map D03 Onaryc", ROMX
 
 MapD03Onaryc::
     map "#+++~oM  +  +   ", \
@@ -125,7 +125,7 @@ MapD03Onaryc::
     db OWN | MUNKS, $20 | $0e, $04
     db $ff
 
-SECTION "Map D04 Yesmar", ROMX
+SECTION "nectaris/map_legend_adv: Map D04 Yesmar", ROMX
 
 MapD04Yesmar::
     map "MMM   M ~G  oo# ", \
@@ -174,7 +174,7 @@ MapD04Yesmar::
     db OWN | MUNKS, $80 | $02, $0d
     db $ff
 
-SECTION "Map D05 Notwen", ROMX
+SECTION "nectaris/map_legend_adv: Map D05 Notwen", ROMX
 
 MapD05Notwen::
     map "    M M   ~~~## ", \
@@ -245,7 +245,7 @@ MapD05Notwen::
     db OWN | MUNKS, $80 | $01, $10
     db $ff
 
-SECTION "Map D06 Acenes", ROMX
+SECTION "nectaris/map_legend_adv: Map D06 Acenes", ROMX
 
 MapD06Acenes::
     map "~~~~~~~+ + MM ~ ", \
@@ -303,7 +303,7 @@ MapD06Acenes::
     db FOE | LYNX, $60 | $0c, $02
     db $ff
 
-SECTION "Map D07 Enibas", ROMX
+SECTION "nectaris/map_legend_adv: Map D07 Enibas", ROMX
 
 MapD07Enibas::
     map "~~~~~MM ~~MMMM  +  ++  ooooooo x", \
@@ -369,7 +369,7 @@ MapD07Enibas::
     db OWN | RHINO, $80 | $1c, $06
     db $ff
 
-SECTION "Map D08 Sutara", ROMX
+SECTION "nectaris/map_legend_adv: Map D08 Sutara", ROMX
 
 MapD08Sutara::
     map "~~~~MMMMMMMMM ~~ MMMM MMM~~    x", \
@@ -424,7 +424,7 @@ MapD08Sutara::
     db OWN | HUNTER, $60 | $17, $02
     db $ff
 
-SECTION "Map D09 Siolag", ROMX
+SECTION "nectaris/map_legend_adv: Map D09 Siolag", ROMX
 
 MapD09Siolag::
     map "ooo   + ~~MMMMM##~~MMMMMM MMMM x", \
@@ -503,7 +503,7 @@ MapD09Siolag::
     db OWN | SEEKER, $c0 | $1b, $11
     db $ff
 
-SECTION "Map D10 Niwrad", ROMX
+SECTION "nectaris/map_legend_adv: Map D10 Niwrad", ROMX
 
 MapD10Niwrad::
     map "ooo o  MM M MM~~o oo MMMM MMM  x", \
@@ -585,7 +585,7 @@ MapD10Niwrad::
     db OWN | SLAGGER, $e0 | $1c, $02
     db $ff
 
-SECTION "Map D11 Lacsap", ROMX
+SECTION "nectaris/map_legend_adv: Map D11 Lacsap", ROMX
 
 MapD11Lacsap::
     map "MMMMMMMMMMMMMMMMMMMMMM  # #M#M x", \
@@ -662,7 +662,7 @@ MapD11Lacsap::
     db OWN | NASHORN, $80 | $1b, $07
     db $ff
 
-SECTION "Map D12 Yellah", ROMX
+SECTION "nectaris/map_legend_adv: Map D12 Yellah", ROMX
 
 MapD12Yellah::
     map "MM~+++++##    ~~~~~~~MM MMMMM  x", \
@@ -744,7 +744,7 @@ MapD12Yellah::
     db OWN | PELICAN, $a0 | $1b, $02
     db $ff
 
-SECTION "Map D13 Namrob", ROMX
+SECTION "nectaris/map_legend_adv: Map D13 Namrob", ROMX
 
 MapD13Namrob::
     map "MMMMMMMMM oMMMM MMMMMMM MMMMMM x", \
@@ -826,7 +826,7 @@ MapD13Namrob::
     db OWN | DRAPER, $a0 | $1a, $12
     db $ff
 
-SECTION "Map D14 Oloppa", ROMX
+SECTION "nectaris/map_legend_adv: Map D14 Oloppa", ROMX
 
 MapD14Oloppa::
     map "~~o       ~       ~~~~~ ooo oo x", \
@@ -908,7 +908,7 @@ MapD14Oloppa::
     db OWN | ESTOL, $c0 | $1b, $06
     db $ff
 
-SECTION "Map D15 Resiak", ROMX
+SECTION "nectaris/map_legend_adv: Map D15 Resiak", ROMX
 
 MapD15Resiak::
     map " MM+~#MMMM M   +~~~~~  # M##MM x", \
@@ -988,7 +988,7 @@ MapD15Resiak::
     db OWN | HUNTER, $a0 | $1a, $0d
     db $ff
 
-SECTION "Map D16 Rotcen", ROMX
+SECTION "nectaris/map_legend_adv: Map D16 Rotcen", ROMX
 
 MapD16Rotcen::
     map "MM ~~MMMMM  ooo ooo   MMM   M  x", \

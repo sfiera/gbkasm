@@ -16,7 +16,7 @@ DEF XFER_FAILURE EQU $03
 DEF XFER_NOSPACE EQU $04
 DEF XFER_IGNORE EQU $05
 
-SECTION "Kiss System 1", ROMX
+SECTION "system/bank_001: Kiss System 1", ROMX
 
 data_01_4018::
     db "\0\0"
@@ -95,7 +95,7 @@ traps1::
     dw TrapIRWrite          ; $7f
 
 
-SECTION "Kiss System 1B", ROMX
+SECTION "system/bank_001: Kiss System 1B", ROMX
 
 Call_001_66dc::
     ld h, $04
@@ -330,7 +330,7 @@ jr_001_688b:
     ret
 
 
-SECTION "Kiss System 2", ROMX
+SECTION "system/bank_001: Kiss System 2", ROMX
 
 trap_60_6d2f:
     ld b, [hl]

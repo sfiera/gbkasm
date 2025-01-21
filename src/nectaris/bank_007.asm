@@ -13,7 +13,7 @@ INCLUDE "nectaris/audio.inc"
 INCLUDE "nectaris/map.inc"
 INCLUDE "nectaris/text.inc"
 
-SECTION "ROM Bank $007", ROMX
+SECTION "nectaris/bank_007: ROM Bank $007", ROMX
 
 Chars::
     db " 0123456789=####################ABCDEFGHIJKLMNOPQRSTUVWXYZ[]    "
@@ -4608,7 +4608,7 @@ SetCampaignComplete::
     ret
 
 
-SECTION "Save Data", SRAM
+SECTION "nectaris/bank_007: Save Data", SRAM
 
 CampaignStatus::
     ds 2

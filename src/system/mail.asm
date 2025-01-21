@@ -38,7 +38,7 @@ DEF LAYOUT_RECEIVING          EQU $11
 DEF LAYOUT_ERASE_CONFIRM      EQU $12
 DEF LAYOUT_NO_SPACE_CONFIRM   EQU $13
 
-SECTION "Kiss Mail Stub", ROMX
+SECTION "system/mail: Kiss Mail Stub", ROMX
 
 KissMailRegionHeader:
     db REGION_TYPE_ZEROFILE
@@ -60,7 +60,7 @@ KissMailMain:
     jp KissMailStart
 
 
-SECTION "Kiss Mail Code", ROMX
+SECTION "system/mail: Kiss Mail Code", ROMX
 
 KissMailStart:
     ld a, $20
@@ -1064,7 +1064,7 @@ LoadPageTiles:
     ret
 
 
-SECTION "Kiss Mail Memory", WRAM0[$c600]
+SECTION "system/mail: Kiss Mail Memory", WRAM0[$c600]
 
 MailMessage:
 .title

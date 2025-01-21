@@ -12,7 +12,7 @@ INCLUDE "trap.inc"
 INCLUDE "nectaris/map.inc"
 INCLUDE "nectaris/units.inc"
 
-SECTION "Map A01 Steven", ROMX
+SECTION "nectaris/map_story: Map A01 Steven", ROMX
 
 MapA01Steven::
     map "MoMMM~# ~ ~~~MMM", \
@@ -37,7 +37,7 @@ MapA01Steven::
     db FOE | BISON, $00 | $0b, $02
     db $ff
 
-SECTION "Map A02 Astral", ROMX
+SECTION "nectaris/map_story: Map A02 Astral", ROMX
 
 MapA02Astral::
     map "M Moo ~   oMM   ", \
@@ -67,7 +67,7 @@ MapA02Astral::
     db FOE | BISON, $00 | $0b, $03
     db $ff
 
-SECTION "Map A03 Heckle", ROMX
+SECTION "nectaris/map_story: Map A03 Heckle", ROMX
 
 MapA03Heckle::
     map "MMMMM  # ~     ~", \
@@ -95,7 +95,7 @@ MapA03Heckle::
     db OWN | BISON, $00 | $0c, $06
     db $ff
 
-SECTION "Map A04 Reming", ROMX
+SECTION "nectaris/map_story: Map A04 Reming", ROMX
 
 MapA04Reming::
     map "Mooo           ~", \
@@ -130,7 +130,7 @@ MapA04Reming::
     db FOE | DARBEK, $00 | $0c, $07
     db $ff
 
-SECTION "Map A05 Steyer", ROMX
+SECTION "nectaris/map_story: Map A05 Steyer", ROMX
 
 MapA05Steyer::
     map "MMMoo   ~   ooMM", \
@@ -178,7 +178,7 @@ MapA05Steyer::
     db OWN | RABBIT, $00 | $03, $03
     db $ff
 
-SECTION "Map A06 Walthe", ROMX
+SECTION "nectaris/map_story: Map A06 Walthe", ROMX
 
 MapA06Walthe::
     map "~  ~          ~M", \
@@ -238,7 +238,7 @@ MapA06Walthe::
     db FOE | YAMA, $60 | $01, $10
     db $ff
 
-SECTION "Map A07 Numbut", ROMX
+SECTION "nectaris/map_story: Map A07 Numbut", ROMX
 
 MapA07Numbut::
     map "o~ ~oMMMo ~~o ~M", \
@@ -305,7 +305,7 @@ MapA07Numbut::
     db FOE | MUNKS, $00 | $06, $0c
     db $ff
 
-SECTION "Map A08 Gustaf", ROMX
+SECTION "nectaris/map_story: Map A08 Gustaf", ROMX
 
 MapA08Gustaf::
     map "MMo Moo~MMMMMMoM", \
@@ -362,7 +362,7 @@ MapA08Gustaf::
     db OWN | LYNX, $40 | $03, $0c
     db $ff
 
-SECTION "Map A09 Dardic", ROMX
+SECTION "nectaris/map_story: Map A09 Dardic", ROMX
 
 MapA09Dardic::
     map "#oo    MM~~ ~MM~MM~   ~~    ~#~~", \
@@ -433,7 +433,7 @@ MapA09Dardic::
     db FOE | SLAGGER, $00 | $1d, $07
     db $ff
 
-SECTION "Map A10 Keslle", ROMX
+SECTION "nectaris/map_story: Map A10 Keslle", ROMX
 
 MapA10Keslle::
     map "MMMM+   ooooMMMMMMMMM#~##~ +~~~~", \
@@ -504,7 +504,7 @@ MapA10Keslle::
     db FOE | HUNTER, $60 | $0b, $04
     db $ff
 
-SECTION "Map A11 Browny", ROMX
+SECTION "nectaris/map_story: Map A11 Browny", ROMX
 
 MapA11Browny::
     map "MMM   +~#~ooo  f  ~~+ MMMMM~oooo", \
@@ -553,7 +553,7 @@ MapA11Browny::
     db FOE | GIANT, $00 | $18, $05
     db $ff
 
-SECTION "Map A12 Bereto", ROMX
+SECTION "nectaris/map_story: Map A12 Bereto", ROMX
 
 MapA12Bereto::
     map "~~    ooo ~~~    f  MMMMMMM###oo", \
@@ -604,7 +604,7 @@ MapA12Bereto::
     db FOE | DARBEK, $00 | $15, $00
     db $ff
 
-SECTION "Map A13 Grener", ROMX
+SECTION "nectaris/map_story: Map A13 Grener", ROMX
 
 MapA13Grener::
     map "~ ~ ~~o~oMMMMMMMMMMMooo~o   ~~oM", \
@@ -680,7 +680,7 @@ MapA13Grener::
     db OWN | GIANT, $40 | $0a, $07
     db $ff
 
-SECTION "Map A14 Regert", ROMX
+SECTION "nectaris/map_story: Map A14 Regert", ROMX
 
 MapA14Regert::
     map "  +~  ooMMM~MMMMMMMMMMMoo~ +~+ M", \
@@ -758,7 +758,7 @@ MapA14Regert::
     db OWN | PELICAN, $20 | $06, $0a
     db $ff
 
-SECTION "Map A15 Salama", ROMX
+SECTION "nectaris/map_story: Map A15 Salama", ROMX
 
 MapA15Salama::
     map "MMMMo~o~o~~~~MooMoMoMMMMM~~++M~M", \
@@ -826,7 +826,7 @@ MapA15Salama::
     db OWN | PELICAN, $20 | $04, $04
     db $ff
 
-SECTION "Map A16 Zonect", ROMX
+SECTION "nectaris/map_story: Map A16 Zonect", ROMX
 
 MapA16Zonect::
     map "  Mo+~oM          ~~oo      o ~M", \

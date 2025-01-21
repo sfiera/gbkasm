@@ -10,19 +10,19 @@ INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
-SECTION "RST $08", ROM0
+SECTION "minigame/bank_000: RST $08", ROM0
 
 RST_08::
     jp InvokeTrap
 
 
-SECTION "RST $10", ROM0
+SECTION "minigame/bank_000: RST $10", ROM0
 
 RST_10::
     jp PushRelAddr
 
 
-SECTION "RST $20", ROM0
+SECTION "minigame/bank_000: RST $20", ROM0
 
 RST_20::
     ldh [hROMBank], a
@@ -30,32 +30,32 @@ RST_20::
     ret
 
 
-SECTION "VBlank interrupt", ROM0
+SECTION "minigame/bank_000: VBlank interrupt", ROM0
 
 VBlankInterrupt::
     jp $c006
 
 
-SECTION "Timer Overflow interrupt", ROM0
+SECTION "minigame/bank_000: Timer Overflow interrupt", ROM0
 
 TimerOverflowInterrupt::
     jp $c000
 
 
-SECTION "ROM Bank $000 A", ROM0
+SECTION "minigame/bank_000: ROM Bank $000 A", ROM0
 
 Call_000_0053::
 Jump_000_0053::
     jp Jump_000_021c
 
 
-SECTION "Serial Transfer interrupt", ROM0
+SECTION "minigame/bank_000: Serial Transfer interrupt", ROM0
 
 SerialTransferCompleteInterrupt::
     jp $c003
 
 
-SECTION "ROM Bank $000 B", ROM0
+SECTION "minigame/bank_000: ROM Bank $000 B", ROM0
 
 InvokeTrap:
     add sp, -$05
@@ -189,14 +189,14 @@ Call_000_00f7:
     ret
 
 
-SECTION "Boot", ROM0
+SECTION "minigame/bank_000: Boot", ROM0
 
 Boot::
     di
     jp Jump_000_02e5
 
 
-SECTION "ROM Bank $000 C", ROM0
+SECTION "minigame/bank_000: ROM Bank $000 C", ROM0
 
 TrapExitToMenu::
     ld a, [Config0]
@@ -304,7 +304,7 @@ trap_none_0::
     ret
 
 
-SECTION "ROM Bank $000 D", ROM0
+SECTION "minigame/bank_000: ROM Bank $000 D", ROM0
 
 traps0::
     dw trap_00_00e9            ; trap $00
@@ -2231,7 +2231,7 @@ strLoadFailure::
 strLoadOverwrite::
     dk "«- おなじファイルがあります -»\0"
 
-SECTION "ROM Bank $3fe0", ROM0
+SECTION "minigame/bank_000: ROM Bank $3fe0", ROM0
 
 Call_000_3fe0::
     push af

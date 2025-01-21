@@ -10,7 +10,7 @@ INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
-SECTION "ROM Math", ROMX
+SECTION "system/math: ROM Math", ROMX
 
 TrapMathXor16::
     ld a, h

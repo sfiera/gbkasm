@@ -1,107 +1,107 @@
 ROM0
     org $0008
-    "RST $08"
+    "minigame/bank_000: RST $08"
     org $000b
-    "GBKiss Config"
+    "minigame/minigame: GBKiss Config"
     org $0010
-    "RST $10"
+    "minigame/bank_000: RST $10"
     org $0013
-    "GBKiss Metadata"
+    "minigame/minigame: GBKiss Metadata"
     org $0020
-    "RST $20"
+    "minigame/bank_000: RST $20"
     org $0040
-    "VBlank interrupt"
+    "minigame/bank_000: VBlank interrupt"
     org $0050
-    "Timer Overflow interrupt"
-    "ROM Bank $000 A"
+    "minigame/bank_000: Timer Overflow interrupt"
+    "minigame/bank_000: ROM Bank $000 A"
     org $0058
-    "Serial Transfer interrupt"
+    "minigame/bank_000: Serial Transfer interrupt"
     org $0068
-    "ROM Bank $000 B"
+    "minigame/bank_000: ROM Bank $000 B"
     org $0100
-    "Boot"
+    "minigame/bank_000: Boot"
     org $0104
-    "Game Boy Metadata"
-    "ROM Bank $000 C"
+    "minigame/minigame: Game Boy Metadata"
+    "minigame/bank_000: ROM Bank $000 C"
     org $01e0
-    "ROM Bank $000 D"
+    "minigame/bank_000: ROM Bank $000 D"
     org $3fe0
-    "ROM Bank $3fe0"
+    "minigame/bank_000: ROM Bank $3fe0"
 
 ROMX $01
     org $4000
-    "Kiss Mail Stub"
-    "Kiss System 1"
-    "Kiss Menu"
-    "Kiss Mail Code"
-    "Kiss System 1B"
-    "ROM Infrared"
-    "Kiss System 2"
+    "system/mail: Kiss Mail Stub"
+    "system/bank_001: Kiss System 1"
+    "system/menu: Kiss Menu"
+    "system/mail: Kiss Mail Code"
+    "system/bank_001: Kiss System 1B"
+    "system/infrared: ROM Infrared"
+    "system/bank_001: Kiss System 2"
 
 ROMX $02
     org $4000
-    "Kiss System 3"
-    "ROM Math"
-    "Kiss System 4"
+    "system/bank_002: Kiss System 3"
+    "system/math: ROM Math"
+    "system/bank_002: Kiss System 4"
 
 ROMX $03
     org $4000
-    "ROM Bank $003"
+    "minigame/bank_003: ROM Bank $003"
 
 ROMX $04
     org $4000
-    "ROM Bank $00$4"
+    "minigame/bank_004: ROM Bank $00$4"
 
 ROMX $05
     org $4000
-    "ROM Bank $00$5"
+    "minigame/bank_004: ROM Bank $00$5"
 
 ROMX $06
     org $4000
-    "CARAVAN supplement"
+    "minigame/groups: CARAVAN supplement"
 
 ROMX $07
     org $4000
-    "CARAVAN index"
+    "minigame/groups: CARAVAN index"
 
 ROMX $08
     org $4000
-    "KISSMON supplement"
+    "minigame/groups: KISSMON supplement"
 
 ROMX $09
     org $4000
-    "KISSMON index"
+    "minigame/groups: KISSMON index"
 
 ROMX $0a
     org $4000
-    "CANNON supplement"
+    "minigame/groups: CANNON supplement"
 
 ROMX $0b
     org $4000
-    "CANNON index"
+    "minigame/groups: CANNON index"
 
 ROMX $0c
     org $4000
-    "BINARY supplement"
+    "minigame/groups: BINARY supplement"
 
 ROMX $0d
     org $4000
-    "BINARY index"
+    "minigame/groups: BINARY index"
 
 ROMX $0e
     org $4000
-    "GAMEDATA index"
+    "minigame/groups: GAMEDATA index"
 
 ROMX $0f
     org $4000
-    "KISSTOOL index"
+    "minigame/groups: KISSTOOL index"
 
 WRAM0
     org $c3c8
-    "WRAM"
+    "system/ram: WRAM"
 
 HRAM
     org $ff80
-    "HRAM Banking"
+    "system/ram: HRAM Banking"
     org $ff8e
-    "HRAM Text"
+    "system/ram: HRAM Text"

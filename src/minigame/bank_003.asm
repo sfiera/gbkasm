@@ -9,7 +9,7 @@ INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
-SECTION "ROM Bank $003", ROMX
+SECTION "minigame/bank_003: ROM Bank $003", ROMX
 
 Jump_003_4006_Origin::
     jp Jump_003_4006

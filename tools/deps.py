@@ -5,7 +5,8 @@ import os
 import re
 import sys
 
-pattern = re.compile(r'^\s*INC(?:LUDE|BIN)\s*"([^"]*)"', re.I)
+inc_pattern = re.compile(r'^\s*INC(?:LUDE|BIN)\s*"([^"]*)"', re.I)
+sect_pattern = re.compile(r'^\s*"([^":]+): [^"]+"')
 extensions = {}
 
 
@@ -35,7 +36,7 @@ def asm_deps(path):
     print("%s: %s" % (obj, asm), end=" ")
     with open(path) as f:
         for line in f.readlines():
-            m = pattern.match(line)
+            m = inc_pattern.match(line)
             if not m:
                 continue
             print(path_for(os.path.join("src", m[1])), end=" ")
@@ -47,12 +48,14 @@ def link_deps(path):
     name = os.path.basename(name)
     rom = path_for(name + ".gb")
     print("%s:" % rom, end=" ")
-    srcs = glob.glob("src/system/*.asm")
-    srcs += glob.glob(f"src/{name}/*.asm")
-    for src in srcs:
-        name, _ = os.path.splitext(src)
-        obj = path_for(name + ".o")
-        print(obj, end=" ")
+    seen = set()
+    with open(path) as f:
+        for line in f.readlines():
+            m = sect_pattern.match(line)
+            if not m or m[1] in seen:
+                continue
+            seen.add(m[1])
+            print(path_for(os.path.join("src", m[1] + ".o")), end=" ")
     print()
 
 

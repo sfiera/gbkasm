@@ -10,7 +10,7 @@ INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
-SECTION "Game Boy Metadata", ROM0
+SECTION "nectaris/nectaris: Game Boy Metadata", ROM0
 
 HeaderLogo::
     NINTENDO_LOGO
@@ -38,7 +38,7 @@ HeaderGlobalChecksum::
     db $d2, $51
 
 
-SECTION "GBKiss Config", ROM0
+SECTION "nectaris/nectaris: GBKiss Config", ROM0
 
 Config0::
     db BANK(KissMenu)
@@ -52,7 +52,7 @@ Config4::
     db BANK(traps2)
 
 
-SECTION "GBKiss Metadata", ROM0
+SECTION "nectaris/nectaris: GBKiss Metadata", ROM0
 
     db $00
 KissCartridgeCode::

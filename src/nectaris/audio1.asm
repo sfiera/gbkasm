@@ -10,7 +10,7 @@ INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
-SECTION "Audio 1", ROMX
+SECTION "nectaris/audio1: Audio 1", ROMX
 
 AudioTraps::
 .stop::

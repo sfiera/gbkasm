@@ -10,7 +10,7 @@ INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
-SECTION "Audio 2", ROMX
+SECTION "nectaris/audio2: Audio 2", ROMX
 
     jp Jump_01d_4088
 

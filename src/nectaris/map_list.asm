@@ -19,7 +19,7 @@ MACRO laddr
     dbw BANK(\1), \1
 ENDM
 
-SECTION "Map List", ROMX
+SECTION "nectaris/map_list: Map List", ROMX
 
 Maps::
     laddr MapA01Steven

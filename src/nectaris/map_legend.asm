@@ -12,7 +12,7 @@ INCLUDE "trap.inc"
 INCLUDE "nectaris/map.inc"
 INCLUDE "nectaris/units.inc"
 
-SECTION "Map B01 Revolt", ROMX
+SECTION "nectaris/map_legend: Map B01 Revolt", ROMX
 
 MapB01Revolt::
     map "MMMMMM~#MMM~~MM ", \
@@ -37,7 +37,7 @@ MapB01Revolt::
     db FOE | BISON, $00 | $0c, $04
     db $ff
 
-SECTION "Map B02 Icarus", ROMX
+SECTION "nectaris/map_legend: Map B02 Icarus", ROMX
 
 MapB02Icarus::
     map "MMM++++++++++++ ", \
@@ -67,7 +67,7 @@ MapB02Icarus::
     db FOE | BISON, $00 | $0d, $06
     db $ff
 
-SECTION "Map B03 Cyrano", ROMX
+SECTION "nectaris/map_legend: Map B03 Cyrano", ROMX
 
 MapB03Cyrano::
     map "#+++~oM  +  +   ", \
@@ -95,7 +95,7 @@ MapB03Cyrano::
     db OWN | NASHORN, $20 | $0e, $04
     db $ff
 
-SECTION "Map B04 Ramsey", ROMX
+SECTION "nectaris/map_legend: Map B04 Ramsey", ROMX
 
 MapB04Ramsey::
     map "MMM   M ~G  oo# ", \
@@ -140,7 +140,7 @@ MapB04Ramsey::
     db OWN | GRIZZLY, $80 | $02, $0d
     db $ff
 
-SECTION "Map B05 Newton", ROMX
+SECTION "nectaris/map_legend: Map B05 Newton", ROMX
 
 MapB05Newton::
     map "    M M   ~~~## ", \
@@ -185,7 +185,7 @@ MapB05Newton::
     db OWN | MONSTER, $80 | $01, $10
     db $ff
 
-SECTION "Map B06 Seneca", ROMX
+SECTION "nectaris/map_legend: Map B06 Seneca", ROMX
 
 MapB06Seneca::
     map "~~~~~~~+ + MM ~ ", \
@@ -235,7 +235,7 @@ MapB06Seneca::
     db OWN | LYNX, $60 | $0c, $02
     db $ff
 
-SECTION "Map B07 Sabine", ROMX
+SECTION "nectaris/map_legend: Map B07 Sabine", ROMX
 
 MapB07Sabine::
     map "~~~~~MM ~~MMMM  +  ++  ooooooo x", \
@@ -279,7 +279,7 @@ MapB07Sabine::
     db OWN | HAWKEYE, $80 | $1c, $06
     db $ff
 
-SECTION "Map B08 Aratus", ROMX
+SECTION "nectaris/map_legend: Map B08 Aratus", ROMX
 
 MapB08Aratus::
     map "~~~~MMMMMMMMM ~~ MMMM MMM~~    x", \
@@ -341,7 +341,7 @@ MapB08Aratus::
     db OWN | MUNKS, $60 | $17, $02
     db $ff
 
-SECTION "Map B09 Galois", ROMX
+SECTION "nectaris/map_legend: Map B09 Galois", ROMX
 
 MapB09Galois::
     map "ooo   + ~~MMMMM##~~MMMMMM MMMM x", \
@@ -421,7 +421,7 @@ MapB09Galois::
     db OWN | FALCO, $c0 | $1b, $11
     db $ff
 
-SECTION "Map B10 Darwin", ROMX
+SECTION "nectaris/map_legend: Map B10 Darwin", ROMX
 
 MapB10Darwin::
     map "ooo o  MM M MM~~o oo MMMM MMM  x", \
@@ -503,7 +503,7 @@ MapB10Darwin::
     db OWN | HAWKEYE, $e0 | $1c, $02
     db $ff
 
-SECTION "Map B11 Pascal", ROMX
+SECTION "nectaris/map_legend: Map B11 Pascal", ROMX
 
 MapB11Pascal::
     map "MMMMMMMMMMMMMMMMMMMMMM  # #M#M x", \
@@ -583,7 +583,7 @@ MapB11Pascal::
     db OWN | RHINO, $c0 | $1c, $0f
     db $ff
 
-SECTION "Map B12 Halley", ROMX
+SECTION "nectaris/map_legend: Map B12 Halley", ROMX
 
 MapB12Halley::
     map "MM~+++++##    ~~~~~~~MM MMMMM  x", \
@@ -664,7 +664,7 @@ MapB12Halley::
     db OWN | HAWKEYE, $a0 | $1b, $02
     db $ff
 
-SECTION "Map B13 Borman", ROMX
+SECTION "nectaris/map_legend: Map B13 Borman", ROMX
 
 MapB13Borman::
     map "MMMMMMMMM oMMMM MMMMMMM MMMMMM x", \
@@ -735,7 +735,7 @@ MapB13Borman::
     db OWN | YAMA, $a0 | $1a, $12
     db $ff
 
-SECTION "Map B14 Appolo", ROMX
+SECTION "nectaris/map_legend: Map B14 Appolo", ROMX
 
 MapB14Appolo::
     map "~~o       ~       ~~~~~ ooo oo x", \
@@ -807,7 +807,7 @@ MapB14Appolo::
     db OWN | GRIZZLY, $c0 | $1b, $06
     db $ff
 
-SECTION "Map B15 Kaiser", ROMX
+SECTION "nectaris/map_legend: Map B15 Kaiser", ROMX
 
 MapB15Kaiser::
     map " MM+~#MMMM M   +~~~~~  # M##MM x", \
@@ -887,7 +887,7 @@ MapB15Kaiser::
     db OWN | NASHORN, $a0 | $1a, $0d
     db $ff
 
-SECTION "Map B16 Nector", ROMX
+SECTION "nectaris/map_legend: Map B16 Nector", ROMX
 
 MapB16Nector::
     map "MM ~~MMMMM  ooo ooo   MMM   M  x", \

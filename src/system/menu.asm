@@ -16,7 +16,7 @@ DEF XFER_FAILURE EQU $03
 DEF XFER_NOSPACE EQU $04
 DEF XFER_IGNORE EQU $05
 
-SECTION "Kiss Menu", ROMX
+SECTION "system/menu: Kiss Menu", ROMX
 
 KissMenu::
     ld sp, $e000
