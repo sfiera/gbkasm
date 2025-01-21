@@ -17,7 +17,7 @@ Header::
 .title
     dk "SLOT"
 .icon
-    INCBIN "gfx/slot/icon.2bpp"
+    INCBIN "slot/icon.2bpp"
 .end
 
 History:

@@ -26,7 +26,7 @@ Header::
 .title
     dk "ルーレット"
 .icon
-    INCBIN "gfx/roulette/icon.2bpp"
+    INCBIN "roulette/icon.2bpp"
 .end
 
 History:

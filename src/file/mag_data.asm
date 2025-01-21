@@ -31,7 +31,7 @@ History:
 .end
 
 Body::
-    INCBIN "gfx/magnets/symbols.2bpp"
+    INCBIN "magnets/symbols.2bpp"
     ds 16
 
 Compressed:

@@ -2399,16 +2399,16 @@ TransferTileSet:
     INCBIN "system/frag/transfer.hz"
 
 TransferPrepTileMap:
-    INCBIN "gfx/system/transfer.tilemap", 0, 192
+    INCBIN "system/gfx/transfer.tilemap", 0, 192
 
 TransferringTileMap:
-    INCBIN "gfx/system/transfer.tilemap", 192, 192
+    INCBIN "system/gfx/transfer.tilemap", 192, 192
 
 TransferDoneTileMap:
-    INCBIN "gfx/system/transfer.tilemap", 384, 192
+    INCBIN "system/gfx/transfer.tilemap", 384, 192
 
 TransferErrorTileMap:
-    INCBIN "gfx/system/transfer.tilemap", 576, 192
+    INCBIN "system/gfx/transfer.tilemap", 576, 192
 
 TransferMessageBoxTileMap:
     db $00, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $02

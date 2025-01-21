@@ -17,7 +17,7 @@ Header::
 .title
     dk "CANNON BALL"
 .icon
-    INCBIN "gfx/cannon/icon.2bpp"
+    INCBIN "cannon/icon.2bpp"
 .end
 
 History:

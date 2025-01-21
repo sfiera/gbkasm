@@ -17,7 +17,7 @@ Header::
 .title
     dk "Puzzle Game"
 .icon
-    INCBIN "gfx/puzzle/icon.2bpp"
+    INCBIN "puzzle/icon.2bpp"
 .end
 
 History:
@@ -2136,13 +2136,13 @@ data_0ef4:
     db $01, $01, $01, $01, $01, $01
 
 data_0f18:
-    INCBIN "gfx/puzzle/arrow.2bpp"
+    INCBIN "puzzle/arrow.2bpp"
 
 data_0f28:
-    INCBIN "gfx/puzzle/hand.2bpp"
+    INCBIN "puzzle/hand.2bpp"
 
 data_0f68:
-    INCBIN "gfx/puzzle/tile.2bpp"
+    INCBIN "puzzle/tile.2bpp"
 
 data_0fa8:
     INCBIN "puzzle/boxes.hz"

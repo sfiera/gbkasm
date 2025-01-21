@@ -18,7 +18,7 @@ Header::
 .title
     dh "モグってナンボ"
 .icon
-    INCBIN "gfx/mogura/icon.2bpp"
+    INCBIN "mogura/icon.2bpp"
 .end
 
 History:
@@ -2749,7 +2749,7 @@ call_b2da:
 
 
 data_b2e9:
-    INCBIN "gfx/mogura/sprites.2bpp"
+    INCBIN "mogura/sprites.2bpp"
 
 data_b729:
     dw $c602

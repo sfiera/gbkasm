@@ -18,7 +18,7 @@ Header::
 .title
     dk "BINARY"
 .icon
-    INCBIN "gfx/bland/icon.2bpp"
+    INCBIN "bland/icon.2bpp"
 .end
 
 History:

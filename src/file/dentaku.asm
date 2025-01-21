@@ -17,7 +17,7 @@ Header::
 .title
     dk "DEN TAKU"
 .icon
-    INCBIN "gfx/iconsend/dentaku.2bpp"
+    INCBIN "iconsend/dentaku.2bpp"
 .end
 
 History:

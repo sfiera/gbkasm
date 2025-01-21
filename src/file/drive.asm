@@ -17,7 +17,7 @@ Header::
 .title
     dk "DRIVE"
 .icon
-    INCBIN "gfx/drive/icon.2bpp"
+    INCBIN "drive/icon.2bpp"
 .end
 
 History:

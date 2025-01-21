@@ -43,7 +43,7 @@ Header::
 .title
     dk "ICON-EDIT"
 .icon
-    INCBIN "gfx/iconedit/icon.2bpp"
+    INCBIN "iconedit/icon.2bpp"
 .end
 
 History:
@@ -845,7 +845,7 @@ ShowMenu:
 
 
 TileMenuCursor:
-    INCBIN "gfx/iconedit/menucursor.2bpp"
+    INCBIN "iconedit/menucursor.2bpp"
 
 
 ClearScreen:
@@ -873,13 +873,13 @@ LayoutMenu:
     db $ff
 
 TileShades:
-    INCBIN "gfx/iconedit/shades.2bpp"
+    INCBIN "iconedit/shades.2bpp"
 
 TileGrid:
-    INCBIN "gfx/iconedit/grid.2bpp"
+    INCBIN "iconedit/grid.2bpp"
 
 TileCursor:
-    INCBIN "gfx/iconedit/cursor.2bpp"
+    INCBIN "iconedit/cursor.2bpp"
 
 
 ShowTopMsg:

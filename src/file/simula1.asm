@@ -17,7 +17,7 @@ Header::
 .title
     dk "SIMULA1"
 .icon
-    INCBIN "gfx/iconsend/simula1.2bpp"
+    INCBIN "iconsend/simula1.2bpp"
 .end
 
 History:

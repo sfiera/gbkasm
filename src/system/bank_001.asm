@@ -25,17 +25,17 @@ data_01_401a::
     dp "GB KISS MENU \0"
 
 AttrCross::
-    INCBIN "gfx/system/attrs.2bpp", 0, 16
+    INCBIN "system/gfx/attrs.2bpp", 0, 16
 AttrTriangle::
-    INCBIN "gfx/system/attrs.2bpp", 16, 16
+    INCBIN "system/gfx/attrs.2bpp", 16, 16
 AttrCircle::
-    INCBIN "gfx/system/attrs.2bpp", 32, 16
+    INCBIN "system/gfx/attrs.2bpp", 32, 16
 AttrDiamond::
-    INCBIN "gfx/system/attrs.2bpp", 48, 16
+    INCBIN "system/gfx/attrs.2bpp", 48, 16
 AttrBullseye::
-    INCBIN "gfx/system/attrs.2bpp", 64, 16
+    INCBIN "system/gfx/attrs.2bpp", 64, 16
 ArrowIcon::
-    INCBIN "gfx/system/attrs.2bpp", 80, 16
+    INCBIN "system/gfx/attrs.2bpp", 80, 16
 
     ds 14
 
@@ -3374,10 +3374,10 @@ jr_001_7f52:
 
 
 PageIcon::
-    INCBIN "gfx/system/page.2bpp"
+    INCBIN "system/gfx/page.2bpp"
 
 PencilIcon:
-    INCBIN "gfx/system/pencil.2bpp"
+    INCBIN "system/gfx/pencil.2bpp"
 
 data_01_7ff0:
-    INCBIN "gfx/system/reticle.2bpp"
+    INCBIN "system/gfx/reticle.2bpp"

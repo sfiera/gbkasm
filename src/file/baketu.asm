@@ -20,7 +20,7 @@ Header::
 .title
     dk "バケちゅリレー"
 .icon
-    INCBIN "gfx/baketu/icon.2bpp"
+    INCBIN "baketu/icon.2bpp"
 .end
 
 History:

@@ -13,21 +13,21 @@ INCLUDE "trap.inc"
 SECTION "nectaris/tiles: Tiles 1", ROMX
 
 MapTiles::
-    INCBIN "gfx/nectaris/maptiles.2bpp"
+    INCBIN "nectaris/gfx/maptiles.2bpp"
 
 Font1::
-    INCBIN "gfx/nectaris/font1.2bpp"
+    INCBIN "nectaris/gfx/font1.2bpp"
 Font2::
-    INCBIN "gfx/nectaris/font2.2bpp"
+    INCBIN "nectaris/gfx/font2.2bpp"
 Font3::
-    INCBIN "gfx/nectaris/font3.2bpp"
+    INCBIN "nectaris/gfx/font3.2bpp"
 Font4::
-    INCBIN "gfx/nectaris/font4.2bpp"
+    INCBIN "nectaris/gfx/font4.2bpp"
 
-    INCBIN "gfx/nectaris/unused.2bpp"
+    INCBIN "nectaris/gfx/unused.2bpp"
 
 UnitNameTiles::
-    INCBIN "gfx/nectaris/unitnames.2bpp"
+    INCBIN "nectaris/gfx/unitnames.2bpp"
 
     ds 160, $00
     ds 16, $ff
@@ -35,72 +35,72 @@ UnitNameTiles::
 SECTION "nectaris/tiles: Tiles 2", ROMX
 
 UnitsGuicy::
-    INCBIN "gfx/nectaris/units-guicy.2bpp"
+    INCBIN "nectaris/gfx/units-guicy.2bpp"
 UnitsUnion::
-    INCBIN "gfx/nectaris/units-union.2bpp"
+    INCBIN "nectaris/gfx/units-union.2bpp"
 
 BattleTileMap1::
-    INCBIN "gfx/nectaris/battle.tilemap", 40, 100
+    INCBIN "nectaris/gfx/battle.tilemap", 40, 100
 BattleTileMap2::
-    INCBIN "gfx/nectaris/battle.tilemap", 140, 10
+    INCBIN "nectaris/gfx/battle.tilemap", 140, 10
 BattleTileMap3::
-    INCBIN "gfx/nectaris/battle.tilemap", 150, 10
+    INCBIN "nectaris/gfx/battle.tilemap", 150, 10
 BattleTileMap4::
-    INCBIN "gfx/nectaris/battle.tilemap", 160, 160
+    INCBIN "nectaris/gfx/battle.tilemap", 160, 160
 BattleTileMap5::
-    INCBIN "gfx/nectaris/battle.tilemap", 320, 160
+    INCBIN "nectaris/gfx/battle.tilemap", 320, 160
 BattleTileMap6::
-    INCBIN "gfx/nectaris/battle.tilemap", 480, 160
+    INCBIN "nectaris/gfx/battle.tilemap", 480, 160
 BattleTileMap7::
-    INCBIN "gfx/nectaris/battle.tilemap", 640, 160
+    INCBIN "nectaris/gfx/battle.tilemap", 640, 160
 BattleTileMap8::
-    INCBIN "gfx/nectaris/battle.tilemap", 800
+    INCBIN "nectaris/gfx/battle.tilemap", 800
 BattleTileData::
-    INCBIN "gfx/nectaris/battle.2bpp", 0, 304
+    INCBIN "nectaris/gfx/battle.2bpp", 0, 304
     ds 32, $ff  ; tiles $94 and $95 must be blanked out
-    INCBIN "gfx/nectaris/battle.2bpp", 336, 2304
+    INCBIN "nectaris/gfx/battle.2bpp", 336, 2304
     ds 16, $ff  ; tile $25 must be blanked out
-    INCBIN "gfx/nectaris/battle.2bpp", 2656, 96
+    INCBIN "nectaris/gfx/battle.2bpp", 2656, 96
 
 MessageTurn::
-    INCBIN "gfx/nectaris/message-turn.2bpp"
+    INCBIN "nectaris/gfx/message-turn.2bpp"
 MessageChange::
-    INCBIN "gfx/nectaris/message-change.2bpp"
+    INCBIN "nectaris/gfx/message-change.2bpp"
 MessagePlayer1::
-    INCBIN "gfx/nectaris/message-player1.2bpp"
+    INCBIN "nectaris/gfx/message-player1.2bpp"
 MessagePlayer2::
-    INCBIN "gfx/nectaris/message-player2.2bpp"
+    INCBIN "nectaris/gfx/message-player2.2bpp"
 MessageComputer::
-    INCBIN "gfx/nectaris/message-computer.2bpp"
+    INCBIN "nectaris/gfx/message-computer.2bpp"
 
 SECTION "nectaris/tiles: Tiles 3", ROMX
 
 TileMapWeaponDataUnused::
     ; This part of the source image ensures that all ASCII is in the tileset.
     ; It is never itself displayed within the game.
-    INCBIN "gfx/nectaris/weapondata.tilemap", 20, 120
+    INCBIN "nectaris/gfx/weapondata.tilemap", 20, 120
 TileMapWeaponData::
-    INCBIN "gfx/nectaris/weapondata.tilemap", 140
+    INCBIN "nectaris/gfx/weapondata.tilemap", 140
 WeaponDataTiles::
-    INCBIN "gfx/nectaris/weapondata.2bpp"
+    INCBIN "nectaris/gfx/weapondata.2bpp"
 
 SECTION "nectaris/tiles: Tiles 4", ROMX
 
 FactoryTileMap1::
-    INCBIN "gfx/nectaris/factory.tilemap", 40, 80
+    INCBIN "nectaris/gfx/factory.tilemap", 40, 80
 FactoryTileMap2::
-    INCBIN "gfx/nectaris/factory.tilemap", 120, 20
+    INCBIN "nectaris/gfx/factory.tilemap", 120, 20
 FactoryTileMap3::
-    INCBIN "gfx/nectaris/factory.tilemap", 140, 480
+    INCBIN "nectaris/gfx/factory.tilemap", 140, 480
 FactoryTileMap4::
-    INCBIN "gfx/nectaris/factory.tilemap", 620, 220
+    INCBIN "nectaris/gfx/factory.tilemap", 620, 220
 FactoryTileData::
-    INCBIN "gfx/nectaris/factory.2bpp"
+    INCBIN "nectaris/gfx/factory.2bpp"
 
 Font7::
-    INCBIN "gfx/nectaris/font7.2bpp"
+    INCBIN "nectaris/gfx/font7.2bpp"
 
 SECTION "nectaris/tiles: Tiles 5", ROMX
 
 Font8::
-    INCBIN "gfx/nectaris/font8.2bpp"
+    INCBIN "nectaris/gfx/font8.2bpp"

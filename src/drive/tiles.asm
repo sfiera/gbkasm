@@ -1,8 +1,8 @@
 SECTION "Fragment", ROM0[$0]
 
-    INCBIN "gfx/drive/car.2bpp"
-    INCBIN "gfx/drive/cursor.2bpp"
-    INCBIN "gfx/drive/effects.2bpp"
-    INCBIN "gfx/drive/text.2bpp"
-    INCBIN "gfx/drive/track.2bpp"
-    INCBIN "gfx/drive/hazards.2bpp"
+    INCBIN "drive/car.2bpp"
+    INCBIN "drive/cursor.2bpp"
+    INCBIN "drive/effects.2bpp"
+    INCBIN "drive/text.2bpp"
+    INCBIN "drive/track.2bpp"
+    INCBIN "drive/hazards.2bpp"

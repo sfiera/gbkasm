@@ -20,7 +20,7 @@ Header::
 .title
     dk "SAMEGAME"
 .icon
-    INCBIN "gfx/samegame/icon.2bpp"
+    INCBIN "samegame/icon.2bpp"
 .end
 
 History:

@@ -21,7 +21,7 @@ Header:
 .title
     dk "KISS-MON2"
 .icon
-    INCBIN "gfx/kissmon/icon2.2bpp"
+    INCBIN "kissmon/icon2.2bpp"
 .end
 
 History:
@@ -2581,13 +2581,13 @@ data_b1ef:
     dk $00, $23, " rux  Y=   SEL:EXIT\0"
 
 data_b246:
-    INCBIN "gfx/iconedit/shades.2bpp"
+    INCBIN "iconedit/shades.2bpp"
 
 data_b286:
-    INCBIN "gfx/iconedit/grid.2bpp"
+    INCBIN "iconedit/grid.2bpp"
 
 data_b296:
-    INCBIN "gfx/iconedit/cursor.2bpp"
+    INCBIN "iconedit/cursor.2bpp"
 
 
 call_b2a6:
@@ -2612,21 +2612,21 @@ call_b2b1:
 
 
 data_b2c0:
-    INCBIN "gfx/kissmon/moncroc.2bpp"
-    INCBIN "gfx/kissmon/monocto.2bpp"
-    INCBIN "gfx/kissmon/monmouse.2bpp"
-    INCBIN "gfx/kissmon/monrobo3.2bpp"
-    INCBIN "gfx/kissmon/monrobo2.2bpp"
-    INCBIN "gfx/kissmon/mondora.2bpp"
-    INCBIN "gfx/kissmon/monbird1.2bpp"
-    INCBIN "gfx/kissmon/monfly.2bpp"
-    INCBIN "gfx/kissmon/monpoop.2bpp"
-    INCBIN "gfx/kissmon/monfish2.2bpp"
-    INCBIN "gfx/kissmon/monghost.2bpp"
-    INCBIN "gfx/kissmon/monwolf2.2bpp"
-    INCBIN "gfx/kissmon/monbird2.2bpp"
-    INCBIN "gfx/kissmon/monbird3.2bpp"
-    INCBIN "gfx/kissmon/monwhale.2bpp"
-    INCBIN "gfx/kissmon/monpig.2bpp"
+    INCBIN "kissmon/moncroc.2bpp"
+    INCBIN "kissmon/monocto.2bpp"
+    INCBIN "kissmon/monmouse.2bpp"
+    INCBIN "kissmon/monrobo3.2bpp"
+    INCBIN "kissmon/monrobo2.2bpp"
+    INCBIN "kissmon/mondora.2bpp"
+    INCBIN "kissmon/monbird1.2bpp"
+    INCBIN "kissmon/monfly.2bpp"
+    INCBIN "kissmon/monpoop.2bpp"
+    INCBIN "kissmon/monfish2.2bpp"
+    INCBIN "kissmon/monghost.2bpp"
+    INCBIN "kissmon/monwolf2.2bpp"
+    INCBIN "kissmon/monbird2.2bpp"
+    INCBIN "kissmon/monbird3.2bpp"
+    INCBIN "kissmon/monwhale.2bpp"
+    INCBIN "kissmon/monpig.2bpp"
 
 ENDL
