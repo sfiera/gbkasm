@@ -2396,7 +2396,7 @@ Call_001_509b:
 
 
 TransferTileSet:
-    INCBIN "frag/system/transfer.hz"
+    INCBIN "system/frag/transfer.hz"
 
 TransferPrepTileMap:
     INCBIN "gfx/system/transfer.tilemap", 0, 192
@@ -2418,4 +2418,4 @@ TransferMessageBoxTileMap:
     db $1e, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $20
 
 MenuActionTileData:
-    INCBIN "frag/system/actions.hz"
+    INCBIN "system/frag/actions.hz"

@@ -4173,10 +4173,10 @@ data_b891:
     db -9,  0, $3a, OAMF_PAL1 | OAMF_YFLIP
 
 data_b896:
-    INCBIN "frag/bland/sprites.hz"
+    INCBIN "bland/sprites.hz"
 
 data_bb0b:
-    INCBIN "frag/bland/levels.hz"
+    INCBIN "bland/levels.hz"
 
 data_bc82:
     dw .bcbe, .bcc1, .bcc4, .bcc5, .bcce

@@ -45,4 +45,4 @@ FOR _BLOCK, 0, 3
 ENDR
 
 Tileset:
-    INCBIN "frag/sw_timer/stencil.hz"
+    INCBIN "sw_timer/stencil.hz"

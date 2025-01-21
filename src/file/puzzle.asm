@@ -2145,7 +2145,7 @@ data_0f68:
     INCBIN "gfx/puzzle/tile.2bpp"
 
 data_0fa8:
-    INCBIN "frag/puzzle/boxes.hz"
+    INCBIN "puzzle/boxes.hz"
 
 data_10ea:
-    INCBIN "frag/puzzle/numbers.hz"
+    INCBIN "puzzle/numbers.hz"

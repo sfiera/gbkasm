@@ -1,7 +1,18 @@
-MINIGAME = minigame.gb
-NECTARIS = nectaris.gb
-GBF_ASM = $(wildcard src/file/*.asm)
-GBF = $(GBF_ASM:src/file/%.asm=%.gbf)
+OUT = minigame.gb \
+	  nectaris.gb \
+	  cksum.gbf \
+	  family_s.gbf \
+	  hello_w.gbf \
+	  huxplore.gbf \
+	  irtest.gbf \
+	  kissmon2.gbf \
+	  n5unlock.gbf \
+	  passwords.gbf \
+	  saita.gbf \
+	  simula1.gbf \
+	  sw_lcd.gbf \
+	  sw_pop.gbf
+
 
 RGBASM  ?= rgbasm
 RGBLINK ?= rgblink
@@ -54,7 +65,7 @@ clean:
 	       -name '*.map' | xargs rm -f
 
 .PHONY: compare
-compare: $(MINIGAME) $(NECTARIS) $(GBF)
+compare: $(OUT)
 	shasum -c roms.sha1
 
 define NL

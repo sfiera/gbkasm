@@ -619,4 +619,4 @@ data_0436:
     db $00, $00, $00, $00, $00, $00, $00
 
 data_0491:
-    INCBIN "frag/family_s/code.hz"
+    INCBIN "family_s/code.hz"

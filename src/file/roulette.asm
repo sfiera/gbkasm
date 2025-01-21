@@ -95,7 +95,7 @@ ENDL
 data_013b:
     dw 100
 data_013d:
-    INCBIN "frag/roulette/bin.hz"
+    INCBIN "roulette/bin.hz"
 
 data_06ae:
     db $00, $06, $08, $04, $0a, $02, $0c, $07, $05, $09, $03, $0b, $01

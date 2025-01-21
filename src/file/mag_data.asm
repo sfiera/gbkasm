@@ -35,10 +35,10 @@ Body::
     ds 16
 
 Compressed:
-    INCBIN "frag/magnets/bin1.hz"
+    INCBIN "magnets/bin1.hz"
 
 Compressed2:
-    INCBIN "frag/magnets/bin2.hz"
+    INCBIN "magnets/bin2.hz"
 
 Compressed3:
-    INCBIN "frag/magnets/bin3.hz"
+    INCBIN "magnets/bin3.hz"

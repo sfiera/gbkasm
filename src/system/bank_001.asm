@@ -1690,7 +1690,7 @@ data_01_72d2:
     db $10, $09, $70, $7f, $ff
 
 gfxGBKissLogo:
-    INCBIN "frag/system/logo.hz"
+    INCBIN "system/frag/logo.hz"
 
 TrapJumpViaTable::
     pop de

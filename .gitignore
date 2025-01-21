@@ -3,6 +3,7 @@
 *.frag
 *.sav
 *.map
+*.tilemap
 *.sym
 *.o
 *.d

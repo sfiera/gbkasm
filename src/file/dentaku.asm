@@ -41,4 +41,4 @@ Main::
     jp $c800
 
 Compressed:
-    INCBIN "frag/dentaku/code.hz"
+    INCBIN "dentaku/code.hz"

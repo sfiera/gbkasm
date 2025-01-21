@@ -43,4 +43,4 @@ FOR _BLOCK, 0, 3
 ENDR
 
 Tileset:
-    INCBIN "frag/sw_timer/pop.hz"
+    INCBIN "sw_timer/pop.hz"

@@ -35,7 +35,7 @@ Main::
 
 
 Compressed:
-    INCBIN "frag/n5unlock/code.hz"
+    INCBIN "n5unlock/code.hz"
 
 
 SECTION "Variables", WRAM0[$cc00]

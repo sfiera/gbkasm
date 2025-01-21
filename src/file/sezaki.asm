@@ -31,4 +31,4 @@ History:
 .end
 
 Body::
-    INCBIN "frag/mogura/sezaki.hz"
+    INCBIN "mogura/sezaki.hz"

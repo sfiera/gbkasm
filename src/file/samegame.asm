@@ -927,7 +927,7 @@ strHiScoreName:
     dk "          "
 
 gfxTileset:
-    INCBIN "frag/samegame/tiles.hz"
+    INCBIN "samegame/tiles.hz"
 
 
 SECTION "Field", WRAM0[$c980]

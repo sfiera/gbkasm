@@ -2794,6 +2794,6 @@ data_b876:
     db $0f, $b5, $c3, $c2, $b7, $ca, $b9, $de, $dd, $c3, $dd, $c0, $de, $d6, $21, $00
 
 data_b886:
-    INCBIN "frag/mogura/island.hz"
+    INCBIN "mogura/island.hz"
 
 ENDL

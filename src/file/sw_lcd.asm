@@ -43,4 +43,4 @@ FOR _BLOCK, 0, 3
 ENDR
 
 Tileset:
-    INCBIN "frag/sw_timer/lcd.hz"
+    INCBIN "sw_timer/lcd.hz"

@@ -1668,7 +1668,7 @@ jr_0b82::
 data_tileset:
     ; only the first 541 bytes of this data are necessary
     ; the rest contains another 6 copies of the same tile data
-    INCBIN "frag/cannon/tiles.hz"
+    INCBIN "cannon/tiles.hz"
 
 data_high_score:
     dw 500
