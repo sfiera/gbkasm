@@ -31,4 +31,4 @@ History:
 .end
 
 Body::
-    INCBIN "puzzle/koura-1.hz"
+    INCBIN "koura1/koura-1.hz"
