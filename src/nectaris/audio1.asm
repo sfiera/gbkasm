@@ -5,7 +5,6 @@
 
 INCLUDE "common.inc"
 INCLUDE "hardware.inc"
-INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
 SECTION "nectaris/audio1: Audio 1", ROMX

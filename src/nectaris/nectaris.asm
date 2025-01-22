@@ -5,7 +5,6 @@
 
 INCLUDE "common.inc"
 INCLUDE "hardware.inc"
-INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 
 SECTION "nectaris/nectaris: Game Boy Metadata", ROM0

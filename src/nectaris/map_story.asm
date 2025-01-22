@@ -5,7 +5,6 @@
 
 INCLUDE "common.inc"
 INCLUDE "hardware.inc"
-INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 INCLUDE "nectaris/map.inc"
 INCLUDE "nectaris/units.inc"
