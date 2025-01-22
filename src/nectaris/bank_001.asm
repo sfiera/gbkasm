@@ -5,7 +5,6 @@
 
 INCLUDE "common.inc"
 INCLUDE "hardware.inc"
-INCLUDE "trap.inc"
 INCLUDE "nectaris/audio.inc"
 INCLUDE "nectaris/units.inc"
 

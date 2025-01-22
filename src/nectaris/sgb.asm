@@ -5,7 +5,6 @@
 
 INCLUDE "common.inc"
 INCLUDE "hardware.inc"
-INCLUDE "trap.inc"
 
 DEF PAL01    EQU $00
 DEF PAL23    EQU $01

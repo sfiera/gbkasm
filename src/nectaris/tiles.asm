@@ -5,7 +5,6 @@
 
 INCLUDE "common.inc"
 INCLUDE "hardware.inc"
-INCLUDE "trap.inc"
 
 SECTION "nectaris/tiles: Tiles 1", ROMX
 
