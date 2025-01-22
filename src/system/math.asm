@@ -5,10 +5,10 @@
 
 INCLUDE "charmap.inc"
 INCLUDE "common.inc"
-INCLUDE "consts.inc"
 INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
+INCLUDE "system/consts.inc"
 
 SECTION "system/math: ROM Math", ROMX
 

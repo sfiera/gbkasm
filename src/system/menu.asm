@@ -5,10 +5,10 @@
 
 INCLUDE "charmap.inc"
 INCLUDE "common.inc"
-INCLUDE "consts.inc"
 INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
+INCLUDE "system/consts.inc"
 
 DEF XFER_STARTED EQU $01
 DEF XFER_SUCCESS EQU $02

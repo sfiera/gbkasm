@@ -23,14 +23,5 @@ DEF DrawMode_Bit5 EQU 5
 DEF DrawMode_Bit6 EQU 6
 DEF DrawMode_Bit7 EQU 7
 
-def rIRMode       EQU $0000
-def kIRReadOnly   EQU $00
-def kIRReadWrite  EQU $0a
-def kIRModeOn     EQU $0e
-def rROMBank      EQU $2000
-def rRAMBank      EQU $4000
-def rIgnored      EQU $6000
-def rIR           EQU $a000
-
 def REGION_BEGIN EQU $a002
 def REGION_END   EQU $c000

@@ -5,8 +5,8 @@
 
 INCLUDE "charmap.inc"
 INCLUDE "common.inc"
-INCLUDE "consts.inc"
 INCLUDE "hardware.inc"
+INCLUDE "huc.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
 

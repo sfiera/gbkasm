@@ -5,10 +5,10 @@
 
 INCLUDE "charmap.inc"
 INCLUDE "common.inc"
-INCLUDE "consts.inc"
 INCLUDE "hardware.inc"
 INCLUDE "macro.inc"
 INCLUDE "trap.inc"
+INCLUDE "system/consts.inc"
 
 DEF TITLE_SIZE  EQU 12
 DEF LINE_SIZE   EQU 17
