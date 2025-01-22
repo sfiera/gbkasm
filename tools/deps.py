@@ -16,6 +16,8 @@ def main():
     else:
         paths = []
         for root, dirs, files in os.walk("."):
+            dirs.sort()
+            files.sort()
             for file in files:
                 name, ext = os.path.splitext(file)
                 if ext in extensions:
