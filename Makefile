@@ -68,8 +68,8 @@ clean:
 compare: $(OUT)
 	shasum -c roms.sha1
 
-minigame.gb: src/minigame.link
-nectaris.gb: src/nectaris.link
+minigame.gb: src/minigame/minigame.link
+nectaris.gb: src/nectaris/nectaris.link
 baketu.gbf: src/baketu/baketu.o
 biorythm.gbf: src/biorythm/biorythm.o
 bj.gbf: src/bj/bj.o
