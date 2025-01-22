@@ -36,62 +36,62 @@ UnitsUnion::
     INCBIN "nectaris/gfx/units-union.2bpp"
 
 BattleTileMap1::
-    INCBIN "nectaris/gfx/battle.tilemap", 40, 100
+    INCBIN "nectaris/gfx/ui/battle.tilemap", 40, 100
 BattleTileMap2::
-    INCBIN "nectaris/gfx/battle.tilemap", 140, 10
+    INCBIN "nectaris/gfx/ui/battle.tilemap", 140, 10
 BattleTileMap3::
-    INCBIN "nectaris/gfx/battle.tilemap", 150, 10
+    INCBIN "nectaris/gfx/ui/battle.tilemap", 150, 10
 BattleTileMap4::
-    INCBIN "nectaris/gfx/battle.tilemap", 160, 160
+    INCBIN "nectaris/gfx/ui/battle.tilemap", 160, 160
 BattleTileMap5::
-    INCBIN "nectaris/gfx/battle.tilemap", 320, 160
+    INCBIN "nectaris/gfx/ui/battle.tilemap", 320, 160
 BattleTileMap6::
-    INCBIN "nectaris/gfx/battle.tilemap", 480, 160
+    INCBIN "nectaris/gfx/ui/battle.tilemap", 480, 160
 BattleTileMap7::
-    INCBIN "nectaris/gfx/battle.tilemap", 640, 160
+    INCBIN "nectaris/gfx/ui/battle.tilemap", 640, 160
 BattleTileMap8::
-    INCBIN "nectaris/gfx/battle.tilemap", 800
+    INCBIN "nectaris/gfx/ui/battle.tilemap", 800
 BattleTileData::
-    INCBIN "nectaris/gfx/battle.2bpp", 0, 304
+    INCBIN "nectaris/gfx/ui/battle.2bpp", 0, 304
     ds 32, $ff  ; tiles $94 and $95 must be blanked out
-    INCBIN "nectaris/gfx/battle.2bpp", 336, 2304
+    INCBIN "nectaris/gfx/ui/battle.2bpp", 336, 2304
     ds 16, $ff  ; tile $25 must be blanked out
-    INCBIN "nectaris/gfx/battle.2bpp", 2656, 96
+    INCBIN "nectaris/gfx/ui/battle.2bpp", 2656, 96
 
 MessageTurn::
-    INCBIN "nectaris/gfx/message-turn.2bpp"
+    INCBIN "nectaris/gfx/message/turn.2bpp"
 MessageChange::
-    INCBIN "nectaris/gfx/message-change.2bpp"
+    INCBIN "nectaris/gfx/message/change.2bpp"
 MessagePlayer1::
-    INCBIN "nectaris/gfx/message-player1.2bpp"
+    INCBIN "nectaris/gfx/message/player1.2bpp"
 MessagePlayer2::
-    INCBIN "nectaris/gfx/message-player2.2bpp"
+    INCBIN "nectaris/gfx/message/player2.2bpp"
 MessageComputer::
-    INCBIN "nectaris/gfx/message-computer.2bpp"
+    INCBIN "nectaris/gfx/message/computer.2bpp"
 
 SECTION "nectaris/tiles: Tiles 3", ROMX
 
 TileMapWeaponDataUnused::
     ; This part of the source image ensures that all ASCII is in the tileset.
     ; It is never itself displayed within the game.
-    INCBIN "nectaris/gfx/weapondata.tilemap", 20, 120
+    INCBIN "nectaris/gfx/ui/weapondata.tilemap", 20, 120
 TileMapWeaponData::
-    INCBIN "nectaris/gfx/weapondata.tilemap", 140
+    INCBIN "nectaris/gfx/ui/weapondata.tilemap", 140
 WeaponDataTiles::
-    INCBIN "nectaris/gfx/weapondata.2bpp"
+    INCBIN "nectaris/gfx/ui/weapondata.2bpp"
 
 SECTION "nectaris/tiles: Tiles 4", ROMX
 
 FactoryTileMap1::
-    INCBIN "nectaris/gfx/factory.tilemap", 40, 80
+    INCBIN "nectaris/gfx/ui/factory.tilemap", 40, 80
 FactoryTileMap2::
-    INCBIN "nectaris/gfx/factory.tilemap", 120, 20
+    INCBIN "nectaris/gfx/ui/factory.tilemap", 120, 20
 FactoryTileMap3::
-    INCBIN "nectaris/gfx/factory.tilemap", 140, 480
+    INCBIN "nectaris/gfx/ui/factory.tilemap", 140, 480
 FactoryTileMap4::
-    INCBIN "nectaris/gfx/factory.tilemap", 620, 220
+    INCBIN "nectaris/gfx/ui/factory.tilemap", 620, 220
 FactoryTileData::
-    INCBIN "nectaris/gfx/factory.2bpp"
+    INCBIN "nectaris/gfx/ui/factory.2bpp"
 
 Font7::
     INCBIN "nectaris/gfx/font7.2bpp"
