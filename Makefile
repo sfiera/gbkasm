@@ -44,10 +44,10 @@ all: compare
 	$(RGBLINK) -n $*.sym -x -o $@ $<
 
 %.2bpp %.tilemap: %.png %.flags
-	$(RGBGFX) @$*.flags -d2 -o $*.2bpp $<
+	$(RGBGFX) @$*.flags -d2 -o $*.2bpp -t $*.tilemap $<
 
 %.1bpp %.tilemap: %.png %.flags
-	$(RGBGFX) @$*.flags -d1 -o $*.1bpp $<
+	$(RGBGFX) @$*.flags -d1 -o $*.1bpp -t $*.tilemap $<
 
 %.hz: %.frag
 	tools/compress.py $@ $<
