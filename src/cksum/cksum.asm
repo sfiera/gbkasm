@@ -35,7 +35,7 @@ Header::
 .title
     dk "CKSUM"
 .icon
-    INCBIN "cksum/icon.2bpp"
+    INCBIN "../out/src/cksum/icon.2bpp"
 .end
 
 History:

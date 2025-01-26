@@ -1,3 +1,3 @@
 SECTION "Fragment", ROM0[$0]
 
-    INCBIN "puzzle/boxes.2bpp"
+    INCBIN "../out/src/puzzle/boxes.2bpp"

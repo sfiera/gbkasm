@@ -17,7 +17,7 @@ Header::
 .title
     dk "DEN TAKU"
 .icon
-    INCBIN "iconsend/dentaku.2bpp"
+    INCBIN "../out/src/iconsend/dentaku.2bpp"
 .end
 
 History:
@@ -41,4 +41,4 @@ Main::
     jp $c800
 
 Compressed:
-    INCBIN "dentaku/code.hz"
+    INCBIN "../out/src/dentaku/code.hz"

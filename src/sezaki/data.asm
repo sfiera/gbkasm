@@ -1,3 +1,3 @@
 SECTION "Fragment", ROM0[$0]
 
-    INCBIN "sezaki/sezaki.2bpp"
+    INCBIN "../out/src/sezaki/sezaki.2bpp"

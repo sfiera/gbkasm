@@ -17,7 +17,7 @@ Header::
 .title
     dk "CANNON BALL"
 .icon
-    INCBIN "cannon/icon.2bpp"
+    INCBIN "../out/src/cannon/icon.2bpp"
 .end
 
 History:
@@ -1668,7 +1668,7 @@ jr_0b82::
 data_tileset:
     ; only the first 541 bytes of this data are necessary
     ; the rest contains another 6 copies of the same tile data
-    INCBIN "cannon/tiles.hz"
+    INCBIN "../out/src/cannon/tiles.hz"
 
 data_high_score:
     dw 500

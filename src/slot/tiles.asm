@@ -1,3 +1,3 @@
 SECTION "Fragment", ROM0[$0]
 
-    INCBIN "slot/tiles.2bpp"
+    INCBIN "../out/src/slot/tiles.2bpp"

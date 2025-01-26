@@ -31,14 +31,14 @@ History:
 .end
 
 Body::
-    INCBIN "mag_data/symbols.2bpp"
+    INCBIN "../out/src/mag_data/symbols.2bpp"
     ds 16
 
 Compressed:
-    INCBIN "mag_data/bin1.hz"
+    INCBIN "../out/src/mag_data/bin1.hz"
 
 Compressed2:
-    INCBIN "mag_data/bin2.hz"
+    INCBIN "../out/src/mag_data/bin2.hz"
 
 Compressed3:
-    INCBIN "mag_data/bin3.hz"
+    INCBIN "../out/src/mag_data/bin3.hz"

@@ -20,7 +20,7 @@ Header::
 .title
     dk "SAMEGAME"
 .icon
-    INCBIN "samegame/icon.2bpp"
+    INCBIN "../out/src/samegame/icon.2bpp"
 .end
 
 History:
@@ -927,7 +927,7 @@ strHiScoreName:
     dk "          "
 
 gfxTileset:
-    INCBIN "samegame/tiles.hz"
+    INCBIN "../out/src/samegame/tiles.hz"
 
 
 SECTION "Field", WRAM0[$c980]

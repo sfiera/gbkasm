@@ -2396,19 +2396,19 @@ Call_001_509b:
 
 
 TransferTileSet:
-    INCBIN "system/frag/transfer.hz"
+    INCBIN "../out/src/system/frag/transfer.hz"
 
 TransferPrepTileMap:
-    INCBIN "system/gfx/transfer.tilemap", 0, 192
+    INCBIN "../out/src/system/gfx/transfer.tilemap", 0, 192
 
 TransferringTileMap:
-    INCBIN "system/gfx/transfer.tilemap", 192, 192
+    INCBIN "../out/src/system/gfx/transfer.tilemap", 192, 192
 
 TransferDoneTileMap:
-    INCBIN "system/gfx/transfer.tilemap", 384, 192
+    INCBIN "../out/src/system/gfx/transfer.tilemap", 384, 192
 
 TransferErrorTileMap:
-    INCBIN "system/gfx/transfer.tilemap", 576, 192
+    INCBIN "../out/src/system/gfx/transfer.tilemap", 576, 192
 
 TransferMessageBoxTileMap:
     db $00, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $02
@@ -2418,4 +2418,4 @@ TransferMessageBoxTileMap:
     db $1e, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $20
 
 MenuActionTileData:
-    INCBIN "system/frag/actions.hz"
+    INCBIN "../out/src/system/frag/actions.hz"

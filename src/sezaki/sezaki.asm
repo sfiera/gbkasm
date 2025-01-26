@@ -31,4 +31,4 @@ History:
 .end
 
 Body::
-    INCBIN "sezaki/data.hz"
+    INCBIN "../out/src/sezaki/data.hz"

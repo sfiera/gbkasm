@@ -18,7 +18,7 @@ Header::
 .title
     dk "BINARY"
 .icon
-    INCBIN "bland/icon.2bpp"
+    INCBIN "../out/src/bland/icon.2bpp"
 .end
 
 History:
@@ -4173,10 +4173,10 @@ data_b891:
     db -9,  0, $3a, OAMF_PAL1 | OAMF_YFLIP
 
 data_b896:
-    INCBIN "bland/sprites.hz"
+    INCBIN "../out/src/bland/sprites.hz"
 
 data_bb0b:
-    INCBIN "bland/levels.hz"
+    INCBIN "../out/src/bland/levels.hz"
 
 data_bc82:
     dw .bcbe, .bcc1, .bcc4, .bcc5, .bcce

@@ -30,7 +30,8 @@ endif
 .PHONY: all
 all: compare
 
-%.o: %.asm
+out/%.o: %.asm
+	@ mkdir -p $(dir $@)
 	$(RGBASM) $(RGBASMFLAGS) -o $@ $<
 
 %.gb:
@@ -40,17 +41,21 @@ all: compare
 %.gbf:
 	$(RGBLINK) -n $*.sym -x -o $@ $<
 
-%.frag: %.o
+out/%.frag: out/%.o
+	@ mkdir -p $(dir $@)
 	$(RGBLINK) -n $*.sym -x -o $@ $<
 
-%.2bpp %.tilemap: %.png %.flags
-	$(RGBGFX) @$*.flags -d2 -o $*.2bpp -t $*.tilemap $<
+out/%.2bpp out/%.tilemap: %.png %.flags
+	@ mkdir -p $(dir $@)
+	$(RGBGFX) @$*.flags -d2 -o out/$*.2bpp -OT $<
 
-%.1bpp %.tilemap: %.png %.flags
-	$(RGBGFX) @$*.flags -d1 -o $*.1bpp -t $*.tilemap $<
+out/%.1bpp out/%.tilemap: %.png %.flags
+	@ mkdir -p $(dir $@)
+	$(RGBGFX) @$*.flags -d1 -o out/$*.1bpp -OT $<
 
-%.hz: %.frag
-	tools/compress.py $@ $<
+out/%.hz: out/%.frag
+	@ mkdir -p $(dir $@)
+	tools/compress.py $@ $< $*.hz.orig
 
 .PHONY: clean
 clean:
@@ -70,48 +75,48 @@ compare: $(OUT)
 
 minigame.gb: src/minigame/minigame.link
 nectaris.gb: src/nectaris/nectaris.link
-baketu.gbf: src/baketu/baketu.o
-biorythm.gbf: src/biorythm/biorythm.o
-bj.gbf: src/bj/bj.o
-bland.gbf: src/bland/bland.o
-cannon.gbf: src/cannon/cannon.o
-chardump.gbf: src/chardump/chardump.o
-cksum.gbf: src/cksum/cksum.o
-del_all.gbf: src/del_all/del_all.o
-dentaku.gbf: src/dentaku/dentaku.o
-drive.gbf: src/drive/drive.o
-family_s.gbf: src/family_s/family_s.o
-hello_w.gbf: src/hello_w/hello_w.o
-huxplore.gbf: src/huxplore/huxplore.o
-iconedit.gbf: src/iconedit/iconedit.o
-iconsend.gbf: src/iconsend/iconsend.o
-irtest.gbf: src/irtest/irtest.o
-kissmon.gbf: src/kissmon/kissmon.o
-kissmon2.gbf: src/kissmon2/kissmon2.o
-koura1.gbf: src/koura1/koura1.o
-koura2.gbf: src/koura2/koura2.o
-koura3.gbf: src/koura3/koura3.o
-mag_data.gbf: src/mag_data/mag_data.o
-magnets.gbf: src/magnets/magnets.o
-mogura.gbf: src/mogura/mogura.o
-n5unlock.gbf: src/n5unlock/n5unlock.o
-passwords.gbf: src/passwords/passwords.o
-poker.gbf: src/poker/poker.o
-puzzle.gbf: src/puzzle/puzzle.o
-roulette.gbf: src/roulette/roulette.o
-saita.gbf: src/saita/saita.o
-samegame.gbf: src/samegame/samegame.o
-sezaki.gbf: src/sezaki/sezaki.o
-shot.gbf: src/shot/shot.o
-simula1.gbf: src/simula1/simula1.o
-slot.gbf: src/slot/slot.o
-soundtst.gbf: src/soundtst/soundtst.o
-sramtool.gbf: src/sramtool/sramtool.o
-sw_data.gbf: src/sw_data/sw_data.o
-sw_lcd.gbf: src/sw_lcd/sw_lcd.o
-sw_pop.gbf: src/sw_pop/sw_pop.o
-sw_timer.gbf: src/sw_timer/sw_timer.o
-worm.gbf: src/worm/worm.o
+baketu.gbf: out/src/baketu/baketu.o
+biorythm.gbf: out/src/biorythm/biorythm.o
+bj.gbf: out/src/bj/bj.o
+bland.gbf: out/src/bland/bland.o
+cannon.gbf: out/src/cannon/cannon.o
+chardump.gbf: out/src/chardump/chardump.o
+cksum.gbf: out/src/cksum/cksum.o
+del_all.gbf: out/src/del_all/del_all.o
+dentaku.gbf: out/src/dentaku/dentaku.o
+drive.gbf: out/src/drive/drive.o
+family_s.gbf: out/src/family_s/family_s.o
+hello_w.gbf: out/src/hello_w/hello_w.o
+huxplore.gbf: out/src/huxplore/huxplore.o
+iconedit.gbf: out/src/iconedit/iconedit.o
+iconsend.gbf: out/src/iconsend/iconsend.o
+irtest.gbf: out/src/irtest/irtest.o
+kissmon.gbf: out/src/kissmon/kissmon.o
+kissmon2.gbf: out/src/kissmon2/kissmon2.o
+koura1.gbf: out/src/koura1/koura1.o
+koura2.gbf: out/src/koura2/koura2.o
+koura3.gbf: out/src/koura3/koura3.o
+mag_data.gbf: out/src/mag_data/mag_data.o
+magnets.gbf: out/src/magnets/magnets.o
+mogura.gbf: out/src/mogura/mogura.o
+n5unlock.gbf: out/src/n5unlock/n5unlock.o
+passwords.gbf: out/src/passwords/passwords.o
+poker.gbf: out/src/poker/poker.o
+puzzle.gbf: out/src/puzzle/puzzle.o
+roulette.gbf: out/src/roulette/roulette.o
+saita.gbf: out/src/saita/saita.o
+samegame.gbf: out/src/samegame/samegame.o
+sezaki.gbf: out/src/sezaki/sezaki.o
+shot.gbf: out/src/shot/shot.o
+simula1.gbf: out/src/simula1/simula1.o
+slot.gbf: out/src/slot/slot.o
+soundtst.gbf: out/src/soundtst/soundtst.o
+sramtool.gbf: out/src/sramtool/sramtool.o
+sw_data.gbf: out/src/sw_data/sw_data.o
+sw_lcd.gbf: out/src/sw_lcd/sw_lcd.o
+sw_pop.gbf: out/src/sw_pop/sw_pop.o
+sw_timer.gbf: out/src/sw_timer/sw_timer.o
+worm.gbf: out/src/worm/worm.o
 
 define NL
 

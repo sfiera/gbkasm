@@ -1796,7 +1796,7 @@ jr_000_0b93::
 
 
 data_0ba3:
-    INCBIN "poker/tiles.hz"
+    INCBIN "../out/src/poker/tiles.hz"
 
 data_0cec:
     db $00, $18, $18, $3c, $3c, $7e, $7e, $ff, $00, $ff, $00, $00, $00, $00, $00, $00
@@ -1806,7 +1806,7 @@ data_0d0c:
     db $20, $20, $03, $02, $02, $20, $20, $03, $02, $02, $20, $20, $00
 
 data_0d19:
-    INCBIN "poker/text.hz"
+    INCBIN "../out/src/poker/text.hz"
 
 data_0e5c:
     db $b8, $c8, $24, $c8

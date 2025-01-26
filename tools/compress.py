@@ -8,15 +8,15 @@ import sys
 
 
 def main():
-    _, dst, src = sys.argv
+    _, dst, src, orig = sys.argv
     with open(src, "rb") as f:
         uncompressed = f.read()
 
     # If no orig data exists, just compress the source data.
     # Otherwise, decompress the expected compressed data
     # and verify that it is equal to the source data.
-    if os.path.exists(dst + ".orig"):
-        with open(dst + ".orig", "rb") as f:
+    if os.path.exists(orig):
+        with open(orig, "rb") as f:
             compressed = f.read()
         result = io.BytesIO()
         hunzip.unzip(io.BytesIO(compressed), result)

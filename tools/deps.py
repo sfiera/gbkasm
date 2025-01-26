@@ -33,7 +33,7 @@ def main():
 
 def asm_deps(path):
     name, ext = os.path.splitext(path)
-    obj = path_for(name + ".o")
+    obj = path_for(os.path.join("out", name + ".o"))
     asm = path_for(name + ".asm")
     print("%s: %s" % (obj, asm), end=" ")
     with open(path) as f:
@@ -57,7 +57,7 @@ def link_deps(path):
             if not m or m[1] in seen:
                 continue
             seen.add(m[1])
-            print(path_for(os.path.join("src", m[1] + ".o")), end=" ")
+            print(path_for(os.path.join("out", "src", m[1] + ".o")), end=" ")
     print()
 
 

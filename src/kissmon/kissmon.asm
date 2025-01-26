@@ -20,7 +20,7 @@ Header::
 .title
     dk "KISS-MON"
 .icon
-    INCBIN "kissmon/icon.2bpp"
+    INCBIN "../out/src/kissmon/icon.2bpp"
 .end
 
 History:
@@ -1567,19 +1567,19 @@ call_0cf8:
 
 
 data_0d0f:
-    INCBIN "kissmon/moncroc.2bpp"
-    INCBIN "kissmon/monwolf1.2bpp"
-    INCBIN "kissmon/monpig.2bpp"
-    INCBIN "kissmon/monrodent.2bpp"
-    INCBIN "kissmon/monplant.2bpp"
-    INCBIN "kissmon/monrobo1.2bpp"
-    INCBIN "kissmon/monknight.2bpp"
-    INCBIN "kissmon/monocto.2bpp"
-    INCBIN "kissmon/monbird1.2bpp"
-    INCBIN "kissmon/monfly.2bpp"
-    INCBIN "kissmon/monslug.2bpp"
-    INCBIN "kissmon/mondevil.2bpp"
-    INCBIN "kissmon/monseal.2bpp"
-    INCBIN "kissmon/mondora.2bpp"
-    INCBIN "kissmon/monrobo2.2bpp"
-    INCBIN "kissmon/monfish1.2bpp"
+    INCBIN "../out/src/kissmon/moncroc.2bpp"
+    INCBIN "../out/src/kissmon/monwolf1.2bpp"
+    INCBIN "../out/src/kissmon/monpig.2bpp"
+    INCBIN "../out/src/kissmon/monrodent.2bpp"
+    INCBIN "../out/src/kissmon/monplant.2bpp"
+    INCBIN "../out/src/kissmon/monrobo1.2bpp"
+    INCBIN "../out/src/kissmon/monknight.2bpp"
+    INCBIN "../out/src/kissmon/monocto.2bpp"
+    INCBIN "../out/src/kissmon/monbird1.2bpp"
+    INCBIN "../out/src/kissmon/monfly.2bpp"
+    INCBIN "../out/src/kissmon/monslug.2bpp"
+    INCBIN "../out/src/kissmon/mondevil.2bpp"
+    INCBIN "../out/src/kissmon/monseal.2bpp"
+    INCBIN "../out/src/kissmon/mondora.2bpp"
+    INCBIN "../out/src/kissmon/monrobo2.2bpp"
+    INCBIN "../out/src/kissmon/monfish1.2bpp"
