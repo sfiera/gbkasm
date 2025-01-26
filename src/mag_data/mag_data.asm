@@ -1,10 +1,10 @@
 ; Disassembly of "magnets-data.gbf"
 
-INCLUDE "charmap.inc"
-INCLUDE "common.inc"
-INCLUDE "hardware.inc"
-INCLUDE "macro.inc"
-INCLUDE "trap.inc"
+INCLUDE "src/charmap.inc"
+INCLUDE "src/common.inc"
+INCLUDE "src/hardware.inc"
+INCLUDE "src/macro.inc"
+INCLUDE "src/trap.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
@@ -31,14 +31,14 @@ History:
 .end
 
 Body::
-    INCBIN "../out/src/mag_data/symbols.2bpp"
+    INCBIN "out/src/mag_data/symbols.2bpp"
     ds 16
 
 Compressed:
-    INCBIN "../out/src/mag_data/bin1.hz"
+    INCBIN "out/src/mag_data/bin1.hz"
 
 Compressed2:
-    INCBIN "../out/src/mag_data/bin2.hz"
+    INCBIN "out/src/mag_data/bin2.hz"
 
 Compressed3:
-    INCBIN "../out/src/mag_data/bin3.hz"
+    INCBIN "out/src/mag_data/bin3.hz"

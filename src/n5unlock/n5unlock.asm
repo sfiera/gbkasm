@@ -1,10 +1,10 @@
 ; N5UNLOCK -- unlocks Quick Play mode in Nectaris GB
 
-INCLUDE "charmap.inc"
-INCLUDE "common.inc"
-INCLUDE "hardware.inc"
-INCLUDE "macro.inc"
-INCLUDE "trap.inc"
+INCLUDE "src/charmap.inc"
+INCLUDE "src/common.inc"
+INCLUDE "src/hardware.inc"
+INCLUDE "src/macro.inc"
+INCLUDE "src/trap.inc"
 
 DEF SetROMBank           EQU $05bf
 DEF PlayMusic            EQU $0cbf
@@ -35,7 +35,7 @@ Main::
 
 
 Compressed:
-    INCBIN "../out/src/n5unlock/code.hz"
+    INCBIN "out/src/n5unlock/code.hz"
 
 
 SECTION "Variables", WRAM0[$cc00]

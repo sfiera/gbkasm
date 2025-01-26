@@ -1,10 +1,10 @@
 ; Disassembly of "bakechu-relay.gbf"
 
-INCLUDE "charmap.inc"
-INCLUDE "common.inc"
-INCLUDE "hardware.inc"
-INCLUDE "macro.inc"
-INCLUDE "trap.inc"
+INCLUDE "src/charmap.inc"
+INCLUDE "src/common.inc"
+INCLUDE "src/hardware.inc"
+INCLUDE "src/macro.inc"
+INCLUDE "src/trap.inc"
 
 DEF IR_ID0 EQU "B"
 DEF IR_ID1 EQU "K"
@@ -20,7 +20,7 @@ Header::
 .title
     dk "バケちゅリレー"
 .icon
-    INCBIN "../out/src/baketu/icon.2bpp"
+    INCBIN "out/src/baketu/icon.2bpp"
 .end
 
 History:
@@ -1013,7 +1013,7 @@ call_0916:
 
 
 data_0928:
-    INCBIN "../out/src/baketu/tiles.hz"
+    INCBIN "out/src/baketu/tiles.hz"
 
 SECTION "Status Bar", WRAM0[$cc40]
 

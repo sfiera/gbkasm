@@ -3,8 +3,8 @@
 ; mgbdis v2.0 - Game Boy ROM disassembler by Matt Currie and contributors.
 ; https://github.com/mattcurrie/mgbdis
 
-INCLUDE "charmap.inc"
-INCLUDE "macro.inc"
+INCLUDE "src/charmap.inc"
+INCLUDE "src/macro.inc"
 
 MACRO TableEntry
     db $46, BANK(\1)
@@ -45,13 +45,13 @@ FileCollection1::
     TableEntry FileShot, "SHOOTING MASTER\0"
 
 FileMagnets:
-    INCBIN "../magnets.gbf"
+    INCBIN "magnets.gbf"
 
 FileMagnetsData:
-    INCBIN "../mag_data.gbf"
+    INCBIN "mag_data.gbf"
 
 FileShot:
-    INCBIN "../shot.gbf"
+    INCBIN "shot.gbf"
 
 
 SECTION "minigame/groups: CARAVAN supplement", ROMX
@@ -65,13 +65,13 @@ FileRandomSelection:
     dw FileSameGame
 
 FileMogutteNanbo:
-    INCBIN "../mogura.gbf"
+    INCBIN "mogura.gbf"
 
 FileDrive:
-    INCBIN "../drive.gbf"
+    INCBIN "drive.gbf"
 
 FileSameGame:
-    INCBIN "../samegame.gbf"
+    INCBIN "samegame.gbf"
 
 SECTION "minigame/groups: KISSMON index", ROMX
 
@@ -98,25 +98,25 @@ FileCollection2::
     TableEntry FileBakechuRelay, "バケちゅリレー\0"
 
 FileSoundTest:
-    INCBIN "../soundtst.gbf"
+    INCBIN "soundtst.gbf"
 
 FileBiorhythm:
-    INCBIN "../biorythm.gbf"
+    INCBIN "biorythm.gbf"
 
 FileBakechuRelay:
-    INCBIN "../baketu.gbf"
+    INCBIN "baketu.gbf"
 
 
 SECTION "minigame/groups: KISSMON supplement", ROMX
 
 FileKissMon:
-    INCBIN "../kissmon.gbf"
+    INCBIN "kissmon.gbf"
 
 FileWatchAndTimer:
-    INCBIN "../sw_timer.gbf"
+    INCBIN "sw_timer.gbf"
 
 FileCalculator:
-    INCBIN "../dentaku.gbf"
+    INCBIN "dentaku.gbf"
 
 SECTION "minigame/groups: CANNON index", ROMX
 
@@ -143,25 +143,25 @@ FileCollection3::
     TableEntry FilePoker, "ポーカー\0"
 
 FileCannonBall:
-    INCBIN "../cannon.gbf"
+    INCBIN "cannon.gbf"
 
 FilePoker:
-    INCBIN "../poker.gbf"
+    INCBIN "poker.gbf"
 
 
 SECTION "minigame/groups: CANNON supplement", ROMX
 
 FileIconSend:
-    INCBIN "../iconsend.gbf"
+    INCBIN "iconsend.gbf"
 
 FileIconEdit:
-    INCBIN "../iconedit.gbf"
+    INCBIN "iconedit.gbf"
 
 FilePuzzleGame:
-    INCBIN "../puzzle.gbf"
+    INCBIN "puzzle.gbf"
 
 FileSlot:
-    INCBIN "../slot.gbf"
+    INCBIN "slot.gbf"
 
 SECTION "minigame/groups: BINARY index", ROMX
 
@@ -184,19 +184,19 @@ FileCollection4::
     TableEntry FileBlackjack, "ブラックジャック\0"
 
 FileRoulette:
-    INCBIN "../roulette.gbf"
+    INCBIN "roulette.gbf"
 
 FileBlackjack:
-    INCBIN "../bj.gbf"
+    INCBIN "bj.gbf"
 
 
 SECTION "minigame/groups: BINARY supplement", ROMX
 
 FileWorm:
-    INCBIN "../worm.gbf"
+    INCBIN "worm.gbf"
 
 FileBinary:
-    INCBIN "../bland.gbf"
+    INCBIN "bland.gbf"
 
 SECTION "minigame/groups: GAMEDATA index", ROMX
 
@@ -221,19 +221,19 @@ FileCollection5::
     TableEntry FileNum0Data, "ストップウォッチすうじデータ\0"
 
 FileKoura1:
-    INCBIN "../koura1.gbf"
+    INCBIN "koura1.gbf"
 
 FileKoura2:
-    INCBIN "../koura2.gbf"
+    INCBIN "koura2.gbf"
 
 FileKoura3:
-    INCBIN "../koura3.gbf"
+    INCBIN "koura3.gbf"
 
 FileSezaki:
-    INCBIN "../sezaki.gbf"
+    INCBIN "sezaki.gbf"
 
 FileNum0Data:
-    INCBIN "../sw_data.gbf"
+    INCBIN "sw_data.gbf"
 
 SECTION "minigame/groups: KISSTOOL index", ROMX
 
@@ -254,10 +254,10 @@ FileCollection6::
     TableEntry FileCharDump, "CHAR DUMP\0"
 
 FileSRAMGetAndClear:
-    INCBIN "../sramtool.gbf"
+    INCBIN "sramtool.gbf"
 
 FileDeleteAll:
-    INCBIN "../del_all.gbf"
+    INCBIN "del_all.gbf"
 
 FileCharDump:
-    INCBIN "../chardump.gbf"
+    INCBIN "chardump.gbf"

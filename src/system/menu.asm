@@ -3,12 +3,12 @@
 ; mgbdis v2.0 - Game Boy ROM disassembler by Matt Currie and contributors.
 ; https://github.com/mattcurrie/mgbdis
 
-INCLUDE "charmap.inc"
-INCLUDE "common.inc"
-INCLUDE "hardware.inc"
-INCLUDE "macro.inc"
-INCLUDE "trap.inc"
-INCLUDE "system/consts.inc"
+INCLUDE "src/charmap.inc"
+INCLUDE "src/common.inc"
+INCLUDE "src/hardware.inc"
+INCLUDE "src/macro.inc"
+INCLUDE "src/trap.inc"
+INCLUDE "src/system/consts.inc"
 
 DEF XFER_STARTED EQU $01
 DEF XFER_SUCCESS EQU $02
@@ -2396,19 +2396,19 @@ Call_001_509b:
 
 
 TransferTileSet:
-    INCBIN "../out/src/system/frag/transfer.hz"
+    INCBIN "out/src/system/frag/transfer.hz"
 
 TransferPrepTileMap:
-    INCBIN "../out/src/system/gfx/transfer.tilemap", 0, 192
+    INCBIN "out/src/system/gfx/transfer.tilemap", 0, 192
 
 TransferringTileMap:
-    INCBIN "../out/src/system/gfx/transfer.tilemap", 192, 192
+    INCBIN "out/src/system/gfx/transfer.tilemap", 192, 192
 
 TransferDoneTileMap:
-    INCBIN "../out/src/system/gfx/transfer.tilemap", 384, 192
+    INCBIN "out/src/system/gfx/transfer.tilemap", 384, 192
 
 TransferErrorTileMap:
-    INCBIN "../out/src/system/gfx/transfer.tilemap", 576, 192
+    INCBIN "out/src/system/gfx/transfer.tilemap", 576, 192
 
 TransferMessageBoxTileMap:
     db $00, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $02
@@ -2418,4 +2418,4 @@ TransferMessageBoxTileMap:
     db $1e, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f, $20
 
 MenuActionTileData:
-    INCBIN "../out/src/system/frag/actions.hz"
+    INCBIN "out/src/system/frag/actions.hz"

@@ -3,10 +3,10 @@
 ; mgbdis v2.0 - Game Boy ROM disassembler by Matt Currie and contributors.
 ; https://github.com/mattcurrie/mgbdis
 
-INCLUDE "common.inc"
-INCLUDE "hardware.inc"
-INCLUDE "nectaris/map.inc"
-INCLUDE "nectaris/units.inc"
+INCLUDE "src/common.inc"
+INCLUDE "src/hardware.inc"
+INCLUDE "src/nectaris/map.inc"
+INCLUDE "src/nectaris/units.inc"
 
 SECTION "nectaris/map_story_adv: Map C01 Nevets", ROMX
 

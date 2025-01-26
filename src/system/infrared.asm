@@ -3,13 +3,13 @@
 ; mgbdis v2.0 - Game Boy ROM disassembler by Matt Currie and contributors.
 ; https://github.com/mattcurrie/mgbdis
 
-INCLUDE "charmap.inc"
-INCLUDE "common.inc"
-INCLUDE "hardware.inc"
-INCLUDE "huc.inc"
-INCLUDE "macro.inc"
-INCLUDE "trap.inc"
-INCLUDE "system/consts.inc"
+INCLUDE "src/charmap.inc"
+INCLUDE "src/common.inc"
+INCLUDE "src/hardware.inc"
+INCLUDE "src/huc.inc"
+INCLUDE "src/macro.inc"
+INCLUDE "src/trap.inc"
+INCLUDE "src/system/consts.inc"
 
 SECTION "system/infrared: ROM Infrared", ROMX
 

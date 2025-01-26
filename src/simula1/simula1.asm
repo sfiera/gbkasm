@@ -1,10 +1,10 @@
 ; Disassembly of "simula1.gbf"
 
-INCLUDE "charmap.inc"
-INCLUDE "common.inc"
-INCLUDE "hardware.inc"
-INCLUDE "macro.inc"
-INCLUDE "trap.inc"
+INCLUDE "src/charmap.inc"
+INCLUDE "src/common.inc"
+INCLUDE "src/hardware.inc"
+INCLUDE "src/macro.inc"
+INCLUDE "src/trap.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
@@ -17,7 +17,7 @@ Header::
 .title
     dk "SIMULA1"
 .icon
-    INCBIN "../out/src/iconsend/simula1.2bpp"
+    INCBIN "out/src/iconsend/simula1.2bpp"
 .end
 
 History:

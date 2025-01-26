@@ -1,10 +1,10 @@
 ; Disassembly of "slot.gbf"
 
-INCLUDE "charmap.inc"
-INCLUDE "common.inc"
-INCLUDE "hardware.inc"
-INCLUDE "macro.inc"
-INCLUDE "trap.inc"
+INCLUDE "src/charmap.inc"
+INCLUDE "src/common.inc"
+INCLUDE "src/hardware.inc"
+INCLUDE "src/macro.inc"
+INCLUDE "src/trap.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
@@ -17,7 +17,7 @@ Header::
 .title
     dk "SLOT"
 .icon
-    INCBIN "../out/src/slot/icon.2bpp"
+    INCBIN "out/src/slot/icon.2bpp"
 .end
 
 History:
@@ -1035,7 +1035,7 @@ data_07c1:
     dw 100
 
 data_07c3:
-    INCBIN "../out/src/slot/tiles.hz"
+    INCBIN "out/src/slot/tiles.hz"
 
 data_0b05:
     db $fa, $7d, $1e, $08, $05, $04, $02, $01

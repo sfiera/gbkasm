@@ -2,11 +2,11 @@
 ;
 ; Shows the state of the HuC-3 mapper (if applicable).
 
-INCLUDE "charmap.inc"
-INCLUDE "common.inc"
-INCLUDE "hardware.inc"
-INCLUDE "macro.inc"
-INCLUDE "trap.inc"
+INCLUDE "src/charmap.inc"
+INCLUDE "src/common.inc"
+INCLUDE "src/hardware.inc"
+INCLUDE "src/macro.inc"
+INCLUDE "src/trap.inc"
 
 MACRO ld2
     ld \1, (\2 << 8) | \3

@@ -3,11 +3,11 @@
 ; Lists installed GBKiss files in a selectable menu.
 ; Shows info for selected files, including a CRC-32 sum.
 
-INCLUDE "charmap.inc"
-INCLUDE "common.inc"
-INCLUDE "hardware.inc"
-INCLUDE "macro.inc"
-INCLUDE "trap.inc"
+INCLUDE "src/charmap.inc"
+INCLUDE "src/common.inc"
+INCLUDE "src/hardware.inc"
+INCLUDE "src/macro.inc"
+INCLUDE "src/trap.inc"
 
 DEF CRC_POLY_0 EQU $04
 DEF CRC_POLY_1 EQU $c1
@@ -35,7 +35,7 @@ Header::
 .title
     dk "CKSUM"
 .icon
-    INCBIN "../out/src/cksum/icon.2bpp"
+    INCBIN "out/src/cksum/icon.2bpp"
 .end
 
 History:

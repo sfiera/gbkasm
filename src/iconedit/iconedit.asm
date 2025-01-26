@@ -1,10 +1,10 @@
 ; Disassembly of "icon-edit.gbf"
 
-INCLUDE "charmap.inc"
-INCLUDE "common.inc"
-INCLUDE "hardware.inc"
-INCLUDE "macro.inc"
-INCLUDE "trap.inc"
+INCLUDE "src/charmap.inc"
+INCLUDE "src/common.inc"
+INCLUDE "src/hardware.inc"
+INCLUDE "src/macro.inc"
+INCLUDE "src/trap.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
@@ -43,7 +43,7 @@ Header::
 .title
     dk "ICON-EDIT"
 .icon
-    INCBIN "../out/src/iconedit/icon.2bpp"
+    INCBIN "out/src/iconedit/icon.2bpp"
 .end
 
 History:
@@ -845,7 +845,7 @@ ShowMenu:
 
 
 TileMenuCursor:
-    INCBIN "../out/src/iconedit/menucursor.2bpp"
+    INCBIN "out/src/iconedit/menucursor.2bpp"
 
 
 ClearScreen:
@@ -873,13 +873,13 @@ LayoutMenu:
     db $ff
 
 TileShades:
-    INCBIN "../out/src/iconedit/shades.2bpp"
+    INCBIN "out/src/iconedit/shades.2bpp"
 
 TileGrid:
-    INCBIN "../out/src/iconedit/grid.2bpp"
+    INCBIN "out/src/iconedit/grid.2bpp"
 
 TileCursor:
-    INCBIN "../out/src/iconedit/cursor.2bpp"
+    INCBIN "out/src/iconedit/cursor.2bpp"
 
 
 ShowTopMsg:

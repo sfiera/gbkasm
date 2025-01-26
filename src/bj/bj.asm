@@ -1,10 +1,10 @@
 ; Disassembly of "blackjack.gbf"
 
-INCLUDE "charmap.inc"
-INCLUDE "common.inc"
-INCLUDE "hardware.inc"
-INCLUDE "macro.inc"
-INCLUDE "trap.inc"
+INCLUDE "src/charmap.inc"
+INCLUDE "src/common.inc"
+INCLUDE "src/hardware.inc"
+INCLUDE "src/macro.inc"
+INCLUDE "src/trap.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
@@ -1353,7 +1353,7 @@ jr_000_093a::
 
 
 data_093e:
-    INCBIN "../out/src/bj/tiles.hz"
+    INCBIN "out/src/bj/tiles.hz"
 
 data_0a5f:
     dh "BLACK JACK\0"

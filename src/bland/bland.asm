@@ -1,10 +1,10 @@
 ; Disassembly of "binary.gbf"
 
-INCLUDE "charmap.inc"
-INCLUDE "common.inc"
-INCLUDE "hardware.inc"
-INCLUDE "macro.inc"
-INCLUDE "trap.inc"
+INCLUDE "src/charmap.inc"
+INCLUDE "src/common.inc"
+INCLUDE "src/hardware.inc"
+INCLUDE "src/macro.inc"
+INCLUDE "src/trap.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 LOAD "CRAM Code", SRAM[$a008]
@@ -18,7 +18,7 @@ Header::
 .title
     dk "BINARY"
 .icon
-    INCBIN "../out/src/bland/icon.2bpp"
+    INCBIN "out/src/bland/icon.2bpp"
 .end
 
 History:
@@ -4173,10 +4173,10 @@ data_b891:
     db -9,  0, $3a, OAMF_PAL1 | OAMF_YFLIP
 
 data_b896:
-    INCBIN "../out/src/bland/sprites.hz"
+    INCBIN "out/src/bland/sprites.hz"
 
 data_bb0b:
-    INCBIN "../out/src/bland/levels.hz"
+    INCBIN "out/src/bland/levels.hz"
 
 data_bc82:
     dw .bcbe, .bcc1, .bcc4, .bcc5, .bcce

@@ -1,10 +1,10 @@
 ; Disassembly of "cannon-ball.gbf"
 
-INCLUDE "charmap.inc"
-INCLUDE "common.inc"
-INCLUDE "hardware.inc"
-INCLUDE "macro.inc"
-INCLUDE "trap.inc"
+INCLUDE "src/charmap.inc"
+INCLUDE "src/common.inc"
+INCLUDE "src/hardware.inc"
+INCLUDE "src/macro.inc"
+INCLUDE "src/trap.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
@@ -17,7 +17,7 @@ Header::
 .title
     dk "CANNON BALL"
 .icon
-    INCBIN "../out/src/cannon/icon.2bpp"
+    INCBIN "out/src/cannon/icon.2bpp"
 .end
 
 History:
@@ -1668,7 +1668,7 @@ jr_0b82::
 data_tileset:
     ; only the first 541 bytes of this data are necessary
     ; the rest contains another 6 copies of the same tile data
-    INCBIN "../out/src/cannon/tiles.hz"
+    INCBIN "out/src/cannon/tiles.hz"
 
 data_high_score:
     dw 500

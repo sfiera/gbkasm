@@ -1,11 +1,11 @@
 SECTION "Fragment", ROM0[$0]
 
 Sprites:
-    INCBIN "../out/src/roulette/sprites.2bpp"
+    INCBIN "out/src/roulette/sprites.2bpp"
 
 Tiles:
-    INCBIN "../out/src/roulette/wheel.2bpp",0,$790
-    INCBIN "../out/src/roulette/diamonds.2bpp"
+    INCBIN "out/src/roulette/wheel.2bpp",0,$790
+    INCBIN "out/src/roulette/diamonds.2bpp"
 
 Tilemap:
     db $80, $80, $80, $8e, $94, $9a, $a1, $a8, $af, $b6, $bd, $c4, $cb, $d2, $d8, $df, $e6, $80, $80, $80

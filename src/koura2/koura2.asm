@@ -1,10 +1,10 @@
 ; Disassembly of "koura-2.gbf"
 
-INCLUDE "charmap.inc"
-INCLUDE "common.inc"
-INCLUDE "hardware.inc"
-INCLUDE "macro.inc"
-INCLUDE "trap.inc"
+INCLUDE "src/charmap.inc"
+INCLUDE "src/common.inc"
+INCLUDE "src/hardware.inc"
+INCLUDE "src/macro.inc"
+INCLUDE "src/trap.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
@@ -31,4 +31,4 @@ History:
 .end
 
 Body::
-    INCBIN "../out/src/koura2/koura-2.hz"
+    INCBIN "out/src/koura2/koura-2.hz"

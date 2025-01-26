@@ -41,7 +41,7 @@ def asm_deps(path):
             m = inc_pattern.match(line)
             if not m:
                 continue
-            print(path_for(os.path.join("src", m[1])), end=" ")
+            print(path_for(m[1]), end=" ")
     print()
 
 

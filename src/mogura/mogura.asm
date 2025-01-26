@@ -1,10 +1,10 @@
 ; Disassembly of "mogutte-nanbo.gbf"
 
-INCLUDE "charmap.inc"
-INCLUDE "common.inc"
-INCLUDE "hardware.inc"
-INCLUDE "macro.inc"
-INCLUDE "trap.inc"
+INCLUDE "src/charmap.inc"
+INCLUDE "src/common.inc"
+INCLUDE "src/hardware.inc"
+INCLUDE "src/macro.inc"
+INCLUDE "src/trap.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 LOAD "CRAM Code", SRAM[$a008]
@@ -18,7 +18,7 @@ Header::
 .title
     dh "モグってナンボ"
 .icon
-    INCBIN "../out/src/mogura/icon.2bpp"
+    INCBIN "out/src/mogura/icon.2bpp"
 .end
 
 History:
@@ -2749,7 +2749,7 @@ call_b2da:
 
 
 data_b2e9:
-    INCBIN "../out/src/mogura/sprites.2bpp"
+    INCBIN "out/src/mogura/sprites.2bpp"
 
 data_b729:
     dw $c602
@@ -2794,6 +2794,6 @@ data_b876:
     db $0f, $b5, $c3, $c2, $b7, $ca, $b9, $de, $dd, $c3, $dd, $c0, $de, $d6, $21, $00
 
 data_b886:
-    INCBIN "../out/src/mogura/island.hz"
+    INCBIN "out/src/mogura/island.hz"
 
 ENDL

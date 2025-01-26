@@ -1,10 +1,10 @@
 ; Disassembly of "kissmon2.gbf"
 
-INCLUDE "charmap.inc"
-INCLUDE "common.inc"
-INCLUDE "hardware.inc"
-INCLUDE "macro.inc"
-INCLUDE "trap.inc"
+INCLUDE "src/charmap.inc"
+INCLUDE "src/common.inc"
+INCLUDE "src/hardware.inc"
+INCLUDE "src/macro.inc"
+INCLUDE "src/trap.inc"
 
 DEF IR_ID0 EQU "k"
 DEF IR_ID1 EQU "2"
@@ -21,7 +21,7 @@ Header:
 .title
     dk "KISS-MON2"
 .icon
-    INCBIN "../out/src/kissmon/icon2.2bpp"
+    INCBIN "out/src/kissmon/icon2.2bpp"
 .end
 
 History:
@@ -2581,13 +2581,13 @@ data_b1ef:
     dk $00, $23, " rux  Y=   SEL:EXIT\0"
 
 data_b246:
-    INCBIN "../out/src/iconedit/shades.2bpp"
+    INCBIN "out/src/iconedit/shades.2bpp"
 
 data_b286:
-    INCBIN "../out/src/iconedit/grid.2bpp"
+    INCBIN "out/src/iconedit/grid.2bpp"
 
 data_b296:
-    INCBIN "../out/src/iconedit/cursor.2bpp"
+    INCBIN "out/src/iconedit/cursor.2bpp"
 
 
 call_b2a6:
@@ -2612,21 +2612,21 @@ call_b2b1:
 
 
 data_b2c0:
-    INCBIN "../out/src/kissmon/moncroc.2bpp"
-    INCBIN "../out/src/kissmon/monocto.2bpp"
-    INCBIN "../out/src/kissmon/monmouse.2bpp"
-    INCBIN "../out/src/kissmon/monrobo3.2bpp"
-    INCBIN "../out/src/kissmon/monrobo2.2bpp"
-    INCBIN "../out/src/kissmon/mondora.2bpp"
-    INCBIN "../out/src/kissmon/monbird1.2bpp"
-    INCBIN "../out/src/kissmon/monfly.2bpp"
-    INCBIN "../out/src/kissmon/monpoop.2bpp"
-    INCBIN "../out/src/kissmon/monfish2.2bpp"
-    INCBIN "../out/src/kissmon/monghost.2bpp"
-    INCBIN "../out/src/kissmon/monwolf2.2bpp"
-    INCBIN "../out/src/kissmon/monbird2.2bpp"
-    INCBIN "../out/src/kissmon/monbird3.2bpp"
-    INCBIN "../out/src/kissmon/monwhale.2bpp"
-    INCBIN "../out/src/kissmon/monpig.2bpp"
+    INCBIN "out/src/kissmon/moncroc.2bpp"
+    INCBIN "out/src/kissmon/monocto.2bpp"
+    INCBIN "out/src/kissmon/monmouse.2bpp"
+    INCBIN "out/src/kissmon/monrobo3.2bpp"
+    INCBIN "out/src/kissmon/monrobo2.2bpp"
+    INCBIN "out/src/kissmon/mondora.2bpp"
+    INCBIN "out/src/kissmon/monbird1.2bpp"
+    INCBIN "out/src/kissmon/monfly.2bpp"
+    INCBIN "out/src/kissmon/monpoop.2bpp"
+    INCBIN "out/src/kissmon/monfish2.2bpp"
+    INCBIN "out/src/kissmon/monghost.2bpp"
+    INCBIN "out/src/kissmon/monwolf2.2bpp"
+    INCBIN "out/src/kissmon/monbird2.2bpp"
+    INCBIN "out/src/kissmon/monbird3.2bpp"
+    INCBIN "out/src/kissmon/monwhale.2bpp"
+    INCBIN "out/src/kissmon/monpig.2bpp"
 
 ENDL

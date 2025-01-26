@@ -3,8 +3,8 @@
 ; mgbdis v2.0 - Game Boy ROM disassembler by Matt Currie and contributors.
 ; https://github.com/mattcurrie/mgbdis
 
-INCLUDE "common.inc"
-INCLUDE "hardware.inc"
+INCLUDE "src/common.inc"
+INCLUDE "src/hardware.inc"
 
 SECTION "nectaris/nectaris: Game Boy Metadata", ROM0
 

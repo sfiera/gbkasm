@@ -3,13 +3,13 @@
 ; mgbdis v2.0 - Game Boy ROM disassembler by Matt Currie and contributors.
 ; https://github.com/mattcurrie/mgbdis
 
-INCLUDE "common.inc"
-INCLUDE "hardware.inc"
-INCLUDE "trap.inc"
-INCLUDE "nectaris/audio.inc"
-INCLUDE "nectaris/map.inc"
-INCLUDE "nectaris/text.inc"
-INCLUDE "nectaris/units.inc"
+INCLUDE "src/common.inc"
+INCLUDE "src/hardware.inc"
+INCLUDE "src/trap.inc"
+INCLUDE "src/nectaris/audio.inc"
+INCLUDE "src/nectaris/map.inc"
+INCLUDE "src/nectaris/text.inc"
+INCLUDE "src/nectaris/units.inc"
 
 DEF JP_U16 EQU $c3
 

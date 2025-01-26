@@ -1,9 +1,9 @@
 ; Disassembly of "gbkiss.gb"
 
-INCLUDE "charmap.inc"
-INCLUDE "common.inc"
-INCLUDE "macro.inc"
-INCLUDE "trap.inc"
+INCLUDE "src/charmap.inc"
+INCLUDE "src/common.inc"
+INCLUDE "src/macro.inc"
+INCLUDE "src/trap.inc"
 
 DEF SND_WALL_HIT  EQU 3
 DEF SND_SELF_HIT  EQU 4

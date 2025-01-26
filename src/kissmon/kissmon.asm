@@ -1,10 +1,10 @@
 ; Disassembly of "kiss-mon.gbf"
 
-INCLUDE "charmap.inc"
-INCLUDE "common.inc"
-INCLUDE "hardware.inc"
-INCLUDE "macro.inc"
-INCLUDE "trap.inc"
+INCLUDE "src/charmap.inc"
+INCLUDE "src/common.inc"
+INCLUDE "src/hardware.inc"
+INCLUDE "src/macro.inc"
+INCLUDE "src/trap.inc"
 
 DEF IR_ID0 EQU "M"
 DEF IR_ID1 EQU "T"
@@ -20,7 +20,7 @@ Header::
 .title
     dk "KISS-MON"
 .icon
-    INCBIN "../out/src/kissmon/icon.2bpp"
+    INCBIN "out/src/kissmon/icon.2bpp"
 .end
 
 History:
@@ -1567,19 +1567,19 @@ call_0cf8:
 
 
 data_0d0f:
-    INCBIN "../out/src/kissmon/moncroc.2bpp"
-    INCBIN "../out/src/kissmon/monwolf1.2bpp"
-    INCBIN "../out/src/kissmon/monpig.2bpp"
-    INCBIN "../out/src/kissmon/monrodent.2bpp"
-    INCBIN "../out/src/kissmon/monplant.2bpp"
-    INCBIN "../out/src/kissmon/monrobo1.2bpp"
-    INCBIN "../out/src/kissmon/monknight.2bpp"
-    INCBIN "../out/src/kissmon/monocto.2bpp"
-    INCBIN "../out/src/kissmon/monbird1.2bpp"
-    INCBIN "../out/src/kissmon/monfly.2bpp"
-    INCBIN "../out/src/kissmon/monslug.2bpp"
-    INCBIN "../out/src/kissmon/mondevil.2bpp"
-    INCBIN "../out/src/kissmon/monseal.2bpp"
-    INCBIN "../out/src/kissmon/mondora.2bpp"
-    INCBIN "../out/src/kissmon/monrobo2.2bpp"
-    INCBIN "../out/src/kissmon/monfish1.2bpp"
+    INCBIN "out/src/kissmon/moncroc.2bpp"
+    INCBIN "out/src/kissmon/monwolf1.2bpp"
+    INCBIN "out/src/kissmon/monpig.2bpp"
+    INCBIN "out/src/kissmon/monrodent.2bpp"
+    INCBIN "out/src/kissmon/monplant.2bpp"
+    INCBIN "out/src/kissmon/monrobo1.2bpp"
+    INCBIN "out/src/kissmon/monknight.2bpp"
+    INCBIN "out/src/kissmon/monocto.2bpp"
+    INCBIN "out/src/kissmon/monbird1.2bpp"
+    INCBIN "out/src/kissmon/monfly.2bpp"
+    INCBIN "out/src/kissmon/monslug.2bpp"
+    INCBIN "out/src/kissmon/mondevil.2bpp"
+    INCBIN "out/src/kissmon/monseal.2bpp"
+    INCBIN "out/src/kissmon/mondora.2bpp"
+    INCBIN "out/src/kissmon/monrobo2.2bpp"
+    INCBIN "out/src/kissmon/monfish1.2bpp"

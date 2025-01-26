@@ -1,10 +1,10 @@
 ; Disassembly of "saita.gbf"
 
-INCLUDE "charmap.inc"
-INCLUDE "common.inc"
-INCLUDE "hardware.inc"
-INCLUDE "macro.inc"
-INCLUDE "trap.inc"
+INCLUDE "src/charmap.inc"
+INCLUDE "src/common.inc"
+INCLUDE "src/hardware.inc"
+INCLUDE "src/macro.inc"
+INCLUDE "src/trap.inc"
 
 DEF FIELD_WIDTH   EQU $14
 DEF FIELD_HEIGHT  EQU $10
@@ -20,7 +20,7 @@ Header::
 .title
     dk "SAMEGAME"
 .icon
-    INCBIN "../out/src/samegame/icon.2bpp"
+    INCBIN "out/src/samegame/icon.2bpp"
 .end
 
 History:
@@ -927,7 +927,7 @@ strHiScoreName:
     dk "          "
 
 gfxTileset:
-    INCBIN "../out/src/samegame/tiles.hz"
+    INCBIN "out/src/samegame/tiles.hz"
 
 
 SECTION "Field", WRAM0[$c980]

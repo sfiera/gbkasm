@@ -1,10 +1,10 @@
 ; Disassembly of "drive.gbf"
 
-INCLUDE "charmap.inc"
-INCLUDE "common.inc"
-INCLUDE "hardware.inc"
-INCLUDE "macro.inc"
-INCLUDE "trap.inc"
+INCLUDE "src/charmap.inc"
+INCLUDE "src/common.inc"
+INCLUDE "src/hardware.inc"
+INCLUDE "src/macro.inc"
+INCLUDE "src/trap.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 
@@ -17,7 +17,7 @@ Header::
 .title
     dk "DRIVE"
 .icon
-    INCBIN "../out/src/drive/icon.2bpp"
+    INCBIN "out/src/drive/icon.2bpp"
 .end
 
 History:
@@ -2088,7 +2088,7 @@ jr_000_0d7e::
 
 
 data_0d80:
-    INCBIN "../out/src/drive/tiles.hz"
+    INCBIN "out/src/drive/tiles.hz"
 
 data_1126:
     db $00, $01, $02, $03

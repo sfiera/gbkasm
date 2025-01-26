@@ -1,10 +1,10 @@
 ; Disassembly of "sound-test.gbf"
 
-INCLUDE "charmap.inc"
-INCLUDE "common.inc"
-INCLUDE "hardware.inc"
-INCLUDE "macro.inc"
-INCLUDE "trap.inc"
+INCLUDE "src/charmap.inc"
+INCLUDE "src/common.inc"
+INCLUDE "src/hardware.inc"
+INCLUDE "src/macro.inc"
+INCLUDE "src/trap.inc"
 
 DEF SuperBDamanAudioCount  EQU (27 << 8) + 56
 
@@ -19,7 +19,7 @@ Header::
 .title
     dk "サウンド　テスト"
 .icon
-    INCBIN "../out/src/soundtst/icon.2bpp"
+    INCBIN "out/src/soundtst/icon.2bpp"
 .end
 
 History:

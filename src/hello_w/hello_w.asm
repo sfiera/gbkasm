@@ -3,11 +3,11 @@
 ; Shows the string "Hello, World" in the center of the screen
 ; then waits for the player to exit by pressing Select
 
-INCLUDE "charmap.inc"
-INCLUDE "common.inc"
-INCLUDE "hardware.inc"
-INCLUDE "macro.inc"
-INCLUDE "trap.inc"
+INCLUDE "src/charmap.inc"
+INCLUDE "src/common.inc"
+INCLUDE "src/hardware.inc"
+INCLUDE "src/macro.inc"
+INCLUDE "src/trap.inc"
 
 SECTION "GBKiss File", ROM0[$0]
 

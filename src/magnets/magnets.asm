@@ -1,10 +1,10 @@
 ; Disassembly of "magnets.gbf"
 
-INCLUDE "charmap.inc"
-INCLUDE "common.inc"
-INCLUDE "hardware.inc"
-INCLUDE "macro.inc"
-INCLUDE "trap.inc"
+INCLUDE "src/charmap.inc"
+INCLUDE "src/common.inc"
+INCLUDE "src/hardware.inc"
+INCLUDE "src/macro.inc"
+INCLUDE "src/trap.inc"
 
 SECTION "ROM Bank $000", ROM0[$0]
 LOAD "CRAM Code", SRAM[$a008]
@@ -18,7 +18,7 @@ Header::
 .title
     dk "MAGNETS"
 .icon
-    INCBIN "../out/src/magnets/icon.2bpp"
+    INCBIN "out/src/magnets/icon.2bpp"
 .end
 
 History:

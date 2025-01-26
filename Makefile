@@ -19,7 +19,7 @@ RGBLINK ?= rgblink
 RGBFIX  ?= rgbfix
 RGBGFX  ?= rgbgfx
 
-RGBASMFLAGS ?= -Wall -Werror -Isrc
+RGBASMFLAGS ?= -Wall -Werror
 
 ifeq ($(DEBUG),1)
 RGBASMFLAGS += -E

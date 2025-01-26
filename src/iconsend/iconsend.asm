@@ -1,10 +1,10 @@
 ; Disassembly of "icon-send.gbf"
 
-INCLUDE "charmap.inc"
-INCLUDE "common.inc"
-INCLUDE "hardware.inc"
-INCLUDE "macro.inc"
-INCLUDE "trap.inc"
+INCLUDE "src/charmap.inc"
+INCLUDE "src/common.inc"
+INCLUDE "src/hardware.inc"
+INCLUDE "src/macro.inc"
+INCLUDE "src/trap.inc"
 
 DEF OWNER_CODE_ICON  EQU $83
 DEF ICON_SIZE        EQU $c0
@@ -154,4 +154,4 @@ IconData:
     db 0
 
 IconGfx:
-    INCBIN "../out/src/iconsend/icons.hz"
+    INCBIN "out/src/iconsend/icons.hz"
