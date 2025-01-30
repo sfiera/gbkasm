@@ -260,7 +260,7 @@ call_0295:
 
 call_029e::
     trap AwaitFrame
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and a
     jr nz, call_029e
 
@@ -269,7 +269,7 @@ call_029e::
 
 call_02a6::
     trap AwaitFrame
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and a
     jr z, call_02a6
 
@@ -299,7 +299,7 @@ jr_000_02c9::
 
 
 call_02d6:
-    ldh a, [$9a]
+    ldh a, [$ff9a]
     and $07
     jr nz, jr_000_02f6
 
@@ -315,9 +315,9 @@ jr_000_02f3::
     ld [$c904], a
 
 jr_000_02f6::
-    ldh a, [$9a]
+    ldh a, [$ff9a]
     dec a
-    ldh [$9a], a
+    ldh [$ff9a], a
     ret
 
 
@@ -337,7 +337,7 @@ jr_000_0301::
     and a
     ret nz
 
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     bit 0, a
     ret z
 
@@ -353,14 +353,14 @@ call_0322:
     and a
     ret nz
 
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     bit 5, a
     jr z, jr_000_0334
 
     callx call_0342
 
 jr_000_0334::
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     bit 4, a
     jr z, jr_000_0341
 
@@ -371,16 +371,16 @@ jr_000_0341::
 
 
 call_0342:
-    ldh a, [$9b]
+    ldh a, [$ff9b]
     dec a
-    ldh [$9b], a
+    ldh [$ff9b], a
     ret
 
 
 call_0348:
-    ldh a, [$9b]
+    ldh a, [$ff9b]
     inc a
-    ldh [$9b], a
+    ldh [$ff9b], a
     ret
 
 
@@ -1666,7 +1666,7 @@ jr_000_0ac0::
     callx call_11de
     callx call_12cf
     pop bc
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and a
     jr nz, jr_000_0afd
 
@@ -1780,7 +1780,7 @@ jr_000_0b62::
 
 
 call_0b86::
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and a
     jr z, call_0b86
 
@@ -2063,7 +2063,7 @@ call_0d41:
     rl b
     ld hl, $c930
     add hl, bc
-    ldh a, [$9b]
+    ldh a, [$ff9b]
     srl a
     srl a
     srl a
@@ -2321,7 +2321,7 @@ call_12cf:
 
 
 call_12e7:
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     bit 3, a
     ret z
 
@@ -2330,7 +2330,7 @@ call_12e7:
     callx call_029e
 
 jr_000_12f8::
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     bit 3, a
     jr z, jr_000_12f8
 

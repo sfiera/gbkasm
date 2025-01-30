@@ -48,7 +48,7 @@ Main::
     ld a, $20
     trap DrawInit
     ld a, $e4
-    ldh [$9d], a
+    ldh [$ff9d], a
     ld hl, layout_a19f
     trap DrawLayout
     call call_a16d
@@ -144,7 +144,7 @@ call_a21f:
     ld a, $20
     trap DrawInit
     ld a, $e4
-    ldh [$9d], a
+    ldh [$ff9d], a
     ld a, [$c867]
     ld hl, $8100
     call call_b2a6
@@ -335,7 +335,7 @@ call_a33a:
     ld [$0000], a
 
 .jr_a3b4
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     or a
     jr nz, .jr_a3b4
 
@@ -838,8 +838,8 @@ call_a79a:
     jr nc, .jr_a7ac
 
     xor a
-    ldh [$9b], a
-    ldh [$9a], a
+    ldh [$ff9b], a
+    ldh [$ff9a], a
     jp jp_aed5
 
 
@@ -857,9 +857,9 @@ call_a79a:
 
 .jr_a7bb
     ld a, d
-    ldh [$9b], a
+    ldh [$ff9b], a
     ld a, e
-    ldh [$9a], a
+    ldh [$ff9a], a
     ret
 
 
@@ -1079,7 +1079,7 @@ call_a8bb:
 
 .jr_a8e3
     trap AwaitFrame
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and $02
     jr nz, .jr_a8e3
 
@@ -1185,7 +1185,7 @@ call_a93d:
     dec c
     jr nz, .jr_a96e
 
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and $04
     cp $04
     ret nz
@@ -1392,7 +1392,7 @@ call_aa58:
     trap StrTrim
     ld c, a
     trap KbdEdit
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and $04
     ret z
 
@@ -1528,7 +1528,7 @@ call_ab98:
     trap AwaitFrame
     trap InputButtons
     call call_ac27
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     bit 2, a
     jr z, .jr_abd8
 
@@ -1594,7 +1594,7 @@ call_ac06:
 
 
 call_ac27:
-    ldh a, [$b6]
+    ldh a, [$ffb6]
     ld b, a
     and $c0
     jr z, .jr_ac51
@@ -1628,7 +1628,7 @@ call_ac27:
     ld [$c85e], a
 
 .jr_ac51
-    ldh a, [$b6]
+    ldh a, [$ffb6]
     ld b, a
     and $30
     jr z, .jr_acae
@@ -1961,8 +1961,8 @@ call_ae89:
     ld h, $04
     trap $ca
     ld a, $e4
-    ldh [$9c], a
-    ldh [$9d], a
+    ldh [$ff9c], a
+    ldh [$ff9d], a
     ret
 
 
@@ -2092,7 +2092,7 @@ call_af4f:
     trap $c4
     trap InputButtons
     call call_afa6
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     bit 2, a
     jr nz, .jr_af7c
 
@@ -2101,15 +2101,15 @@ call_af4f:
     jr .jr_af62
 
 .jr_af7c
-    ldh a, [$9b]
+    ldh a, [$ff9b]
     ld [$c9ba], a
-    ldh a, [$9a]
+    ldh a, [$ff9a]
     ld [$c9bb], a
     ret
 
 
 call_af87:
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     bit 3, a
     ret z
 
@@ -2132,7 +2132,7 @@ call_af90:
 
 
 call_afa6:
-    ldh a, [$b6]
+    ldh a, [$ffb6]
     ld b, a
     and $f0
     jr z, .jr_afe1
@@ -2165,7 +2165,7 @@ call_afa6:
 
 .jr_afcf
     call call_b098
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and $03
     jr z, .jr_afe1
 
@@ -2181,9 +2181,9 @@ call_afa6:
     bit 4, c
     ret nz
 
-    ldh a, [$9b]
+    ldh a, [$ff9b]
     ld d, a
-    ldh a, [$9a]
+    ldh a, [$ff9a]
     ld e, a
     ld hl, $c300
     ld a, [$c9b7]
@@ -2229,7 +2229,7 @@ call_b014:
 
 .jr_b01e
     call call_b00a
-    ldh a, [$9a]
+    ldh a, [$ff9a]
     or a
     jr z, .jr_b033
 
@@ -2242,7 +2242,7 @@ call_b014:
 
     ld a, d
     sub $08
-    ldh [$9a], a
+    ldh [$ff9a], a
 
 .jr_b033
     ret
@@ -2259,7 +2259,7 @@ call_b034:
 
 .jr_b03f
     call call_b00a
-    ldh a, [$9a]
+    ldh a, [$ff9a]
     cp $50
     jr nc, .jr_b055
 
@@ -2272,7 +2272,7 @@ call_b034:
 
     ld a, d
     add $08
-    ldh [$9a], a
+    ldh [$ff9a], a
 
 .jr_b055
     ret
@@ -2289,7 +2289,7 @@ call_b056:
 
 .jr_b060
     call call_b00a
-    ldh a, [$9b]
+    ldh a, [$ff9b]
     or a
     jr z, .jr_b075
 
@@ -2302,7 +2302,7 @@ call_b056:
 
     ld a, d
     sub $08
-    ldh [$9b], a
+    ldh [$ff9b], a
 
 .jr_b075
     ret
@@ -2319,7 +2319,7 @@ call_b076:
 
 .jr_b081
     call call_b00a
-    ldh a, [$9b]
+    ldh a, [$ff9b]
     cp $20
     jr nc, .jr_b097
 
@@ -2332,7 +2332,7 @@ call_b076:
 
     ld a, d
     add $08
-    ldh [$9b], a
+    ldh [$ff9b], a
 
 .jr_b097
     ret
@@ -2360,7 +2360,7 @@ call_b0a5:
 
 
 call_b0b9:
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     ld e, a
     and $03
     ret z
@@ -2541,15 +2541,15 @@ call_b187:
 
 call_b1a8:
     ld a, $e4
-    ldh [$9d], a
+    ldh [$ff9d], a
     ld a, $07
-    ldh [$a0], a
+    ldh [$ffa0], a
     ld a, $70
-    ldh [$9f], a
+    ldh [$ff9f], a
     ld a, [$c9ba]
-    ldh [$9b], a
+    ldh [$ff9b], a
     ld a, [$c9bb]
-    ldh [$9a], a
+    ldh [$ff9a], a
     call call_b1e3
     call call_af90
     ld de, data_b246 + $10

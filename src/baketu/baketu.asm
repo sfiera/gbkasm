@@ -111,9 +111,9 @@ Receive:
     ld [var_mouse_pos], a
     callx call_052d
     ld a, $08
-    ldh [$a0], a
+    ldh [$ffa0], a
     ld a, $18
-    ldh [$9f], a
+    ldh [$ff9f], a
     ld a, LCDCF_OBJON | LCDCF_BGON | LCDCF_WINON | LCDCF_WIN9C00
     trap LCDEnable
     ld a, $14
@@ -207,7 +207,7 @@ Transmit:
 
 .cancel
     trap AwaitFrame
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and BTN_B
     jr nz, .cancel
 
@@ -279,12 +279,12 @@ PlayGame:
     trap LCDDisable
     callx call_08d8
     xor a
-    ldh [$9b], a
-    ldh [$9a], a
+    ldh [$ff9b], a
+    ldh [$ff9a], a
     ld a, $08
-    ldh [$a0], a
+    ldh [$ffa0], a
     ld a, $18
-    ldh [$9f], a
+    ldh [$ff9f], a
     ld a, LCDCF_OBJON | LCDCF_BGON | LCDCF_WINON | LCDCF_WIN9C00
     trap LCDEnable
     xor a
@@ -302,7 +302,7 @@ PlayGame:
     ld [hl], $00
     callx call_070c
     xor a
-    ldh [$83], a
+    ldh [$ff83], a
 
 .start
     xor a
@@ -369,7 +369,7 @@ PlayGame:
 .awaitExit
     trap AwaitFrame
     trap InputButtons
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and BTN_SEL | BTN_B
     cp BTN_SEL | BTN_B
     jr nz, .awaitExit
@@ -379,7 +379,7 @@ PlayGame:
 
 UpdateMouse:
     ld hl, var_motion
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     ld b, a
     ld hl, var_mouse_pos
     ld a, [hl]
@@ -621,7 +621,7 @@ call_0689:
 
 
 .jr_000_06b9
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and $01
     ret z
 
@@ -741,7 +741,7 @@ call_0762:
     ld hl, var_hole_pos
     ld a, $b0
     sub [hl]
-    ldh [$9b], a
+    ldh [$ff9b], a
     ret
 
 
@@ -870,11 +870,11 @@ layout_083d:
 
 
 UpdateTimer:
-    ldh a, [$83]
+    ldh a, [$ff83]
     sub $06
     ret c
 
-    ldh [$83], a
+    ldh [$ff83], a
     ld hl, var_time.sub
     inc [hl]
     ld a, [hl]

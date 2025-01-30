@@ -3,7 +3,7 @@ LOAD "CRAM Code", WRAMX[$dc40]
 
 call_dc40:
     di
-    ldh a, [$81]
+    ldh a, [$ff81]
     push af
     ld hl, $c000
     ld bc, $1c00

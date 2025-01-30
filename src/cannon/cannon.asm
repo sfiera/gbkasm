@@ -45,11 +45,11 @@ Main::
     ld [$c650], a
     ld [$c651], a
     xor a
-    ldh [$9b], a
-    ldh [$9a], a
+    ldh [$ff9b], a
+    ldh [$ff9a], a
     ld a, $a0
-    ldh [$a0], a
-    ldh [$9f], a
+    ldh [$ffa0], a
+    ldh [$ff9f], a
     callx call_0b47
     callx call_01cf
     ld a, $07
@@ -81,17 +81,17 @@ jr_015b::
     cp $02
     jr nz, jr_015b
 
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and $02
     jr nz, jr_0202
 
-    ldh a, [$8b]
+    ldh a, [$ff8b]
 
 jr_01a4::
     and $04
     jr nz, jr_0204
 
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and $01
     jr z, jr_015b
 
@@ -162,7 +162,7 @@ jp_022a:
     ld hl, $0080
     xor a
     trap $c5
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and $40
     jr z, jr_0257
 
@@ -174,7 +174,7 @@ jp_022a:
     ld [$c656], a
 
 jr_0257::
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and $80
     jr z, jr_0268
 
@@ -186,7 +186,7 @@ jr_0257::
     ld [$c656], a
 
 jr_0268::
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and $10
     jr z, jr_029b
 
@@ -217,7 +217,7 @@ jr_0284::
     callx call_031a
 
 jr_029b::
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and $20
     jr z, jr_02c4
 
@@ -239,7 +239,7 @@ jr_029b::
     callx call_031a
 
 jr_02c4::
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and $01
     jr z, jr_02e2
 
@@ -262,7 +262,7 @@ jr_02df::
     trap AudioPlayMusic
 
 jr_02e2::
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and $02
     jr z, jr_0308
 
@@ -939,7 +939,7 @@ call_06d8:
 
     ld a, [$c662]
     ld b, a
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     ld c, a
     and $20
     jr z, jr_06f4
@@ -1218,7 +1218,7 @@ jr_0846::
     jr z, jr_0858
 
 jr_0853::
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and $03
     ret z
 

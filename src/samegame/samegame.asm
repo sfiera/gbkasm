@@ -72,7 +72,7 @@ jump_0122:
     jr c, .jr_0132
     callx call_03b7
     jr c, jump_0122
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     bit 3, a
     jr nz, jump_0113
     bit 1, a
@@ -291,7 +291,7 @@ call_0322:
     ld b, $00
     callx call_037e
     ld a, b
-    ldh [$c1], a
+    ldh [$ffc1], a
     sub $02
     jr nc, .jr_0365
     xor a
@@ -344,10 +344,10 @@ call_037e:
     ret
 
 call_03b7:
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and $01
     ret z
-    ldh a, [$c1]
+    ldh a, [$ffc1]
     cp $02
     ccf
     ret nc
@@ -514,7 +514,7 @@ call_0486:
     ret
 
 call_04ae:
-    ldh a, [$b6]
+    ldh a, [$ffb6]
     ld b, a
     and $f0
     ret z
@@ -590,7 +590,7 @@ call_04f1:
 
 call_0514:
     xor a
-    ldh [$c0], a
+    ldh [$ffc0], a
     ld hl, varField
     ld c, FIELD_WIDTH
 .jr_051c
@@ -646,9 +646,9 @@ call_0514:
     ld [hl], a
     and $0f
     ld c, a
-    ldh a, [$c0]
+    ldh a, [$ffc0]
     or c
-    ldh [$c0], a
+    ldh [$ffc0], a
     pop bc
     inc hl
     dec b
@@ -663,7 +663,7 @@ call_0514:
     dec c
     jr nz, .jr_051c
 .jr_0577
-    ldh a, [$c0]
+    ldh a, [$ffc0]
     or a
     ret nz
     scf
@@ -755,7 +755,7 @@ call_060d:
     jr jump_062d
 
 call_0615:
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and $03
     jr z, call_0627
 .jr_061b
@@ -865,7 +865,7 @@ call_0684:
 
 SetupGfx:
     ld a, $e4
-    ldh [$9d], a
+    ldh [$ff9d], a
     ld hl, varCursor
     xor a
     ld [hli], a

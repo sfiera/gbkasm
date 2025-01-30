@@ -48,7 +48,7 @@ RST_18::
     nop
 
 RST_20::
-    ldh [$80], a
+    ldh [$ff80], a
     ld [$2000], a
     ret
 
@@ -168,7 +168,7 @@ Jump_000_0068:
 jr_000_0093:
     ld d, e
     dec hl
-    ldh a, [$80]
+    ldh a, [$ff80]
     ld [hl-], a
     ld [hl], $00
     dec hl
@@ -258,7 +258,7 @@ trap_00_00e9:
     xor a
 
 Call_000_00ea::
-    ldh [$81], a
+    ldh [$ff81], a
     inc a
     ld [$6000], a
     xor a
@@ -266,7 +266,7 @@ Call_000_00ea::
     ld a, [$000c]
 
 Call_000_00f7:
-    ldh [$80], a
+    ldh [$ff80], a
     ld [$2000], a
     ret
 
@@ -284,7 +284,7 @@ SECTION "nectaris/bank_000: ROM Bank $000-B", ROM0
 
 trap_01_0150:
     ld a, [$000b]
-    ldh [$80], a
+    ldh [$ff80], a
     ld [$2000], a
     jp KissMenu
 
@@ -294,7 +294,7 @@ trap_02_015b:
     or c
     ret z
 
-    ldh a, [$86]
+    ldh a, [$ff86]
     or a
     jr z, jr_000_0174
 
@@ -381,10 +381,10 @@ jr_000_01a8:
 
 Call_000_01b0:
     ld a, l
-    ldh [$87], a
-    ldh a, [$89]
+    ldh [$ff87], a
+    ldh a, [$ff89]
     add b
-    ldh [$89], a
+    ldh [$ff89], a
     ei
 
 trap_noop:
@@ -476,7 +476,7 @@ Jump_000_021c:
     push bc
     push de
     push hl
-    ldh a, [$99]
+    ldh a, [$ff99]
     bit 2, a
     call nz, TrapAudioUnknownJump
     pop hl
@@ -534,7 +534,7 @@ JumpToAudioBank:
 Call_000_025c:
     push hl
     push af
-    ldh a, [$80]
+    ldh a, [$ff80]
     ld hl, sp+$07
     ld [hl], a
     ld a, BANK(AudioTraps)
@@ -605,7 +605,7 @@ jr_000_0292:
     jr z, jr_000_028d
 
     pop hl
-    ldh a, [$80]
+    ldh a, [$ff80]
     ld b, a
     ld a, h
     ld h, $00
@@ -863,7 +863,7 @@ Call_000_05e3::
 
 .jr_000_05f8
     ld a, $01
-    ldh [$92], a
+    ldh [$ff92], a
     ld a, [$d6d2]
     inc a
     ld [$d6d2], a
@@ -1181,12 +1181,12 @@ Call_000_079c::
     and $0f
     or b
     ld c, a
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     xor c
     and c
-    ldh [$8d], a
+    ldh [$ff8d], a
     ld a, c
-    ldh [$8c], a
+    ldh [$ff8c], a
     ld a, $30
     ldh [rP1], a
     ret
@@ -1199,7 +1199,7 @@ Call_000_07cd::
 
 jr_000_07d4:
     ld a, [hl+]
-    ld [c], a
+    ldh [c], a
     inc c
     dec b
     jr nz, jr_000_07d4
@@ -1234,7 +1234,7 @@ Jump_000_07e5:
 
 Call_000_07f1:
     ldh a, [rIE]
-    ldh [$93], a
+    ldh [$ff93], a
     res 0, a
 
 jr_000_07f7:
@@ -1245,7 +1245,7 @@ jr_000_07f7:
     ldh a, [rLCDC]
     and $7f
     ldh [rLCDC], a
-    ldh a, [$93]
+    ldh a, [$ff93]
     ldh [rIE], a
     ret
 
@@ -1362,12 +1362,12 @@ Call_000_085d::
     halt
 
 jr_000_085e:
-    ldh a, [$92]
+    ldh a, [$ff92]
     and a
     jr z, jr_000_085e
 
     xor a
-    ldh [$92], a
+    ldh [$ff92], a
     ret
 
 
@@ -2101,7 +2101,7 @@ Call_000_0c3c::
 jr_000_0c3c:
     call Call_000_085d
     call Call_000_079c
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     bit BTN_A_F, a
     ld b, $00
 
@@ -2119,7 +2119,7 @@ jr_000_0c52:
     call Call_000_085d
     call Call_000_079c
     pop bc
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     bit BTN_A_F, a
     jr nz, jr_000_0c52
 
@@ -2142,7 +2142,7 @@ jr_000_0c6d:
 
     call Call_000_085d
     call Call_000_079c
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     bit BTN_A_F, a
     ld b, $00
     jr nz, jr_000_0c8b
@@ -2162,7 +2162,7 @@ jr_000_0c8b:
     call Call_000_085d
     call Call_000_079c
     pop bc
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     bit BTN_A_F, a
     jr nz, jr_000_0c8b
 
@@ -3664,7 +3664,7 @@ Call_000_1730:
     ld [hl+], a
     ld a, d
     ld [hl+], a
-    ldh a, [$80]
+    ldh a, [$ff80]
     ld [$2000], a
     trap AudioStop
     trap $00
@@ -4717,7 +4717,7 @@ jr_000_1ec4:
     call Call_00f_4000
     ld a, BANK(Call_001_4000)
     call SetROMBank
-    ldh [$94], a
+    ldh [$ff94], a
     ei
     ld a, [$db1e]
     cp $00
@@ -4738,7 +4738,7 @@ jr_000_1f24:
     call StopAudio
     call Call_000_085d
     call Call_000_079c
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     bit BTN_A_F, a
     jp z, Jump_000_1f4c
 
@@ -4801,7 +4801,7 @@ DoTitleScreen:
 .loop
     call Call_000_085d
     call Call_000_079c
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     bit BTN_STA_F, a
     jp z, .loop
 
@@ -5576,7 +5576,7 @@ DoRecvDataFromGB:
 
     call Call_000_085d
     call Call_000_079c
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     bit BTN_B_F, a
     jp nz, Jump_000_25a5
 
@@ -5587,7 +5587,7 @@ DoRecvDataFromGB:
 
     call Call_000_085d
     call Call_000_079c
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     bit BTN_B_F, a
     jp nz, Jump_000_25a5
 
@@ -5832,7 +5832,7 @@ jr_000_2736:
     call DrawFlagsJump
     call Call_000_085d
     call Call_000_079c
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     bit BTN_A_F, a
     jr z, jr_000_2736
 
@@ -6006,7 +6006,7 @@ Call_000_2899:
 Jump_000_28c9::
     call Call_000_085d
     call Call_000_079c
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     bit BTN_A_F, a
     jp nz, Jump_000_28c9
 
@@ -6160,7 +6160,7 @@ jr_000_29c4:
 Jump_000_29e7:
     call Call_000_085d
     call Call_000_079c
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     bit BTN_A_F, a
     jp nz, Jump_000_29e7
 
@@ -6185,7 +6185,7 @@ Jump_000_2a14:
 Jump_000_2a19:
     call Call_000_085d
     call Call_000_079c
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     bit BTN_A_F, a
     jp nz, Jump_000_2a19
 
@@ -6585,7 +6585,7 @@ jr_000_2ce6:
     call Call_000_085d
     call Call_000_14b0
     call Call_000_079c
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     bit BTN_A_F, a
     jp nz, Jump_000_2d03
 
@@ -6612,7 +6612,7 @@ Jump_000_2d14:
     call Call_000_085d
     call Call_000_14b0
     call Call_000_079c
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     bit BTN_A_F, a
     jp nz, Jump_000_2d14
 
@@ -6638,7 +6638,7 @@ Jump_000_2d42:
     call Call_000_085d
     call Call_000_14b0
     call Call_000_079c
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     bit BTN_B_F, a
     jp nz, Jump_000_2d42
 
@@ -7111,7 +7111,7 @@ jr_000_3074:
     ld [$d7a1], a
     call Call_000_085d
     call Call_000_079c
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     bit BTN_A_F, a
     jp nz, Jump_000_3116
 
@@ -7144,7 +7144,7 @@ Jump_000_30aa:
 Jump_000_30b5:
     call Call_000_085d
     call Call_000_079c
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     bit BTN_RT_F, a
     jp nz, Jump_000_30b5
 
@@ -7160,7 +7160,7 @@ Jump_000_30c5:
 Jump_000_30d0:
     call Call_000_085d
     call Call_000_079c
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     bit BTN_UP_F, a
     jp nz, Jump_000_30d0
 
@@ -7176,7 +7176,7 @@ Jump_000_30e0:
 Jump_000_30eb:
     call Call_000_085d
     call Call_000_079c
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     bit BTN_LT_F, a
     jp nz, Jump_000_30eb
 
@@ -7192,7 +7192,7 @@ Jump_000_30fb:
 Jump_000_3106:
     call Call_000_085d
     call Call_000_079c
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     bit BTN_DN_F, a
     jp nz, Jump_000_3106
 
@@ -7280,7 +7280,7 @@ jr_000_318f:
 Jump_000_3193:
     call Call_000_085d
     call Call_000_079c
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     bit BTN_A_F, a
     jp nz, Jump_000_3193
 
@@ -7910,7 +7910,7 @@ jr_000_354f:
 jr_000_357d:
     call Call_000_085d
     call Call_000_079c
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     bit BTN_A_F, a
     jr nz, jr_000_357d
 
@@ -7924,7 +7924,7 @@ Jump_000_358c:
 jr_000_3591:
     call Call_000_085d
     call Call_000_079c
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     bit BTN_A_F, a
     jr nz, jr_000_3591
 
@@ -7954,7 +7954,7 @@ Jump_000_35a0:
 jr_000_35c3:
     call Call_000_085d
     call Call_000_079c
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     bit BTN_B_F, a
     jr nz, jr_000_35c3
 
@@ -7968,14 +7968,14 @@ jr_000_35d2:
 jr_000_35d7:
     call Call_000_085d
     call Call_000_079c
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     bit BTN_B_F, a
     jr nz, jr_000_35d7
 
 jr_000_35e3:
     call Call_000_085d
     call Call_000_079c
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     bit BTN_A_F, a
     jr nz, jr_000_35e3
 
@@ -9319,7 +9319,7 @@ jr_000_3f77:
 Call_000_3f80::
     push af
     ld a, $1d
-    ldh [$80], a
+    ldh [$ff80], a
     ld [$2000], a
     pop af
     ld bc, Call_000_3f8e
@@ -9329,7 +9329,7 @@ Call_000_3f80::
 
 Call_000_3f8e:
     ld a, $1c
-    ldh [$80], a
+    ldh [$ff80], a
     ld [$2000], a
     ret
 

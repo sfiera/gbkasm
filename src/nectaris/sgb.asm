@@ -167,9 +167,9 @@ SendSGBPacket:
 jr_00e_40e4:
     push bc
     ld a, $00
-    ld [c], a
+    ldh [c], a
     ld a, $30
-    ld [c], a
+    ldh [c], a
     ld b, $10
 
 jr_00e_40ed:
@@ -185,9 +185,9 @@ jr_00e_40f1:
     ld a, $20
 
 jr_00e_40f9:
-    ld [c], a
+    ldh [c], a
     ld a, $30
-    ld [c], a
+    ldh [c], a
     rr d
     dec e
     jr nz, jr_00e_40f1
@@ -196,9 +196,9 @@ jr_00e_40f9:
     jr nz, jr_00e_40ed
 
     ld a, $20
-    ld [c], a
+    ldh [c], a
     ld a, $30
-    ld [c], a
+    ldh [c], a
     pop bc
     dec b
     ret z

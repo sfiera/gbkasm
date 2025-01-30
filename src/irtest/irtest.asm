@@ -119,7 +119,7 @@ Error:
     ; then this prevents cancellation of the menu too.
     trap AwaitFrame
     trap InputButtons
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and BTN_B
     jr nz, .releaseB
 

@@ -115,7 +115,7 @@ KissMailHandle:
 
 RedrawMailLine:
     xor a
-    ldh [$c1], a
+    ldh [$ffc1], a
     call GetMailLineMetrics
     ld c, LINE_SIZE
     trap TileLoadText
@@ -130,14 +130,14 @@ KissMailEditLine:
     jr c, .done
 
     ld a, $01
-    ldh [$c2], a
-    ldh a, [$8a]
+    ldh [$ffc2], a
+    ldh a, [$ff8a]
     bit BTN_SEL_F, a
     jp nz, SetUpAndDoKissMailMenu
 
     call NextMailLine
     xor a
-    ldh [$c1], a
+    ldh [$ffc1], a
 
 .done
     ld a, 1
@@ -146,7 +146,7 @@ KissMailEditLine:
 
 
 NextMailLine:
-    ldh a, [$c0]
+    ldh a, [$ffc0]
     inc a
     cp EDIT_COUNT
     jr c, .noWrap
@@ -154,12 +154,12 @@ NextMailLine:
     ld a, 1
 
 .noWrap
-    ldh [$c0], a
+    ldh [$ffc0], a
     ret
 
 
 PrevMailLine:
-    ldh a, [$c0]
+    ldh a, [$ffc0]
     dec a
     bit 7, a
     jr z, .noWrap
@@ -167,7 +167,7 @@ PrevMailLine:
     ld a, LINE_COUNT
 
 .noWrap
-    ldh [$c0], a
+    ldh [$ffc0], a
     ret
 
 
@@ -266,13 +266,13 @@ ShowMailLayout:
     ld e, $01
     trap $5a
     ld a, d
-    ldh [$c4], a
+    ldh [$ffc4], a
     or a
     ret
 
 
 KissMailExit:
-    ldh a, [$c2]
+    ldh a, [$ffc2]
     or a
     jr z, .exit
 
@@ -293,10 +293,10 @@ Exit:
 
 KissMailPager:
     call DrawMailWindow
-    ldh a, [$c0]
+    ldh a, [$ffc0]
     push af
     ld a, $01
-    ldh [$c0], a
+    ldh [$ffc0], a
     ld a, LAYOUT_PAGER_EDIT_HELP
     call ShowMailLayout
     ld a, $03
@@ -326,7 +326,7 @@ KissMailPager:
 
 .menu
     pop af
-    ldh [$c0], a
+    ldh [$ffc0], a
     jp SetUpAndDoKissMailMenu
 
 .up
@@ -336,7 +336,7 @@ KissMailPager:
     ; In pager mode, the title line is skipped.
     ; So if the line became 0, then go up again.
     call PrevMailLine
-    ldh a, [$c0]
+    ldh a, [$ffc0]
     or a
     jr z, .upAgain
 
@@ -363,10 +363,10 @@ KissMailPager:
 
 
 KissMailSave:
-    ldh a, [$c0]
+    ldh a, [$ffc0]
     push af
     xor a
-    ldh [$c0], a
+    ldh [$ffc0], a
 
 .retry
     call TrimMailLine
@@ -405,7 +405,7 @@ KissMailSave:
     jr c, .wait
 
     xor a
-    ldh [$c2], a
+    ldh [$ffc2], a
     ld a, LAYOUT_SAVE_DONE
 
 .wait
@@ -414,7 +414,7 @@ KissMailSave:
 
 .done
     pop af
-    ldh [$c0], a
+    ldh [$ffc0], a
     jp DoKissMailMenu
 
 
@@ -465,7 +465,7 @@ KissMailSend:
 
 
 KissMailRecv:
-    ldh a, [$c2]
+    ldh a, [$ffc2]
     or a
     jr z, .ready
 
@@ -495,13 +495,13 @@ KissMailRecv:
     jr z, .error
 
     xor a
-    ldh [$c0], a
+    ldh [$ffc0], a
     call RedrawMailLine
     call NextMailLine
     ld a, LAYOUT_XFER_DONE
     call ShowMailLayout
     ld a, $01
-    ldh [$c2], a
+    ldh [$ffc2], a
 
 .wait
     call AwaitAB
@@ -595,7 +595,7 @@ TrimMailLine:
 
 
 PromptAB:
-    ldh a, [$c4]
+    ldh a, [$ffc4]
     ld d, a
     ld e, $01
     ld hl, LayoutYesNo
@@ -626,7 +626,7 @@ AwaitAB:
 ; These values are suitable for calling trap KbdEdit
 GetMailLineMetrics:
     ld b, LINE_SIZE
-    ldh a, [$c0]
+    ldh a, [$ffc0]
     or a
     jr nz, .calc
 
@@ -858,7 +858,7 @@ DrawMailWindow:
     trap LCDDisable
     call Call_001_66dc
     ld a, $e4
-    ldh [$9d], a
+    ldh [$ff9d], a
     call KissClearScreen
     call DrawMailHeader
 
@@ -878,10 +878,10 @@ DrawMailWindow:
     ld de, $0204
     ld bc, $1108
     trap $59
-    ldh a, [$c0]
+    ldh a, [$ffc0]
     push af
     xor a
-    ldh [$c0], a
+    ldh [$ffc0], a
     ld c, EDIT_COUNT
 
 .next
@@ -893,7 +893,7 @@ DrawMailWindow:
     jr nz, .next
 
     pop af
-    ldh [$c0], a
+    ldh [$ffc0], a
     ret
 
 
@@ -960,9 +960,9 @@ InitMail::
     ld bc, $0100
     trap MemCopy
     xor a
-    ldh [$c0], a
-    ldh [$c1], a
-    ldh [$c2], a
+    ldh [$ffc0], a
+    ldh [$ffc1], a
+    ldh [$ffc2], a
     ret
 
 

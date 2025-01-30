@@ -50,22 +50,22 @@ jr_0126:
     ld bc, $0000
     callx call_0778
     trap InputButtons
-    ldh [$c4], a
+    ldh [$ffc4], a
     bit 1, a
     jr z, jr_0166
-    ldh a, [$c3]
+    ldh a, [$ffc3]
     bit 7, a
     jr z, jr_015f
     cp $86
     jr nc, jr_014a
     inc a
-    ldh [$c3], a
+    ldh [$ffc3], a
 jr_014a:
     and $7f
     inc a
     ld hl, $ffc7
     callx call_06ac
-    ldh a, [$cc]
+    ldh a, [$ffcc]
     add $30
     trap DrawChar
     jr jr_0166
@@ -86,16 +86,16 @@ call_01a0:
     ldx hl, data_0171
     callx call_0671
     xor a
-    ldh [$c7], a
-    ldh [$c8], a
-    ldh [$c9], a
-    ldh [$ca], a
-    ldh [$cc], a
+    ldh [$ffc7], a
+    ldh [$ffc8], a
+    ldh [$ffc9], a
+    ldh [$ffca], a
+    ldh [$ffcc], a
 jp_01b6:
-    ldh [$c3], a
+    ldh [$ffc3], a
     xor a
-    ldh [$c1], a
-    ldh [$c2], a
+    ldh [$ffc1], a
+    ldh [$ffc2], a
     callx call_05af
     callx call_05b5
     callx call_05d9
@@ -106,16 +106,16 @@ jp_01b6:
 
 call_01e8:
     xor a
-    ldh [$c5], a
+    ldh [$ffc5], a
     inc a
-    ldh [$c6], a
+    ldh [$ffc6], a
     callx call_03c2
 jp_01f5:
     ld h, $ff
     ld de, $ffff
     ld bc, $0509
     callx call_0778
-    ldh a, [$c3]
+    ldh a, [$ffc3]
     and $80
     jr z, jr_022b
     ld hl, $ffc7
@@ -128,69 +128,69 @@ jr_0210:
     jr nz, jr_0210
     or a
     jr nz, jr_022b
-    ldh [$cc], a
+    ldh [$ffcc], a
     callx call_059d
     callx call_032a
     xor a
-    ldh [$c3], a
+    ldh [$ffc3], a
 jr_022b:
     trap InputButtons
-    ldh [$c4], a
+    ldh [$ffc4], a
     bit 1, a
     jr z, jr_024e
-    ldh a, [$c3]
+    ldh a, [$ffc3]
     bit 7, a
     jr nz, jr_0247
-    ldh a, [$c5]
+    ldh a, [$ffc5]
     inc a
     cp $06
     jr c, jr_0241
     xor a
 jr_0241:
-    ldh [$c5], a
+    ldh [$ffc5], a
     ld a, $01
-    ldh [$c6], a
+    ldh [$ffc6], a
 jr_0247:
     callx call_03cd
 jr_024e:
-    ldh a, [$c4]
+    ldh a, [$ffc4]
     bit 0, a
     jr z, jr_0260
-    ldh a, [$c3]
+    ldh a, [$ffc3]
     or a
     jr nz, jr_0260
     callx call_03cd
 jr_0260:
     callx call_07d3
-    ldh a, [$c4]
+    ldh a, [$ffc4]
     bit 4, a
     jr z, jr_027e
-    ldh a, [$c6]
+    ldh a, [$ffc6]
     inc a
     cp $05
     jr c, jr_0275
     xor a
 jr_0275:
-    ldh [$c6], a
+    ldh [$ffc6], a
     callx call_0418
 jr_027e:
-    ldh a, [$c4]
+    ldh a, [$ffc4]
     bit 5, a
     jr z, jr_0295
-    ldh a, [$c6]
+    ldh a, [$ffc6]
     sub $01
     jr nc, jr_028c
     ld a, $04
 jr_028c:
-    ldh [$c6], a
+    ldh [$ffc6], a
     callx call_0418
 jr_0295:
-    ldh a, [$c4]
+    ldh a, [$ffc4]
     bit 6, a
     jr z, jr_02a2
     callx call_02b8
 jr_02a2:
-    ldh a, [$c4]
+    ldh a, [$ffc4]
     bit 7, a
     jr z, jr_02af
     callx call_02c8
@@ -230,10 +230,10 @@ jr_02d6:
     ld hl, $ffc7
     ld bc, $0005
     trap MemCopy
-    ldh a, [$c5]
+    ldh a, [$ffc5]
     add $02
     callx call_0698
-    ldh a, [$c6]
+    ldh a, [$ffc6]
     or a
     jr z, jr_0305
     inc h
@@ -253,11 +253,11 @@ jr_0305:
     pop af
     trap DrawChar
     xor a
-    ldh [$c3], a
+    ldh [$ffc3], a
     ret
 
 call_030e:
-    ldh a, [$c6]
+    ldh a, [$ffc6]
     ld c, a
     ld b, $00
     callx call_0407
@@ -273,7 +273,7 @@ call_030e:
     ret
 
 call_032a:
-    ldh a, [$cb]
+    ldh a, [$ffcb]
     dec a
     jr z, jr_0339
     dec a
@@ -364,13 +364,13 @@ jr_03d4:
     ld bc, $0005
     trap MemCopy
     ld a, $0a
-    ldh [$cc], a
+    ldh [$ffcc], a
     ld a, $01
     jx jp_01b6
 
 call_0407:
     ldx de, data_0375
-    ldh a, [$c5]
+    ldh a, [$ffc5]
     ld l, a
     add a
     add a
@@ -383,7 +383,7 @@ call_0407:
     ret
 
 call_0418:
-    ldh a, [$c5]
+    ldh a, [$ffc5]
     add $02
     callx call_0698
     ld a, h
@@ -415,7 +415,7 @@ call_0418:
 call_046b:
     ld h, $ff
 call_046d:
-    ldh a, [$c6]
+    ldh a, [$ffc6]
     sub l
     jr z, jr_0474
     ld a, $02
@@ -535,7 +535,7 @@ POPC
 call_059d:
     ld hl, $120c
     trap DrawAt
-    ldh a, [$cc]
+    ldh a, [$ffcc]
     add "0"
     cp $3a
     jr nz, jr_05ac
@@ -545,22 +545,22 @@ jr_05ac:
     ret
 
 call_05af:
-    ldh a, [$c7]
+    ldh a, [$ffc7]
     ld h, $01
     jr jr_05c5
 
 call_05b5:
-    ldh a, [$c8]
+    ldh a, [$ffc8]
     ld h, $05
     jr jr_05c5
 
 call_05bb:
-    ldh a, [$c9]
+    ldh a, [$ffc9]
     ld h, $0b
     jr jr_05c5
 
 call_05c1:
-    ldh a, [$ca]
+    ldh a, [$ffca]
     ld h, $0f
 jr_05c5:
     ld e, a
@@ -702,15 +702,15 @@ call_06ac:
 
 call_06d4:
     call $0100
-    ldh a, [$c0]
+    ldh a, [$ffc0]
     inc a
-    ldh [$c0], a
+    ldh [$ffc0], a
     sub $e1
     ret c
-    ldh [$c0], a
-    ldh a, [$83]
+    ldh [$ffc0], a
+    ldh a, [$ff83]
     inc a
-    ldh [$83], a
+    ldh [$ff83], a
     ret
 
 SetUpGfx:
@@ -788,62 +788,62 @@ jr_0738:
     inc hl
     ld [hl], d
     xor a
-    ldh [$c0], a
+    ldh [$ffc0], a
     ei
     ret
 
 call_0778:
     trap AwaitFrame
-    ldh a, [$c3]
+    ldh a, [$ffc3]
     and $80
     ret z
-    ldh a, [$83]
+    ldh a, [$ff83]
     sub $06
     ret c
-    ldh [$83], a
-    ldh a, [$cc]
+    ldh [$ff83], a
+    ldh a, [$ffcc]
     add h
     cp e
     jr nz, jr_07cd
-    ldh a, [$ca]
+    ldh a, [$ffca]
     add h
     cp e
     jr nz, jr_07c3
-    ldh a, [$c9]
+    ldh a, [$ffc9]
     add h
     cp d
     jr nz, jr_07b9
-    ldh a, [$c8]
+    ldh a, [$ffc8]
     add h
     cp e
     jr nz, jr_07af
-    ldh a, [$c7]
+    ldh a, [$ffc7]
     add h
     cp e
     jr nz, jr_07a5
     ld a, c
 jr_07a5:
-    ldh [$c7], a
+    ldh [$ffc7], a
     callx call_05af
     ld a, c
 jr_07af:
-    ldh [$c8], a
+    ldh [$ffc8], a
     callx call_05b5
     ld a, b
 jr_07b9:
-    ldh [$c9], a
+    ldh [$ffc9], a
     callx call_05bb
     ld a, c
 jr_07c3:
-    ldh [$ca], a
+    ldh [$ffca], a
     callx call_05c1
     ld a, c
 jr_07cd:
-    ldh [$cc], a
+    ldh [$ffcc], a
     jx call_059d
 
 call_07d3:
-    ldh a, [$c4]
+    ldh a, [$ffc4]
     bit 2, a
     jr z, jr_07dd
     pop af
@@ -860,22 +860,22 @@ jr_07dd:
 jr_07e4:
     bit 0, a
     ret z
-    ldh a, [$c3]
+    ldh a, [$ffc3]
     bit 7, a
     jr z, jr_07fa
     and $7f
-    ldh [$c3], a
-    ldh a, [$83]
-    ldh [$c1], a
-    ldh a, [$c0]
-    ldh [$c2], a
+    ldh [$ffc3], a
+    ldh a, [$ff83]
+    ldh [$ffc1], a
+    ldh a, [$ffc0]
+    ldh [$ffc2], a
     ret
 
 jr_07fa:
     or $80
-    ldh [$c3], a
-    ldh a, [$c1]
-    ldh [$83], a
-    ldh a, [$c2]
-    ldh [$c0], a
+    ldh [$ffc3], a
+    ldh a, [$ffc1]
+    ldh [$ff83], a
+    ldh a, [$ffc2]
+    ldh [$ffc0], a
     ret

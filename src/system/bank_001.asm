@@ -142,12 +142,12 @@ jr_001_670e:
 
 jr_001_671f:
     xor a
-    ldh [$c3], a
+    ldh [$ffc3], a
     trap $e1
     jr nc, jr_001_6731
 
     ld a, $01
-    ldh [$c3], a
+    ldh [$ffc3], a
     trap $65
     ld de, $c699
     trap $51
@@ -159,7 +159,7 @@ jr_001_6731:
     trap TileLoadText
     ld a, $03
     trap LCDEnable
-    ldh a, [$c3]
+    ldh a, [$ffc3]
     or a
     jr nz, jr_001_6757
 
@@ -295,17 +295,17 @@ jr_001_6861:
     ld hl, data_01_6855
     ld de, $d301
     ldh a, [hDraw90]
-    ldh [$b4], a
+    ldh [$ffb4], a
     trap $5b
     inc bc
     inc bc
     inc bc
     ldh a, [hDraw90]
     swap a
-    ldh [$b4], a
+    ldh [$ffb4], a
     trap $5b
     ld a, $03
-    ldh [$b4], a
+    ldh [$ffb4], a
 
 jr_001_688b:
     trap AwaitFrame
@@ -339,7 +339,7 @@ trap_60_6d2f:
     push hl
     trap $c6
     jp c, Jump_001_6d4f
-    ldh [$a1], a
+    ldh [$ffa1], a
     ld a, b
     pop bc
 
@@ -367,7 +367,7 @@ jr_001_6d3b:
 
 Jump_001_6d4f:
     pop hl
-    ldh a, [$a1]
+    ldh a, [$ffa1]
     ret
 
 
@@ -1205,7 +1205,7 @@ trap_6d_70ba:
     ret z
 
     xor a
-    ldh [$b7], a
+    ldh [$ffb7], a
     push hl
     inc hl
     inc hl
@@ -1286,7 +1286,7 @@ Call_001_7118:
     inc hl
     ld a, [hl]
     inc hl
-    ldh [$97], a
+    ldh [$ff97], a
     inc hl
     inc hl
     ld a, [hl+]
@@ -2055,7 +2055,7 @@ trap_53_784d:
     xor a
     ld [hl+], a
     ld [hl], a
-    ldh [$ae], a
+    ldh [$ffae], a
     ld c, $05
     ld hl, $ffaf
 
@@ -2065,13 +2065,13 @@ jr_001_785a:
     jr nz, jr_001_785a
 
     ld a, $03
-    ldh [$b4], a
+    ldh [$ffb4], a
     ret
 
 
 TrapKbdInit:
     ld a, d
-    ldh [$aa], a
+    ldh [$ffaa], a
     push de
     ld e, l
     ld d, h
@@ -2249,10 +2249,10 @@ TrapKbdEdit:
     inc hl
     ld [hl], b
     pop hl
-    ldh a, [$a4]
+    ldh a, [$ffa4]
     ld c, a
     call TrapTileLoadText
-    ldh a, [$a5]
+    ldh a, [$ffa5]
     ld c, a
     or a
     ld a, d
@@ -2263,7 +2263,7 @@ jr_sys_795e:
     dec c
     jr nz, jr_sys_795e
 
-    ldh [$a2], a
+    ldh [$ffa2], a
     ld a, $01
     call LoadPencilTiles
 
@@ -2274,7 +2274,7 @@ jr_001_7969:
     and BTN_SEL | BTN_STA
     jr nz, jr_001_7988
 
-    ldh a, [$ab]
+    ldh a, [$ffab]
     cp $0c
     jr z, jr_001_7980
 
@@ -2294,13 +2294,13 @@ jr_001_7988:
     call Call_001_7a85
     xor a
     call LoadPencilTiles
-    ldh a, [$a5]
+    ldh a, [$ffa5]
     or a
     ret
 
 
 jr_001_7993:
-    ldh a, [$ab]
+    ldh a, [$ffab]
     cp $0c
     jr z, jr_001_7980
 
@@ -2309,14 +2309,14 @@ jr_001_7993:
     cp [hl]
     jr nc, jr_001_79c3
 
-    ldh a, [$ae]
+    ldh a, [$ffae]
     call Call_001_7ba9
     ld e, a
-    ldh a, [$a2]
+    ldh a, [$ffa2]
     ld d, a
     call Call_001_7dc0
     call Call_001_7b07
-    ldh a, [$a5]
+    ldh a, [$ffa5]
     ld c, a
     ld b, $00
     add hl, bc
@@ -2327,15 +2327,15 @@ jr_001_7993:
 
     inc hl
     inc [hl]
-    ldh a, [$a3]
+    ldh a, [$ffa3]
     add d
-    ldh [$a2], a
+    ldh [$ffa2], a
 
 jr_001_79c3:
     jr jr_001_7980
 
 jr_001_79c5:
-    ldh a, [$a2]
+    ldh a, [$ffa2]
     ld d, a
     ld hl, $ffa5
     ld a, [hl-]
@@ -2353,7 +2353,7 @@ jr_001_79d8:
     dec hl
     ld a, d
     sub [hl]
-    ldh [$a2], a
+    ldh [$ffa2], a
     ld d, a
     ld e, $20
     call Call_001_7dc0
@@ -2384,7 +2384,7 @@ jr_001_79fb:
 
 
 Call_001_79fe:
-    ldh a, [$b6]
+    ldh a, [$ffb6]
     ld b, a
     ld hl, $ffab
     ld a, [hl+]
@@ -2505,20 +2505,20 @@ jr_001_7a80:
 
 jr_001_7a81:
     xor a
-    ldh [$ad], a
+    ldh [$ffad], a
     ret
 
 
 Call_001_7a85:
     ld a, $10
-    ldh [$ad], a
+    ldh [$ffad], a
 
 Call_001_7a89:
-    ldh a, [$ad]
+    ldh a, [$ffad]
     and $0f
     jr nz, jr_001_7ac1
 
-    ldh a, [$a2]
+    ldh a, [$ffa2]
     ld d, a
     ld hl, $ffa5
     ld a, [hl-]
@@ -2533,7 +2533,7 @@ Call_001_7a89:
     dec c
 
 jr_001_7a9f:
-    ldh a, [$ad]
+    ldh a, [$ffad]
     bit 4, a
     jr z, jr_001_7ab1
 
@@ -2565,7 +2565,7 @@ jr_001_7ac1:
     ld [hl-], a
     pop de
     ld hl, $ffad
-    ldh a, [$ab]
+    ldh a, [$ffab]
     cp $0c
     jr z, jr_001_7af2
 
@@ -2607,12 +2607,12 @@ jr_001_7af2:
     jr nz, jr_001_7aff
 
     ld a, $30
-    ldh [$b4], a
+    ldh [$ffb4], a
 
 jr_001_7aff:
     call Call_001_7b2f
     ld a, $03
-    ldh [$b4], a
+    ldh [$ffb4], a
     ret
 
 
@@ -2629,7 +2629,7 @@ Jump_001_7b0e:
     ld c, $03
     call Call_001_7b77
     push af
-    ldh a, [$aa]
+    ldh a, [$ffaa]
     ld d, a
 
 jr_001_7b17:
@@ -2654,10 +2654,10 @@ jr_001_7b19:
     ld [de], a
 
 Call_001_7b2f:
-    ldh a, [$aa]
+    ldh a, [$ffaa]
     add $24
     ld d, a
-    ldh a, [$ae]
+    ldh a, [$ffae]
     add a
     add a
     ld c, a
@@ -2714,7 +2714,7 @@ jr_001_7b77:
     inc hl
     ld a, [de]
     call Call_001_7bd2
-    ldh a, [$ae]
+    ldh a, [$ffae]
     cp $04
     jr nz, jr_001_7b8c
 
@@ -2732,7 +2732,7 @@ jr_001_7b8c:
 
 Call_001_7b90:
     push bc
-    ldh a, [$ae]
+    ldh a, [$ffae]
     ld c, a
     ld b, $00
     ld hl, $ffaf
@@ -2756,7 +2756,7 @@ Call_001_7ba9:
     push de
     push bc
     call Call_001_7bc5
-    ldh a, [$ae]
+    ldh a, [$ffae]
     cp $04
     jr nz, jr_001_7bbb
 
@@ -2767,7 +2767,7 @@ Call_001_7ba9:
 
 jr_001_7bbb:
     add hl, bc
-    ldh a, [$ab]
+    ldh a, [$ffab]
     ld c, a
     add hl, bc
     ld a, [hl]
@@ -2779,7 +2779,7 @@ jr_001_7bbb:
 
 Call_001_7bc5:
     call Call_001_7b90
-    ldh a, [$ac]
+    ldh a, [$ffac]
     ld c, a
     ld a, [de]
     add c
@@ -2993,7 +2993,7 @@ trap_4b_7dcc:
     ld b, d
     ld hl, $c3e0
     push hl
-    ldh a, [$b4]
+    ldh a, [$ffb4]
     ld c, a
     trap $ba
     ld a, b
@@ -3308,7 +3308,7 @@ jr_001_7f21:
 
 LoadPencilTiles:
     ld e, a
-    ldh a, [$aa]
+    ldh a, [$ffaa]
     add $28
     ld d, a
     ld c, $04

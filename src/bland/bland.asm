@@ -47,8 +47,8 @@ call_a10d:
     ld a, $20
     trap DrawInit
     ld a, $e4
-    ldh [$9d], a
-    ldh [$9c], a
+    ldh [$ff9d], a
+    ldh [$ff9c], a
     call call_a189
     ld a, [$0014]
     cp $01
@@ -158,8 +158,8 @@ call_a1a8:
     trap LCDDisable
     call call_b553
     xor a
-    ldh [$9b], a
-    ldh [$9a], a
+    ldh [$ff9b], a
+    ldh [$ff9a], a
     ld hl, $0505
     trap DrawAt
     ld hl, data_b597
@@ -186,14 +186,14 @@ call_a1a8:
 jr_000_a20e:
     trap AwaitFrame
     trap RandNext
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     bit 2, a
     jp nz, call_a105
 
     bit 3, a
     jr z, jr_000_a20e
 
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     bit 0, a
     jr nz, jr_000_a227
 
@@ -205,9 +205,9 @@ jr_000_a227:
     trap AudioPlayMusic
     trap LCDDisable
     ld a, $f4
-    ldh [$9b], a
+    ldh [$ff9b], a
     ld a, $04
-    ldh [$9a], a
+    ldh [$ff9a], a
     ld hl, $c800
     res 1, [hl]
     ret
@@ -252,7 +252,7 @@ jr_000_a263:
     jr jr_000_a250
 
 jr_000_a267:
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and $0f
     jr nz, jr_000_a280
 
@@ -282,7 +282,7 @@ call_a286:
 
     trap LCDDisable
     xor a
-    ldh [$83], a
+    ldh [$ff83], a
     call call_b553
     ld hl, $c8ed
     ld a, $63
@@ -423,7 +423,7 @@ jr_000_a38d:
 
 call_a393:
     trap AwaitFrame
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and a
     jr nz, call_a393
 
@@ -435,7 +435,7 @@ call_a39b:
 
 jr_000_a39e:
     trap AwaitFrame
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and a
     jr z, jr_000_a39e
 
@@ -1785,7 +1785,7 @@ call_aaaa:
 
 
 call_aaba:
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     bit 6, a
     push af
     call nz, call_ab8e
@@ -1796,7 +1796,7 @@ call_aaba:
 
 
 call_aac9:
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     bit 5, a
     push af
     call nz, call_abfb
@@ -1807,7 +1807,7 @@ call_aac9:
 
 
 call_aad8:
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     bit 6, a
     push af
     call nz, call_aba9
@@ -1818,7 +1818,7 @@ call_aad8:
 
 
 call_aae7:
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     bit 5, a
     push af
     call nz, call_ac17
@@ -1832,7 +1832,7 @@ call_aaf6:
     call call_a843
     jr c, jr_000_ab45
 
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     bit 0, a
     jr nz, jr_000_ab41
 
@@ -3455,8 +3455,8 @@ jr_000_b390:
     ld hl, $c919
     set 7, [hl]
     xor a
-    ldh [$9b], a
-    ldh [$9a], a
+    ldh [$ff9b], a
+    ldh [$ff9a], a
     ld hl, $0204
     trap DrawAt
     ld hl, data_b5de
@@ -3520,8 +3520,8 @@ call_b42a:
     trap LCDDisable
     call call_b553
     xor a
-    ldh [$9b], a
-    ldh [$9a], a
+    ldh [$ff9b], a
+    ldh [$ff9a], a
     ld hl, $0807
     trap DrawAt
     ld hl, data_b5ac
@@ -3583,7 +3583,7 @@ jr_000_b47d:
     jr jr_000_b47d
 
 jr_000_b4a0:
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and $0f
     jr nz, jr_000_b4b4
 
@@ -3678,7 +3678,7 @@ call_b513:
     bit 0, a
     ret z
 
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     bit 3, a
     ret z
 
@@ -3695,7 +3695,7 @@ call_b513:
 
 jr_000_b537:
     trap AwaitFrame
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     bit 3, a
     jr z, jr_000_b537
 
@@ -4384,7 +4384,7 @@ jp_bfbc:
     call call_a10d
 
 jp_bfc2:
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     bit 2, a
     jp nz, call_a105
 

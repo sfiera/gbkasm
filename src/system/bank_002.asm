@@ -1251,7 +1251,7 @@ AlternateAddrGBToCRAM:
     ld h, a
     ldh a, [hRAMBank]
     and $fc
-    ldh [$97], a
+    ldh [$ff97], a
     ldh a, [hRAMBank]
     and $03
     rrca
@@ -1676,7 +1676,7 @@ Call_002_48dc:
     ld a, [hl+]
     ld d, a
     ld a, [hl]
-    ldh [$97], a
+    ldh [$ff97], a
     ld hl, -HEADER_SIZE
     add hl, de
     ccf
@@ -1712,7 +1712,7 @@ jr_002_4904:
     cp d
     jr nz, jr_002_491e
 
-    ldh a, [$97]
+    ldh a, [$ff97]
     cp [hl]
     jr nz, jr_002_491e
 
@@ -1722,7 +1722,7 @@ jr_002_4904:
     ld [hl], a
     ld a, $78
     sub b
-    ldh [$b7], a
+    ldh [$ffb7], a
     jp RestoreRAMBankAndLock
 
 
@@ -1807,7 +1807,7 @@ trap_8f_496e:
     cp $ff
     jp z, Jump_002_49dc
 
-    ldh [$97], a
+    ldh [$ff97], a
     inc hl
     inc hl
     inc hl
@@ -1903,7 +1903,7 @@ TrapFileNext:
     jr z, jr_002_4a05
 
     ld a, [hl]
-    ldh [$97], a
+    ldh [$ff97], a
     ld hl, -HEADER_SIZE
     add hl, de
     jr nc, jr_002_49fc
@@ -1983,7 +1983,7 @@ jr_002_4a36:
 
 trap_fc_4a3c:
     ld a, e
-    ldh [$97], a
+    ldh [$ff97], a
     ldh a, [hRAMBank]
     push af
     call RealAddrGBToCRAM
@@ -2006,7 +2006,7 @@ FileCopyHeader:
     ld a, h
     ld [bc], a
     inc bc
-    ldh a, [$97]
+    ldh a, [$ff97]
     ld [bc], a
     inc bc
     ld l, c
@@ -2084,7 +2084,7 @@ TrapFileWrite:
     cp $ff
     jr nz, jr_002_4aa8
 
-    ldh a, [$b7]
+    ldh a, [$ffb7]
     ld c, a
 
 jr_002_4aa8:
@@ -2154,7 +2154,7 @@ jr_002_4adf:
     inc hl
     ld [hl], d
     inc hl
-    ldh a, [$97]
+    ldh a, [$ff97]
     ld [hl], a
     inc hl
     push hl
@@ -2542,7 +2542,7 @@ trap_eb_4c9a:
     call Call_002_4cb8
     pop hl
     push bc
-    ldh [$97], a
+    ldh [$ff97], a
     call TrapCRAMRead
     pop bc
     pop hl
@@ -2555,7 +2555,7 @@ trap_ec_4ca9:
     call Call_002_4cb8
     pop hl
     push bc
-    ldh [$97], a
+    ldh [$ff97], a
     call TrapCRAMWrite
     pop bc
     pop hl
@@ -2874,7 +2874,7 @@ jr_002_4df5:
     halt
 
 trap_fd_4df6:
-    ldh a, [$89]
+    ldh a, [$ff89]
     ld b, a
     ld a, $c8
     sub b
@@ -2904,7 +2904,7 @@ jr_002_4e15:
     halt
 
 Call_002_4e16:
-    ldh a, [$89]
+    ldh a, [$ff89]
     ld b, a
     ld a, $c8
     sub b
@@ -2934,9 +2934,9 @@ jr_002_4e35:
     halt
 
 trap_ff_4e36:
-    ldh a, [$88]
+    ldh a, [$ff88]
     ld b, a
-    ldh a, [$87]
+    ldh a, [$ff87]
     sub b
     add c
     jr c, jr_002_4e35
@@ -2957,7 +2957,7 @@ jr_002_4e4f:
     halt
 
 jr_002_4e50:
-    ldh a, [$89]
+    ldh a, [$ff89]
     add b
     jr c, jr_002_4e4f
 
@@ -2966,7 +2966,7 @@ jr_002_4e50:
 
     push bc
     push hl
-    ldh a, [$87]
+    ldh a, [$ff87]
     ld l, a
     ld h, $c2
     ld [hl], $02
@@ -3046,7 +3046,7 @@ jr_002_4eab:
 TrapAwaitBlit:
     ei
     halt
-    ldh a, [$89]
+    ldh a, [$ff89]
     or a
     jr nz, TrapAwaitBlit
 
@@ -3057,9 +3057,9 @@ jr_002_4eb7:
     halt
 
 Call_002_4eb8:
-    ldh a, [$88]
+    ldh a, [$ff88]
     ld b, a
-    ldh a, [$87]
+    ldh a, [$ff87]
     sub b
     cp $f0
     jr nc, jr_002_4eb7
@@ -3076,7 +3076,7 @@ jr_002_4ecc:
     halt
 
 jr_002_4ecd:
-    ldh a, [$89]
+    ldh a, [$ff89]
     add b
     jr c, jr_002_4ecc
 
@@ -3085,7 +3085,7 @@ jr_002_4ecd:
 
     push hl
     push de
-    ldh a, [$87]
+    ldh a, [$ff87]
     ld l, a
     ld h, $c2
     ld [hl], $03
@@ -3117,10 +3117,10 @@ jr_002_4ecd:
     inc l
     di
     ld a, l
-    ldh [$87], a
-    ldh a, [$89]
+    ldh [$ff87], a
+    ldh a, [$ff89]
     add b
-    ldh [$89], a
+    ldh [$ff89], a
     ei
     ret
 
@@ -3319,9 +3319,9 @@ data_02_4f08:
     cpl
     ld [hl+], a
     ld a, b
-    ldh [$89], a
+    ldh [$ff89], a
     ld a, c
-    ldh [$88], a
+    ldh [$ff88], a
     ret
 
 
@@ -3519,9 +3519,9 @@ data_02_4fcf:
     ld [de], a
     inc de
     ld a, b
-    ldh [$89], a
+    ldh [$ff89], a
     ld a, c
-    ldh [$88], a
+    ldh [$ff88], a
     ret
 
 
@@ -3655,9 +3655,9 @@ data_02_5096:
     ld [hl+], a
     ld [hl+], a
     ld a, b
-    ldh [$89], a
+    ldh [$ff89], a
     ld a, c
-    ldh [$88], a
+    ldh [$ff88], a
     ret
 
 
@@ -3855,16 +3855,16 @@ data_02_511d:
     inc e
     ld [hl+], a
     ld a, e
-    ldh [$88], a
+    ldh [$ff88], a
     ld a, b
-    ldh [$89], a
+    ldh [$ff89], a
     ret
 
 
 Call_02_51e4:
-    ldh a, [$88]
+    ldh a, [$ff88]
     ld l, a
-    ldh a, [$87]
+    ldh a, [$ff87]
     sub l
     ret z
 
@@ -3899,7 +3899,7 @@ Call_02_51e4:
     ld h, $c2
     ld de, Call_02_51e4
     push de
-    ldh a, [$89]
+    ldh a, [$ff89]
     sub b
     ld b, a
     ld e, [hl]
@@ -3923,9 +3923,9 @@ Call_02_51e4:
     pop af
     pop af
     xor a
-    ldh [$87], a
-    ldh [$88], a
-    ldh [$89], a
+    ldh [$ff87], a
+    ldh [$ff88], a
+    ldh [$ff89], a
     ret
 
 
@@ -4499,7 +4499,7 @@ TrapMemSet:
     or c
     ret z
 
-    ldh a, [$86]
+    ldh a, [$ff86]
     or a
     jr z, jr_002_55ee
 
@@ -4566,9 +4566,9 @@ jr_002_5622:
 
 Call_002_5623:
 jr_002_5623:
-    ldh a, [$88]
+    ldh a, [$ff88]
     ld b, a
-    ldh a, [$87]
+    ldh a, [$ff87]
     sub b
     cp $f0
     jr nc, jr_002_5622
@@ -4584,7 +4584,7 @@ jr_002_5636:
     halt
 
 jr_002_5637:
-    ldh a, [$89]
+    ldh a, [$ff89]
     add b
     jr c, jr_002_5636
 
@@ -4593,7 +4593,7 @@ jr_002_5637:
 
     push de
     push hl
-    ldh a, [$87]
+    ldh a, [$ff87]
     ld l, a
     ld h, $c2
     ld [hl], $01
@@ -4622,10 +4622,10 @@ data_02_5653:
     inc l
     di
     ld a, l
-    ldh [$87], a
-    ldh a, [$89]
+    ldh [$ff87], a
+    ldh a, [$ff89]
     add b
-    ldh [$89], a
+    ldh [$ff89], a
     ei
     ret
 
@@ -4634,7 +4634,7 @@ jr_002_566d:
     halt
 
 Call_002_566e:
-    ldh a, [$89]
+    ldh a, [$ff89]
     ld b, a
     ld a, $c8
     sub b
@@ -4736,7 +4736,7 @@ trap_c5_56c4:
     call trap_c6_5730
     jp c, Jump_002_5715
 
-    ldh [$a1], a
+    ldh [$ffa1], a
     ld e, l
     ld d, h
     ldh a, [rLCDC]
@@ -4796,7 +4796,7 @@ Jump_002_5715:
     pop de
     pop hl
     pop bc
-    ldh a, [$a1]
+    ldh a, [$ffa1]
     ret
 
 
@@ -4819,7 +4819,7 @@ jr_002_5721:
     or a
 
 jr_002_572d:
-    ldh a, [$a1]
+    ldh a, [$ffa1]
     ret
 
 
@@ -4827,7 +4827,7 @@ trap_c6_5730:
     cp $ff
     jr nz, jr_002_5736
 
-    ldh a, [$a1]
+    ldh a, [$ffa1]
 
 jr_002_5736:
     ld l, a
@@ -4889,7 +4889,7 @@ TrapDrawInit:
 
 TrapLCDEnable:
     or $80
-    ldh [$86], a
+    ldh [$ff86], a
     ldh [rLCDC], a
     xor a
     ldh [rBGP], a
@@ -5018,20 +5018,20 @@ Call_002_5831:
     ldh [rSCX], a
     ldh [rWY], a
     ldh [rWX], a
-    ldh [$9a], a
-    ldh [$9b], a
-    ldh [$9f], a
-    ldh [$a0], a
+    ldh [$ff9a], a
+    ldh [$ff9b], a
+    ldh [$ff9f], a
+    ldh [$ffa0], a
     ret
 
 
 Call_002_5843:
     ld a, $e4
-    ldh [$9c], a
+    ldh [$ff9c], a
     ld a, $d8
-    ldh [$9d], a
+    ldh [$ff9d], a
     ld a, $9c
-    ldh [$9e], a
+    ldh [$ff9e], a
     ret
 
 
@@ -5100,7 +5100,7 @@ Call_002_58c1:
 
 trap_c4_58c4:
     ld a, c
-    ldh [$a1], a
+    ldh [$ffa1], a
     call trap_c6_5730
     xor a
 
@@ -5144,7 +5144,7 @@ jr_002_58e8:
 
 jr_002_58f4:
     xor a
-    ldh [$86], a
+    ldh [$ff86], a
     ret
 
 
@@ -6614,7 +6614,7 @@ jr_002_5f59:
     halt
 
 Call_002_5f5a:
-    ldh a, [$89]
+    ldh a, [$ff89]
     ld b, a
     ld a, $c8
     sub b
@@ -6687,9 +6687,9 @@ jr_002_5fa5:
 
 Call_002_5fa6:
 jr_002_5fa6:
-    ldh a, [$88]
+    ldh a, [$ff88]
     ld b, a
-    ldh a, [$87]
+    ldh a, [$ff87]
     sub b
     cp $f0
     jr nc, jr_002_5fa5
@@ -6707,7 +6707,7 @@ jr_002_5fbc:
     halt
 
 jr_002_5fbd:
-    ldh a, [$89]
+    ldh a, [$ff89]
     add b
     jr c, jr_002_5fbc
 
@@ -6715,7 +6715,7 @@ jr_002_5fbd:
     jr nc, jr_002_5fbc
 
     push hl
-    ldh a, [$87]
+    ldh a, [$ff87]
     ld l, a
     ld h, $c2
     ld [hl], $04
@@ -6742,10 +6742,10 @@ jr_002_5fbd:
     inc l
     di
     ld a, l
-    ldh [$87], a
-    ldh a, [$89]
+    ldh [$ff87], a
+    ldh a, [$ff89]
     add b
-    ldh [$89], a
+    ldh [$ff89], a
     ei
     ret
 
@@ -6763,25 +6763,25 @@ trap_b0_5ff2:
     ld bc, (DMASprites.end - DMASprites)
     trap MemCopy
     xor a
-    ldh [$82], a
-    ldh [$83], a
-    ldh [$84], a
-    ldh [$85], a
-    ldh [$86], a
-    ldh [$87], a
-    ldh [$88], a
-    ldh [$89], a
-    ldh [$8b], a
-    ldh [$8c], a
-    ldh [$8d], a
-    ldh [$93], a
-    ldh [$94], a
-    ldh [$95], a
-    ldh [$96], a
+    ldh [$ff82], a
+    ldh [$ff83], a
+    ldh [$ff84], a
+    ldh [$ff85], a
+    ldh [$ff86], a
+    ldh [$ff87], a
+    ldh [$ff88], a
+    ldh [$ff89], a
+    ldh [$ff8b], a
+    ldh [$ff8c], a
+    ldh [$ff8d], a
+    ldh [$ff93], a
+    ldh [$ff94], a
+    ldh [$ff95], a
+    ldh [$ff96], a
     cpl
-    ldh [$8a], a
-    ldh [$98], a
-    ldh [$99], a
+    ldh [$ff8a], a
+    ldh [$ff98], a
+    ldh [$ff99], a
     ret
 
 
@@ -6827,12 +6827,12 @@ trap_b6_605c:
     ld a, l
     and h
     ld l, a
-    ldh a, [$99]
+    ldh a, [$ff99]
     cpl
     or h
     cpl
     or l
-    ldh [$99], a
+    ldh [$ff99], a
     ret
 
 
@@ -6859,13 +6859,13 @@ jr_002_607f:
     dec b
     jr nz, jr_002_607f
 
-    ldh a, [$99]
+    ldh a, [$ff99]
     bit 0, a
     call nz, $fff5
     call Call_02_51e4
 
 jr_002_608f:
-    ldh a, [$99]
+    ldh a, [$ff99]
     bit 1, a
     call nz, Call_002_60fa
     ldh a, [rIE]
@@ -6875,11 +6875,11 @@ jr_002_608f:
     inc [hl]
     ld hl, $ff84
     inc [hl]
-    ldh a, [$99]
+    ldh a, [$ff99]
     bit 3, a
     call z, Call_002_60b4
     ld a, $01
-    ldh [$82], a
+    ldh [$ff82], a
     pop hl
     pop de
     pop bc
@@ -6904,16 +6904,16 @@ Call_002_60b4:
 
 TrapAwaitFrame:
     xor a
-    ldh [$82], a
+    ldh [$ff82], a
     ei
 
 jr_002_60c9:
     halt
-    ldh a, [$82]
+    ldh a, [$ff82]
     dec a
     jr nz, jr_002_60c9
 
-    ldh [$82], a
+    ldh [$ff82], a
     ret
 
 
@@ -6940,13 +6940,13 @@ trap_db_60e2:
     push de
     push hl
     xor a
-    ldh [$8c], a
-    ldh [$8d], a
-    ldh [$8b], a
-    ldh [$b6], a
+    ldh [$ff8c], a
+    ldh [$ff8d], a
+    ldh [$ff8b], a
+    ldh [$ffb6], a
     cpl
-    ldh [$8a], a
-    ldh [$b5], a
+    ldh [$ff8a], a
+    ldh [$ffb5], a
     call Call_002_60fa
     pop hl
     pop de
@@ -6975,38 +6975,38 @@ Call_002_60fa:
     and $0f
     or b
     ld b, a
-    ldh [$8a], a
+    ldh [$ff8a], a
     ld a, $30
     ldh [rP1], a
-    ldh a, [$b5]
+    ldh a, [$ffb5]
     xor b
     and b
     ld c, a
-    ldh [$8b], a
-    ldh [$b6], a
+    ldh [$ff8b], a
+    ldh [$ffb6], a
     ld a, b
-    ldh [$b5], a
+    ldh [$ffb5], a
     jr nz, jr_002_614b
 
     and $f0
     ret z
 
-    ldh a, [$98]
+    ldh a, [$ff98]
     ld b, a
-    ldh a, [$84]
+    ldh a, [$ff84]
     cp b
     jr c, jr_002_6147
 
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and $f0
     ld c, a
-    ldh [$b6], a
+    ldh [$ffb6], a
     ld a, $06
     jr jr_002_6152
 
 jr_002_6147:
     xor a
-    ldh [$b6], a
+    ldh [$ffb6], a
     ret
 
 
@@ -7018,19 +7018,19 @@ jr_002_614b:
     ld a, $18
 
 jr_002_6152:
-    ldh [$98], a
+    ldh [$ff98], a
     xor a
-    ldh [$84], a
+    ldh [$ff84], a
 
 jr_002_6157:
-    ldh [$85], a
-    ldh a, [$99]
+    ldh [$ff85], a
+    ldh a, [$ff99]
     and $10
     ret z
 
-    ldh a, [$8d]
+    ldh a, [$ff8d]
     ld l, a
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     ld e, a
     ld h, $0f
     sub l
@@ -7045,21 +7045,21 @@ jr_002_6157:
     ld a, e
     inc a
     and $0f
-    ldh [$8c], a
+    ldh [$ff8c], a
     ret
 
 
 trap_da_6178:
     push bc
     push de
-    ldh a, [$99]
+    ldh a, [$ff99]
     bit 1, a
     call z, Call_002_60fa
-    ldh a, [$b6]
+    ldh a, [$ffb6]
     ld h, a
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     ld l, a
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     pop de
     pop bc
     ret
@@ -7081,23 +7081,23 @@ TrapInputButtons:
 
 jr_002_619d:
     pop hl
-    ldh a, [$99]
+    ldh a, [$ff99]
     and $10
-    ldh a, [$b6]
+    ldh a, [$ffb6]
     ret z
 
     push de
     push hl
-    ldh a, [$8d]
+    ldh a, [$ff8d]
     ld e, a
-    ldh a, [$8c]
+    ldh a, [$ff8c]
     sub e
     jr z, jr_002_61bd
 
     ld a, e
     inc a
     and $0f
-    ldh [$8d], a
+    ldh [$ff8d], a
     ld d, $00
     ld hl, $c3a0
     add hl, de
@@ -7233,18 +7233,18 @@ jr_002_624b:
     jr nz, jr_002_624b
 
     xor a
-    ldh [$94], a
-    ldh [$95], a
+    ldh [$ff94], a
+    ldh [$ff95], a
     jr jr_002_6269
 
 jr_002_625d:
-    ldh a, [$95]
+    ldh a, [$ff95]
     or a
     jr z, jr_002_6269
 
     xor a
-    ldh [$94], a
-    ldh [$95], a
+    ldh [$ff94], a
+    ldh [$ff95], a
     jr jr_002_6239
 
 jr_002_6269:
@@ -7294,7 +7294,7 @@ jr_002_6291:
     jr jr_002_6239
 
 jr_002_62a6:
-    ldh a, [$95]
+    ldh a, [$ff95]
     or a
     jr z, jr_002_62ae
 
@@ -7310,8 +7310,8 @@ jr_002_62ae:
 
 jr_002_62b6:
     xor a
-    ldh [$94], a
-    ldh [$95], a
+    ldh [$ff94], a
+    ldh [$ff95], a
     ld [de], a
     ldh a, [hDrawMode]
     and ~(1 << DrawMode_Bit2)
@@ -7324,10 +7324,10 @@ jr_002_62b6:
 
 
 Call_002_62c8:
-    ldh a, [$96]
+    ldh a, [$ff96]
     and $f8
     or h
-    ldh [$96], a
+    ldh [$ff96], a
     and $07
     cp $04
     jr z, jr_002_62ee
@@ -7337,14 +7337,14 @@ Call_002_62d5:
     ldh a, [hDrawMode]
     and ~(1 << DrawMode_Bit2)
     ldh [hDrawMode], a
-    ldh a, [$96]
+    ldh a, [$ff96]
     and $07
     cp $04
     jr nz, jr_002_62eb
 
-    ldh a, [$96]
+    ldh a, [$ff96]
     dec a
-    ldh [$96], a
+    ldh [$ff96], a
 
 jr_002_62eb:
     jp Jump_002_66aa
@@ -7357,10 +7357,10 @@ jr_002_62ee:
     and ~(1 << DrawMode_Bit2)
     or b
     ldh [hDrawMode], a
-    ldh a, [$96]
+    ldh a, [$ff96]
     and $f8
     or $04
-    ldh [$96], a
+    ldh [$ff96], a
     jp Jump_002_66aa
 
 
@@ -7447,7 +7447,7 @@ jr_002_634e:
 Call_002_6350:
 jr_002_6350:
     push de
-    ldh a, [$95]
+    ldh a, [$ff95]
     ld e, a
     ld d, $00
     or a
@@ -7484,10 +7484,10 @@ jr_002_636c:
     push hl
     sub $1b
     ld l, a
-    ldh a, [$96]
+    ldh a, [$ff96]
     and $f8
     or l
-    ldh [$96], a
+    ldh [$ff96], a
     ld a, l
     ld h, $04
     cp h
@@ -7503,13 +7503,13 @@ jr_002_638d:
     or b
     ld [hl], a
     pop hl
-    ldh a, [$96]
+    ldh a, [$ff96]
     call Call_002_66aa
     jr jr_002_6350
 
 Call_002_639e:
     ld de, $1058
-    ldh a, [$96]
+    ldh a, [$ff96]
     and $40
     jr z, jr_002_63a9
 
@@ -7562,9 +7562,9 @@ Call_002_63cc:
     bit 2, a
     jp z, Jump_002_6483
 
-    ldh a, [$96]
+    ldh a, [$ff96]
     xor $80
-    ldh [$96], a
+    ldh [$ff96], a
     rlca
     jr c, jr_002_63f2
 
@@ -7579,13 +7579,13 @@ jr_002_63f2:
     push bc
     push de
     push hl
-    ldh a, [$96]
+    ldh a, [$ff96]
     xor $40
-    ldh [$96], a
+    ldh [$ff96], a
     call Call_002_639e
     xor a
-    ldh [$95], a
-    ldh [$94], a
+    ldh [$ff95], a
+    ldh [$ff94], a
     ldh a, [hDrawMode2]
     ld c, $10
     call Call_02_662b
@@ -7617,7 +7617,7 @@ jr_002_641b:
 
 
 jr_002_641f:
-    ldh a, [$96]
+    ldh a, [$ff96]
     bit 7, a
     jr z, jr_002_6417
 
@@ -7627,7 +7627,7 @@ jr_002_641f:
     push de
     push hl
     xor a
-    ldh [$95], a
+    ldh [$ff95], a
     ldh a, [hDrawMode2]
     ld e, a
     ld d, $00
@@ -7674,7 +7674,7 @@ jr_002_6462:
     ld a, $00
     adc h
     ld h, a
-    ldh a, [$94]
+    ldh a, [$ff94]
     ld e, a
     inc a
     cp d
@@ -7683,7 +7683,7 @@ jr_002_6462:
     xor a
 
 jr_002_6470:
-    ldh [$94], a
+    ldh [$ff94], a
     ld d, $00
     add hl, de
     ld a, [hl]
@@ -7729,7 +7729,7 @@ Jump_002_6483:
     ld c, $10
     call Call_02_662b
     xor a
-    ldh [$94], a
+    ldh [$ff94], a
     call Call_002_640d
 
 jr_002_64b7:

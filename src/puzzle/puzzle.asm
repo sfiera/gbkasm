@@ -910,7 +910,7 @@ call_069d:
 
 
 call_06b3:
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     cp $01
     jr nz, jr_000_06bd
 
@@ -1992,10 +1992,10 @@ call_0cec:
     ldx hl, data_0e12
     callx call_0d1b
     xor a
-    ldh [$8a], a
+    ldh [$ff8a], a
 
 jr_000_0d11:
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     bit 0, a
     jr z, jr_000_0d11
 
@@ -2079,7 +2079,7 @@ jr_000_0d9a:
     callx call_0c54
 
 jr_000_0da1:
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and a
     jr nz, jr_000_0da1
 

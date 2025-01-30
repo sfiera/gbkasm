@@ -210,7 +210,7 @@ TrapMemCopy::
     or c
     ret z
 
-    ldh a, [$86]
+    ldh a, [$ff86]
     or a
     jr z, .copyNonVRAM
 
@@ -294,10 +294,10 @@ jr_000_01a8:
 
     di
     ld a, l
-    ldh [$87], a
-    ldh a, [$89]
+    ldh [$ff87], a
+    ldh a, [$ff89]
     add b
-    ldh [$89], a
+    ldh [$ff89], a
     ei
 
 trap_none_0::
@@ -345,7 +345,7 @@ Jump_000_021c:
     push bc
     push de
     push hl
-    ldh a, [$99]
+    ldh a, [$ff99]
     bit 2, a
     call nz, TrapAudioUnknownJump
     pop hl
@@ -1212,7 +1212,7 @@ Jump_000_06b9::
     ld bc, $9902
     call Call_000_0882
     ld a, $03
-    ldh [$ae], a
+    ldh [$ffae], a
     ld de, $900d
     ld hl, $0000
     trap KbdInit
@@ -1530,7 +1530,7 @@ jr_000_092b:
 
 
 jr_000_0943:
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and $04
     ret z
 
@@ -1546,7 +1546,7 @@ jr_000_0943:
     scf
     ret z
 
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     ld [$c660], a
     ldh a, [hROMBank]
     ld [$c65f], a

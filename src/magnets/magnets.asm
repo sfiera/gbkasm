@@ -271,7 +271,7 @@ call_a1f7:
     push af
 
 jr_a1f8::
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and a
     jr nz, jr_a1f8
 
@@ -284,7 +284,7 @@ jp_a1ff:
     call call_a1f7
 
 jr_a203::
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and a
     jr z, jr_a203
 
@@ -296,7 +296,7 @@ jp_a20a:
     push af
 
 jr_a20b::
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     bit 0, a
     jr z, jr_a20b
 
@@ -365,10 +365,10 @@ call_a267:
     xor a
     trap DrawInit
     ld a, $e4
-    ldh [$9d], a
+    ldh [$ff9d], a
     ld a, $d8
-    ldh [$9c], a
-    ldh [$9e], a
+    ldh [$ff9c], a
+    ldh [$ff9e], a
     call call_a278
     ret
 
@@ -1066,7 +1066,7 @@ jr_a683::
 
 jr_a68e::
     trap AwaitFrame
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     bit 1, a
     jr nz, jr_a683
 
@@ -1211,7 +1211,7 @@ jr_a75d::
     ld [$d04d], a
     ld a, [$cf21]
     ld c, a
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     rrca
     jr c, jr_a7a4
 
@@ -2542,9 +2542,9 @@ call_ae80:
 
 jr_ae82::
     ld b, $07
-    ldh a, [$9a]
+    ldh a, [$ff9a]
     inc a
-    ldh [$9a], a
+    ldh [$ff9a], a
 
 jr_ae89::
     trap AwaitFrame
@@ -2583,12 +2583,12 @@ data_ae92:
     db $ff
 
 call_afd6::
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and a
     jr nz, call_afd6
 
 jr_afdb::
-    ldh a, [$8a]
+    ldh a, [$ff8a]
 
 jr_afdd::
     bit 2, a
@@ -2815,7 +2815,7 @@ jr_b103::
     trap AudioPlaySound
 
 jr_b10d::
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and $01
     jr nz, jr_b10d
 
@@ -2850,7 +2850,7 @@ jr_b113::
     call call_b02e
     jr c, jr_b1ab
 
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     bit 2, a
     jr z, jr_b113
 
@@ -2996,7 +2996,7 @@ call_b25a::
     trap AudioPlaySound
     call call_b963
     call call_a660
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and $02
     jr nz, call_b25a
 

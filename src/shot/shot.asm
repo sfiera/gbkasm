@@ -62,7 +62,7 @@ Main::
     jr z, .waitStart
 
     xor a
-    ldh [$83], a
+    ldh [$ff83], a
 
 .play
     callx CheckCount
@@ -83,11 +83,11 @@ Main::
     trap ExitToMenu
 
 CheckTime:
-    ldh a, [$83]
+    ldh a, [$ff83]
     sub 60
     jr c, DrawTime
 
-    ldh [$83], a
+    ldh [$ff83], a
     ld hl, VarTime
     dec [hl]
 

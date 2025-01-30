@@ -156,7 +156,7 @@ jr_000_01e8::
 
 jr_000_01ed::
     trap AwaitFrame
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and a
     jp z, $a15b
 
@@ -684,7 +684,7 @@ call_a501:
     trap DrawString
 
 jr_000_0560::
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and a
     jp nz, call_a438
 
@@ -997,13 +997,13 @@ jr_000_0885:
 
     call call_b2da
     ld [$d024], a
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     bit 2, a
     jr z, call_a87d
 
     jr jr_000_089e
 
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     bit 2, a
     ret z
 
@@ -2412,7 +2412,7 @@ jr_000_101a::
     trap DrawString
 
 jr_000_102e::
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     cp $21
     jr z, jr_000_1044
 
@@ -2534,17 +2534,17 @@ jr_000_10f6::
     ld hl, $0510
     trap DrawAt
     ld hl, $c400
-    ldh a, [$92]
+    ldh a, [$ff92]
     push af
     or $40
-    ldh [$92], a
+    ldh [$ff92], a
     trap DrawString
     pop af
     and $fb
-    ldh [$92], a
+    ldh [$ff92], a
 
 jr_000_1118::
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and a
     jp nz, call_aec4
 
@@ -2730,13 +2730,13 @@ call_b2bc:
 
 call_b2d2:
     xor $00
-    ldh [$8a], a
+    ldh [$ff8a], a
     ld [$c64e], a
     ret
 
 
 call_b2da:
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     ld b, a
     ld a, [$c64e]
     xor b

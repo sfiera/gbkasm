@@ -139,11 +139,11 @@ jr_000_008e::
     ld hl, $8000
     trap MemCopy
     ld a, $e4
-    ldh [$9c], a
+    ldh [$ff9c], a
     ld a, $e4
-    ldh [$9d], a
+    ldh [$ff9d], a
     ld a, $e4
-    ldh [$9e], a
+    ldh [$ff9e], a
     ld hl, $ca28
     ld a, $01
     ld [hl+], a
@@ -310,7 +310,7 @@ jr_000_01cc::
     ld [$ca78], a
     ld a, [$ca77]
     ld b, a
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     cp h
     jr nz, jr_000_01e2
 
@@ -1027,7 +1027,7 @@ jr_000_0687::
     ld [hl+], a
     ld a, $01
     ld [hl], a
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     bit 6, a
     jr z, jr_000_06b8
 
@@ -1096,7 +1096,7 @@ jr_000_0706::
     callx @+$08a8
 
 jr_000_071c:
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and a
     jr z, jr_000_071c
 
@@ -1175,7 +1175,7 @@ jr_000_0774::
     callx @+$09f5
 
 jr_000_07bd::
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and a
     jr z, jr_000_07bd
 
@@ -1733,7 +1733,7 @@ jr_000_0aee::
     callx @+$0691
 
 jr_000_0b21::
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and a
     jr z, jr_000_0b21
 
@@ -1784,7 +1784,7 @@ jr_000_0b45::
     callx @+$061f
 
 jr_000_0b93::
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and a
     jr z, jr_000_0b93
 
@@ -1901,7 +1901,7 @@ jr_000_0ef4::
 
 
 jr_000_0f6b::
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     bit 2, a
     jr z, jr_000_0f75
 
@@ -2274,7 +2274,7 @@ call_113c:
     ret
 
 
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     ld b, a
     ld a, [$ca97]
     cp b
@@ -2602,7 +2602,7 @@ jr_000_1347::
     jr nz, jr_000_1340
 
 jr_000_135c::
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and a
     jr z, jr_000_135c
 

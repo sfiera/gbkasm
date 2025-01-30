@@ -385,7 +385,7 @@ call_0272:
 
 jr_000_028a::
     trap AwaitFrame
-    ldh a, [$b6]
+    ldh a, [$ffb6]
     bit 6, a
     jr z, jr_000_02a1
 
@@ -406,7 +406,7 @@ jr_000_02a0::
     ld [hl], a
 
 jr_000_02a1::
-    ldh a, [$b6]
+    ldh a, [$ffb6]
     bit 7, a
     jr z, jr_000_02b6
 
@@ -430,7 +430,7 @@ jr_000_02b6::
     ld a, [hl]
     trap DrawChar
     callx call_0268
-    ldh a, [$b6]
+    ldh a, [$ffb6]
     bit 5, a
     jr z, jr_000_02d3
 
@@ -443,7 +443,7 @@ jr_000_02b6::
     callx call_0268
 
 jr_000_02d3::
-    ldh a, [$b6]
+    ldh a, [$ffb6]
     bit 4, a
     jr z, jr_000_02e5
 
@@ -456,11 +456,11 @@ jr_000_02d3::
     callx call_026d
 
 jr_000_02e5::
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and $07
     ret nz
 
-    ldh a, [$83]
+    ldh a, [$ff83]
     and $08
     jr nz, jr_000_028a
 
@@ -517,7 +517,7 @@ jr_000_0338::
 
 jr_000_0346:
     pop hl
-    ldh a, [$b6]
+    ldh a, [$ffb6]
     bit 5, a
     jr z, jr_000_0359
 
@@ -530,7 +530,7 @@ jr_000_0346:
     jr call_0306
 
 jr_000_0359::
-    ldh a, [$b6]
+    ldh a, [$ffb6]
     bit 4, a
     jr z, jr_000_036b
 
@@ -543,11 +543,11 @@ jr_000_0359::
     jr call_0306
 
 jr_000_036b::
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and $07
     ret nz
 
-    ldh a, [$83]
+    ldh a, [$ff83]
     and $08
     jr nz, jr_000_0319
 
@@ -614,7 +614,7 @@ call_03de:
 
 call_03e8:
     trap DrawAt
-    ldh a, [$b6]
+    ldh a, [$ffb6]
     bit 6, a
     jr z, jr_000_0406
 
@@ -634,7 +634,7 @@ jr_000_03ff::
     ld e, l
 
 jr_000_0406::
-    ldh a, [$b6]
+    ldh a, [$ffb6]
     bit 7, a
     jr z, jr_000_0422
 
@@ -683,7 +683,7 @@ call_044b:
 
 call_045d:
     trap DrawAt
-    ldh a, [$b6]
+    ldh a, [$ffb6]
     bit 6, a
     jr z, jr_000_046d
 
@@ -697,7 +697,7 @@ jr_000_046c::
     inc b
 
 jr_000_046d::
-    ldh a, [$b6]
+    ldh a, [$ffb6]
     bit 7, a
     jr z, jr_000_047b
 
@@ -745,7 +745,7 @@ call_04ab:
     ld a, c
     pop bc
     ld b, a
-    ldh a, [$b6]
+    ldh a, [$ffb6]
     bit 6, a
     jr z, jr_000_04c5
 
@@ -759,7 +759,7 @@ jr_000_04c4::
     inc c
 
 jr_000_04c5::
-    ldh a, [$b6]
+    ldh a, [$ffb6]
     bit 7, a
     jr z, jr_000_04d4
 
@@ -793,7 +793,7 @@ call_04f2:
     callx call_0507
 
 jr_000_0500::
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and $07
     jr z, jr_000_0500
 
@@ -847,7 +847,7 @@ jr_000_056f::
 
 jr_000_057f::
     ld [$c620], a
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and $07
     jr nz, jr_000_05a3
 
@@ -862,17 +862,17 @@ jr_000_0588::
 
 jr_000_059a::
     ld [$c620], a
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and $07
     jr z, jr_000_0564
 
 jr_000_05a3::
     callx call_06ad
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and $05
     ret nz
 
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     bit 1, a
     jr z, jr_000_0564
 
@@ -1026,7 +1026,7 @@ jr_000_070e::
 
 jr_000_0720::
     ld [$c620], a
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and $07
     jr z, jr_000_070e
 
@@ -1149,7 +1149,7 @@ jr_000_0845:
     cp $00
     jr nz, jr_000_0806
 
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     bit 6, a
     jr z, jr_000_0861
 
@@ -1157,7 +1157,7 @@ jr_000_0845:
     jr jr_000_0806
 
 jr_000_0861::
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     bit 7, a
     jr z, jr_000_0870
 
@@ -1165,7 +1165,7 @@ jr_000_0861::
     jr jr_000_0806
 
 jr_000_0870::
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     bit 1, a
     jr z, jr_000_087f
 
@@ -1173,7 +1173,7 @@ jr_000_0870::
     jr jr_000_0806
 
 jr_000_087f::
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and $05
     jr z, jr_000_0845
 
@@ -1638,7 +1638,7 @@ call_0bef:
     trap DrawStringList
 
 jr_000_0bff::
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and $ff
     jr z, jr_000_0bff
 
@@ -1803,7 +1803,7 @@ jr_000_0dc2::
     trap DrawString
 
 jr_000_0e53::
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and $ff
     jr z, jr_000_0e53
 
@@ -1926,7 +1926,7 @@ call_10b5:
 
 
 call_10d5:
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     bit 5, a
     jr z, jr_000_1136
 
@@ -1989,7 +1989,7 @@ jr_000_1118::
     jr jr_000_110e
 
 jr_000_1136::
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     bit 4, a
     jr z, jr_000_118e
 
@@ -2129,7 +2129,7 @@ jr_000_1207::
     jr nz, jr_000_1207
 
 jr_000_1225::
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and $ff
     jr z, jr_000_1225
 

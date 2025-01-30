@@ -72,13 +72,13 @@ PrepMenu::
     ; Save X/Y scroll to memory and reset to (0, 0).
     ; This way, the menu is displayed without scroll,
     ; and scroll can be restored upon exiting the menu.
-    ldh a, [$9b]
+    ldh a, [$ff9b]
     ld [VarSaveScroll.x], a
-    ldh a, [$9a]
+    ldh a, [$ff9a]
     ld [VarSaveScroll.y], a
     xor a
-    ldh [$9b], a
-    ldh [$9a], a
+    ldh [$ff9b], a
+    ldh [$ff9a], a
 
     ; fall through
 
@@ -214,7 +214,7 @@ EditIcon:
     trap $c4
     trap InputButtons
     callx HandleMove
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     bit BTN_STA_F, a
     jr z, .continue
 
@@ -230,7 +230,7 @@ EditIcon:
 
 
 HandleGrid:
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     bit BTN_SEL_F, a
     ret z
 
@@ -256,7 +256,7 @@ LoadBlankTile:
 
 
 HandleMove:
-    ldh a, [$b6]
+    ldh a, [$ffb6]
     ld b, a
     and BTN_DIR
     jr z, .blink
@@ -282,7 +282,7 @@ HandleMove:
 
 .drag
     callx UpdatePosText
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and BTN_AB
     jr z, .blink
 
@@ -298,9 +298,9 @@ HandleMove:
     bit 4, c
     ret nz
 
-    ldh a, [$9b]
+    ldh a, [$ff9b]
     ld d, a
-    ldh a, [$9a]
+    ldh a, [$ff9a]
     ld e, a
     ld hl, $c300
     ld a, [VarCursor.y]
@@ -346,7 +346,7 @@ MoveCursorUp:
 
 .updateScroll
     callx UpdatePosition
-    ldh a, [$9a]
+    ldh a, [$ff9a]
     or a
     jr z, .noUpdate
 
@@ -359,7 +359,7 @@ MoveCursorUp:
 
     ld a, d
     sub TILE_WIDTH
-    ldh [$9a], a
+    ldh [$ff9a], a
 
 .noUpdate
     ret
@@ -376,7 +376,7 @@ MoveCursorDown:
 
 .updateScroll
     callx UpdatePosition
-    ldh a, [$9a]
+    ldh a, [$ff9a]
     cp MAX_SCROLL_Y
     jr nc, .noUpdate
 
@@ -389,7 +389,7 @@ MoveCursorDown:
 
     ld a, d
     add TILE_WIDTH
-    ldh [$9a], a
+    ldh [$ff9a], a
 
 .noUpdate
     ret
@@ -406,7 +406,7 @@ MoveCursorLeft:
 
 .updateScroll
     callx UpdatePosition
-    ldh a, [$9b]
+    ldh a, [$ff9b]
     or a
     jr z, .noUpdate
 
@@ -419,7 +419,7 @@ MoveCursorLeft:
 
     ld a, d
     sub TILE_WIDTH
-    ldh [$9b], a
+    ldh [$ff9b], a
 
 .noUpdate
     ret
@@ -436,7 +436,7 @@ MoveCursorRight:
 
 .updateScroll
     callx UpdatePosition
-    ldh a, [$9b]
+    ldh a, [$ff9b]
     cp MAX_SCROLL_X
     jr nc, .noUpdate
 
@@ -449,7 +449,7 @@ MoveCursorRight:
 
     ld a, d
     add TILE_WIDTH
-    ldh [$9b], a
+    ldh [$ff9b], a
 
 .noUpdate
     ret
@@ -478,7 +478,7 @@ UpdatePosText:
 
 
 HandleDraw:
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     ld e, a
     and BTN_AB
     ret z
@@ -775,15 +775,15 @@ InitMemory:
 
 EditInitVideo:
     ld a, PALETTE
-    ldh [$9d], a
+    ldh [$ff9d], a
     ld a, $07
-    ldh [$a0], a
+    ldh [$ffa0], a
     ld a, WINDOW_TOP
-    ldh [$9f], a
+    ldh [$ff9f], a
     ld a, [VarSaveScroll.x]
-    ldh [$9b], a
+    ldh [$ff9b], a
     ld a, [VarSaveScroll.y]
-    ldh [$9a], a
+    ldh [$ff9a], a
     callx LoadIconTiles
     callx LoadBlankTile
     ldx de, TileShades + $10
@@ -812,8 +812,8 @@ ClearIcon:
     xor a
     ld [VarSaveScroll.x], a
     ld [VarSaveScroll.y], a
-    ldh [$9b], a
-    ldh [$9a], a
+    ldh [$ff9b], a
+    ldh [$ff9a], a
     ld [VarCursor.x], a
     ld [VarCursor.y], a
     ld [VarC765], a

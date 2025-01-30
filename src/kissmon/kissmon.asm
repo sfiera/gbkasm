@@ -45,7 +45,7 @@ Main::
     ld a, $20
     trap DrawInit
     ld a, $e4
-    ldh [$9d], a
+    ldh [$ff9d], a
     ldx hl, layout_01a9
     trap DrawLayout
     callx call_0177
@@ -140,7 +140,7 @@ call_0245:
     ld a, $20
     trap DrawInit
     ld a, $e4
-    ldh [$9d], a
+    ldh [$ff9d], a
     ld a, [$cca3]
     ld hl, $8000
     callx call_0cf8
@@ -598,8 +598,8 @@ call_06a0:
     jr nc, .jr_06b3
 
     xor a
-    ldh [$9b], a
-    ldh [$9a], a
+    ldh [$ff9b], a
+    ldh [$ff9a], a
     jx call_0c8e
 
 
@@ -617,9 +617,9 @@ call_06a0:
 
 .jr_06c7
     ld a, d
-    ldh [$9b], a
+    ldh [$ff9b], a
     ld a, e
-    ldh [$9a], a
+    ldh [$ff9a], a
     ret
 
 
@@ -840,7 +840,7 @@ call_07cc:
 
 .jr_07f4
     trap AwaitFrame
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and $02
     jr nz, .jr_07f4
 
@@ -923,7 +923,7 @@ call_084e::
     or a
     jr nz, .jr_086e
 
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     and $04
     cp $04
     ret nz
@@ -1067,7 +1067,7 @@ call_095d:
     trap AwaitFrame
     trap InputButtons
     callx call_09eb
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and $08
     jr z, .jr_0993
 
@@ -1128,7 +1128,7 @@ call_09d6:
 
 
 call_09eb:
-    ldh a, [$b6]
+    ldh a, [$ffb6]
     ld b, a
     and $c0
     jr z, .jr_0a19
@@ -1162,7 +1162,7 @@ call_09eb:
     ld [$cc62], a
 
 .jr_0a19
-    ldh a, [$b6]
+    ldh a, [$ffb6]
     ld b, a
     and $33
     jr z, .jr_0a5a
@@ -1451,8 +1451,8 @@ call_0c29:
     ld h, $04
     trap $ca
     ld a, $e4
-    ldh [$9c], a
-    ldh [$9d], a
+    ldh [$ff9c], a
+    ldh [$ff9d], a
     ret
 
 

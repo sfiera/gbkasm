@@ -63,18 +63,18 @@ jr_0070:
     ld sp, $e000
 
 jr_0086:
-    ldh a, [rLY & $FF] ; =$44
+    ldh a, [rLY]
     cp $91
     jr nz, jr_0086
-    ldh a, [rLCDC & $FF] ; =$40
+    ldh a, [rLCDC]
     and $7f
-    ldh [rLCDC & $FF], a ; =$40
+    ldh [rLCDC], a
     ld hl, $c6a0
     ld a, $01
     ld [hli], a
     ld a, $01
     ld [hli], a
-    ldh a, [rBGP & $FF] ; =$47
+    ldh a, [rBGP]
     ld [hli], a
     ld a, $80
     ld [hli], a
@@ -106,12 +106,12 @@ jr_00cc:
     dec b
     jr nz, jr_00cc
     ld a, $a0
-    ldh [rWX & $FF], a ; =$4b
+    ldh [rWX], a
     xor a
-    ldh [rWY & $FF], a ; =$4a
-    ldh a, [rLCDC & $FF] ; =$40
+    ldh [rWY], a
+    ldh a, [rLCDC]
     or $e0
-    ldh [rLCDC & $FF], a ; =$40
+    ldh [rLCDC], a
     callx call_01f9
 
 jr_00e7:
@@ -174,12 +174,12 @@ call_0188:
     ret
 
 call_01d5:
-    ldh a, [$c7]
+    ldh a, [$ffc7]
     jr jr_01ec
 call_01d9:
-    ldh a, [$c6]
+    ldh a, [$ffc6]
     ld c, a
-    ldh a, [$c5]
+    ldh a, [$ffc5]
     or a
     jr z, jr_01e3
     ld a, $0c
@@ -187,10 +187,10 @@ jr_01e3:
     add c
     jr jr_01ec
 call_01e6:
-    ldh a, [$c2]
+    ldh a, [$ffc2]
     jr jr_01ec
 call_01ea:
-    ldh a, [$c3]
+    ldh a, [$ffc3]
 jr_01ec:
     ld c, $2f
 jr_01ee:
@@ -205,13 +205,13 @@ jr_01ee:
 
 call_01f9:
     ld b, $09
-    ldh a, [rSCY & $FF] ; =$42
+    ldh a, [rSCY]
     and $f8
     ld l, a
     ld h, $00
     add hl, hl
     add hl, hl
-    ldh a, [rSCX & $FF] ; =$43
+    ldh a, [rSCX]
     rrca
     rrca
     rrca
@@ -273,7 +273,7 @@ jr_025b:
     ld a, $09
     sub b
     swap a
-    ldh [rWY & $FF], a ; =$4a
+    ldh [rWY], a
     dec b
     jr nz, jr_025b
     ld de, $0400
@@ -382,22 +382,22 @@ jr_0300:
     push bc
     push af
 jr_0303:
-    ldh a, [rSTAT & $FF] ; =$41
+    ldh a, [rSTAT]
     bit 1, a
     jr nz, jr_0303
     ld a, [de]
     ld c, a
-    ldh a, [rSTAT & $FF] ; =$41
+    ldh a, [rSTAT]
     bit 1, a
     jr nz, jr_0303
     inc de
 jr_0312:
-    ldh a, [rSTAT & $FF] ; =$41
+    ldh a, [rSTAT]
     bit 1, a
     jr nz, jr_0312
     ld a, [de]
     ld b, a
-    ldh a, [rSTAT & $FF] ; =$41
+    ldh a, [rSTAT]
     bit 1, a
     jr nz, jr_0312
     inc de
@@ -489,11 +489,11 @@ jr_038c:
     ret
 
 call_039b:
-    ldh a, [rSTAT & $FF] ; =$41
+    ldh a, [rSTAT]
     bit 1, a
     jr nz, call_039b
     ld c, [hl]
-    ldh a, [rSTAT & $FF] ; =$41
+    ldh a, [rSTAT]
     bit 1, a
     jr nz, call_039b
     inc hl

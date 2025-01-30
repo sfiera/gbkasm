@@ -196,7 +196,7 @@ TrapAudioUnknown:
     ld hl, $6c03
     call Call_000_3f80
     ld a, [$de91]
-    ldh [$80], a
+    ldh [$ff80], a
     ld [$2000], a
     ld a, [$df02]
     cp $00
@@ -301,7 +301,7 @@ Call_01c_4197:
     add hl, bc
     ld a, [hl]
     ld [$de91], a
-    ldh [$80], a
+    ldh [$ff80], a
     ld [$2000], a
     pop af
     add a

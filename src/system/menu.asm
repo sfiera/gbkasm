@@ -23,7 +23,7 @@ KissMenu::
     ld hl, KissMenu
     trap $6f
     xor a
-    ldh [$b7], a
+    ldh [$ffb7], a
     call InitKissUserIfNeeded
     ; fall through
 
@@ -36,10 +36,10 @@ UpdateKissMenu:
     ld bc, $0001
     trap CRAMRead
     ld a, $ff
-    ldh [$c2], a
+    ldh [$ffc2], a
     xor a
-    ldh [$c3], a
-    ldh [$c1], a
+    ldh [$ffc3], a
+    ldh [$ffc1], a
 
 jr_001_4125:
     call SelectFile
@@ -49,7 +49,7 @@ jr_001_4125:
     jp z, MenuQuickRecv
 
     call Call_001_490e
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     bit BTN_SEL_F, a
     jp nz, MenuSend
 
@@ -82,10 +82,10 @@ MenuRun:
 
 
 MenuSort:
-    ldh a, [$c0]
-    ldh [$c2], a
-    ldh a, [$c1]
-    ldh [$c3], a
+    ldh a, [$ffc0]
+    ldh [$ffc2], a
+    ldh a, [$ffc1]
+    ldh [$ffc3], a
     call Call_001_4990
     push af
 
@@ -120,7 +120,7 @@ MenuSort:
 .done
     pop af
     ld a, $ff
-    ldh [$c2], a
+    ldh [$ffc2], a
     jp UpdateKissMenu
 
 
@@ -527,7 +527,7 @@ MenuErase:
 
 
 Jump_001_43d4:
-    ldh a, [$c1]
+    ldh a, [$ffc1]
     call Call_001_4a36
     jp ContinueActionMenu
 
@@ -1103,7 +1103,7 @@ Call_001_478a:
 Call_001_479d:
     ld hl, $c800
     ld bc, $0020
-    ldh a, [$c0]
+    ldh a, [$ffc0]
     ld e, a
 
 .jr_001_47a6
@@ -1122,7 +1122,7 @@ Call_001_479d:
     jr .jr_001_47a6
 
 .jr_001_47b7
-    ldh a, [$c1]
+    ldh a, [$ffc1]
 
 Call_001_47b9:
     ld de, $0c3c
@@ -1168,13 +1168,13 @@ SelectFile:
     ld de, $ff44
     ld bc, $0001
     trap CRAMWrite
-    ldh a, [$c2]
+    ldh a, [$ffc2]
     ld c, a
-    ldh a, [$c0]
+    ldh a, [$ffc0]
     cp c
     jr nz, .jr_001_480c
 
-    ldh a, [$c3]
+    ldh a, [$ffc3]
     call Call_001_47b9
     ld hl, data_01_47da
     ld a, $1c
@@ -1192,7 +1192,7 @@ SelectFile:
     call Call_001_4fec
     push af
     ld a, h
-    ldh [$c1], a
+    ldh [$ffc1], a
     pop af
     or a
     bit BTN_A_F, a
@@ -1206,7 +1206,7 @@ SelectFile:
     ret nz
 
     ld l, a
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     bit BTN_RT_F, l
     jr nz, .right
 
@@ -1252,21 +1252,21 @@ SelectFile:
     ld l, 5
 
 .Jump_001_4860
-    ldh a, [$c0]
+    ldh a, [$ffc0]
     or a
     jp z, .next
 
-    ldh a, [$c1]
+    ldh a, [$ffc1]
     add l
-    ldh [$c1], a
-    ldh a, [$c0]
+    ldh [$ffc1], a
+    ldh a, [$ffc0]
     sub 6
     jr nc, .jr_001_4872
 
     xor a
 
 .jr_001_4872
-    ldh [$c0], a
+    ldh [$ffc0], a
     jp SelectFile
 
 
@@ -1303,21 +1303,21 @@ SelectFile:
     ld l, 5
 
 .Jump_001_489c
-    ldh a, [$c0]
+    ldh a, [$ffc0]
     add 6
     cp 120
     jp nc, SelectFile
 
-    ldh [$c0], a
-    ldh a, [$c1]
+    ldh [$ffc0], a
+    ldh a, [$ffc1]
     sub l
-    ldh [$c1], a
+    ldh [$ffc1], a
     jp SelectFile
 
 
 .moveBy30
     push hl
-    ldh a, [$c0]
+    ldh a, [$ffc0]
     ld e, a
     ld d, 0
     ld hl, 30
@@ -1330,7 +1330,7 @@ SelectFile:
     jr .jr_001_48c4
 
 .jr_001_48c2
-    ldh a, [$c0]
+    ldh a, [$ffc0]
 
 .jr_001_48c4
     add l
@@ -1347,7 +1347,7 @@ SelectFile:
     sub -120
 
 .moveBy30Done
-    ldh [$c0], a
+    ldh [$ffc0], a
     jp SelectFile
 
 
@@ -1495,9 +1495,9 @@ InitKissUserIfNeeded:
 
 
 Call_001_4990:
-    ldh a, [$c0]
+    ldh a, [$ffc0]
     ld c, a
-    ldh a, [$c1]
+    ldh a, [$ffc1]
     add c
     ret
 
@@ -1511,9 +1511,9 @@ DrawMenu:
     ld hl, $1200
     trap $b6
     ld a, $e4
-    ldh [$9d], a
+    ldh [$ff9d], a
     ld a, $1b
-    ldh [$9e], a
+    ldh [$ff9e], a
     ld de, $0000
     ld bc, $1005
     trap DrawBox
@@ -1673,7 +1673,7 @@ Call_001_4a36:
     call Call_001_4b45
     ld hl, data_01_4ac2
     trap DrawString
-    ldh a, [$c0]
+    ldh a, [$ffc0]
     pop de
     add d
     ld e, a

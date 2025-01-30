@@ -36,7 +36,7 @@ Main::
     callx @+$0645
     callx @+$0440
     trap AwaitFrame
-    ldh a, [$c6]
+    ldh a, [$ffc6]
     ld l, a
     ld h, $00
     trap JumpViaTable
@@ -51,16 +51,16 @@ jp_0121:
     ld de, $0000
     ld c, $00
     callx @+$02fa
-    ldh a, [$c9]
+    ldh a, [$ffc9]
     or a
     jr z, jp_014e
 
     dec a
-    ldh [$c9], a
+    ldh [$ffc9], a
     jr nz, jp_014e
 
     xor a
-    ldh [$c3], a
+    ldh [$ffc3], a
     ld de, $0000
     ld c, $00
 
@@ -68,59 +68,59 @@ jp_0121:
     ld hl, $ffc6
     inc [hl]
     ld a, $5a
-    ldh [$cb], a
+    ldh [$ffcb], a
 
 jp_014e::
     ld de, $0001
     ld c, $10
     callx @+$02cd
-    ldh a, [$c6]
+    ldh a, [$ffc6]
     cp $01
     jr nz, jp_0181
 
-    ldh a, [$c9]
+    ldh a, [$ffc9]
     or a
     jr z, jp_0181
 
     dec a
-    ldh [$c9], a
+    ldh [$ffc9], a
     jr nz, jp_0181
 
     xor a
-    ldh [$c4], a
+    ldh [$ffc4], a
     ld de, $0001
     ld c, $10
     callx @+$02c6
     ld hl, $ffc6
     inc [hl]
     ld a, $b4
-    ldh [$cb], a
+    ldh [$ffcb], a
 
 jp_0181::
-    ldh a, [$c6]
+    ldh a, [$ffc6]
     cp $02
     jr nz, jr_000_01bb
 
-    ldh a, [$c9]
+    ldh a, [$ffc9]
     or a
     jr z, jr_000_01bb
 
     dec a
-    ldh [$c9], a
+    ldh [$ffc9], a
     jr z, jr_000_01a6
 
     ld de, $0002
     ld c, $20
     callx @+$028a
-    ldh a, [$ca]
+    ldh a, [$ffca]
     inc a
-    ldh [$ca], a
+    ldh [$ffca], a
     trap AwaitButton
     jr jp_01ed
 
 jr_000_01a6::
     xor a
-    ldh [$c5], a
+    ldh [$ffc5], a
     ld de, $0002
     ld c, $20
     callx @+$028a
@@ -144,14 +144,14 @@ jp_01cb:
     ld [hl], a
     callx @+$016d
     ld a, $ff
-    ldh [$c6], a
+    ldh [$ffc6], a
     xor a
-    ldh [$cb], a
+    ldh [$ffcb], a
     callx @+$0121
 
 jp_01ed::
     ld c, $00
-    ldh a, [$c9]
+    ldh a, [$ffc9]
     or a
     jr nz, jr_000_01f7
 
@@ -166,7 +166,7 @@ jr_000_01f7::
     trap ExitToMenu
 
 jr_000_01fe:
-    ldh a, [$c6]
+    ldh a, [$ffc6]
     cp $ff
     jr nz, Jump_000_023e
 
@@ -181,7 +181,7 @@ jr_000_01fe:
 
     inc a
     ld b, a
-    ldh a, [$c7]
+    ldh a, [$ffc7]
 
 jr_000_0215::
     rrca
@@ -213,7 +213,7 @@ jr_000_022b::
 
 
 Jump_000_023e::
-    ldh a, [$c6]
+    ldh a, [$ffc6]
     cp $ff
     jr nz, jr_000_027d
 
@@ -221,7 +221,7 @@ Jump_000_023e::
     and c
     jr z, jr_000_027d
 
-    ldh a, [$c7]
+    ldh a, [$ffc7]
     cp $40
     jr nc, jr_000_027d
 
@@ -260,7 +260,7 @@ jr_000_026c::
 
 
 jr_000_027d::
-    ldh a, [$c6]
+    ldh a, [$ffc6]
     cp $ff
     jr nz, jr_000_029d
 
@@ -268,23 +268,23 @@ jr_000_027d::
     and c
     jr z, jr_000_029d
 
-    ldh a, [$c7]
+    ldh a, [$ffc7]
     cp $02
     jr c, jr_000_029d
 
     rr a
-    ldh [$c7], a
+    ldh [$ffc7], a
     callx @+$00b3
     jx @+$fe73
 
 
 jr_000_029d::
-    ldh a, [$cb]
+    ldh a, [$ffcb]
     or a
     jr z, jr_000_02a9
 
     dec a
-    ldh [$cb], a
+    ldh [$ffcb], a
     jr nz, jr_000_02a9
 
     ld c, $01
@@ -294,7 +294,7 @@ jr_000_02a9::
     and c
     jr z, jr_000_0301
 
-    ldh a, [$c6]
+    ldh a, [$ffc6]
     ld bc, $0305
     cp $02
     jr z, jr_000_02f0
@@ -306,22 +306,22 @@ jr_000_02a9::
     jr z, jr_000_0301
 
     xor a
-    ldh [$c9], a
+    ldh [$ffc9], a
     ld a, [$c760]
     or a
     jr z, jr_000_0301
 
     xor a
-    ldh [$c6], a
+    ldh [$ffc6], a
     ld a, $3c
-    ldh [$cb], a
+    ldh [$ffcb], a
     ld a, [$c760]
     ld e, a
     cpl
     inc a
     ld c, a
     ld b, $ff
-    ldh a, [$c7]
+    ldh a, [$ffc7]
 
 jr_000_02db::
     rrca
@@ -343,9 +343,9 @@ jr_000_02f0::
     trap RandNext
     and b
     add c
-    ldh [$c9], a
+    ldh [$ffc9], a
     ld a, $01
-    ldh [$ca], a
+    ldh [$ffca], a
     callx @+$000d
 
 jr_000_0301::
@@ -359,7 +359,7 @@ data_0308:
 
 
 call_030b:
-    ldh a, [$c6]
+    ldh a, [$ffc6]
     cp $03
     jr c, jr_000_0332
 
@@ -413,7 +413,7 @@ jr_000_035b::
     ld hl, $1110
     trap DrawAt
     ldx hl, data_0343
-    ldh a, [$c7]
+    ldh a, [$ffc7]
     cp $01
     jr z, jr_000_037b
 
@@ -744,12 +744,12 @@ jr_000_051b::
     ld [hl+], a
     ld [hl], a
     ld a, $01
-    ldh [$c7], a
+    ldh [$ffc7], a
     ld a, $ff
-    ldh [$c6], a
+    ldh [$ffc6], a
     xor a
-    ldh [$c9], a
-    ldh [$cb], a
+    ldh [$ffc9], a
+    ldh [$ffcb], a
     ldx hl, data_0bc3
     trap DrawString
     ld de, $0302
@@ -840,7 +840,7 @@ jp_0608:
 
 jr_000_0646::
     trap AwaitFrame
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     or a
     jr nz, jr_000_0646
 
@@ -889,7 +889,7 @@ jr_000_0666::
     inc hl
     ld d, [hl]
     push de
-    ldh a, [$c7]
+    ldh a, [$ffc7]
     ld l, a
     ld h, $00
     trap MathMul16
@@ -961,7 +961,7 @@ jr_000_0713::
     ldx hl, data_0b05
     add hl, bc
     ld a, [hl]
-    ldh [$c8], a
+    ldh [$ffc8], a
     ld hl, $c762
     ld c, [hl]
     inc hl

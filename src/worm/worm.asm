@@ -151,7 +151,7 @@ HandleMenu:
     trap AwaitFrame
     ld e, " "
     callx DrawSelection
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     bit BTN_UP_F, a
     jr z, :+
     ld a, c
@@ -159,7 +159,7 @@ HandleMenu:
     jr z, :+
     dec c
 
-:   ldh a, [$8b]
+:   ldh a, [$ff8b]
     bit BTN_DN_F, a
     jr z, :+
     ld a, c
@@ -172,7 +172,7 @@ HandleMenu:
     ld a, [varTicker]
     inc a
     ld [varTicker], a
-    ldh a, [$8b]
+    ldh a, [$ff8b]
 
     bit BTN_A_F, a
     jr z, .next
@@ -429,7 +429,7 @@ DrawGameOver:
     trap DrawString
 
 .awaitA
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     bit BTN_A_F, a
     jr z, .awaitA
 
@@ -475,7 +475,7 @@ DrawPerfect:
     trap DrawString
 
 .awaitA
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     bit BTN_A_F, a
     jr z, .awaitA
 
@@ -654,7 +654,7 @@ HandleInput:
     jr nz, .copyNext
 
     ; Check if left button pressed
-    ldh a, [$8a]
+    ldh a, [$ff8a]
     bit BTN_LT_F, a
     jr z, :+
 
@@ -669,7 +669,7 @@ HandleInput:
     jr .inputDone
 
     ; Check if right button pressed
-:   ldh a, [$8a]
+:   ldh a, [$ff8a]
     bit BTN_RT_F, a
     jr z, :+
 
@@ -684,7 +684,7 @@ HandleInput:
     jr .inputDone
 
     ; Check if up button pressed
-:   ldh a, [$8a]
+:   ldh a, [$ff8a]
     bit BTN_UP_F, a
     jr z, :+
 
@@ -699,7 +699,7 @@ HandleInput:
     jr .inputDone
 
     ; Check if down button pressed
-:   ldh a, [$8a]
+:   ldh a, [$ff8a]
     bit BTN_DN_F, a
     jr z, .inputDone
 

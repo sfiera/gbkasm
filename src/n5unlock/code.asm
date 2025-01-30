@@ -18,7 +18,7 @@ Main:
     ld a, $20
     trap DrawInit
     ld a, %00011011
-    ldh [$9c], a
+    ldh [$ff9c], a
 
     ; Nectaris font, capital letters
     ld a, $02

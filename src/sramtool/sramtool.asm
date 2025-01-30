@@ -307,7 +307,7 @@ call_03a4:
 call_03d7:
     ld a, c
     and $fc
-    ldh [$97], a
+    ldh [$ff97], a
     ld a, c
     rrca
     rrca
