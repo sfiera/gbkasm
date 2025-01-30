@@ -26,17 +26,17 @@ data_01_401a::
     dp "GB KISS MENU \0"
 
 AttrCross::
-    INCBIN "out/src/system/gfx/attrs.2bpp", 0, 16
+    INCBIN "out/system/gfx/attrs.2bpp", 0, 16
 AttrTriangle::
-    INCBIN "out/src/system/gfx/attrs.2bpp", 16, 16
+    INCBIN "out/system/gfx/attrs.2bpp", 16, 16
 AttrCircle::
-    INCBIN "out/src/system/gfx/attrs.2bpp", 32, 16
+    INCBIN "out/system/gfx/attrs.2bpp", 32, 16
 AttrDiamond::
-    INCBIN "out/src/system/gfx/attrs.2bpp", 48, 16
+    INCBIN "out/system/gfx/attrs.2bpp", 48, 16
 AttrBullseye::
-    INCBIN "out/src/system/gfx/attrs.2bpp", 64, 16
+    INCBIN "out/system/gfx/attrs.2bpp", 64, 16
 ArrowIcon::
-    INCBIN "out/src/system/gfx/attrs.2bpp", 80, 16
+    INCBIN "out/system/gfx/attrs.2bpp", 80, 16
 
     ds 14
 
@@ -1691,7 +1691,7 @@ data_01_72d2:
     db $10, $09, $70, $7f, $ff
 
 gfxGBKissLogo:
-    INCBIN "out/src/system/frag/logo.hz"
+    INCBIN "out/system/frag/logo.hz"
 
 TrapJumpViaTable::
     pop de
@@ -3375,10 +3375,10 @@ jr_001_7f52:
 
 
 PageIcon::
-    INCBIN "out/src/system/gfx/page.2bpp"
+    INCBIN "out/system/gfx/page.2bpp"
 
 PencilIcon:
-    INCBIN "out/src/system/gfx/pencil.2bpp"
+    INCBIN "out/system/gfx/pencil.2bpp"
 
 data_01_7ff0:
-    INCBIN "out/src/system/gfx/reticle.2bpp"
+    INCBIN "out/system/gfx/reticle.2bpp"

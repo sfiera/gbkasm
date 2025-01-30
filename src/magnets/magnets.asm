@@ -18,7 +18,7 @@ Header::
 .title
     dk "MAGNETS"
 .icon
-    INCBIN "out/src/magnets/icon.2bpp"
+    INCBIN "out/magnets/icon.2bpp"
 .end
 
 History:

@@ -17,7 +17,7 @@ Header::
 .title
     dk "SHOT"
 .icon
-    INCBIN "out/src/iconsend/gun.2bpp"
+    INCBIN "out/iconsend/gun.2bpp"
 .end
 
 History:

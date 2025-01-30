@@ -20,7 +20,7 @@ Header::
 .title
     dk "バケちゅリレー"
 .icon
-    INCBIN "out/src/baketu/icon.2bpp"
+    INCBIN "out/baketu/icon.2bpp"
 .end
 
 History:
@@ -1013,7 +1013,7 @@ call_0916:
 
 
 data_0928:
-    INCBIN "out/src/baketu/tiles.hz"
+    INCBIN "out/baketu/tiles.hz"
 
 SECTION "Status Bar", WRAM0[$cc40]
 

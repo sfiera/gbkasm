@@ -17,7 +17,7 @@ Header::
 .title
     dk "DRIVE"
 .icon
-    INCBIN "out/src/drive/icon.2bpp"
+    INCBIN "out/drive/icon.2bpp"
 .end
 
 History:
@@ -2088,7 +2088,7 @@ jr_000_0d7e::
 
 
 data_0d80:
-    INCBIN "out/src/drive/tiles.hz"
+    INCBIN "out/drive/tiles.hz"
 
 data_1126:
     db $00, $01, $02, $03

@@ -9793,31 +9793,31 @@ jr_002_6f8d:
 
 
 image_02_6f8e:
-    INCBIN "out/src/system/gfx/font.1bpp"
+    INCBIN "out/system/gfx/font.1bpp"
 
 image_02_778e:
-    INCBIN "out/src/system/gfx/borders.2bpp"
+    INCBIN "out/system/gfx/borders.2bpp"
 
 data_02_784e:
     db $01, $81, $40, $41, $42, $43, $44, $45, $ff, $00
 
 gfxLetterIcon:
-    INCBIN "out/src/iconsend/letter.2bpp"
+    INCBIN "out/iconsend/letter.2bpp"
 gfxMailIcon:
-    INCBIN "out/src/iconsend/mail.2bpp"
+    INCBIN "out/iconsend/mail.2bpp"
 gfxFlyIcon:
-    INCBIN "out/src/iconsend/hikou0.2bpp"
+    INCBIN "out/iconsend/hikou0.2bpp"
 gfxPuzzleIcon:
-    INCBIN "out/src/iconsend/puzzle0.2bpp"
+    INCBIN "out/iconsend/puzzle0.2bpp"
 gfxSwordIcon:
-    INCBIN "out/src/iconsend/ken0.2bpp"
+    INCBIN "out/iconsend/ken0.2bpp"
 gfxCardIcon:
-    INCBIN "out/src/iconsend/card0.2bpp"
+    INCBIN "out/iconsend/card0.2bpp"
 gfxMapIcon:
-    INCBIN "out/src/iconsend/map.2bpp"
+    INCBIN "out/iconsend/map.2bpp"
 gfxHouseIcon:
-    INCBIN "out/src/iconsend/ie2.2bpp"
+    INCBIN "out/iconsend/ie2.2bpp"
 gfxEmptyIcon:
-    INCBIN "out/src/system/gfx/empty.2bpp"
+    INCBIN "out/system/gfx/empty.2bpp"
 gfxHatchIcon:
-    INCBIN "out/src/iconsend/simula1.2bpp"
+    INCBIN "out/iconsend/simula1.2bpp"

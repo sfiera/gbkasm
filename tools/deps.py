@@ -32,23 +32,24 @@ def main():
 
 
 def asm_deps(path):
+    path = path_from(path, source="src")
     name, ext = os.path.splitext(path)
-    obj = path_for(os.path.join("out", name + ".o"))
-    asm = path_for(name + ".asm")
+    obj = os.path.join("out", name + ".o")
+    asm = os.path.join("src", name + ".asm")
     print("%s: %s" % (obj, asm), end=" ")
-    with open(path) as f:
+    with open(asm) as f:
         for line in f.readlines():
             m = inc_pattern.match(line)
             if not m:
                 continue
-            print(path_for(m[1]), end=" ")
+            print(path_from(m[1]), end=" ")
     print()
 
 
 def link_deps(path):
     name, _ = os.path.splitext(path)
     name = os.path.basename(name)
-    rom = path_for(name + ".gb")
+    rom = path_from(name + ".gb")
     print("%s:" % rom, end=" ")
     seen = set()
     with open(path) as f:
@@ -57,7 +58,7 @@ def link_deps(path):
             if not m or m[1] in seen:
                 continue
             seen.add(m[1])
-            print(path_for(os.path.join("out", "src", m[1] + ".o")), end=" ")
+            print(path_from(os.path.join("out", m[1] + ".o")), end=" ")
     print()
 
 
@@ -65,8 +66,8 @@ extensions[".asm"] = asm_deps
 extensions[".link"] = link_deps
 
 
-def path_for(target):
-    return os.path.relpath(os.path.realpath(target), ".")
+def path_from(target, source="."):
+    return os.path.relpath(os.path.realpath(target), source)
 
 
 if __name__ == "__main__":

@@ -17,7 +17,7 @@ Header::
 .title
     dk "WATCH&TIMER"
 .icon
-    INCBIN "out/src/iconsend/tokei.2bpp"
+    INCBIN "out/iconsend/tokei.2bpp"
 .end
 
 History:

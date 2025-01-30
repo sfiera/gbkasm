@@ -19,7 +19,7 @@ Header::
 .title
     dk "サウンド　テスト"
 .icon
-    INCBIN "out/src/soundtst/icon.2bpp"
+    INCBIN "out/soundtst/icon.2bpp"
 .end
 
 History:

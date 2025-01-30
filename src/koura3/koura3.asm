@@ -31,4 +31,4 @@ History:
 .end
 
 Body::
-    INCBIN "out/src/koura3/koura-3.hz"
+    INCBIN "out/koura3/koura-3.hz"

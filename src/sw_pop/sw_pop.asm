@@ -37,10 +37,10 @@ FOR _BLOCK, 0, 3
         DEF _DIGIT_OFFSET = _BLOCK_OFFSET + _SIZE*_DIGIT
         FOR _ROW, 0, 7
             DEF _ROW_OFFSET = _DIGIT_OFFSET + 3*5*_ROW
-            INCBIN "out/src/sw_pop/pop.tilemap", _ROW_OFFSET % (3*5*7*3), _SIZE
+            INCBIN "out/sw_pop/pop.tilemap", _ROW_OFFSET % (3*5*7*3), _SIZE
         ENDR
     ENDR
 ENDR
 
 Tileset:
-    INCBIN "out/src/sw_pop/pop.hz"
+    INCBIN "out/sw_pop/pop.hz"
