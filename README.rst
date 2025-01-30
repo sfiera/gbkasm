@@ -158,5 +158,5 @@ Homebrew Files
      * `IR Test <https://gbkiss.org/file/irtest>`_
      * Demonstrates infrared communication between carts
    * * `n5unlock.asm <src/n5unlock/n5unlock.asm>`_
-     * `IR Test <https://gbkiss.org/file/n5unlock>`_
+     * `N5Unlock <https://gbkiss.org/file/n5unlock>`_
      * Unlocks the Quick Start menu in Nectaris GB
