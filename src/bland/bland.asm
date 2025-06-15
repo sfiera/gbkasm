@@ -216,7 +216,7 @@ jr_000_a227:
 call_a23a:
     ld hl, $1f0a
     trap $b6
-    ld de, $ff44
+    ld de, rLY
     ld hl, $cbfe
     ld a, $80
     ld [hl], a
@@ -224,7 +224,7 @@ call_a23a:
     ld [$cbff], a
 
 jr_000_a24c:
-    ld a, [de]
+    ld a, [de]  ; [rLY]
     and a
     jr nz, jr_000_a24c
 
@@ -233,8 +233,8 @@ jr_000_a250:
     and $03
     jr nz, jr_000_a250
 
-    ld a, [de]
-    cp $8f
+    ld a, [de]  ; [rLY]
+    cp 143
     jr z, jr_000_a267
 
     rrca
@@ -3545,7 +3545,7 @@ call_b42a:
 call_b469:
     ld hl, $1f0a
     trap $b6
-    ld de, $ff44
+    ld de, rLY
     ld hl, $cbfe
     xor a
     ld [hl], a
