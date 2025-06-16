@@ -31,7 +31,6 @@ endif
 all: compare
 
 out/%.o: src/%.asm
-	@ echo deps: $+
 	@ mkdir -p $(dir $@)
 	$(RGBASM) $(RGBASMFLAGS) -o $@ $<
 
