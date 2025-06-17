@@ -619,9 +619,12 @@ def add_command(parser, args):
                 )
 
             if args.update:
-                entry, _ = find_file(f, meta, title=file.title, owner=file.owner)
-                pos = entry.pos
-                del_file(f, meta, entry)
+                try:
+                    entry, _ = find_file(f, meta, title=file.title, owner=file.owner)
+                    pos = entry.pos
+                    del_file(f, meta, entry)
+                except ToolError:
+                    pos = find_empty_index(f, meta)
             else:
                 pos = find_empty_index(f, meta)
             add_file(f, meta, pos, file, data)
